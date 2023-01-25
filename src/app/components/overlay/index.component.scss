@@ -1,0 +1,17 @@
+:host {
+  display: flex;
+  position: absolute;
+
+  &.vr-up {
+    align-items: flex-end;
+    transform: translateY(-100%);
+  }
+
+  &.vr-down {
+    align-items: flex-start;
+  }
+
+  &.hr-reverse {
+    flex-direction: row-reverse;
+  }
+}

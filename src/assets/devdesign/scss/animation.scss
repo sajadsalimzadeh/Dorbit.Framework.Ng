@@ -1,0 +1,13 @@
+.fade-scale-vertical {animation: fade-scale-vertical 500ms ease;}
+@keyframes fade-scale-vertical {
+  0% {
+    opacity: 0;
+    overflow: hidden;
+    transform: scaleY(.7);
+  }
+  100% {
+    opacity: 1;
+    overflow: hidden;
+    transform: scaleY(1);
+  }
+}
