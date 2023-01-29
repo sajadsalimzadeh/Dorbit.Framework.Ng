@@ -1,0 +1,52 @@
+<div *ngIf="captionTemplate" class="caption">
+  <ng-container *ngTemplateOutlet="captionTemplate.template; context: {}"></ng-container>
+</div>
+<div class="data">
+  <table class="data-table">
+    <thead *ngIf="headerTemplate">
+    <ng-container *ngTemplateOutlet="headerTemplate.template; context: {}"></ng-container>
+    </thead>
+    <thead *ngIf="filterTemplate">
+    <ng-container *ngTemplateOutlet="filterTemplate.template; context: {$implicit: filters}"></ng-container>
+    </thead>
+    <ng-container *ngFor="let item of renderedItems">
+      <tbody *ngIf="bodyTemplate">
+      <ng-container *ngTemplateOutlet="bodyTemplate.template; context: {$implicit: item}"></ng-container>
+      <ng-container *ngIf="detailTemplate">
+        <ng-container *ngTemplateOutlet="detailTemplate.template; context: {$implicit: item}"></ng-container>
+      </ng-container>
+      </tbody>
+    </ng-container>
+    <tfoot *ngIf="footerTemplate">
+    <ng-container *ngTemplateOutlet="footerTemplate.template; context: {}"></ng-container>
+    </tfoot>
+  </table>
+</div>
+<div class="pagination" *ngIf="config.paging">
+  <div class="pagination-start">
+    <ng-container *ngIf="paginationStartTemplate">
+      <ng-container *ngTemplateOutlet="paginationStartTemplate.template; context: {}"></ng-container>
+    </ng-container>
+  </div>
+  <div class="pagination-center">
+    <div class="current-page-report">
+      {{config.paging.currentPageReportTemplate}}
+    </div>
+    <div class="page-first"></div>
+    <div class="page-prev"></div>
+    <div class="page-numbers"></div>
+    <div class="page-next"></div>
+    <div class="page-last"></div>
+    <div class="page-row-count">
+      <dev-select [items]="config.paging.rowCountList" [formControl]="pageRowCountControl" name="pageRowCountControl"></dev-select>
+    </div>
+  </div>
+  <div class="pagination-end">
+    <ng-container *ngIf="paginationEndTemplate">
+      <ng-container *ngTemplateOutlet="paginationEndTemplate.template; context: {}"></ng-container>
+    </ng-container>
+  </div>
+</div>
+<div *ngIf="summaryTemplate" class="summary">
+  <ng-container *ngTemplateOutlet="summaryTemplate.template; context: {}"></ng-container>
+</div>

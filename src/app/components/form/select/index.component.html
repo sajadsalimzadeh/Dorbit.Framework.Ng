@@ -1,0 +1,27 @@
+<div class="control-box">
+  <div class="arrow"></div>
+  <div class="placeholder" *ngIf="placeholder && !searchValue && !selectedItem">{{placeholder}}</div>
+  <div class="search">
+    <input [(ngModel)]="searchValue"/>
+  </div>
+  <div class="value">
+    {{getValue(selectedItem)}}
+  </div>
+</div>
+<div class="items-box">
+  <div class="items-container">
+  <ul class="items">
+    <li *ngFor="let item of items" class="item" (click)="select(item, $event)"
+        [ngClass]="{selected: (selectedItem == item), hovered: (hoveredItem == item)}">
+      <ng-container *ngIf="optionTemplate; else elseOptionTemplate">
+        <ng-container *ngTemplateOutlet="optionTemplate.template; context: {$implicit: item}"></ng-container>
+      </ng-container>
+      <ng-template #elseOptionTemplate>
+        <div class="default-template">
+          {{getText(item)}}
+        </div>
+      </ng-template>
+    </li>
+  </ul>
+  </div>
+</div>

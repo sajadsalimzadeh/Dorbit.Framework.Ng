@@ -1,1 +1,48 @@
 <dev-date-picker locale="fa"></dev-date-picker>
+<dev-table [items]="items">
+
+  <ng-template filter="input" let-control>
+    <input [formControl]="control"/>
+  </ng-template>
+
+  <ng-template devTemplate="header">
+    <tr>
+      <th>#</th>
+      <th [filter]="'first_name'">Firstname</th>
+      <th>Lastname</th>
+      <th>Email</th>
+      <th>Gender</th>
+      <th>IP Address</th>
+    </tr>
+  </ng-template>
+  <ng-template devTemplate="filter" let-filters>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template devTemplate="body" let-item>
+    <tr>
+      <td>{{item.id}}</td>
+      <td>{{item.first_name}}</td>
+      <td>{{item.last_name}}</td>
+      <td>{{item.email}}</td>
+      <td>{{item.gender}}</td>
+      <td>{{item.ip_address}}</td>
+    </tr>
+  </ng-template>
+  <ng-template devTemplate="footer">
+    <tr>
+      <th>#</th>
+      <th>Firstname</th>
+      <th>Lastname</th>
+      <th>Email</th>
+      <th>Gender</th>
+      <th>IP Address</th>
+    </tr>
+  </ng-template>
+</dev-table>
