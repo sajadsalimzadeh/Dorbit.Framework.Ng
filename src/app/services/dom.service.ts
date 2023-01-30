@@ -3,9 +3,8 @@ import {
   ComponentFactoryResolver,
   EmbeddedViewRef,
   Injectable,
-  Injector,
-  Type,
-  ViewContainerRef
+  Injector, TemplateRef,
+  Type, ViewContainerRef,
 } from "@angular/core";
 
 
@@ -18,7 +17,15 @@ export class DomService {
   ) {
   }
 
-  create<T>(component: Type<T>) {
+  createByTemplate(template: TemplateRef<any>, viewContainerRef: ViewContainerRef,) {
+    const embeddedViewRef = viewContainerRef.createEmbeddedView(template);
+    embeddedViewRef.detectChanges();
+    const domElem = embeddedViewRef.rootNodes[0] as HTMLElement;
+    document.body.appendChild(domElem);
+    return embeddedViewRef;
+  }
+
+  createByComponent<T>(component: Type<T>) {
     const componentRef = this.componentFactoryResolver.resolveComponentFactory(component).create(this.injector);
     this.appRef.attachView(componentRef.hostView);
     const domElem = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;

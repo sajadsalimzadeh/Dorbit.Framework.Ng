@@ -1,5 +1,4 @@
-import {Component, HostBinding} from "@angular/core";
-import {DomService} from "../../services/dom.service";
+import {AfterViewInit, Component, ComponentRef, HostBinding, HostListener, OnInit, TemplateRef} from "@angular/core";
 
 type Direction = 'up' | 'down';
 
@@ -8,27 +7,53 @@ type Direction = 'up' | 'down';
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.scss']
 })
-export class OverlayComponent {
+export class OverlayComponent implements OnInit, AfterViewInit {
+  isViewInit = false;
+
+  relatedElement?: HTMLElement;
+  template?: TemplateRef<any>;
+  componentRef?: ComponentRef<OverlayComponent>;
+
   verticalThreshold = 200;
   verticalDirection: Direction = 'down';
 
-  horizontalReverse: boolean = false;
   horizontalThreshold = 100;
+  horizontalReverse: boolean = false;
 
-  animation: string = 'fade-scale-vertical';
+  animation: string = 'fade';
 
   @HostBinding('class') classes: any = {};
   @HostBinding('style') styles: any = {};
 
+  @HostListener('window:click', ['$event'])
+  onWindowClick() {
+    if (this.isViewInit && this.componentRef) {
+      this.componentRef.destroy();
+    }
+  }
+
+  @HostListener('click', ['$event'])
+  onClick(e: MouseEvent) {
+    e.stopPropagation();
+  }
 
   constructor() {
   }
 
-  show(element: HTMLElement) {
-    this.verticalDirection = 'down';
-    this.horizontalReverse = false;
+  ngOnInit(): void {
+    this.render();
+  }
 
-    const rect = element.getBoundingClientRect();
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.isViewInit = true;
+    }, 1)
+  }
+
+  render() {
+    if (!this.relatedElement) return;
+
+    const rect = this.relatedElement.getBoundingClientRect();
     const topOfScreen = window.innerHeight + window.scrollY;
     const horizontalOfScreen = window.innerWidth + window.scrollX;
 
@@ -36,23 +61,23 @@ export class OverlayComponent {
     const left = rect.left + window.scrollX;
     const right = rect.right + window.scrollX;
 
+
     this.styles.width = rect.width + 'px';
-    this.styles.height = rect.height + 'px';
     this.styles.left = left + 'px';
 
     const dir = getComputedStyle(document.body).direction;
 
-    if(dir == 'ltr') {
-      if(horizontalOfScreen - this.horizontalThreshold < left + rect.width) {
+    if (dir == 'ltr') {
+      if (horizontalOfScreen - this.horizontalThreshold < left + rect.width) {
         this.horizontalReverse = true;
       }
     } else {
-      if(horizontalOfScreen - this.horizontalThreshold < right + rect.width) {
+      if (horizontalOfScreen - this.horizontalThreshold < right + rect.width) {
         this.horizontalReverse = true;
       }
     }
 
-    if (topOfScreen - 200 < top) {
+    if (topOfScreen - this.verticalThreshold < top) {
       this.styles.top = top + 'px';
       this.verticalDirection = 'up';
     } else {
