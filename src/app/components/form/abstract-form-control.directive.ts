@@ -1,4 +1,4 @@
-import {Directive, forwardRef, Injector, OnInit, Optional, Type} from "@angular/core";
+import {Directive, forwardRef, Injector, OnInit, Type} from "@angular/core";
 import {AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl} from "@angular/forms";
 
 export function CreateControlValueAccessor(type: Type<any>) {
@@ -16,7 +16,7 @@ export abstract class AbstractFormControl<T> implements ControlValueAccessor, On
 
   innerValue?: T;
 
-  protected _change: any;
+  protected _onChange: any;
   protected _touch: any;
 
   constructor(protected injector: Injector) {
@@ -28,7 +28,7 @@ export abstract class AbstractFormControl<T> implements ControlValueAccessor, On
   }
 
   registerOnChange(fn: any): void {
-    this._change = fn;
+    this._onChange = fn;
     this.control = this.injector.get(NgControl);
     this.formControl = this.control?.control ?? undefined;
   }

@@ -10,14 +10,8 @@
 
 :host {
   display: block;
-  min-width: 60px;
+  min-width: 80px;
   position: relative;
-
-  &.open {
-    .items {
-      display: flex;
-    }
-  }
 }
 
 .control-box {
@@ -61,26 +55,22 @@
   }
 }
 
-.items-box {
-  left: 0;
-  right: 0;
-  top: 100%;
-  display: flex;
-  position: absolute;
-  justify-content: flex-start;
-}
-
 .items-container {
   width: 100%;
+  display: flex;
   overflow: auto;
   min-width: 100px;
+  max-height: 200px;
+  justify-content: flex-start;
+  background-color: var(--color-white);
   box-shadow: 0 0 1px 0 var(--color-gray-6);
 }
 
 .items {
+  width: 100%;
   margin: 0;
   padding: 0;
-  display: none;
+  display: flex;
   list-style: none;
   flex-direction: column;
 
