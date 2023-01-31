@@ -1,27 +1,33 @@
 import {
+  AfterViewInit,
   Component,
-  ContentChildren,
+  ContentChildren, ElementRef,
   Input,
-  OnChanges,
+  OnChanges, OnDestroy,
   OnInit,
   QueryList,
-  SimpleChanges,
-  ViewChildren
+  SimpleChanges, ViewChild, ViewChildren,
 } from "@angular/core";
-import {TemplateDirective} from "../../directives/template/index.directive";
-import {DataTableConfig, FilterFunc, SortFunc} from "./models";
+import {TemplateDirective} from "../../directives/template/template.directive";
+import {DataTableConfig, SortFunc} from "./models";
 import {DataTableSortDirective} from "./directives/sort.directive";
 import {DataTableFilterDirective} from "./directives/filter.directive";
 import {FormControl} from "@angular/forms";
+import {TableService} from "./services/table.service";
+import {config} from "rxjs";
 
 @Component({
   selector: 'dev-table',
   templateUrl: './index.component.html',
-  styleUrls: ['./index.component.scss']
+  styleUrls: ['./index.component.scss'],
+  providers: [
+    TableService,
+  ]
 })
-export class DataTableComponent implements OnInit, OnChanges {
+export class DataTableComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 
   @Input() items: any[] = [];
+  @Input() totalCount: number = 0;
   @Input() config: DataTableConfig = new DataTableConfig();
 
   captionTemplate?: TemplateDirective;
@@ -72,44 +78,52 @@ export class DataTableComponent implements OnInit, OnChanges {
   }
 
   filters: { [key: string]: DataTableFilterDirective } = {};
-
-  @ContentChildren(DataTableFilterDirective)
-  private set filterTemplates(value: QueryList<DataTableFilterDirective>) {
-    this.filters = {};
-    value?.forEach(x => this.filters[x.name] = x);
-  }
-
-  page = 0;
   renderedItems: any[] = [];
-
+  pageNumbers: number[] = [];
   pageRowCountControl = new FormControl(10);
+  intervals: any[] = [];
 
   private sortIndex = -1;
   private sortAscending = true;
   private sortFunc?: SortFunc;
 
-  constructor() {
+  constructor(private tableService: TableService, private elementRef: ElementRef) {
 
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (this.totalCount == 0) this.totalCount = this.items.length;
     this.render();
   }
 
   ngOnInit(): void {
-    this.render();
 
-    this.pageRowCountControl.setValue(this.config.paging.rowCountPerPage);
+    this.intervals.push(setInterval(() => {
+      this.sizingHeaderAndFooters();
+    }, 50));
+
+    this.pageRowCountControl.valueChanges.subscribe(e => this.render());
+    this.pageRowCountControl.setValue(this.config.paging.limit);
+  }
+
+  ngOnDestroy(): void {
+    this.intervals.forEach(x => clearInterval(x));
+  }
+
+  ngAfterViewInit(): void {
+    this.render();
   }
 
   render() {
+    this.createPageNumbers();
+
     this.renderedItems = this.items.filter(x => true);
     this.renderedItems = this.filterItems(this.renderedItems);
     this.renderedItems = this.sortItems(this.renderedItems);
     this.renderedItems = this.pagingItems(this.renderedItems);
   }
 
-  filterItems(items: any[]): any[] {
+  private filterItems(items: any[]): any[] {
     //
     // Object.values(this.filters)?.forEach(x => {
     //   x.onChange = (() => this.render());
@@ -151,7 +165,7 @@ export class DataTableComponent implements OnInit, OnChanges {
     return items;
   }
 
-  sortItems(items: any[]): any[] {
+  private sortItems(items: any[]): any[] {
     if (this.sortFunc) {
       const func = this.sortFunc;
       items = items.sort((x1, x2) => func(x1, x2, this.sortAscending));
@@ -159,11 +173,59 @@ export class DataTableComponent implements OnInit, OnChanges {
     return items;
   }
 
-  pagingItems(items: any[]): any[] {
+  private pagingItems(items: any[]): any[] {
     if (this.config.settings.paging) {
-      const start = this.page * this.config.paging.rowCountPerPage;
-      items = items.slice(start, start + this.config.paging.rowCountPerPage);
+      const start = this.config.paging.page * this.config.paging.limit;
+      items = items.slice(start, start + this.config.paging.limit);
     }
     return items;
+  }
+
+  private createPageNumbers() {
+
+    const lastPage = Math.floor(this.totalCount / this.config.paging.limit);
+    if (this.config.paging.page > lastPage) this.config.paging.page = lastPage - 1;
+    const currentPageNumber = this.config.paging.page + 1;
+
+    if (lastPage <= 7) {
+      this.pageNumbers = [];
+      for (let i = 1; i < lastPage; i++) {
+        this.pageNumbers.push(i);
+      }
+    } else {
+      this.pageNumbers = [currentPageNumber];
+      for (let i = 1; this.pageNumbers.length < 7; i++) {
+        if (currentPageNumber - i > 0) this.pageNumbers.unshift(currentPageNumber - i);
+        if (currentPageNumber + i <= lastPage) this.pageNumbers.push(currentPageNumber + i);
+      }
+      this.pageNumbers[0] = 1;
+      if (this.pageNumbers[1] != 2) {
+        this.pageNumbers[1] = 0;
+      }
+      if (this.pageNumbers[this.pageNumbers.length - 2] != lastPage - 1) {
+        this.pageNumbers[this.pageNumbers.length - 2] = 0;
+      }
+      this.pageNumbers[this.pageNumbers.length - 1] = lastPage;
+    }
+  }
+
+  sizingHeaderAndFooters() {
+    const el = this.elementRef.nativeElement as HTMLElement;
+    const header_ths = el.querySelectorAll('.data .header thead:first-child>tr th');
+    const footer_ths = el.querySelectorAll('.data .footer tfoot:first-child>tr th');
+    const data_tds = el.querySelectorAll('.data-table tbody:first-child>tr td');
+
+    data_tds.forEach((td, index) => {
+      const header_th = header_ths.item(index) as HTMLElement;
+      if (header_th) header_th.style.width = td.clientWidth + 'px';
+      const footer_th = footer_ths.item(index) as HTMLElement;
+      if (footer_th) footer_th.style.width = td.clientWidth + 'px';
+    })
+  }
+
+  selectPage(page: number) {
+    if (!page) return;
+    this.config.paging.page = page - 1;
+    this.render();
   }
 }

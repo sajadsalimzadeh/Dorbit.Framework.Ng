@@ -6,12 +6,10 @@
       <ng-container *ngTemplateOutlet="optionTemplate.template; context: {$implicit: selectedItem}"></ng-container>
     </ng-container>
     <ng-template #elseTextTemplate>
-    {{getText(selectedItem)}}
+      {{getText(selectedItem)}}
     </ng-template>
   </div>
-  <div class="search">
-    <input [(ngModel)]="searchValue" (ngModelChange)="search()" (keydown)="handleHoveredIndex($event, true)"/>
-  </div>
+  <input [(ngModel)]="searchValue" (ngModelChange)="search()" (keydown)="handleHoveredIndex($event, true)"/>
 </div>
 <ng-template #itemsTpl>
   <div class="items-container">

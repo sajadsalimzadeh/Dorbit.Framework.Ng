@@ -1,0 +1,52 @@
+<div class="control-box">
+  <input [(ngModel)]="innerValue" (ngModelChange)="onInputChange()" (change)="onInputChange()"/>
+  <div class="icon end">
+    <i class="far fa-times" *ngIf="innerValue" (click)="clear()"></i>
+    <i class="far fa-calendar"></i>
+  </div>
+</div>
+<ng-template #pickerTpl>
+  <div class="picker" [ngClass]="pickerClasses">
+    <div class="day-picker">
+      <div class="year-month">
+        <div class="year" (click)="showYears()">{{selectedValue.year}}</div>
+        <div class="month" (click)="showMonths()">{{selectedDate.format('MMMM')}}</div>
+      </div>
+      <div class="calendar">
+        <div class="week-days">
+          <div class="week-day" *ngFor="let weekDay of weekDays">
+            {{weekDay}}
+          </div>
+        </div>
+        <div class="days">
+          <div class="day" *ngFor="let date of dates; let index = index" [ngClass]="{
+      active: date.isSelected,
+      today: date.isToday,
+      holiday: date.isHoliday,
+     'this-month': date.isCurrentMonth
+      }" (click)="selectDate(date)">
+            <span>
+              {{date.day}}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="today-button" (click)="selectDate(todayValue)">
+        امروز
+      </div>
+    </div>
+    <div class="month-picker" [ngClass]="{show: (view == 'month')}">
+      <div class="month" *ngFor="let month of months;let index = index" [ngClass]="{
+    active: (selectedValue.month == index)
+  }" (click)="selectMonth(index)">
+        {{month}}
+      </div>
+    </div>
+    <div #yearPickerEl class="year-picker" [ngClass]="{show: (view == 'year')}">
+      <div class="year" *ngFor="let year of years" (click)="selectYear(year)"
+           [ngClass]="{active: (selectedValue.year == year)}">
+        {{year}}
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -7,7 +7,7 @@ import mockData from "./mock-data";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-
+  dateValue = '';
   items: any[] = [];
 
   constructor() {

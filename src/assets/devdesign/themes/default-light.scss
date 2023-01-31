@@ -1,17 +1,24 @@
 
 
 :root {
-  --color-black: #000;
+
+  // Colors
+  --color-black: rgb(0, 0, 0);
   --color-black-rgb: 0, 0, 0;
 
-  --color-white: #fff;
+  --color-white: rgb(255, 255, 255);
   --color-white-rgb: 255, 255, 255;
 
-  --color-primary: #555bbb;
-  --color-danger: #ea4747;
-  --color-warning: #eab636;
-  --color-success: #3ac752;
-  --color-link: #3791b7;
+  --color-primary: rgb(93, 68, 255);
+  --color-primary-rgb: 93, 68, 255;
+  --color-danger: rgb(234, 71, 71);
+  --color-danger-rgb: 234, 71, 71;
+  --color-warning: rgb(234, 182, 54);
+  --color-warning-rgb: 234, 182, 54;
+  --color-success: rgb(58, 199, 82);
+  --color-success-rgb: 58, 199, 82;
+  --color-link: rgb(55, 145, 183);
+  --color-link-rgb: 55, 145, 183;
 
   --color-gray--1: #f6f6f6;
   --color-gray--2: #f2f2f2;
@@ -32,4 +39,19 @@
   --color-gray-3: #333;
   --color-gray-2: #222;
   --color-gray-1: #111;
+
+  // Fonts
+  --font-family: sans-serif;
+
+  --font-size-base: 12px;
+  --font-size-1: .8em;
+  --font-size-2: 1em;
+  --font-size-3: 1.1em;
+  --font-size-4: 1.2em;
+  --font-size-5: 1.3em;
+  --font-size-6: 1.4em;
+  --font-size-7: 1.6em;
+
+  // Components
+  --date-picker-day-size: 35px;
 }

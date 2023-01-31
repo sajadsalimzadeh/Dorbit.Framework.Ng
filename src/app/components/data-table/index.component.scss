@@ -6,13 +6,26 @@
 
 .data {
 
+  .header {
+    overflow-y: scroll;
+  }
+
   .data-table {
-    width: 100%;
-    border-collapse: collapse;
+    max-height: 500px;
+    overflow-y: scroll;
+  }
 
-    ::ng-deep {
+  .footer {
+    overflow-y: scroll;
+  }
 
-      td,th {
+  ::ng-deep {
+    table {
+      width: 100%;
+      border-collapse: collapse;
+
+
+      td, th {
         border: 1px solid var(--color-gray--4);
       }
 
@@ -21,7 +34,7 @@
       }
 
       tbody:nth-child(2n) tr {
-        background-color: var(--color-gray--2);
+        background-color: var(--color-gray--1);
 
       }
     }
@@ -36,5 +49,36 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    .page-numbers {
+      padding: 0 2em;
+
+      ul {
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        list-style: none;
+        user-select: none;
+        align-items: center;
+
+        li {
+          width: 2.7em;
+          height: 2.7em;
+          display: flex;
+          cursor: pointer;
+          overflow: hidden;
+          border-radius: 50%;
+          align-items: center;
+          justify-content: center;
+          text-overflow: ellipsis;
+
+          &.active {
+            color: var(--color-white);
+            background-color: var(--color-primary);
+          }
+        }
+      }
+    }
   }
 }

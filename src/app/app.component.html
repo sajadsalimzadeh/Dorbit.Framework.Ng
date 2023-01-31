@@ -1,28 +1,28 @@
-<dev-date-picker locale="fa"></dev-date-picker>
+<input [(ngModel)]="dateValue"/>
+<dev-date-picker [(ngModel)]="dateValue" (onChooseDate)="dateValue = $event" locale="fa"></dev-date-picker>
 <dev-table [items]="items">
 
   <ng-template filter="input" let-control>
     <input [formControl]="control"/>
   </ng-template>
 
+  <ng-template devTemplate="caption">
+    Caption
+  </ng-template>
+
   <ng-template devTemplate="header">
     <tr>
       <th>#</th>
-      <th [filter]="'first_name'">Firstname</th>
+      <th>Firstname</th>
       <th>Lastname</th>
       <th>Email</th>
       <th>Gender</th>
-      <th>IP Address</th>
-    </tr>
-  </ng-template>
-  <ng-template devTemplate="filter" let-filters>
-    <tr>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>
+        IP Address
+        <dev-columnFilter>
+          <ng-template devTemplate="header"></ng-template>
+        </dev-columnFilter>
+      </th>
     </tr>
   </ng-template>
   <ng-template devTemplate="body" let-item>

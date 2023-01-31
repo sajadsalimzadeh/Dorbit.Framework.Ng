@@ -4,8 +4,8 @@ type Direction = 'up' | 'down';
 
 @Component({
   selector: 'dev-overlay',
-  templateUrl: './index.component.html',
-  styleUrls: ['./index.component.scss']
+  templateUrl: './overlay.component.html',
+  styleUrls: ['./overlay.component.scss']
 })
 export class OverlayComponent implements OnInit, AfterViewInit {
   isViewInit = false;
@@ -68,11 +68,11 @@ export class OverlayComponent implements OnInit, AfterViewInit {
     const dir = getComputedStyle(document.body).direction;
 
     if (dir == 'ltr') {
-      if (horizontalOfScreen - this.horizontalThreshold < left + rect.width) {
+      if (horizontalOfScreen - this.horizontalThreshold < left) {
         this.horizontalReverse = true;
       }
     } else {
-      if (horizontalOfScreen - this.horizontalThreshold < right + rect.width) {
+      if (horizontalOfScreen - this.horizontalThreshold < right) {
         this.horizontalReverse = true;
       }
     }

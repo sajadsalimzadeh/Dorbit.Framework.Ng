@@ -7,8 +7,8 @@ import {
   QueryList,
   SimpleChanges, TemplateRef, ViewChild
 } from "@angular/core";
-import {TemplateDirective} from "../../../directives/template/index.directive";
-import {AbstractFormControl, CreateControlValueAccessor} from "../abstract-form-control.directive";
+import {TemplateDirective} from "../../../directives/template/template.directive";
+import {AbstractFormControl, createControlValueAccessor} from "../abstract-form-control.directive";
 import {OverlayService} from "../../overlay/overlay.service";
 import {DomService} from "../../../services/dom.service";
 
@@ -17,8 +17,8 @@ type Func = (item: any) => any;
 @Component({
   selector: 'dev-select',
   templateUrl: './index.component.html',
-  styleUrls: ['./index.component.scss'],
-  providers: [CreateControlValueAccessor(SelectComponent)]
+  styleUrls: ['./index.component.scss', '../control-box.scss'],
+  providers: [createControlValueAccessor(SelectComponent)]
 })
 export class SelectComponent extends AbstractFormControl<any> implements OnChanges {
   @Input() items: any[] = [];

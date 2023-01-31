@@ -10,3 +10,7 @@
 @import "./scss/typography";
 
 @import "./themes/default-light";
+
+body {
+  font-size: var(--font-size-base);
+}

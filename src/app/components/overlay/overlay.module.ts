@@ -1,5 +1,5 @@
 import {NgModule} from "@angular/core";
-import {OverlayComponent} from "./index.component";
+import {OverlayComponent} from "./overlay.component";
 import {CommonModule} from "@angular/common";
 
 @NgModule({

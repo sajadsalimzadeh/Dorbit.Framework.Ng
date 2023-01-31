@@ -1,5 +1,4 @@
 import {Component} from "@angular/core";
-import {OverlayService} from "../overlay/overlay.service";
 import {DomService} from "../../services/dom.service";
 
 @Component({

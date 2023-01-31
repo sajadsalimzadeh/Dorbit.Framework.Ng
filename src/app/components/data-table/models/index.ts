@@ -5,9 +5,10 @@ export class DataTableConfig {
 }
 
 export class PagingConfig {
-  rowCountPerPage = 10;
-  rowCountList = [10,15,25,50,100];
-  currentPageReportTemplate = 'Showing {first} to {last} of {totalRecords} entries';
+  page = 0;
+  limit = 10;
+  limits = [10,15,25,50,100];
+  pageReportTemplate = 'Showing {first} to {last} of {totalRecords} entries';
 }
 
 export class SortingConfig {

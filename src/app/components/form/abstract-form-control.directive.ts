@@ -1,7 +1,7 @@
 import {Directive, forwardRef, Injector, OnInit, Type} from "@angular/core";
 import {AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl} from "@angular/forms";
 
-export function CreateControlValueAccessor(type: Type<any>) {
+export function createControlValueAccessor(type: Type<any>) {
   return {
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => type),

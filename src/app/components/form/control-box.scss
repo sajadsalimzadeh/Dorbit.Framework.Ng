@@ -1,0 +1,48 @@
+@mixin full-size-absolute {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  position: absolute;
+  align-items: center;
+}
+
+.control-box {
+  height: 2.5em;
+  display: flex;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 1px 0 var(--color-gray-6);
+
+  > * {
+    padding: 0 10px;
+    @include full-size-absolute;
+  }
+
+  .arrow {
+    justify-content: flex-end;
+    color: var(--color-gray-9);
+
+    &::before {
+      content: '▼';
+      font-size: .8em;
+    }
+  }
+
+  .end {
+    justify-content: flex-end;
+  }
+
+  .placeholder {
+    color: var(--color-gray-7);
+  }
+
+  input {
+    border: none;
+    cursor: text;
+    outline: none;
+    background-color: transparent;
+  }
+}
