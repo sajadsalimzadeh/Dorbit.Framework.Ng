@@ -7,7 +7,7 @@ export class DataTableConfig {
 export class PagingConfig {
   page = 0;
   limit = 10;
-  limits = [10,15,25,50,100];
+  limits = [10, 15, 25, 50, 100, 200, 500];
   pageReportTemplate = 'Showing {first} to {last} of {totalRecords} entries';
 }
 

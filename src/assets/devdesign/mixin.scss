@@ -1,0 +1,4 @@
+@mixin selected-color {
+  color: var(--color-primary);
+  background-color: rgba(var(--color-primary-rgb), .1);
+}

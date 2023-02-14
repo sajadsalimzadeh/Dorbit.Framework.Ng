@@ -2,7 +2,7 @@
   <ng-container *ngTemplateOutlet="captionTemplate.template; context: {}"></ng-container>
 </div>
 <div class="data">
-  <div class="header">
+  <div class="data-header">
     <table>
       <thead *ngIf="headerTemplate">
       <ng-container *ngTemplateOutlet="headerTemplate.template; context: {}"></ng-container>
@@ -13,18 +13,21 @@
     </table>
   </div>
   <div class="data-table">
-    <table>
-      <ng-container *ngFor="let item of renderedItems">
-        <tbody *ngIf="bodyTemplate">
-        <ng-container *ngTemplateOutlet="bodyTemplate.template; context: {$implicit: item}"></ng-container>
-        <ng-container *ngIf="detailTemplate">
-          <ng-container *ngTemplateOutlet="detailTemplate.template; context: {$implicit: item}"></ng-container>
+    <div class="data-scroll-thumb" [ngStyle]="dataTableScrollThumbStyles"></div>
+    <div class="scroll-container" [ngStyle]="dataScrollBarStyles" (scroll)="onDataTableScroll()">
+      <table>
+        <ng-container *ngFor="let item of renderedItems">
+          <tbody *ngIf="bodyTemplate">
+          <ng-container *ngTemplateOutlet="bodyTemplate.template; context: {$implicit: item}"></ng-container>
+          <ng-container *ngIf="detailTemplate">
+            <ng-container *ngTemplateOutlet="detailTemplate.template; context: {$implicit: item}"></ng-container>
+          </ng-container>
+          </tbody>
         </ng-container>
-        </tbody>
-      </ng-container>
-    </table>
+      </table>
+    </div>
   </div>
-  <div class="footer">
+  <div class="data-footer">
     <table>
       <tfoot *ngIf="footerTemplate">
       <ng-container *ngTemplateOutlet="footerTemplate.template; context: {}"></ng-container>
@@ -38,9 +41,9 @@
       <ng-container *ngTemplateOutlet="paginationStartTemplate.template; context: {}"></ng-container>
     </ng-container>
   </div>
-  <div class="pagination-center">
-    <div class="current-page-report">
-      {{config.paging.pageReportTemplate}}
+  <div class="paginator">
+    <div class="current-page-report page-numbers-around">
+      {{pageReportTemplate}}
     </div>
     <div class="page-numbers">
       <ul>
@@ -55,15 +58,14 @@
         </li>
       </ul>
     </div>
-    <div class="page-row-count">
-      <dev-select [items]="config.paging.limits" [(ngModel)]="config.paging.limit" (ngModelChange)="render()"
-                  name="pageRowCountControl"></dev-select>
+    <div class="page-row-count page-numbers-around">
+      <dev-select [items]="config.paging.limits"
+                  [(ngModel)]="config.paging.limit"
+                  (ngModelChange)="render()"
+                  class="limit-select"
+                  name="pageRowCountControl">
+      </dev-select>
     </div>
-  </div>
-  <div class="pagination-end">
-    <ng-container *ngIf="paginationEndTemplate">
-      <ng-container *ngTemplateOutlet="paginationEndTemplate.template; context: {}"></ng-container>
-    </ng-container>
   </div>
 </div>
 <div *ngIf="summaryTemplate" class="summary">

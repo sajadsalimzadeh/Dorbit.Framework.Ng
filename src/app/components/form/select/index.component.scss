@@ -1,15 +1,23 @@
+@import "mixin";
+
 .control-box {
+  input {
+    color: var(--color-gray-4);
+  }
+
   .text {
     color: var(--color-gray-5);
   }
-  input {
-    color: var(--color-gray-4)
-  }
 }
+
 :host {
   display: block;
   min-width: 80px;
   position: relative;
+
+  &.open .control-box input:focus ~ .text  {
+      color: var(--color-gray--5);
+  }
 }
 
 .items-container {
@@ -39,8 +47,7 @@
     }
 
     &.selected {
-      color: var(--color-white);
-      background-color: var(--color-primary);
+      @include selected-color;
     }
 
     &:not(:last-child) {

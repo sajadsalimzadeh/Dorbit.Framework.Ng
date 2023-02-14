@@ -66,6 +66,7 @@ export class DatePickerComponent extends AbstractFormControl<any> implements OnI
   onClick(e: MouseEvent) {
     e.stopPropagation();
     if (this.pickerTpl && !this.componentRef) {
+      this.onInputChange();
       this.componentRef = this.overlayService.createByTemplate(this.elementRef.nativeElement, this.pickerTpl);
       this.componentRef.onDestroy(() => this.componentRef = undefined);
     }

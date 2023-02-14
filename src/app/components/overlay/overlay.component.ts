@@ -14,10 +14,10 @@ export class OverlayComponent implements OnInit, AfterViewInit {
   template?: TemplateRef<any>;
   componentRef?: ComponentRef<OverlayComponent>;
 
-  verticalThreshold = 200;
+  verticalThreshold = 300;
   verticalDirection: Direction = 'down';
 
-  horizontalThreshold = 100;
+  horizontalThreshold = 300;
   horizontalReverse: boolean = false;
 
   animation: string = 'fade';

@@ -1,6 +1,6 @@
 import {
   Component, ComponentRef,
-  ContentChildren, ElementRef,
+  ContentChildren, ElementRef, HostBinding,
   HostListener, Injector,
   Input,
   OnChanges,
@@ -26,6 +26,10 @@ export class SelectComponent extends AbstractFormControl<any> implements OnChang
   @Input() textField: string | Func = 'text';
   @Input() placeholder: string = 'choose one of theme';
   @Input() comparator = (item: any, value: any) => this.getValue(item) == value;
+
+  @HostBinding('class.open') get isOpen() {
+    return !!this.itemsComponentRef;
+  }
 
   @HostListener('window:keydown', ['$event'])
   onKeyDown(e: KeyboardEvent) {

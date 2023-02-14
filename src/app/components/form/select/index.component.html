@@ -1,4 +1,5 @@
-<div class="control-box">
+<div class="control-box" (click)="inputEl.focus()">
+  <input #inputEl [(ngModel)]="searchValue" (ngModelChange)="search()" (keydown)="handleHoveredIndex($event, true)"/>
   <div class="arrow"></div>
   <div class="placeholder" *ngIf="placeholder && !searchValue && !selectedItem">{{placeholder}}</div>
   <div class="text" *ngIf="selectedItem && !searchValue">
@@ -9,7 +10,6 @@
       {{getText(selectedItem)}}
     </ng-template>
   </div>
-  <input [(ngModel)]="searchValue" (ngModelChange)="search()" (keydown)="handleHoveredIndex($event, true)"/>
 </div>
 <ng-template #itemsTpl>
   <div class="items-container">

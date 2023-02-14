@@ -1,7 +1,7 @@
 import {
   AfterViewInit,
   Component,
-  ContentChildren, ElementRef,
+  ContentChildren, ElementRef, HostBinding,
   Input,
   OnChanges, OnDestroy,
   OnInit,
@@ -38,7 +38,6 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy, AfterVi
   footerTemplate?: TemplateDirective;
   summaryTemplate?: TemplateDirective;
   paginationStartTemplate?: TemplateDirective;
-  paginationEndTemplate?: TemplateDirective;
 
   @ContentChildren(TemplateDirective)
   set devTemplates(value: QueryList<TemplateDirective>) {
@@ -49,7 +48,6 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy, AfterVi
     this.detailTemplate = value.find(x => x.name == 'detail');
     this.footerTemplate = value.find(x => x.name == 'footer');
     this.paginationStartTemplate = value.find(x => x.name == 'paginationStart');
-    this.paginationEndTemplate = value.find(x => x.name == 'paginationEnd');
     this.summaryTemplate = value.find(x => x.name == 'summary');
   }
 
@@ -77,11 +75,18 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy, AfterVi
     });
   }
 
+  @HostBinding('class.has-scroll') hasScroll: boolean = false;
+
   filters: { [key: string]: DataTableFilterDirective } = {};
   renderedItems: any[] = [];
   pageNumbers: number[] = [];
   pageRowCountControl = new FormControl(10);
   intervals: any[] = [];
+
+  pageReportTemplate: string = '';
+  dataScrollBarStyles: any = {};
+  dataScrollBarWidth: number = 20;
+  dataTableScrollThumbStyles: any = {};
 
   private sortIndex = -1;
   private sortAscending = true;
@@ -100,7 +105,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy, AfterVi
 
     this.intervals.push(setInterval(() => {
       this.sizingHeaderAndFooters();
-    }, 50));
+    }, 1000));
 
     this.pageRowCountControl.valueChanges.subscribe(e => this.render());
     this.pageRowCountControl.setValue(this.config.paging.limit);
@@ -121,6 +126,18 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy, AfterVi
     this.renderedItems = this.filterItems(this.renderedItems);
     this.renderedItems = this.sortItems(this.renderedItems);
     this.renderedItems = this.pagingItems(this.renderedItems);
+
+    setTimeout(() => {
+      this.sizingHeaderAndFooters();
+      this.onDataTableScroll();
+    }, 10);
+
+    const first = this.config.paging.page * this.config.paging.limit + 1;
+    const last = first + this.config.paging.limit - 1;
+    this.pageReportTemplate = this.config.paging.pageReportTemplate
+      .replace('{totalRecords}', this.totalCount.toString())
+      .replace('{first}', first.toString())
+      .replace('{last}', last.toString());
   }
 
   private filterItems(items: any[]): any[] {
@@ -211,16 +228,40 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy, AfterVi
 
   sizingHeaderAndFooters() {
     const el = this.elementRef.nativeElement as HTMLElement;
-    const header_ths = el.querySelectorAll('.data .header thead:first-child>tr th');
-    const footer_ths = el.querySelectorAll('.data .footer tfoot:first-child>tr th');
-    const data_tds = el.querySelectorAll('.data-table tbody:first-child>tr td');
+
+    const dataEl = el.querySelector('.data') as HTMLElement;
+
+    const dataTableEl = dataEl.querySelector('.data-table .scroll-container') as HTMLElement;
+    this.dataScrollBarWidth = dataTableEl.offsetWidth - dataTableEl.clientWidth;
+
+    const dataHeaderEl = dataEl.querySelector('.data-header') as HTMLElement;
+    const dataFooterEl = dataEl.querySelector('.data-footer') as HTMLElement;
+
+    dataHeaderEl.style.paddingInlineEnd = this.dataScrollBarWidth + 'px';
+    dataFooterEl.style.paddingInlineEnd = this.dataScrollBarWidth + 'px';
+
+    const header_ths = dataHeaderEl.querySelectorAll('thead:first-child>tr th');
+    const footer_ths = dataFooterEl.querySelectorAll('tfoot:first-child>tr th');
+    const data_tds = dataTableEl.querySelectorAll('.data-table tbody:first-child>tr td');
 
     data_tds.forEach((td, index) => {
       const header_th = header_ths.item(index) as HTMLElement;
-      if (header_th) header_th.style.width = td.clientWidth + 'px';
+      if (header_th) header_th.style.width = td.clientWidth + 1 + 'px';
       const footer_th = footer_ths.item(index) as HTMLElement;
-      if (footer_th) footer_th.style.width = td.clientWidth + 'px';
+      if (footer_th) footer_th.style.width = td.clientWidth + 1 + 'px';
     })
+  }
+
+  onDataTableScroll() {
+    const el = this.elementRef.nativeElement as HTMLElement;
+    const dataTableEl = el.querySelector('.data .data-table .scroll-container') as HTMLElement;
+    const height = (dataTableEl.offsetHeight * 100 / dataTableEl.scrollHeight);
+    const top = (dataTableEl.scrollTop * 100 / dataTableEl.scrollHeight);
+    this.hasScroll = !(height == 100);
+    this.dataTableScrollThumbStyles['height'] = height + '%';
+    this.dataTableScrollThumbStyles['top'] = top + '%';
+    this.dataTableScrollThumbStyles['visibility'] = (this.hasScroll ? '' : 'hidden');
+    // this.dataTableScrollThumbStyles['margin-inline-start'] = -(this.dataScrollBarWidth + 5) + 'px';
   }
 
   selectPage(page: number) {

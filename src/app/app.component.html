@@ -1,6 +1,6 @@
 <input [(ngModel)]="dateValue"/>
 <dev-date-picker [(ngModel)]="dateValue" (onChooseDate)="dateValue = $event" locale="fa"></dev-date-picker>
-<dev-table [items]="items">
+<dev-table [items]="items" [config]="config" style="height: 750px">
 
   <ng-template filter="input" let-control>
     <input [formControl]="control"/>
