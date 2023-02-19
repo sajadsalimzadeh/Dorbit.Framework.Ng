@@ -1,10 +1,29 @@
+
 export class DataTableConfig {
   paging = new PagingConfig();
   sorting = new SortingConfig();
+  selecting = new SelectingConfig();
+  layout = new LayoutConfig();
+
   settings = new Settings();
 }
 
+export class SelectingConfig {
+  enable = true;
+
+  key = 'selected';
+  mode: 'single' | 'multiple' = 'single';
+  metaKey: boolean = false;
+}
+
+export class LayoutConfig {
+  striped: boolean = true;
+  bordered: boolean = true;
+}
+
 export class PagingConfig {
+  enable = true;
+
   page = 0;
   limit = 10;
   limits = [10, 15, 25, 50, 100, 200, 500];
@@ -12,19 +31,19 @@ export class PagingConfig {
 }
 
 export class SortingConfig {
+  enable = true;
 
+  showNumbers = true;
+  showRowCountSelect = true;
+  showCurrentPageReport = true;
+
+  field: string | SortFunc = '';
+  dir: SortDir = 'desc';
 }
 
 export class Settings {
-  paging = true;
-  sorting = true;
-
-  pageNumbers = true;
-  pageNextPrevControl = true;
-  pageFirstLastControl = true;
-  pageRowCountSelect = true;
-  currentPageReport = true;
 }
 
-export type SortFunc = (x1: any, x2: any, ascending: boolean) => number;
+export type SortDir = 'asc' | 'desc';
+export type SortFunc = (x1: any, x2: any, dir: SortDir) => number;
 export type FilterFunc = (x: any) => boolean;

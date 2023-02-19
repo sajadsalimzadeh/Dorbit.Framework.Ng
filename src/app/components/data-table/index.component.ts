@@ -1,12 +1,12 @@
 import {
   AfterViewInit,
   Component,
-  ContentChildren, ElementRef, HostBinding,
+  ContentChildren, ElementRef, EventEmitter, HostBinding, HostListener,
   Input,
   OnChanges, OnDestroy,
-  OnInit,
+  OnInit, Output,
   QueryList,
-  SimpleChanges, ViewChild, ViewChildren,
+  SimpleChanges, TemplateRef, ViewChild, ViewChildren,
 } from "@angular/core";
 import {TemplateDirective} from "../../directives/template/template.directive";
 import {DataTableConfig, SortFunc} from "./models";
@@ -30,70 +30,71 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy, AfterVi
   @Input() totalCount: number = 0;
   @Input() config: DataTableConfig = new DataTableConfig();
 
-  captionTemplate?: TemplateDirective;
-  headerTemplate?: TemplateDirective;
-  filterTemplate?: TemplateDirective;
-  bodyTemplate?: TemplateDirective;
-  detailTemplate?: TemplateDirective;
-  footerTemplate?: TemplateDirective;
-  summaryTemplate?: TemplateDirective;
-  paginationStartTemplate?: TemplateDirective;
+  @Output() onRowClick = new EventEmitter<any>();
+  @Output() onRowSelect = new EventEmitter<any>();
+  @Output() onRowDeSelect = new EventEmitter<any>();
 
-  @ContentChildren(TemplateDirective)
-  set devTemplates(value: QueryList<TemplateDirective>) {
-    this.captionTemplate = value.find(x => x.name == 'caption');
-    this.headerTemplate = value.find(x => x.name == 'header');
-    this.filterTemplate = value.find(x => x.name == 'filter');
-    this.bodyTemplate = value.find(x => x.name == 'body');
-    this.detailTemplate = value.find(x => x.name == 'detail');
-    this.footerTemplate = value.find(x => x.name == 'footer');
-    this.paginationStartTemplate = value.find(x => x.name == 'paginationStart');
-    this.summaryTemplate = value.find(x => x.name == 'summary');
+  @HostBinding('class.table-striped')
+  get isTableStriped() {
+    return this.config.layout.striped;
   }
 
-  @ContentChildren(DataTableSortDirective)
-  private set sorts(value: QueryList<DataTableSortDirective>) {
-    value?.forEach((x, index) => {
-      x.onSort = () => {
-        if (this.sortIndex == index) this.sortAscending = !this.sortAscending;
-        else this.sortAscending = true;
-        this.sortIndex = index;
-        let func: SortFunc;
-        if (typeof x.field === 'function') func = x.field;
-        else if (x.field) {
-          const field = x.field;
-          func = (x1, x2, ascending) => {
-            if (ascending) {
-              return x1[field] < x2[field] ? 1 : (x1[field] < x2[field] ? -1 : 0);
-            }
-            return x1[field] < x2[field] ? -1 : (x1[field] < x2[field] ? 1 : 0);
-          }
-        }
-        this.sortFunc = (x1, x2, ascending) => func(x1, x2, ascending);
-        this.render();
-      }
-    });
+  @HostBinding('class.table-bordered')
+  get isTableBordered() {
+    return this.config.layout.bordered;
+  }
+
+  @HostBinding('class.selectable')
+  get isSelectable() {
+    return this.config.selecting.enable;
   }
 
   @HostBinding('class.has-scroll') hasScroll: boolean = false;
+
+
+  @HostListener('window:keydown', ['$event']) onWindowKeydown(e: KeyboardEvent) {
+    if (e.key == 'Control') this.isMetaKeyDown = true;
+  }
+
+  @HostListener('window:keyup', ['$event']) onWindowKeyup(e: KeyboardEvent) {
+    if (e.key == 'Control') this.isMetaKeyDown = false;
+  }
+
+  captionTemplate?: TemplateRef<any>;
+  headerTemplate?: TemplateRef<any>;
+  filterTemplate?: TemplateRef<any>;
+  bodyTemplate?: TemplateRef<any>;
+  detailTemplate?: TemplateRef<any>;
+  footerTemplate?: TemplateRef<any>;
+  summaryTemplate?: TemplateRef<any>;
+  paginationStartTemplate?: TemplateRef<any>;
+
+  @ContentChildren(TemplateDirective)
+  set devTemplates(value: QueryList<TemplateDirective>) {
+    this.captionTemplate = value.find(x => x.name == 'caption')?.template;
+    this.headerTemplate = value.find(x => x.name == 'header')?.template;
+    this.filterTemplate = value.find(x => x.name == 'filter')?.template;
+    this.bodyTemplate = value.find(x => x.name == 'body')?.template;
+    this.detailTemplate = value.find(x => x.name == 'detail')?.template;
+    this.footerTemplate = value.find(x => x.name == 'footer')?.template;
+    this.paginationStartTemplate = value.find(x => x.name == 'paginationStart')?.template;
+    this.summaryTemplate = value.find(x => x.name == 'summary')?.template;
+  }
 
   filters: { [key: string]: DataTableFilterDirective } = {};
   renderedItems: any[] = [];
   pageNumbers: number[] = [];
   pageRowCountControl = new FormControl(10);
   intervals: any[] = [];
+  isMetaKeyDown: boolean = false;
 
   pageReportTemplate: string = '';
   dataScrollBarStyles: any = {};
   dataScrollBarWidth: number = 20;
   dataTableScrollThumbStyles: any = {};
 
-  private sortIndex = -1;
-  private sortAscending = true;
-  private sortFunc?: SortFunc;
-
   constructor(private tableService: TableService, private elementRef: ElementRef) {
-
+    tableService.dataTable = this;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -102,13 +103,56 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy, AfterVi
   }
 
   ngOnInit(): void {
-
-    this.intervals.push(setInterval(() => {
-      this.sizingHeaderAndFooters();
-    }, 1000));
-
     this.pageRowCountControl.valueChanges.subscribe(e => this.render());
     this.pageRowCountControl.setValue(this.config.paging.limit);
+
+    this.onRowClick.subscribe(item => {
+      if (this.config.selecting.enable) {
+        const clearSelectedRow = () => {
+          this.items.filter(x => x[this.config.selecting.key] && x != item).forEach(x => {
+            x[this.config.selecting.key] = false;
+            this.onRowDeSelect.emit(x);
+          });
+        };
+
+        if (this.config.selecting.mode == 'single') {
+          clearSelectedRow();
+          this.selectItem(item);
+        }
+        if (this.config.selecting.metaKey) {
+          if (this.isMetaKeyDown) {
+            this.toggleSelectItem(item);
+          } else {
+            clearSelectedRow();
+            this.selectItem(item);
+          }
+        } else if (this.config.selecting.mode == 'multiple') {
+          this.toggleSelectItem(item);
+        }
+      }
+    });
+
+    if(this.config.sorting.field) {
+      this.tableService.onSortChange.next(this.config.sorting.field)
+    }
+  }
+
+  selectItem(item: any) {
+    const isRowSelected = item[this.config.selecting.key];
+    if (!isRowSelected) {
+      this.onRowSelect.emit(item);
+    }
+    item[this.config.selecting.key] = true;
+  }
+
+  toggleSelectItem(item: any) {
+    const isRowSelected = item[this.config.selecting.key];
+    item[this.config.selecting.key] = !item[this.config.selecting.key];
+    if (isRowSelected) {
+      this.onRowDeSelect.emit(item);
+    } else {
+      this.onRowSelect.emit(item);
+    }
   }
 
   ngOnDestroy(): void {
@@ -122,14 +166,13 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy, AfterVi
   render() {
     this.createPageNumbers();
 
-    this.renderedItems = this.items.filter(x => true);
+    this.renderedItems = this.items.filter(() => true);
     this.renderedItems = this.filterItems(this.renderedItems);
     this.renderedItems = this.sortItems(this.renderedItems);
     this.renderedItems = this.pagingItems(this.renderedItems);
 
     setTimeout(() => {
       this.sizingHeaderAndFooters();
-      this.onDataTableScroll();
     }, 10);
 
     const first = this.config.paging.page * this.config.paging.limit + 1;
@@ -183,15 +226,24 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy, AfterVi
   }
 
   private sortItems(items: any[]): any[] {
-    if (this.sortFunc) {
-      const func = this.sortFunc;
-      items = items.sort((x1, x2) => func(x1, x2, this.sortAscending));
+    const field = this.config.sorting.field;
+    const dir = this.tableService.config.sorting.dir;
+
+    let func: SortFunc = () => 0;
+    if (typeof field === 'function') func = field;
+    else if (field) {
+      func = (x1, x2, dir) => {
+        if (dir == 'asc') {
+          return x1[field] < x2[field] ? 1 : (x1[field] > x2[field] ? -1 : 0);
+        }
+        return x1[field] < x2[field] ? -1 : (x1[field] > x2[field] ? 1 : 0);
+      }
     }
-    return items;
+    return items.sort((x1, x2) => func(x1, x2, dir));
   }
 
   private pagingItems(items: any[]): any[] {
-    if (this.config.settings.paging) {
+    if (this.config.paging.enable) {
       const start = this.config.paging.page * this.config.paging.limit;
       items = items.slice(start, start + this.config.paging.limit);
     }
@@ -227,41 +279,29 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy, AfterVi
   }
 
   sizingHeaderAndFooters() {
-    const el = this.elementRef.nativeElement as HTMLElement;
-
-    const dataEl = el.querySelector('.data') as HTMLElement;
-
-    const dataTableEl = dataEl.querySelector('.data-table .scroll-container') as HTMLElement;
-    this.dataScrollBarWidth = dataTableEl.offsetWidth - dataTableEl.clientWidth;
-
-    const dataHeaderEl = dataEl.querySelector('.data-header') as HTMLElement;
-    const dataFooterEl = dataEl.querySelector('.data-footer') as HTMLElement;
-
-    dataHeaderEl.style.paddingInlineEnd = this.dataScrollBarWidth + 'px';
-    dataFooterEl.style.paddingInlineEnd = this.dataScrollBarWidth + 'px';
-
-    const header_ths = dataHeaderEl.querySelectorAll('thead:first-child>tr th');
-    const footer_ths = dataFooterEl.querySelectorAll('tfoot:first-child>tr th');
-    const data_tds = dataTableEl.querySelectorAll('.data-table tbody:first-child>tr td');
-
-    data_tds.forEach((td, index) => {
-      const header_th = header_ths.item(index) as HTMLElement;
-      if (header_th) header_th.style.width = td.clientWidth + 1 + 'px';
-      const footer_th = footer_ths.item(index) as HTMLElement;
-      if (footer_th) footer_th.style.width = td.clientWidth + 1 + 'px';
-    })
-  }
-
-  onDataTableScroll() {
-    const el = this.elementRef.nativeElement as HTMLElement;
-    const dataTableEl = el.querySelector('.data .data-table .scroll-container') as HTMLElement;
-    const height = (dataTableEl.offsetHeight * 100 / dataTableEl.scrollHeight);
-    const top = (dataTableEl.scrollTop * 100 / dataTableEl.scrollHeight);
-    this.hasScroll = !(height == 100);
-    this.dataTableScrollThumbStyles['height'] = height + '%';
-    this.dataTableScrollThumbStyles['top'] = top + '%';
-    this.dataTableScrollThumbStyles['visibility'] = (this.hasScroll ? '' : 'hidden');
-    // this.dataTableScrollThumbStyles['margin-inline-start'] = -(this.dataScrollBarWidth + 5) + 'px';
+    // const el = this.elementRef.nativeElement as HTMLElement;
+    //
+    // const dataEl = el.querySelector('.data') as HTMLElement;
+    //
+    // const dataTableEl = dataEl.querySelector('.data-table .scroll-container') as HTMLElement;
+    // this.dataScrollBarWidth = dataTableEl.offsetWidth - dataTableEl.clientWidth;
+    //
+    // const dataHeaderEl = dataEl.querySelector('.data-header') as HTMLElement;
+    // const dataFooterEl = dataEl.querySelector('.data-footer') as HTMLElement;
+    //
+    // dataHeaderEl.style.paddingInlineEnd = this.dataScrollBarWidth + 'px';
+    // dataFooterEl.style.paddingInlineEnd = this.dataScrollBarWidth + 'px';
+    //
+    // const header_ths = dataHeaderEl.querySelectorAll('thead:first-child>tr th');
+    // const footer_ths = dataFooterEl.querySelectorAll('tfoot:first-child>tr th');
+    // const data_tds = dataTableEl.querySelectorAll('.data-table tbody:first-child>tr td');
+    //
+    // data_tds.forEach((td, index) => {
+    //   const header_th = header_ths.item(index) as HTMLElement;
+    //   if (header_th) header_th.style.width = td.clientWidth + 1 + 'px';
+    //   const footer_th = footer_ths.item(index) as HTMLElement;
+    //   if (footer_th) footer_th.style.width = td.clientWidth + 1 + 'px';
+    // })
   }
 
   selectPage(page: number) {

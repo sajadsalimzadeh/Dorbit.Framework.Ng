@@ -1,0 +1,53 @@
+@import "mixin";
+
+:host {
+  display: inline-flex;
+  align-items: center;
+
+  i {
+    transition: transform 300ms ease;
+  }
+
+  &.expanded {
+    i {
+      transform: rotate(90deg);
+    }
+  }
+}
+
+:host-context([dir=rtl]) {
+
+  i {
+    transform: rotate(180deg);
+  }
+}
+
+.icon-box {
+  padding: 5px;
+  cursor: pointer;
+}
+
+.overlay-box {
+  margin: 10px 0;
+  border-radius: 2px;
+  background-color: var(--color-white);
+  @include shadow;
+
+  .operation {
+    width: 200px;
+    padding: 8px;
+    background-color: var(--color-gray--1);
+    border-bottom: 1px solid var(--color-gray--3);
+  }
+
+  .value-box {
+    gap: 8px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  dev-select {
+    background-color: var(--color-white);
+  }
+}

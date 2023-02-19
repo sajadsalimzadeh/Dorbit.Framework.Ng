@@ -1,4 +1,8 @@
 @mixin selected-color {
-  color: var(--color-primary);
-  background-color: rgba(var(--color-primary-rgb), .1);
+  color: var(--color-primary-shade) !important;
+  background-color: rgba(var(--color-primary-rgb), .05) !important;
+}
+
+@mixin shadow {
+  box-shadow: 0 0 1px 0 var(--color-gray-6);
 }

@@ -2,8 +2,8 @@
 <dev-date-picker [(ngModel)]="dateValue" (onChooseDate)="dateValue = $event" locale="fa"></dev-date-picker>
 <dev-table [items]="items" [config]="config" style="height: 750px">
 
-  <ng-template filter="input" let-control>
-    <input [formControl]="control"/>
+  <ng-template #filterTextTpl let-control="control">
+    <input class="form-control" [formControl]="control"/>
   </ng-template>
 
   <ng-template devTemplate="caption">
@@ -12,21 +12,64 @@
 
   <ng-template devTemplate="header">
     <tr>
-      <th>#</th>
-      <th>Firstname</th>
-      <th>Lastname</th>
-      <th>Email</th>
-      <th>Gender</th>
-      <th>
-        IP Address
-        <dev-columnFilter>
-          <ng-template devTemplate="header"></ng-template>
-        </dev-columnFilter>
+      <th></th>
+      <th></th>
+      <th sort-by="id">
+        <div class="flex-row flex-align-center">
+          <span class="flex-1">#</span>
+          <i class="sort-icon"></i>
+        </div>
+      </th>
+      <th sort-by="first_name">
+        <div class="flex-row flex-align-center">
+          <span class="flex-1">Firstname</span>
+          <i class="sort-icon"></i>
+          <dev-table-filter [template]="filterTextTpl"></dev-table-filter>
+        </div>
+      </th>
+      <th sort-by="last_name">
+        <div class="flex-row flex-align-center">
+          <span class="flex-1">Lastname</span>
+          <i class="sort-icon"></i>
+          <dev-table-filter [template]="filterTextTpl"></dev-table-filter>
+        </div>
+      </th>
+      <th sort-by="email">
+        <div class="flex-row flex-align-center">
+          <span class="flex-1">Email</span>
+          <i class="sort-icon"></i>
+          <dev-table-filter [template]="filterTextTpl"></dev-table-filter>
+        </div>
+      </th>
+      <th sort-by="gender">
+        <div class="flex-row flex-align-center">
+          <span class="flex-1">Gender</span>
+          <i class="sort-icon"></i>
+          <dev-table-filter [template]="filterTextTpl"></dev-table-filter>
+        </div>
+      </th>
+      <th sort-by="ip_address">
+        <div class="flex-row flex-align-center">
+          <span class="flex-1">IP Address</span>
+          <i class="sort-icon"></i>
+          <dev-table-filter [template]="filterTextTpl"></dev-table-filter>
+        </div>
       </th>
     </tr>
   </ng-template>
+  <!--  <ng-template devTemplate="filter">-->
+  <!--    <tr>-->
+  <!--      <th colspan="2"></th>-->
+  <!--      <th>-->
+  <!--      </th>-->
+  <!--    </tr>-->
+  <!--  </ng-template>-->
   <ng-template devTemplate="body" let-item>
     <tr>
+      <td>
+        <dev-table-row-expander [item]="item"></dev-table-row-expander>
+      </td>
+      <td><input type="checkbox" [(ngModel)]="item['selected']"/></td>
       <td>{{item.id}}</td>
       <td>{{item.first_name}}</td>
       <td>{{item.last_name}}</td>
@@ -35,8 +78,14 @@
       <td>{{item.ip_address}}</td>
     </tr>
   </ng-template>
+  <ng-template devTemplate="detail" let-item>
+    {{item.email}}
+  </ng-template>
   <ng-template devTemplate="footer">
     <tr>
+
+      <th></th>
+      <th></th>
       <th>#</th>
       <th>Firstname</th>
       <th>Lastname</th>

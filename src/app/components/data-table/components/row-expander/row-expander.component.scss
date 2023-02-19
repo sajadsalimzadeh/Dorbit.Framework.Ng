@@ -1,0 +1,19 @@
+:host {
+
+  i {
+    transition: transform 300ms ease;
+  }
+
+  &.expanded {
+    i {
+      transform: rotate(90deg);
+    }
+  }
+}
+
+:host-context([dir=rtl]) {
+
+  i {
+    transform: rotate(180deg);
+  }
+}

@@ -9,27 +9,41 @@
   --color-white: rgb(255, 255, 255);
   --color-white-rgb: 255, 255, 255;
 
-  --color-primary: rgb(93, 68, 255);
-  --color-primary-rgb: 93, 68, 255;
-  --color-danger: rgb(234, 71, 71);
+  --color-primary-tint: rgb(198, 190, 255);
+  --color-primary: rgb(118, 102, 239);
+  --color-primary-shade: rgb(82, 62, 238);
+  --color-primary-rgb: 132, 113, 255;
+
+  --color-danger-tint: rgb(248, 175, 175);
+  --color-danger: rgb(238, 120, 120);
+  --color-danger-shade: rgb(234, 71, 71);
   --color-danger-rgb: 234, 71, 71;
-  --color-warning: rgb(234, 182, 54);
+
+  --color-warning-tint: rgb(236, 208, 149);
+  --color-warning: rgb(241, 197, 95);
+  --color-warning-shade: rgb(218, 163, 33);
   --color-warning-rgb: 234, 182, 54;
-  --color-success: rgb(58, 199, 82);
+
+  --color-success-tint: rgb(142, 224, 158);
+  --color-success: rgb(76, 203, 96);
+  --color-success-shade: rgb(45, 178, 67);
   --color-success-rgb: 58, 199, 82;
-  --color-link: rgb(55, 145, 183);
+
+  --color-link-shade: rgb(38, 121, 155);
+  --color-link: rgb(71, 160, 194);
+  --color-link-tint: rgb(141, 208, 232);
   --color-link-rgb: 55, 145, 183;
 
-  --color-gray--0: #f9f9f9;
-  --color-gray--1: #f6f6f6;
-  --color-gray--2: #f2f2f2;
-  --color-gray--3: #e6e6e6;
-  --color-gray--4: #d6d6d6;
-  --color-gray--5: #d2d2d2;
-  --color-gray--6: #ccc;
-  --color-gray--7: #c6c6c6;
-  --color-gray--8: #bbb;
-  --color-gray--9: #aaa;
+  --color-gray--0: #fbfbfb;
+  --color-gray--1: #f9f9f9;
+  --color-gray--2: #f6f6f6;
+  --color-gray--3: #f2f2f2;
+  --color-gray--4: #eee;
+  --color-gray--5: #e6e6e6;
+  --color-gray--6: #ddd;
+  --color-gray--7: #d6d6d6;
+  --color-gray--8: #ccc;
+  --color-gray--9: #c6c6c6;
 
   --color-gray-9: #999;
   --color-gray-8: #888;

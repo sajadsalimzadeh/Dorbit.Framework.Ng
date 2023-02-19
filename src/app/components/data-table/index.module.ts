@@ -6,6 +6,8 @@ import {DataTableSortDirective} from "./directives/sort.directive";
 import {DataTableFilterDirective} from "./directives/filter.directive";
 import {SelectModule} from "../form/select/index.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {DataTableRowExpanderComponent} from "./components/row-expander/row-expander.component";
+import {DataTableFilterComponent} from "./components/filter/filter.component";
 
 @NgModule({
   imports: [
@@ -18,11 +20,15 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
   ],
   declarations: [
     DataTableComponent,
+    DataTableRowExpanderComponent,
+    DataTableFilterComponent,
     DataTableFilterDirective,
     DataTableSortDirective,
   ],
   exports: [
     DataTableComponent,
+    DataTableRowExpanderComponent,
+    DataTableFilterComponent,
     DataTableFilterDirective,
     DataTableSortDirective,
   ]

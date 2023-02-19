@@ -1,0 +1,19 @@
+<div class="icon-box" (click)="openFilterOverlay($event)">
+  <i class="far fa-filter" #filterIconEl></i>
+</div>
+<div *ngIf="!overlay && template">
+  <ng-container *ngTemplateOutlet="template; context: {$implicit: this, control: valueControl}">
+  </ng-container>
+</div>
+
+<ng-template #overlayTpl>
+  <div class="overlay-box">
+    <div class="operation">
+      <dev-select [items]="operations" [formControl]="operationControl" valueField="key" textField="value"></dev-select>
+    </div>
+    <div class="value-box" *ngIf="overlay && template">
+      <ng-container *ngTemplateOutlet="template; context: {$implicit: this, control: valueControl}">
+      </ng-container>
+    </div>
+  </div>
+</ng-template>

@@ -1,3 +1,5 @@
+@import "mixin";
+
 :host {
   width: 100%;
   display: flex;
@@ -6,6 +8,38 @@
   &.has-scroll .data-table ::ng-deep table > tbody:last-child {
     td, th {
       border-bottom: none;
+    }
+  }
+
+  &.table-striped ::ng-deep {
+    table {
+      .item-box:nth-child(2n) {
+        background-color: var(--color-gray--0);
+      }
+
+      .item-box:nth-child(2n+1) {
+        background-color: var(--color-white);
+      }
+    }
+  }
+
+  &.table-bordered ::ng-deep {
+    table {
+      td, th {
+        border-inline-end: 1px solid var(--color-gray--2);
+      }
+    }
+  }
+
+  &.selectable ::ng-deep {
+    table {
+      .item-box {
+        cursor: pointer;
+
+        &:hover {
+          background-color: var(--color-gray--2);
+        }
+      }
     }
   }
 }
@@ -24,7 +58,8 @@
   }
 
   .data-header, .data-footer {
-    border: 1px solid var(--color-gray--3);
+    border: 1px solid var(--color-gray--2);
+    background-color: var(--color-gray--0);
   }
 
   .data-header {
@@ -32,26 +67,10 @@
 
   .data-table {
     flex: 1;
-    text-align: end;
+    overflow: auto;
     position: relative;
-    background-color: var(--color-gray--0);
-    border-left: 1px solid var(--color-gray--3);
-    border-right: 1px solid var(--color-gray--3);
-
-    .data-scroll-thumb {
-      top: 0;
-      width: 5px;
-      z-index: 10;
-      position: absolute;
-      border-radius: 10px;
-      display: inline-block;
-      transition: top 100ms linear;
-      background-color: var(--color-gray--4);
-
-      &:hover + .scroll-container {
-        margin-inline-end: 0 !important;
-      }
-    }
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray--2);
 
     .scroll-container {
       top: 0;
@@ -68,37 +87,116 @@
 
   ::ng-deep {
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-
-      td, th {
-        height: 40px;
-        padding: 0 .5em;
-      }
-
-      th {
-        text-align: justify;
-      }
-
-      tbody:nth-child(2n) tr {
-        background-color: var(--color-gray--1);
-      }
-
-      tbody:nth-child(2n+1) tr {
-        background-color: var(--color-white);
-      }
-    }
-
     .data-table {
-      td, th {
-        border-bottom: 1px solid var(--color-gray--3);
+      table {
+        width: 100%;
+        min-height: 100%;
+        border-collapse: collapse;
+        color: var(--color-gray-4);
+
+        td, th {
+          padding: 0 .5em;
+        }
+
+        th {
+          text-align: justify;
+
+          &.sortable {
+            cursor: pointer;
+
+            &:hover {
+              background-color: var(--color-gray--1);
+            }
+
+            &:not(.sort-dir) {
+              .sort-icon::before {
+                font-family: "Font Awesome 6 Pro";
+                content: '\e099';
+                font-style: normal;
+              }
+            }
+            &.sort-dir.asc .sort-icon::before {
+              font-family: "Font Awesome 6 Pro";
+              content: '\f160';
+              font-style: normal;
+            }
+            &.sort-dir.desc .sort-icon::before {
+              font-family: "Font Awesome 6 Pro";
+              content: '\f885';
+              font-style: normal;
+            }
+          }
+        }
+
+        thead, tfoot {
+          height: 40px;
+          position: sticky;
+
+          tr {
+            position: relative;
+
+            th:first-child {
+            }
+          }
+
+          th {
+            background-color: var(--color-white);
+          }
+
+          &::before {
+            left: 0;
+            right: 0;
+            z-index: 1;
+            content: '';
+            height: 1px;
+            position: absolute;
+            background-color: var(--color-gray--2);
+          }
+        }
+
+        thead {
+          top: -1px;
+
+          &::before {
+            bottom: 0;
+          }
+        }
+
+        tfoot {
+          bottom: -1px;
+
+          &::before {
+            top: 0;
+          }
+        }
+
+        tbody {
+          height: 40px;
+
+          &.selected {
+            @include selected-color;
+
+            ::ng-deep {
+              tr, & + tbody tr {
+                border-top: 1px solid rgba(var(--color-primary-rgb), 0.15) !important;
+              }
+            }
+          }
+        }
+      }
+
+      tr {
+        border-top: 1px solid var(--color-gray--2);
       }
 
       table > tbody:first-child {
         td, th {
           border-top: none;
         }
+      }
+
+      .flexible-table-height {
+        height: auto;
       }
     }
   }
@@ -144,6 +242,10 @@
           justify-content: center;
           text-overflow: ellipsis;
           color: var(--color-gray-6);
+
+          &:hover {
+            background-color: var(--color-gray--1);
+          }
 
           &.active {
             font-weight: bold;

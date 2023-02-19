@@ -33,12 +33,14 @@ export class SelectComponent extends AbstractFormControl<any> implements OnChang
 
   @HostListener('window:keydown', ['$event'])
   onKeyDown(e: KeyboardEvent) {
+    this.itemsComponentRef?.destroy();
     this.handleHoveredIndex(e);
   }
 
-  @HostListener('click')
-  onClick() {
-    this.open()
+  @HostListener('click', ['$event'])
+  onClick(e: MouseEvent) {
+    e.stopPropagation();
+    this.open();
   }
 
   optionTemplate?: TemplateDirective;
@@ -71,12 +73,7 @@ export class SelectComponent extends AbstractFormControl<any> implements OnChang
     if (!item) return '';
     if (!operation) return item;
     if (typeof operation === 'function') return operation(item);
-    const split = operation.split('.');
-    let tmp = item;
-    for (let i = 0; i < split.length && tmp; i++) {
-      tmp = tmp[split[i]];
-    }
-    return tmp;
+    return item[operation];
   }
 
   override ngOnInit() {
@@ -93,9 +90,6 @@ export class SelectComponent extends AbstractFormControl<any> implements OnChang
           this.textField = '';
           this.valueField = '';
           break;
-        default:
-          this.textField = 'text';
-          this.valueField = 'value';
       }
     }
   }

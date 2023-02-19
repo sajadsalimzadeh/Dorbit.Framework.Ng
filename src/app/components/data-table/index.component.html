@@ -1,44 +1,58 @@
 <div *ngIf="captionTemplate" class="caption">
-  <ng-container *ngTemplateOutlet="captionTemplate.template; context: {}"></ng-container>
+  <ng-container *ngTemplateOutlet="captionTemplate; context: {}"></ng-container>
 </div>
 <div class="data">
-  <div class="data-header">
+  <!--  <div class="data-header">-->
+  <!--    <table>-->
+  <!--      <thead *ngIf="headerTemplate">-->
+  <!--      <ng-container *ngTemplateOutlet="headerTemplate; context: {}"></ng-container>-->
+  <!--      </thead>-->
+  <!--      <thead *ngIf="filterTemplate">-->
+  <!--      <ng-container *ngTemplateOutlet="filterTemplate; context: {$implicit: filters}"></ng-container>-->
+  <!--      </thead>-->
+  <!--    </table>-->
+  <!--  </div>-->
+  <div class="data-table">
     <table>
       <thead *ngIf="headerTemplate">
-      <ng-container *ngTemplateOutlet="headerTemplate.template; context: {}"></ng-container>
+      <ng-container *ngTemplateOutlet="headerTemplate; context: {}"></ng-container>
       </thead>
-      <thead *ngIf="filterTemplate">
-      <ng-container *ngTemplateOutlet="filterTemplate.template; context: {$implicit: filters}"></ng-container>
-      </thead>
-    </table>
-  </div>
-  <div class="data-table">
-    <div class="data-scroll-thumb" [ngStyle]="dataTableScrollThumbStyles"></div>
-    <div class="scroll-container" [ngStyle]="dataScrollBarStyles" (scroll)="onDataTableScroll()">
-      <table>
-        <ng-container *ngFor="let item of renderedItems">
-          <tbody *ngIf="bodyTemplate">
-          <ng-container *ngTemplateOutlet="bodyTemplate.template; context: {$implicit: item}"></ng-container>
-          <ng-container *ngIf="detailTemplate">
-            <ng-container *ngTemplateOutlet="detailTemplate.template; context: {$implicit: item}"></ng-container>
-          </ng-container>
-          </tbody>
-        </ng-container>
-      </table>
-    </div>
-  </div>
-  <div class="data-footer">
-    <table>
+      <ng-container *ngFor="let item of renderedItems">
+        <tbody *ngIf="bodyTemplate" class="item-box"
+               [ngClass]="{selected: item[config.selecting.key]}"
+               (click)="onRowClick.emit(item)">
+        <ng-container *ngTemplateOutlet="bodyTemplate; context: {$implicit: item}"></ng-container>
+        </tbody>
+        <tbody *ngIf="detailTemplate && item['rowExpanded']" class="item-detail-box">
+        <tr>
+          <td colspan="1000">
+            <ng-container *ngTemplateOutlet="detailTemplate; context: {$implicit: item}"></ng-container>
+          </td>
+        </tr>
+        </tbody>
+      </ng-container>
       <tfoot *ngIf="footerTemplate">
-      <ng-container *ngTemplateOutlet="footerTemplate.template; context: {}"></ng-container>
+      <ng-container *ngTemplateOutlet="footerTemplate; context: {}"></ng-container>
       </tfoot>
+      <tbody class="flexible-table-height">
+      <tr>
+        <td colspan="1000"></td>
+      </tr>
+      </tbody>
     </table>
   </div>
+  <!--  <div class="data-footer">-->
+  <!--    <table>-->
+  <!--      <tfoot *ngIf="footerTemplate">-->
+  <!--      <ng-container *ngTemplateOutlet="footerTemplate; context: {}"></ng-container>-->
+  <!--      </tfoot>-->
+  <!--    </table>-->
+  <!--  </div>-->
 </div>
 <div class="pagination" *ngIf="config.paging">
   <div class="pagination-start">
     <ng-container *ngIf="paginationStartTemplate">
-      <ng-container *ngTemplateOutlet="paginationStartTemplate.template; context: {}"></ng-container>
+      <ng-container *ngTemplateOutlet="paginationStartTemplate; context: {}"></ng-container>
     </ng-container>
   </div>
   <div class="paginator">
@@ -69,5 +83,5 @@
   </div>
 </div>
 <div *ngIf="summaryTemplate" class="summary">
-  <ng-container *ngTemplateOutlet="summaryTemplate.template; context: {}"></ng-container>
+  <ng-container *ngTemplateOutlet="summaryTemplate; context: {}"></ng-container>
 </div>
