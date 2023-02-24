@@ -23,18 +23,28 @@
 }
 
 .icon-box {
-  padding: 5px;
+  padding: 5px 7px;
   cursor: pointer;
+
+  i {
+    opacity: .4;
+  }
+
+  &.active {
+    opacity: 1;
+  }
 }
 
 .overlay-box {
+  width: 200px;
   margin: 10px 0;
+  overflow: hidden;
   border-radius: 2px;
   background-color: var(--color-white);
+  animation: overlay-open 300ms ease;
   @include shadow;
 
   .operation {
-    width: 200px;
     padding: 8px;
     background-color: var(--color-gray--1);
     border-bottom: 1px solid var(--color-gray--3);
@@ -49,5 +59,14 @@
 
   dev-select {
     background-color: var(--color-white);
+  }
+}
+
+@keyframes overlay-open {
+  0% {
+    max-height: 0;
+  }
+  100% {
+    max-height: 300px;
   }
 }

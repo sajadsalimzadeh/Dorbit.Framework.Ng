@@ -2,15 +2,15 @@ import {Injectable} from "@angular/core";
 import {DataTableComponent} from "../index.component";
 import {DataTableFilterComponent} from "../components/filter/filter.component";
 import {Subject} from "rxjs";
-import {SortFunc} from "../models";
+import {SortEvent} from "../directives/sort.directive";
 
 @Injectable()
 export class TableService {
   dataTable!: DataTableComponent;
-  filters: { [key: string]: DataTableFilterComponent } = {};
+  filters: DataTableFilterComponent[] = [];
 
   onFilterChange = new Subject();
-  onSortChange = new Subject<string | SortFunc>();
+  onSortChange = new Subject<SortEvent>();
 
   get config() { return this.dataTable.config; }
 }

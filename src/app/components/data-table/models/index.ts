@@ -38,7 +38,7 @@ export class SortingConfig {
   showCurrentPageReport = true;
 
   field: string | SortFunc = '';
-  dir: SortDir = 'desc';
+  dir: SortDir = 'asc';
 }
 
 export class Settings {

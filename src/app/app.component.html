@@ -3,7 +3,7 @@
 <dev-table [items]="items" [config]="config" style="height: 750px">
 
   <ng-template #filterTextTpl let-control="control">
-    <input class="form-control" [formControl]="control"/>
+    <input class="form-control" [formControl]="control" placeholder="Value"/>
   </ng-template>
 
   <ng-template devTemplate="caption">
@@ -16,7 +16,7 @@
       <th></th>
       <th sort-by="id">
         <div class="flex-row flex-align-center">
-          <span class="flex-1">#</span>
+          <span class="flex-1">Id</span>
           <i class="sort-icon"></i>
         </div>
       </th>
@@ -24,14 +24,14 @@
         <div class="flex-row flex-align-center">
           <span class="flex-1">Firstname</span>
           <i class="sort-icon"></i>
-          <dev-table-filter [template]="filterTextTpl"></dev-table-filter>
+          <dev-table-filter [template]="filterTextTpl" field="first_name"></dev-table-filter>
         </div>
       </th>
       <th sort-by="last_name">
         <div class="flex-row flex-align-center">
           <span class="flex-1">Lastname</span>
           <i class="sort-icon"></i>
-          <dev-table-filter [template]="filterTextTpl"></dev-table-filter>
+          <dev-table-filter [template]="filterTextTpl" field="last_name"></dev-table-filter>
         </div>
       </th>
       <th sort-by="email">

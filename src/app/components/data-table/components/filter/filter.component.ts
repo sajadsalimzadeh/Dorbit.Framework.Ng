@@ -1,12 +1,10 @@
 import {
-  AfterViewInit,
   Component, ComponentRef,
-  ContentChildren, ElementRef,
+  ContentChildren, ElementRef, HostListener,
   Input,
-  OnChanges,
   OnInit,
   QueryList,
-  SimpleChanges, TemplateRef, ViewChild
+  TemplateRef, ViewChild
 } from "@angular/core";
 import {TableService} from "../../services/table.service";
 import {TemplateDirective} from "../../../../directives/template/template.directive";
@@ -14,15 +12,15 @@ import {FormControl} from "@angular/forms";
 import {KeyValue} from "@angular/common";
 import {OverlayService} from "../../../overlay/overlay.service";
 
-type OperationKey = 'eq' | 'nq' | 'gt' | 'ge' | 'lt' | 'le' | 'in' | 'sw' | 'ew' | 'in' | 'ni';
+type OperationKey = 'eq' | 'nq' | 'gt' | 'ge' | 'lt' | 'le' | 'sw' | 'ew' | 'in' | 'ni';
 
 @Component({
   selector: 'dev-table-filter',
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.scss']
 })
-export class DataTableFilterComponent implements OnInit, OnChanges, AfterViewInit {
-  @Input('name') name!: string;
+export class DataTableFilterComponent implements OnInit {
+  @Input('field') field!: string;
   @Input('comparator') comparator?: (x: any) => boolean;
   @Input() overlay: boolean = true;
   @Input() template?: TemplateRef<any>;
@@ -35,6 +33,14 @@ export class DataTableFilterComponent implements OnInit, OnChanges, AfterViewIni
     if(valueTemplate) this.template = valueTemplate;
   }
 
+  @HostListener('window:keydown', ['$event'])
+  onWindowKeydown(e: KeyboardEvent) {
+    if(e.key == 'Escape') {
+      this.overlayRef?.destroy();
+    }
+  }
+
+  overlayRef?: ComponentRef<any>;
   valueControl = new FormControl(null);
   operationControl = new FormControl<OperationKey>('in');
   operations: KeyValue<OperationKey, string>[] = [
@@ -49,24 +55,15 @@ export class DataTableFilterComponent implements OnInit, OnChanges, AfterViewIni
     {key: 'in', value: 'Include'},
     {key: 'ni', value: 'Not include'},
   ];
-  overlayRef?: ComponentRef<any>;
 
   constructor(private tableService: TableService, private overlayService: OverlayService) {
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['name']) {
-      this.tableService.filters[this.name] = this;
-    }
+    this.tableService.filters.push(this);
   }
 
   ngOnInit(): void {
     this.valueControl.valueChanges.subscribe(e => {
       this.tableService.onFilterChange.next(this);
     })
-  }
-
-  ngAfterViewInit(): void {
   }
 
   openFilterOverlay(e: Event) {

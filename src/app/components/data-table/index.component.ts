@@ -6,15 +6,12 @@ import {
   OnChanges, OnDestroy,
   OnInit, Output,
   QueryList,
-  SimpleChanges, TemplateRef, ViewChild, ViewChildren,
+  SimpleChanges, TemplateRef
 } from "@angular/core";
 import {TemplateDirective} from "../../directives/template/template.directive";
-import {DataTableConfig, SortFunc} from "./models";
-import {DataTableSortDirective} from "./directives/sort.directive";
-import {DataTableFilterDirective} from "./directives/filter.directive";
+import {DataTableConfig, FilterFunc, SortFunc} from "./models";
 import {FormControl} from "@angular/forms";
 import {TableService} from "./services/table.service";
-import {config} from "rxjs";
 
 @Component({
   selector: 'dev-table',
@@ -81,7 +78,6 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy, AfterVi
     this.summaryTemplate = value.find(x => x.name == 'summary')?.template;
   }
 
-  filters: { [key: string]: DataTableFilterDirective } = {};
   renderedItems: any[] = [];
   pageNumbers: number[] = [];
   pageRowCountControl = new FormControl(10);
@@ -132,9 +128,26 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy, AfterVi
       }
     });
 
-    if(this.config.sorting.field) {
-      this.tableService.onSortChange.next(this.config.sorting.field)
+    this.tableService.onFilterChange.subscribe(() => {
+      this.render();
+    });
+
+    if (this.config.sorting.field) {
+      setTimeout(() => {
+        this.tableService.onSortChange.next({
+          field: this.config.sorting.field,
+          keepDirection: true,
+        });
+      }, 50);
     }
+  }
+
+  ngAfterViewInit(): void {
+    this.render();
+  }
+
+  ngOnDestroy(): void {
+    this.intervals.forEach(x => clearInterval(x));
   }
 
   selectItem(item: any) {
@@ -153,14 +166,6 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy, AfterVi
     } else {
       this.onRowSelect.emit(item);
     }
-  }
-
-  ngOnDestroy(): void {
-    this.intervals.forEach(x => clearInterval(x));
-  }
-
-  ngAfterViewInit(): void {
-    this.render();
   }
 
   render() {
@@ -184,44 +189,43 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy, AfterVi
   }
 
   private filterItems(items: any[]): any[] {
-    //
-    // Object.values(this.filters)?.forEach(x => {
-    //   x.onChange = (() => this.render());
-    //   let func: FilterFunc | undefined;
-    //   if (x.control?.value && x.field) {
-    //     const value = x.control.value as any;
-    //     if (x.comparator) {
-    //       const comparator = x.comparator;
-    //       func = (x) => {
-    //         return comparator(x);
-    //       }
-    //     } else if (x.field) {
-    //       const field = x.field;
-    //       if (x.operation == 'eq') func = (x) => x[field] == value;
-    //       else if (x.operation == 'nq') func = (x) => x[field] != value;
-    //       else if (x.operation == 'gt') func = (x) => x[field] > value;
-    //       else if (x.operation == 'ge') func = (x) => x[field] >= value;
-    //       else if (x.operation == 'lt') func = (x) => x[field] < value;
-    //       else if (x.operation == 'le') func = (x) => x[field] <= value;
-    //       else if (x.operation == 'in') {
-    //         if (Array.isArray(value)) {
-    //           const arr = value as any[];
-    //           func = (x) => arr.includes(x[field]);
-    //         }
-    //       } else {
-    //         const searchValue = value?.toString();
-    //         func = (x) => {
-    //           const str = x[field]?.toString() ?? '';
-    //           return str.includes(searchValue)
-    //         };
-    //       }
-    //     }
-    //     if (typeof func === 'function') {
-    //       const filedFund = func;
-    //       items = items.filter(x => (filedFund(x)))
-    //     }
-    //   }
-    // });
+    this.tableService.filters.forEach(x => {
+      let func: FilterFunc | undefined;
+      if (x.operationControl?.value && x.valueControl.value && x.field) {
+        let value = x.valueControl.value as any;
+        if(typeof value === 'string') value = value.toLowerCase();
+        if (x.comparator) {
+          const comparator = x.comparator;
+          func = (x) => {
+            return comparator(x);
+          }
+        } else if (x.field) {
+          const field = x.field;
+          const op = x.operationControl.value;
+          if (op == 'eq') func = (x) => x[field] == value;
+          else if (op == 'nq') func = (x) => x[field] != value;
+          else if (op == 'gt') func = (x) => x[field] > value;
+          else if (op == 'ge') func = (x) => x[field] >= value;
+          else if (op == 'lt') func = (x) => x[field] < value;
+          else if (op == 'le') func = (x) => x[field] <= value;
+          else if (op == 'in' || op == 'ni' || op == 'sw' || op == 'ew') {
+            const searchValue = value?.toString();
+            func = (x) => {
+              const str = (x[field]?.toString()?.toLowerCase() ?? '') as string;
+              if (op == 'in') return str.includes(searchValue);
+              else if (op == 'ni') return !str.includes(searchValue);
+              else if (op == 'sw') return str.startsWith(searchValue);
+              else if (op == 'ew') return str.endsWith(searchValue);
+              return false;
+            };
+          }
+        }
+        if (typeof func === 'function') {
+          const filedFund = func;
+          items = items.filter(x => (filedFund(x)))
+        }
+      }
+    });
     return items;
   }
 
@@ -234,9 +238,9 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy, AfterVi
     else if (field) {
       func = (x1, x2, dir) => {
         if (dir == 'asc') {
-          return x1[field] < x2[field] ? 1 : (x1[field] > x2[field] ? -1 : 0);
+          return x1[field] < x2[field] ? -1 : (x1[field] > x2[field] ? 1 : 0);
         }
-        return x1[field] < x2[field] ? -1 : (x1[field] > x2[field] ? 1 : 0);
+        return x1[field] < x2[field] ? 1 : (x1[field] > x2[field] ? -1 : 0);
       }
     }
     return items.sort((x1, x2) => func(x1, x2, dir));

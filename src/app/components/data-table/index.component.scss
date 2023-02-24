@@ -68,9 +68,10 @@
   .data-table {
     flex: 1;
     overflow: auto;
+    border-radius: 8px;
     position: relative;
     background-color: var(--color-white);
-    border: 1px solid var(--color-gray--2);
+    border: 1px solid var(--color-gray--4);
 
     .scroll-container {
       top: 0;
@@ -88,6 +89,7 @@
   ::ng-deep {
 
     .data-table {
+
       table {
         width: 100%;
         min-height: 100%;
@@ -105,24 +107,32 @@
             cursor: pointer;
 
             &:hover {
-              background-color: var(--color-gray--1);
+              background-color: var(--color-gray--4);
+              .sort-icon::before {
+                opacity: 1 !important;
+              }
+            }
+
+            .sort-icon {
+              padding: 5px 7px;
             }
 
             &:not(.sort-dir) {
               .sort-icon::before {
                 font-family: "Font Awesome 6 Pro";
+                opacity: .4;
                 content: '\e099';
                 font-style: normal;
               }
             }
             &.sort-dir.asc .sort-icon::before {
               font-family: "Font Awesome 6 Pro";
-              content: '\f160';
+              content: '\f884';
               font-style: normal;
             }
             &.sort-dir.desc .sort-icon::before {
               font-family: "Font Awesome 6 Pro";
-              content: '\f885';
+              content: '\f161';
               font-style: normal;
             }
           }
@@ -140,7 +150,7 @@
           }
 
           th {
-            background-color: var(--color-white);
+            background-color: var(--color-gray--2);
           }
 
           &::before {
@@ -150,12 +160,12 @@
             content: '';
             height: 1px;
             position: absolute;
-            background-color: var(--color-gray--2);
+            background-color: var(--color-gray--4);
           }
         }
 
         thead {
-          top: -1px;
+          top: 0;
 
           &::before {
             bottom: 0;
@@ -163,7 +173,7 @@
         }
 
         tfoot {
-          bottom: -1px;
+          bottom: 0;
 
           &::before {
             top: 0;
@@ -179,13 +189,16 @@
             ::ng-deep {
               tr, & + tbody tr {
                 border-top: 1px solid rgba(var(--color-primary-rgb), 0.15) !important;
+                td {
+                  border-inline-end: 1px solid rgba(var(--color-primary-rgb), 0.15) !important;
+                }
               }
             }
           }
         }
       }
 
-      tr {
+      tbody tr {
         border-top: 1px solid var(--color-gray--2);
       }
 
