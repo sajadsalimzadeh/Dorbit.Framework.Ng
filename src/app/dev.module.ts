@@ -8,6 +8,7 @@ import {TemplateModule} from "./directives/template/template.directive";
 import {HttpClientModule} from "@angular/common/http";
 import {OverlayModule} from "./components/overlay/overlay.module";
 import {GlobalErrorHandler} from "./services/error-handler.service";
+import {TimelineModule} from "./components/timeline/timeline.module";
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import {GlobalErrorHandler} from "./services/error-handler.service";
     DatePickerModule,
     TemplateModule,
     OverlayModule,
+    TimelineModule,
   ],
 })
 export class DevModule {
