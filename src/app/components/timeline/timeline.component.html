@@ -1,10 +1,41 @@
-<ng-container *ngIf="config.direction == 'vertical'">
-  <div >
-    <div class="start"></div>
-    <div class="line"></div>
-    <div class="end"></div>
-  </div>
-</ng-container>
-<ng-container *ngIf="config.direction == 'horizontal'">
+<ng-template #contentTpl let-item let-template="template">
+  <ng-container *ngIf="template; else elseContentTpl">
+    <ng-container *ngTemplateOutlet="template; context: {$implicit: item}"></ng-container>
+  </ng-container>
+  <ng-template #elseContentTpl>{{item}}</ng-template>
+</ng-template>
 
-</ng-container>
+<ul class="items" [ngClass]="'dir-' + config.direction">
+  <li class="item" *ngFor="let item of items; let index = index" [style]="style">
+    <div class="start">
+      <ng-container *ngIf="config.align == 'start' || (config.align == 'alternate' && index%2 == 0)">
+        <ng-container
+          *ngTemplateOutlet="contentTpl; context: {$implicit: item, template: contentTemplate}"></ng-container>
+      </ng-container>
+      <ng-container *ngIf="oppositeTemplate">
+        <ng-container *ngIf="config.align == 'end' || (config.align == 'alternate' && index%2 == 1)">
+          <ng-container *ngTemplateOutlet="oppositeTemplate; context: {$implicit: item}"></ng-container>
+        </ng-container>
+      </ng-container>
+    </div>
+    <div class="splitter">
+      <ng-container *ngIf="pointTemplate; else elsePointTpl">
+        <ng-container *ngTemplateOutlet="pointTemplate; context: {$implicit: item}"></ng-container>
+      </ng-container>
+      <ng-template #elsePointTpl>
+        <span class="default-point"></span>
+      </ng-template>
+    </div>
+    <div class="end">
+      <ng-container *ngIf="config.align == 'end' || (config.align == 'alternate' && index%2 == 1)">
+        <ng-container
+          *ngTemplateOutlet="contentTpl; context: {$implicit: item, template: contentTemplate}"></ng-container>
+      </ng-container>
+      <ng-container *ngIf="oppositeTemplate">
+        <ng-container *ngIf="config.align == 'start' || (config.align == 'alternate' && index%2 == 0)">
+          <ng-container *ngTemplateOutlet="oppositeTemplate; context: {$implicit: item}"></ng-container>
+        </ng-container>
+      </ng-container>
+    </div>
+  </li>
+</ul>

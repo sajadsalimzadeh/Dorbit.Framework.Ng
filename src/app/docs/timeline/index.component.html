@@ -1,0 +1,8 @@
+<dev-timeline [items]="items" [config]="config">
+  <ng-template devTemplate="content" let-item>
+    {{item.text}}
+  </ng-template>
+  <ng-template devTemplate="opposite" let-item>
+    {{item.date}}
+  </ng-template>
+</dev-timeline>
