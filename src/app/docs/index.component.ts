@@ -8,6 +8,7 @@ import {Component} from "@angular/core";
 })
 export class IndexComponent {
   menus = [
+    {text: 'Button', link: 'button'},
     {text: 'Timeline', link: 'timeline'},
     {text: 'Data Table', link: 'data-table'},
     {

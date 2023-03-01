@@ -9,6 +9,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {OverlayModule} from "./components/overlay/overlay.module";
 import {GlobalErrorHandler} from "./services/error-handler.service";
 import {TimelineModule} from "./components/timeline/timeline.module";
+import {ButtonModule} from "./components/button/button.module";
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import {TimelineModule} from "./components/timeline/timeline.module";
     TemplateModule,
     OverlayModule,
     TimelineModule,
+    ButtonModule,
   ],
 })
 export class DevModule {

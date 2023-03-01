@@ -9,29 +9,34 @@
   --color-white: rgb(255, 255, 255);
   --color-white-rgb: 255, 255, 255;
 
-  --color-primary-tint: rgb(198, 190, 255);
+  --color-primary-tint: rgb(197, 188, 250);
   --color-primary: rgb(118, 102, 239);
   --color-primary-shade: rgb(82, 62, 238);
   --color-primary-rgb: 132, 113, 255;
 
-  --color-danger-tint: rgb(248, 175, 175);
+  --color-secondary-tint: rgb(168, 248, 226);
+  --color-secondary: rgb(73, 190, 161);
+  --color-secondary-shade: rgb(36, 189, 152);
+  --color-secondary-rgb: 73, 190, 161;
+
+  --color-danger-tint: rgb(255, 196, 196);
   --color-danger: rgb(238, 120, 120);
   --color-danger-shade: rgb(234, 71, 71);
   --color-danger-rgb: 234, 71, 71;
 
-  --color-warning-tint: rgb(236, 208, 149);
-  --color-warning: rgb(241, 197, 95);
-  --color-warning-shade: rgb(218, 163, 33);
+  --color-warning-tint: rgb(253, 228, 179);
+  --color-warning: rgb(250, 173, 65);
+  --color-warning-shade: rgb(231, 142, 19);
   --color-warning-rgb: 234, 182, 54;
 
-  --color-success-tint: rgb(142, 224, 158);
+  --color-success-tint: rgb(167, 245, 181);
   --color-success: rgb(76, 203, 96);
   --color-success-shade: rgb(45, 178, 67);
   --color-success-rgb: 58, 199, 82;
 
-  --color-link-shade: rgb(38, 121, 155);
-  --color-link: rgb(71, 160, 194);
-  --color-link-tint: rgb(141, 208, 232);
+  --color-link-tint: rgb(183, 230, 253);
+  --color-link: rgb(109, 198, 234);
+  --color-link-shade: rgb(64, 168, 215);
   --color-link-rgb: 55, 145, 183;
 
   --color-gray--0: #fbfbfb;
@@ -60,13 +65,41 @@
   --font-family: sans-serif;
 
   --font-size-base: 12px;
-  --font-size-1: .8em;
-  --font-size-2: 1em;
-  --font-size-3: 1.1em;
-  --font-size-4: 1.2em;
-  --font-size-5: 1.3em;
-  --font-size-6: 1.4em;
-  --font-size-7: 1.6em;
+  --font-size-0: 1em;
+  --font-size-1: 1.1em;
+  --font-size-2: 1.2em;
+  --font-size-3: 1.3em;
+  --font-size-4: 1.4em;
+  --font-size-5: 1.5em;
+  --font-size-6: 1.6em;
+  --font-size-7: 1.7em;
+  --font-size-8: 1.8em;
+  --font-size-9: 1.9em;
+  --font-size-10: 2em;
+
+  //Spacing
+  --space-1: 2px;
+  --space-2: 4px;
+  --space-3: 6px;
+  --space-4: 8px;
+  --space-5: 12px;
+  --space-6: 16px;
+  --space-7: 20px;
+  --space-8: 24px;
+  --space-9: 28px;
+  --space-10: 32px;
+
+  //Radius
+  --radius-1: 2px;
+  --radius-2: 4px;
+  --radius-3: 6px;
+  --radius-4: 8px;
+  --radius-5: 10px;
+  --radius-6: 12px;
+  --radius-7: 14px;
+  --radius-8: 16px;
+  --radius-9: 20px;
+  --radius-10: 24px;
 
   // Components
   --date-picker-day-size: 35px;
