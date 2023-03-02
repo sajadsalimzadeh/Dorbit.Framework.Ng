@@ -1,0 +1,7 @@
+<span class="box" [ngClass]="classes">
+  <i *ngIf="innerValue" class="fas fa-check"></i>
+  <i *ngIf="innerValue === null || innerValue === undefined" class="fas fa-minus"></i>
+</span>
+<label>
+  <ng-content></ng-content>
+</label>

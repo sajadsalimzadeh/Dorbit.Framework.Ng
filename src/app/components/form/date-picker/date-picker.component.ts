@@ -9,7 +9,7 @@ import {
   SimpleChanges, TemplateRef, ViewChild
 } from "@angular/core";
 import * as moment from 'jalali-moment';
-import {Moment, MomentInput} from "jalali-moment";
+import {Moment} from "jalali-moment";
 import {AbstractFormControl, createControlValueAccessor} from "../abstract-form-control.directive";
 import {OverlayService} from "../../overlay/overlay.service";
 import {OverlayComponent} from "../../overlay/overlay.component";

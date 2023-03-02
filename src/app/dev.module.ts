@@ -10,6 +10,7 @@ import {OverlayModule} from "./components/overlay/overlay.module";
 import {GlobalErrorHandler} from "./services/error-handler.service";
 import {TimelineModule} from "./components/timeline/timeline.module";
 import {ButtonModule} from "./components/button/button.module";
+import {CheckboxModule} from "./components/form/checkbox/checkbox.module";
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import {ButtonModule} from "./components/button/button.module";
     OverlayModule,
     TimelineModule,
     ButtonModule,
+    CheckboxModule,
   ],
 })
 export class DevModule {

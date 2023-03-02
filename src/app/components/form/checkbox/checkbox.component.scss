@@ -1,0 +1,72 @@
+:host {
+  align-items: center;
+  display: inline-flex;
+  border-radius: var(--radius-2);
+
+  &, * {
+    cursor: pointer;
+  }
+
+  &.primary {
+    &:hover {background-color: rgba(var(--color-primary-rgb), .1);}
+  }
+  &.warning {
+    &:hover {background-color: rgba(var(--color-warning-rgb), .1);}
+  }
+  &.success {
+    &:hover {background-color: rgba(var(--color-success-rgb), .1);}
+  }
+  &.link {
+    &:hover {background-color: rgba(var(--color-link-rgb), .1);}
+  }
+  &.danger {
+    &:hover {background-color: rgba(var(--color-danger-rgb), .1);}
+  }
+
+  &.xs {padding: var(--space-1) var(--space-2);}
+  &.sm {padding: var(--space-2) var(--space-3);}
+  &.md {padding: var(--space-2) var(--space-3);}
+  &.lg {padding: var(--space-3) var(--space-3);}
+  &.xl {padding: var(--space-3) var(--space-3);}
+
+  .box {
+    width: 0;
+    height: 0;
+    border-width: 2px;
+    align-items: center;
+    border-style: solid;
+    display: inline-flex;
+    border-radius: inherit;
+    justify-content: center;
+    box-sizing: content-box;
+    margin-inline-end: var(--space-3);
+
+    &.primary {border-color: var(--color-primary);}
+    &.warning {border-color: var(--color-warning);}
+    &.success {border-color: var(--color-success);}
+    &.link {border-color: var(--color-link);}
+    &.danger {border-color: var(--color-danger);}
+
+    &.fill {
+      color: var(--color-white);
+
+      &.primary {background-color: var(--color-primary);}
+      &.warning {background-color: var(--color-warning);}
+      &.success {background-color: var(--color-success);}
+      &.link {background-color: var(--color-link);}
+      &.danger {background-color: var(--color-danger);}
+    }
+
+    &.xs {padding: var(--space-3);font-size: var(--font-size--4);border-width: 1px;}
+    &.sm {padding: var(--space-3);font-size: var(--font-size--2);border-width: 2px;}
+    &.md {padding: var(--space-4);font-size: var(--font-size-0);border-width: 2px;}
+    &.lg {padding: var(--space-4);font-size: var(--font-size-2);border-width: 3px;}
+    &.xl {padding: var(--space-5);font-size: var(--font-size-4);border-width: 3px;}
+  }
+
+  &.xs label {font-size: var(--font-size--2);}
+  &.sm label {font-size: var(--font-size-0);}
+  &.md label {font-size: var(--font-size-2);}
+  &.lg label {font-size: var(--font-size-4);}
+  &.xl label {font-size: var(--font-size-6);}
+}
