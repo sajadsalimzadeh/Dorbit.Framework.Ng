@@ -7,10 +7,10 @@ import {
   TemplateRef, ViewChild
 } from "@angular/core";
 import {TableService} from "../../services/table.service";
-import {TemplateDirective} from "../../../../directives/template/template.directive";
+import {DevTemplateDirective} from "../../../../directives/template/dev-template.directive";
 import {FormControl} from "@angular/forms";
 import {KeyValue} from "@angular/common";
-import {OverlayService} from "../../../overlay/overlay.service";
+import {OverlayRef, OverlayService} from "../../../overlay/overlay.service";
 
 type OperationKey = 'eq' | 'nq' | 'gt' | 'ge' | 'lt' | 'le' | 'sw' | 'ew' | 'in' | 'ni';
 
@@ -28,7 +28,7 @@ export class DataTableFilterComponent implements OnInit {
   @ViewChild('overlayTpl') overlayTpl!: TemplateRef<any>;
   @ViewChild('filterIconEl') filterIconEl!: ElementRef<HTMLElement>;
 
-  @ContentChildren(TemplateDirective) set templates(value: QueryList<TemplateDirective>) {
+  @ContentChildren(DevTemplateDirective) set templates(value: QueryList<DevTemplateDirective>) {
     const valueTemplate = value.find(x => !x.name || x.name == 'value')?.template;
     if(valueTemplate) this.template = valueTemplate;
   }
@@ -40,7 +40,7 @@ export class DataTableFilterComponent implements OnInit {
     }
   }
 
-  overlayRef?: ComponentRef<any>;
+  overlayRef?: OverlayRef;
   valueControl = new FormControl(null);
   operationControl = new FormControl<OperationKey>('in');
   operations: KeyValue<OperationKey, string>[] = [
@@ -70,6 +70,6 @@ export class DataTableFilterComponent implements OnInit {
     e.stopPropagation();
     if(this.overlayRef) return;
     this.overlayRef = this.overlayService.createByTemplate(this.filterIconEl.nativeElement, this.overlayTpl);
-    this.overlayRef.onDestroy(() => this.overlayRef = undefined);
+    this.overlayRef.onDestroy.subscribe(() => this.overlayRef = undefined);
   }
 }

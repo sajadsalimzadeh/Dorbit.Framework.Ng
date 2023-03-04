@@ -1,14 +1,18 @@
 @import "mixin";
 
 .control-box {
-  justify-content: flex-end;
 
   .icon {
     gap: 10px;
     left: initial;
     right: initial;
+    padding: 0 .8em;
     color: var(--color-gray-8);
     font-size: var(--font-size-5);
+  }
+
+  .clear {
+    cursor: pointer;
   }
 }
 

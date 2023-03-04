@@ -1,24 +1,89 @@
-@mixin full-size-absolute {
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+:host {
   display: flex;
-  position: absolute;
-  align-items: center;
+
+  &.focused {
+    .control-box {
+      border-color: var(--color-primary-tint);
+      box-shadow: 0 0 0 var(--size-2) rgba(var(--color-primary-rgb), .1);
+    }
+  }
+
+  &.xs {
+    height: calc(var(--size-5) * 2);
+    * {font-size: var(--font-size--1);}
+    ::ng-deep {
+      .control-container {padding: 0 var(--size-3);}
+    }
+  }
+
+  &.sm {
+    height: calc(var(--size-6) * 2);
+    * {font-size: var(--font-size-1);}
+    ::ng-deep {
+      .control-container {padding: 0 var(--size-4);}
+    }
+  }
+
+  &.md {
+    height: calc(var(--size-7) * 2);
+    * {font-size: var(--font-size-2);}
+    ::ng-deep {
+      .control-container {padding: 0 var(--size-4);}
+    }
+  }
+
+  &.lg {
+    height: calc(var(--size-8) * 2);
+    * {font-size: var(--font-size-6);}
+    ::ng-deep {
+      .control-container {padding: 0 var(--size-5);}
+    }
+  }
+
+  &.xl {
+    height: calc(var(--size-8) * 2);
+    ::ng-deep {
+      * {font-size: var(--font-size-9);}
+      .control-container {padding: 0 var(--size-5);}
+    }
+  }
 }
 
 .control-box {
-  height: 2.5em;
+  cursor: text;
   display: flex;
-  cursor: pointer;
   position: relative;
-  overflow: hidden;
-  box-shadow: 0 0 1px 0 var(--color-gray-6);
+  align-items: stretch;
+  border-radius: var(--radius-3);
+  border: 1px solid var(--color-gray--5);
 
-  > * {
-    padding: 0 10px;
-    @include full-size-absolute;
+  .control-container {
+    display: flex;
+    position: relative;
+    align-items: center;
+  }
+
+  .full-absolute {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    padding: inherit;
+    position: absolute;
+    align-items: center;
+
+    &.start {
+      justify-content: flex-start;
+    }
+
+    &.end {
+      justify-content: flex-end;
+    }
+
+    >* {
+      position: absolute;
+    }
   }
 
   .arrow {
@@ -39,10 +104,13 @@
     color: var(--color-gray-7);
   }
 
-  input {
+  .control {
+    flex: 1;
     border: none;
     cursor: text;
     outline: none;
+    position: relative;
+    color: var(--color-gray-4);
     background-color: transparent;
   }
 }

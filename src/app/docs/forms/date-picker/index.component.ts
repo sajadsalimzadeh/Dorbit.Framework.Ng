@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 
 
 @Component({
-  selector: 'doc-forms',
+  selector: 'doc-date-picker',
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.scss']
 })

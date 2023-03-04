@@ -5,7 +5,7 @@ import {CommonModule} from "@angular/common";
 @Directive({
   selector: '[devTemplate]'
 })
-export class TemplateDirective {
+export class DevTemplateDirective {
 
   @Input('devTemplate') name?: string;
 
@@ -15,10 +15,8 @@ export class TemplateDirective {
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-  ],
-  declarations: [TemplateDirective],
-  exports: [TemplateDirective],
+  imports: [CommonModule],
+  declarations: [DevTemplateDirective],
+  exports: [DevTemplateDirective],
 })
-export class TemplateModule {}
+export class DevTemplateModule {}

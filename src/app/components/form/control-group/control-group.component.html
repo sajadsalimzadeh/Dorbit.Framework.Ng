@@ -1,0 +1,17 @@
+<div class="control-box">
+  <div class="side-box start-box" *ngIf="startTemplate">
+    <ng-container *ngTemplateOutlet="startTemplate"></ng-container>
+  </div>
+  <div class="control-box-container">
+    <label class="label-box" *ngIf="label" [ngClass]="labelState">{{label}}</label>
+    <ng-content></ng-content>
+  </div>
+  <div class="side-box end-box" *ngIf="endTemplate">
+    <ng-container *ngTemplateOutlet="endTemplate"></ng-container>
+  </div>
+</div>
+<div class="validation-box">
+  <span *ngFor="let error of errors">
+    {{error.message}}
+  </span>
+</div>

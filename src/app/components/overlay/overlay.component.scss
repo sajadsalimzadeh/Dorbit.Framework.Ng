@@ -2,6 +2,7 @@
   height: 0;
   display: flex;
   position: absolute;
+  z-index: 1000;
 
   &.vr-up {
     align-items: flex-end;

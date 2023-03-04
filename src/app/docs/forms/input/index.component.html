@@ -1,0 +1,72 @@
+<div class="flex-column flex-gap-5">
+  <dev-input [ngModel]="text" mask="999-99"></dev-input>
+</div>
+
+<div class="flex-column flex-gap-5">
+  <dev-input size="xs" [ngModel]="text"></dev-input>
+  <dev-input size="sm" [ngModel]="text"></dev-input>
+  <dev-input size="md" [ngModel]="text"></dev-input>
+  <dev-input size="lg" [ngModel]="text"></dev-input>
+  <dev-input size="xl" [ngModel]="text"></dev-input>
+</div>
+<h2>Placeholder</h2>
+<div class="flex-column flex-gap-5">
+  <dev-input placeholder="please enter your name ...."></dev-input>
+</div>
+<ng-template devTemplate="end">
+  <i class="far fa-info"></i>
+</ng-template>
+
+<h2>Control Group</h2>
+<div class="flex-column flex-gap-5">
+  <dev-control-group>
+    <ng-template devTemplate="start"><i class="far fa-search"></i></ng-template>
+    <dev-input placeholder="please enter your name ...." [formControl]="formControl"></dev-input>
+  </dev-control-group>
+  <dev-control-group>
+    <ng-template devTemplate="start"><i class="far fa-search"></i></ng-template>
+    <ng-template devTemplate="end"><i class="far fa-info"></i></ng-template>
+    <dev-input placeholder="please enter your name ...." [formControl]="formControl"></dev-input>
+  </dev-control-group>
+</div>
+
+<h2>Labels</h2>
+<div class="flex-column flex-gap-5">
+  <dev-control-group [formControl]="formControl" label="Fix Label">
+    <ng-template devTemplate="end"><i class="far fa-info"></i></ng-template>
+    <dev-input placeholder="please enter your name ...."></dev-input>
+  </dev-control-group>
+  <dev-control-group [formControl]="formControl" label="Floating Label" labelState="floating">
+    <ng-template devTemplate="end"><i class="far fa-info"></i></ng-template>
+    <dev-input></dev-input>
+  </dev-control-group>
+</div>
+
+<h2>Other Controls</h2>
+<div class="flex-column flex-gap-5">
+  <dev-control-group [formControl]="formControl" label="Select Control" labelState="floating">
+    <dev-select [items]="items"></dev-select>
+    <ng-template devTemplate="end"><i class="far fa-info"></i></ng-template>
+  </dev-control-group>
+  <dev-control-group [formControl]="formControl" label="Date Picker Control" labelState="floating">
+    <dev-date-picker locale="fa"></dev-date-picker>
+    <ng-template devTemplate="end"><i class="far fa-calendar"></i></ng-template>
+  </dev-control-group>
+  <dev-control-group [formControl]="formControl" label="Checkbox">
+    <dev-input></dev-input>
+    <ng-template devTemplate="end"><dev-checkbox></dev-checkbox></ng-template>
+  </dev-control-group>
+  <dev-control-group [formControl]="formControl" label="End Button">
+    <dev-input></dev-input>
+    <ng-template devTemplate="end"><dev-button>Submit</dev-button></ng-template>
+  </dev-control-group>
+  <dev-control-group [formControl]="formControl" label="Start Button">
+    <dev-input></dev-input>
+    <ng-template devTemplate="start"><dev-button><i class="far fa-search"></i></dev-button></ng-template>
+  </dev-control-group>
+  <dev-control-group [formControl]="formControl" label="Both Side Button">
+    <ng-template devTemplate="start"><dev-button><i class="far fa-user"></i></dev-button></ng-template>
+    <dev-input></dev-input>
+    <ng-template devTemplate="end"><dev-button><i class="far fa-calendar-note"></i></dev-button></ng-template>
+  </dev-control-group>
+</div>

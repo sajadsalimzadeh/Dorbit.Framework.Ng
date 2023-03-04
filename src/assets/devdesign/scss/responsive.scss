@@ -9,7 +9,7 @@
 
 $i: 0;
 @while ($i < 12) {
-  .flex-row-gap-#{$i} {gap: var(--space-#{$i});}
+  .flex-gap-#{$i} {gap: var(--size-#{$i});}
   $i: $i + 1;
 }
 

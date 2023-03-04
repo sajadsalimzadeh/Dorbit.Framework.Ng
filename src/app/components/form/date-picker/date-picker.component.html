@@ -1,8 +1,10 @@
 <div class="control-box">
-  <input [(ngModel)]="innerValue" (ngModelChange)="onInputChange()" (change)="onInputChange()"/>
-  <div class="icon end">
-    <i class="far fa-times" *ngIf="innerValue" (click)="clear()"></i>
-    <i class="far fa-calendar"></i>
+  <div class="control-container flex-1">
+    <input class="control" [ngModel]="formControl.value" [placeholder]="placeholder"
+           (ngModelChange)="onInputChange($event)" (focus)="focusHandler()" (blur)="blurHandler()"/>
+  </div>
+  <div class="control-container">
+    <i class="clear far fa-times" *ngIf="formControl.value" (click)="clear()"></i>
   </div>
 </div>
 <ng-template #pickerTpl>

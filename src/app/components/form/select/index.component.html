@@ -1,14 +1,20 @@
 <div class="control-box" (click)="inputEl.focus()">
-  <input #inputEl [(ngModel)]="searchValue" (ngModelChange)="search()" (keydown)="handleHoveredIndex($event, true)"/>
-  <div class="arrow"></div>
-  <div class="placeholder" *ngIf="placeholder && !searchValue && !selectedItem">{{placeholder}}</div>
-  <div class="text" *ngIf="selectedItem && !searchValue">
-    <ng-container *ngIf="optionTemplate; else elseTextTemplate">
-      <ng-container *ngTemplateOutlet="optionTemplate.template; context: {$implicit: selectedItem}"></ng-container>
-    </ng-container>
-    <ng-template #elseTextTemplate>
-      {{getText(selectedItem)}}
-    </ng-template>
+  <div class="control-container flex-1">
+    <input class="control" #inputEl [(ngModel)]="searchValue"
+           (ngModelChange)="search()" (keydown)="handleHoveredIndex($event, true)"
+           (focus)="focusHandler()" (blur)="blurHandler()"/>
+    <div class="full-absolute placeholder" *ngIf="placeholder && !searchValue && !selectedItem">{{placeholder}}</div>
+    <div class="full-absolute text" *ngIf="selectedItem && !searchValue">
+      <ng-container *ngIf="optionTemplate; else elseTextTemplate">
+        <ng-container *ngTemplateOutlet="optionTemplate.template; context: {$implicit: selectedItem}"></ng-container>
+      </ng-container>
+      <ng-template #elseTextTemplate>
+        {{getText(selectedItem)}}
+      </ng-template>
+    </div>
+  </div>
+  <div class="control-container">
+    <div class="arrow"></div>
   </div>
 </div>
 <ng-template #itemsTpl>

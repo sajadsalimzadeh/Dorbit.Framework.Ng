@@ -8,125 +8,125 @@ $i: 0;
 //Margins
 $i: 0;
 @while ($i < 10) {
-  .mx-#{$i} {margin-inline-start: var(--space-#{$i});margin-inline-end: var(--space-#{$i});}
+  .mx-#{$i} {margin-inline-start: var(--size-#{$i});margin-inline-end: var(--size-#{$i});}
   $i: $i + 1;
 }
 
 $i: 0;
 @while ($i < 10) {
-  .my-#{$i} {margin-block-start: var(--space-#{$i});margin-block-end: var(--space-#{$i});}
+  .my-#{$i} {margin-block-start: var(--size-#{$i});margin-block-end: var(--size-#{$i});}
   $i: $i + 1;
 }
 
 //Margin Directive
 $i: 0;
 @while ($i < 10) {
-  .ml-#{$i} {margin-left: var(--space-#{$i});}
+  .ml-#{$i} {margin-left: var(--size-#{$i});}
   $i: $i + 1;
 }
 
 $i: 0;
 @while ($i < 10) {
-  .mr-#{$i} {margin-right: var(--space-#{$i});}
+  .mr-#{$i} {margin-right: var(--size-#{$i});}
   $i: $i + 1;
 }
 
 $i: 0;
 @while ($i < 10) {
-  .mt-#{$i} {margin-top: var(--space-#{$i});}
+  .mt-#{$i} {margin-top: var(--size-#{$i});}
   $i: $i + 1;
 }
 
 $i: 0;
 @while ($i < 10) {
-  .mb-#{$i} {margin-bottom: var(--space-#{$i});}
+  .mb-#{$i} {margin-bottom: var(--size-#{$i});}
   $i: $i + 1;
 }
 
 //Margin Flexbox
 $i: 0;
 @while ($i < 10) {
-  .mxs-#{$i} {margin-inline-start: var(--space-#{$i});}
+  .mxs-#{$i} {margin-inline-start: var(--size-#{$i});}
   $i: $i + 1;
 }
 
 $i: 0;
 @while ($i < 10) {
-  .mxe-#{$i} {margin-inline-end: var(--space-#{$i});}
+  .mxe-#{$i} {margin-inline-end: var(--size-#{$i});}
   $i: $i + 1;
 }
 
 $i: 0;
 @while ($i < 10) {
-  .mys-#{$i} {margin-block-start: var(--space-#{$i});}
+  .mys-#{$i} {margin-block-start: var(--size-#{$i});}
   $i: $i + 1;
 }
 
 $i: 0;
 @while ($i < 10) {
-  .mye-#{$i} {margin-block-end: var(--space-#{$i});}
+  .mye-#{$i} {margin-block-end: var(--size-#{$i});}
   $i: $i + 1;
 }
 
 //Paddings
 $i: 0;
 @while ($i < 10) {
-  .px-#{$i} {padding-inline-start: var(--space-#{$i});padding-inline-end: var(--space-#{$i});}
+  .px-#{$i} {padding-inline-start: var(--size-#{$i});padding-inline-end: var(--size-#{$i});}
   $i: $i + 1;
 }
 
 $i: 0;
 @while ($i < 10) {
-  .py-#{$i} {padding-block-start: var(--space-#{$i});padding-block-end: var(--space-#{$i});}
+  .py-#{$i} {padding-block-start: var(--size-#{$i});padding-block-end: var(--size-#{$i});}
   $i: $i + 1;
 }
 
 //Padding Directive
 $i: 0;
 @while ($i < 10) {
-  .pl-#{$i} {padding-left: var(--space-#{$i});}
+  .pl-#{$i} {padding-left: var(--size-#{$i});}
   $i: $i + 1;
 }
 
 $i: 0;
 @while ($i < 10) {
-  .pr-#{$i} {padding-right: var(--space-#{$i});}
+  .pr-#{$i} {padding-right: var(--size-#{$i});}
   $i: $i + 1;
 }
 
 $i: 0;
 @while ($i < 10) {
-  .pt-#{$i} {padding-top: var(--space-#{$i});}
+  .pt-#{$i} {padding-top: var(--size-#{$i});}
   $i: $i + 1;
 }
 
 $i: 0;
 @while ($i < 10) {
-  .pb-#{$i} {padding-bottom: var(--space-#{$i});}
+  .pb-#{$i} {padding-bottom: var(--size-#{$i});}
   $i: $i + 1;
 }
 
 //Padding Flexbox
 $i: 0;
 @while ($i < 10) {
-  .pxs-#{$i} {padding-inline-start: var(--space-#{$i});}
+  .pxs-#{$i} {padding-inline-start: var(--size-#{$i});}
   $i: $i + 1;
 }
 
 $i: 0;
 @while ($i < 10) {
-  .pxe-#{$i} {padding-inline-end: var(--space-#{$i});}
+  .pxe-#{$i} {padding-inline-end: var(--size-#{$i});}
   $i: $i + 1;
 }
 
 $i: 0;
 @while ($i < 10) {
-  .pys-#{$i} {padding-block-start: var(--space-#{$i});}
+  .pys-#{$i} {padding-block-start: var(--size-#{$i});}
   $i: $i + 1;
 }
 
 $i: 0;
 @while ($i < 10) {
-  .pye-#{$i} {padding-block-end: var(--space-#{$i});}
+  .pye-#{$i} {padding-block-end: var(--size-#{$i});}
   $i: $i + 1;
 }

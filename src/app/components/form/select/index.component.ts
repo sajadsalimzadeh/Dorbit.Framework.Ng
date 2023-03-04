@@ -7,9 +7,9 @@ import {
   QueryList,
   SimpleChanges, TemplateRef, ViewChild
 } from "@angular/core";
-import {TemplateDirective} from "../../../directives/template/template.directive";
-import {AbstractFormControl, createControlValueAccessor} from "../abstract-form-control.directive";
-import {OverlayService} from "../../overlay/overlay.service";
+import {DevTemplateDirective} from "../../../directives/template/dev-template.directive";
+import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
+import {OverlayRef, OverlayService} from "../../overlay/overlay.service";
 import {DomService} from "../../../services/dom.service";
 
 type Func = (item: any) => any;
@@ -24,16 +24,15 @@ export class SelectComponent extends AbstractFormControl<any> implements OnChang
   @Input() items: any[] = [];
   @Input() valueField: string | Func = 'value';
   @Input() textField: string | Func = 'text';
-  @Input() placeholder: string = 'choose one of theme';
   @Input() comparator = (item: any, value: any) => this.getValue(item) == value;
 
   @HostBinding('class.open') get isOpen() {
-    return !!this.itemsComponentRef;
+    return !!this.overlayRef;
   }
 
   @HostListener('window:keydown', ['$event'])
   onKeyDown(e: KeyboardEvent) {
-    this.itemsComponentRef?.destroy();
+    this.overlayRef?.destroy();
     this.handleHoveredIndex(e);
   }
 
@@ -43,16 +42,21 @@ export class SelectComponent extends AbstractFormControl<any> implements OnChang
     this.open();
   }
 
-  optionTemplate?: TemplateDirective;
+  override onFocus(e: FocusEvent) {
+    super.onFocus(e);
+    this.open();
+  }
 
-  @ContentChildren(TemplateDirective) set templates(value: QueryList<TemplateDirective>) {
+  optionTemplate?: DevTemplateDirective;
+
+  @ContentChildren(DevTemplateDirective) set templates(value: QueryList<DevTemplateDirective>) {
     if (value) {
       this.optionTemplate = value.find(x => x.name == 'option');
     }
   }
 
   @ViewChild('itemsTpl') itemsTpl?: TemplateRef<any>;
-  itemsComponentRef?: ComponentRef<any>;
+  overlayRef?: OverlayRef;
 
   selectedItem: any;
   searchValue = '';
@@ -64,7 +68,6 @@ export class SelectComponent extends AbstractFormControl<any> implements OnChang
 
   constructor(injector: Injector,
               private domService: DomService,
-              private elementRef: ElementRef,
               private overlayService: OverlayService) {
     super(injector);
   }
@@ -81,7 +84,7 @@ export class SelectComponent extends AbstractFormControl<any> implements OnChang
     this.search();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  override ngOnChanges(changes: SimpleChanges): void {
     if (changes['items'] && this.items?.length > 0) {
       switch (typeof this.items[0]) {
         case 'string':
@@ -95,7 +98,7 @@ export class SelectComponent extends AbstractFormControl<any> implements OnChang
   }
 
   handleHoveredIndex(e: KeyboardEvent, bySearchInput = false) {
-    if (!this.itemsComponentRef && !bySearchInput) return;
+    if (!this.overlayRef && !bySearchInput) return;
     e.stopPropagation();
 
     if (e.key == 'Escape') {
@@ -116,7 +119,7 @@ export class SelectComponent extends AbstractFormControl<any> implements OnChang
         this.hoveredItem = this.renderedItems[this.hoveredIndex];
       } else this.hoveredItem = this.selectedItem;
 
-      if (bySearchInput && !this.itemsComponentRef && this.hoveredItem) {
+      if (bySearchInput && !this.overlayRef && this.hoveredItem) {
         this.select(this.hoveredItem);
       }
     } else if (e.key == 'Enter' && this.hoveredItem) {
@@ -126,9 +129,10 @@ export class SelectComponent extends AbstractFormControl<any> implements OnChang
     }
   }
 
-  render() {
+  override render() {
+    super.render();
     //find selected item
-    this.selectedItem = this.items.find(x => this.comparator(x, this.innerValue));
+    this.selectedItem = this.items.find(x => this.comparator(x, this.formControl.value));
   }
 
   getValue(item: any): any {
@@ -141,8 +145,9 @@ export class SelectComponent extends AbstractFormControl<any> implements OnChang
 
   select(item: any, e?: MouseEvent) {
     e?.stopPropagation();
-    this.innerValue = this.getValue(item);
-    this._onChange(this.innerValue);
+    const value = this.getValue(item);
+    if (this._onChange) this._onChange(value);
+    this.formControl.setValue(value);
     this.render();
     this.searchValue = '';
     this.search();
@@ -164,15 +169,13 @@ export class SelectComponent extends AbstractFormControl<any> implements OnChang
   }
 
   private open() {
-    if (this.itemsTpl && this.elementRef.nativeElement && !this.itemsComponentRef) {
-      this.itemsComponentRef = this.overlayService.createByTemplate(this.elementRef.nativeElement, this.itemsTpl)
-      this.itemsComponentRef.onDestroy(() => {
-        this.itemsComponentRef = undefined;
-      })
+    if (this.itemsTpl && this.elementRef.nativeElement && !this.overlayRef) {
+      this.overlayRef = this.overlayService.createByTemplate(this.elementRef.nativeElement, this.itemsTpl)
+      this.overlayRef.onDestroy.subscribe(() => this.overlayRef = undefined);
     }
   }
 
   private close() {
-    this.itemsComponentRef?.destroy();
+    this.overlayRef?.destroy();
   }
 }

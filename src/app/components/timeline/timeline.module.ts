@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
 import {TimelineComponent} from "./timeline.component";
 import {CommonModule} from "@angular/common";
-import {TemplateModule} from "../../directives/template/template.directive";
+import {DevTemplateModule} from "../../directives/template/dev-template.directive";
 
 
 @NgModule({
@@ -14,7 +14,7 @@ import {TemplateModule} from "../../directives/template/template.directive";
   exports: [
     TimelineComponent,
 
-    TemplateModule,
+    DevTemplateModule,
   ],
 })
 export class TimelineModule {}

@@ -1,6 +1,4 @@
-import {Component, OnInit} from '@angular/core';
-import mockData from "./docs/data-table/mock-data";
-import {DataTableConfig} from "./components/data-table/models";
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +6,4 @@ import {DataTableConfig} from "./components/data-table/models";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-
 }

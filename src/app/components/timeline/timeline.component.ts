@@ -1,6 +1,6 @@
 import {Component, ContentChildren, Input, OnChanges, QueryList, SimpleChanges, TemplateRef} from "@angular/core";
 import {TimelineConfig} from "./models";
-import {TemplateDirective} from "../../directives/template/template.directive";
+import {DevTemplateDirective} from "../../directives/template/dev-template.directive";
 import {config} from "rxjs";
 
 @Component({
@@ -19,7 +19,7 @@ export class TimelineComponent implements OnChanges {
   contentTemplate?: TemplateRef<any>;
   oppositeTemplate?: TemplateRef<any>;
 
-  @ContentChildren(TemplateDirective) set templates(value: QueryList<TemplateDirective>) {
+  @ContentChildren(DevTemplateDirective) set templates(value: QueryList<DevTemplateDirective>) {
     this.pointTemplate = value.find(x => x.name == 'point')?.template;
     this.oppositeTemplate = value.find(x => x.name == 'opposite')?.template;
     this.contentTemplate = value.find(x => !x.name || x.name == 'content')?.template;

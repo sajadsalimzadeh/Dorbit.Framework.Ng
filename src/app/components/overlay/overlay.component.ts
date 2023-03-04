@@ -8,8 +8,6 @@ type Direction = 'up' | 'down';
   styleUrls: ['./overlay.component.scss']
 })
 export class OverlayComponent implements OnInit, AfterViewInit {
-  isViewInit = false;
-
   relatedElement?: HTMLElement;
   template?: TemplateRef<any>;
   componentRef?: ComponentRef<OverlayComponent>;
@@ -27,7 +25,7 @@ export class OverlayComponent implements OnInit, AfterViewInit {
 
   @HostListener('window:click', ['$event'])
   onWindowClick() {
-    if (this.isViewInit && this.componentRef) {
+    if (this.componentRef) {
       this.componentRef.destroy();
     }
   }
@@ -45,9 +43,6 @@ export class OverlayComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.isViewInit = true;
-    }, 1)
   }
 
   render() {

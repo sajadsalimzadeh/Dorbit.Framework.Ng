@@ -8,7 +8,7 @@ import {
   QueryList,
   SimpleChanges, TemplateRef
 } from "@angular/core";
-import {TemplateDirective} from "../../directives/template/template.directive";
+import {DevTemplateDirective} from "../../directives/template/dev-template.directive";
 import {DataTableConfig, FilterFunc, SortFunc} from "./models";
 import {FormControl} from "@angular/forms";
 import {TableService} from "./services/table.service";
@@ -66,8 +66,8 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy, AfterVi
   summaryTemplate?: TemplateRef<any>;
   paginationStartTemplate?: TemplateRef<any>;
 
-  @ContentChildren(TemplateDirective)
-  set devTemplates(value: QueryList<TemplateDirective>) {
+  @ContentChildren(DevTemplateDirective)
+  set devTemplates(value: QueryList<DevTemplateDirective>) {
     this.captionTemplate = value.find(x => x.name == 'caption')?.template;
     this.headerTemplate = value.find(x => x.name == 'header')?.template;
     this.filterTemplate = value.find(x => x.name == 'filter')?.template;

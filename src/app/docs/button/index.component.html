@@ -1,71 +1,78 @@
 <h2>Status (Colors)</h2>
-<div class="flex-row flex-align-center flex-row-gap-4 py-3">
+<div class="flex-row flex-align-center flex-gap-4 py-3">
   <dev-button status="primary">Primary</dev-button>
   <dev-button status="secondary">Secondary</dev-button>
+  <dev-button status="success">Success</dev-button>
   <dev-button status="warning">Warning</dev-button>
   <dev-button status="danger">Danger</dev-button>
   <dev-button status="link">Link</dev-button>
 </div>
-<div class="flex-row flex-align-center flex-row-gap-4 py-3">
+<div class="flex-row flex-align-center flex-gap-4 py-3">
   <dev-button status="primary" [disabled]="true">Primary</dev-button>
   <dev-button status="secondary" [disabled]="true">Secondary</dev-button>
+  <dev-button status="success" [disabled]="true">Success</dev-button>
   <dev-button status="warning" [disabled]="true">Warning</dev-button>
   <dev-button status="danger" [disabled]="true">Danger</dev-button>
   <dev-button status="link" [disabled]="true">Link</dev-button>
 </div>
 <h2>Icon</h2>
-<div class="flex-row flex-align-center flex-row-gap-4 py-3">
+<div class="flex-row flex-align-center flex-gap-4 py-3">
   <dev-button status="primary" icon="far fa-check" iconPos="start"></dev-button>
   <dev-button status="primary" icon="far fa-check" iconPos="start">Primary</dev-button>
   <dev-button status="primary" icon="far fa-check" iconPos="end">Primary</dev-button>
 </div>
 <h2>Sizes</h2>
-<div class="flex-row flex-align-center flex-row-gap-4 py-3">
+<div class="flex-row flex-align-center flex-gap-4 py-3">
   <dev-button size="xs" status="primary">Primary</dev-button>
   <dev-button size="xs" status="secondary">Secondary</dev-button>
+  <dev-button size="xs" status="success">Success</dev-button>
   <dev-button size="xs" status="warning">Warning</dev-button>
   <dev-button size="xs" status="danger">Danger</dev-button>
   <dev-button size="xs" status="link">Link</dev-button>
   <dev-button size="xs" status="primary" icon="far fa-check" iconPos="start">Primary</dev-button>
   <dev-button size="xs" status="primary" icon="far fa-check" iconPos="end">Primary</dev-button>
 </div>
-<div class="flex-row flex-align-center flex-row-gap-4 py-3">
+<div class="flex-row flex-align-center flex-gap-4 py-3">
   <dev-button size="sm" status="primary">Primary</dev-button>
   <dev-button size="sm" status="secondary">Secondary</dev-button>
+  <dev-button size="sm" status="success">Success</dev-button>
   <dev-button size="sm" status="warning">Warning</dev-button>
   <dev-button size="sm" status="danger">Danger</dev-button>
   <dev-button size="sm" status="link">Link</dev-button>
   <dev-button size="sm" status="primary" icon="far fa-check" iconPos="start">Primary</dev-button>
   <dev-button size="sm" status="primary" icon="far fa-check" iconPos="end">Primary</dev-button>
 </div>
-<div class="flex-row flex-align-center flex-row-gap-4 py-3">
+<div class="flex-row flex-align-center flex-gap-4 py-3">
   <dev-button status="primary">Primary</dev-button>
   <dev-button status="secondary">Secondary</dev-button>
+  <dev-button status="success">Success</dev-button>
   <dev-button status="warning">Warning</dev-button>
   <dev-button status="danger">Danger</dev-button>
   <dev-button status="link">Link</dev-button>
   <dev-button status="primary" icon="far fa-check" iconPos="start">Primary</dev-button>
   <dev-button status="primary" icon="far fa-check" iconPos="end">Primary</dev-button>
 </div>
-<div class="flex-row flex-align-center flex-row-gap-4 py-3">
+<div class="flex-row flex-align-center flex-gap-4 py-3">
   <dev-button size="lg" status="primary">Primary</dev-button>
   <dev-button size="lg" status="secondary">Secondary</dev-button>
+  <dev-button size="lg" status="success">Success</dev-button>
   <dev-button size="lg" status="warning">Warning</dev-button>
   <dev-button size="lg" status="danger">Danger</dev-button>
   <dev-button size="lg" status="link">Link</dev-button>
   <dev-button size="lg" status="primary" icon="far fa-check" iconPos="start">Primary</dev-button>
   <dev-button size="lg" status="primary" icon="far fa-check" iconPos="end">Primary</dev-button>
 </div>
-<div class="flex-row flex-align-center flex-row-gap-4 py-3">
+<div class="flex-row flex-align-center flex-gap-4 py-3">
   <dev-button size="xl" status="primary">Primary</dev-button>
   <dev-button size="xl" status="secondary">Secondary</dev-button>
+  <dev-button size="xl" status="success">Success</dev-button>
   <dev-button size="xl" status="warning">Warning</dev-button>
   <dev-button size="xl" status="danger">Danger</dev-button>
   <dev-button size="xl" status="link">Link</dev-button>
   <dev-button size="xl" status="primary" icon="far fa-check" iconPos="start">Primary</dev-button>
   <dev-button size="xl" status="primary" icon="far fa-check" iconPos="end">Primary</dev-button>
 </div>
-<div class="flex-row flex-align-center flex-row-gap-4 py-3">
+<div class="flex-row flex-align-center flex-gap-4 py-3">
   <dev-button size="xs" status="primary" icon="far fa-check" [rounded]="true"></dev-button>
   <dev-button size="sm" status="primary" icon="far fa-check" [rounded]="true"></dev-button>
   <dev-button size="md" status="primary" icon="far fa-check" [rounded]="true"></dev-button>
@@ -73,7 +80,7 @@
   <dev-button size="xl" status="primary" icon="far fa-check" [rounded]="true"></dev-button>
 </div>
 <h2>Loading</h2>
-<div class="flex-row flex-align-center flex-row-gap-4 py-3">
+<div class="flex-row flex-align-center flex-gap-4 py-3">
   <dev-button status="primary"
               [loading]="loadings['l1']" (click)="startLoading('l1')">Primary
   </dev-button>
@@ -84,7 +91,7 @@
               [loading]="loadings['l3']" (click)="startLoading('l3')">Primary
   </dev-button>
 </div>
-<div class="flex-row flex-align-center flex-row-gap-4 py-3">
+<div class="flex-row flex-align-center flex-gap-4 py-3">
   <dev-button status="primary" loadingIcon="far fa-gear"
               [loading]="loadings['l4']" (click)="startLoading('l4')">Primary
   </dev-button>
@@ -97,7 +104,7 @@
 </div>
 
 <h2>Rounded</h2>
-<div class="flex-row flex-align-center flex-row-gap-4 py-3">
+<div class="flex-row flex-align-center flex-gap-4 py-3">
   <dev-button size="xs" status="primary" [rounded]="true">Primary</dev-button>
   <dev-button size="xs" status="secondary" [rounded]="true">Secondary</dev-button>
   <dev-button size="xs" status="warning" [rounded]="true">Warning</dev-button>
@@ -106,7 +113,7 @@
   <dev-button size="xs" status="primary" icon="far fa-check" iconPos="start" [rounded]="true">Primary</dev-button>
   <dev-button size="xs" status="primary" icon="far fa-check" iconPos="end" [rounded]="true">Primary</dev-button>
 </div>
-<div class="flex-row flex-align-center flex-row-gap-4 py-3">
+<div class="flex-row flex-align-center flex-gap-4 py-3">
   <dev-button size="sm" status="primary" [rounded]="true">Primary</dev-button>
   <dev-button size="sm" status="secondary" [rounded]="true">Secondary</dev-button>
   <dev-button size="sm" status="warning" [rounded]="true">Warning</dev-button>
@@ -115,7 +122,7 @@
   <dev-button size="sm" status="primary" icon="far fa-check" iconPos="start" [rounded]="true">Primary</dev-button>
   <dev-button size="sm" status="primary" icon="far fa-check" iconPos="end" [rounded]="true">Primary</dev-button>
 </div>
-<div class="flex-row flex-align-center flex-row-gap-4 py-3">
+<div class="flex-row flex-align-center flex-gap-4 py-3">
   <dev-button status="primary" [rounded]="true">Primary</dev-button>
   <dev-button status="secondary" [rounded]="true">Secondary</dev-button>
   <dev-button status="warning" [rounded]="true">Warning</dev-button>
@@ -124,7 +131,7 @@
   <dev-button status="primary" icon="far fa-check" iconPos="start" [rounded]="true">Primary</dev-button>
   <dev-button status="primary" icon="far fa-check" iconPos="end" [rounded]="true">Primary</dev-button>
 </div>
-<div class="flex-row flex-align-center flex-row-gap-4 py-3">
+<div class="flex-row flex-align-center flex-gap-4 py-3">
   <dev-button size="lg" status="primary" [rounded]="true">Primary</dev-button>
   <dev-button size="lg" status="secondary" [rounded]="true">Secondary</dev-button>
   <dev-button size="lg" status="warning" [rounded]="true">Warning</dev-button>
@@ -133,7 +140,7 @@
   <dev-button size="lg" status="primary" icon="far fa-check" iconPos="start" [rounded]="true">Primary</dev-button>
   <dev-button size="lg" status="primary" icon="far fa-check" iconPos="end" [rounded]="true">Primary</dev-button>
 </div>
-<div class="flex-row flex-align-center flex-row-gap-4 py-3">
+<div class="flex-row flex-align-center flex-gap-4 py-3">
   <dev-button size="xl" status="primary" [rounded]="true">Primary</dev-button>
   <dev-button size="xl" status="secondary" [rounded]="true">Secondary</dev-button>
   <dev-button size="xl" status="warning" [rounded]="true">Warning</dev-button>
@@ -142,14 +149,14 @@
   <dev-button size="xl" status="primary" icon="far fa-check" iconPos="start" [rounded]="true">Primary</dev-button>
   <dev-button size="xl" status="primary" icon="far fa-check" iconPos="end" [rounded]="true">Primary</dev-button>
 </div>
-<div class="flex-row flex-align-center flex-row-gap-4 py-3">
+<div class="flex-row flex-align-center flex-gap-4 py-3">
   <dev-button status="primary" icon="far fa-bookmark" [rounded]="true"></dev-button>
   <dev-button status="secondary" icon="far fa-bell" [rounded]="true"></dev-button>
   <dev-button status="warning" icon="far fa-search" [rounded]="true"></dev-button>
   <dev-button status="danger" icon="far fa-heart" [rounded]="true"></dev-button>
   <dev-button status="link" icon="far fa-user" [rounded]="true"></dev-button>
 </div>
-<div class="flex-row flex-align-center flex-row-gap-4 py-3">
+<div class="flex-row flex-align-center flex-gap-4 py-3">
   <dev-button status="primary" icon="far fa-bookmark" [rounded]="true" [disabled]="true"></dev-button>
   <dev-button status="secondary" icon="far fa-bell" [rounded]="true" [disabled]="true"></dev-button>
   <dev-button status="warning" icon="far fa-search" [rounded]="true" [disabled]="true"></dev-button>
@@ -157,7 +164,7 @@
   <dev-button status="link" icon="far fa-user" [rounded]="true" [disabled]="true"></dev-button>
 </div>
 <h2>Text</h2>
-<div class="flex-row flex-align-center flex-row-gap-4 py-3">
+<div class="flex-row flex-align-center flex-gap-4 py-3">
   <dev-button status="primary" [mode]="'text'">Primary</dev-button>
   <dev-button status="secondary" [mode]="'text'">Secondary</dev-button>
   <dev-button status="warning" [mode]="'text'">Warning</dev-button>
@@ -166,14 +173,14 @@
   <dev-button status="primary" icon="far fa-check" iconPos="start" [mode]="'text'">Primary</dev-button>
   <dev-button status="primary" icon="far fa-check" iconPos="end" [mode]="'text'">Primary</dev-button>
 </div>
-<div class="flex-row flex-align-center flex-row-gap-4 py-3">
+<div class="flex-row flex-align-center flex-gap-4 py-3">
   <dev-button status="primary" [mode]="'text'" [disabled]="true">Primary</dev-button>
   <dev-button status="secondary" [mode]="'text'" [disabled]="true">Secondary</dev-button>
   <dev-button status="warning" [mode]="'text'" [disabled]="true">Warning</dev-button>
   <dev-button status="danger" [mode]="'text'" [disabled]="true">Danger</dev-button>
   <dev-button status="link" [mode]="'text'" [disabled]="true">Link</dev-button>
 </div>
-<div class="flex-row flex-align-center flex-row-gap-4 py-3">
+<div class="flex-row flex-align-center flex-gap-4 py-3">
   <dev-button status="primary" icon="far fa-bookmark" [mode]="'text'" [rounded]="true"></dev-button>
   <dev-button status="secondary" icon="far fa-bell" [mode]="'text'" [rounded]="true"></dev-button>
   <dev-button status="warning" icon="far fa-search" [mode]="'text'" [rounded]="true"></dev-button>
@@ -181,7 +188,7 @@
   <dev-button status="link" icon="far fa-user" [mode]="'text'" [rounded]="true"></dev-button>
 </div>
 <h2>Outline</h2>
-<div class="flex-row flex-align-center flex-row-gap-4 py-3">
+<div class="flex-row flex-align-center flex-gap-4 py-3">
   <dev-button status="primary" [mode]="'outline'">Primary</dev-button>
   <dev-button status="secondary" [mode]="'outline'">Secondary</dev-button>
   <dev-button status="warning" [mode]="'outline'">Warning</dev-button>
@@ -190,14 +197,14 @@
   <dev-button status="primary" icon="far fa-check" iconPos="start" [mode]="'outline'">Primary</dev-button>
   <dev-button status="primary" icon="far fa-check" iconPos="end" [mode]="'outline'">Primary</dev-button>
 </div>
-<div class="flex-row flex-align-center flex-row-gap-4 py-3">
+<div class="flex-row flex-align-center flex-gap-4 py-3">
   <dev-button status="primary" [mode]="'outline'" [disabled]="true">Primary</dev-button>
   <dev-button status="secondary" [mode]="'outline'" [disabled]="true">Secondary</dev-button>
   <dev-button status="warning" [mode]="'outline'" [disabled]="true">Warning</dev-button>
   <dev-button status="danger" [mode]="'outline'" [disabled]="true">Danger</dev-button>
   <dev-button status="link" [mode]="'outline'" [disabled]="true">Link</dev-button>
 </div>
-<div class="flex-row flex-align-center flex-row-gap-4 py-3">
+<div class="flex-row flex-align-center flex-gap-4 py-3">
   <dev-button status="primary" icon="far fa-bookmark" [mode]="'outline'" [rounded]="true"></dev-button>
   <dev-button status="secondary" icon="far fa-bell" [mode]="'outline'" [rounded]="true"></dev-button>
   <dev-button status="warning" icon="far fa-search" [mode]="'outline'" [rounded]="true"></dev-button>

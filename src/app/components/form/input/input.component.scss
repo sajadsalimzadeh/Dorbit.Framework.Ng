@@ -1,0 +1,28 @@
+
+.control-box {
+  flex: 1;
+}
+
+.side-box {
+  display: flex;
+  align-items: center;
+}
+
+.start-box {
+  padding-inline-end: 0 !important;
+}
+
+.end-box {
+  padding-inline-start: 0 !important;
+}
+
+.control {
+  width: 100%;
+  border: none;
+  outline: none;
+  background-color: transparent;
+
+  &::placeholder {
+    color: var(--color-gray-10);
+  }
+}

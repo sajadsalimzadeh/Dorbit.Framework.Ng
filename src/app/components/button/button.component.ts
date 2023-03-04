@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, ElementRef, HostBinding, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'dev-button',
@@ -25,6 +25,8 @@ export class ButtonComponent implements OnInit, OnChanges {
 
   activeIcon?: string;
   emptyContent: boolean = false;
+
+  @HostBinding('class')
   classes: any = {};
 
   constructor() {
@@ -57,5 +59,6 @@ export class ButtonComponent implements OnInit, OnChanges {
     this.classes['empty-content'] = this.emptyContent;
     this.classes['has-content'] = !this.emptyContent;
     this.classes['loading'] = this.loading;
+    this.classes['disabled'] = this.disabled;
   }
 }

@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
 import {DataTableComponent} from "./index.component";
 import {CommonModule} from "@angular/common";
-import {TemplateDirective, TemplateModule} from "../../directives/template/template.directive";
+import {DevTemplateDirective, DevTemplateModule} from "../../directives/template/dev-template.directive";
 import {DataTableSortDirective} from "./directives/sort.directive";
 import {SelectModule} from "../form/select/index.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -14,7 +14,7 @@ import {DataTableFilterComponent} from "./components/filter/filter.component";
     FormsModule,
     ReactiveFormsModule,
 
-    TemplateModule,
+    DevTemplateModule,
     SelectModule,
   ],
   declarations: [
@@ -29,7 +29,7 @@ import {DataTableFilterComponent} from "./components/filter/filter.component";
     DataTableFilterComponent,
     DataTableSortDirective,
 
-    TemplateModule,
+    DevTemplateModule,
   ]
 })
 export class DataTableModule {}

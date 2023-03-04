@@ -6,7 +6,8 @@ import {IndexComponent} from "./index.component";
   imports: [
     RouterModule.forChild([{
       path: '', component: IndexComponent, children: [
-        {path: 'date-picker', loadChildren: () => import('./date-picker/index.module').then(x => x.Module)}
+        {path: 'date-picker', loadChildren: () => import('./date-picker/index.module').then(x => x.Module)},
+        {path: 'input', loadChildren: () => import('./input/index.module').then(x => x.Module)},
       ]
     }])
   ],

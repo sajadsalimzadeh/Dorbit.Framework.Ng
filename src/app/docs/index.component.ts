@@ -14,7 +14,8 @@ export class IndexComponent {
     {text: 'Data Table', link: 'data-table'},
     {
       text: 'Forms', children: [
-        {text: 'Date Picker', link: 'forms/date-picker'}
+        {text: 'Date Picker', link: 'forms/date-picker'},
+        {text: 'Input', link: 'forms/input'},
       ]
     },
   ]

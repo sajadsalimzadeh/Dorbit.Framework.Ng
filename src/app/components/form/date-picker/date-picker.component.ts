@@ -1,5 +1,5 @@
 import {
-  Component, ComponentRef,
+  Component,
   ElementRef,
   EventEmitter,
   HostListener, Injector,
@@ -10,9 +10,8 @@ import {
 } from "@angular/core";
 import * as moment from 'jalali-moment';
 import {Moment} from "jalali-moment";
-import {AbstractFormControl, createControlValueAccessor} from "../abstract-form-control.directive";
-import {OverlayService} from "../../overlay/overlay.service";
-import {OverlayComponent} from "../../overlay/overlay.component";
+import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
+import {OverlayRef, OverlayService} from "../../overlay/overlay.service";
 
 type ViewMode = 'calendar' | 'month' | 'year';
 
@@ -65,18 +64,18 @@ export class DatePickerComponent extends AbstractFormControl<any> implements OnI
   @HostListener('click', ['$event'])
   onClick(e: MouseEvent) {
     e.stopPropagation();
-    if (this.pickerTpl && !this.componentRef) {
-      this.onInputChange();
-      this.componentRef = this.overlayService.createByTemplate(this.elementRef.nativeElement, this.pickerTpl);
-      this.componentRef.onDestroy(() => this.componentRef = undefined);
-    }
-    this.render();
+    this.open();
+  }
+
+  override onFocus(e: FocusEvent) {
+    super.onFocus(e);
+    this.open();
   }
 
   view: ViewMode = 'calendar';
   pickerClasses: any = {};
 
-  componentRef?: ComponentRef<OverlayComponent>;
+  overlayRef?: OverlayRef;
 
   todayDate!: Moment;
   selectedDate!: Moment;
@@ -92,17 +91,9 @@ export class DatePickerComponent extends AbstractFormControl<any> implements OnI
 
   constructor(
     injector: Injector,
-    private elementRef: ElementRef,
     private overlayService: OverlayService,
   ) {
     super(injector)
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    try {
-      this.init();
-    } catch {
-    }
   }
 
   createDate(inp?: string): { value: Moment, isValid: boolean } {
@@ -121,7 +112,8 @@ export class DatePickerComponent extends AbstractFormControl<any> implements OnI
     return result;
   }
 
-  init() {
+  override init() {
+    super.init();
     this.todayDate = this.createDate().value;
     this.todayValue = this.getDateTime(this.todayDate);
 
@@ -153,19 +145,22 @@ export class DatePickerComponent extends AbstractFormControl<any> implements OnI
   }
 
   updateValue(value?: string) {
-    if (value) this.innerValue = value;
-    const date = this.createDate(this.innerValue);
+    const date = this.createDate(value);
     if (date.isValid) {
-      this._onChange(date.value.format(this.format));
+      value = date.value.format(this.format);
     } else {
-      this._onChange(undefined);
+      value = undefined;
     }
+    if (this._onChange) {
+      this._onChange(value);
+    }
+    this.formControl.setValue(value);
   }
 
-  onInputChange() {
-    this.updateValue();
+  onInputChange(e: string) {
+    this.updateValue(e);
 
-    this.selectedDate = this.createDate(this.innerValue).value;
+    this.selectedDate = this.createDate(this.formControl.value).value;
 
     this.render();
   }
@@ -178,8 +173,10 @@ export class DatePickerComponent extends AbstractFormControl<any> implements OnI
     }
   }
 
-  render() {
-    if(!this.selectedDate) this.selectedDate = this.createDate(this.innerValue).value;
+  override render() {
+    if(!this.formControl) return;
+    super.render();
+    if (!this.selectedDate) this.selectedDate = this.createDate(this.formControl.value).value;
 
     this.selectedValue = this.getDateTime(this.selectedDate);
 
@@ -187,6 +184,7 @@ export class DatePickerComponent extends AbstractFormControl<any> implements OnI
   }
 
   createDays() {
+    if(!this.overlayRef) return;
     let date = this.selectedDate.clone();
     const curtMonthDayCount = date.daysInMonth();
     const curtMonthWeekDay = date.clone().startOf('month').get('weekday');
@@ -265,8 +263,7 @@ export class DatePickerComponent extends AbstractFormControl<any> implements OnI
   }
 
   clear() {
-    this.innerValue = '';
-    this.updateValue();
+    this.updateValue('');
   }
 
   showMonths() {
@@ -290,7 +287,16 @@ export class DatePickerComponent extends AbstractFormControl<any> implements OnI
     }
   }
 
+  open() {
+    if (this.pickerTpl && !this.overlayRef) {
+      this.onInputChange(this.formControl.value);
+      this.overlayRef = this.overlayService.createByTemplate(this.elementRef.nativeElement, this.pickerTpl);
+      this.overlayRef.onDestroy.subscribe(() => this.overlayRef = undefined);
+    }
+    this.render();
+  }
+
   close() {
-    this.componentRef?.destroy();
+    this.overlayRef?.destroy();
   }
 }
