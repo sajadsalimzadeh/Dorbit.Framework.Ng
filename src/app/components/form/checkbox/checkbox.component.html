@@ -1,5 +1,5 @@
 <span class="box" [ngClass]="classes">
-  <i *ngIf="formControl.value" class="fas fa-check"></i>
+  <i *ngIf="formControl.value === true" class="fas fa-check"></i>
   <i *ngIf="formControl.value === null || formControl.value === undefined" class="fas fa-minus"></i>
 </span>
 <label>

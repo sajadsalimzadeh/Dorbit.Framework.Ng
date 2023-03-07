@@ -1,4 +1,5 @@
 import {AfterViewInit, Component, ComponentRef, HostBinding, HostListener, OnInit, TemplateRef} from "@angular/core";
+import {OverlayRef} from "./overlay.service";
 
 type Direction = 'up' | 'down';
 
@@ -8,9 +9,9 @@ type Direction = 'up' | 'down';
   styleUrls: ['./overlay.component.scss']
 })
 export class OverlayComponent implements OnInit, AfterViewInit {
+  overlayRef!: OverlayRef;
   relatedElement?: HTMLElement;
   template?: TemplateRef<any>;
-  componentRef?: ComponentRef<OverlayComponent>;
 
   verticalThreshold = 300;
   verticalDirection: Direction = 'down';
@@ -25,8 +26,8 @@ export class OverlayComponent implements OnInit, AfterViewInit {
 
   @HostListener('window:click', ['$event'])
   onWindowClick() {
-    if (this.componentRef) {
-      this.componentRef.destroy();
+    if (this.overlayRef) {
+      this.overlayRef.destroy();
     }
   }
 

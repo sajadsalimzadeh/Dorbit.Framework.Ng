@@ -32,7 +32,7 @@ export abstract class AbstractFormControl<T> implements ControlValueAccessor, On
   @Input() size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' = 'md';
   @Input() placeholder: string = '';
 
-  formControl!: FormControl;
+  formControl!: FormControl<T>;
   errors: (ValidationError | any)[] = [];
 
   validationsTemplate?: TemplateRef<any>;
@@ -100,9 +100,10 @@ export abstract class AbstractFormControl<T> implements ControlValueAccessor, On
     if (!this.formControl) {
       this.formControl = new FormControl<any>(null);
     }
+    let value: any;
     this.subscription.add(this.formControl.valueChanges.subscribe((e) => {
-      if (this.value == e) return;
-      this.value = e;
+      if (value === e) return;
+      value = e;
       this.render();
     }));
     this.render();
@@ -127,8 +128,7 @@ export abstract class AbstractFormControl<T> implements ControlValueAccessor, On
   }
 
   writeValue(value: T): void {
-    if(this.formControl.value !== value && this.value != value) {
-      this.value = value;
+    if(this.formControl.value !== value) {
       this.formControl.setValue(value);
     }
   }

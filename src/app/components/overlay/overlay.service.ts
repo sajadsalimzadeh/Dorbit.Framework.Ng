@@ -29,7 +29,6 @@ export class OverlayService {
     const component = componentRef.instance;
     component.relatedElement = element;
     component.template = template;
-    component.componentRef = componentRef;
     const overlayRef = {
       componentRef: componentRef,
       destroy: () => {
@@ -39,6 +38,7 @@ export class OverlayService {
       },
       onDestroy: new EventEmitter<any>()
     } as OverlayRef;
+    component.overlayRef = overlayRef;
     componentRef.onDestroy = () => { overlayRef.destroy(); };
     this.refs.push(overlayRef)
     return overlayRef;

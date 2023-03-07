@@ -1,7 +1,4 @@
-<div class="flex-column flex-gap-5">
-  <dev-input [ngModel]="text" mask="999-99"></dev-input>
-</div>
-
+<h2>Sizes</h2>
 <div class="flex-column flex-gap-5">
   <dev-input size="xs" [ngModel]="text"></dev-input>
   <dev-input size="sm" [ngModel]="text"></dev-input>
@@ -54,19 +51,55 @@
   </dev-control-group>
   <dev-control-group [formControl]="formControl" label="Checkbox">
     <dev-input></dev-input>
-    <ng-template devTemplate="end"><dev-checkbox></dev-checkbox></ng-template>
+    <ng-template devTemplate="end">
+      <dev-checkbox mode="ternary"></dev-checkbox>
+    </ng-template>
   </dev-control-group>
   <dev-control-group [formControl]="formControl" label="End Button">
     <dev-input></dev-input>
-    <ng-template devTemplate="end"><dev-button>Submit</dev-button></ng-template>
+    <ng-template devTemplate="end">
+      <dev-button>Submit</dev-button>
+    </ng-template>
   </dev-control-group>
   <dev-control-group [formControl]="formControl" label="Start Button">
     <dev-input></dev-input>
-    <ng-template devTemplate="start"><dev-button><i class="far fa-search"></i></dev-button></ng-template>
+    <ng-template devTemplate="start">
+      <dev-button><i class="far fa-search"></i></dev-button>
+    </ng-template>
   </dev-control-group>
   <dev-control-group [formControl]="formControl" label="Both Side Button">
-    <ng-template devTemplate="start"><dev-button><i class="far fa-user"></i></dev-button></ng-template>
+    <ng-template devTemplate="start">
+      <dev-button><i class="far fa-user"></i></dev-button>
+    </ng-template>
     <dev-input></dev-input>
-    <ng-template devTemplate="end"><dev-button><i class="far fa-calendar-note"></i></dev-button></ng-template>
+    <ng-template devTemplate="end">
+      <dev-button><i class="far fa-calendar-note"></i></dev-button>
+    </ng-template>
+  </dev-control-group>
+</div>
+<h2>Mask</h2>
+<div class="flex-column flex-gap-5">
+  <dev-control-group label="Cellphone Number">
+    <dev-input mask="99 999"></dev-input>
+  </dev-control-group>
+  <h3>Ignore special chars with slash (/)</h3>
+  <dev-control-group label="Cellphone Number">
+    <dev-input mask="+/98 999 999 99 99"></dev-input>
+  </dev-control-group>
+  <h3>Match length mask and placeholder</h3>
+  <dev-control-group label="Cellphone Number">
+    <dev-input mask="+/98 999 999 99 99" placeholder="+98 912 000 00 00"></dev-input>
+  </dev-control-group>
+  <dev-control-group label="Debit Card">
+    <dev-input mask="9999 - 9999 - 9999 - 9999" placeholder="xxxx - xxxx - xxxx - xxxx"></dev-input>
+  </dev-control-group>
+  <dev-control-group label="Use Character">
+    <dev-input mask="P - 9999 999 999" placeholder="P - 9999 999 999 "></dev-input>
+  </dev-control-group>
+  <dev-control-group label="Date">
+    <dev-input mask="yyyy//mm//dd" placeholder="yyyy/mm/dd"></dev-input>
+  </dev-control-group>
+  <dev-control-group label="Date">
+    <dev-input mask="13yy//mm//dd" placeholder="yyyy/mm/dd"></dev-input>
   </dev-control-group>
 </div>

@@ -3,6 +3,7 @@
 
   .control-box-container {
     flex: 1;
+    display: flex;
     position: relative;
 
     .label-box {
@@ -16,7 +17,8 @@
       background-color: var(--color-white);
     }
 
-    &::ng-deep {
+    &::ng-deep > *:not(.label-box) {
+      flex: 1;
 
       .control-box {
         flex: 1;
@@ -32,7 +34,9 @@
 
   .side-box {
     display: flex;
+    overflow: hidden;
     align-items: stretch;
+    border-radius: inherit;
 
     &::ng-deep {
       >i {

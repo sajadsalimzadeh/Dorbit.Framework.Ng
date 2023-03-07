@@ -16,13 +16,18 @@ export class CheckboxComponent extends AbstractFormControl<boolean | null> imple
     this.toggle();
   }
 
-  override render() {
-    super.render();
-    if(this.mode == 'binary' && !this.formControl.value) {
+  override writeValue(value: boolean | null) {
+    super.writeValue(value);
+    if(this.mode == 'binary' && !value && value !== false) {
       this.formControl.setValue(false);
     }
+  }
+
+  override render() {
+    super.render();
     this.classes[this.status] = true;
-    this.classes['fill'] = (this.formControl.value || this.formControl.value === null || this.formControl.value === undefined);
+    const value = this.formControl.value;
+    this.classes['fill'] = (value === true || value === null || value === undefined);
   }
 
   toggle() {

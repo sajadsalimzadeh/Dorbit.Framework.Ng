@@ -45,20 +45,9 @@ export class DatePickerComponent extends AbstractFormControl<any> implements OnI
   @ViewChild('pickerTpl') pickerTpl?: TemplateRef<any>
   @ViewChild('yearPickerEl') yearPickerEl?: ElementRef<HTMLDivElement>;
 
-  @HostListener('window.click', ['$event'])
+  @HostListener('window:click', ['$event'])
   onWindowClick(e: MouseEvent) {
-    let el: ParentNode | null = e.target as ParentNode;
-    let isClickOnThisComponent = false;
-    while (el) {
-      if (el == this.elementRef.nativeElement) {
-        isClickOnThisComponent = true;
-        break;
-      }
-      el = el.parentNode
-    }
-    if (!isClickOnThisComponent) {
-      this.onLeave.emit();
-    }
+    this.close();
   }
 
   @HostListener('click', ['$event'])

@@ -16,4 +16,8 @@
   &.hr-reverse {
     flex-direction: row-reverse;
   }
+
+  .overlay-container {
+    min-width: 100%;
+  }
 }

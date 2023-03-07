@@ -1,5 +1,5 @@
 :host {
-  display: flex;
+  display: inline-flex;
 
   &.focused {
     .control-box {
@@ -106,6 +106,7 @@
 
   .control {
     flex: 1;
+    width: 100%;
     border: none;
     cursor: text;
     outline: none;

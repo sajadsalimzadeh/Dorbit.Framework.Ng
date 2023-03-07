@@ -1,13 +1,13 @@
 <div class="control-box" [ngSwitch]="type">
   <div class="control-container flex-1">
     <ng-container *ngSwitchCase="'textarea'">
-    <textarea class="control" [ngModel]="formControl.value" [placeholder]="placeholder"
+    <textarea #inputEl class="control" [ngModel]="formControl.value" [placeholder]="placeholder"
               (ngModelChange)="formControl.setValue($event)" (focus)="focusHandler()" (blur)="blurHandler()"></textarea>
     </ng-container>
     <ng-container *ngSwitchDefault>
-      <input class="control" [type]="type" [ngModel]="formControl.value" [placeholder]="placeholder"
+      <input #inputEl class="control" [type]="type" [ngModel]="formControl.value" [placeholder]="placeholder"
              (ngModelChange)="formControl.setValue($event)" (focus)="focusHandler()" (blur)="blurHandler()"
-              (keyup)="render()"/>
+             (keyup)="render()" (keydown)="onKeyDown($event)"/>
     </ng-container>
   </div>
 </div>
