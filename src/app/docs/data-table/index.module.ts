@@ -1,9 +1,9 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {IndexComponent} from "./index.component";
-import {DataTableModule} from "../../components/data-table/index.module";
 import {CommonModule} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {DevModule} from "../../dev.module";
 
 @NgModule({
   imports: [
@@ -12,7 +12,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     ReactiveFormsModule,
     RouterModule.forChild([{path: '', component: IndexComponent}]),
 
-    DataTableModule,
+    DevModule,
   ],
   declarations: [
     IndexComponent

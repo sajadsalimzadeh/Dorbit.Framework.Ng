@@ -21,15 +21,10 @@ export interface MaskItem {
   styleUrls: ['./input.component.scss', '../control-box.scss'],
   providers: [createControlValueAccessor(InputComponent)]
 })
-export class InputComponent extends AbstractFormControl<string> implements OnInit, OnChanges, OnDestroy {
+export class InputComponent extends AbstractFormControl<string> {
   @Input() type: 'text' | 'textarea' | 'number' = 'text';
   @Input() mask?: string | MaskItem[];
   @Input() pattern?: string;
-
-  @ViewChild('inputEl') inputEl?: ElementRef<HTMLInputElement>;
-
-  @ContentChildren(DevTemplateDirective) set templates(value: QueryList<DevTemplateDirective>) {
-  }
 
   maskValue: string = '';
 

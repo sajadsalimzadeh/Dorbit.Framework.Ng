@@ -12,6 +12,7 @@ import {DevTemplateDirective} from "../../directives/template/dev-template.direc
 import {DataTableConfig, FilterFunc, SortFunc} from "./models";
 import {FormControl} from "@angular/forms";
 import {TableService} from "./services/table.service";
+import {OverlayService} from "../overlay/overlay.service";
 
 @Component({
   selector: 'dev-table',
@@ -89,8 +90,9 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy, AfterVi
   dataScrollBarWidth: number = 20;
   dataTableScrollThumbStyles: any = {};
 
-  constructor(private tableService: TableService, private elementRef: ElementRef) {
+  constructor(private tableService: TableService, private overlayService: OverlayService) {
     tableService.dataTable = this;
+    overlayService.singleton = false;
   }
 
   ngOnChanges(changes: SimpleChanges): void {

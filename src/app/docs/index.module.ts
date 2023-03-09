@@ -13,7 +13,6 @@ import {CommonModule} from "@angular/common";
         {path: 'data-table', loadChildren: () => import('./data-table/index.module').then(x => x.Module)},
         {path: 'forms', loadChildren: () => import('./forms/index.module').then(x => x.Module)},
         {path: 'button', loadChildren: () => import('./button/index.module').then(x => x.Module)},
-        {path: 'checkbox', loadChildren: () => import('./checkbox/index.module').then(x => x.Module)},
       ]
     }])
   ],

@@ -16,11 +16,11 @@ type Func = (item: any) => any;
 
 @Component({
   selector: 'dev-select',
-  templateUrl: './index.component.html',
-  styleUrls: ['./index.component.scss', '../control-box.scss'],
+  templateUrl: './select.component.html',
+  styleUrls: ['./select.component.scss', '../control-box.scss'],
   providers: [createControlValueAccessor(SelectComponent)]
 })
-export class SelectComponent extends AbstractFormControl<any> implements OnChanges {
+export class SelectComponent extends AbstractFormControl<any> {
   @Input() items: any[] = [];
   @Input() valueField: string | Func = 'value';
   @Input() textField: string | Func = 'text';
@@ -36,10 +36,10 @@ export class SelectComponent extends AbstractFormControl<any> implements OnChang
     this.handleHoveredIndex(e);
   }
 
-  @HostListener('click', ['$event'])
-  onClick(e: MouseEvent) {
+  override onClick(e: MouseEvent) {
     e.stopPropagation();
     this.open();
+    super.onClick(e);
   }
 
   override onFocus(e: FocusEvent) {

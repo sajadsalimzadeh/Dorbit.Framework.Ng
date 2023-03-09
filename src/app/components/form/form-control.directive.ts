@@ -7,7 +7,7 @@ import {
   OnDestroy,
   OnInit, QueryList,
   SimpleChanges, TemplateRef,
-  Type
+  Type, ViewChild
 } from "@angular/core";
 import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, NgControl} from "@angular/forms";
 import {Subscription} from "rxjs";
@@ -27,10 +27,15 @@ export interface ValidationError {
   message: string;
 }
 
+export type Sizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+
 @Directive()
 export abstract class AbstractFormControl<T> implements ControlValueAccessor, OnInit, OnChanges, OnDestroy {
-  @Input() size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' = 'md';
+  @Input() size: Sizes = 'md';
   @Input() placeholder: string = '';
+  @HostBinding('tabIndex') @Input() tabIndex = 0;
+
+  @ViewChild('inputEl') inputEl?: ElementRef<HTMLInputElement>;
 
   formControl!: FormControl<T>;
   errors: (ValidationError | any)[] = [];
@@ -49,9 +54,14 @@ export abstract class AbstractFormControl<T> implements ControlValueAccessor, On
   }
 
   @HostListener('blur', ['$event'])
-  onBlur(e: FocusEvent) {
+  onBlur(_: FocusEvent) {
     this.focused = false;
     this.render();
+  }
+
+  @HostListener('click', ['$event'])
+  onClick(e: MouseEvent) {
+    this.inputEl?.nativeElement.focus();
   }
 
   @HostBinding('class')
@@ -65,11 +75,12 @@ export abstract class AbstractFormControl<T> implements ControlValueAccessor, On
   protected elementRef: ElementRef;
   protected formControlService: FormControlService | null;
 
-  private value?: any;
-
   constructor(protected injector: Injector) {
     this.elementRef = injector.get(ElementRef);
     this.formControlService = injector.get(FormControlService, null, {optional: true});
+    if(this.formControlService) {
+      this.size = this.formControlService.size ?? 'md';
+    }
   }
 
   ngOnInit(): void {
@@ -91,9 +102,10 @@ export abstract class AbstractFormControl<T> implements ControlValueAccessor, On
       this.formControl = (control.control as FormControl);
     }
     if (this.formControlService) {
-      if (this.formControl) {
-        this.formControlService.formControl = this.formControl;
-      } else if (this.formControlService.formControl) {
+      if (this.formControlService.size) {
+        this.size = this.formControlService.size;
+      }
+      if (this.formControlService.formControl) {
         this.formControl = this.formControlService.formControl;
       }
     }

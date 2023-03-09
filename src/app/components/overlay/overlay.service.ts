@@ -9,19 +9,19 @@ export interface OverlayRef {
   onDestroy: EventEmitter<any>;
 }
 
-const defaultOptions = {
-  singleton: true
-}
-
 @Injectable({providedIn: 'root'})
 export class OverlayService {
   refs: OverlayRef[] = [];
+  singleton = true;
+  defaultOptions = {
+
+  }
 
   constructor(private domService: DomService) {
   }
 
-  createByTemplate(element: HTMLElement, template: TemplateRef<any>, options= defaultOptions) {
-    if(options.singleton) {
+  createByTemplate(element: HTMLElement, template: TemplateRef<any>, options= this.defaultOptions) {
+    if(this.singleton) {
       this.refs.forEach(x => x.destroy());
     }
 

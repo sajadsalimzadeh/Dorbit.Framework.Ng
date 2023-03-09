@@ -7,13 +7,18 @@ import {AbstractFormControl, createControlValueAccessor} from "../form-control.d
   styleUrls: ['./checkbox.component.scss'],
   providers: [createControlValueAccessor(CheckboxComponent)]
 })
-export class CheckboxComponent extends AbstractFormControl<boolean | null> implements OnInit {
+export class CheckboxComponent extends AbstractFormControl<boolean | null> {
   @Input() mode: 'binary' | 'ternary' = 'binary';
   @Input() status: 'primary' | 'warning' | 'success' | 'danger' | 'link' = 'primary';
 
-  @HostListener('click', ['$event'])
-  onClick() {
+  @HostListener('keydown.space')
+  onKeyDownSpace() {
     this.toggle();
+  }
+
+  override onClick(e: MouseEvent) {
+    this.toggle();
+    super.onClick(e);
   }
 
   override writeValue(value: boolean | null) {

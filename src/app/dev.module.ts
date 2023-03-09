@@ -2,7 +2,7 @@ import {ErrorHandler, ModuleWithProviders, NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {DataTableModule} from "./components/data-table/index.module";
-import {SelectModule} from "./components/form/select/index.module";
+import {SelectModule} from "./components/form/select/select.module";
 import {DatePickerModule} from "./components/form/date-picker/date-picker.module";
 import {DevTemplateModule} from "./directives/template/dev-template.directive";
 import {HttpClientModule} from "@angular/common/http";
@@ -13,6 +13,9 @@ import {ButtonModule} from "./components/button/button.module";
 import {CheckboxModule} from "./components/form/checkbox/checkbox.module";
 import {InputModule} from "./components/form/input/input.module";
 import {ControlGroupModule} from "./components/form/control-group/control-group.module";
+import {ButtonGroupModule} from "./components/button-group/button-group.module";
+import {ChipsModule} from "./components/form/chips/chips.module";
+import {SwitchModule} from "./components/form/switch/switch.module";
 
 @NgModule({
   imports: [
@@ -34,6 +37,9 @@ import {ControlGroupModule} from "./components/form/control-group/control-group.
     CheckboxModule,
     InputModule,
     ControlGroupModule,
+    ButtonGroupModule,
+    ChipsModule,
+    SwitchModule,
   ],
 })
 export class DevModule {

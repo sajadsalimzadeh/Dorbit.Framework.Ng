@@ -10,7 +10,6 @@ import {FormControl, Validators} from "@angular/forms";
 export class IndexComponent {
   text = 'text string';
   formControl = new FormControl('');
-  formControlWithValidation = new FormControl('', [Validators.required]);
   items = [
     'option 1',
     'option 2',

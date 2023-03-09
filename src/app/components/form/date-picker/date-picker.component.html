@@ -1,6 +1,6 @@
 <div class="control-box">
   <div class="control-container flex-1">
-    <input class="control" [ngModel]="formControl.value" [placeholder]="placeholder"
+    <input class="control" #inputEl [ngModel]="formControl.value" [placeholder]="placeholder"
            (ngModelChange)="onInputChange($event)" (focus)="focusHandler()" (blur)="blurHandler()"/>
   </div>
   <div class="control-container">

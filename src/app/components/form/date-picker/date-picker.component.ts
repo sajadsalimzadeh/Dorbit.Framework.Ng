@@ -35,7 +35,7 @@ interface DateValue {
   styleUrls: ['./date-picker.component.scss', '../control-box.scss'],
   providers: [createControlValueAccessor(DatePickerComponent)]
 })
-export class DatePickerComponent extends AbstractFormControl<any> implements OnInit, OnChanges {
+export class DatePickerComponent extends AbstractFormControl<any> {
   @Input() locale: 'en' | 'fa' = 'en';
   @Input() format = 'YYYY/MM/DD';
 
@@ -50,10 +50,10 @@ export class DatePickerComponent extends AbstractFormControl<any> implements OnI
     this.close();
   }
 
-  @HostListener('click', ['$event'])
-  onClick(e: MouseEvent) {
+  override onClick(e: MouseEvent) {
     e.stopPropagation();
     this.open();
+    super.onClick(e)
   }
 
   override onFocus(e: FocusEvent) {

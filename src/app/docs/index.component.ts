@@ -9,13 +9,16 @@ import {Component} from "@angular/core";
 export class IndexComponent {
   menus = [
     {text: 'Button', link: 'button'},
-    {text: 'Checkbox', link: 'checkbox'},
     {text: 'Timeline', link: 'timeline'},
     {text: 'Data Table', link: 'data-table'},
     {
       text: 'Forms', children: [
         {text: 'Date Picker', link: 'forms/date-picker'},
+        {text: 'Checkbox', link: 'forms/checkbox'},
+        {text: 'Switch', link: 'forms/switch'},
         {text: 'Input', link: 'forms/input'},
+        {text: 'Select', link: 'forms/select'},
+        {text: 'Chips', link: 'forms/chips'},
       ]
     },
   ]

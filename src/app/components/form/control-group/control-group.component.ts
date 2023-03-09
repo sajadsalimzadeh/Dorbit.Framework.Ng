@@ -18,6 +18,7 @@ import {FormControlService} from "../form-control.service";
 export class ControlGroupComponent extends AbstractFormControl<any> {
   @Input() label: string = '';
   @Input() labelState: 'floating' | 'fix' = 'fix';
+  @Input() hint: string = '';
 
   controlEl!: ElementRef<HTMLInputElement>;
 
@@ -38,10 +39,22 @@ export class ControlGroupComponent extends AbstractFormControl<any> {
     super(injector);
   }
 
+  override init() {
+
+    if(this.formControlService) {
+      this.formControlService.formControl = this.formControl;
+      this.formControlService.size = this.size;
+    }
+
+    super.init();
+  }
+
   override render() {
     super.render();
-    this.classes['float-label'] = (this.labelState == 'floating' &&
+    this.classes['float-label'] = (
+      this.labelState == 'floating' &&
       (!this.focused && !this.formControl.value && this.formControl.value !== false)
     );
+    this.classes['has-below-box'] = true;
   }
 }

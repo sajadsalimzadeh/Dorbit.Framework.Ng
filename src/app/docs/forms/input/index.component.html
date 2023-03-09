@@ -10,9 +10,10 @@
 <div class="flex-column flex-gap-5">
   <dev-input placeholder="please enter your name ...."></dev-input>
 </div>
-<ng-template devTemplate="end">
-  <i class="far fa-info"></i>
-</ng-template>
+<h2>Textarea</h2>
+<div class="flex-column flex-gap-5">
+  <dev-input type="textarea" [formControl]="formControl"></dev-input>
+</div>
 
 <h2>Control Group</h2>
 <div class="flex-column flex-gap-5">
@@ -103,3 +104,16 @@
     <dev-input mask="13yy//mm//dd" placeholder="yyyy/mm/dd"></dev-input>
   </dev-control-group>
 </div>
+<h2>Hint Box</h2>
+<div class="flex-column flex-gap-5">
+  <dev-control-group class="mb-10" size="xl" hint="Enter your username">
+    <dev-input></dev-input>
+  </dev-control-group>
+</div>
+<h2>Errors</h2>
+<div class="flex-column flex-gap-5">
+  <dev-control-group [formControl]="formControlWithValidation" class="mb-10" hint="Enter your username">
+    <dev-input></dev-input>
+  </dev-control-group>
+</div>
+

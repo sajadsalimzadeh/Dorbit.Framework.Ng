@@ -1,5 +1,5 @@
 import {NgModule} from "@angular/core";
-import {SelectComponent} from "./index.component";
+import {ChipsComponent} from "./chips.component";
 import {CommonModule} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
@@ -11,10 +11,10 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     ReactiveFormsModule,
   ],
   declarations: [
-    SelectComponent,
+    ChipsComponent,
   ],
   exports: [
-    SelectComponent,
+    ChipsComponent,
   ]
 })
-export class SelectModule {}
+export class ChipsModule {}

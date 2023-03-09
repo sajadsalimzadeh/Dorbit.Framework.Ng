@@ -1,0 +1,32 @@
+@import "mixin";
+
+:host {
+  width: 100%;
+  display: block;
+  min-width: 80px;
+  position: relative;
+
+  .control-container {
+    overflow: auto;
+    flex-wrap: wrap;
+  }
+
+  .control {
+    min-width: 100px;
+  }
+
+  .item {
+    gap: .5em;
+    display: flex;
+    margin: .2em .2em;
+    padding: .2em .6em;
+    align-items: center;
+    color: var(--color-primary);
+    border-radius: var(--radius-3);
+    background-color: rgba(var(--color-primary-rgb), .1);
+  }
+
+  .remove {
+    cursor: pointer;
+  }
+}

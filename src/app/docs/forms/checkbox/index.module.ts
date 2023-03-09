@@ -3,7 +3,7 @@ import {RouterModule} from "@angular/router";
 import {IndexComponent} from "./index.component";
 import {CommonModule} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {CheckboxModule} from "../../components/form/checkbox/checkbox.module";
+import {DevModule} from "../../../dev.module";
 
 @NgModule({
   imports: [
@@ -12,7 +12,7 @@ import {CheckboxModule} from "../../components/form/checkbox/checkbox.module";
     ReactiveFormsModule,
     RouterModule.forChild([{path: '', component: IndexComponent}]),
 
-    CheckboxModule,
+    DevModule,
   ],
   declarations: [
     IndexComponent

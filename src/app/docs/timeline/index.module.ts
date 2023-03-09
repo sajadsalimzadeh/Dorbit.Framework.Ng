@@ -3,7 +3,7 @@ import {RouterModule} from "@angular/router";
 import {IndexComponent} from "./index.component";
 import {CommonModule} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {TimelineModule} from "../../components/timeline/timeline.module";
+import {DevModule} from "../../dev.module";
 
 @NgModule({
   imports: [
@@ -12,7 +12,7 @@ import {TimelineModule} from "../../components/timeline/timeline.module";
     ReactiveFormsModule,
     RouterModule.forChild([{path: '', component: IndexComponent}]),
 
-    TimelineModule,
+    DevModule,
   ],
   declarations: [
     IndexComponent

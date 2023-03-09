@@ -2,7 +2,7 @@
   outline: none;
   align-items: center;
   display: inline-flex;
-  border-radius: var(--radius-2);
+  border-radius: var(--radius-10);
 
   &, * {
     cursor: pointer;
@@ -14,71 +14,80 @@
 
   &.primary {
     &:hover, &:focus {background-color: rgba(var(--color-primary-rgb), .1);}
-    .box {border-color: var(--color-primary);}
-    &.fill .box {background-color: var(--color-primary);}
+    &.checked .box {background-color: var(--color-primary);border-color: var(--color-primary);}
   }
   &.warning {
     &:hover, &:focus {background-color: rgba(var(--color-warning-rgb), .1);}
-    .box {border-color: var(--color-warning);}
-    &.fill .box {background-color: var(--color-warning);}
+    &.checked .box {background-color: var(--color-warning);border-color: var(--color-warning);}
   }
   &.success {
     &:hover, &:focus {background-color: rgba(var(--color-success-rgb), .1);}
-    .box {border-color: var(--color-success);}
-    &.fill .box {background-color: var(--color-success);}
+    &.checked .box {background-color: var(--color-success);border-color: var(--color-success);}
   }
   &.link {
     &:hover, &:focus {background-color: rgba(var(--color-link-rgb), .1);}
-    .box {border-color: var(--color-link);}
-    &.fill .box {background-color: var(--color-link);}
+    &.checked .box {background-color: var(--color-link);border-color: var(--color-link);}
   }
   &.danger {
     &:hover, &:focus {background-color: rgba(var(--color-danger-rgb), .1);}
-    .box {border-color: var(--color-danger);}
-    &.fill .box {background-color: var(--color-danger);}
+    &.checked .box {background-color: var(--color-danger);border-color: var(--color-danger);}
   }
 
   &.xs {
     padding: var(--size-1) var(--size-2);
-    .box {border-width: 1px;padding: var(--size-3);font-size: var(--font-size--4);}
+    .box {font-size: var(--font-size--4);}
     label {font-size: var(--font-size--2);}
   }
   &.sm {
     padding: var(--size-2) var(--size-3);
-    .box {border-width: 2px;padding: var(--size-3);font-size: var(--font-size--2);}
+    .box {font-size: var(--font-size--2);}
     label {font-size: var(--font-size-0);}
   }
   &.md {
     padding: var(--size-2) var(--size-3);
-    .box {border-width: 2px;padding: var(--size-4);font-size: var(--font-size-0);}
+    .box {font-size: var(--font-size-0);}
     label {font-size: var(--font-size-2);}
   }
   &.lg {
     padding: var(--size-3) var(--size-3);
-    .box {border-width: 3px;padding: var(--size-4);font-size: var(--font-size-2);}
+    .box {font-size: var(--font-size-2);}
     label {font-size: var(--font-size-4);}
   }
   &.xl {
     padding: var(--size-3) var(--size-3);
-    .box {border-width: 3px;padding: var(--size-5);font-size: var(--font-size-4);}
+    .box {font-size: var(--font-size-4);}
     label {font-size: var(--font-size-6);}
   }
 
+  $base-size: 1.5em;
+  $border-size: 3px;
+
+  &.checked .box::after {
+    margin-inline-start: $base-size;
+  }
+
   .box {
-    width: 0;
-    height: 0;
-    border-width: 1px;
+    width: calc(($base-size * 2) + ($border-size * 2));
     align-items: center;
-    border-style: solid;
     display: inline-flex;
     border-radius: inherit;
-    justify-content: center;
-    box-sizing: content-box;
+    transition: all 200ms ease;
+    justify-content: flex-start;
+    border: $border-size solid transparent;
+    background-color: var(--color-gray--8);
+    outline: none;
+
+    &::after {
+      content: '';
+      min-width: $base-size;
+      min-height: $base-size;
+      border-radius: 50%;
+      transition: all 200ms ease;
+      background-color: var(--color-white);
+    }
   }
 
   label {
-    display: flex;
-    align-items: center;
     margin-inline: var(--size-3);
 
     &:empty {

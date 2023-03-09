@@ -1,5 +1,6 @@
 :host {
-  display: inline-flex;
+  width: 100%;
+  display: flex;
 
   &.focused {
     .control-box {
@@ -9,7 +10,7 @@
   }
 
   &.xs {
-    height: calc(var(--size-5) * 2);
+    min-height: calc(var(--size-5) * 2);
     * {font-size: var(--font-size--1);}
     ::ng-deep {
       .control-container {padding: 0 var(--size-3);}
@@ -17,7 +18,7 @@
   }
 
   &.sm {
-    height: calc(var(--size-6) * 2);
+    min-height: calc(var(--size-6) * 2);
     * {font-size: var(--font-size-1);}
     ::ng-deep {
       .control-container {padding: 0 var(--size-4);}
@@ -25,7 +26,7 @@
   }
 
   &.md {
-    height: calc(var(--size-7) * 2);
+    min-height: calc(var(--size-7) * 2);
     * {font-size: var(--font-size-2);}
     ::ng-deep {
       .control-container {padding: 0 var(--size-4);}
@@ -33,7 +34,7 @@
   }
 
   &.lg {
-    height: calc(var(--size-8) * 2);
+    min-height: calc(var(--size-8) * 2);
     * {font-size: var(--font-size-6);}
     ::ng-deep {
       .control-container {padding: 0 var(--size-5);}
@@ -41,7 +42,7 @@
   }
 
   &.xl {
-    height: calc(var(--size-8) * 2);
+    min-height: calc(var(--size-8) * 2);
     ::ng-deep {
       * {font-size: var(--font-size-9);}
       .control-container {padding: 0 var(--size-5);}
@@ -52,6 +53,7 @@
 .control-box {
   cursor: text;
   display: flex;
+  min-width: 100%;
   position: relative;
   align-items: stretch;
   border-radius: var(--radius-3);

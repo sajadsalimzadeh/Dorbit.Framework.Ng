@@ -8,6 +8,10 @@ import {IndexComponent} from "./index.component";
       path: '', component: IndexComponent, children: [
         {path: 'date-picker', loadChildren: () => import('./date-picker/index.module').then(x => x.Module)},
         {path: 'input', loadChildren: () => import('./input/index.module').then(x => x.Module)},
+        {path: 'select', loadChildren: () => import('./select/index.module').then(x => x.Module)},
+        {path: 'chips', loadChildren: () => import('./chips/index.module').then(x => x.Module)},
+        {path: 'checkbox', loadChildren: () => import('./checkbox/index.module').then(x => x.Module)},
+        {path: 'switch', loadChildren: () => import('./switch/index.module').then(x => x.Module)},
       ]
     }])
   ],
