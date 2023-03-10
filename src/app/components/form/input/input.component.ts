@@ -18,7 +18,7 @@ export interface MaskItem {
 @Component({
   selector: 'dev-input',
   templateUrl: 'input.component.html',
-  styleUrls: ['./input.component.scss', '../control-box.scss'],
+  styleUrls: ['./input.component.scss', '../control.scss'],
   providers: [createControlValueAccessor(InputComponent)]
 })
 export class InputComponent extends AbstractFormControl<string> {

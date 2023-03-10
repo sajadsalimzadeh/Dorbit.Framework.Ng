@@ -4,6 +4,7 @@
       <span class="text">{{item}}</span>
       <i class="remove far fa-times-circle" (click)="remove(index)"></i>
     </div>
-    <input class="control" #inputEl [(ngModel)]="value" (ngModelChange)="onValueChange()" (focus)="focusHandler()" (blur)="blurHandler()" (keydown)="onInputKeyDown($event)"/>
+    <input class="control" #inputEl [(ngModel)]="value" [placeholder]="placeholder"
+           (ngModelChange)="onValueChange()" (focus)="focus()" (blur)="blur()" (keydown)="onInputKeyDown($event)"/>
   </div>
 </div>

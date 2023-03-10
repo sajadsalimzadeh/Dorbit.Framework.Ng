@@ -2,78 +2,26 @@
   outline: none;
   align-items: center;
   display: inline-flex;
+  padding: .2em .2em;
   border-radius: var(--radius-2);
 
-  &, * {
-    cursor: pointer;
-  }
-
-  &.fill .box {
-    color: var(--color-white);
-  }
-
-  &.primary {
-    &:hover, &:focus {background-color: rgba(var(--color-primary-rgb), .1);}
-    .box {border-color: var(--color-primary);}
-    &.fill .box {background-color: var(--color-primary);}
-  }
-  &.warning {
-    &:hover, &:focus {background-color: rgba(var(--color-warning-rgb), .1);}
-    .box {border-color: var(--color-warning);}
-    &.fill .box {background-color: var(--color-warning);}
-  }
-  &.success {
-    &:hover, &:focus {background-color: rgba(var(--color-success-rgb), .1);}
-    .box {border-color: var(--color-success);}
-    &.fill .box {background-color: var(--color-success);}
-  }
-  &.link {
-    &:hover, &:focus {background-color: rgba(var(--color-link-rgb), .1);}
-    .box {border-color: var(--color-link);}
-    &.fill .box {background-color: var(--color-link);}
-  }
-  &.danger {
-    &:hover, &:focus {background-color: rgba(var(--color-danger-rgb), .1);}
-    .box {border-color: var(--color-danger);}
-    &.fill .box {background-color: var(--color-danger);}
-  }
-
-  &.xs {
-    padding: var(--size-1) var(--size-2);
-    .box {border-width: 1px;padding: var(--size-3);font-size: var(--font-size--4);}
-    label {font-size: var(--font-size--2);}
-  }
-  &.sm {
-    padding: var(--size-2) var(--size-3);
-    .box {border-width: 2px;padding: var(--size-3);font-size: var(--font-size--2);}
-    label {font-size: var(--font-size-0);}
-  }
-  &.md {
-    padding: var(--size-2) var(--size-3);
-    .box {border-width: 2px;padding: var(--size-4);font-size: var(--font-size-0);}
-    label {font-size: var(--font-size-2);}
-  }
-  &.lg {
-    padding: var(--size-3) var(--size-3);
-    .box {border-width: 3px;padding: var(--size-4);font-size: var(--font-size-2);}
-    label {font-size: var(--font-size-4);}
-  }
-  &.xl {
-    padding: var(--size-3) var(--size-3);
-    .box {border-width: 3px;padding: var(--size-5);font-size: var(--font-size-4);}
-    label {font-size: var(--font-size-6);}
-  }
+  &, * {cursor: pointer;}
+  &.fill .box {color: var(--color-white);}
+  &:hover, &:focus {background-color: rgba(var(--component-color-rgb), .1);}
+  &.fill .box {background-color: var(--component-color);}
 
   .box {
     width: 0;
     height: 0;
-    border-width: 1px;
+    padding: .7em;
+    border-width: .2em;
     align-items: center;
     border-style: solid;
     display: inline-flex;
     border-radius: inherit;
     justify-content: center;
     box-sizing: content-box;
+    border-color: var(--component-color);
   }
 
   label {

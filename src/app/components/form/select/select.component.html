@@ -1,36 +1,60 @@
-<div class="control-box" (click)="inputEl.focus()">
-  <div class="control-container flex-1">
-    <input class="control" #inputEl [(ngModel)]="searchValue"
-           (ngModelChange)="search()" (keydown)="handleHoveredIndex($event, true)"
-           (focus)="focusHandler()" (blur)="blurHandler()"/>
-    <div class="full-absolute placeholder" *ngIf="placeholder && !searchValue && !selectedItem">{{placeholder}}</div>
-    <div class="full-absolute text" *ngIf="selectedItem && !searchValue">
-      <ng-container *ngIf="optionTemplate; else elseTextTemplate">
-        <ng-container *ngTemplateOutlet="optionTemplate.template; context: {$implicit: selectedItem}"></ng-container>
+<ng-template #itemTpl let-item let-type="type">
+  <div class="item" [ngClass]="'type-' + type">
+    <ng-container *ngIf="optionTemplate; else elseTextTemplate">
+      <ng-container *ngTemplateOutlet="optionTemplate.template; context: {$implicit: item}"></ng-container>
+    </ng-container>
+    <ng-template #elseTextTemplate>
+      <span class="text">{{getText(item)}}</span>
+      <ng-container *ngIf="mode == 'multiple' && type == 'value'">
+        <i class="remove far fa-times-circle" (click)="select(item, $event)"></i>
       </ng-container>
-      <ng-template #elseTextTemplate>
-        {{getText(selectedItem)}}
-      </ng-template>
-    </div>
+    </ng-template>
+  </div>
+</ng-template>
+
+<div class="control-box">
+  <div class="control-container flex-1">
+    <ng-container *ngIf="selectedItems.length == 0; else hasSelectedItemTpl">
+      <div class="full-absolute placeholder" *ngIf="placeholder">
+        {{placeholder}}
+      </div>
+    </ng-container>
+    <ng-template #hasSelectedItemTpl>
+      <div class="selected-items" [ngClass]="mode">
+        <ng-container *ngIf="mode === 'single'">
+          <ng-container
+            *ngTemplateOutlet="itemTpl; context: {$implicit:selectedItems[0], type: 'value'}"></ng-container>
+        </ng-container>
+        <ng-container *ngIf="mode === 'multiple'">
+          <ng-container *ngFor="let item of selectedItems">
+            <ng-container *ngTemplateOutlet="itemTpl; context: {$implicit:item, type: 'value'}"></ng-container>
+          </ng-container>
+        </ng-container>
+      </div>
+    </ng-template>
   </div>
   <div class="control-container">
     <div class="arrow"></div>
   </div>
 </div>
 <ng-template #itemsTpl>
-  <div class="items-container">
-    <ul class="items">
-      <li *ngFor="let item of renderedItems" class="item" (click)="select(item, $event)"
-          [ngClass]="{selected: (selectedItem == item), hovered: (hoveredItem == item)}">
-        <ng-container *ngIf="optionTemplate; else elseOptionTemplate">
-          <ng-container *ngTemplateOutlet="optionTemplate.template; context: {$implicit: item}"></ng-container>
-        </ng-container>
-        <ng-template #elseOptionTemplate>
-          <div class="default-template">
-            {{getText(item)}}
-          </div>
-        </ng-template>
-      </li>
-    </ul>
+  <div class="items-container" [ngClass]="size">
+    <div class="filter-box">
+      <dev-control-group class="filter-control-group" [size]="size" [formControl]="searchFormControl">
+        <ng-template devTemplate="end"><i class="far fa-search"></i></ng-template>
+        <dev-input [placeholder]="searchPlaceHolder" [tabIndex]="tabIndex"/>
+      </dev-control-group>
+    </div>
+    <div class="scroll-container">
+      <ul class="items">
+        <li *ngFor="let item of renderedItems" class="item" (click)="select(item, $event)"
+            [ngClass]="{selected: item.selected, hovered: (hoveredItem == item)}">
+          <ng-container *ngIf="mode == 'multiple'">
+            <dev-checkbox [size]="size" [ngModel]="item.selected"></dev-checkbox>
+          </ng-container>
+          <ng-container *ngTemplateOutlet="itemTpl; context: {$implicit:item, type: 'option'}"></ng-container>
+        </li>
+      </ul>
+    </div>
   </div>
 </ng-template>

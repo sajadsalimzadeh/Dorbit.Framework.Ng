@@ -1,53 +1,25 @@
 :host {
-  width: 100%;
-  display: flex;
+  max-width: 100%;
+  min-height: 2.5em;
+  display: inline-flex;
 
   &.focused {
     .control-box {
       border-color: var(--color-primary-tint);
-      box-shadow: 0 0 0 var(--size-2) rgba(var(--color-primary-rgb), .1);
+      box-shadow: 0 0 0 var(--size-1) rgba(var(--color-primary-rgb), .1);
     }
   }
+
+  ::ng-deep .control-container {padding: 0 .5em;}
 
   &.xs {
-    min-height: calc(var(--size-5) * 2);
-    * {font-size: var(--font-size--1);}
-    ::ng-deep {
-      .control-container {padding: 0 var(--size-3);}
-    }
+    font-size: var(--font-size--1);
+    .control-box {border-radius: var(--radius-2);}
   }
-
-  &.sm {
-    min-height: calc(var(--size-6) * 2);
-    * {font-size: var(--font-size-1);}
-    ::ng-deep {
-      .control-container {padding: 0 var(--size-4);}
-    }
-  }
-
-  &.md {
-    min-height: calc(var(--size-7) * 2);
-    * {font-size: var(--font-size-2);}
-    ::ng-deep {
-      .control-container {padding: 0 var(--size-4);}
-    }
-  }
-
-  &.lg {
-    min-height: calc(var(--size-8) * 2);
-    * {font-size: var(--font-size-6);}
-    ::ng-deep {
-      .control-container {padding: 0 var(--size-5);}
-    }
-  }
-
-  &.xl {
-    min-height: calc(var(--size-8) * 2);
-    ::ng-deep {
-      * {font-size: var(--font-size-9);}
-      .control-container {padding: 0 var(--size-5);}
-    }
-  }
+  &.sm {font-size: var(--font-size-1);}
+  &.md {font-size: var(--font-size-2);}
+  &.lg {font-size: var(--font-size-6);}
+  &.xl {font-size: var(--font-size-9);}
 }
 
 .control-box {
@@ -83,7 +55,7 @@
       justify-content: flex-end;
     }
 
-    >* {
+    > * {
       position: absolute;
     }
   }
@@ -112,6 +84,8 @@
     border: none;
     cursor: text;
     outline: none;
+    padding: .3em 0;
+    font-size: inherit;
     position: relative;
     color: var(--color-gray-4);
     background-color: transparent;

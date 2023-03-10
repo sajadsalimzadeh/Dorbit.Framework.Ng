@@ -1,9 +1,8 @@
 import {
-  Component, ComponentRef,
-  ContentChildren, ElementRef, HostBinding,
+  Component,
+  ContentChildren, HostBinding,
   HostListener, Injector,
   Input,
-  OnChanges,
   QueryList,
   SimpleChanges, TemplateRef, ViewChild
 } from "@angular/core";
@@ -11,19 +10,23 @@ import {DevTemplateDirective} from "../../../directives/template/dev-template.di
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
 import {OverlayRef, OverlayService} from "../../overlay/overlay.service";
 import {DomService} from "../../../services/dom.service";
+import {InputComponent} from "../input/input.component";
+import {FormControl} from "@angular/forms";
 
 type Func = (item: any) => any;
 
 @Component({
   selector: 'dev-select',
   templateUrl: './select.component.html',
-  styleUrls: ['./select.component.scss', '../control-box.scss'],
+  styleUrls: ['./select.component.scss', '../control.scss'],
   providers: [createControlValueAccessor(SelectComponent)]
 })
-export class SelectComponent extends AbstractFormControl<any> {
+export class SelectComponent extends AbstractFormControl<any | any[]> {
   @Input() items: any[] = [];
+  @Input() mode: 'single' | 'multiple' = 'single';
   @Input() valueField: string | Func = 'value';
   @Input() textField: string | Func = 'text';
+  @Input() searchPlaceHolder: string = 'Search ....';
   @Input() comparator = (item: any, value: any) => this.getValue(item) == value;
 
   @HostBinding('class.open') get isOpen() {
@@ -32,20 +35,11 @@ export class SelectComponent extends AbstractFormControl<any> {
 
   @HostListener('window:keydown', ['$event'])
   onKeyDown(e: KeyboardEvent) {
-    this.overlayRef?.destroy();
     this.handleHoveredIndex(e);
   }
 
-  override onClick(e: MouseEvent) {
-    e.stopPropagation();
-    this.open();
-    super.onClick(e);
-  }
-
-  override onFocus(e: FocusEvent) {
-    super.onFocus(e);
-    this.open();
-  }
+  @ViewChild('itemsTpl') itemsTpl?: TemplateRef<any>;
+  @ViewChild(InputComponent) inputComponent?: InputComponent;
 
   optionTemplate?: DevTemplateDirective;
 
@@ -55,11 +49,25 @@ export class SelectComponent extends AbstractFormControl<any> {
     }
   }
 
-  @ViewChild('itemsTpl') itemsTpl?: TemplateRef<any>;
+  override onClick(e: MouseEvent) {
+    e.stopPropagation();
+    this.open();
+    super.onClick(e);
+  }
+
+  override onFocus(e: FocusEvent) {
+    e.preventDefault();
+    this.open();
+    super.onFocus(e);
+  }
+
+  get selectedItems() {
+    return this.items.filter(x => x.selected);
+  }
+
   overlayRef?: OverlayRef;
 
-  selectedItem: any;
-  searchValue = '';
+  searchFormControl = new FormControl('');
 
   hoveredIndex: number = 0;
   hoveredItem: any;
@@ -81,23 +89,25 @@ export class SelectComponent extends AbstractFormControl<any> {
 
   override ngOnInit() {
     super.ngOnInit();
+    this.subscription.add(this.searchFormControl.valueChanges.subscribe(() => {
+      this.search();
+    }));
     this.search();
   }
 
   override ngOnChanges(changes: SimpleChanges): void {
-    if (changes['items'] && this.items?.length > 0) {
-      switch (typeof this.items[0]) {
-        case 'string':
-        case 'boolean':
-        case 'number':
-          this.textField = '';
-          this.valueField = '';
-          break;
-      }
+    if (changes['items']) {
+      this.items.filter(x => typeof x !== 'object').forEach((x, i) => {
+        this.items[i] = {text: x, value: x};
+      });
     }
   }
 
-  handleHoveredIndex(e: KeyboardEvent, bySearchInput = false) {
+  private getSelectedItems(): any[] {
+    return this.items.filter(x => x.selected);
+  }
+
+  private handleHoveredIndex(e: KeyboardEvent, bySearchInput = false) {
     if (!this.overlayRef && !bySearchInput) return;
     e.stopPropagation();
 
@@ -117,7 +127,7 @@ export class SelectComponent extends AbstractFormControl<any> {
 
       if (this.hoveredIndex > -1 && this.hoveredIndex < this.renderedItems.length) {
         this.hoveredItem = this.renderedItems[this.hoveredIndex];
-      } else this.hoveredItem = this.selectedItem;
+      } else this.hoveredItem = this.items.find(x => x.selected);
 
       if (bySearchInput && !this.overlayRef && this.hoveredItem) {
         this.select(this.hoveredItem);
@@ -129,10 +139,22 @@ export class SelectComponent extends AbstractFormControl<any> {
     }
   }
 
-  override render() {
-    super.render();
-    //find selected item
-    this.selectedItem = this.items.find(x => this.comparator(x, this.formControl.value));
+  private updateFormControlValue() {
+    const selectedItems = this.getSelectedItems()
+    if (this.mode === 'single') {
+      if (selectedItems.length == 0) {
+        this.formControl.setValue(null);
+      } else {
+        this.formControl.setValue(this.getValue(selectedItems[0]));
+      }
+    } else {
+      if (selectedItems.length == 0) {
+        this.formControl.setValue(null);
+      } else {
+        this.formControl.setValue(selectedItems.map(x => this.getValue(x)));
+      }
+    }
+    this.render();
   }
 
   getValue(item: any): any {
@@ -145,21 +167,22 @@ export class SelectComponent extends AbstractFormControl<any> {
 
   select(item: any, e?: MouseEvent) {
     e?.stopPropagation();
-    const value = this.getValue(item);
-    if (this._onChange) this._onChange(value);
-    this.formControl.setValue(value);
-    this.render();
-    this.searchValue = '';
-    this.search();
-    this.hoveredIndex = this.renderedItems.indexOf(this.selectedItem);
-    this.close();
+
+    if (this.mode == 'single') {
+      this.items.forEach(x => x.selected = false);
+      this.close();
+    }
+
+    item.selected = !item.selected;
+    this.updateFormControlValue();
+    this.hoveredIndex = this.renderedItems.findIndex(x => x.selected);
   }
 
   search() {
     this.renderedItems = this.items.filter(() => true);
 
-    if (this.searchValue) {
-      const value = this.searchValue.toString().toLowerCase();
+    if (this.searchFormControl.value) {
+      const value = this.searchFormControl.value.toString().toLowerCase();
       this.renderedItems = this.renderedItems.filter(x => {
         const text = this.getText(x);
         if (text) return text.toString().toLowerCase().includes(value)
@@ -172,6 +195,9 @@ export class SelectComponent extends AbstractFormControl<any> {
     if (this.itemsTpl && this.elementRef.nativeElement && !this.overlayRef) {
       this.overlayRef = this.overlayService.createByTemplate(this.elementRef.nativeElement, this.itemsTpl)
       this.overlayRef.onDestroy.subscribe(() => this.overlayRef = undefined);
+      setTimeout(() => {
+        this.inputComponent?.inputEl?.nativeElement.focus();
+      }, 10);
     }
   }
 

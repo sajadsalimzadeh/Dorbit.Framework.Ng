@@ -7,7 +7,7 @@ import {Chips} from "./models";
 @Component({
   selector: 'dev-chips',
   templateUrl: './chips.component.html',
-  styleUrls: ['./chips.component.scss', '../control-box.scss'],
+  styleUrls: ['./chips.component.scss', '../control.scss'],
   providers: [createControlValueAccessor(ChipsComponent)]
 })
 export class ChipsComponent extends AbstractFormControl<Chips> {
@@ -33,6 +33,10 @@ export class ChipsComponent extends AbstractFormControl<Chips> {
     if (e.key == this.separator || e.key === 'Enter') {
       this.processValue();
       e.preventDefault();
+    } else if(e.key === 'Backspace' && !this.value) {
+      if(this.formControl.value.length > 0) {
+        this.remove(this.formControl.value.length - 1)
+      }
     }
   }
 

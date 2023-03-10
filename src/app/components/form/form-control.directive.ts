@@ -1,11 +1,11 @@
 import {
   ContentChildren,
-  Directive, ElementRef,
+  Directive, ElementRef, EventEmitter,
   forwardRef, HostBinding, HostListener,
   Injector, Input,
   OnChanges,
   OnDestroy,
-  OnInit, QueryList,
+  OnInit, Output, QueryList,
   SimpleChanges, TemplateRef,
   Type, ViewChild
 } from "@angular/core";
@@ -29,23 +29,16 @@ export interface ValidationError {
 
 export type Sizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
+let tabIndex = 0;
+
 @Directive()
 export abstract class AbstractFormControl<T> implements ControlValueAccessor, OnInit, OnChanges, OnDestroy {
   @Input() size: Sizes = 'md';
   @Input() placeholder: string = '';
-  @HostBinding('tabIndex') @Input() tabIndex = 0;
+  @Input() @HostBinding('tabIndex') tabIndex: number | undefined = tabIndex++;
+  @Input() status: 'primary' | 'secondary' | 'warning' | 'success' | 'danger' | 'link' = 'primary';
 
-  @ViewChild('inputEl') inputEl?: ElementRef<HTMLInputElement>;
-
-  formControl!: FormControl<T>;
-  errors: (ValidationError | any)[] = [];
-
-  validationsTemplate?: TemplateRef<any>;
-
-  @ContentChildren(DevTemplateDirective)
-  private set _templates(value: QueryList<DevTemplateDirective>) {
-    this.validationsTemplate = value.find(x => x.name == 'validation')?.template;
-  }
+  @Output() onChange = new EventEmitter<T>();
 
   @HostListener('focus', ['$event'])
   onFocus(e: FocusEvent) {
@@ -64,21 +57,33 @@ export abstract class AbstractFormControl<T> implements ControlValueAccessor, On
     this.inputEl?.nativeElement.focus();
   }
 
+  @ViewChild('inputEl') inputEl?: ElementRef<HTMLInputElement>;
+
+  validationsTemplate?: TemplateRef<any>;
+
+  @ContentChildren(DevTemplateDirective)
+  private set _templates(value: QueryList<DevTemplateDirective>) {
+    this.validationsTemplate = value.find(x => x.name == 'validation')?.template;
+  }
+
   @HostBinding('class')
   classes: any = {};
   focused: boolean = false;
+
+  formControl!: FormControl<T>;
+  errors: (ValidationError | any)[] = [];
 
   protected _onChange: any;
   protected _touch: any;
   protected subscription = new Subscription();
 
-  protected elementRef: ElementRef;
+  protected elementRef: ElementRef<HTMLElement>;
   protected formControlService: FormControlService | null;
 
   constructor(protected injector: Injector) {
     this.elementRef = injector.get(ElementRef);
     this.formControlService = injector.get(FormControlService, null, {optional: true});
-    if(this.formControlService) {
+    if (this.formControlService) {
       this.size = this.formControlService.size ?? 'md';
     }
   }
@@ -96,7 +101,7 @@ export abstract class AbstractFormControl<T> implements ControlValueAccessor, On
   }
 
   init() {
-    if(this.formControl) return;
+    if (this.formControl) return;
     const control = this.injector.get(NgControl, undefined, {optional: true});
     if (control?.control) {
       this.formControl = (control.control as FormControl);
@@ -117,6 +122,7 @@ export abstract class AbstractFormControl<T> implements ControlValueAccessor, On
       if (value === e) return;
       value = e;
       this.render();
+      this.onChange.emit(e);
     }));
     this.render();
   }
@@ -140,7 +146,7 @@ export abstract class AbstractFormControl<T> implements ControlValueAccessor, On
   }
 
   writeValue(value: T): void {
-    if(this.formControl.value !== value) {
+    if (this.formControl.value !== value) {
       this.formControl.setValue(value);
     }
   }
@@ -148,6 +154,7 @@ export abstract class AbstractFormControl<T> implements ControlValueAccessor, On
   render() {
     this.classes = {};
     this.classes[this.size] = true;
+    this.classes[this.status] = true;
     this.classes['focused'] = this.focused;
     if (this.formControl?.errors) {
       this.errors = [];
@@ -159,15 +166,18 @@ export abstract class AbstractFormControl<T> implements ControlValueAccessor, On
         });
       }
     }
+
+    this.elementRef.nativeElement.style.setProperty('--component-color', `var(--color-${this.status})`)
+    this.elementRef.nativeElement.style.setProperty('--component-color-rgb', `var(--color-${this.status}-rgb)`)
   }
 
-  focusHandler() {
+  focus() {
     const evt = document.createEvent("FocusEvent");
     evt.initEvent("focus", true, true);
     this.elementRef.nativeElement.dispatchEvent(evt);
   }
 
-  blurHandler() {
+  blur() {
     const evt = document.createEvent("FocusEvent");
     evt.initEvent("blur", true, true);
     this.elementRef.nativeElement.dispatchEvent(evt);

@@ -16,6 +16,7 @@ import {ControlGroupModule} from "./components/form/control-group/control-group.
 import {ButtonGroupModule} from "./components/button-group/button-group.module";
 import {ChipsModule} from "./components/form/chips/chips.module";
 import {SwitchModule} from "./components/form/switch/switch.module";
+import {RadioModule} from "./components/form/radio/radio.module";
 
 @NgModule({
   imports: [
@@ -40,6 +41,7 @@ import {SwitchModule} from "./components/form/switch/switch.module";
     ButtonGroupModule,
     ChipsModule,
     SwitchModule,
+    RadioModule,
   ],
 })
 export class DevModule {

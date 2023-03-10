@@ -4,12 +4,11 @@ import {AbstractFormControl, createControlValueAccessor} from "../form-control.d
 @Component({
   selector: 'dev-checkbox',
   templateUrl: 'checkbox.component.html',
-  styleUrls: ['./checkbox.component.scss'],
+  styleUrls: ['./checkbox.component.scss', '../control.scss'],
   providers: [createControlValueAccessor(CheckboxComponent)]
 })
 export class CheckboxComponent extends AbstractFormControl<boolean | null> {
   @Input() mode: 'binary' | 'ternary' = 'binary';
-  @Input() status: 'primary' | 'warning' | 'success' | 'danger' | 'link' = 'primary';
 
   @HostListener('keydown.space')
   onKeyDownSpace() {
@@ -30,7 +29,6 @@ export class CheckboxComponent extends AbstractFormControl<boolean | null> {
 
   override render() {
     super.render();
-    this.classes[this.status] = true;
     const value = this.formControl.value;
     this.classes['fill'] = (value === true || value === null || value === undefined);
   }

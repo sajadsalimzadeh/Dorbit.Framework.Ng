@@ -23,6 +23,7 @@
     align-items: center;
     color: var(--color-primary);
     border-radius: var(--radius-3);
+    margin-inline-start: 0 !important;
     background-color: rgba(var(--color-primary-rgb), .1);
   }
 

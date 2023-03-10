@@ -15,6 +15,7 @@ export class IndexComponent {
       text: 'Forms', children: [
         {text: 'Date Picker', link: 'forms/date-picker'},
         {text: 'Checkbox', link: 'forms/checkbox'},
+        {text: 'Radio', link: 'forms/radio'},
         {text: 'Switch', link: 'forms/switch'},
         {text: 'Input', link: 'forms/input'},
         {text: 'Select', link: 'forms/select'},

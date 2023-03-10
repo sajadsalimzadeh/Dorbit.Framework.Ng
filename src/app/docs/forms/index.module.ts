@@ -12,6 +12,7 @@ import {IndexComponent} from "./index.component";
         {path: 'chips', loadChildren: () => import('./chips/index.module').then(x => x.Module)},
         {path: 'checkbox', loadChildren: () => import('./checkbox/index.module').then(x => x.Module)},
         {path: 'switch', loadChildren: () => import('./switch/index.module').then(x => x.Module)},
+        {path: 'radio', loadChildren: () => import('./radio/index.module').then(x => x.Module)},
       ]
     }])
   ],

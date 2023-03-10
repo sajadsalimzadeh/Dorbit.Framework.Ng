@@ -3,7 +3,7 @@ import {
   ContentChildren, ElementRef, Injector,
   Input,
   QueryList,
-  TemplateRef
+  TemplateRef, ViewChild
 } from '@angular/core';
 import {DevTemplateDirective} from "../../../directives/template/dev-template.directive";
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
@@ -12,7 +12,7 @@ import {FormControlService} from "../form-control.service";
 @Component({
   selector: 'dev-control-group',
   templateUrl: 'control-group.component.html',
-  styleUrls: ['./control-group.component.scss', '../control-box.scss'],
+  styleUrls: ['./control-group.component.scss', '../control.scss'],
   providers: [createControlValueAccessor(ControlGroupComponent), FormControlService]
 })
 export class ControlGroupComponent extends AbstractFormControl<any> {

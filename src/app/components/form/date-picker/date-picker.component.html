@@ -1,7 +1,7 @@
 <div class="control-box">
   <div class="control-container flex-1">
     <input class="control" #inputEl [ngModel]="formControl.value" [placeholder]="placeholder"
-           (ngModelChange)="onInputChange($event)" (focus)="focusHandler()" (blur)="blurHandler()"/>
+           (ngModelChange)="onInputChange($event)" (focus)="focus()" (blur)="blur()"/>
   </div>
   <div class="control-container">
     <i class="clear far fa-times" *ngIf="formControl.value" (click)="clear()"></i>
