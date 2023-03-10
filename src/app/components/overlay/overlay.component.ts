@@ -21,7 +21,7 @@ export class OverlayComponent implements OnInit, AfterViewInit {
 
   animation: string = 'fade';
 
-  @HostBinding('class') classes: any = {};
+  classes: any = {};
   @HostBinding('style') styles: any = {};
 
   @HostListener('window:click', ['$event'])
@@ -34,9 +34,6 @@ export class OverlayComponent implements OnInit, AfterViewInit {
   @HostListener('click', ['$event'])
   onClick(e: MouseEvent) {
     e.stopPropagation();
-  }
-
-  constructor() {
   }
 
   ngOnInit(): void {
@@ -56,7 +53,6 @@ export class OverlayComponent implements OnInit, AfterViewInit {
     const top = rect.top + window.scrollY;
     const left = rect.left + window.scrollX;
     const right = rect.right + window.scrollX;
-
 
     this.styles.width = rect.width + 'px';
     this.styles.left = left + 'px';

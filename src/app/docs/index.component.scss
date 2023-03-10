@@ -1,0 +1,71 @@
+::ng-deep {
+  body {
+    margin: 0;
+  }
+}
+
+:host {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+$header-height: 70px;
+
+header {
+  min-height: $header-height;
+  background-color: var(--color-primary);
+}
+
+main {
+  flex: 1;
+  width: 100%;
+  display: flex;
+
+  aside {
+    width: 230px;
+    background-color: var(--color-white);
+    border-inline-end: 1px solid var(--color-gray--3);
+
+    a:link, a:visited {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      li {
+        color: var(--color-gray-3);
+
+        a {
+          display: flex;
+          padding: 10px 0;
+          padding-inline-start: 10%;
+
+          &:hover {
+            background-color: var(--color-gray--1);
+          }
+        }
+      }
+    }
+  }
+
+  article {
+    flex: 1;
+    position: relative;
+    background-color: var(--color-gray--0);
+
+    >section {
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 20px;
+      overflow: auto;
+      position: absolute;
+    }
+  }
+}

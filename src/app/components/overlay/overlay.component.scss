@@ -4,21 +4,22 @@
   position: absolute;
   z-index: 1000;
 
-  &.vr-up {
-    align-items: flex-end;
-    transform: translateY(-100%);
-  }
-
-  &.vr-down {
-    align-items: flex-start;
-  }
-
-  &.hr-reverse {
-    flex-direction: row-reverse;
-  }
-
   .overlay-container {
     height: 0;
+    display: flex;
     min-width: 100%;
+
+    &.vr-up {
+      align-items: flex-end;
+      transform: translateY(-100%);
+    }
+
+    &.vr-down {
+      align-items: flex-start;
+    }
+
+    &.hr-reverse {
+      flex-direction: row-reverse;
+    }
   }
 }

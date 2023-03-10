@@ -8,6 +8,18 @@
     </li>
   </ul>
 </ng-template>
-<ng-container *ngTemplateOutlet="menusTpl; context: {$implicit: menus}"></ng-container>
+<header>
 
-<router-outlet></router-outlet>
+</header>
+<main>
+  <aside>
+    <nav>
+      <ng-container *ngTemplateOutlet="menusTpl; context: {$implicit: menus}"></ng-container>
+    </nav>
+  </aside>
+  <article>
+    <section>
+      <router-outlet></router-outlet>
+    </section>
+  </article>
+</main>
