@@ -16,10 +16,12 @@ export class IndexComponent {
         {text: 'Date Picker', link: 'forms/date-picker'},
         {text: 'Checkbox', link: 'forms/checkbox'},
         {text: 'Radio', link: 'forms/radio'},
+        {text: 'Rate', link: 'forms/rate'},
         {text: 'Switch', link: 'forms/switch'},
         {text: 'Input', link: 'forms/input'},
         {text: 'Select', link: 'forms/select'},
         {text: 'Chips', link: 'forms/chips'},
+        {text: 'Volume', link: 'forms/volume'},
       ]
     },
   ]

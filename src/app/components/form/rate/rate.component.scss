@@ -1,0 +1,27 @@
+:host {
+
+  ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    list-style: none;
+
+    &:hover li.active {
+      color: rgba(var(--component-color-rgb), .8);
+    }
+
+    li {
+      width: 1.7em;
+      display: flex;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      color: var(--component-color);
+
+      i {
+        font-size: 1.2em;
+      }
+    }
+  }
+
+}

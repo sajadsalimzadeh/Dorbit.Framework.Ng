@@ -9,10 +9,9 @@ import {FormControl} from "@angular/forms";
 export class IndexComponent implements OnInit {
 
   loadings: any = {};
-  formControl = new FormControl(true);
-  formControlWithNull1 = new FormControl(false);
-  formControlWithNull2 = new FormControl(null);
-  formControlWithNull3 = new FormControl(true);
+  formControlSingle = new FormControl(50);
+  formControlMultiple = new FormControl({start: 20, end: 80});
+  formControlMultiple2 = new FormControl({start: 500, end: 4500});
 
   constructor() {
   }

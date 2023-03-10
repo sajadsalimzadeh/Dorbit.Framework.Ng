@@ -1,0 +1,5 @@
+  <div class="value-bar" #valueBarEl>
+    <span class="bullet start" *ngIf="mode == 'multiple'" (mousedown)="onDragStart($event, 'start')"></span>
+    <span class="gap"></span>
+    <span class="bullet end" (mousedown)="onDragStart($event, 'end')"></span>
+  </div>

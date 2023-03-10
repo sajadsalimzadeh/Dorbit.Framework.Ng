@@ -13,6 +13,8 @@ import {IndexComponent} from "./index.component";
         {path: 'checkbox', loadChildren: () => import('./checkbox/index.module').then(x => x.Module)},
         {path: 'switch', loadChildren: () => import('./switch/index.module').then(x => x.Module)},
         {path: 'radio', loadChildren: () => import('./radio/index.module').then(x => x.Module)},
+        {path: 'rate', loadChildren: () => import('./rate/index.module').then(x => x.Module)},
+        {path: 'volume', loadChildren: () => import('./volume/index.module').then(x => x.Module)},
       ]
     }])
   ],

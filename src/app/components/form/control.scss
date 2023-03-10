@@ -1,6 +1,5 @@
 :host {
   max-width: 100%;
-  min-height: 2.5em;
   display: inline-flex;
 
   &.focused {
@@ -33,6 +32,7 @@
 
   .control-container {
     display: flex;
+    min-height: 2.5em;
     position: relative;
     align-items: center;
   }
