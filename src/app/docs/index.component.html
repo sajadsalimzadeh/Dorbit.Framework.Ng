@@ -1,7 +1,7 @@
 <ng-template #menusTpl let-menus let-parent="parent">
-  <ul>
-    <li *ngFor="let menu of menus">
-      <a [routerLink]="menu.link">
+  <ul *ngIf="!parent || parent.open">
+    <li *ngFor="let menu of menus" [ngClass]="{active: (menu == activeMenu), open: menu.open}">
+      <a [routerLink]="menu.link" (click)="selectMenu(menu)">
         <i class="icon-start" [ngClass]="menu.icon"></i>
         <span>{{menu.text}}</span>
         <i *ngIf="menu.children" class="icon-end far fa-angle-right"></i>
@@ -14,7 +14,10 @@
 </ng-template>
 
 <header>
-
+  <div class="title-box">
+    <i class="icon fab fa-angular"></i>
+    <span class="text">Devor Angular</span>
+  </div>
 </header>
 <main>
   <aside>

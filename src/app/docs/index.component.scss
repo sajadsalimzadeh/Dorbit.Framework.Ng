@@ -10,11 +10,36 @@
   flex-direction: column;
 }
 
-$header-height: 70px;
+$header-height: 80px;
+$aside-width: 230px;
 
 header {
-  min-height: $header-height;
-  background-color: var(--color-primary);
+  display: flex;
+  justify-content: stretch;
+  max-height: $header-height;
+  border-bottom: 1px solid var(--color-gray--3);
+  background-color: var(--color-primary-shade);
+
+  .title-box {
+    gap: .5em;
+    padding: .5em;
+    display: flex;
+    width: $aside-width;
+    align-items: center;
+    font-size: var(--font-size-10);
+    background-color: var(--color-white);
+
+
+    .icon {
+      color: red;
+      font-size: 2em;
+    }
+
+    .text {
+      font-weight: bold;
+      white-space: nowrap;
+    }
+  }
 }
 
 main {
@@ -23,7 +48,7 @@ main {
   display: flex;
 
   aside {
-    width: 230px;
+    width: $aside-width;
     background-color: var(--color-white);
     border-inline-end: 1px solid var(--color-gray--3);
 
@@ -38,25 +63,69 @@ main {
       padding: 0;
       list-style: none;
 
+      ul {
+        background-color: rgba(var(--color-black-rgb), 0.01);
+
+        a {
+          padding-inline-start: 2em !important;
+        }
+      }
+
       li {
-        color: var(--color-gray-3);
 
         a {
           display: flex;
+          cursor: pointer;
           align-items: center;
-          padding: .8em .5em .8em 2em;
+          padding: .8em 0 .8em 1em;
+          color: var(--color-gray-5);
           border-bottom: 1px solid var(--color-gray--3);
 
           &:hover {
-            background-color: var(--color-gray--2);
+            color: var(--color-primary);
+            background-color: rgba(var(--color-black-rgb), 0.03);
           }
 
           i {
-            width: 2em;
+            width: 1.7em;
+            font-size: 1.5em;
           }
 
           span {
             flex: 1;
+          }
+
+          .icon-end {
+            display: flex;
+            position: relative;
+            align-items: center;
+            justify-content: center;
+
+            &::before {
+              position: absolute;
+            }
+          }
+        }
+
+        &.open {
+          >a {
+            color: var(--color-primary);
+            background-color: var(--color-gray--2);
+          }
+
+          .icon-end::before {
+            transform: rotate(90deg);
+          }
+        }
+
+        &.active {
+          > a {
+            color: var(--color-white);
+            background-color: var(--color-primary);
+
+            span {
+              color: inherit;
+            }
           }
         }
       }
@@ -66,9 +135,9 @@ main {
   article {
     flex: 1;
     position: relative;
-    background-color: var(--color-gray--0);
+    background-color: rgba(var(--color-black-rgb), 0.01);
 
-    >section {
+    > section {
       top: 0;
       left: 0;
       right: 0;

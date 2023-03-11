@@ -12,8 +12,8 @@
 
   <ng-template devTemplate="header">
     <tr>
-      <th></th>
-      <th></th>
+      <th style="width: 50px"></th>
+      <th style="width: 50px"></th>
       <th sort-by="id">
         <div class="flex-row flex-align-center">
           <span class="flex-1">Id</span>
@@ -69,7 +69,7 @@
       <td>
         <dev-table-row-expander [item]="item"></dev-table-row-expander>
       </td>
-      <td><input type="checkbox" [(ngModel)]="item['selected']"/></td>
+      <td><dev-checkbox [(ngModel)]="item['selected']"></dev-checkbox></td>
       <td>{{item.id}}</td>
       <td>{{item.first_name}}</td>
       <td>{{item.last_name}}</td>
