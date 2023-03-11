@@ -24,8 +24,8 @@
   color: var(--color-black);
   background-color: var(--color-white);
   box-shadow: 0 0 1px 0 var(--color-gray-9);
-  min-width: calc(var(--date-picker-day-size) * 7);
-  max-width: calc(var(--date-picker-day-size) * 7);
+  min-width: var(--date-picker-size);
+  max-width: var(--date-picker-size);
 
   &.dir-rtl {
     direction: rtl;
@@ -61,7 +61,7 @@
     > div {
       flex: 1;
       cursor: pointer;
-      padding: 10px 0;
+      padding: 1em 0;
       @include center;
       @include hover;
     }
@@ -88,20 +88,18 @@
 
     .days {
       flex: 1;
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
       border-bottom: 1px solid var(--color-gray--2);
+      grid-template-columns: auto auto auto auto auto auto auto;
 
       .day {
         cursor: pointer;
         padding: .1em;
         font-size: var(--font-size-2);
-        width: var(--date-picker-day-size);
-        height: var(--date-picker-day-size);
 
         span {
-          width: 100%;
-          height: 100%;
+          width: 3em;
+          height: 3em;
           border-radius: 50%;
 
           @include center;
@@ -138,7 +136,7 @@
 
   .today-button {
     @include hover;
-    padding: 5px 0;
+    padding: .5em 0;
     cursor: pointer;
     font-weight: bold;
     text-align: center;
