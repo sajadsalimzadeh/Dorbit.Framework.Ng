@@ -1,13 +1,18 @@
-<ng-template #menusTpl let-menus>
+<ng-template #menusTpl let-menus let-parent="parent">
   <ul>
     <li *ngFor="let menu of menus">
-      <a [routerLink]="menu.link">{{menu.text}}</a>
+      <a [routerLink]="menu.link">
+        <i class="icon-start" [ngClass]="menu.icon"></i>
+        <span>{{menu.text}}</span>
+        <i *ngIf="menu.children" class="icon-end far fa-angle-right"></i>
+      </a>
       <ng-container *ngIf="menu.children">
-        <ng-container *ngTemplateOutlet="menusTpl; context: {$implicit: menu.children}"></ng-container>
+        <ng-container *ngTemplateOutlet="menusTpl; context: {$implicit: menu.children, parent: menu}"></ng-container>
       </ng-container>
     </li>
   </ul>
 </ng-template>
+
 <header>
 
 </header>

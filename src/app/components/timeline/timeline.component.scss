@@ -26,7 +26,6 @@
     }
 
     .start, .end {
-      flex: 1;
       display: flex;
     }
   }
@@ -34,23 +33,26 @@
   &.dir-vertical {
     flex-direction: column;
     .item {
+      min-width: 200px;
+      min-height: 50px;
       flex-direction: row;
 
       .splitter {
         width: 2px;
-        height: 100%;
         justify-content: center;
       }
 
       .start, .end {
-        padding: 0 20px;
+        width: 50%;
       }
 
       .start {
+        padding-inline-end: 2em;
         justify-content: flex-end;
       }
 
       .end {
+        padding-inline-start: 2em;
         justify-content: flex-start;
       }
     }
@@ -60,23 +62,27 @@
     flex-direction: row;
 
     .item {
+      min-width: 50px;
+      min-height: 50px;
       flex-direction: column;
 
       .splitter {
         height: 2px;
-        width: 100%;
         align-items: center;
       }
 
       .start, .end {
+        height: 50%;
         padding: 20px 0;
       }
 
       .start {
+        padding-block-end: 2em;
         align-items: flex-end;
       }
 
       .end {
+        padding-block-start: 2em;
         align-items: flex-start;
       }
     }

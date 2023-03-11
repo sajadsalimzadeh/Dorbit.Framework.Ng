@@ -9,7 +9,6 @@ import {
 import {DevTemplateDirective} from "../../../directives/template/dev-template.directive";
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
 import {OverlayRef, OverlayService} from "../../overlay/overlay.service";
-import {DomService} from "../../../services/dom.service";
 import {InputComponent} from "../input/input.component";
 import {FormControl} from "@angular/forms";
 
@@ -74,9 +73,7 @@ export class SelectComponent extends AbstractFormControl<any | any[]> {
 
   renderedItems: any[] = [];
 
-  constructor(injector: Injector,
-              private domService: DomService,
-              private overlayService: OverlayService) {
+  constructor(injector: Injector, private overlayService: OverlayService) {
     super(injector);
   }
 
@@ -101,6 +98,7 @@ export class SelectComponent extends AbstractFormControl<any | any[]> {
         this.items[i] = {text: x, value: x};
       });
     }
+    super.ngOnChanges(changes);
   }
 
   private getSelectedItems(): any[] {
@@ -140,7 +138,7 @@ export class SelectComponent extends AbstractFormControl<any | any[]> {
   }
 
   private updateFormControlValue() {
-    const selectedItems = this.getSelectedItems()
+    const selectedItems = this.getSelectedItems();
     if (this.mode === 'single') {
       if (selectedItems.length == 0) {
         this.formControl.setValue(null);
@@ -155,6 +153,20 @@ export class SelectComponent extends AbstractFormControl<any | any[]> {
       }
     }
     this.render();
+  }
+
+  private updateItemsSelectedState() {
+    const values = this.formControl.value;
+    if(Array.isArray(values)) {
+      this.items.forEach(x => x.selected = values.findIndex(y => this.comparator(x, y)) > -1);
+    } else {
+      this.items.forEach(x => x.selected = this.comparator(x, values));
+    }
+  }
+
+  override render() {
+    this.updateItemsSelectedState();
+    super.render();
   }
 
   getValue(item: any): any {

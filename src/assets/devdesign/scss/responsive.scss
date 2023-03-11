@@ -11,6 +11,12 @@
 .flex-justify-start {justify-content: flex-start;}
 .flex-justify-center {justify-content: center;}
 .flex-justify-end {justify-content: flex-end;}
+.flex-justify-space-between {justify-content: space-between;}
+.flex-justify-space-around {justify-content: space-around;}
+
+.text-align-start {text-align: start;}
+.text-align-center {text-align: center;}
+.text-align-end {text-align: end;}
 
 $i: 0;
 @while ($i < 12) {

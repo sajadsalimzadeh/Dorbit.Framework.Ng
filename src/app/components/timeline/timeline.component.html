@@ -5,15 +5,15 @@
   <ng-template #elseContentTpl>{{item}}</ng-template>
 </ng-template>
 
-<ul class="items" [ngClass]="'dir-' + config.direction">
+<ul class="items" [ngClass]="'dir-' + direction">
   <li class="item" *ngFor="let item of items; let index = index" [style]="style">
     <div class="start">
-      <ng-container *ngIf="config.align == 'start' || (config.align == 'alternate' && index%2 == 0)">
+      <ng-container *ngIf="align == 'start' || (align == 'alternate' && index%2 == 0)">
         <ng-container
           *ngTemplateOutlet="contentTpl; context: {$implicit: item, template: contentTemplate}"></ng-container>
       </ng-container>
       <ng-container *ngIf="oppositeTemplate">
-        <ng-container *ngIf="config.align == 'end' || (config.align == 'alternate' && index%2 == 1)">
+        <ng-container *ngIf="align == 'end' || (align == 'alternate' && index%2 == 1)">
           <ng-container *ngTemplateOutlet="oppositeTemplate; context: {$implicit: item}"></ng-container>
         </ng-container>
       </ng-container>
@@ -27,12 +27,12 @@
       </ng-template>
     </div>
     <div class="end">
-      <ng-container *ngIf="config.align == 'end' || (config.align == 'alternate' && index%2 == 1)">
+      <ng-container *ngIf="align == 'end' || (align == 'alternate' && index%2 == 1)">
         <ng-container
           *ngTemplateOutlet="contentTpl; context: {$implicit: item, template: contentTemplate}"></ng-container>
       </ng-container>
       <ng-container *ngIf="oppositeTemplate">
-        <ng-container *ngIf="config.align == 'start' || (config.align == 'alternate' && index%2 == 0)">
+        <ng-container *ngIf="align == 'start' || (align == 'alternate' && index%2 == 0)">
           <ng-container *ngTemplateOutlet="oppositeTemplate; context: {$implicit: item}"></ng-container>
         </ng-container>
       </ng-container>

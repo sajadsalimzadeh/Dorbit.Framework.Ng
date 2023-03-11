@@ -6,11 +6,11 @@
   border-radius: var(--radius-2);
 
   &, * {cursor: pointer;}
-  &.fill .box {color: var(--color-white);}
+  &.fill .check-box {color: var(--color-white);}
   &:hover, &:focus {background-color: rgba(var(--component-color-rgb), .1);}
-  &.fill .box {background-color: var(--component-color);}
+  &.fill .check-box {background-color: var(--component-color);}
 
-  .box {
+  .check-box {
     width: 0;
     height: 0;
     padding: .6em;

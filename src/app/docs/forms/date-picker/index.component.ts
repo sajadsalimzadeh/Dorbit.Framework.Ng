@@ -1,4 +1,5 @@
 import {Component} from "@angular/core";
+import { FormControl } from "@angular/forms";
 
 
 @Component({
@@ -7,6 +8,7 @@ import {Component} from "@angular/core";
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent {
-  dateValue = '';
+  geregorianFormControl = new FormControl('');
+  jalaliFormControl = new FormControl('');
 
 }

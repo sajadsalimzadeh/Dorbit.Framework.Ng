@@ -1,1 +1,14 @@
-<dev-date-picker [(ngModel)]="dateValue" locale="fa"></dev-date-picker>
+<h1>Date Picker</h1>
+<hr>
+<h2>Sizes</h2>
+<div class="flex-column flex-gap-4 py-1">
+    <dev-date-picker [formControl]="geregorianFormControl" size="xs" placeholder="Choose Date ..."></dev-date-picker>
+    <dev-date-picker [formControl]="geregorianFormControl" size="sm" placeholder="Choose Date ..."></dev-date-picker>
+    <dev-date-picker [formControl]="geregorianFormControl" size="md" placeholder="Choose Date ..."></dev-date-picker>
+    <dev-date-picker [formControl]="geregorianFormControl" size="lg" placeholder="Choose Date ..."></dev-date-picker>
+    <dev-date-picker [formControl]="geregorianFormControl" size="xl" placeholder="Choose Date ..."></dev-date-picker>
+</div>
+<h2>Jalali</h2>
+<div class="flex-column flex-gap-4 py-1">
+    <dev-date-picker [formControl]="jalaliFormControl" locale="fa" placeholder="Choose Date ..."></dev-date-picker>
+</div>

@@ -1,7 +1,5 @@
 import {Component, ContentChildren, Input, OnChanges, QueryList, SimpleChanges, TemplateRef} from "@angular/core";
-import {TimelineConfig} from "./models";
 import {DevTemplateDirective} from "../../directives/template/dev-template.directive";
-import {config} from "rxjs";
 
 @Component({
   selector: 'dev-timeline',
@@ -10,7 +8,8 @@ import {config} from "rxjs";
 })
 export class TimelineComponent implements OnChanges {
   @Input() items: any[] = [];
-  @Input() config = new TimelineConfig();
+  @Input() direction: 'vertical' | 'horizontal' = 'horizontal';
+  @Input() align: 'start' | 'end' | 'alternate' = 'alternate';
   @Input() size = 0;
 
   style: any = {};
@@ -30,7 +29,7 @@ export class TimelineComponent implements OnChanges {
   }
 
   render() {
-    this.style['height'] = (this.config.direction == 'vertical' && this.size ? this.size + 'px' : 'auto');
-    this.style['width'] = (this.config.direction == 'horizontal' && this.size ? this.size + 'px' : 'auto');
+    this.style['height'] = (this.direction == 'vertical' && this.size ? this.size + 'px' : 'auto');
+    this.style['width'] = (this.direction == 'horizontal' && this.size ? this.size + 'px' : 'auto');
   }
 }
