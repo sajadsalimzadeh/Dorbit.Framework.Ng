@@ -24,6 +24,7 @@ export class IndexComponent implements OnInit {
     },
     {text: 'Timeline', link: 'timeline', icon: 'far fa-timeline'},
     {text: 'Data Table', link: 'data-table', icon: 'far fa-table'},
+    {text: 'Paginator', link: 'data-table', icon: 'far fa-table'},
   ];
   activeMenu: any;
 

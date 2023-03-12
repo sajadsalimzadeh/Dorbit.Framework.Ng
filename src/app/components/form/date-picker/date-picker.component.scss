@@ -89,17 +89,21 @@
     .days {
       flex: 1;
       display: grid;
+      padding: .5em 0;
+      grid-row-gap: .6em;
       border-bottom: 1px solid var(--color-gray--2);
       grid-template-columns: auto auto auto auto auto auto auto;
 
       .day {
+        display: flex;
         cursor: pointer;
-        padding: .1em;
+        align-items: center;
+        justify-content: center;
         font-size: var(--font-size-2);
 
         span {
-          width: 3em;
-          height: 3em;
+          width: 2.5em;
+          height: 2.5em;
           border-radius: 50%;
 
           @include center;

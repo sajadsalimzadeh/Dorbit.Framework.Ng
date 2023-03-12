@@ -15,7 +15,7 @@ export class IndexComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.config.paging.limit = 10;
+    this.config.paging.size = 10;
     this.config.selecting.mode = 'multiple';
     this.config.sorting.field = 'id';
     // this.config.settings.selectMultipleWithMetaKey = true;

@@ -1,0 +1,11 @@
+<ul>
+    <li *ngFor="let item of pageNumbers" [ngClass]="{active: (page == item - 1)}"
+        (click)="select(item)">
+        <ng-container *ngIf="item; else extraPagesTpl">
+        {{item}}
+        </ng-container>
+        <ng-template #extraPagesTpl>
+        ...
+        </ng-template>
+    </li>
+</ul>

@@ -60,21 +60,11 @@
       {{pageReportTemplate}}
     </div>
     <div class="page-numbers">
-      <ul>
-        <li *ngFor="let item of pageNumbers" [ngClass]="{active: (config.paging.page == item - 1)}"
-            (click)="selectPage(item)">
-          <ng-container *ngIf="item; else extraPagesTpl">
-            {{item}}
-          </ng-container>
-          <ng-template #extraPagesTpl>
-            ...
-          </ng-template>
-        </li>
-      </ul>
+      <dev-paginator [page]="config.paging.page" [totalCount]="totalCount" [pageSize]="config.paging.size" (onSelect)="onPageSelect($event)"></dev-paginator>
     </div>
     <div class="page-row-count page-numbers-around">
-      <dev-select [items]="config.paging.limits"
-                  [(ngModel)]="config.paging.limit"
+      <dev-select [items]="config.paging.pageSizes"
+                  [(ngModel)]="config.paging.size"
                   (ngModelChange)="render()"
                   class="limit-select"
                   name="pageRowCountControl">

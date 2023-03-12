@@ -7,8 +7,8 @@
 
   &, * {cursor: pointer;}
   &.fill .check-box {color: var(--color-white);}
-  &:hover, &:focus {background-color: rgba(var(--component-color-rgb), .1);}
-  &.fill .check-box {background-color: var(--component-color);}
+  &:hover, &:focus {background-color: rgba(var(--color-component-rgb), .1);}
+  &.fill .check-box {background-color: var(--color-component);}
 
   .check-box {
     width: 0;
@@ -21,7 +21,7 @@
     border-radius: inherit;
     justify-content: center;
     box-sizing: content-box;
-    border-color: var(--component-color);
+    border-color: var(--color-component);
 
     i {
       font-size: .8em;

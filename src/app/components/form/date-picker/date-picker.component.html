@@ -16,20 +16,13 @@
       </div>
       <div class="calendar">
         <div class="week-days">
-          <div class="week-day" *ngFor="let weekDay of weekDays">
-            {{weekDay}}
-          </div>
+          <div class="week-day" *ngFor="let weekDay of weekDays">{{weekDay}}</div>
         </div>
         <div class="days">
-          <div class="day" *ngFor="let date of dates; let index = index" [ngClass]="{
-      active: date.isSelected,
-      today: date.isToday,
-      holiday: date.isHoliday,
-     'this-month': date.isCurrentMonth
-      }" (mousedown)="selectDate(date)">
-            <span>
-              {{date.day}}
-            </span>
+          <div class="day" *ngFor="let date of dates; let index = index" 
+            [ngClass]="{active: date.isSelected,today: date.isToday,holiday: date.isHoliday,'this-month': date.isCurrentMonth}" 
+            (mousedown)="selectDate(date)">
+            <span>{{date.day}}</span>
           </div>
         </div>
       </div>

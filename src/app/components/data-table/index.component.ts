@@ -90,7 +90,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy, AfterVi
   dataScrollBarWidth: number = 20;
   dataTableScrollThumbStyles: any = {};
 
-  constructor(private tableService: TableService, private overlayService: OverlayService) {
+  constructor(private tableService: TableService, overlayService: OverlayService) {
     tableService.dataTable = this;
     overlayService.singleton = false;
   }
@@ -102,7 +102,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy, AfterVi
 
   ngOnInit(): void {
     this.pageRowCountControl.valueChanges.subscribe(e => this.render());
-    this.pageRowCountControl.setValue(this.config.paging.limit);
+    this.pageRowCountControl.setValue(this.config.paging.size);
 
     this.onRowClick.subscribe(item => {
       if (this.config.selecting.enable) {
@@ -171,8 +171,6 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy, AfterVi
   }
 
   render() {
-    this.createPageNumbers();
-
     this.renderedItems = this.items.filter(() => true);
     this.renderedItems = this.filterItems(this.renderedItems);
     this.renderedItems = this.sortItems(this.renderedItems);
@@ -182,8 +180,8 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy, AfterVi
       this.sizingHeaderAndFooters();
     }, 10);
 
-    const first = this.config.paging.page * this.config.paging.limit + 1;
-    const last = first + this.config.paging.limit - 1;
+    const first = this.config.paging.page * this.config.paging.size + 1;
+    const last = first + this.config.paging.size - 1;
     this.pageReportTemplate = this.config.paging.pageReportTemplate
       .replace('{totalRecords}', this.totalCount.toString())
       .replace('{first}', first.toString())
@@ -250,38 +248,10 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy, AfterVi
 
   private pagingItems(items: any[]): any[] {
     if (this.config.paging.enable) {
-      const start = this.config.paging.page * this.config.paging.limit;
-      items = items.slice(start, start + this.config.paging.limit);
+      const start = this.config.paging.page * this.config.paging.size;
+      items = items.slice(start, start + this.config.paging.size);
     }
     return items;
-  }
-
-  private createPageNumbers() {
-
-    const lastPage = Math.floor(this.totalCount / this.config.paging.limit);
-    if (this.config.paging.page > lastPage) this.config.paging.page = lastPage - 1;
-    const currentPageNumber = this.config.paging.page + 1;
-
-    if (lastPage <= 7) {
-      this.pageNumbers = [];
-      for (let i = 1; i < lastPage; i++) {
-        this.pageNumbers.push(i);
-      }
-    } else {
-      this.pageNumbers = [currentPageNumber];
-      for (let i = 1; this.pageNumbers.length < 7; i++) {
-        if (currentPageNumber - i > 0) this.pageNumbers.unshift(currentPageNumber - i);
-        if (currentPageNumber + i <= lastPage) this.pageNumbers.push(currentPageNumber + i);
-      }
-      this.pageNumbers[0] = 1;
-      if (this.pageNumbers[1] != 2) {
-        this.pageNumbers[1] = 0;
-      }
-      if (this.pageNumbers[this.pageNumbers.length - 2] != lastPage - 1) {
-        this.pageNumbers[this.pageNumbers.length - 2] = 0;
-      }
-      this.pageNumbers[this.pageNumbers.length - 1] = lastPage;
-    }
   }
 
   sizingHeaderAndFooters() {
@@ -310,8 +280,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy, AfterVi
     // })
   }
 
-  selectPage(page: number) {
-    if (!page) return;
+  onPageSelect(page: number) {
     this.config.paging.page = page - 1;
     this.render();
   }

@@ -7,7 +7,7 @@
     list-style: none;
 
     &:hover li.active {
-      color: rgba(var(--component-color-rgb), .8);
+      color: rgba(var(--color-component-rgb), .8);
     }
 
     li {
@@ -16,7 +16,7 @@
       cursor: pointer;
       align-items: center;
       justify-content: center;
-      color: var(--component-color);
+      color: var(--color-component);
 
       i {
         font-size: 1.2em;

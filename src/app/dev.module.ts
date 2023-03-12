@@ -19,6 +19,7 @@ import {SwitchModule} from "./components/form/switch/switch.module";
 import {RadioModule} from "./components/form/radio/radio.module";
 import {RateModule} from "./components/form/rate/rate.module";
 import {VolumeModule} from "./components/form/volume/volume.module";
+import {PaginatorModule} from "./components/paginator/paginator.module";
 
 @NgModule({
   imports: [
@@ -46,6 +47,7 @@ import {VolumeModule} from "./components/form/volume/volume.module";
     RadioModule,
     RateModule,
     VolumeModule,
+    PaginatorModule,
   ],
 })
 export class DevModule {

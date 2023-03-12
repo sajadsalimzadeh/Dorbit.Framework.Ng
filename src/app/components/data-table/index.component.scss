@@ -185,13 +185,14 @@
 
           &.selected {
             @include selected-color;
+            
+            td {
+              border-inline-end: 1px solid rgba(var(--color-primary-rgb), 0.15) !important;
+            }
 
             ::ng-deep {
               tr, & + tbody tr {
                 border-top: 1px solid rgba(var(--color-primary-rgb), 0.15) !important;
-                td {
-                  border-inline-end: 1px solid rgba(var(--color-primary-rgb), 0.15) !important;
-                }
               }
             }
           }
@@ -234,39 +235,6 @@
 
     .page-numbers {
       padding: 0 2em;
-
-      ul {
-        gap: 10px;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        list-style: none;
-        user-select: none;
-        align-items: center;
-
-        li {
-          width: 2.7em;
-          height: 2.7em;
-          display: flex;
-          cursor: pointer;
-          overflow: hidden;
-          align-items: center;
-          border-radius: 6px;
-          justify-content: center;
-          text-overflow: ellipsis;
-          color: var(--color-gray-6);
-
-          &:hover {
-            background-color: var(--color-gray--1);
-          }
-
-          &.active {
-            font-weight: bold;
-            color: var(--color-primary);
-            background-color: rgba(var(--color-primary-rgb), .1);
-          }
-        }
-      }
     }
 
     .page-row-count {

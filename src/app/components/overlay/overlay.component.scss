@@ -12,21 +12,36 @@
     &.vr-up {
       align-items: flex-end;
       transform: translateY(-100%);
+
+      ::ng-deep>* {
+        transform-origin: bottom;
+      }
     }
 
     &.vr-down {
       align-items: flex-start;
+
+      ::ng-deep>* {
+        transform-origin: top;
+      }
     }
 
     &.hr-reverse {
       flex-direction: row-reverse;
     }
 
-    ::ng-deep {
-      >* {
-
-      }
+    ::ng-deep>* {
+      animation: scale-vertical 200ms ease;
     }
   }
 }
 
+@keyframes scale-vertical {
+  0% {
+    transform: scaleY(.8);
+  }
+
+  100% {
+    transform: scaleY(1);
+  }
+}

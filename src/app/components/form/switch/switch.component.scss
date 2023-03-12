@@ -9,8 +9,8 @@
   label {font-size: .9em;}
 
   &, * {cursor: pointer;}
-  &:hover, &:focus {background-color: rgba(var(--component-color-rgb), .1);}
-  &.checked .switch-box {background-color: var(--component-color);border-color: var(--component-color);}
+  &:hover, &:focus {background-color: rgba(var(--color-component-rgb), .1);}
+  &.checked .switch-box {background-color: var(--color-component);border-color: var(--color-component);}
 
   $base-size: 1.5em;
   $border-size: 3px;
