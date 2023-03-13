@@ -1,0 +1,66 @@
+:host {
+  left: 0;
+  right: 0;
+  height: 0;
+  display: flex;
+  position: fixed;
+
+  &.show {
+    .button {
+      opacity: .8;
+      transform: translate(0) !important;
+    }
+  }
+
+  &.top-start {
+    top: 0;
+    align-items: flex-start;
+    justify-content: flex-start;
+    .button {
+      transform: translate(-5em, -5em);
+    }
+  }
+  &.top-end {
+    top: 0;
+    align-items: flex-start;
+    justify-content: flex-end;
+    .button {
+      transform: translate(5em, -5em);
+    }
+  }
+  &.bottom-start {
+    bottom: 0;
+    align-items: flex-end;
+    justify-content: flex-start;
+    .button {
+      transform: translate(-5em, 5em);
+    }
+  }
+  &.bottom-end {
+    bottom: 0;
+    align-items: flex-end;
+    justify-content: flex-end;
+    .button {
+      transform: translate(5em, 5em);
+    }
+  }
+}
+
+.button {
+  width: 3em;
+  height: 3em;
+  opacity: 0;
+  display: flex;
+  margin: 1em 2em;
+  cursor: pointer;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white);
+  transition: all 300ms ease;
+  background-color: var(--color-component);
+
+  i {
+    font-size: 1.5em;
+  }
+}
