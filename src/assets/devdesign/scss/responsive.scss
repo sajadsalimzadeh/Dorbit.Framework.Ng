@@ -1,3 +1,5 @@
+@import "../variables";
+
 .flex-row {display: flex; flex-direction: row;}
 .flex-row-reverse {display: flex; flex-direction: row-reverse;}
 
@@ -18,9 +20,6 @@
 .text-align-center {text-align: center;}
 .text-align-end {text-align: end;}
 
-$i: 0;
-@while ($i < 12) {
-  .flex-gap-#{$i} {gap: var(--size-#{$i});}
-  $i: $i + 1;
+@each $count in $counters {
+  .flex-gap-#{$count} {gap: var(--size-#{$count});}
 }
-

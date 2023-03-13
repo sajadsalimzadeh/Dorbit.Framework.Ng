@@ -1,132 +1,56 @@
+@use "sass:list";
+@import "../variables";
 
-$i: 0;
-@while ($i <= 12) {
-  .flex-#{$i} {flex: $i;}
-  $i: $i + 1;
+@each $counter in $counters {
+  .flex-#{$counter} {flex: $counter;}
 }
 
-//Margins
-$i: 0;
-@while ($i <= 10) {
-  .mx-#{$i} {margin-inline-start: var(--size-#{$i});margin-inline-end: var(--size-#{$i});}
-  $i: $i + 1;
+$helpers: (
+    ("mx", "margin-inline-start", "margin-inline-end"),
+    ("mxs", "margin-inline-start"),
+    ("mxe", "margin-inline-end"),
+    ("my", "margin-block-start", "margin-block-end"),
+    ("mys", "margin-block-start"),
+    ("mye", "margin-block-end"),
+    ("ml", "margin-left"),
+    ("mr", "margin-right"),
+    ("mt", "margin-top"),
+    ("mb", "margin-bottom"),
+    ("px", "padding-inline-start", "padding-inline-end"),
+    ("pxs", "padding-inline-start"),
+    ("pxe", "padding-inline-end"),
+    ("py", "padding-block-start", "padding-block-end"),
+    ("pys", "padding-block-start"),
+    ("pye", "padding-block-end"),
+    ("pl", "padding-left"),
+    ("pr", "padding-right"),
+    ("pt", "padding-top"),
+    ("pb", "padding-bottom"),
+);
+
+@each $helper in $helpers {
+  $name: list.nth($helper, 1);
+  $i: 0;
+  @while ($i <= 10) {
+    .#{$name}-#{$i} {
+      $j: 2;
+      @while ($j < list.length($helper)) {
+        $propName: list.nth($helper, $j);
+        #{$propName}: var(--size-#{$i});
+        $j: $j + 1;
+      }
+    }
+    $i: $i + 1;
+  }
 }
 
-$i: 0;
-@while ($i <= 10) {
-  .my-#{$i} {margin-block-start: var(--size-#{$i});margin-block-end: var(--size-#{$i});}
-  $i: $i + 1;
+@each $size in $sizes {
+  .#{$size} {font-size: var(--font-size-#{$size});}
 }
 
-//Margin Directive
-$i: 0;
-@while ($i <= 10) {
-  .ml-#{$i} {margin-left: var(--size-#{$i});}
-  $i: $i + 1;
-}
 
-$i: 0;
-@while ($i <= 10) {
-  .mr-#{$i} {margin-right: var(--size-#{$i});}
-  $i: $i + 1;
-}
-
-$i: 0;
-@while ($i <= 10) {
-  .mt-#{$i} {margin-top: var(--size-#{$i});}
-  $i: $i + 1;
-}
-
-$i: 0;
-@while ($i <= 10) {
-  .mb-#{$i} {margin-bottom: var(--size-#{$i});}
-  $i: $i + 1;
-}
-
-//Margin Flexbox
-$i: 0;
-@while ($i <= 10) {
-  .mxs-#{$i} {margin-inline-start: var(--size-#{$i});}
-  $i: $i + 1;
-}
-
-$i: 0;
-@while ($i <= 10) {
-  .mxe-#{$i} {margin-inline-end: var(--size-#{$i});}
-  $i: $i + 1;
-}
-
-$i: 0;
-@while ($i <= 10) {
-  .mys-#{$i} {margin-block-start: var(--size-#{$i});}
-  $i: $i + 1;
-}
-
-$i: 0;
-@while ($i <= 10) {
-  .mye-#{$i} {margin-block-end: var(--size-#{$i});}
-  $i: $i + 1;
-}
-
-//Paddings
-$i: 0;
-@while ($i <= 10) {
-  .px-#{$i} {padding-inline-start: var(--size-#{$i});padding-inline-end: var(--size-#{$i});}
-  $i: $i + 1;
-}
-
-$i: 0;
-@while ($i <= 10) {
-  .py-#{$i} {padding-block-start: var(--size-#{$i});padding-block-end: var(--size-#{$i});}
-  $i: $i + 1;
-}
-
-//Padding Directive
-$i: 0;
-@while ($i <= 10) {
-  .pl-#{$i} {padding-left: var(--size-#{$i});}
-  $i: $i + 1;
-}
-
-$i: 0;
-@while ($i <= 10) {
-  .pr-#{$i} {padding-right: var(--size-#{$i});}
-  $i: $i + 1;
-}
-
-$i: 0;
-@while ($i <= 10) {
-  .pt-#{$i} {padding-top: var(--size-#{$i});}
-  $i: $i + 1;
-}
-
-$i: 0;
-@while ($i <= 10) {
-  .pb-#{$i} {padding-bottom: var(--size-#{$i});}
-  $i: $i + 1;
-}
-
-//Padding Flexbox
-$i: 0;
-@while ($i <= 10) {
-  .pxs-#{$i} {padding-inline-start: var(--size-#{$i});}
-  $i: $i + 1;
-}
-
-$i: 0;
-@while ($i <= 10) {
-  .pxe-#{$i} {padding-inline-end: var(--size-#{$i});}
-  $i: $i + 1;
-}
-
-$i: 0;
-@while ($i <= 10) {
-  .pys-#{$i} {padding-block-start: var(--size-#{$i});}
-  $i: $i + 1;
-}
-
-$i: 0;
-@while ($i <= 10) {
-  .pye-#{$i} {padding-block-end: var(--size-#{$i});}
-  $i: $i + 1;
+@each $color in $colors {
+  .bg-#{$color}-tint {background-color: var(--color-#{$color}-tint);}
+  .bg-#{$color} {background-color: var(--color-#{$color});}
+  .bg-#{$color}-shade {background-color: var(--color-#{$color}-shade);}
 }
