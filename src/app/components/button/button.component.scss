@@ -2,82 +2,15 @@
   display: inline-block;
   border-radius: var(--radius-2);
 
-  &.primary {
-    &.fill {
-      color: var(--color-white);
-      background-color: var(--color-primary);
-      &.disabled {color: var(--color-primary-tint);}
-    }
-    &.outline {border: 1px solid var(--color-primary);}
-    &.text, &.outline {
-      color: var(--color-primary);
-      &:hover {background-color: rgba(var(--color-primary-rgb), .1);}
-    }
+  &.fill {
+    color: var(--color-white);
+    background-color: var(--color-component);
+    &.disabled {color: rgba(var(--color-white-rgb), .8);}
   }
-
-  &.secondary {
-    &.fill {
-      color: var(--color-white);
-      background-color: var(--color-secondary);
-      &.disabled {color: var(--color-secondary-tint);}
-    }
-    &.outline {border: 1px solid var(--color-secondary);}
-    &.text, &.outline {
-      color: var(--color-secondary);
-      &:hover {background-color: rgba(var(--color-secondary-rgb), .1);}
-    }
-  }
-
-  &.success {
-    &.fill {
-      color: var(--color-white);
-      background-color: var(--color-success);
-      &.disabled {color: var(--color-success-tint);}
-    }
-    &.outline {border: 1px solid var(--color-success);}
-    &.text, &.outline {
-      color: var(--color-success);
-      &:hover {background-color: rgba(var(--color-success-rgb), .1);}
-    }
-  }
-
-  &.warning {
-    &.fill {
-      color: var(--color-white);
-      background-color: var(--color-warning);
-      &.disabled {color: var(--color-warning-tint);}
-    }
-    &.outline {border: 1px solid var(--color-warning);}
-    &.text, &.outline {
-      color: var(--color-warning);
-      &:hover {background-color: rgba(var(--color-warning-rgb), .1);}
-    }
-  }
-
-  &.danger {
-    &.fill {
-      color: var(--color-white);
-      background-color: var(--color-danger);
-      &.disabled {color: var(--color-danger-tint);}
-    }
-    &.outline {border: 1px solid var(--color-danger);}
-    &.text, &.outline {
-      color: var(--color-danger);
-      &:hover {background-color: rgba(var(--color-danger-rgb), .1);}
-    }
-  }
-
-  &.link {
-    &.fill {
-      color: var(--color-white);
-      background-color: var(--color-link);
-      &.disabled {color: var(--color-link-tint);}
-    }
-    &.outline {border: 1px solid var(--color-link);}
-    &.text, &.outline {
-      color: var(--color-link);
-      &:hover {background-color: rgba(var(--color-link-rgb), .1);}
-    }
+  &.outline {border: 1px solid var(--color-component);}
+  &.text, &.outline {
+    color: var(--color-component);
+    &:hover {background-color: rgba(var(--color-component-rgb), .1);}
   }
 
   &.disabled {opacity: .5 !important;}
@@ -113,58 +46,20 @@
 
     &.empty-content {
       padding: 0;
-
-      $scale: 1.5;
-      &.xs {width: calc(var(--size-6) * $scale);height: calc(var(--size-6) * $scale);}
-      &.sm {width: calc(var(--size-7) * $scale);height: calc(var(--size-7) * $scale);}
-      &.md {width: calc(var(--size-8) * $scale);height: calc(var(--size-8) * $scale);}
-      &.lg {width: calc(var(--size-9) * $scale);height: calc(var(--size-9) * $scale);}
-      &.xl {width: calc(var(--size-10) * $scale);height: calc(var(--size-10) * $scale);}
+      width: 2.7em;
+      height: 2.7em;
     }
 
     &.has-content {
       border-radius: var(--radius-10);
     }
   }
-
-  &.xs button {
-    font-size: var(--font-size-0);
-    padding: var(--size-3) var(--size-4);
-
-    &.icon-start .icon {margin-inline-end: var(--size-3);}
-    &.icon-end .icon {margin-inline-start: var(--size-3);}
-  }
-
-  &.sm button {
-    font-size: var(--font-size-2);
-    padding: var(--size-4) var(--size-5);
+  button {
+    font-size: .9em;
+    padding: .7em 1.1em;
 
     &.icon-start .icon {margin-inline-end: var(--size-3);}
     &.icon-end .icon {margin-inline-start: var(--size-3);}
-  }
-
-  &.md button {
-    font-size: var(--font-size-3);
-    padding: var(--size-4) var(--size-5);
-
-    &.icon-start .icon {margin-inline-end: var(--size-4);}
-    &.icon-end .icon {margin-inline-start: var(--size-4);}
-  }
-
-  &.lg button {
-    font-size: var(--font-size-4);
-    padding: var(--size-5) var(--size-6);
-
-    &.icon-start .icon {margin-inline-end: var(--size-5);}
-    &.icon-end .icon {margin-inline-start: var(--size-5);}
-  }
-
-  &.xl button {
-    font-size: var(--font-size-5);
-    padding: var(--size-5) var(--size-7);
-
-    &.icon-start .icon {margin-inline-end: var(--size-6);}
-    &.icon-end .icon {margin-inline-start: var(--size-6);}
   }
 
   .icon {
