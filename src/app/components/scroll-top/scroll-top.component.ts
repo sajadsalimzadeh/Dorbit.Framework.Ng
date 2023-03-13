@@ -16,7 +16,6 @@ export class ScrollTopComponent extends BaseComponent {
   @Input() threshold = 50;
   @Input() icon: string = 'far fa-angle-up';
   @Input() pos: 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' = 'bottom-end';
-  override color: Colors = 'primary-shade';
 
   @HostBinding('class.show')
   private show: boolean = false;

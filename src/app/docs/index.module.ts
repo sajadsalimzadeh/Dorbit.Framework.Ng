@@ -17,6 +17,7 @@ import {CommonModule} from "@angular/common";
         {path: 'paginator', loadChildren: () => import('./paginator/index.module').then(x => x.Module)},
         {path: 'scroll-top', loadChildren: () => import('./scroll-top/index.module').then(x => x.Module)},
         {path: 'progress-bar', loadChildren: () => import('./progress-bar/index.module').then(x => x.Module)},
+        {path: 'skeleton', loadChildren: () => import('./skeleton/index.module').then(x => x.Module)},
       ]
     }])
   ],

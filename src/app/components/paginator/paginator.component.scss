@@ -25,8 +25,8 @@ ul {
 
     &.active {
       font-weight: bold;
-      color: var(--color-primary);
-      background-color: rgba(var(--color-primary-rgb), .1);
+      color: var(--color-component);
+      background-color: rgba(var(--color-component-rgb), .1);
     }
   }
 }

@@ -25,6 +25,7 @@ import {KeyFilterModule} from "./directives/key-filter/key-filter.directive";
 import {PasswordModule} from "./components/form/password/password.module";
 import {ProgressBarModule} from "./components/progress-bar/progress-bar.module";
 import {ScrollTopModule} from "./components/scroll-top/scroll-top.module";
+import {SkeletonModule} from "./components/skeleton/skeleton.module";
 
 @NgModule({
   imports: [
@@ -58,6 +59,7 @@ import {ScrollTopModule} from "./components/scroll-top/scroll-top.module";
     PasswordModule,
     ProgressBarModule,
     ScrollTopModule,
+    SkeletonModule,
   ],
 })
 export class DevModule {

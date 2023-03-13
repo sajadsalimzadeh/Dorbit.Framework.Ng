@@ -1,0 +1,31 @@
+:host {
+  overflow: hidden;
+  position: relative;
+  border-radius: var(--radius-component);
+  background-color: var(--color-gray--5);
+
+  &.circle {
+    border-radius: 50% !important;
+  }
+
+  &::after {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    content: '';
+    position: absolute;
+    transform: translate(-100%);
+    background: linear-gradient(90deg,
+      rgba(var(--color-white-rgb), 0),
+      rgba(var(--color-white-rgb), 0.4),
+      rgba(var(--color-white-rgb), 0));
+    animation: white-background-animation 1.2s infinite;
+  }
+}
+
+@keyframes white-background-animation {
+  0%{transform: translate(-100%)}
+  100%{transform: translate(100%)}
+}
