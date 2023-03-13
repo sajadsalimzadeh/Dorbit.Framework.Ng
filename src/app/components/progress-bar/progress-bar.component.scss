@@ -1,0 +1,36 @@
+:host {
+  display: block;
+
+  &.xs {font-size: var(--font-size-0);}
+}
+
+.bar {
+  height: 1.3em;
+  display: flex;
+  overflow: hidden;
+  border-radius: var(--radius-2);
+  background-color: var(--color-gray--3);
+
+  .fill {
+    height: 100%;
+    display: flex;
+    font-size: .7em;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-white);
+    transition: width 400ms ease;
+    background-color: var(--color-component);
+  }
+
+  &.indeterminate {
+    .fill {
+      animation: indeterminate-animation 2.1s cubic-bezier(.65,.815,.735,.395) infinite;
+    }
+  }
+}
+
+@keyframes indeterminate-animation {
+  0%{width: 0;margin-inline-start: -35%;}
+  60%{width: 135%;margin-inline-start: 100%;}
+  100%{width: 90%;margin-inline-start: 100%;}
+}
