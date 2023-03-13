@@ -76,7 +76,8 @@ main {
           display: flex;
           cursor: pointer;
           align-items: center;
-          padding: .8em 0 .8em 1em;
+          padding: .8em 0;
+          padding-inline-start: .8em;
           color: var(--color-gray-10);
           border-bottom: 1px solid var(--color-gray--3);
 

@@ -8,7 +8,7 @@
   &.show {
     .button {
       opacity: .6;
-      transform: translate(0) !important;
+      margin: 1em 2em !important;
     }
   }
 
@@ -17,7 +17,8 @@
     align-items: flex-start;
     justify-content: flex-start;
     .button {
-      transform: translate(-5em, -5em);
+      margin-inline-start: -5em;
+      margin-block-start: -5em;
     }
   }
   &.top-end {
@@ -25,7 +26,8 @@
     align-items: flex-start;
     justify-content: flex-end;
     .button {
-      transform: translate(5em, -5em);
+      margin-inline-end: -5em;
+      margin-block-start: -5em;
     }
   }
   &.bottom-start {
@@ -33,7 +35,8 @@
     align-items: flex-end;
     justify-content: flex-start;
     .button {
-      transform: translate(-5em, 5em);
+      margin-inline-start: -5em;
+      margin-block-end: -5em;
     }
   }
   &.bottom-end {
@@ -41,7 +44,8 @@
     align-items: flex-end;
     justify-content: flex-end;
     .button {
-      transform: translate(5em, 5em);
+      margin-inline-end: -5em;
+      margin-block-end: -5em;
     }
   }
 }
