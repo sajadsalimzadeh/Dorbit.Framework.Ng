@@ -167,8 +167,8 @@ export abstract class AbstractFormControl<T> implements ControlValueAccessor, On
       }
     }
 
-    this.elementRef.nativeElement.style.setProperty('--color-component', `var(--color-${this.status})`)
-    this.elementRef.nativeElement.style.setProperty('--color-component-rgb', `var(--color-${this.status}-rgb)`)
+    this.elementRef.nativeElement.style.setProperty('--color-component', `var(--color-${this.status})`);
+    this.elementRef.nativeElement.style.setProperty('--color-component-rgb', `var(--color-${this.status}-rgb)`);
   }
 
   focus() {

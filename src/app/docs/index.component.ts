@@ -20,11 +20,12 @@ export class IndexComponent implements OnInit {
         {text: 'Select', link: 'forms/select', icon: 'far fa-ballot-check'},
         {text: 'Chips', link: 'forms/chips', icon: 'far fa-pen-field'},
         {text: 'Volume', link: 'forms/volume', icon: 'far fa-slider'},
+        {text: 'Color Picker', link: 'forms/color-picker', icon: 'far fa-eye-dropper-half'},
       ]
     },
     {text: 'Timeline', link: 'timeline', icon: 'far fa-timeline'},
     {text: 'Data Table', link: 'data-table', icon: 'far fa-table'},
-    {text: 'Paginator', link: 'data-table', icon: 'far fa-table'},
+    {text: 'Paginator', link: 'data-table', icon: 'far fa-ellipsis-stroke'},
   ];
   activeMenu: any;
 
