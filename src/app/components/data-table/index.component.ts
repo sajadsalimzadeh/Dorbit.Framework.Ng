@@ -150,7 +150,7 @@ export class DataTableComponent extends BaseComponent implements OnInit, OnChang
     this.render();
   }
 
-  ngOnDestroy(): void {
+  override ngOnDestroy(): void {
     this.intervals.forEach(x => clearInterval(x));
   }
 

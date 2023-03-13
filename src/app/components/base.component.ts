@@ -5,20 +5,23 @@ import {
   HostBinding,
   Injector,
   Input,
-  OnChanges,
+  OnChanges, OnDestroy,
   OnInit,
   SimpleChanges
 } from "@angular/core";
 import {Colors, Sizes} from "../types";
+import {Subscription} from "rxjs";
 
 
 @Directive()
-export abstract class BaseComponent implements OnInit, OnChanges {
+export abstract class BaseComponent implements OnInit, OnChanges, OnDestroy {
   @Input() size: Sizes = 'md';
   @Input() color: Colors = 'primary';
 
   @HostBinding('class')
   classes: any = {};
+
+  protected subscription = new Subscription();
 
   protected elementRef: ElementRef<HTMLElement>;
 
@@ -29,8 +32,13 @@ export abstract class BaseComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.render();
   }
+
   ngOnChanges(changes: SimpleChanges) {
     this.render();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   render() {

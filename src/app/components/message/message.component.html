@@ -1,0 +1,11 @@
+<ul>
+  <li *ngFor="let item of items" [ngClass]="{show: item.show}">
+    <dev-message [item]="item" (onRemove)="removeMessage($event)">
+      <ng-container *ngIf="contentTemplate">
+        <ng-template devTemplate="content">
+          <ng-container *ngTemplateOutlet="contentTemplate; context: {$implicit: item}"></ng-container>
+        </ng-template>
+      </ng-container>
+    </dev-message>
+  </li>
+</ul>

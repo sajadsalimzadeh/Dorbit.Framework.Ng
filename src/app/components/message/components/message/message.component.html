@@ -1,0 +1,24 @@
+<div class="message">
+  <ng-container *ngIf="contentTemplate; else noTemplateTpl">
+    <ng-container *ngTemplateOutlet="contentTemplate; context: {$implicit: item}"></ng-container>
+  </ng-container>
+  <ng-template #noTemplateTpl>
+    <div *ngIf="item.icon" class="icon-box">
+      <i [ngClass]="item.icon"></i>
+    </div>
+    <div class="content">
+      <div *ngIf="item.title" class="title">
+        {{item.title}}
+      </div>
+      <div *ngIf="item.body" class="body">
+        {{item.body}}
+      </div>
+    </div>
+    <div class="timer-box" *ngIf="timer">
+      {{(timer / 1000).toFixed(2)}}s
+    </div>
+    <div class="remove-box" *ngIf="item.removable" (click)="remove()">
+      <i class="fa fa-times"></i>
+    </div>
+  </ng-template>
+</div>

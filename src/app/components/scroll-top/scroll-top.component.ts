@@ -15,7 +15,7 @@ export class ScrollTopComponent extends BaseComponent {
 
   @Input() threshold = 50;
   @Input() icon: string = 'far fa-angle-up';
-  @Input() pos: 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' = 'bottom-end';
+  @Input() position: 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' = 'bottom-end';
 
   @HostBinding('class.show')
   private show: boolean = false;
@@ -32,7 +32,7 @@ export class ScrollTopComponent extends BaseComponent {
 
   override render() {
     super.render();
-    this.classes[this.pos] = true;
+    this.classes[this.position] = true;
   }
 
   private initTarget() {

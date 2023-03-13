@@ -10,7 +10,6 @@ import {
   Type, ViewChild
 } from "@angular/core";
 import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, NgControl} from "@angular/forms";
-import {Subscription} from "rxjs";
 import {DevTemplateDirective} from "../../directives/template/dev-template.directive";
 import {FormControlService} from "./form-control.service";
 import {BaseComponent} from "../base.component";
@@ -69,7 +68,6 @@ export abstract class AbstractFormControl<T> extends BaseComponent implements Co
 
   protected _onChange: any;
   protected _touch: any;
-  protected subscription = new Subscription();
 
   protected formControlService: FormControlService | null;
 
@@ -87,10 +85,6 @@ export abstract class AbstractFormControl<T> extends BaseComponent implements Co
 
   override ngOnChanges(changes: SimpleChanges): void {
     this.init();
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 
   init() {

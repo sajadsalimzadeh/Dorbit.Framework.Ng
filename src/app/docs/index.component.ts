@@ -32,6 +32,8 @@ export class IndexComponent implements OnInit {
     {text: 'Progress Bar', link: 'progress-bar', icon: 'far fa-bars-progress'},
     {text: 'Scroll top', link: 'scroll-top', icon: 'far fa-up-down'},
     {text: 'Skeleton', link: 'skeleton', icon: 'far fa-loader'},
+    {text: 'Tag', link: 'tag', icon: 'far fa-tag'},
+    {text: 'Message', link: 'message', icon: 'far fa-envelope'},
   ];
   activeMenu: any;
 

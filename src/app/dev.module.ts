@@ -27,6 +27,8 @@ import {ProgressBarModule} from "./components/progress-bar/progress-bar.module";
 import {ScrollTopModule} from "./components/scroll-top/scroll-top.module";
 import {SkeletonModule} from "./components/skeleton/skeleton.module";
 import {CardModule} from "./components/card/card.module";
+import {TagModule} from "./components/tag/tag.module";
+import {MessagesModule} from "./components/message/messages.module";
 
 @NgModule({
   imports: [
@@ -62,6 +64,8 @@ import {CardModule} from "./components/card/card.module";
     ScrollTopModule,
     SkeletonModule,
     CardModule,
+    TagModule,
+    MessagesModule,
   ],
 })
 export class DevModule {
