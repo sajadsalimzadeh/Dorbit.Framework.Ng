@@ -1,0 +1,10 @@
+<h1>Color Pallet</h1>
+<hr>
+<h2>Primary Colors</h2>
+<div class="grid">
+  <div *ngFor="let color of primaryColors" [ngClass]="('bg-' + color)"></div>
+</div>
+<h2>Gray Colors</h2>
+<div class="grid">
+  <div *ngFor="let color of grayColors" [ngClass]="('bg-' + color)"></div>
+</div>

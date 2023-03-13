@@ -2,16 +2,6 @@
   <ng-container *ngTemplateOutlet="captionTemplate; context: {}"></ng-container>
 </div>
 <div class="data">
-  <!--  <div class="data-header">-->
-  <!--    <table>-->
-  <!--      <thead *ngIf="headerTemplate">-->
-  <!--      <ng-container *ngTemplateOutlet="headerTemplate; context: {}"></ng-container>-->
-  <!--      </thead>-->
-  <!--      <thead *ngIf="filterTemplate">-->
-  <!--      <ng-container *ngTemplateOutlet="filterTemplate; context: {$implicit: filters}"></ng-container>-->
-  <!--      </thead>-->
-  <!--    </table>-->
-  <!--  </div>-->
   <div class="data-table">
     <table>
       <thead *ngIf="headerTemplate">
@@ -41,13 +31,6 @@
       </tbody>
     </table>
   </div>
-  <!--  <div class="data-footer">-->
-  <!--    <table>-->
-  <!--      <tfoot *ngIf="footerTemplate">-->
-  <!--      <ng-container *ngTemplateOutlet="footerTemplate; context: {}"></ng-container>-->
-  <!--      </tfoot>-->
-  <!--    </table>-->
-  <!--  </div>-->
 </div>
 <div class="pagination" *ngIf="config.paging">
   <div class="pagination-start">

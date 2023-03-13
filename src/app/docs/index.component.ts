@@ -9,6 +9,7 @@ import {NavigationEnd, Router, RouterEvent} from "@angular/router";
 export class IndexComponent implements OnInit {
   menus = [
     {text: 'Button', link: 'button', icon: 'far fa-computer-mouse'},
+    {text: 'Color Pallet', link: 'color-pallet-pallet', icon: 'far fa-palette'},
     {
       text: 'Forms', icon: 'far fa-input-text', children: [
         {text: 'Input', link: 'forms/input', icon: 'far fa-input-text'},
@@ -20,12 +21,16 @@ export class IndexComponent implements OnInit {
         {text: 'Select', link: 'forms/select', icon: 'far fa-ballot-check'},
         {text: 'Chips', link: 'forms/chips', icon: 'far fa-pen-field'},
         {text: 'Volume', link: 'forms/volume', icon: 'far fa-slider'},
-        {text: 'Color Picker', link: 'forms/color-picker', icon: 'far fa-eye-dropper-half'},
+        {text: 'Color Picker', link: 'forms/color-pallet-picker', icon: 'far fa-eye-dropper-half'},
+        {text: 'Key Filter', link: 'forms/key-filter', icon: 'far fa-keyboard'},
+        {text: 'Password', link: 'forms/password', icon: 'far fa-key'},
       ]
     },
     {text: 'Timeline', link: 'timeline', icon: 'far fa-timeline'},
     {text: 'Data Table', link: 'data-table', icon: 'far fa-table'},
-    {text: 'Paginator', link: 'data-table', icon: 'far fa-ellipsis-stroke'},
+    {text: 'Paginator', link: 'paginator', icon: 'far fa-ellipsis-stroke'},
+    {text: 'Progress Bar', link: 'progress-bar', icon: 'far fa-bars-progress'},
+    {text: 'Scroll top', link: 'scroll-top', icon: 'far fa-up-down'},
   ];
   activeMenu: any;
 

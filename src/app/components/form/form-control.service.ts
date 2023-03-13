@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {FormControl} from "@angular/forms";
-import {Sizes} from "./form-control.directive";
+import {Sizes} from "../../types";
 
 @Injectable()
 export class FormControlService {

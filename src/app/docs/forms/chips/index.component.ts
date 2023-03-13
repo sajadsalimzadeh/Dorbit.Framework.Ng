@@ -3,7 +3,7 @@ import {FormControl, Validators} from "@angular/forms";
 
 
 @Component({
-  selector: 'doc-input',
+  selector: 'doc-chips',
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.scss']
 })

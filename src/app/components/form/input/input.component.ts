@@ -22,7 +22,7 @@ export interface MaskItem {
   providers: [createControlValueAccessor(InputComponent)]
 })
 export class InputComponent extends AbstractFormControl<string> {
-  @Input() type: 'text' | 'textarea' | 'number' = 'text';
+  @Input() type: 'text' | 'password' | 'email' | 'textarea' | 'number' = 'text';
   @Input() mask?: string | MaskItem[];
   @Input() pattern?: string;
 

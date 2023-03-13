@@ -1,11 +1,13 @@
 :host {
   max-width: 100%;
+  position: relative;
   display: inline-flex;
 
   &.focused {
+    z-index: 100;
     .control-box {
       border-color: var(--color-primary-tint);
-      box-shadow: 0 0 0 var(--size-1) rgba(var(--color-primary-rgb), .1);
+      box-shadow: 0 0 0 .2em rgba(var(--color-primary-rgb), .2);
     }
   }
 
@@ -27,7 +29,7 @@
   min-width: 100%;
   position: relative;
   align-items: stretch;
-  border-radius: var(--radius-3);
+  border-radius: var(--radius-2);
   background-color: var(--color-white);
   border: 1px solid var(--color-gray--5);
 

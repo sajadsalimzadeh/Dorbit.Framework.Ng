@@ -13,6 +13,7 @@ import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, NgControl} from "@
 import {Subscription} from "rxjs";
 import {DevTemplateDirective} from "../../directives/template/dev-template.directive";
 import {FormControlService} from "./form-control.service";
+import {BaseComponent} from "../base.component";
 
 export function createControlValueAccessor(type: Type<any>) {
   return {
@@ -27,16 +28,12 @@ export interface ValidationError {
   message: string;
 }
 
-export type Sizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-
 let tabIndex = 0;
 
 @Directive()
-export abstract class AbstractFormControl<T> implements ControlValueAccessor, OnInit, OnChanges, OnDestroy {
-  @Input() size: Sizes = 'md';
+export abstract class AbstractFormControl<T> extends BaseComponent implements ControlValueAccessor, OnInit, OnChanges, OnDestroy {
   @Input() placeholder: string = '';
   @Input() @HostBinding('tabIndex') tabIndex: number | undefined = tabIndex++;
-  @Input() status: 'primary' | 'secondary' | 'warning' | 'success' | 'danger' | 'link' = 'primary';
 
   @Output() onChange = new EventEmitter<T>();
 
@@ -66,33 +63,29 @@ export abstract class AbstractFormControl<T> implements ControlValueAccessor, On
     this.validationsTemplate = value.find(x => x.name == 'validation')?.template;
   }
 
-  @HostBinding('class')
-  classes: any = {};
   focused: boolean = false;
 
   formControl!: FormControl<T>;
-  errors: (ValidationError | any)[] = [];
 
   protected _onChange: any;
   protected _touch: any;
   protected subscription = new Subscription();
 
-  protected elementRef: ElementRef<HTMLElement>;
   protected formControlService: FormControlService | null;
 
-  constructor(protected injector: Injector) {
-    this.elementRef = injector.get(ElementRef);
+  constructor(injector: Injector) {
+    super(injector);
     this.formControlService = injector.get(FormControlService, null, {optional: true});
     if (this.formControlService) {
       this.size = this.formControlService.size ?? 'md';
     }
   }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
     this.init();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  override ngOnChanges(changes: SimpleChanges): void {
     this.init();
   }
 
@@ -151,24 +144,9 @@ export abstract class AbstractFormControl<T> implements ControlValueAccessor, On
     }
   }
 
-  render() {
-    this.classes = {};
-    this.classes[this.size] = true;
-    this.classes[this.status] = true;
+  override render() {
+    super.render();
     this.classes['focused'] = this.focused;
-    if (this.formControl?.errors) {
-      this.errors = [];
-      for (const errorsKey in this.formControl.errors) {
-        const error = this.formControl.errors[errorsKey];
-        this.errors.push({
-          type: errorsKey,
-          ...error
-        });
-      }
-    }
-
-    this.elementRef.nativeElement.style.setProperty('--color-component', `var(--color-${this.status})`);
-    this.elementRef.nativeElement.style.setProperty('--color-component-rgb', `var(--color-${this.status}-rgb)`);
   }
 
   focus() {

@@ -21,6 +21,10 @@ import {RateModule} from "./components/form/rate/rate.module";
 import {VolumeModule} from "./components/form/volume/volume.module";
 import {PaginatorModule} from "./components/paginator/paginator.module";
 import {ColorPickerModule} from "./components/form/color-picker/color-picker.module";
+import {KeyFilterModule} from "./directives/key-filter/key-filter.directive";
+import {PasswordModule} from "./components/form/password/password.module";
+import {ProgressBarModule} from "./components/progress-bar/progress-bar.module";
+import {ScrollTopModule} from "./components/scroll-top/scroll-top.module";
 
 @NgModule({
   imports: [
@@ -50,6 +54,10 @@ import {ColorPickerModule} from "./components/form/color-picker/color-picker.mod
     VolumeModule,
     PaginatorModule,
     ColorPickerModule,
+    KeyFilterModule,
+    PasswordModule,
+    ProgressBarModule,
+    ScrollTopModule,
   ],
 })
 export class DevModule {

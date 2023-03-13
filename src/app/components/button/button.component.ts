@@ -1,17 +1,16 @@
 import {Component, ElementRef, HostBinding, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {BaseComponent} from "../base.component";
 
 @Component({
   selector: 'dev-button',
   templateUrl: 'button.component.html',
   styleUrls: ['./button.component.scss']
 })
-export class ButtonComponent implements OnInit, OnChanges {
+export class ButtonComponent extends BaseComponent implements OnInit, OnChanges {
 
   @Input() type: 'button' | 'submit' | 'reset' = 'button';
   @Input() icon?: string;
   @Input() iconPos: 'start' | 'end' = 'start';
-  @Input() size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' = 'md';
-  @Input() status: 'primary' | 'secondary' | 'success' | 'link' | 'warning' | 'help' | 'danger' = 'primary';
   @Input() rounded?: boolean = false;
   @Input() disabled?: boolean = false;
   @Input() mode: 'fill' | 'outline' | 'text' = 'fill';
@@ -26,20 +25,15 @@ export class ButtonComponent implements OnInit, OnChanges {
   activeIcon?: string;
   emptyContent: boolean = false;
 
-  @HostBinding('class')
-  classes: any = {};
-
-  constructor() {
+  override ngOnInit() {
   }
 
-  ngOnInit() {
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
+  override ngOnChanges(changes: SimpleChanges): void {
     this.render();
   }
 
-  render() {
+  override render() {
+    super.render();
     if(this.loading) {
       this.activeIcon = this.loadingIcon;
     }
@@ -48,7 +42,7 @@ export class ButtonComponent implements OnInit, OnChanges {
     }
 
     this.classes = {};
-    this.classes[this.status] = true;
+    this.classes[this.color] = true;
     this.classes[this.size] = true;
     this.classes['rounded'] = this.rounded;
     this.classes['outline'] = this.mode == 'outline';

@@ -1,34 +1,34 @@
 <h1>Volume</h1>
 <hr>
-<dev-input [formControl]="formControlSingle" status="primary"></dev-input>
+<dev-input [formControl]="formControlSingle" color="primary"></dev-input>
 <h2>Colors</h2>
 <div style="width: 250px">
   <div class="flex-column flex-gap-5 py-1">
-    <dev-volume [formControl]="formControlSingle" status="primary"></dev-volume>
-    <dev-volume [formControl]="formControlSingle" status="secondary"></dev-volume>
-    <dev-volume [formControl]="formControlSingle" status="warning"></dev-volume>
-    <dev-volume [formControl]="formControlSingle" status="success"></dev-volume>
-    <dev-volume [formControl]="formControlSingle" status="danger"></dev-volume>
-    <dev-volume [formControl]="formControlSingle" status="link"></dev-volume>
+    <dev-volume [formControl]="formControlSingle" color="primary"></dev-volume>
+    <dev-volume [formControl]="formControlSingle" color="secondary"></dev-volume>
+    <dev-volume [formControl]="formControlSingle" color="warning"></dev-volume>
+    <dev-volume [formControl]="formControlSingle" color="success"></dev-volume>
+    <dev-volume [formControl]="formControlSingle" color="danger"></dev-volume>
+    <dev-volume [formControl]="formControlSingle" color="link"></dev-volume>
   </div>
   <h2>Step = 20</h2>
   <div class="flex-column flex-gap-5 py-1">
-    <dev-volume [formControl]="formControlSingle" status="primary" [step]="20"></dev-volume>
+    <dev-volume [formControl]="formControlSingle" color="primary" [step]="20"></dev-volume>
   </div>
   <h2>Range</h2>
   <label>Start: {{formControlMultiple.value?.start}} , End: {{formControlMultiple.value?.end}}</label>
   <div class="flex-column flex-gap-5 py-1">
-    <dev-volume [formControl]="formControlMultiple" status="primary" mode="multiple"></dev-volume>
+    <dev-volume [formControl]="formControlMultiple" color="primary" mode="multiple"></dev-volume>
   </div>
   <div class="flex-row flex-gap-5 py-1" style="height: 150px">
-    <dev-volume [formControl]="formControlSingle" status="primary" align="vertical"></dev-volume>
-    <dev-volume [formControl]="formControlMultiple" status="primary" align="vertical" mode="multiple"></dev-volume>
+    <dev-volume [formControl]="formControlSingle" color="primary" align="vertical"></dev-volume>
+    <dev-volume [formControl]="formControlMultiple" color="primary" align="vertical" mode="multiple"></dev-volume>
   </div>
   <h2>Customize Min Max</h2>
   <label>Start: {{formControlMultiple2.value?.start}} , End: {{formControlMultiple2.value?.end}}</label>
   <div class="flex-row flex-gap-5 py-1">
     <dev-volume [formControl]="formControlMultiple2"
-                status="primary" [min]="100" [max]="10000" [step]="100" mode="multiple"></dev-volume>
+                color="primary" [min]="100" [max]="10000" [step]="100" mode="multiple"></dev-volume>
   </div>
 </div>
 

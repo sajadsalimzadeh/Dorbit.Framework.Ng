@@ -10,13 +10,18 @@
     <ng-container *ngTemplateOutlet="endTemplate"></ng-container>
   </div>
 </div>
-<div class="below-box validation-box" *ngIf="errors?.length; else noErrorTpl">
-  <span *ngFor="let error of errors">
-    {{error.message}}
-  </span>
-</div>
-<ng-template #noErrorTpl>
-  <div class="below-box hint-box" *ngIf="hint">
-    {{hint}}
-  </div>
-</ng-template>
+<ng-container *ngIf="focused">
+  <ul class="below-box validation-box" *ngIf="errors?.length; else noErrorTpl">
+    <li *ngFor="let error of errors">
+      <span>{{error.message}}</span>
+      <ng-container *ngIf="!focused && errors.length > 1">
+        <span> and {{errors.length - 1}} more errors.</span>
+      </ng-container>
+    </li>
+  </ul>
+  <ng-template #noErrorTpl>
+    <div class="below-box hint-box" *ngIf="hint">
+      {{hint}}
+    </div>
+  </ng-template>
+</ng-container>

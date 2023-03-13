@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl} from "@angular/forms";
 
 @Component({
-  selector: 'doc-button',
+  selector: 'doc-radio',
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.scss']
 })

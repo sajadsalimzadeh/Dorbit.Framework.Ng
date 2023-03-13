@@ -1,32 +1,35 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {BaseComponent} from "../base.component";
 
 @Component({
   selector: 'dev-paginator',
   templateUrl: 'paginator.component.html',
   styleUrls: ['./paginator.component.scss']
 })
-export class PaginatorComponent implements OnChanges {
+export class PaginatorComponent extends BaseComponent implements OnChanges {
 
-  @Input() page!: number;
+  @Input() page: number = 0;
+  @Input() pageSize: number = 10;
   @Input() totalCount!: number;
-  @Input() pageSize!: number;
 
   @Output() onSelect = new EventEmitter<number>();
 
   pageNumbers: number[] = [];
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.createPageNumbers();
+  override ngOnChanges(changes: SimpleChanges): void {
+    this.render();
   }
 
   select(page: number) {
     if (!page) return;
-    this.onSelect.emit(page);
+    this.onSelect.emit(page - 1);
   }
 
-  private createPageNumbers() {
+  override render() {
+    super.render();
 
     const lastPage = Math.floor(this.totalCount / this.pageSize);
+    if (!this.page) this.page = 0;
     if (this.page > lastPage) this.page = lastPage - 1;
     const currentPageNumber = this.page + 1;
 

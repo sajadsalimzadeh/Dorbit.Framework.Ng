@@ -1,13 +1,14 @@
 import {
   Component,
-  ContentChildren, ElementRef, Injector,
+  ContentChildren, ElementRef, HostBinding, Injector,
   Input,
   QueryList,
-  TemplateRef, ViewChild
+  TemplateRef,
 } from '@angular/core';
 import {DevTemplateDirective} from "../../../directives/template/dev-template.directive";
-import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
+import {AbstractFormControl, createControlValueAccessor, ValidationError} from "../form-control.directive";
 import {FormControlService} from "../form-control.service";
+import {ControlGroupService} from "./control-group.service";
 
 @Component({
   selector: 'dev-control-group',
@@ -22,6 +23,7 @@ export class ControlGroupComponent extends AbstractFormControl<any> {
 
   controlEl!: ElementRef<HTMLInputElement>;
 
+  errors: (ValidationError | any)[] = [];
   startTemplate?: TemplateRef<any>;
   endTemplate?: TemplateRef<any>;
 
@@ -35,13 +37,13 @@ export class ControlGroupComponent extends AbstractFormControl<any> {
     this.endTemplate = value.find(x => x.name == 'end')?.template;
   }
 
-  constructor(injector: Injector) {
+  constructor(injector: Injector, private controlGroupService: ControlGroupService) {
     super(injector);
   }
 
   override init() {
 
-    if(this.formControlService) {
+    if (this.formControlService) {
       this.formControlService.formControl = this.formControl;
       this.formControlService.size = this.size;
     }
@@ -51,6 +53,41 @@ export class ControlGroupComponent extends AbstractFormControl<any> {
 
   override render() {
     super.render();
+
+    this.errors = [];
+    if (this.formControl?.errors) {
+      for (const errorsKey in this.formControl.errors) {
+        const error = this.formControl.errors[errorsKey];
+        if (!error) continue;
+        if (typeof error === 'object') {
+          let message = (error.message ? error.message : this.controlGroupService.validationMessages[errorsKey])?.toString() ?? '';
+          for (const key in error) {
+            message = message.replace(`{${key}}`, error[key]);
+          }
+          if (message) {
+            this.errors.push({
+              type: errorsKey,
+              message: message,
+              order: error.order ?? 100,
+            });
+          }
+        } else if (typeof error === 'boolean') {
+          this.errors.push({
+            type: errorsKey,
+            message: this.controlGroupService.validationMessages[errorsKey],
+            order: 100,
+          });
+        } else if (typeof error === 'string') {
+          this.errors.push({
+            type: errorsKey,
+            message: error,
+            order: 100,
+          });
+        }
+      }
+      this.errors = this.errors.sort((x1, x2) => (x1.order < x2.order ? -1 : (x1.order > x2.order ? 1 : 0)));
+    }
+
     this.classes['float-label'] = (
       this.labelState == 'floating' &&
       (!this.focused && !this.formControl.value && this.formControl.value !== false)

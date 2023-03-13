@@ -1,7 +1,7 @@
 import {
   AfterViewInit,
   Component,
-  ContentChildren, ElementRef, EventEmitter, HostBinding, HostListener,
+  ContentChildren, ElementRef, EventEmitter, HostBinding, HostListener, Injector,
   Input,
   OnChanges, OnDestroy,
   OnInit, Output,
@@ -13,6 +13,7 @@ import {DataTableConfig, FilterFunc, SortFunc} from "./models";
 import {FormControl} from "@angular/forms";
 import {TableService} from "./services/table.service";
 import {OverlayService} from "../overlay/overlay.service";
+import {BaseComponent} from "../base.component";
 
 @Component({
   selector: 'dev-table',
@@ -22,7 +23,7 @@ import {OverlayService} from "../overlay/overlay.service";
     TableService,
   ]
 })
-export class DataTableComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
+export class DataTableComponent extends BaseComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 
   @Input() items: any[] = [];
   @Input() totalCount: number = 0;
@@ -90,17 +91,13 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy, AfterVi
   dataScrollBarWidth: number = 20;
   dataTableScrollThumbStyles: any = {};
 
-  constructor(private tableService: TableService, overlayService: OverlayService) {
+  constructor(injector: Injector, private tableService: TableService, overlayService: OverlayService) {
+    super(injector);
     tableService.dataTable = this;
     overlayService.singleton = false;
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (this.totalCount == 0) this.totalCount = this.items.length;
-    this.render();
-  }
-
-  ngOnInit(): void {
+  override ngOnInit(): void {
     this.pageRowCountControl.valueChanges.subscribe(e => this.render());
     this.pageRowCountControl.setValue(this.config.paging.size);
 
@@ -144,6 +141,11 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy, AfterVi
     }
   }
 
+  override ngOnChanges(changes: SimpleChanges): void {
+    if (this.totalCount == 0) this.totalCount = this.items.length;
+    this.render();
+  }
+
   ngAfterViewInit(): void {
     this.render();
   }
@@ -170,7 +172,9 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy, AfterVi
     }
   }
 
-  render() {
+  override render() {
+    super.render();
+
     this.renderedItems = this.items.filter(() => true);
     this.renderedItems = this.filterItems(this.renderedItems);
     this.renderedItems = this.sortItems(this.renderedItems);
@@ -281,7 +285,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy, AfterVi
   }
 
   onPageSelect(page: number) {
-    this.config.paging.page = page - 1;
+    this.config.paging.page = page;
     this.render();
   }
 }
