@@ -1,29 +1,34 @@
 <h1>Progress Bar</h1>
 <hr>
-<h2>Sizes</h2>
-<div class="flex-column flex-gap-4 py-3">
-  <dev-progress-bar size="xs" [value]="value"></dev-progress-bar>
-  <dev-progress-bar size="sm" [value]="value"></dev-progress-bar>
-  <dev-progress-bar size="md" [value]="value"></dev-progress-bar>
-  <dev-progress-bar size="lg" [value]="value"></dev-progress-bar>
-  <dev-progress-bar size="xl" [value]="value"></dev-progress-bar>
-</div>
-
-<h2>Colors</h2>
-<div class="flex-column flex-gap-4 py-3">
-  <dev-progress-bar color="primary" [value]="value"></dev-progress-bar>
-  <dev-progress-bar color="secondary" [value]="value"></dev-progress-bar>
-  <dev-progress-bar color="success" [value]="value"></dev-progress-bar>
-  <dev-progress-bar color="warning" [value]="value"></dev-progress-bar>
-  <dev-progress-bar color="danger" [value]="value"></dev-progress-bar>
-</div>
-
-<h2>Show value inside</h2>
-<div class="flex-column flex-gap-4 py-3">
-  <dev-progress-bar color="primary" [value]="value">{{value.toFixed(2)}}%</dev-progress-bar>
-</div>
-
-<h2>Indeterminate</h2>
-<div class="flex-column flex-gap-4 py-3">
-  <dev-progress-bar size="xs" color="primary" [value]="value" mode="indeterminate"></dev-progress-bar>
-</div>
+<dev-card class="mt-6">
+  <h2>Sizes</h2>
+  <div class="flex-column flex-gap-4 py-3">
+    <dev-progress-bar size="xs" [value]="value"></dev-progress-bar>
+    <dev-progress-bar size="sm" [value]="value"></dev-progress-bar>
+    <dev-progress-bar size="md" [value]="value"></dev-progress-bar>
+    <dev-progress-bar size="lg" [value]="value"></dev-progress-bar>
+    <dev-progress-bar size="xl" [value]="value"></dev-progress-bar>
+  </div>
+</dev-card>
+<dev-card class="mt-6">
+  <h2>Colors</h2>
+  <div class="flex-column flex-gap-4 py-3">
+    <dev-progress-bar color="primary" [value]="value"></dev-progress-bar>
+    <dev-progress-bar color="secondary" [value]="value"></dev-progress-bar>
+    <dev-progress-bar color="success" [value]="value"></dev-progress-bar>
+    <dev-progress-bar color="warning" [value]="value"></dev-progress-bar>
+    <dev-progress-bar color="danger" [value]="value"></dev-progress-bar>
+  </div>
+</dev-card>
+<dev-card class="mt-6">
+  <h2>Show value inside</h2>
+  <div class="flex-column flex-gap-4 py-3">
+    <dev-progress-bar color="primary" [value]="value">{{value.toFixed(2)}}%</dev-progress-bar>
+  </div>
+</dev-card>
+<dev-card class="mt-6">
+  <h2>Indeterminate</h2>
+  <div class="flex-column flex-gap-4 py-3">
+    <dev-progress-bar size="xs" color="primary" [value]="value" mode="indeterminate"></dev-progress-bar>
+  </div>
+</dev-card>

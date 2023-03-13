@@ -1,144 +1,153 @@
 <h1>Input</h1>
 <hr>
-
-<h2>Sizes</h2>
-<div class="flex-column flex-gap-5">
-  <dev-input size="xs" [ngModel]="text"></dev-input>
-  <dev-input size="sm" [ngModel]="text"></dev-input>
-  <dev-input size="md" [ngModel]="text"></dev-input>
-  <dev-input size="lg" [ngModel]="text"></dev-input>
-  <dev-input size="xl" [ngModel]="text"></dev-input>
-</div>
-
-<h2>Placeholder</h2>
-<div class="flex-column flex-gap-5">
-  <dev-input placeholder="please enter your name ...."></dev-input>
-</div>
-
-<h2>Textarea</h2>
-<div class="flex-column flex-gap-5">
-  <dev-input type="textarea" [formControl]="formControl"></dev-input>
-</div>
-
-<h2>Control Group</h2>
-<div class="flex-column flex-gap-5">
-  <dev-control-group>
-    <ng-template devTemplate="start"><i class="far fa-search"></i></ng-template>
-    <dev-input placeholder="please enter your name ...." [formControl]="formControl"></dev-input>
-  </dev-control-group>
-  <dev-control-group>
-    <ng-template devTemplate="start"><i class="far fa-search"></i></ng-template>
-    <ng-template devTemplate="end"><i class="far fa-info"></i></ng-template>
-    <dev-input placeholder="please enter your name ...." [formControl]="formControl"></dev-input>
-  </dev-control-group>
-</div>
-
-<h2>Labels</h2>
-<div class="flex-column flex-gap-5">
-  <dev-control-group [formControl]="formControl" label="Fix Label">
-    <ng-template devTemplate="end"><i class="far fa-info"></i></ng-template>
+<dev-card class="mt-6">
+  <h2>Sizes</h2>
+  <div class="flex-column flex-gap-5">
+    <dev-input size="xs" [ngModel]="text"></dev-input>
+    <dev-input size="sm" [ngModel]="text"></dev-input>
+    <dev-input size="md" [ngModel]="text"></dev-input>
+    <dev-input size="lg" [ngModel]="text"></dev-input>
+    <dev-input size="xl" [ngModel]="text"></dev-input>
+  </div>
+</dev-card>
+<dev-card class="mt-6">
+  <h2>Placeholder</h2>
+  <div class="flex-column flex-gap-5">
     <dev-input placeholder="please enter your name ...."></dev-input>
-  </dev-control-group>
-  <dev-control-group [formControl]="formControl" label="Floating Label" labelState="floating">
-    <ng-template devTemplate="end"><i class="far fa-info"></i></ng-template>
-    <dev-input></dev-input>
-  </dev-control-group>
-</div>
-
-<h2>Other Controls</h2>
-<div class="flex-column flex-gap-5">
-  <dev-control-group [formControl]="formControl" label="Select Control" labelState="floating">
-    <dev-select [items]="items"></dev-select>
-    <ng-template devTemplate="end"><i class="far fa-info"></i></ng-template>
-  </dev-control-group>
-  <dev-control-group [formControl]="formControl" label="Date Picker Control" labelState="floating">
-    <dev-date-picker locale="fa"></dev-date-picker>
-    <ng-template devTemplate="end"><i class="far fa-calendar"></i></ng-template>
-  </dev-control-group>
-  <dev-control-group [formControl]="formControl" label="Checkbox">
-    <dev-input></dev-input>
-    <ng-template devTemplate="end">
-      <dev-checkbox mode="ternary"></dev-checkbox>
-    </ng-template>
-  </dev-control-group>
-  <dev-control-group [formControl]="formControl" label="End Button">
-    <dev-input></dev-input>
-    <ng-template devTemplate="end">
-      <dev-button>Submit</dev-button>
-    </ng-template>
-  </dev-control-group>
-  <dev-control-group [formControl]="formControl" label="Start Button">
-    <dev-input></dev-input>
-    <ng-template devTemplate="start">
-      <dev-button><i class="far fa-search"></i></dev-button>
-    </ng-template>
-  </dev-control-group>
-  <dev-control-group [formControl]="formControl" label="Both Side Button">
-    <ng-template devTemplate="start">
-      <dev-button><i class="far fa-user"></i></dev-button>
-    </ng-template>
-    <dev-input></dev-input>
-    <ng-template devTemplate="end">
-      <dev-button><i class="far fa-calendar-note"></i></dev-button>
-    </ng-template>
-  </dev-control-group>
-</div>
-
-<h2>Mask</h2>
-<div class="flex-column flex-gap-5">
-  <dev-control-group label="Cellphone Number">
-    <dev-input mask="99 999"></dev-input>
-  </dev-control-group>
-  <h3>Ignore special chars with slash (/)</h3>
-  <dev-control-group label="Cellphone Number">
-    <dev-input mask="+/98 999 999 99 99"></dev-input>
-  </dev-control-group>
-  <h3>Match length mask and placeholder</h3>
-  <dev-control-group label="Cellphone Number">
-    <dev-input mask="+/98 999 999 99 99" placeholder="+98 912 000 00 00"></dev-input>
-  </dev-control-group>
-  <dev-control-group label="Debit Card">
-    <dev-input mask="9999 - 9999 - 9999 - 9999" placeholder="xxxx - xxxx - xxxx - xxxx"></dev-input>
-  </dev-control-group>
-  <dev-control-group label="Use Character">
-    <dev-input mask="P - 9999 999 999" placeholder="P - 9999 999 999 "></dev-input>
-  </dev-control-group>
-  <dev-control-group label="Date">
-    <dev-input mask="yyyy//mm//dd" placeholder="yyyy/mm/dd"></dev-input>
-  </dev-control-group>
-  <dev-control-group label="Date">
-    <dev-input mask="13yy//mm//dd" placeholder="yyyy/mm/dd"></dev-input>
-  </dev-control-group>
-</div>
-
-<h2>Errors</h2>
-<div class="flex-column flex-gap-5">
-  <dev-control-group [formControl]="formControlWithValidationRequired">
-    <dev-input placeholder="Required"></dev-input>
-  </dev-control-group>
-  <dev-control-group [formControl]="formControlWithValidationNumeric">
-    <dev-input placeholder="Numeric"></dev-input>
-  </dev-control-group>
-  <dev-control-group [formControl]="formControlWithValidationPattern">
-    <dev-input placeholder="P-xxx..."></dev-input>
-  </dev-control-group>
-  <dev-control-group [formControl]="formControlWithValidationPassword">
-    <dev-input type="password" placeholder="Password"></dev-input>
-  </dev-control-group>
-  <dev-control-group [formControl]="formControlWithValidationMinMaxLength">
-    <dev-input placeholder="Min Max Length"></dev-input>
-  </dev-control-group>
-  <dev-control-group [formControl]="formControlWithValidationMinMax">
-    <dev-input placeholder="Min Max"></dev-input>
-  </dev-control-group>
-  <dev-control-group [formControl]="formControlWithValidationEmail">
-    <dev-input type="email" placeholder="Email"></dev-input>
-  </dev-control-group>
-</div>
-
-<h2>Hint Box</h2>
-<div class="flex-column flex-gap-5">
-  <dev-control-group hint="Enter your username">
-    <dev-input></dev-input>
-  </dev-control-group>
-</div>
+  </div>
+</dev-card>
+<dev-card class="mt-6">
+  <h2>Textarea</h2>
+  <div class="flex-column flex-gap-5">
+    <dev-input type="textarea" [formControl]="formControl"></dev-input>
+  </div>
+</dev-card>
+<dev-card class="mt-6">
+  <h2>Control Group</h2>
+  <div class="flex-column flex-gap-5">
+    <dev-control-group>
+      <ng-template devTemplate="start"><i class="far fa-search"></i></ng-template>
+      <dev-input placeholder="please enter your name ...." [formControl]="formControl"></dev-input>
+    </dev-control-group>
+    <dev-control-group>
+      <ng-template devTemplate="start"><i class="far fa-search"></i></ng-template>
+      <ng-template devTemplate="end"><i class="far fa-info"></i></ng-template>
+      <dev-input placeholder="please enter your name ...." [formControl]="formControl"></dev-input>
+    </dev-control-group>
+  </div>
+</dev-card>
+<dev-card class="mt-6">
+  <h2>Labels</h2>
+  <div class="flex-column flex-gap-5">
+    <dev-control-group [formControl]="formControl" label="Fix Label">
+      <ng-template devTemplate="end"><i class="far fa-info"></i></ng-template>
+      <dev-input placeholder="please enter your name ...."></dev-input>
+    </dev-control-group>
+    <dev-control-group [formControl]="formControl" label="Floating Label" labelState="floating">
+      <ng-template devTemplate="end"><i class="far fa-info"></i></ng-template>
+      <dev-input></dev-input>
+    </dev-control-group>
+  </div>
+</dev-card>
+<dev-card class="mt-6">
+  <h2>Other Controls</h2>
+  <div class="flex-column flex-gap-5">
+    <dev-control-group [formControl]="formControl" label="Select Control" labelState="floating">
+      <dev-select [items]="items"></dev-select>
+      <ng-template devTemplate="end"><i class="far fa-info"></i></ng-template>
+    </dev-control-group>
+    <dev-control-group [formControl]="formControl" label="Date Picker Control" labelState="floating">
+      <dev-date-picker locale="fa"></dev-date-picker>
+      <ng-template devTemplate="end"><i class="far fa-calendar"></i></ng-template>
+    </dev-control-group>
+    <dev-control-group [formControl]="formControl" label="Checkbox">
+      <dev-input></dev-input>
+      <ng-template devTemplate="end">
+        <dev-checkbox mode="ternary"></dev-checkbox>
+      </ng-template>
+    </dev-control-group>
+    <dev-control-group [formControl]="formControl" label="End Button">
+      <dev-input></dev-input>
+      <ng-template devTemplate="end">
+        <dev-button>Submit</dev-button>
+      </ng-template>
+    </dev-control-group>
+    <dev-control-group [formControl]="formControl" label="Start Button">
+      <dev-input></dev-input>
+      <ng-template devTemplate="start">
+        <dev-button><i class="far fa-search"></i></dev-button>
+      </ng-template>
+    </dev-control-group>
+    <dev-control-group [formControl]="formControl" label="Both Side Button">
+      <ng-template devTemplate="start">
+        <dev-button><i class="far fa-user"></i></dev-button>
+      </ng-template>
+      <dev-input></dev-input>
+      <ng-template devTemplate="end">
+        <dev-button><i class="far fa-calendar-note"></i></dev-button>
+      </ng-template>
+    </dev-control-group>
+  </div>
+</dev-card>
+<dev-card class="mt-6">
+  <h2>Mask</h2>
+  <div class="flex-column flex-gap-5">
+    <dev-control-group label="Cellphone Number">
+      <dev-input mask="99 999"></dev-input>
+    </dev-control-group>
+    <h3>Ignore special chars with slash (/)</h3>
+    <dev-control-group label="Cellphone Number">
+      <dev-input mask="+/98 999 999 99 99"></dev-input>
+    </dev-control-group>
+    <h3>Match length mask and placeholder</h3>
+    <dev-control-group label="Cellphone Number">
+      <dev-input mask="+/98 999 999 99 99" placeholder="+98 912 000 00 00"></dev-input>
+    </dev-control-group>
+    <dev-control-group label="Debit Card">
+      <dev-input mask="9999 - 9999 - 9999 - 9999" placeholder="xxxx - xxxx - xxxx - xxxx"></dev-input>
+    </dev-control-group>
+    <dev-control-group label="Use Character">
+      <dev-input mask="P - 9999 999 999" placeholder="P - 9999 999 999 "></dev-input>
+    </dev-control-group>
+    <dev-control-group label="Date">
+      <dev-input mask="yyyy//mm//dd" placeholder="yyyy/mm/dd"></dev-input>
+    </dev-control-group>
+    <dev-control-group label="Date">
+      <dev-input mask="13yy//mm//dd" placeholder="yyyy/mm/dd"></dev-input>
+    </dev-control-group>
+  </div>
+</dev-card>
+<dev-card class="mt-6">
+  <h2>Errors</h2>
+  <div class="flex-column flex-gap-5">
+    <dev-control-group [formControl]="formControlWithValidationRequired">
+      <dev-input placeholder="Required"></dev-input>
+    </dev-control-group>
+    <dev-control-group [formControl]="formControlWithValidationNumeric">
+      <dev-input placeholder="Numeric"></dev-input>
+    </dev-control-group>
+    <dev-control-group [formControl]="formControlWithValidationPattern">
+      <dev-input placeholder="P-xxx..."></dev-input>
+    </dev-control-group>
+    <dev-control-group [formControl]="formControlWithValidationPassword">
+      <dev-input type="password" placeholder="Password"></dev-input>
+    </dev-control-group>
+    <dev-control-group [formControl]="formControlWithValidationMinMaxLength">
+      <dev-input placeholder="Min Max Length"></dev-input>
+    </dev-control-group>
+    <dev-control-group [formControl]="formControlWithValidationMinMax">
+      <dev-input placeholder="Min Max"></dev-input>
+    </dev-control-group>
+    <dev-control-group [formControl]="formControlWithValidationEmail">
+      <dev-input type="email" placeholder="Email"></dev-input>
+    </dev-control-group>
+  </div>
+</dev-card>
+<dev-card class="mt-6">
+  <h2>Hint Box</h2>
+  <div class="flex-column flex-gap-5">
+    <dev-control-group hint="Enter your username">
+      <dev-input></dev-input>
+    </dev-control-group>
+  </div>
+</dev-card>

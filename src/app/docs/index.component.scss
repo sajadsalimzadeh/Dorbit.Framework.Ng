@@ -135,7 +135,7 @@ main {
   article {
     flex: 1;
     position: relative;
-    background-color: rgba(var(--color-black-rgb), 0.01);
+    background-color: var(--color-gray--1);
 
     > section {
       top: 0;

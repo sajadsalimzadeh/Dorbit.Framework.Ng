@@ -1,63 +1,72 @@
 <h1>Timeline</h1>
 <hr>
+
 <div class="flex-column">
-  <div>
-    <h3>Basic</h3>
-    <dev-timeline [items]="items">
-      <ng-template devTemplate="content" let-item>{{item.text}}</ng-template>
-    </dev-timeline>
-  </div>
 
-  <div>
-    <h3>Align Start</h3>
-    <dev-timeline [items]="items" align="start">
-      <ng-template devTemplate="content" let-item>{{item.text}}</ng-template>
-    </dev-timeline>
-  </div>
-
-  <div>
-    <h3>Align End</h3>
-    <dev-timeline [items]="items" align="end">
-      <ng-template devTemplate="content" let-item>{{item.text}}</ng-template>
-    </dev-timeline>
-  </div>
-
-  <div>
-    <h3>Align Alternate With Opposite</h3>
-    <dev-timeline [items]="items">
-      <ng-template devTemplate="content" let-item>{{item.text}}</ng-template>
-      <ng-template devTemplate="opposite" let-item>{{item.date}}</ng-template>
-    </dev-timeline>
-  </div>
+  <dev-card class="mt-6">
+    <div>
+      <h3>Basic</h3>
+      <dev-timeline [items]="items">
+        <ng-template devTemplate="content" let-item>{{item.text}}</ng-template>
+      </dev-timeline>
+    </div>
+  </dev-card>
+  <dev-card class="mt-6">
+    <div>
+      <h3>Align Start</h3>
+      <dev-timeline [items]="items" align="start">
+        <ng-template devTemplate="content" let-item>{{item.text}}</ng-template>
+      </dev-timeline>
+    </div>
+  </dev-card>
+  <dev-card class="mt-6">
+    <div>
+      <h3>Align End</h3>
+      <dev-timeline [items]="items" align="end">
+        <ng-template devTemplate="content" let-item>{{item.text}}</ng-template>
+      </dev-timeline>
+    </div>
+  </dev-card>
+  <dev-card class="mt-6">
+    <div>
+      <h3>Align Alternate With Opposite</h3>
+      <dev-timeline [items]="items">
+        <ng-template devTemplate="content" let-item>{{item.text}}</ng-template>
+        <ng-template devTemplate="opposite" let-item>{{item.date}}</ng-template>
+      </dev-timeline>
+    </div>
+  </dev-card>
 </div>
-<h2>Vertical</h2>
-<div class="flex-row flex-justify-space-around">
-  <div>
-    <h3 class="text-align-center">Basic</h3>
-    <dev-timeline [items]="items" direction="vertical">
-      <ng-template devTemplate="content" let-item>{{item.text}}</ng-template>
-    </dev-timeline>
-  </div>
+<dev-card class="mt-6">
+  <h2>Vertical</h2>
+  <div class="flex-row flex-justify-space-around">
+    <div>
+      <h3 class="text-align-center">Basic</h3>
+      <dev-timeline [items]="items" direction="vertical">
+        <ng-template devTemplate="content" let-item>{{item.text}}</ng-template>
+      </dev-timeline>
+    </div>
 
-  <div>
-    <h3 class="text-align-center">Align Start</h3>
-    <dev-timeline [items]="items" direction="vertical" align="start">
-      <ng-template devTemplate="content" let-item>{{item.text}}</ng-template>
-    </dev-timeline>
-  </div>
+    <div>
+      <h3 class="text-align-center">Align Start</h3>
+      <dev-timeline [items]="items" direction="vertical" align="start">
+        <ng-template devTemplate="content" let-item>{{item.text}}</ng-template>
+      </dev-timeline>
+    </div>
 
-  <div>
-    <h3 class="text-align-center">Align End</h3>
-    <dev-timeline [items]="items" direction="vertical" align="end">
-      <ng-template devTemplate="content" let-item>{{item.text}}</ng-template>
-    </dev-timeline>
-  </div>
+    <div>
+      <h3 class="text-align-center">Align End</h3>
+      <dev-timeline [items]="items" direction="vertical" align="end">
+        <ng-template devTemplate="content" let-item>{{item.text}}</ng-template>
+      </dev-timeline>
+    </div>
 
-  <div>
-    <h3 class="text-align-center">Align Alternate With Opposite</h3>
-    <dev-timeline [items]="items" direction="vertical">
-      <ng-template devTemplate="content" let-item>{{item.text}}</ng-template>
-      <ng-template devTemplate="opposite" let-item>{{item.date}}</ng-template>
-    </dev-timeline>
+    <div>
+      <h3 class="text-align-center">Align Alternate With Opposite</h3>
+      <dev-timeline [items]="items" direction="vertical">
+        <ng-template devTemplate="content" let-item>{{item.text}}</ng-template>
+        <ng-template devTemplate="opposite" let-item>{{item.date}}</ng-template>
+      </dev-timeline>
+    </div>
   </div>
-</div>
+</dev-card>

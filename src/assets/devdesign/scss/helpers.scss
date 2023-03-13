@@ -34,7 +34,7 @@ $helpers: (
   @while ($i <= 10) {
     .#{$name}-#{$i} {
       $j: 2;
-      @while ($j < list.length($helper)) {
+      @while ($j <= list.length($helper)) {
         $propName: list.nth($helper, $j);
         #{$propName}: var(--size-#{$i});
         $j: $j + 1;
