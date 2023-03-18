@@ -69,7 +69,9 @@ export class DataTableFilterComponent implements OnInit {
   openFilterOverlay(e: Event) {
     e.stopPropagation();
     if(this.overlayRef) return;
-    this.overlayRef = this.overlayService.createByTemplate(this.filterIconEl.nativeElement, this.overlayTpl);
+    this.overlayRef = this.overlayService.create(this.overlayTpl, {
+      element: this.filterIconEl.nativeElement
+    });
     this.overlayRef.onDestroy.subscribe(() => this.overlayRef = undefined);
   }
 }

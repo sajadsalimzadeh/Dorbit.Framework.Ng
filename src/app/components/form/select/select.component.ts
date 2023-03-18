@@ -205,7 +205,9 @@ export class SelectComponent extends AbstractFormControl<any | any[]> {
 
   private open() {
     if (this.itemsTpl && this.elementRef.nativeElement && !this.overlayRef) {
-      this.overlayRef = this.overlayService.createByTemplate(this.elementRef.nativeElement, this.itemsTpl)
+      this.overlayRef = this.overlayService.create(this.itemsTpl, {
+        element: this.elementRef.nativeElement
+      })
       this.overlayRef.onDestroy.subscribe(() => this.overlayRef = undefined);
       setTimeout(() => {
         this.inputComponent?.inputEl?.nativeElement.focus();

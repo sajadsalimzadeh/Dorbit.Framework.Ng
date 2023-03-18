@@ -6,6 +6,7 @@ import {DevTemplateDirective} from "../../directives/template/dev-template.direc
 import {MessagesService} from "./messages.service";
 import {Subscription} from "rxjs";
 import {Message} from "./models";
+import {Positions} from "../../types";
 
 @Component({
   selector: 'dev-messages',
@@ -15,10 +16,7 @@ import {Message} from "./models";
 export class MessagesComponent extends BaseComponent {
   @Input() scope?: string;
   @Input() items: Message[] = [];
-  @Input() position: 'static' |
-    'top-start' | 'top-center' | 'top-end' |
-    'middle-start' | 'middle-center' | 'middle-end' |
-    'bottom-start' | 'bottom-center' | 'bottom-end' = 'static';
+  @Input() position: 'static' | Positions  = 'static';
 
   contentTemplate?: TemplateRef<any>;
 

@@ -29,6 +29,7 @@ import {SkeletonModule} from "./components/skeleton/skeleton.module";
 import {CardModule} from "./components/card/card.module";
 import {TagModule} from "./components/tag/tag.module";
 import {MessagesModule} from "./components/message/messages.module";
+import {DialogModule} from "./components/dialog/dialog.module";
 
 @NgModule({
   imports: [
@@ -66,6 +67,7 @@ import {MessagesModule} from "./components/message/messages.module";
     CardModule,
     TagModule,
     MessagesModule,
+    DialogModule,
   ],
 })
 export class DevModule {

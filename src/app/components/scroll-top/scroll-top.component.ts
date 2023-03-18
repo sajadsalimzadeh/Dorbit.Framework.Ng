@@ -2,7 +2,7 @@ import {
   Component, HostBinding, HostListener, Input,
 } from '@angular/core';
 import {BaseComponent} from "../base.component";
-import {Colors} from "../../types";
+import {Colors, PositionsCorner} from "../../types";
 
 @Component({
   selector: 'dev-scroll-top',
@@ -15,7 +15,7 @@ export class ScrollTopComponent extends BaseComponent {
 
   @Input() threshold = 50;
   @Input() icon: string = 'far fa-angle-up';
-  @Input() position: 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' = 'bottom-end';
+  @Input() position: PositionsCorner = 'bottom-end';
 
   @HostBinding('class.show')
   private show: boolean = false;

@@ -13,21 +13,22 @@ export interface OverlayRef {
 export class OverlayService {
   refs: OverlayRef[] = [];
   singleton = true;
-  defaultOptions = {
-
-  }
+  defaultOptions: {
+    element?: HTMLElement
+  } = {}
 
   constructor(private domService: DomService) {
   }
 
-  createByTemplate(element: HTMLElement, template: TemplateRef<any>, options= this.defaultOptions) {
+  create(template: TemplateRef<any>, options= this.defaultOptions) {
     if(this.singleton) {
       this.refs.forEach(x => x.destroy());
     }
+    if(!options.element) options.element = document.body;
 
     const componentRef = this.domService.createByComponent(OverlayComponent);
     const component = componentRef.instance;
-    component.relatedElement = element;
+    component.relatedElement = options.element;
     component.template = template;
     const overlayRef = {
       componentRef: componentRef,

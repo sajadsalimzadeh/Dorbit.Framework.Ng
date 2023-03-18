@@ -18,8 +18,13 @@ export abstract class BaseComponent implements OnInit, OnChanges, OnDestroy {
   @Input() size: Sizes = 'md';
   @Input() color: Colors = 'primary';
 
+  direction: 'rtl' | 'ltr' = 'ltr';
+
   @HostBinding('class')
   classes: any = {};
+
+  @HostBinding('style')
+  styles: any = {};
 
   protected subscription = new Subscription();
 
@@ -43,8 +48,14 @@ export abstract class BaseComponent implements OnInit, OnChanges, OnDestroy {
 
   render() {
     this.classes = {};
+    this.styles = {};
     this.classes[this.size] = true;
     this.classes[this.color] = true;
+
+    if(this.elementRef) {
+      this.direction = getComputedStyle(this.elementRef.nativeElement).direction as any;
+      this.classes['direction-' + this.direction] = true;
+    }
 
     this.elementRef.nativeElement.style.setProperty('--color-component', `var(--color-${this.color})`);
     this.elementRef.nativeElement.style.setProperty('--color-component-rgb', `var(--color-${this.color}-rgb)`);

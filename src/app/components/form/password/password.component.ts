@@ -37,7 +37,9 @@ export class PasswordComponent extends AbstractFormControl<string> {
 
   openMeter() {
     if (this.meterTpl && this.elementRef.nativeElement && !this.overlayRef) {
-      this.overlayRef = this.overlayService.createByTemplate(this.elementRef.nativeElement, this.meterTpl)
+      this.overlayRef = this.overlayService.create(this.meterTpl, {
+        element: this.elementRef.nativeElement
+      })
       this.overlayRef.onDestroy.subscribe(() => this.overlayRef = undefined);
     }
   }

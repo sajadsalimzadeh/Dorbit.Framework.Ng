@@ -20,6 +20,7 @@ import {CommonModule} from "@angular/common";
         {path: 'skeleton', loadChildren: () => import('./skeleton/index.module').then(x => x.Module)},
         {path: 'tag', loadChildren: () => import('./tag/index.module').then(x => x.Module)},
         {path: 'message', loadChildren: () => import('./message/index.module').then(x => x.Module)},
+        {path: 'dialog', loadChildren: () => import('./dialog/index.module').then(x => x.Module)},
       ]
     }])
   ],

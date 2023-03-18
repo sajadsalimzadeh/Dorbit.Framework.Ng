@@ -34,6 +34,7 @@ export class IndexComponent implements OnInit {
     {text: 'Skeleton', link: 'skeleton', icon: 'far fa-loader'},
     {text: 'Tag', link: 'tag', icon: 'far fa-tag'},
     {text: 'Message', link: 'message', icon: 'far fa-envelope'},
+    {text: 'Dialog', link: 'dialog', icon: 'far fa-message'},
   ];
   activeMenu: any;
 
@@ -50,6 +51,10 @@ export class IndexComponent implements OnInit {
   }
 
   selectMenu(menu: any) {
+    if (menu.open) {
+      menu.open = false;
+      return;
+    }
     this.iterateMenus(this.menus, x => x.open = false);
     const menus = this.findMenuHierarchy(this.menus, x => x == menu);
     menus.forEach(x => x.open = true);
@@ -58,7 +63,7 @@ export class IndexComponent implements OnInit {
   iterateMenus(menus: any[], action: (menu: any) => void) {
     menus.forEach(x => {
       action(x);
-      if(x.children) this.iterateMenus(x.children, action);
+      if (x.children) this.iterateMenus(x.children, action);
     })
   }
 
@@ -68,7 +73,7 @@ export class IndexComponent implements OnInit {
       for (let i = 0; i < menus.length; i++) {
         const menu = menus[i];
         if (menu.children) {
-          if(recFunc(menu.children)) {
+          if (recFunc(menu.children)) {
             result.push(menu);
             return true;
           }
@@ -78,7 +83,7 @@ export class IndexComponent implements OnInit {
           return true;
         }
       }
-      return  false;
+      return false;
     };
     recFunc(menus);
     return result;
@@ -88,7 +93,7 @@ export class IndexComponent implements OnInit {
     this.activeMenu = null;
     this.iterateMenus(this.menus, (m) => m.open = false);
     const menus = this.findMenuHierarchy(this.menus, (m) => url.includes(m.link));
-    if(menus.length > 0) {
+    if (menus.length > 0) {
       this.activeMenu = menus[0];
       menus.forEach(x => x.open = true);
     }
