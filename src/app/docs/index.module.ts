@@ -21,6 +21,7 @@ import {CommonModule} from "@angular/common";
         {path: 'tag', loadChildren: () => import('./tag/index.module').then(x => x.Module)},
         {path: 'message', loadChildren: () => import('./message/index.module').then(x => x.Module)},
         {path: 'dialog', loadChildren: () => import('./dialog/index.module').then(x => x.Module)},
+        {path: 'tooltip', loadChildren: () => import('./tooltip/index.module').then(x => x.Module)},
       ]
     }])
   ],

@@ -30,6 +30,7 @@ import {CardModule} from "./components/card/card.module";
 import {TagModule} from "./components/tag/tag.module";
 import {MessagesModule} from "./components/message/messages.module";
 import {DialogModule} from "./components/dialog/dialog.module";
+import {TooltipModule} from "./directives/tooltip/tooltip.directive";
 
 @NgModule({
   imports: [
@@ -68,6 +69,7 @@ import {DialogModule} from "./components/dialog/dialog.module";
     TagModule,
     MessagesModule,
     DialogModule,
+    TooltipModule,
   ],
 })
 export class DevModule {

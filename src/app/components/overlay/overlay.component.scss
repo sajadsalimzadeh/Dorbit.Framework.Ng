@@ -5,35 +5,55 @@
   z-index: 1000;
 
   .overlay-container {
-    height: 0;
     display: flex;
-    min-width: 100%;
+    white-space: nowrap;
 
-    &.vr-up {
+    &.top, &.bottom {
+      height: 0;
+      min-width: 100%;
+
+      ::ng-deep > * {
+        animation: scale-vertical 200ms ease;
+      }
+    }
+    &.top {
       align-items: flex-end;
-      transform: translateY(-100%);
-
-      ::ng-deep>* {
-        transform-origin: bottom;
-      }
+      ::ng-deep > * {transform-origin: bottom;}
     }
-
-    &.vr-down {
+    &.bottom {
       align-items: flex-start;
+      ::ng-deep > * {transform-origin: top;}
+    }
+    &.top-start, &.bottom-start {justify-content: flex-start;}
+    &.top-center, &.bottom-center {justify-content: center;}
+    &.top-end, &.bottom-end {justify-content: flex-end;}
 
-      ::ng-deep>* {
-        transform-origin: top;
+    &.start, &.end {
+      width: 0;
+      min-height: 100%;
+
+      ::ng-deep > * {
+        animation: scale-horizontal 200ms ease;
       }
     }
-
-    &.hr-reverse {
-      flex-direction: row-reverse;
+    &.start {
+      justify-content: flex-end;
+      &.direction-ltr ::ng-deep > * {transform-origin: right;}
+      &.direction-rtl ::ng-deep > * {transform-origin: left;}
     }
-
-    ::ng-deep>* {
-      animation: scale-vertical 200ms ease;
+    &.end {
+      justify-content: flex-start;
+      &.direction-ltr ::ng-deep > * {transform-origin: left;}
+      &.direction-rtl ::ng-deep > * {transform-origin: right;}
     }
+    &.start-top, &.end-top {align-items: flex-start;}
+    &.start-center, &.end-center {align-items: center;}
+    &.start-bottom, &.end-bottom {align-items: flex-end;}
   }
+}
+
+::ng-deep {
+  @import "../../directives/tooltip/tooltip-directive";
 }
 
 @keyframes scale-vertical {
@@ -43,5 +63,15 @@
 
   100% {
     transform: scaleY(1);
+  }
+}
+
+@keyframes scale-horizontal {
+  0% {
+    transform: scaleX(.8);
+  }
+
+  100% {
+    transform: scaleX(1);
   }
 }

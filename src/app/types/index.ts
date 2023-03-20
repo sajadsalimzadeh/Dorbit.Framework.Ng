@@ -4,7 +4,7 @@ export type Colors =
   'warning-tint' | 'warning' | 'warning-shade' |
   'success-tint' | 'success' | 'success-shade' |
   'danger-tint' | 'danger' | 'danger-shade' |
-  'link-tint' | 'link' | 'link-shade';
+  'link-tint' | 'link' | 'link-shade' | string;
 export type Sizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export type Positions = PositionsCross | PositionsCorner | 'middle-center';
 export type PositionsCross = 'middle-start' | 'middle-end' | 'top-center' | 'bottom-center';

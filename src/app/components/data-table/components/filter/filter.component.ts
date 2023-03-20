@@ -30,12 +30,12 @@ export class DataTableFilterComponent implements OnInit {
 
   @ContentChildren(DevTemplateDirective) set templates(value: QueryList<DevTemplateDirective>) {
     const valueTemplate = value.find(x => !x.name || x.name == 'value')?.template;
-    if(valueTemplate) this.template = valueTemplate;
+    if (valueTemplate) this.template = valueTemplate;
   }
 
   @HostListener('window:keydown', ['$event'])
   onWindowKeydown(e: KeyboardEvent) {
-    if(e.key == 'Escape') {
+    if (e.key == 'Escape') {
       this.overlayRef?.destroy();
     }
   }
@@ -68,9 +68,10 @@ export class DataTableFilterComponent implements OnInit {
 
   openFilterOverlay(e: Event) {
     e.stopPropagation();
-    if(this.overlayRef) return;
-    this.overlayRef = this.overlayService.create(this.overlayTpl, {
-      element: this.filterIconEl.nativeElement
+    if (this.overlayRef) return;
+    this.overlayRef = this.overlayService.create({
+      template: this.overlayTpl,
+      targetElement: this.filterIconEl.nativeElement
     });
     this.overlayRef.onDestroy.subscribe(() => this.overlayRef = undefined);
   }

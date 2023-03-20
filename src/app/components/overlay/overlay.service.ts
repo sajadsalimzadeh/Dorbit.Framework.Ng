@@ -1,6 +1,6 @@
 import {ComponentRef, EventEmitter, Injectable, TemplateRef} from "@angular/core";
 import {DomService} from "../../services/dom.service";
-import {OverlayComponent} from "./overlay.component";
+import {OverlayComponent, OverlayOptions} from "./overlay.component";
 
 export interface OverlayRef {
   componentRef: ComponentRef<OverlayComponent>;
@@ -13,23 +13,20 @@ export interface OverlayRef {
 export class OverlayService {
   refs: OverlayRef[] = [];
   singleton = true;
-  defaultOptions: {
-    element?: HTMLElement
-  } = {}
+  defaultOptions: OverlayOptions = {}
 
   constructor(private domService: DomService) {
   }
 
-  create(template: TemplateRef<any>, options= this.defaultOptions) {
+  create(options= this.defaultOptions) {
     if(this.singleton) {
       this.refs.forEach(x => x.destroy());
     }
-    if(!options.element) options.element = document.body;
+    if(!options.targetElement) options.targetElement = document.body;
 
     const componentRef = this.domService.createByComponent(OverlayComponent);
     const component = componentRef.instance;
-    component.relatedElement = options.element;
-    component.template = template;
+    Object.assign(component, options);
     const overlayRef = {
       componentRef: componentRef,
       destroy: () => {

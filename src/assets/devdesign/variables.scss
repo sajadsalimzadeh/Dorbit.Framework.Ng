@@ -2,17 +2,42 @@
 
 $counters: (0,1,2,3,4,5,6,7,8,9,10);
 $sizes: ('xs', 'sm', 'md', 'lg', 'xl');
-$primary_colors: ('primary', 'secondary', 'success', 'warning', 'danger', 'link');
+$main-colors: (
+  'white',
+  'black',
 
+  'primary',
+  'primary-tint',
+  'primary-shade',
+  'secondary',
+  'secondary-tint',
+  'secondary-shade',
+  'success',
+  'success-tint',
+  'success-shade',
+  'warning',
+  'warning-tint',
+  'warning-shade',
+  'danger',
+  'danger-tint',
+  'danger-shade',
+  'link',
+  'link-tint',
+  'link-shade',
+);
+$sub-colors: ();
 $colors: ();
-@each $primary_color in $primary_colors {
-  $colors: list.append($colors, $primary_color);
+
+@each $primary-color in $main-colors {
+  $colors: list.append($colors, $primary-color);
 }
 
 @each $counter in $counters {
+  $sub-colors: list.append($sub-colors, "gray-" + $counter);
   $colors: list.append($colors, "gray-" + $counter);
 }
 
 @each $counter in $counters {
+  $sub-colors: list.append($sub-colors, "gray--" + $counter);
   $colors: list.append($colors, "gray--" + $counter);
 }

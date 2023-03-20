@@ -34,7 +34,8 @@ export class IndexComponent implements OnInit {
     {text: 'Skeleton', link: 'skeleton', icon: 'far fa-loader'},
     {text: 'Tag', link: 'tag', icon: 'far fa-tag'},
     {text: 'Message', link: 'message', icon: 'far fa-envelope'},
-    {text: 'Dialog', link: 'dialog', icon: 'far fa-message'},
+    {text: 'Dialog', link: 'dialog', icon: 'far fa-rectangle-history'},
+    {text: 'Tooltip', link: 'tooltip', icon: 'far fa-message-middle-top'},
   ];
   activeMenu: any;
 

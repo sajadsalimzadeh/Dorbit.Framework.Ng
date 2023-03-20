@@ -17,6 +17,7 @@ import {Subscription} from "rxjs";
 export abstract class BaseComponent implements OnInit, OnChanges, OnDestroy {
   @Input() size: Sizes = 'md';
   @Input() color: Colors = 'primary';
+  @Input() ngClasses?: any;
 
   direction: 'rtl' | 'ltr' = 'ltr';
 
@@ -47,17 +48,49 @@ export abstract class BaseComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   render() {
-    this.classes = {};
+    this.classes = {...this.ngClasses};
     this.styles = {};
     this.classes[this.size] = true;
     this.classes[this.color] = true;
 
-    if(this.elementRef) {
+    if (this.elementRef) {
       this.direction = getComputedStyle(this.elementRef.nativeElement).direction as any;
       this.classes['direction-' + this.direction] = true;
     }
 
-    this.elementRef.nativeElement.style.setProperty('--color-component', `var(--color-${this.color})`);
-    this.elementRef.nativeElement.style.setProperty('--color-component-rgb', `var(--color-${this.color}-rgb)`);
+    let color = '', colorRgb = '';
+    // Handle HEX Format
+    if (this.color.startsWith('#')) {
+      color = this.color;
+      colorRgb = this.hexToRgb(this.color);
+    }
+    // Handle RGB And RGBA Format
+    else if (this.color.startsWith('rgb')) {
+      color = this.color;
+      const rgbColors = /[0-9]+/.exec(this.color);
+      if (rgbColors && rgbColors.length > 2) colorRgb = `${rgbColors[0]}, ${rgbColors[1]}, ${rgbColors[2]}`;
+    }
+    // Handle Variable Format
+    else {
+      color = `var(--color-${this.color})`;
+      colorRgb = `var(--color-${this.color}-rgb)`;
+    }
+    this.elementRef.nativeElement.style.setProperty('--color-component', color);
+    this.elementRef.nativeElement.style.setProperty('--color-component-rgb', colorRgb);
+  }
+
+  private hexToRgb(hex: string) {
+    if (hex.length == 4) {
+      const r = parseInt(hex[1], 16);
+      const g = parseInt(hex[2], 16);
+      const b = parseInt(hex[3], 16);
+      return `${r},${g},${b}`;
+    } else if (hex.length == 7) {
+      const r = parseInt(hex[1] + hex[2], 16);
+      const g = parseInt(hex[3] + hex[4], 16);
+      const b = parseInt(hex[5] + hex[6], 16);
+      return `${r},${g},${b}`;
+    }
+    return '';
   }
 }

@@ -36,7 +36,7 @@ $helpers: (
       $j: 2;
       @while ($j <= list.length($helper)) {
         $propName: list.nth($helper, $j);
-        #{$propName}: var(--size-#{$i});
+        #{$propName}: var(--size-#{$i}) !important;
         $j: $j + 1;
       }
     }
@@ -45,12 +45,14 @@ $helpers: (
 }
 
 @each $size in $sizes {
-  .#{$size} {font-size: var(--font-size-#{$size});}
+  .#{$size} {font-size: var(--font-size-#{$size}) !important;}
 }
 
 
 @each $color in $colors {
-  .bg-#{$color}-tint {background-color: var(--color-#{$color}-tint);}
-  .bg-#{$color} {background-color: var(--color-#{$color});}
-  .bg-#{$color}-shade {background-color: var(--color-#{$color}-shade);}
+  .bg-#{$color} {background-color: var(--color-#{$color}) !important;}
+}
+
+@each $color in $colors {
+  .text-#{$color} {color: var(--color-#{$color}) !important;}
 }

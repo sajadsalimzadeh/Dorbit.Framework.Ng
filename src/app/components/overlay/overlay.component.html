@@ -1,5 +1,11 @@
-<ng-container *ngIf="template">
-  <div class="overlay-container" [ngClass]="classes">
-    <ng-container *ngTemplateOutlet="template"></ng-container>
+<ng-container>
+  <div class="overlay-container" [ngClass]="overlayClasses">
+    <ng-container *ngIf="template; else elseTpl">
+      <ng-container *ngTemplateOutlet="template; context: {$implicit: this}"></ng-container>
+    </ng-container>
+    <ng-template #elseTpl>
+      <div class="text" *ngIf="text">{{text}}</div>
+      <div class="html" *ngIf="html" [innerHTML]="html"></div>
+    </ng-template>
   </div>
 </ng-container>

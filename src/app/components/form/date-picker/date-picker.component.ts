@@ -279,8 +279,9 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   open() {
     if (this.pickerTpl && !this.overlayRef) {
       this.onInputChange(this.formControl.value);
-      this.overlayRef = this.overlayService.create(this.pickerTpl, {
-        element: this.elementRef.nativeElement
+      this.overlayRef = this.overlayService.create({
+        template: this.pickerTpl,
+        targetElement: this.elementRef.nativeElement
       });
       this.overlayRef.onDestroy.subscribe(() => this.overlayRef = undefined);
     }

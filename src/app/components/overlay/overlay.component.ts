@@ -1,28 +1,44 @@
-import {AfterViewInit, Component, ComponentRef, HostBinding, HostListener, OnInit, TemplateRef} from "@angular/core";
+import {AfterViewInit, Component, HostBinding, HostListener, OnInit, TemplateRef} from "@angular/core";
 import {OverlayRef} from "./overlay.service";
+import {Colors} from "../../types";
+import {BaseComponent} from "../base.component";
 
-type Direction = 'up' | 'down';
+export type OverlayAlignments =
+  'top-start' | 'top-center' | 'top-end' |
+  'bottom-start' | 'bottom-center' | 'bottom-end' |
+  'start-top' | 'start-center' | 'start-bottom' |
+  'end-top' | 'end-center' | 'end-bottom';
+
+export interface OverlayOptions {
+  targetElement?: HTMLElement;
+  template?: TemplateRef<any>;
+  text?: string;
+  html?: string;
+  ngClasses?: any;
+  color?: Colors;
+  alignment?: OverlayAlignments;
+}
+
 
 @Component({
   selector: 'dev-overlay',
   templateUrl: './overlay.component.html',
   styleUrls: ['./overlay.component.scss']
 })
-export class OverlayComponent implements OnInit, AfterViewInit {
+export class OverlayComponent extends BaseComponent implements OnInit, OverlayOptions {
   overlayRef!: OverlayRef;
-  relatedElement?: HTMLElement;
+  targetElement?: HTMLElement;
   template?: TemplateRef<any>;
+  text?: string;
+  html?: string;
+  alignment?: OverlayAlignments;
 
   verticalThreshold = 300;
-  verticalDirection: Direction = 'down';
-
   horizontalThreshold = 300;
-  horizontalReverse: boolean = false;
 
   animation: string = 'fade';
 
-  classes: any = {};
-  @HostBinding('style') styles: any = {};
+  overlayClasses: any = {};
 
   @HostListener('window:click', ['$event'])
   onWindowClick() {
@@ -36,49 +52,86 @@ export class OverlayComponent implements OnInit, AfterViewInit {
     e.stopPropagation();
   }
 
-  ngOnInit(): void {
-    this.render();
-  }
+  override render() {
+    super.render();
+    if (!this.targetElement) return;
 
-  ngAfterViewInit(): void {
-  }
-
-  render() {
-    if (!this.relatedElement) return;
-
-    const rect = this.relatedElement.getBoundingClientRect();
+    const rect = this.targetElement.getBoundingClientRect();
     const topOfScreen = window.innerHeight + window.scrollY;
     const horizontalOfScreen = window.innerWidth + window.scrollX;
 
+    const width = rect.width;
+    const height = rect.height;
     const top = rect.top + window.scrollY;
     const left = rect.left + window.scrollX;
     const right = rect.right + window.scrollX;
 
-    this.styles.width = rect.width + 'px';
-    this.styles.left = left + 'px';
-
     const dir = getComputedStyle(document.body).direction;
 
-    if (dir == 'ltr') {
-      if (horizontalOfScreen - this.horizontalThreshold < left) {
-        this.horizontalReverse = true;
-      }
-    } else {
-      if (horizontalOfScreen - this.horizontalThreshold < right) {
-        this.horizontalReverse = true;
-      }
+    let alignment = this.alignment ?? 'bottom-start';
+
+    if (
+      (dir == 'ltr' && horizontalOfScreen - this.horizontalThreshold < left) ||
+      (dir == 'rtl' && horizontalOfScreen - this.horizontalThreshold < right)
+    ) {
+      if (alignment == 'top-start') alignment = 'top-end';
+      if (alignment == 'bottom-start') alignment = 'bottom-end';
+      if (alignment == 'end-top') alignment = 'start-top';
+      if (alignment == 'end-bottom') alignment = 'start-bottom';
+    } else if (
+      (dir == 'ltr' && this.horizontalThreshold > left) ||
+      (dir == 'rtl' && this.horizontalThreshold > right)
+    ) {
+      if (alignment == 'top-end') alignment = 'top-start';
+      if (alignment == 'bottom-end') alignment = 'bottom-start';
+      if (alignment == 'start-top') alignment = 'end-top';
+      if (alignment == 'start-bottom') alignment = 'end-bottom';
     }
 
     if (topOfScreen - this.verticalThreshold < top) {
-      this.styles.top = top + 'px';
-      this.verticalDirection = 'up';
-    } else {
-      this.styles.top = (top + rect.height) + 'px';
+      if (alignment == 'bottom-start') alignment = 'top-start';
+      if (alignment == 'bottom-end') alignment = 'top-end';
+      if (alignment == 'start-top') alignment = 'start-bottom';
+      if (alignment == 'end-top') alignment = 'end-bottom';
     }
 
-    this.classes['vr-up'] = (this.verticalDirection == 'up');
-    this.classes['vr-down'] = (this.verticalDirection == 'down');
-    this.classes['hr-reverse'] = this.horizontalReverse;
-    this.classes[this.animation] = !!this.animation;
+
+    this.styles.width = +'px';
+    this.styles.left = left + 'px';
+
+    if (alignment.startsWith('top') || alignment.startsWith('bottom')) {
+      this.styles.width = width + 'px';
+      if (dir == 'ltr') {
+        this.styles.left = left + 'px';
+      } else {
+        this.styles.left = right + 'px';
+      }
+
+      if (alignment.startsWith('top')) {
+        this.styles.top = top + 'px';
+      } else {
+        this.styles.top = top + height + 'px';
+      }
+    }
+
+    if (alignment.startsWith('start') || alignment.startsWith('end')) {
+      this.styles.top = top + 'px';
+      this.styles.height = height + 'px';
+
+      if (dir == 'ltr' && alignment.startsWith('start')) {
+        this.styles.left = left + 'px';
+      } else if (dir == 'ltr' && alignment.startsWith('end')) {
+        this.styles.left = left + width + 'px';
+      } else if (dir == 'rtl' && alignment.startsWith('start')) {
+        this.styles.right = right + 'px';
+      } else if (dir == 'rtl' && alignment.startsWith('end')) {
+        this.styles.right = right + width + 'px';
+      }
+    }
+    this.overlayClasses = {};
+    this.overlayClasses[alignment] = true;
+    this.overlayClasses[alignment.split('-')[0]] = true;
+    this.overlayClasses['direction-' + dir] = true;
+    this.overlayClasses[this.animation] = !!this.animation;
   }
 }
