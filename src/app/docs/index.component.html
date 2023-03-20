@@ -13,21 +13,17 @@
   </ul>
 </ng-template>
 
-<header>
+<aside>
   <div class="title-box">
     <i class="icon fab fa-angular"></i>
     <span class="text">Devor Angular</span>
   </div>
-</header>
+  <nav>
+    <ng-container *ngTemplateOutlet="menusTpl; context: {$implicit: menus}"></ng-container>
+  </nav>
+</aside>
 <main>
-  <aside>
-    <nav>
-      <ng-container *ngTemplateOutlet="menusTpl; context: {$implicit: menus}"></ng-container>
-    </nav>
-  </aside>
-  <article>
-    <section>
-      <router-outlet></router-outlet>
-    </section>
-  </article>
+  <section>
+    <router-outlet></router-outlet>
+  </section>
 </main>
