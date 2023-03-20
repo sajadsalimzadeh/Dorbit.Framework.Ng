@@ -50,11 +50,21 @@
 
   ul {
     margin: 0;
+    padding: 0;
     display: flex;
     min-width: 350px;
     list-style: none;
-    padding: .7em .9em;
     align-content: stretch;
     flex-direction: column;
+
+    li {
+      padding: 0 .9em;
+      &:first-child {
+        padding-top: .7em;
+      }
+      &:last-child {
+        padding-bottom: .7em;
+      }
+    }
   }
 }
