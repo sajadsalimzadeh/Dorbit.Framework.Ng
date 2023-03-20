@@ -8,23 +8,23 @@ import {Component} from '@angular/core';
 export class IndexComponent {
   _primaryColors = ['primary', 'secondary', 'success', 'warning', 'danger', 'link'];
 
-  primaryColors: string[] = [];
-  grayColors: string[] = [];
+  primaryColors: {bg: string, text: string}[] = [];
+  grayColors: {bg: string, text: string}[] = [];
 
 
   constructor() {
     this._primaryColors.forEach(x => {
-      this.primaryColors.push(x + '-tint');
-      this.primaryColors.push(x);
-      this.primaryColors.push(x + '-shade');
+      this.primaryColors.push({bg: x + '-tint', text: x + '-shade'});
+      this.primaryColors.push({bg: x, text: 'white'});
+      this.primaryColors.push({bg: x + '-shade',text: x + '-tint'});
     });
 
     for (let i = 0; i <= 10; i++) {
-      this.grayColors.push(`gray--${i}`);
+      this.grayColors.push({bg: `gray--${i}`, text: `gray-${i}`});
     }
 
     for (let i = 10; i > 0; i--) {
-      this.grayColors.push(`gray-${i}`);
+      this.grayColors.push({bg: `gray-${i}`, text: `gray--${i}`});
     }
   }
 }
