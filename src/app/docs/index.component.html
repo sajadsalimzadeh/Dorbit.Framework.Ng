@@ -19,7 +19,9 @@
     <span class="text">Devor Angular</span>
   </div>
   <nav>
-    <ng-container *ngTemplateOutlet="menusTpl; context: {$implicit: menus}"></ng-container>
+    <div class="scroll-container">
+      <ng-container *ngTemplateOutlet="menusTpl; context: {$implicit: menus}"></ng-container>
+    </div>
   </nav>
 </aside>
 <main>
