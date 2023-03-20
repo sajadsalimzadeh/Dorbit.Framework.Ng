@@ -49,23 +49,23 @@ $animation: 300ms ease;
     position: absolute;
   }
 
-    &.top-start .placement, &.top-center .placement, &.top-end .placement {top: 0; align-items: flex-start;}
-    &.middle-start .placement, &.middle-center .placement, &.middle-end .placement {top: 50%; align-items: center;}
-    &.bottom-start .placement, &.bottom-center .placement, &.bottom-end .placement {bottom: 0; align-items: flex-end;}
+  &.top-start .placement, &.top-center .placement, &.top-end .placement {top: 0; align-items: flex-start;}
+  &.middle-start .placement, &.middle-center .placement, &.middle-end .placement {top: 50%; align-items: center;}
+  &.bottom-start .placement, &.bottom-center .placement, &.bottom-end .placement {bottom: 0; align-items: flex-end;}
 
-    &.top-start .placement, &.middle-start .placement, &.bottom-start .placement {justify-content: flex-start;}
-    &.top-center .placement, &.middle-center .placement, &.bottom-center .placement {left: 50%; justify-content: center;}
-    &.top-end .placement, &.middle-end .placement, &.bottom-end .placement {justify-content: flex-end;}
+  &.top-start .placement, &.middle-start .placement, &.bottom-start .placement {justify-content: flex-start;}
+  &.top-center .placement, &.middle-center .placement, &.bottom-center .placement {left: 50%; justify-content: center;}
+  &.top-end .placement, &.middle-end .placement, &.bottom-end .placement {justify-content: flex-end;}
 
-    &.direction-ltr {
-      &.top-start .placement, &.middle-start .placement, &.bottom-start .placement {left: 0;}
-      &.top-end .placement, &.middle-end .placement, &.bottom-end .placement {right: 0;}
-    }
+  &.direction-ltr {
+    &.top-start .placement, &.middle-start .placement, &.bottom-start .placement {left: 0;}
+    &.top-end .placement, &.middle-end .placement, &.bottom-end .placement {right: 0;}
+  }
 
-    &.direction-rtl {
-      &.top-start .placement, &.middle-start .placement, &.bottom-start .placement {right: 0;}
-      &.top-end .placement, &.middle-end .placement, &.bottom-end .placement {left: 0;}
-    }
+  &.direction-rtl {
+    &.top-start .placement, &.middle-start .placement, &.bottom-start .placement {right: 0;}
+    &.top-end .placement, &.middle-end .placement, &.bottom-end .placement {left: 0;}
+  }
 
   &.middle-start .placement {transform: translateY(-50%)}
   &.middle-center .placement {transform: translate(-50%, -50%)}
@@ -86,6 +86,10 @@ $animation: 300ms ease;
   }
 
   &.maximize {
+    .placement {
+      transform: none;
+    }
+
     .dialog {
       top: 0;
       left: 0;
@@ -101,6 +105,9 @@ $animation: 300ms ease;
   &.minimize {
     z-index: 100;
     position: relative;
+    .placement {
+      transform: none;
+    }
 
     .dialog {
       bottom: 0;
@@ -109,7 +116,7 @@ $animation: 300ms ease;
       margin: 0 !important;
       border-radius: 0 !important;
       transition: all $animation !important;
-      box-shadow: 0 1px 20px 0 rgba(var(--color-black-rgb), 0)!important;
+      box-shadow: 0 1px 20px 0 rgba(var(--color-black-rgb), 0) !important;
     }
 
     .body {
