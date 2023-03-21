@@ -1,0 +1,244 @@
+@import "src/assets/devdesign/mixin";
+
+:host {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  &.has-scroll .data-table ::ng-deep table > tbody:last-child {
+    td, th {
+      border-bottom: none;
+    }
+  }
+
+  &.table-striped ::ng-deep {
+    table {
+      .item-box:nth-child(2n) {
+        background-color: var(--color-gray--0);
+      }
+
+      .item-box:nth-child(2n+1) {
+        background-color: var(--color-white);
+      }
+    }
+  }
+
+  &.table-bordered ::ng-deep {
+    table {
+      td, th {
+        border-inline-end: 1px solid var(--color-gray--2);
+      }
+    }
+  }
+
+  &.selectable ::ng-deep {
+    table {
+      .item-box {
+        cursor: pointer;
+
+        &:hover {
+          background-color: var(--color-gray--2);
+        }
+      }
+    }
+  }
+}
+
+.data {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+
+  .scroll-container {
+    height: 100%;
+    overflow-y: scroll;
+    text-align: justify;
+    transition: margin-inline-end 300ms ease;
+  }
+
+  .data-header, .data-footer {
+    border: 1px solid var(--color-gray--2);
+    background-color: var(--color-gray--0);
+  }
+
+  .data-header {
+  }
+
+  .data-table {
+    flex: 1;
+    overflow: auto;
+    border-radius: 8px;
+    position: relative;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray--4);
+
+    .scroll-container {
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      position: absolute;
+    }
+  }
+
+  .footer {
+
+  }
+
+  ::ng-deep {
+
+    .data-table {
+
+      table {
+        width: 100%;
+        min-height: 100%;
+        border-collapse: collapse;
+        color: var(--color-gray-4);
+
+        td, th {
+          padding: 0 .5em;
+        }
+
+        th {
+          text-align: justify;
+
+          &.sortable {
+            cursor: pointer;
+
+            &:hover {
+              background-color: var(--color-gray--4);
+              .sort-icon::before {
+                opacity: 1 !important;
+              }
+            }
+
+            .sort-icon {
+              padding: 5px 7px;
+            }
+
+            &:not(.sort-dir) {
+              .sort-icon::before {
+                font-family: "Font Awesome 6 Pro";
+                opacity: .4;
+                content: '\e099';
+                font-style: normal;
+              }
+            }
+            &.sort-dir.asc .sort-icon::before {
+              font-family: "Font Awesome 6 Pro";
+              content: '\f884';
+              font-style: normal;
+            }
+            &.sort-dir.desc .sort-icon::before {
+              font-family: "Font Awesome 6 Pro";
+              content: '\f161';
+              font-style: normal;
+            }
+          }
+        }
+
+        thead, tfoot {
+          height: 40px;
+          position: sticky;
+
+          tr {
+            position: relative;
+
+            th:first-child {
+            }
+          }
+
+          th {
+            background-color: var(--color-gray--2);
+          }
+
+          &::before {
+            left: 0;
+            right: 0;
+            z-index: 1;
+            content: '';
+            height: 1px;
+            position: absolute;
+            background-color: var(--color-gray--4);
+          }
+        }
+
+        thead {
+          top: 0;
+
+          &::before {
+            bottom: 0;
+          }
+        }
+
+        tfoot {
+          bottom: 0;
+
+          &::before {
+            top: 0;
+          }
+        }
+
+        tbody {
+          height: 40px;
+
+          &.selected {
+            @include selected-color;
+
+            td {
+              border-inline-end: 1px solid rgba(var(--color-primary-rgb), 0.15) !important;
+            }
+
+            ::ng-deep {
+              tr, & + tbody tr {
+                border-top: 1px solid rgba(var(--color-primary-rgb), 0.15) !important;
+              }
+            }
+          }
+        }
+      }
+
+      tbody tr {
+        border-top: 1px solid var(--color-gray--2);
+      }
+
+      table > tbody:first-child {
+        td, th {
+          border-top: none;
+        }
+      }
+
+      .flexible-table-height {
+        height: auto;
+      }
+    }
+  }
+}
+
+.pagination {
+  display: flex;
+  padding: .5em;
+
+  .pagination-start {
+    flex: 1;
+  }
+
+  .paginator {
+    display: flex;
+    align-items: center;
+
+    .current-page-report {
+      text-align: end;
+      white-space: nowrap;
+    }
+
+    .page-numbers {
+      padding: 0 2em;
+    }
+
+    .page-row-count {
+      width: 100px;
+    }
+  }
+}

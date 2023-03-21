@@ -1,0 +1,78 @@
+<h1>Tag</h1>
+<hr>
+<app-card header="Positions" class="mt-6">
+  <div class="flex-row flex-gap-3">
+    <dev-button (click)="create({scope: 'top-start'})">top start</dev-button>
+    <dev-button (click)="create({scope: 'top-center'})">top center</dev-button>
+    <dev-button (click)="create({scope: 'top-end'})">top end</dev-button>
+
+    <dev-button (click)="create({scope: 'middle-start'})">middle start</dev-button>
+    <dev-button (click)="create({scope: 'middle-center'})">middle center</dev-button>
+    <dev-button (click)="create({scope: 'middle-end'})">middle end</dev-button>
+
+    <dev-button (click)="create({scope: 'bottom-start'})">bottom start</dev-button>
+    <dev-button (click)="create({scope: 'bottom-center'})">bottom center</dev-button>
+    <dev-button (click)="create({scope: 'bottom-end'})">bottom end</dev-button>
+  </div>
+</app-card>
+<app-card header="Colors" class="mt-6">
+  <div class="flex-row flex-gap-3">
+    <dev-button (click)="create({color: 'primary'})" color="primary">primary</dev-button>
+    <dev-button (click)="create({color: 'secondary'})" color="secondary">secondary</dev-button>
+    <dev-button (click)="create({color: 'success'})" color="success">success</dev-button>
+    <dev-button (click)="create({color: 'warning'})" color="warning">warning</dev-button>
+    <dev-button (click)="create({color: 'danger'})" color="danger">danger</dev-button>
+    <dev-button (click)="create({color: 'link'})" color="link">link</dev-button>
+  </div>
+</app-card>
+<app-card header="Static" class="mt-6">
+  <div class="flex-row flex-gap-3">
+    <dev-button (click)="create({scope: 'static', color: 'primary'})" color="primary">primary</dev-button>
+    <dev-button (click)="create({scope: 'static', color: 'secondary'})" color="secondary">secondary</dev-button>
+    <dev-button (click)="create({scope: 'static', color: 'success'})" color="success">success</dev-button>
+    <dev-button (click)="create({scope: 'static', color: 'warning'})" color="warning">warning</dev-button>
+    <dev-button (click)="create({scope: 'static', color: 'danger'})" color="danger">danger</dev-button>
+    <dev-button (click)="create({scope: 'static', color: 'link'})" color="link">link</dev-button>
+  </div>
+  <dev-messages scope="static"></dev-messages>
+</app-card>
+<app-card header="Static Sizes" class="mt-6">
+  <div class="flex-row flex-gap-3">
+    <dev-button (click)="create({scope: 'static-size', size: 'xs'})">extra small</dev-button>
+    <dev-button (click)="create({scope: 'static-size', size: 'sm'})">small</dev-button>
+    <dev-button (click)="create({scope: 'static-size', size: 'md'})">medium</dev-button>
+    <dev-button (click)="create({scope: 'static-size', size: 'lg'})">large</dev-button>
+    <dev-button (click)="create({scope: 'static-size', size: 'xl'})">extra large</dev-button>
+  </div>
+  <dev-messages scope="static-size"></dev-messages>
+</app-card>
+<app-card header="Non Static Sizes" class="mt-6">
+  <div class="flex-row flex-gap-3">
+    <dev-button (click)="create({scope: 'non-static-size', size: 'xs'})">extra small</dev-button>
+    <dev-button (click)="create({scope: 'non-static-size', size: 'sm'})">small</dev-button>
+    <dev-button (click)="create({scope: 'non-static-size', size: 'md'})">medium</dev-button>
+    <dev-button (click)="create({scope: 'non-static-size', size: 'lg'})">large</dev-button>
+    <dev-button (click)="create({scope: 'non-static-size', size: 'xl'})">extra large</dev-button>
+  </div>
+  <dev-messages scope="non-static-size" position="top-end"></dev-messages>
+</app-card>
+<app-card header="Timer" class="mt-6">
+  <div class="flex-row flex-gap-3">
+    <dev-button (click)="create({scope: 'timer', showTimer: true})">show with timer</dev-button>
+  </div>
+  <dev-messages scope="timer" position="top-end"></dev-messages>
+</app-card>
+
+<dev-messages position="top-end"></dev-messages>
+
+<dev-messages scope="top-start" position="top-start"></dev-messages>
+<dev-messages scope="top-center" position="top-center"></dev-messages>
+<dev-messages scope="top-end" position="top-end"></dev-messages>
+
+<dev-messages scope="middle-start" position="middle-start"></dev-messages>
+<dev-messages scope="middle-center" position="middle-center"></dev-messages>
+<dev-messages scope="middle-end" position="middle-end"></dev-messages>
+
+<dev-messages scope="bottom-start" position="bottom-start"></dev-messages>
+<dev-messages scope="bottom-center" position="bottom-center"></dev-messages>
+<dev-messages scope="bottom-end" position="bottom-end"></dev-messages>

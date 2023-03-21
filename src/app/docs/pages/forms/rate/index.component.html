@@ -1,0 +1,28 @@
+<h1>Rate</h1>
+<hr>
+<app-card header="Colors" class="mt-6">
+  <div class="flex-column flex-gap-4 py-1">
+    <dev-rate [formControl]="formControl" color="primary"></dev-rate>
+    <dev-rate [formControl]="formControl" color="secondary"></dev-rate>
+    <dev-rate [formControl]="formControl" color="warning"></dev-rate>
+    <dev-rate [formControl]="formControl" color="success"></dev-rate>
+    <dev-rate [formControl]="formControl" color="danger"></dev-rate>
+    <dev-rate [formControl]="formControl" color="link"></dev-rate>
+  </div>
+</app-card>
+<app-card header="Sizes" class="mt-6">
+  <div class="flex-column flex-align-start flex-gap-4 py-3">
+    <dev-rate [formControl]="formControl" size="xs" color="primary"></dev-rate>
+    <dev-rate [formControl]="formControl" size="sm" color="primary"></dev-rate>
+    <dev-rate [formControl]="formControl" size="md" color="primary"></dev-rate>
+    <dev-rate [formControl]="formControl" size="lg" color="primary"></dev-rate>
+    <dev-rate [formControl]="formControl" size="xl" color="primary"></dev-rate>
+  </div>
+</app-card>
+<app-card header="Custom" class="mt-6">
+  <div class="flex-column flex-gap-4 py-1">
+    <dev-rate [formControl]="formControl" icon="far fa-times-circle" iconActive="fas fa-check-circle"
+              color="primary"></dev-rate>
+    <dev-rate [formControl]="formControl" icon="far fa-heart" iconActive="fas fa-heart" color="primary"></dev-rate>
+  </div>
+</app-card>

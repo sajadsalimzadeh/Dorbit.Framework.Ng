@@ -1,0 +1,17 @@
+<h1>Select</h1>
+<hr>
+<app-card header="Sizes" class="mt-6">
+  <div class="flex-column flex-gap-5 flex-align-start">
+    <dev-select size="xs" placeholder="Choose one ..." [items]="items" [formControl]="formControl"></dev-select>
+    <dev-select size="sm" placeholder="Choose one ..." [items]="items" [formControl]="formControl"></dev-select>
+    <dev-select size="md" placeholder="Choose one ..." [items]="items" [formControl]="formControl"></dev-select>
+    <dev-select size="lg" placeholder="Choose one ..." [items]="items" [formControl]="formControl"></dev-select>
+    <dev-select size="xl" placeholder="Choose one ..." [items]="items" [formControl]="formControl"></dev-select>
+  </div>
+</app-card>
+<app-card header="Multiple" class="mt-6">
+  <div class="flex-column flex-gap-5 flex-align-start">
+    <dev-select placeholder="Choose one ..." [items]="items2" [formControl]="formControlMultiple"
+                mode="multiple"></dev-select>
+  </div>
+</app-card>

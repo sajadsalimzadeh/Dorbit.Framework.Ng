@@ -1,0 +1,20 @@
+<h1>Switch</h1>
+<hr>
+<app-card header="Colors" class="mt-6">
+  <div class="flex-row flex-align-center flex-gap-4 py-1">
+    <dev-switch [formControl]="formControl" color="primary">Programmer</dev-switch>
+    <dev-switch [formControl]="formControl" color="warning">Architecture</dev-switch>
+    <dev-switch [formControl]="formControl" color="success">Data Science</dev-switch>
+    <dev-switch [formControl]="formControl" color="danger">Designer</dev-switch>
+    <dev-switch [formControl]="formControl" color="link">System Admin</dev-switch>
+  </div>
+</app-card>
+<app-card header="Sizes" class="mt-6">
+  <div class="flex-column flex-align-start flex-gap-4 py-1">
+    <dev-switch [formControl]="formControl" size="xs" color="primary">Programmer</dev-switch>
+    <dev-switch [formControl]="formControl" size="sm" color="primary">Programmer</dev-switch>
+    <dev-switch [formControl]="formControl" size="md" color="primary">Programmer</dev-switch>
+    <dev-switch [formControl]="formControl" size="lg" color="primary">Programmer</dev-switch>
+    <dev-switch [formControl]="formControl" size="xl" color="primary">Programmer</dev-switch>
+  </div>
+</app-card>

@@ -1,0 +1,195 @@
+@import "src/assets/devdesign/mixin";
+
+.control-box {
+
+  .icon {
+    gap: 10px;
+    left: initial;
+    right: initial;
+    padding: 0 .8em;
+    color: var(--color-gray-8);
+    font-size: var(--font-size-5);
+  }
+
+  .clear {
+    cursor: pointer;
+  }
+}
+
+.picker {
+  overflow: hidden;
+  position: relative;
+  //border-radius: 8px;
+  display: inline-block;
+  color: var(--color-black);
+  background-color: var(--color-white);
+  box-shadow: 0 0 1px 0 var(--color-gray-9);
+  min-width: var(--date-picker-size);
+  max-width: var(--date-picker-size);
+
+  &.dir-rtl {
+    direction: rtl;
+  }
+
+  &.dir-ltr {
+    direction: ltr;
+  }
+}
+
+@mixin center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin hover {
+  &:hover {
+    background-color: var(--color-gray--1);
+  }
+}
+
+.day-picker {
+  display: flex;
+  flex-direction: column;
+
+  .year-month {
+    display: flex;
+    font-weight: bold;
+    font-size: var(--font-size-2);
+    border-bottom: 1px solid var(--color-gray--2);
+
+    > div {
+      flex: 1;
+      cursor: pointer;
+      padding: 1em 0;
+      @include center;
+      @include hover;
+    }
+  }
+
+
+  .calendar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    .week-days {
+      display: flex;
+      font-weight: bold;
+      font-size: var(--font-size-2);
+      border-bottom: 1px solid var(--color-gray--2);
+
+      .week-day {
+        flex: 1;
+        height: 30px;
+        @include center;
+      }
+    }
+
+    .days {
+      flex: 1;
+      display: grid;
+      padding: .5em 0;
+      grid-row-gap: .6em;
+      border-bottom: 1px solid var(--color-gray--2);
+      grid-template-columns: auto auto auto auto auto auto auto;
+
+      .day {
+        display: flex;
+        cursor: pointer;
+        align-items: center;
+        justify-content: center;
+        font-size: var(--font-size-2);
+
+        span {
+          width: 2.5em;
+          height: 2.5em;
+          border-radius: 50%;
+
+          @include center;
+        }
+
+        &:hover span {
+          background-color: var(--color-gray--2);
+        }
+
+        &.today span {
+          color: var(--color-primary);
+          box-shadow: inset 0 0 0 1px rgba(var(--color-primary-rgb), .2);
+        }
+
+        &.holiday span {
+          color: var(--color-danger)
+        }
+
+        &.active span {
+          font-weight: bold;
+          @include selected-color;
+
+          & + .day.active {
+            border-radius: 0 !important;
+          }
+        }
+
+        &:not(.this-month) {
+          opacity: .4;
+        }
+      }
+    }
+  }
+
+  .today-button {
+    @include hover;
+    padding: .5em 0;
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+    font-size: var(--font-size-4);
+  }
+}
+
+.month-picker, .year-picker {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+  position: absolute;
+  transform: scale(0);
+  transition: transform 300ms ease;
+  background-color: var(--color-white);
+
+  &.show {
+    transform: scale(1);
+  }
+
+  > div {
+    cursor: pointer;
+    @include center;
+    @include hover;
+
+    &.active {
+      color: var(--color-white);
+      background-color: var(--color-primary);
+    }
+  }
+}
+
+
+.month-picker {
+  display: flex;
+  flex-wrap: wrap;
+
+  .month {
+    width: calc(100% / 3);
+    height: calc(100% / 4);
+  }
+}
+
+.year-picker {
+  .year {
+    width: 100%;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--color-gray--2);
+  }
+}

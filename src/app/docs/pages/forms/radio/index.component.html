@@ -1,0 +1,21 @@
+<h1>Radio</h1>
+<hr>
+<app-card header="Colors" class="mt-6">
+  <div class="flex-row flex-align-center flex-gap-4 py-1">
+    <dev-radio [formControl]="formControl" value="1" color="primary">Programmer</dev-radio>
+    <dev-radio [formControl]="formControl" value="2" color="secondary">Architecture</dev-radio>
+    <dev-radio [formControl]="formControl" value="3" color="warning">Architecture</dev-radio>
+    <dev-radio [formControl]="formControl" value="4" color="success">Data Science</dev-radio>
+    <dev-radio [formControl]="formControl" value="5" color="danger">Designer</dev-radio>
+    <dev-radio [formControl]="formControl" value="6" color="link">System Admin</dev-radio>
+  </div>
+</app-card>
+<app-card header="Sizes" class="mt-6">
+  <div class="flex-column flex-align-start flex-gap-4 py-1">
+    <dev-radio [formControl]="formControl" size="xs" value="1" color="primary">Programmer</dev-radio>
+    <dev-radio [formControl]="formControl" size="sm" value="2" color="primary">Programmer</dev-radio>
+    <dev-radio [formControl]="formControl" size="md" value="3" color="primary">Programmer</dev-radio>
+    <dev-radio [formControl]="formControl" size="lg" value="4" color="primary">Programmer</dev-radio>
+    <dev-radio [formControl]="formControl" size="xl" value="5" color="primary">Programmer</dev-radio>
+  </div>
+</app-card>
