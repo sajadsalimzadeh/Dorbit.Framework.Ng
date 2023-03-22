@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 
 @Component({
-  selector: 'doc-progress-bar',
+  selector: 'doc-tag',
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.scss']
 })
