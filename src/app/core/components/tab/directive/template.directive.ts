@@ -6,6 +6,7 @@ import {DevTemplateDirective} from "../../../directives/template/dev-template.di
 })
 export class TemplateDirective extends DevTemplateDirective {
   @Input() header?: string;
+  @Input() icon?: string;
 
   constructor(template: TemplateRef<any>) {
     super(template);

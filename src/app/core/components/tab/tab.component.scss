@@ -2,6 +2,38 @@
   display: flex;
   justify-content: stretch;
 
+  .tab-list {
+    margin: 0;
+    padding: 0;
+    z-index: 10;
+    display: flex;
+    list-style: none;
+    position: relative;
+    white-space: nowrap;
+    justify-content: stretch;
+
+    li {
+      gap: .5em;
+      display: flex;
+      cursor: pointer;
+      padding: .5em 1em;
+      align-items: center;
+      color: var(--color-gray-7);
+
+      &.active {
+        color: var(--color-primary);
+      }
+
+      i {
+        opacity: .7;
+      }
+
+      &:hover {
+        background-color: var(--color-gray--2);
+      }
+    }
+  }
+
   &.horizontal {
     flex-direction: column;
 
@@ -9,14 +41,14 @@
       flex-direction: row;
 
       li {
+
         &.active {
-          box-shadow: inset 0 -3px 0 0px var(--color-component);
+          box-shadow: 0 3px 0 0 var(--color-component);
         }
       }
     }
 
     .tab-container {
-      margin-top: -1px;
       border-top: 1px solid var(--color-gray--6);
     }
   }
@@ -29,38 +61,20 @@
     }
 
     &.direction-ltr .tab-list li.active {
-      box-shadow: inset -3px 0 0 0px var(--color-component);
+      box-shadow: 3px 0 0 0 var(--color-component);
     }
 
     &.direction-rtl .tab-list li.active {
-      box-shadow: inset 3px 0 0 0 var(--color-component);
+      box-shadow: -3px 0 0 0 var(--color-component);
     }
 
     .tab-container {
-      margin-inline-start: -1px;
       border-inline-start: 1px solid var(--color-gray--6);
     }
 
   }
-}
 
-.tab-list {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  list-style: none;
-  justify-content: stretch;
-
-  li {
-    cursor: pointer;
-    padding: .5em 1em;
-
-    &:hover {
-      background-color: var(--color-gray--2);
-    }
+  .tab-container {
+    padding: 1em;
   }
-}
-
-.tab-container {
-  padding: 1em;
 }

@@ -1,5 +1,6 @@
 <ul class="tab-list">
   <li *ngFor="let tab of tabsTemplates" [ngClass]="{active: tab == activeTab}" (click)="activeTab = tab">
+    <i *ngIf="tab.icon" [ngClass]="tab.icon"></i>
     <span>{{tab.header}}</span>
   </li>
 </ul>
