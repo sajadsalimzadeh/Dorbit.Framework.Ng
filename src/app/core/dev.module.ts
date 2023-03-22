@@ -31,6 +31,7 @@ import {TagModule} from "./components/tag/tag.module";
 import {MessagesModule} from "./components/message/messages.module";
 import {DialogModule} from "./components/dialog/dialog.module";
 import {TooltipModule} from "./directives/tooltip/tooltip.directive";
+import {TabModule} from "./components/tab/tab.module";
 
 @NgModule({
   imports: [
@@ -70,6 +71,7 @@ import {TooltipModule} from "./directives/tooltip/tooltip.directive";
     MessagesModule,
     DialogModule,
     TooltipModule,
+    TabModule,
   ],
 })
 export class DevModule {
