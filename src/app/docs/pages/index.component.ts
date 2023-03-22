@@ -16,6 +16,7 @@ export class IndexComponent implements OnInit {
     {text: 'Progress Bar', link: 'progress-bar', icon: 'far fa-bars-progress'},
     {text: 'Scroll top', link: 'scroll-top', icon: 'far fa-up-down'},
     {text: 'Skeleton', link: 'skeleton', icon: 'far fa-loader'},
+    {text: 'Tab', link: 'tab', icon: 'far fa-list-dropdown'},
     {text: 'Tag', link: 'tag', icon: 'far fa-tag'},
     {text: 'Message', link: 'message', icon: 'far fa-envelope'},
     {text: 'Dialog', link: 'dialog', icon: 'far fa-rectangle-history'},
@@ -38,6 +39,8 @@ export class IndexComponent implements OnInit {
     },
   ];
   activeMenu: any;
+
+  isMenuOpen: boolean = true;
 
   constructor(private router: Router) {
   }
@@ -98,6 +101,10 @@ export class IndexComponent implements OnInit {
       this.activeMenu = menus[0];
       menus.forEach(x => x.open = true);
     }
+  }
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen
   }
 
 }

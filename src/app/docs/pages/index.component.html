@@ -13,19 +13,26 @@
   </ul>
 </ng-template>
 
-<aside>
+<header>
+  <div class="toggle-menu" (click)="toggleMenu()">
+    <i class="far fa-bars"></i>
+  </div>
   <div class="title-box">
     <i class="icon fab fa-angular"></i>
-    <span class="text">Devor Angular</span>
+    <span class="text">NGULAR Around Development Orbit (<a href="https://devor.ir" target="_blank">Devor.ir</a>)</span>
   </div>
-  <nav>
-    <div class="scroll-container">
-      <ng-container *ngTemplateOutlet="menusTpl; context: {$implicit: menus}"></ng-container>
-    </div>
-  </nav>
-</aside>
+</header>
 <main>
-  <section>
-    <router-outlet></router-outlet>
-  </section>
+  <aside [ngClass]="{open: isMenuOpen}">
+    <nav>
+      <div class="scroll-container">
+        <ng-container *ngTemplateOutlet="menusTpl; context: {$implicit: menus}"></ng-container>
+      </div>
+    </nav>
+  </aside>
+  <article>
+    <section>
+      <router-outlet></router-outlet>
+    </section>
+  </article>
 </main>

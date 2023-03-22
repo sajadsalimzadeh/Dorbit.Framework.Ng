@@ -7,29 +7,31 @@
 $header-height: 80px;
 $aside-width: 230px;
 
-:host {
-  height: 100vh;
+header {
   display: flex;
-}
+  justify-content: stretch;
+  font-size: var(--font-size-10);
+  border-bottom: 1px solid var(--color-gray--7);
 
-aside {
-  top: 0;
-  display: flex;
-  position: sticky;
-  width: $aside-width;
-  flex-direction: column;
-  background-color: var(--color-white);
-  border-inline-end: 1px solid var(--color-gray--3);
+  .toggle-menu {
+    display: flex;
+    cursor: pointer;
+    padding: 0 .8em;
+    align-items: center;
+    color: var(--color-gray-10);
+
+    &:hover {
+      color: var(--color-gray-6);
+      background-color: var(--color-gray--2);
+    }
+  }
 
   .title-box {
     gap: .5em;
-    padding: .4em;
     display: flex;
+    padding: .4em .5em;
     width: $aside-width;
     align-items: center;
-    font-size: var(--font-size-10);
-    background-color: var(--color-white);
-    border-bottom: 1px solid var(--color-gray--5);
 
     .icon {
       color: var(--color-danger-shade);
@@ -39,133 +41,155 @@ aside {
     .text {
       font-weight: bold;
       white-space: nowrap;
-    }
-  }
-
-  nav {
-    flex: 1;
-    position: relative;
-
-    .scroll-container {
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      overflow: auto;
-      position: absolute;
-    }
-  }
-
-  a:link,
-  a:visited {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-
-    ul {
-
-      a {
-        padding-inline-start: 3.5em !important;
-      }
-    }
-
-    li {
-
-      a {
-        display: flex;
-        cursor: pointer;
-        align-items: center;
-        padding: .8em 0;
-        padding-inline-start: .8em;
-        color: var(--color-gray-10);
-        border-bottom: 1px solid var(--color-gray--3);
-
-        &:hover {
-          color: var(--color-primary);
-          background-color: rgba(var(--color-primary-rgb), 0.1);
-        }
-
-        i {
-          width: 1.7em;
-          font-size: 1.5em;
-        }
-
-        span {
-          flex: 1;
-        }
-
-        .icon-end {
-          display: flex;
-          position: relative;
-          align-items: center;
-          justify-content: center;
-
-          &::before {
-            position: absolute;
-          }
-        }
-      }
-
-      &.open {
-        > a {
-          background-color: var(--color-gray--2);
-
-          * {
-            color: var(--color-primary) !important;
-          }
-        }
-
-        .icon-end::before {
-          transform: rotate(90deg);
-        }
-      }
-
-      &.active {
-        > a {
-          background-color: var(--color-primary);
-
-          * {
-            color: var(--color-white) !important;
-          }
-
-          span {
-            color: inherit;
-          }
-        }
-      }
+      margin-inline-start: -.5em;
     }
   }
 }
 
 main {
-  flex: 1;
-  position: relative;
+  height: 100vh;
+  display: flex;
   background-color: var(--color-gray--1);
 
-  > section {
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding: 50px;
-    overflow: auto;
-    position: absolute;
 
-    ::ng-deep {
-      router-outlet + * {
-        display: block;
-        animation: fade-in-router-outlet 500ms ease;
+  aside {
+    top: 0;
+    display: flex;
+    position: sticky;
+    width: $aside-width;
+    flex-direction: column;
+    transition: margin 300ms ease;
+    background-color: var(--color-white);
+    border-inline-end: 1px solid var(--color-gray--7);
+
+    &:not(.open) {
+      margin-inline-start: -$aside-width;
+    }
+
+    nav {
+      flex: 1;
+      position: relative;
+
+      .scroll-container {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow: auto;
+        position: absolute;
+      }
+    }
+
+    a:link,
+    a:visited {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      ul {
+
+        a {
+          padding-inline-start: 3.5em !important;
+        }
+      }
+
+      li {
+
+        a {
+          display: flex;
+          cursor: pointer;
+          align-items: center;
+          padding: .8em 0;
+          padding-inline-start: .8em;
+          color: var(--color-gray-6);
+          border-bottom: 1px solid var(--color-gray--3);
+
+          &:hover {
+            color: var(--color-primary);
+            background-color: rgba(var(--color-primary-rgb), 0.1);
+          }
+
+          i {
+            width: 1.7em;
+            font-size: 1.5em;
+          }
+
+          span {
+            flex: 1;
+          }
+
+          .icon-end {
+            display: flex;
+            position: relative;
+            align-items: center;
+            justify-content: center;
+
+            &::before {
+              position: absolute;
+            }
+          }
+        }
+
+        &.open {
+          > a {
+            background-color: var(--color-gray--2);
+
+            * {
+              color: var(--color-primary) !important;
+            }
+          }
+
+          .icon-end::before {
+            transform: rotate(90deg);
+          }
+        }
+
+        &.active {
+          > a {
+            background-color: var(--color-primary);
+
+            * {
+              color: var(--color-white) !important;
+            }
+
+            span {
+              color: inherit;
+            }
+          }
+        }
       }
     }
   }
-}
 
-@keyframes fade-in-router-outlet {
-  0% {opacity: 0; transform: translateY(50px);}
-  100% {opacity: 1; transform: translateY(0);}
+  article {
+    flex: 1;
+    position: relative;
+
+    > section {
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 50px;
+      overflow: auto;
+      position: absolute;
+
+      ::ng-deep {
+        router-outlet + * {
+          display: block;
+          animation: fade-in-router-outlet 500ms ease;
+        }
+      }
+    }
+  }
+
+  @keyframes fade-in-router-outlet {
+    0% {opacity: 0; transform: translateY(50px);}
+    100% {opacity: 1; transform: translateY(0);}
+  }
 }

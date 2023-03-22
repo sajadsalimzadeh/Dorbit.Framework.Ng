@@ -18,6 +18,7 @@ import {CommonModule} from "@angular/common";
         {path: 'scroll-top', loadChildren: () => import('./scroll-top/index.module').then(x => x.Module)},
         {path: 'progress-bar', loadChildren: () => import('./progress-bar/index.module').then(x => x.Module)},
         {path: 'skeleton', loadChildren: () => import('./skeleton/index.module').then(x => x.Module)},
+        {path: 'tab', loadChildren: () => import('./tab/index.module').then(x => x.Module)},
         {path: 'tag', loadChildren: () => import('./tag/index.module').then(x => x.Module)},
         {path: 'message', loadChildren: () => import('./message/index.module').then(x => x.Module)},
         {path: 'dialog', loadChildren: () => import('./dialog/index.module').then(x => x.Module)},
