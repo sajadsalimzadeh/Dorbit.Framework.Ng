@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, ElementRef, HostListener, Input, ViewChild} from '@angular/core';
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
+import {Orientation} from "../../../types";
 
 export interface VolumeRange {
   start: number;
@@ -17,7 +18,7 @@ export class VolumeComponent extends AbstractFormControl<number | VolumeRange> i
   @Input() min = 0;
   @Input() max = 100;
   @Input() step = 1;
-  @Input() align: 'horizontal' | 'vertical' = 'horizontal';
+  @Input() orientation: Orientation = 'horizontal';
   @Input() mode: 'single' | 'multiple' = 'single';
   @Input() dir: 'rtl' | 'ltr' = 'ltr';
 
@@ -49,7 +50,7 @@ export class VolumeComponent extends AbstractFormControl<number | VolumeRange> i
   override render() {
     super.render();
     this.classes[this.dir] = true;
-    this.classes[this.align] = true;
+    this.classes[this.orientation] = true;
     this.processStyles();
   }
 
@@ -63,12 +64,12 @@ export class VolumeComponent extends AbstractFormControl<number | VolumeRange> i
     if (!containerBarEl || !valueBarEl) return;
 
     const range = this.getRange();
-    const totalSize = (this.align == 'horizontal' ? containerBarEl.offsetWidth : containerBarEl.offsetHeight);
+    const totalSize = (this.orientation == 'horizontal' ? containerBarEl.offsetWidth : containerBarEl.offsetHeight);
     const totalValue = this.max - this.min;
     const startSize = (range.start - this.min) * totalSize / totalValue;
     const endSize = (this.max - range.end) * totalSize / totalValue;
     this.dir = getComputedStyle(containerBarEl).direction as any;
-    if (this.align == 'horizontal') {
+    if (this.orientation == 'horizontal') {
       valueBarEl.style.top = '';
       valueBarEl.style.bottom = '';
 
@@ -92,7 +93,7 @@ export class VolumeComponent extends AbstractFormControl<number | VolumeRange> i
     const containerBarEl = this.elementRef?.nativeElement;
     if (!containerBarEl) return;
 
-    const totalSize = (this.align == 'horizontal' ? containerBarEl.offsetWidth : containerBarEl.offsetHeight);
+    const totalSize = (this.orientation == 'horizontal' ? containerBarEl.offsetWidth : containerBarEl.offsetHeight);
     const totalValue = this.max - this.min;
     const stepSize = totalSize / totalValue;
 
@@ -119,7 +120,7 @@ export class VolumeComponent extends AbstractFormControl<number | VolumeRange> i
 
     this.onWindowMouseUp();
     window.addEventListener('mousemove', this.onMouseMove = (we) => {
-      const diff = (this.align == 'horizontal' ? (we.pageX - e.pageX) : (we.pageY - e.pageY));
+      const diff = (this.orientation == 'horizontal' ? (we.pageX - e.pageX) : (we.pageY - e.pageY));
       let value = firstValue + (diff / stepSize);
       value = Math.round(value / this.step) * this.step;
       if (getValue() != value) {

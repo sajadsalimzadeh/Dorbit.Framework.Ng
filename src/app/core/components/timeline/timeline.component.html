@@ -5,7 +5,7 @@
   <ng-template #elseContentTpl>{{item}}</ng-template>
 </ng-template>
 
-<ul class="items" [ngClass]="'dir-' + direction">
+<ul class="items" [ngClass]="'dir-' + orientation">
   <li class="item" *ngFor="let item of items; let index = index" [style]="style">
     <div class="start">
       <ng-container *ngIf="align == 'start' || (align == 'alternate' && index%2 == 0)">

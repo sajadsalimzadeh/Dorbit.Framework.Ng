@@ -1,16 +1,17 @@
 import {Component, ContentChildren, Input, OnChanges, QueryList, SimpleChanges, TemplateRef} from "@angular/core";
 import {DevTemplateDirective} from "../../directives/template/dev-template.directive";
+import {Orientation} from "../../types";
+import {BaseComponent} from "../base.component";
 
 @Component({
   selector: 'dev-timeline',
   templateUrl: './timeline.component.html',
   styleUrls: ['./timeline.component.scss']
 })
-export class TimelineComponent implements OnChanges {
+export class TimelineComponent extends BaseComponent {
   @Input() items: any[] = [];
-  @Input() direction: 'vertical' | 'horizontal' = 'horizontal';
+  @Input() orientation: Orientation = 'horizontal';
   @Input() align: 'start' | 'end' | 'alternate' = 'alternate';
-  @Input() size = 0;
 
   style: any = {};
 
@@ -22,14 +23,5 @@ export class TimelineComponent implements OnChanges {
     this.pointTemplate = value.find(x => x.name == 'point')?.template;
     this.oppositeTemplate = value.find(x => x.name == 'opposite')?.template;
     this.contentTemplate = value.find(x => !x.name || x.name == 'content')?.template;
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.render();
-  }
-
-  render() {
-    this.style['height'] = (this.direction == 'vertical' && this.size ? this.size + 'px' : 'auto');
-    this.style['width'] = (this.direction == 'horizontal' && this.size ? this.size + 'px' : 'auto');
   }
 }
