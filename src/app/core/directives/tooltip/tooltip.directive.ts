@@ -56,7 +56,7 @@ export class TooltipDirective {
   }
 
   hide() {
-    // this.overlayRef?.destroy();
+    this.overlayRef?.destroy();
   }
 }
 

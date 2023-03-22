@@ -1,4 +1,5 @@
-$arrow-distance: 10px;
+$arrow-distance: 15%;
+$max-distance: calc(100% - 1px);
 
 .dev-tooltip-overlay {
   .overlay-container {
@@ -20,18 +21,17 @@ $arrow-distance: 10px;
     }
 
     &.top .text::after {
-      top: 100%;
+      top: $max-distance;
       border-bottom: none;
       border-left-color: transparent;
       border-right-color: transparent;
-
     }
     &.top-center .text::after {left: 50%;transform: translateX(-50%);}
     &.top-start.direction-ltr .text::after, &.top-end.direction-rtl .text::after {left: $arrow-distance;}
     &.top-end.direction-ltr .text::after, &.top-start.direction-rtl .text::after {right: $arrow-distance;}
 
     &.bottom .text::after {
-      bottom: 100%;
+      bottom: $max-distance;
       border-top: none;
       border-left-color: transparent;
       border-right-color: transparent;
@@ -41,18 +41,18 @@ $arrow-distance: 10px;
     &.bottom-end.direction-ltr .text::after, &.bottom-start.direction-rtl .text::after {right: $arrow-distance;}
 
     &.start.direction-ltr .text::after, &.end.direction-rtl .text::after {
-      left: 100%;
+      left: $max-distance;
       border-right: none;
       border-top-color: transparent;
       border-bottom-color: transparent;
     }
     &.end.direction-ltr .text::after, &.start.direction-rtl .text::after {
-      right: 100%;
+      right: $max-distance;
       border-left: none;
       border-top-color: transparent;
       border-bottom-color: transparent;
     }
-    &.start-center .text::after {top: 50%;transform: translateY(-50%);}
+    &.start-center .text::after, &.end-center .text::after {top: 50%;transform: translateY(-50%);}
     &.start-top .text::after, &.end-top .text::after {top: $arrow-distance;}
     &.start-bottom .text::after, &.end-bottom .text::after {bottom: $arrow-distance;}
   }
