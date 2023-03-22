@@ -1,10 +1,6 @@
 @use "sass:list";
 @import "../variables";
 
-@each $counter in $counters {
-  .flex-#{$counter} {flex: $counter;}
-}
-
 $helpers: (
     ("mx", "margin-inline-start", "margin-inline-end"),
     ("mxs", "margin-inline-start"),
@@ -44,8 +40,9 @@ $helpers: (
   }
 }
 
-@each $size in $sizes {
-  .#{$size} {font-size: var(--font-size-#{$size}) !important;}
+@each $screen in $screens {
+  $name: nth($screen, 1);
+  .#{$name} {font-size: var(--font-size-#{$name}) !important;}
 }
 
 

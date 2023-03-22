@@ -1,3 +1,4 @@
+@use "sass:math";
 @import "../variables";
 
 .flex-row {display: flex; flex-direction: row;}
@@ -16,10 +17,51 @@
 .flex-justify-space-between {justify-content: space-between;}
 .flex-justify-space-around {justify-content: space-around;}
 
+.flex-wrap {flex-wrap: wrap;}
+.flex-stretch {justify-content: stretch;}
+
 .text-align-start {text-align: start;}
 .text-align-center {text-align: center;}
 .text-align-end {text-align: end;}
 
 @each $count in $counters {
   .flex-gap-#{$count} {gap: var(--size-#{$count});}
+}
+
+@each $counter in $counters {
+  .flex-#{$counter} {flex: $counter;}
+}
+
+$i: 1;
+@while $i <= 12 {
+  .col-#{$i} {width: #{math.div($i*100,12) + 0%};}
+  $i: $i +1;
+}
+
+@each $screen in $screens {
+  $name: nth($screen, 1);
+  $resolution: nth($screen, 2);
+  @media (min-width: $resolution) {
+    $i: 1;
+    @while $i <= 12 {
+      .col-#{$name}-#{$i} {width: #{math.div($i*100,12) + 0%};}
+      $i: $i +1;
+    }
+  }
+}
+
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 90%;
+
+  @each $screen in $screens {
+    $name: nth($screen, 1);
+    $resolution: nth($screen, 2);
+    $width: nth($screen, 3);
+    @media (min-width: $resolution) {
+      width: $width;
+    }
+  }
 }

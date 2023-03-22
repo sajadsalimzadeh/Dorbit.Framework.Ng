@@ -1,11 +1,18 @@
 @use "sass:list";
 
-$counters: (0,1,2,3,4,5,6,7,8,9,10);
-$sizes: ('xs', 'sm', 'md', 'lg', 'xl');
+$counters: (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+$screens: (
+    ('xxs', 0, 100%),
+    ('xs', 366px, 340px),
+    ('sm', 576px, 540px),
+    ('md', 768px, 720px),
+    ('lg', 992px, 960px),
+    ('xl', 1200px, 1140px),
+    ('xxl', 1400px, 1320px),
+);
 $main-colors: (
   'white',
   'black',
-
   'primary',
   'primary-tint',
   'primary-shade',
