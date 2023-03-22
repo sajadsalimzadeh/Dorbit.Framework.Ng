@@ -2,6 +2,7 @@
 $animation: 300ms ease;
 
 :host {
+  z-index: 10000000000;
 
   &.middle-center .dialog,
   &.top-start .dialog,

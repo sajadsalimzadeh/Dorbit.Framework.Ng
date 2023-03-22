@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, HostBinding, HostListener, OnInit, TemplateRef} from "@angular/core";
+import {Component, HostListener, OnInit, TemplateRef} from "@angular/core";
 import {OverlayRef} from "./overlay.service";
 import {Colors} from "../../types";
 import {BaseComponent} from "../base.component";

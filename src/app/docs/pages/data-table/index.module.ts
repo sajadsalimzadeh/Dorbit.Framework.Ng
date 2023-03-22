@@ -4,16 +4,18 @@ import {IndexComponent} from "./index.component";
 import {CommonModule} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {DevModule} from "../../../core/dev.module";
+import {DocModule} from "../../components/doc.module";
 
 @NgModule({
-  imports: [
-    FormsModule,
-    CommonModule,
-    ReactiveFormsModule,
-    RouterModule.forChild([{path: '', component: IndexComponent}]),
+    imports: [
+        FormsModule,
+        CommonModule,
+        ReactiveFormsModule,
+        RouterModule.forChild([{path: '', component: IndexComponent}]),
 
-    DevModule,
-  ],
+        DevModule,
+        DocModule,
+    ],
   declarations: [
     IndexComponent
   ]

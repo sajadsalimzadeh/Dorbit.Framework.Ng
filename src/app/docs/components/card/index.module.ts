@@ -1,13 +1,16 @@
 import {NgModule} from "@angular/core";
 import {IndexComponent} from "./index.component";
 import {CommonModule} from "@angular/common";
-import {CardModule} from "../../../core/components/card/card.module";
+import {HttpClientModule} from "@angular/common/http";
+import {DevModule} from "../../../core/dev.module";
 
 
 @NgModule({
   imports: [
     CommonModule,
-    CardModule,
+    HttpClientModule,
+
+    DevModule,
   ],
   declarations: [IndexComponent],
   exports: [IndexComponent]

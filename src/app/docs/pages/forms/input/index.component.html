@@ -1,6 +1,6 @@
 <h1>Input</h1>
 <hr>
-<app-card header="Sizes" class="mt-6">
+<app-card header="Sizes" class="mt-6" component="forms/input">
   <div class="flex-column flex-gap-5">
     <dev-input size="xs" [ngModel]="text"></dev-input>
     <dev-input size="sm" [ngModel]="text"></dev-input>
@@ -9,17 +9,17 @@
     <dev-input size="xl" [ngModel]="text"></dev-input>
   </div>
 </app-card>
-<app-card header="Placeholder" class="mt-6">
+<app-card header="Placeholder" class="mt-6" component="forms/input">
   <div class="flex-column flex-gap-5">
     <dev-input placeholder="please enter your name ...."></dev-input>
   </div>
 </app-card>
-<app-card header="Textarea" class="mt-6">
+<app-card header="Textarea" class="mt-6" component="forms/input">
   <div class="flex-column flex-gap-5">
     <dev-input type="textarea" [formControl]="formControl"></dev-input>
   </div>
 </app-card>
-<app-card header="Control Group" class="mt-6">
+<app-card header="Control Group" class="mt-6" component="forms/input">
   <div class="flex-column flex-gap-5">
     <dev-control-group>
       <ng-template devTemplate="start"><i class="far fa-search"></i></ng-template>
@@ -32,7 +32,7 @@
     </dev-control-group>
   </div>
 </app-card>
-<app-card header="Labels" class="mt-6">
+<app-card header="Labels" class="mt-6" component="forms/input">
   <div class="flex-column flex-gap-5">
     <dev-control-group [formControl]="formControl" label="Fix Label">
       <ng-template devTemplate="end"><i class="far fa-info"></i></ng-template>
@@ -44,7 +44,7 @@
     </dev-control-group>
   </div>
 </app-card>
-<app-card header="Other Controls" class="mt-6">
+<app-card header="Other Controls" class="mt-6" component="forms/input">
   <div class="flex-column flex-gap-5">
     <dev-control-group [formControl]="formControl" label="Select Control" labelState="floating">
       <dev-select [items]="items"></dev-select>
@@ -83,7 +83,7 @@
     </dev-control-group>
   </div>
 </app-card>
-<app-card header="Mask" class="mt-6">
+<app-card header="Mask" class="mt-6" component="forms/input">
   <div class="flex-column flex-gap-5">
     <dev-control-group label="Cellphone Number">
       <dev-input mask="99 999"></dev-input>
@@ -110,7 +110,7 @@
     </dev-control-group>
   </div>
 </app-card>
-<app-card header="Errors" class="mt-6">
+<app-card header="Errors" class="mt-6" component="forms/input">
   <div class="flex-column flex-gap-5">
     <dev-control-group [formControl]="formControlWithValidationRequired">
       <dev-input placeholder="Required"></dev-input>
@@ -135,7 +135,7 @@
     </dev-control-group>
   </div>
 </app-card>
-<app-card header="Hint Box" class="mt-6">
+<app-card header="Hint Box" class="mt-6" component="forms/input">
   <div class="flex-column flex-gap-5">
     <dev-control-group hint="Enter your username">
       <dev-input></dev-input>

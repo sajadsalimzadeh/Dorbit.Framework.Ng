@@ -2,24 +2,28 @@
 <hr>
 
 <div class="flex-row flex-stretch flex-gap-7">
-  <app-card header="Basic" class="mt-6 flex-1">
+  <app-card [filenames]="['index.component.html', 'index.component.ts']" class="mt-6 flex-1" component="timeline"
+            header="Basic">
     <dev-timeline [items]="items">
       <ng-template devTemplate="content" let-item>{{item.text}}</ng-template>
     </dev-timeline>
   </app-card>
-  <app-card header="Align Start" class="flex-1">
+  <app-card [filenames]="['index.component.html', 'index.component.ts']" class="flex-1" component="timeline"
+            header="Align Start">
     <dev-timeline [items]="items" align="start">
       <ng-template devTemplate="content" let-item>{{item.text}}</ng-template>
     </dev-timeline>
   </app-card>
 </div>
 <div class="flex-row flex-stretch flex-gap-7">
-  <app-card header="Align End" class="flex-1">
+  <app-card [filenames]="['index.component.html', 'index.component.ts']" class="flex-1" component="timeline"
+            header="Align End">
     <dev-timeline [items]="items" align="end">
       <ng-template devTemplate="content" let-item>{{item.text}}</ng-template>
     </dev-timeline>
   </app-card>
-  <app-card header="Align Alternate With Opposite" class="mt-6 flex-1">
+  <app-card [filenames]="['index.component.html', 'index.component.ts']" class="flex-1" component="timeline"
+            header="Align Alternate With Opposite">
     <dev-timeline [items]="items">
       <ng-template devTemplate="content" let-item>{{item.text}}</ng-template>
       <ng-template devTemplate="opposite" let-item>{{item.date}}</ng-template>
@@ -27,26 +31,26 @@
   </app-card>
 </div>
 <div class="flex-row flex-stretch flex-gap-7">
-  <app-card header="Vertical" class="flex-1">
-    <h3 class="text-align-center">Basic</h3>
+  <app-card [filenames]="['index.component.html', 'index.component.ts']" class="flex-1" component="timeline"
+            header="Vertical Basic">
     <dev-timeline [items]="items" orientation="vertical">
       <ng-template devTemplate="content" let-item>{{item.text}}</ng-template>
     </dev-timeline>
   </app-card>
-  <app-card header="Vertical" class="flex-1">
-    <h3 class="text-align-center">Align Start</h3>
+  <app-card [filenames]="['index.component.html', 'index.component.ts']" class="flex-1" component="timeline"
+            header="Vertical Align Start">
     <dev-timeline [items]="items" orientation="vertical" align="start">
       <ng-template devTemplate="content" let-item>{{item.text}}</ng-template>
     </dev-timeline>
   </app-card>
-  <app-card header="Vertical" class="flex-1">
-    <h3 class="text-align-center">Align End</h3>
+  <app-card [filenames]="['index.component.html', 'index.component.ts']" class="flex-1" component="timeline"
+            header="Vertical Align End">
     <dev-timeline [items]="items" orientation="vertical" align="end">
       <ng-template devTemplate="content" let-item>{{item.text}}</ng-template>
     </dev-timeline>
   </app-card>
-  <app-card header="Vertical" class="flex-1">
-    <h3 class="text-align-center">Align Alternate With Opposite</h3>
+  <app-card [filenames]="['index.component.html', 'index.component.ts']" class="flex-1" component="timeline"
+            header="Vertical Align Alternate With Opposite">
     <dev-timeline [items]="items" orientation="vertical" color="danger">
       <ng-template devTemplate="content" let-item>{{item.text}}</ng-template>
       <ng-template devTemplate="opposite" let-item>{{item.date}}</ng-template>

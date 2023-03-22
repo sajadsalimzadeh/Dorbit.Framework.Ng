@@ -1,6 +1,6 @@
 <h1>Tag</h1>
 <hr>
-<app-card header="Sizes" class="mt-6">
+<app-card header="Sizes" class="mt-6" component="tag">
   <div class="flex-column flex-align-start flex-gap-3">
     <dev-tag size="xs">extra small</dev-tag>
     <dev-tag size="sm">small</dev-tag>
@@ -9,7 +9,7 @@
     <dev-tag size="xl">extra large</dev-tag>
   </div>
 </app-card>
-<app-card header="Colors" class="mt-6">
+<app-card header="Colors" class="mt-6" component="tag">
   <div class="flex-row flex-gap-3">
     <dev-tag color="primary">primary</dev-tag>
     <dev-tag color="secondary">secondary</dev-tag>
@@ -19,7 +19,7 @@
     <dev-tag color="link">link</dev-tag>
   </div>
 </app-card>
-<app-card header="Icon" class="mt-6">
+<app-card header="Icon" class="mt-6" component="tag">
   <div class="flex-row flex-gap-3">
     <dev-tag icon="far fa-key" color="primary">primary</dev-tag>
     <dev-tag icon="far fa-user" color="secondary">secondary</dev-tag>
@@ -29,7 +29,7 @@
     <dev-tag icon="far fa-link" color="link">link</dev-tag>
   </div>
 </app-card>
-<app-card header="Rounded" class="mt-6">
+<app-card header="Rounded" class="mt-6" component="tag">
   <div class="flex-row flex-gap-3">
     <dev-tag icon="far fa-key" color="primary" [rounded]="true">primary</dev-tag>
     <dev-tag icon="far fa-user" color="secondary" [rounded]="true">secondary</dev-tag>

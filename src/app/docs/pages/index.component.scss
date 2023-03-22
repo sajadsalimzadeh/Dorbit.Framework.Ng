@@ -6,11 +6,17 @@
 
 $header-height: 80px;
 $aside-width: 230px;
+$header-height: 70px;
 
 header {
+  top: 0;
+  z-index: 100;
   display: flex;
+  position: sticky;
+  height: $header-height;
   justify-content: stretch;
   font-size: var(--font-size-10);
+  background-color: var(--color-white);
   border-bottom: 1px solid var(--color-gray--7);
 
   .toggle-menu {
@@ -47,19 +53,18 @@ header {
 }
 
 main {
-  height: 100vh;
   display: flex;
   background-color: var(--color-gray--1);
 
-
   aside {
-    top: 0;
     display: flex;
     position: sticky;
+    top: $header-height;
     width: $aside-width;
     flex-direction: column;
     transition: margin 300ms ease;
     background-color: var(--color-white);
+    height: calc(100vh - $header-height);
     border-inline-end: 1px solid var(--color-gray--7);
 
     &:not(.open) {
@@ -168,16 +173,17 @@ main {
 
   article {
     flex: 1;
+    padding: 20px 40px;
     position: relative;
 
     > section {
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      padding: 50px;
-      overflow: auto;
-      position: absolute;
+      //top: 0;
+      //left: 0;
+      //right: 0;
+      //bottom: 0;
+      //padding: 50px;
+      //overflow: auto;
+      //position: absolute;
 
       ::ng-deep {
         router-outlet + * {

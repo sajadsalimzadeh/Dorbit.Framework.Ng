@@ -1,6 +1,6 @@
 <h1>Volume</h1>
 <hr>
-<app-card header="Colors" class="mt-6">
+<app-card header="Colors" class="mt-6" component="forms/volume">
   <div class="flex-column flex-gap-5 py-1" style="width: 250px">
     <dev-volume [formControl]="formControlSingle" color="primary"></dev-volume>
     <dev-volume [formControl]="formControlSingle" color="secondary"></dev-volume>
@@ -13,12 +13,12 @@
     <dev-input [formControl]="formControlSingle" color="primary"></dev-input>
   </div>
 </app-card>
-<app-card header="Step = 20" class="mt-6">
+<app-card header="Step = 20" class="mt-6" component="forms/volume">
   <div class="flex-column flex-gap-5 py-1" style="width: 250px">
     <dev-volume [formControl]="formControlSingle" color="primary" [step]="20"></dev-volume>
   </div>
 </app-card>
-<app-card header="Range" class="mt-6">
+<app-card header="Range" class="mt-6" component="forms/volume">
   <label>Start: {{formControlMultiple.value?.start}} , End: {{formControlMultiple.value?.end}}</label>
   <div class="flex-column flex-gap-5 py-1" style="width: 250px">
     <dev-volume [formControl]="formControlMultiple" color="primary" mode="multiple"></dev-volume>
@@ -28,7 +28,7 @@
     <dev-volume [formControl]="formControlMultiple" color="primary" orientation="vertical" mode="multiple"></dev-volume>
   </div>
 </app-card>
-<app-card header="Customize Min Max" class="mt-6">
+<app-card header="Customize Min Max" class="mt-6" component="forms/volume">
   <label>Start: {{formControlMultiple2.value?.start}} , End: {{formControlMultiple2.value?.end}}</label>
   <div class="flex-row flex-gap-5 py-1" style="width: 250px">
     <dev-volume [formControl]="formControlMultiple2"

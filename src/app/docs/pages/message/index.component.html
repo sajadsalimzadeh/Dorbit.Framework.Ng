@@ -1,6 +1,6 @@
-<h1>Tag</h1>
+<h1>Message</h1>
 <hr>
-<app-card header="Positions" class="mt-6">
+<app-card [filenames]="['index.component.html', 'index.component.ts']" class="mt-6" component="message" header="Positions">
   <div class="flex-row flex-gap-3">
     <dev-button (click)="create({scope: 'top-start'})">top start</dev-button>
     <dev-button (click)="create({scope: 'top-center'})">top center</dev-button>
@@ -15,17 +15,17 @@
     <dev-button (click)="create({scope: 'bottom-end'})">bottom end</dev-button>
   </div>
 </app-card>
-<app-card header="Colors" class="mt-6">
+<app-card [filenames]="['index.component.html', 'index.component.ts']" class="mt-6" component="message" header="Colors">
   <div class="flex-row flex-gap-3">
-    <dev-button (click)="create({color: 'primary'})" color="primary">primary</dev-button>
-    <dev-button (click)="create({color: 'secondary'})" color="secondary">secondary</dev-button>
-    <dev-button (click)="create({color: 'success'})" color="success">success</dev-button>
-    <dev-button (click)="create({color: 'warning'})" color="warning">warning</dev-button>
-    <dev-button (click)="create({color: 'danger'})" color="danger">danger</dev-button>
-    <dev-button (click)="create({color: 'link'})" color="link">link</dev-button>
+    <dev-button (click)="create({scope: 'top-end', color: 'primary'})" color="primary">primary</dev-button>
+    <dev-button (click)="create({scope: 'top-end', color: 'secondary'})" color="secondary">secondary</dev-button>
+    <dev-button (click)="create({scope: 'top-end', color: 'success'})" color="success">success</dev-button>
+    <dev-button (click)="create({scope: 'top-end', color: 'warning'})" color="warning">warning</dev-button>
+    <dev-button (click)="create({scope: 'top-end', color: 'danger'})" color="danger">danger</dev-button>
+    <dev-button (click)="create({scope: 'top-end', color: 'link'})" color="link">link</dev-button>
   </div>
 </app-card>
-<app-card header="Static" class="mt-6">
+<app-card [filenames]="['index.component.html', 'index.component.ts']" class="mt-6" component="message" header="Static">
   <div class="flex-row flex-gap-3">
     <dev-button (click)="create({scope: 'static', color: 'primary'})" color="primary">primary</dev-button>
     <dev-button (click)="create({scope: 'static', color: 'secondary'})" color="secondary">secondary</dev-button>
@@ -36,7 +36,7 @@
   </div>
   <dev-messages scope="static"></dev-messages>
 </app-card>
-<app-card header="Static Sizes" class="mt-6">
+<app-card [filenames]="['index.component.html', 'index.component.ts']" class="mt-6" component="message" header="Static Sizes">
   <div class="flex-row flex-gap-3">
     <dev-button (click)="create({scope: 'static-size', size: 'xs'})">extra small</dev-button>
     <dev-button (click)="create({scope: 'static-size', size: 'sm'})">small</dev-button>
@@ -46,24 +46,20 @@
   </div>
   <dev-messages scope="static-size"></dev-messages>
 </app-card>
-<app-card header="Non Static Sizes" class="mt-6">
+<app-card [filenames]="['index.component.html', 'index.component.ts']" class="mt-6" component="message" header="Non Static Sizes">
   <div class="flex-row flex-gap-3">
-    <dev-button (click)="create({scope: 'non-static-size', size: 'xs'})">extra small</dev-button>
-    <dev-button (click)="create({scope: 'non-static-size', size: 'sm'})">small</dev-button>
-    <dev-button (click)="create({scope: 'non-static-size', size: 'md'})">medium</dev-button>
-    <dev-button (click)="create({scope: 'non-static-size', size: 'lg'})">large</dev-button>
-    <dev-button (click)="create({scope: 'non-static-size', size: 'xl'})">extra large</dev-button>
+    <dev-button (click)="create({scope: 'top-end', size: 'xs'})">extra small</dev-button>
+    <dev-button (click)="create({scope: 'top-end', size: 'sm'})">small</dev-button>
+    <dev-button (click)="create({scope: 'top-end', size: 'md'})">medium</dev-button>
+    <dev-button (click)="create({scope: 'top-end', size: 'lg'})">large</dev-button>
+    <dev-button (click)="create({scope: 'top-end', size: 'xl'})">extra large</dev-button>
   </div>
-  <dev-messages scope="non-static-size" position="top-end"></dev-messages>
 </app-card>
-<app-card header="Timer" class="mt-6">
+<app-card [filenames]="['index.component.html', 'index.component.ts']" class="mt-6" component="message" header="Timer">
   <div class="flex-row flex-gap-3">
-    <dev-button (click)="create({scope: 'timer', showTimer: true})">show with timer</dev-button>
+    <dev-button (click)="create({scope: 'top-end', showTimer: true})">show with timer</dev-button>
   </div>
-  <dev-messages scope="timer" position="top-end"></dev-messages>
 </app-card>
-
-<dev-messages position="top-end"></dev-messages>
 
 <dev-messages scope="top-start" position="top-start"></dev-messages>
 <dev-messages scope="top-center" position="top-center"></dev-messages>

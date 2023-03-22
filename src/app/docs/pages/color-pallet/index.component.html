@@ -1,13 +1,15 @@
 <h1>Color Pallet</h1>
 <hr>
-<app-card header="Primary Colors" class="mt-6">
+<app-card [filenames]="['index.component.html', 'index.component.ts']" class="mt-6" component="color-pallet"
+          header="Primary Colors">
   <div class="grid">
     <div *ngFor="let color of primaryColors" [ngClass]="('bg-' + color.bg) + ' ' + ('text-' + color.text)">
       {{color.bg}}
     </div>
   </div>
 </app-card>
-<app-card header="Gray Colors" class="mt-6">
+<app-card class="mt-6" component="color-pallet" [filenames]="['index.component.html', 'index.component.ts']"
+          header="Gray Colors">
   <div class="grid">
     <div *ngFor="let color of grayColors" [ngClass]="('bg-' + color.bg) + ' ' + ('text-' + color.text)">
       {{color.bg}}

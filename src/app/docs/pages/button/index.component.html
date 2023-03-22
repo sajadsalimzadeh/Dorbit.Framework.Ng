@@ -1,6 +1,6 @@
 <h1>Buttons</h1>
 <hr>
-<app-card class="mt-6" header="Colors">
+<app-card class="mt-6" header="Colors" component="button">
   <div class="flex-row flex-align-center flex-gap-4 py-3">
     <dev-button color="primary">Primary</dev-button>
     <dev-button color="secondary">Secondary</dev-button>
@@ -10,7 +10,7 @@
     <dev-button color="link">Link</dev-button>
   </div>
 </app-card>
-<app-card header="Sizes" class="mt-6">
+<app-card header="Sizes" class="mt-6" component="button">
   <div class="flex-row flex-align-center flex-gap-4 py-3">
     <dev-button size="xs" color="primary">Primary</dev-button>
     <dev-button size="xs" color="secondary">Secondary</dev-button>
@@ -62,7 +62,7 @@
     <dev-button size="xl" color="primary" icon="far fa-check" iconPos="end">Primary</dev-button>
   </div>
 </app-card>
-<app-card header="Disable" class="mt-6">
+<app-card header="Disable" class="mt-6" component="button">
   <div class="flex-row flex-align-center flex-gap-4 py-3">
     <dev-button color="primary" [disabled]="true">Primary</dev-button>
     <dev-button color="secondary" [disabled]="true">Secondary</dev-button>
@@ -72,7 +72,7 @@
     <dev-button color="link" [disabled]="true">Link</dev-button>
   </div>
 </app-card>
-<app-card header="Icon" class="mt-6">
+<app-card header="Icon" class="mt-6" component="button">
   <div class="flex-row flex-align-center flex-gap-4 py-3">
     <dev-button color="primary" icon="far fa-check" iconPos="start"></dev-button>
     <dev-button color="primary" icon="far fa-check" iconPos="start">Primary</dev-button>
@@ -86,10 +86,11 @@
     <dev-button size="xl" color="primary" icon="far fa-check" [rounded]="true"></dev-button>
   </div>
 </app-card>
-<app-card header="Rounded" class="mt-6">
+<app-card header="Rounded" class="mt-6" component="button">
   <div class="flex-row flex-align-center flex-gap-4 py-3">
     <dev-button size="xs" color="primary" [rounded]="true">Primary</dev-button>
     <dev-button size="xs" color="secondary" [rounded]="true">Secondary</dev-button>
+    <dev-button size="xs" color="success" [rounded]="true">Success</dev-button>
     <dev-button size="xs" color="warning" [rounded]="true">Warning</dev-button>
     <dev-button size="xs" color="danger" [rounded]="true">Danger</dev-button>
     <dev-button size="xs" color="link" [rounded]="true">Link</dev-button>
@@ -99,6 +100,7 @@
   <div class="flex-row flex-align-center flex-gap-4 py-3">
     <dev-button size="sm" color="primary" [rounded]="true">Primary</dev-button>
     <dev-button size="sm" color="secondary" [rounded]="true">Secondary</dev-button>
+    <dev-button size="sm" color="success" [rounded]="true">Success</dev-button>
     <dev-button size="sm" color="warning" [rounded]="true">Warning</dev-button>
     <dev-button size="sm" color="danger" [rounded]="true">Danger</dev-button>
     <dev-button size="sm" color="link" [rounded]="true">Link</dev-button>
@@ -108,6 +110,7 @@
   <div class="flex-row flex-align-center flex-gap-4 py-3">
     <dev-button color="primary" [rounded]="true">Primary</dev-button>
     <dev-button color="secondary" [rounded]="true">Secondary</dev-button>
+    <dev-button color="success" [rounded]="true">Success</dev-button>
     <dev-button color="warning" [rounded]="true">Warning</dev-button>
     <dev-button color="danger" [rounded]="true">Danger</dev-button>
     <dev-button color="link" [rounded]="true">Link</dev-button>
@@ -117,6 +120,7 @@
   <div class="flex-row flex-align-center flex-gap-4 py-3">
     <dev-button size="lg" color="primary" [rounded]="true">Primary</dev-button>
     <dev-button size="lg" color="secondary" [rounded]="true">Secondary</dev-button>
+    <dev-button size="lg" color="success" [rounded]="true">Success</dev-button>
     <dev-button size="lg" color="warning" [rounded]="true">Warning</dev-button>
     <dev-button size="lg" color="danger" [rounded]="true">Danger</dev-button>
     <dev-button size="lg" color="link" [rounded]="true">Link</dev-button>
@@ -126,6 +130,7 @@
   <div class="flex-row flex-align-center flex-gap-4 py-3">
     <dev-button size="xl" color="primary" [rounded]="true">Primary</dev-button>
     <dev-button size="xl" color="secondary" [rounded]="true">Secondary</dev-button>
+    <dev-button size="xl" color="success" [rounded]="true">Success</dev-button>
     <dev-button size="xl" color="warning" [rounded]="true">Warning</dev-button>
     <dev-button size="xl" color="danger" [rounded]="true">Danger</dev-button>
     <dev-button size="xl" color="link" [rounded]="true">Link</dev-button>
@@ -133,10 +138,11 @@
     <dev-button size="xl" color="primary" icon="far fa-check" iconPos="end" [rounded]="true">Primary</dev-button>
   </div>
 </app-card>
-<app-card header="Rounded Icon" class="mt-6">
+<app-card header="Rounded Icon" class="mt-6" component="button">
   <div class="flex-row flex-align-center flex-gap-4 py-3">
     <dev-button color="primary" icon="far fa-bookmark" [rounded]="true"></dev-button>
     <dev-button color="secondary" icon="far fa-bell" [rounded]="true"></dev-button>
+    <dev-button color="success" icon="far fa-check" [rounded]="true"></dev-button>
     <dev-button color="warning" icon="far fa-search" [rounded]="true"></dev-button>
     <dev-button color="danger" icon="far fa-heart" [rounded]="true"></dev-button>
     <dev-button color="link" icon="far fa-user" [rounded]="true"></dev-button>
@@ -144,12 +150,13 @@
   <div class="flex-row flex-align-center flex-gap-4 py-3">
     <dev-button color="primary" icon="far fa-bookmark" [rounded]="true" [disabled]="true"></dev-button>
     <dev-button color="secondary" icon="far fa-bell" [rounded]="true" [disabled]="true"></dev-button>
+    <dev-button color="success" icon="far fa-check" [rounded]="true" [disabled]="true"></dev-button>
     <dev-button color="warning" icon="far fa-search" [rounded]="true" [disabled]="true"></dev-button>
     <dev-button color="danger" icon="far fa-heart" [rounded]="true" [disabled]="true"></dev-button>
     <dev-button color="link" icon="far fa-user" [rounded]="true" [disabled]="true"></dev-button>
   </div>
 </app-card>
-<app-card header="Loading" class="mt-6">
+<app-card header="Loading" class="mt-6" component="button">
   <div class="flex-row flex-align-center flex-gap-4 py-3">
     <dev-button color="primary"
                 [loading]="loadings['l1']" (click)="startLoading('l1')">Primary
@@ -173,10 +180,11 @@
     </dev-button>
   </div>
 </app-card>
-<app-card header="Text" class="mt-6">
+<app-card header="Text" class="mt-6" component="button">
   <div class="flex-row flex-align-center flex-gap-4 py-3">
     <dev-button color="primary" [mode]="'text'">Primary</dev-button>
     <dev-button color="secondary" [mode]="'text'">Secondary</dev-button>
+    <dev-button color="success" [mode]="'text'">Success</dev-button>
     <dev-button color="warning" [mode]="'text'">Warning</dev-button>
     <dev-button color="danger" [mode]="'text'">Danger</dev-button>
     <dev-button color="link" [mode]="'text'">Link</dev-button>
@@ -186,24 +194,27 @@
   <div class="flex-row flex-align-center flex-gap-4 py-3">
     <dev-button color="primary" [mode]="'text'" [disabled]="true">Primary</dev-button>
     <dev-button color="secondary" [mode]="'text'" [disabled]="true">Secondary</dev-button>
+    <dev-button color="success" [mode]="'text'" [disabled]="true">Success</dev-button>
     <dev-button color="warning" [mode]="'text'" [disabled]="true">Warning</dev-button>
     <dev-button color="danger" [mode]="'text'" [disabled]="true">Danger</dev-button>
     <dev-button color="link" [mode]="'text'" [disabled]="true">Link</dev-button>
   </div>
 </app-card>
-<app-card header="Text Icon" class="mt-6">
+<app-card header="Text Icon" class="mt-6" component="button">
   <div class="flex-row flex-align-center flex-gap-4 py-3">
     <dev-button color="primary" icon="far fa-bookmark" [mode]="'text'" [rounded]="true"></dev-button>
     <dev-button color="secondary" icon="far fa-bell" [mode]="'text'" [rounded]="true"></dev-button>
+    <dev-button color="success" icon="far fa-check" [mode]="'text'" [rounded]="true"></dev-button>
     <dev-button color="warning" icon="far fa-search" [mode]="'text'" [rounded]="true"></dev-button>
     <dev-button color="danger" icon="far fa-heart" [mode]="'text'" [rounded]="true"></dev-button>
     <dev-button color="link" icon="far fa-user" [mode]="'text'" [rounded]="true"></dev-button>
   </div>
 </app-card>
-<app-card header="Outline" class="mt-6">
+<app-card header="Outline" class="mt-6" component="button">
   <div class="flex-row flex-align-center flex-gap-4 py-3">
     <dev-button color="primary" [mode]="'outline'">Primary</dev-button>
     <dev-button color="secondary" [mode]="'outline'">Secondary</dev-button>
+    <dev-button color="success" [mode]="'outline'">Success</dev-button>
     <dev-button color="warning" [mode]="'outline'">Warning</dev-button>
     <dev-button color="danger" [mode]="'outline'">Danger</dev-button>
     <dev-button color="link" [mode]="'outline'">Link</dev-button>
@@ -213,21 +224,23 @@
   <div class="flex-row flex-align-center flex-gap-4 py-3">
     <dev-button color="primary" [mode]="'outline'" [disabled]="true">Primary</dev-button>
     <dev-button color="secondary" [mode]="'outline'" [disabled]="true">Secondary</dev-button>
+    <dev-button color="success" [mode]="'outline'" [disabled]="true">Success</dev-button>
     <dev-button color="warning" [mode]="'outline'" [disabled]="true">Warning</dev-button>
     <dev-button color="danger" [mode]="'outline'" [disabled]="true">Danger</dev-button>
     <dev-button color="link" [mode]="'outline'" [disabled]="true">Link</dev-button>
   </div>
 </app-card>
-<app-card header="Outline Icon" class="mt-6">
+<app-card header="Outline Icon" class="mt-6" component="button">
   <div class="flex-row flex-align-center flex-gap-4 py-3">
     <dev-button color="primary" icon="far fa-bookmark" [mode]="'outline'" [rounded]="true"></dev-button>
     <dev-button color="secondary" icon="far fa-bell" [mode]="'outline'" [rounded]="true"></dev-button>
+    <dev-button color="success" icon="far fa-check" [mode]="'outline'" [rounded]="true"></dev-button>
     <dev-button color="warning" icon="far fa-search" [mode]="'outline'" [rounded]="true"></dev-button>
     <dev-button color="danger" icon="far fa-heart" [mode]="'outline'" [rounded]="true"></dev-button>
     <dev-button color="link" icon="far fa-user" [mode]="'outline'" [rounded]="true"></dev-button>
   </div>
 </app-card>
-<app-card header="Button Group" class="mt-6">
+<app-card header="Button Group" class="mt-6" component="button">
   <div class="flex-row flex-align-center flex-gap-4 py-3">
     <dev-button-group>
       <dev-button color="primary">Primary</dev-button>

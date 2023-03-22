@@ -1,6 +1,6 @@
 <h1>Dialog</h1>
 <hr>
-<app-card header="Size" class="mt-6">
+<app-card [filenames]="['index.component.html', 'index.component.ts']" class="mt-6" component="dialog" header="Size">
   <div class="flex-row flex-gap-3">
     <dev-button (click)="create({template: shortTpl, title: 'Short Content'})">
       Short Content
@@ -10,7 +10,7 @@
     </dev-button>
   </div>
 </app-card>
-<app-card header="Buttons" class="mt-6">
+<app-card [filenames]="['index.component.html', 'index.component.ts']" class="mt-6" component="dialog" header="Buttons">
   <div class="flex-row flex-gap-3">
     <dev-button (click)="create({template: shortTpl, title: 'Close'})">
       Close
@@ -34,7 +34,7 @@
     })">All</dev-button>
   </div>
 </app-card>
-<app-card header="Positions" class="mt-6">
+<app-card [filenames]="['index.component.html', 'index.component.ts']" class="mt-6" component="dialog" header="Positions">
   <div class="flex-row flex-gap-3">
     <dev-button (click)="create({template: shortTpl, position: 'top-start', title: 'top-start'})">
       top start
@@ -45,7 +45,6 @@
     <dev-button (click)="create({template: shortTpl, position: 'top-end', title: 'top-end'})">
       top end
     </dev-button>
-
     <dev-button (click)="create({template: shortTpl, position: 'middle-start', title: 'middle-start'})">
       middle start
     </dev-button>
@@ -55,7 +54,6 @@
     <dev-button (click)="create({template: shortTpl, position: 'middle-end', title: 'middle-end'})">
       middle end
     </dev-button>
-
     <dev-button (click)="create({template: shortTpl, position: 'bottom-start', title: 'bottom-start'})">
       bottom start
     </dev-button>

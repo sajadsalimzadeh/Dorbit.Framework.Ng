@@ -1,6 +1,6 @@
 <h1>Progress Bar</h1>
 <hr>
-<app-card header="Sizes" class="mt-6">
+<app-card header="Sizes" class="mt-6" component="progress-bar">
   <div class="flex-column flex-gap-4 py-3">
     <dev-progress-bar size="xs" [value]="value"></dev-progress-bar>
     <dev-progress-bar size="sm" [value]="value"></dev-progress-bar>
@@ -9,7 +9,7 @@
     <dev-progress-bar size="xl" [value]="value"></dev-progress-bar>
   </div>
 </app-card>
-<app-card header="Colors" class="mt-6">
+<app-card header="Colors" class="mt-6" component="progress-bar">
   <div class="flex-column flex-gap-4 py-3">
     <dev-progress-bar color="primary" [value]="value"></dev-progress-bar>
     <dev-progress-bar color="secondary" [value]="value"></dev-progress-bar>
@@ -18,12 +18,12 @@
     <dev-progress-bar color="danger" [value]="value"></dev-progress-bar>
   </div>
 </app-card>
-<app-card header="Show value inside" class="mt-6">
+<app-card header="Show value inside" class="mt-6" component="progress-bar">
   <div class="flex-column flex-gap-4 py-3">
     <dev-progress-bar color="primary" [value]="value">{{value.toFixed(2)}}%</dev-progress-bar>
   </div>
 </app-card>
-<app-card header="Indeterminate" class="mt-6">
+<app-card header="Indeterminate" class="mt-6" component="progress-bar">
   <div class="flex-column flex-gap-4 py-3">
     <dev-progress-bar size="xs" color="primary" [value]="value" mode="indeterminate"></dev-progress-bar>
   </div>

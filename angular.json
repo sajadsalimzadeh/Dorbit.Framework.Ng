@@ -27,7 +27,12 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "src/app/docs/pages",
+                "output": "/assets/docs/"
+              }
             ],
             "styles": [
               "src/styles.scss"

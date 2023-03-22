@@ -1,6 +1,6 @@
 <h1>Paginator</h1>
 <hr>
-<app-card header="Sizes" class="mt-6">
+<app-card header="Sizes" class="mt-6" component="paginator">
   <div class="flex-column flex-gap-4 py-3">
     <dev-paginator size="xs" [page]="page" [totalCount]="100" (onSelect)="page = $event"></dev-paginator>
     <dev-paginator size="sm" [page]="page" [totalCount]="100" (onSelect)="page = $event"></dev-paginator>
@@ -9,7 +9,7 @@
     <dev-paginator size="xl" [page]="page" [totalCount]="100" (onSelect)="page = $event"></dev-paginator>
   </div>
 </app-card>
-<app-card header="Colors" class="mt-6">
+<app-card header="Colors" class="mt-6" component="paginator">
   <div class="flex-column flex-gap-4 py-3">
     <dev-paginator [page]="page" [totalCount]="100" (onSelect)="page = $event" color="primary"></dev-paginator>
     <dev-paginator [page]="page" [totalCount]="100" (onSelect)="page = $event" color="secondary"></dev-paginator>

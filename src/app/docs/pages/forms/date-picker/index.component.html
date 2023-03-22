@@ -1,6 +1,6 @@
 <h1>Date Picker</h1>
 <hr>
-<app-card header="Sizes" class="mt-6">
+<app-card header="Sizes" class="mt-6" component="forms/date-picker">
   <div class="flex-column flex-gap-4 py-1">
     <dev-date-picker [formControl]="geregorianFormControl" size="xs" placeholder="Choose Date ..."></dev-date-picker>
     <dev-date-picker [formControl]="geregorianFormControl" size="sm" placeholder="Choose Date ..."></dev-date-picker>
@@ -9,7 +9,7 @@
     <dev-date-picker [formControl]="geregorianFormControl" size="xl" placeholder="Choose Date ..."></dev-date-picker>
   </div>
 </app-card>
-<app-card header="Jalali" class="mt-6">
+<app-card header="Jalali" class="mt-6" component="forms/date-picker">
   <div class="flex-column flex-gap-4 py-1">
     <dev-date-picker [formControl]="jalaliFormControl" locale="fa" placeholder="Choose Date ..."></dev-date-picker>
   </div>

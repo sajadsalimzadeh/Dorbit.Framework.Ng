@@ -6,7 +6,7 @@ import {Component} from '@angular/core';
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent {
-  _primaryColors = ['primary', 'secondary', 'success', 'warning', 'danger', 'link'];
+  private _primaryColors = ['primary', 'secondary', 'success', 'warning', 'danger', 'link'];
 
   primaryColors: {bg: string, text: string}[] = [];
   grayColors: {bg: string, text: string}[] = [];
