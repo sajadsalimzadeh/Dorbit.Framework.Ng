@@ -2,7 +2,7 @@ import {
   Component, HostBinding, HostListener, Input,
 } from '@angular/core';
 import {BaseComponent} from "../base.component";
-import {Colors, PositionsCorner} from "../../types";
+import {PositionsCorner} from "../../types";
 
 @Component({
   selector: 'dev-scroll-top',
@@ -37,8 +37,8 @@ export class ScrollTopComponent extends BaseComponent {
 
   private initTarget() {
     let el = this.elementRef.nativeElement.parentNode as HTMLElement;
-    while (el) {
-      if(el.clientHeight < el.scrollHeight) {
+    while (el && el.tagName.toLowerCase() != 'body') {
+      if (el.clientHeight < el.scrollHeight - 200) {
         this.setTarget(el);
         return;
       }
@@ -48,13 +48,13 @@ export class ScrollTopComponent extends BaseComponent {
   }
 
   private setTarget(target: any) {
-    if(this._target) {
+    if (this._target) {
       this._target.removeEventListener('scroll', this._listener);
     }
     this._target = target;
     target.addEventListener('scroll', this._listener = (e: Event) => {
-      if(e.target instanceof HTMLElement) {
-        this.show = e.target.scrollTop > this.threshold;
+      if (target.scrollY) {
+        this.show = target.scrollY > this.threshold;
       }
     });
   }
