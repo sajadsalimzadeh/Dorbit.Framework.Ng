@@ -32,6 +32,7 @@ import {MessagesModule} from "./components/message/messages.module";
 import {DialogModule} from "./components/dialog/dialog.module";
 import {TooltipModule} from "./directives/tooltip/tooltip.directive";
 import {TabModule} from "./components/tab/tab.module";
+import {CodeModule} from "./components/code/code.module";
 
 @NgModule({
   imports: [
@@ -72,6 +73,7 @@ import {TabModule} from "./components/tab/tab.module";
     DialogModule,
     TooltipModule,
     TabModule,
+    CodeModule,
   ],
 })
 export class DevModule {

@@ -18,7 +18,7 @@
     <hr>
     <dev-tab>
       <ng-template *ngFor="let file of files" devTemplate="tab" [header]="file.name">
-        <pre>{{file.content}}</pre>
+        <dev-code [data]="file.content"></dev-code>
       </ng-template>
     </dev-tab>
   </ng-container>

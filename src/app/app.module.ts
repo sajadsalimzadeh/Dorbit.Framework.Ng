@@ -6,6 +6,7 @@ import {DevModule} from "./core/dev.module";
 import {FormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
+import {HIGHLIGHT_OPTIONS} from "ngx-highlightjs";
 
 @NgModule({
   imports: [
@@ -20,7 +21,19 @@ import {RouterModule} from "@angular/router";
   declarations: [
     AppComponent,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HIGHLIGHT_OPTIONS,
+      useValue: {
+        coreLibraryLoader: () => import('highlight.js/lib/core'),
+        languages: {
+          typescript: () => import('highlight.js/lib/languages/typescript'),
+          css: () => import('highlight.js/lib/languages/css'),
+          xml: () => import('highlight.js/lib/languages/xml')
+        },
+      }
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

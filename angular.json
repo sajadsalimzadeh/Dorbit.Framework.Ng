@@ -35,14 +35,13 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/app/core/assets/styles/all.scss",
+              "src/app/core/assets/highlight/github.css",
+              "src/app/core/assets/fonts/FontAwesome/css/all.css",
+              "src/app/core/assets/fonts/VazirMatn/style.css"
             ],
-            "scripts": [],
-            "stylePreprocessorOptions": {
-              "includePaths": [
-                "src/assets/devdesign"
-              ]
-            }
+            "scripts": []
           },
           "configurations": {
             "production": {
