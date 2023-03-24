@@ -4,7 +4,7 @@ import {
 import {BaseComponent} from "../base.component";
 
 @Component({
-  selector: 'dev-skeleton',
+  selector: 'd-skeleton',
   templateUrl: 'skeleton.component.html',
   styleUrls: ['./skeleton.component.scss']
 })

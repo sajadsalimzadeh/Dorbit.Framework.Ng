@@ -5,7 +5,7 @@ import {BaseComponent} from "../base.component";
 import {PositionsCorner} from "../../types";
 
 @Component({
-  selector: 'dev-scroll-top',
+  selector: 'd-scroll-top',
   templateUrl: 'scroll-top.component.html',
   styleUrls: ['./scroll-top.component.scss']
 })

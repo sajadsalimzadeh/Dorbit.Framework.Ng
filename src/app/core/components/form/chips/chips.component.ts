@@ -5,7 +5,7 @@ import {AbstractFormControl, createControlValueAccessor} from "../form-control.d
 import {Chips} from "./models";
 
 @Component({
-  selector: 'dev-chips',
+  selector: 'd-chips',
   templateUrl: './chips.component.html',
   styleUrls: ['./chips.component.scss', '../control.scss'],
   providers: [createControlValueAccessor(ChipsComponent)]

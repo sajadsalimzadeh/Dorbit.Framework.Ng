@@ -40,17 +40,17 @@
 <ng-template #itemsTpl>
   <div class="items-container" [ngClass]="size">
     <div class="filter-box">
-      <dev-control-group class="filter-control-group" [size]="size" [formControl]="searchFormControl">
-        <ng-template devTemplate="end"><i class="far fa-search"></i></ng-template>
-        <dev-input [placeholder]="searchPlaceHolder" [tabIndex]="tabIndex"/>
-      </dev-control-group>
+      <d-control-group class="filter-control-group" [size]="size" [formControl]="searchFormControl">
+        <ng-template dTemplate="end"><i class="far fa-search"></i></ng-template>
+        <d-input [placeholder]="searchPlaceHolder" [tabIndex]="tabIndex"/>
+      </d-control-group>
     </div>
     <div class="scroll-container">
       <ul class="items">
         <li *ngFor="let item of renderedItems" class="item" (click)="select(item, $event)"
             [ngClass]="{selected: item.selected, hovered: (hoveredItem == item)}">
           <ng-container *ngIf="mode == 'multiple'">
-            <dev-checkbox [size]="size" [ngModel]="item.selected"></dev-checkbox>
+            <d-checkbox [size]="size" [ngModel]="item.selected"></d-checkbox>
           </ng-container>
           <ng-container *ngTemplateOutlet="itemTpl; context: {$implicit:item, type: 'option'}"></ng-container>
         </li>

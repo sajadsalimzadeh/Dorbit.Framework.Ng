@@ -6,7 +6,7 @@ import {
   QueryList,
   SimpleChanges, TemplateRef, ViewChild
 } from "@angular/core";
-import {DevTemplateDirective} from "../../../directives/template/dev-template.directive";
+import {TemplateDirective} from "../../../directives/template/template.directive";
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
 import {OverlayRef, OverlayService} from "../../overlay/overlay.service";
 import {InputComponent} from "../input/input.component";
@@ -15,7 +15,7 @@ import {FormControl} from "@angular/forms";
 type Func = (item: any) => any;
 
 @Component({
-  selector: 'dev-select',
+  selector: 'd-select',
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss', '../control.scss'],
   providers: [createControlValueAccessor(SelectComponent)]
@@ -40,9 +40,9 @@ export class SelectComponent extends AbstractFormControl<any | any[]> {
   @ViewChild('itemsTpl') itemsTpl?: TemplateRef<any>;
   @ViewChild(InputComponent) inputComponent?: InputComponent;
 
-  optionTemplate?: DevTemplateDirective;
+  optionTemplate?: TemplateDirective;
 
-  @ContentChildren(DevTemplateDirective) set templates(value: QueryList<DevTemplateDirective>) {
+  @ContentChildren(TemplateDirective) set templates(value: QueryList<TemplateDirective>) {
     if (value) {
       this.optionTemplate = value.find(x => x.name == 'option');
     }

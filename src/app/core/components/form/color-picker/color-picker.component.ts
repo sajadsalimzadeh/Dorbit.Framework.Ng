@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/c
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
 
 @Component({
-  selector: 'dev-color-picker',
+  selector: 'd-color-picker',
   templateUrl: 'color-picker.component.html',
   styleUrls: ['./color-picker.component.scss', '../control.scss'],
   providers: [createControlValueAccessor(ColorPickerComponent)]

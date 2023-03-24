@@ -10,7 +10,7 @@ export interface MaskItem {
 }
 
 @Component({
-  selector: 'dev-password',
+  selector: 'd-password',
   templateUrl: 'password.component.html',
   styleUrls: ['./password.component.scss', '../control.scss'],
   providers: [createControlValueAccessor(PasswordComponent)]

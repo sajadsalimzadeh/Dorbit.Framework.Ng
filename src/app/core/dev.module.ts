@@ -1,10 +1,10 @@
 import {ErrorHandler, ModuleWithProviders, NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {DataTableModule} from "./components/data-table/index.module";
+import {DataTableModule} from "./components/data-table/data-table.module";
 import {SelectModule} from "./components/form/select/select.module";
 import {DatePickerModule} from "./components/form/date-picker/date-picker.module";
-import {DevTemplateModule} from "./directives/template/dev-template.directive";
+import {DevTemplateModule} from "./directives/template/template.directive";
 import {HttpClientModule} from "@angular/common/http";
 import {OverlayModule} from "./components/overlay/overlay.module";
 import {GlobalErrorHandler} from "./services/error-handler.service";

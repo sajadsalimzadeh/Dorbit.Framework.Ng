@@ -2,7 +2,7 @@ import {Component, HostListener, Input, SimpleChanges} from '@angular/core';
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
 
 @Component({
-  selector: 'dev-rate',
+  selector: 'd-rate',
   templateUrl: 'rate.component.html',
   styleUrls: ['./rate.component.scss', '../control.scss'],
   providers: [createControlValueAccessor(RateComponent)]

@@ -2,7 +2,7 @@ import {Component, ElementRef, HostBinding, Input, OnChanges, OnInit, SimpleChan
 import {BaseComponent} from "../base.component";
 
 @Component({
-  selector: 'dev-button',
+  selector: 'd-button',
   templateUrl: 'button.component.html',
   styleUrls: ['./button.component.scss']
 })

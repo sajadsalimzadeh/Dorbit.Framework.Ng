@@ -2,14 +2,14 @@ import {
   Component, ContentChildren, Injector, Input, QueryList, SimpleChanges, TemplateRef,
 } from '@angular/core';
 import {BaseComponent} from "../base.component";
-import {DevTemplateDirective} from "../../directives/template/dev-template.directive";
+import {TemplateDirective} from "../../directives/template/template.directive";
 import {MessagesService} from "./messages.service";
 import {Subscription} from "rxjs";
 import {Message} from "./models";
 import {Positions} from "../../types";
 
 @Component({
-  selector: 'dev-messages',
+  selector: 'd-messages',
   templateUrl: 'message.component.html',
   styleUrls: ['./messages.component.scss']
 })
@@ -20,7 +20,7 @@ export class MessagesComponent extends BaseComponent {
 
   contentTemplate?: TemplateRef<any>;
 
-  @ContentChildren(DevTemplateDirective) set templates(value: QueryList<DevTemplateDirective>) {
+  @ContentChildren(TemplateDirective) set templates(value: QueryList<TemplateDirective>) {
     this.contentTemplate = value.find(x => !x.name || x.name == 'content')?.template;
   }
 

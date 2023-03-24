@@ -8,7 +8,7 @@ export interface VolumeRange {
 }
 
 @Component({
-  selector: 'dev-volume',
+  selector: 'd-volume',
   templateUrl: 'volume.component.html',
   styleUrls: ['./volume.component.scss', '../control.scss'],
   providers: [createControlValueAccessor(VolumeComponent)]

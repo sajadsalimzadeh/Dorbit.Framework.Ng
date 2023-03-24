@@ -4,7 +4,7 @@ import {
 import {BaseComponent} from "../base.component";
 
 @Component({
-  selector: 'dev-tag',
+  selector: 'd-tag',
   templateUrl: 'tag.component.html',
   styleUrls: ['./tag.component.scss']
 })

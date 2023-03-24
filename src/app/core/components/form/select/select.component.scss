@@ -92,7 +92,7 @@
     align-items: center;
 
     &:hover, &.hovered {
-      background-color: var(--color-gray--1);
+      background-color: rgba(var(--color-black-rgb), 0.03);
     }
 
     &.selected {

@@ -2,143 +2,143 @@
 <hr>
 <app-card header="Sizes" class="mt-6" component="forms/input">
   <div class="flex-column flex-gap-5">
-    <dev-input size="xs" [ngModel]="text"></dev-input>
-    <dev-input size="sm" [ngModel]="text"></dev-input>
-    <dev-input size="md" [ngModel]="text"></dev-input>
-    <dev-input size="lg" [ngModel]="text"></dev-input>
-    <dev-input size="xl" [ngModel]="text"></dev-input>
+    <d-input size="xs" [ngModel]="text"></d-input>
+    <d-input size="sm" [ngModel]="text"></d-input>
+    <d-input size="md" [ngModel]="text"></d-input>
+    <d-input size="lg" [ngModel]="text"></d-input>
+    <d-input size="xl" [ngModel]="text"></d-input>
   </div>
 </app-card>
 <app-card header="Placeholder" class="mt-6" component="forms/input">
   <div class="flex-column flex-gap-5">
-    <dev-input placeholder="please enter your name ...."></dev-input>
+    <d-input placeholder="please enter your name ...."></d-input>
   </div>
 </app-card>
 <app-card header="Textarea" class="mt-6" component="forms/input">
   <div class="flex-column flex-gap-5">
-    <dev-input type="textarea" [formControl]="formControl"></dev-input>
+    <d-input type="textarea" [formControl]="formControl"></d-input>
   </div>
 </app-card>
 <app-card header="Control Group" class="mt-6" component="forms/input">
   <div class="flex-column flex-gap-5">
-    <dev-control-group>
-      <ng-template devTemplate="start"><i class="far fa-search"></i></ng-template>
-      <dev-input placeholder="please enter your name ...." [formControl]="formControl"></dev-input>
-    </dev-control-group>
-    <dev-control-group>
-      <ng-template devTemplate="start"><i class="far fa-search"></i></ng-template>
-      <ng-template devTemplate="end"><i class="far fa-info"></i></ng-template>
-      <dev-input placeholder="please enter your name ...." [formControl]="formControl"></dev-input>
-    </dev-control-group>
+    <d-control-group>
+      <ng-template dTemplate="start"><i class="far fa-search"></i></ng-template>
+      <d-input placeholder="please enter your name ...." [formControl]="formControl"></d-input>
+    </d-control-group>
+    <d-control-group>
+      <ng-template dTemplate="start"><i class="far fa-search"></i></ng-template>
+      <ng-template dTemplate="end"><i class="far fa-info"></i></ng-template>
+      <d-input placeholder="please enter your name ...." [formControl]="formControl"></d-input>
+    </d-control-group>
   </div>
 </app-card>
 <app-card header="Labels" class="mt-6" component="forms/input">
   <div class="flex-column flex-gap-5">
-    <dev-control-group [formControl]="formControl" label="Fix Label">
-      <ng-template devTemplate="end"><i class="far fa-info"></i></ng-template>
-      <dev-input placeholder="please enter your name ...."></dev-input>
-    </dev-control-group>
-    <dev-control-group [formControl]="formControl" label="Floating Label" labelState="floating">
-      <ng-template devTemplate="end"><i class="far fa-info"></i></ng-template>
-      <dev-input></dev-input>
-    </dev-control-group>
+    <d-control-group [formControl]="formControl" label="Fix Label">
+      <ng-template dTemplate="end"><i class="far fa-info"></i></ng-template>
+      <d-input placeholder="please enter your name ...."></d-input>
+    </d-control-group>
+    <d-control-group [formControl]="formControl" label="Floating Label" labelState="floating">
+      <ng-template dTemplate="end"><i class="far fa-info"></i></ng-template>
+      <d-input></d-input>
+    </d-control-group>
   </div>
 </app-card>
 <app-card header="Other Controls" class="mt-6" component="forms/input">
   <div class="flex-column flex-gap-5">
-    <dev-control-group [formControl]="formControl" label="Select Control" labelState="floating">
-      <dev-select [items]="items"></dev-select>
-      <ng-template devTemplate="end"><i class="far fa-info"></i></ng-template>
-    </dev-control-group>
-    <dev-control-group [formControl]="formControl" label="Date Picker Control" labelState="floating">
-      <dev-date-picker locale="fa"></dev-date-picker>
-      <ng-template devTemplate="end"><i class="far fa-calendar"></i></ng-template>
-    </dev-control-group>
-    <dev-control-group [formControl]="formControl" label="Checkbox">
-      <dev-input></dev-input>
-      <ng-template devTemplate="end">
-        <dev-checkbox mode="ternary"></dev-checkbox>
+    <d-control-group [formControl]="formControl" label="Select Control" labelState="floating">
+      <d-select [items]="items"></d-select>
+      <ng-template dTemplate="end"><i class="far fa-info"></i></ng-template>
+    </d-control-group>
+    <d-control-group [formControl]="formControl" label="Date Picker Control" labelState="floating">
+      <d-date-picker locale="fa"></d-date-picker>
+      <ng-template dTemplate="end"><i class="far fa-calendar"></i></ng-template>
+    </d-control-group>
+    <d-control-group [formControl]="formControl" label="Checkbox">
+      <d-input></d-input>
+      <ng-template dTemplate="end">
+        <d-checkbox mode="ternary"></d-checkbox>
       </ng-template>
-    </dev-control-group>
-    <dev-control-group [formControl]="formControl" label="End Button">
-      <dev-input></dev-input>
-      <ng-template devTemplate="end">
-        <dev-button>Submit</dev-button>
+    </d-control-group>
+    <d-control-group [formControl]="formControl" label="End Button">
+      <d-input></d-input>
+      <ng-template dTemplate="end">
+        <d-button>Submit</d-button>
       </ng-template>
-    </dev-control-group>
-    <dev-control-group [formControl]="formControl" label="Start Button">
-      <dev-input></dev-input>
-      <ng-template devTemplate="start">
-        <dev-button><i class="far fa-search"></i></dev-button>
+    </d-control-group>
+    <d-control-group [formControl]="formControl" label="Start Button">
+      <d-input></d-input>
+      <ng-template dTemplate="start">
+        <d-button><i class="far fa-search"></i></d-button>
       </ng-template>
-    </dev-control-group>
-    <dev-control-group [formControl]="formControl" label="Both Side Button">
-      <ng-template devTemplate="start">
-        <dev-button><i class="far fa-user"></i></dev-button>
+    </d-control-group>
+    <d-control-group [formControl]="formControl" label="Both Side Button">
+      <ng-template dTemplate="start">
+        <d-button><i class="far fa-user"></i></d-button>
       </ng-template>
-      <dev-input></dev-input>
-      <ng-template devTemplate="end">
-        <dev-button><i class="far fa-calendar-note"></i></dev-button>
+      <d-input></d-input>
+      <ng-template dTemplate="end">
+        <d-button><i class="far fa-calendar-note"></i></d-button>
       </ng-template>
-    </dev-control-group>
+    </d-control-group>
   </div>
 </app-card>
 <app-card header="Mask" class="mt-6" component="forms/input">
   <div class="flex-column flex-gap-5">
-    <dev-control-group label="Cellphone Number">
-      <dev-input mask="99 999"></dev-input>
-    </dev-control-group>
+    <d-control-group label="Cellphone Number">
+      <d-input mask="99 999"></d-input>
+    </d-control-group>
     <h3>Ignore special chars with slash (/)</h3>
-    <dev-control-group label="Cellphone Number">
-      <dev-input mask="+/98 999 999 99 99"></dev-input>
-    </dev-control-group>
+    <d-control-group label="Cellphone Number">
+      <d-input mask="+/98 999 999 99 99"></d-input>
+    </d-control-group>
     <h3>Match length mask and placeholder</h3>
-    <dev-control-group label="Cellphone Number">
-      <dev-input mask="+/98 999 999 99 99" placeholder="+98 912 000 00 00"></dev-input>
-    </dev-control-group>
-    <dev-control-group label="Debit Card">
-      <dev-input mask="9999 - 9999 - 9999 - 9999" placeholder="xxxx - xxxx - xxxx - xxxx"></dev-input>
-    </dev-control-group>
-    <dev-control-group label="Use Character">
-      <dev-input mask="P - 9999 999 999" placeholder="P - 9999 999 999 "></dev-input>
-    </dev-control-group>
-    <dev-control-group label="Date">
-      <dev-input mask="yyyy//mm//dd" placeholder="yyyy/mm/dd"></dev-input>
-    </dev-control-group>
-    <dev-control-group label="Date">
-      <dev-input mask="13yy//mm//dd" placeholder="yyyy/mm/dd"></dev-input>
-    </dev-control-group>
+    <d-control-group label="Cellphone Number">
+      <d-input mask="+/98 999 999 99 99" placeholder="+98 912 000 00 00"></d-input>
+    </d-control-group>
+    <d-control-group label="Debit Card">
+      <d-input mask="9999 - 9999 - 9999 - 9999" placeholder="xxxx - xxxx - xxxx - xxxx"></d-input>
+    </d-control-group>
+    <d-control-group label="Use Character">
+      <d-input mask="P - 9999 999 999" placeholder="P - 9999 999 999 "></d-input>
+    </d-control-group>
+    <d-control-group label="Date">
+      <d-input mask="yyyy//mm//dd" placeholder="yyyy/mm/dd"></d-input>
+    </d-control-group>
+    <d-control-group label="Date">
+      <d-input mask="13yy//mm//dd" placeholder="yyyy/mm/dd"></d-input>
+    </d-control-group>
   </div>
 </app-card>
 <app-card header="Errors" class="mt-6" component="forms/input">
   <div class="flex-column flex-gap-5">
-    <dev-control-group [formControl]="formControlWithValidationRequired">
-      <dev-input placeholder="Required"></dev-input>
-    </dev-control-group>
-    <dev-control-group [formControl]="formControlWithValidationNumeric">
-      <dev-input placeholder="Numeric"></dev-input>
-    </dev-control-group>
-    <dev-control-group [formControl]="formControlWithValidationPattern">
-      <dev-input placeholder="P-xxx..."></dev-input>
-    </dev-control-group>
-    <dev-control-group [formControl]="formControlWithValidationPassword">
-      <dev-input type="password" placeholder="Password"></dev-input>
-    </dev-control-group>
-    <dev-control-group [formControl]="formControlWithValidationMinMaxLength">
-      <dev-input placeholder="Min Max Length"></dev-input>
-    </dev-control-group>
-    <dev-control-group [formControl]="formControlWithValidationMinMax">
-      <dev-input placeholder="Min Max"></dev-input>
-    </dev-control-group>
-    <dev-control-group [formControl]="formControlWithValidationEmail">
-      <dev-input type="email" placeholder="Email"></dev-input>
-    </dev-control-group>
+    <d-control-group [formControl]="formControlWithValidationRequired">
+      <d-input placeholder="Required"></d-input>
+    </d-control-group>
+    <d-control-group [formControl]="formControlWithValidationNumeric">
+      <d-input placeholder="Numeric"></d-input>
+    </d-control-group>
+    <d-control-group [formControl]="formControlWithValidationPattern">
+      <d-input placeholder="P-xxx..."></d-input>
+    </d-control-group>
+    <d-control-group [formControl]="formControlWithValidationPassword">
+      <d-input type="password" placeholder="Password"></d-input>
+    </d-control-group>
+    <d-control-group [formControl]="formControlWithValidationMinMaxLength">
+      <d-input placeholder="Min Max Length"></d-input>
+    </d-control-group>
+    <d-control-group [formControl]="formControlWithValidationMinMax">
+      <d-input placeholder="Min Max"></d-input>
+    </d-control-group>
+    <d-control-group [formControl]="formControlWithValidationEmail">
+      <d-input type="email" placeholder="Email"></d-input>
+    </d-control-group>
   </div>
 </app-card>
 <app-card header="Hint Box" class="mt-6" component="forms/input">
   <div class="flex-column flex-gap-5">
-    <dev-control-group hint="Enter your username">
-      <dev-input></dev-input>
-    </dev-control-group>
+    <d-control-group hint="Enter your username">
+      <d-input></d-input>
+    </d-control-group>
   </div>
 </app-card>

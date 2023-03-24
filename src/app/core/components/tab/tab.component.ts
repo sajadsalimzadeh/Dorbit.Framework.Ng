@@ -6,7 +6,7 @@ import {Orientation} from "../../types";
 import {TemplateDirective} from "./directive/template.directive";
 
 @Component({
-  selector: 'dev-tab',
+  selector: 'd-tab',
   templateUrl: 'tab.component.html',
   styleUrls: ['./tab.component.scss']
 })

@@ -2,7 +2,7 @@ import {Component, HostListener, Input} from '@angular/core';
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
 
 @Component({
-  selector: 'dev-switch',
+  selector: 'd-switch',
   templateUrl: 'switch.component.html',
   styleUrls: ['./switch.component.scss', '../control.scss'],
   providers: [createControlValueAccessor(SwitchComponent)]

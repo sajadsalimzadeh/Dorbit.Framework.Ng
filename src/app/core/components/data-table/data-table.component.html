@@ -43,15 +43,15 @@
       {{pageReportTemplate}}
     </div>
     <div class="page-numbers">
-      <dev-paginator [page]="config.paging.page" [totalCount]="totalCount" [pageSize]="config.paging.size" (onSelect)="onPageSelect($event)"></dev-paginator>
+      <d-paginator [page]="config.paging.page" [totalCount]="totalCount" [pageSize]="config.paging.size" (onSelect)="onPageSelect($event)"></d-paginator>
     </div>
     <div class="page-row-count page-numbers-around">
-      <dev-select [items]="config.paging.pageSizes"
+      <d-select [items]="config.paging.pageSizes"
                   [(ngModel)]="config.paging.size"
                   (ngModelChange)="render()"
                   class="limit-select"
                   name="pageRowCountControl">
-      </dev-select>
+      </d-select>
     </div>
   </div>
 </div>

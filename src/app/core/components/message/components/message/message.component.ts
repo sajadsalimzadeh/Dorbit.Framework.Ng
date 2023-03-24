@@ -6,13 +6,13 @@ import {
   QueryList,
   TemplateRef,
 } from '@angular/core';
-import {DevTemplateDirective} from "../../../../directives/template/dev-template.directive";
+import {TemplateDirective} from "../../../../directives/template/template.directive";
 import {BaseComponent} from "../../../base.component";
 import {Message} from "../../models";
 
 
 @Component({
-  selector: 'dev-message',
+  selector: 'd-message',
   templateUrl: 'message.component.html',
   styleUrls: ['./message.component.scss']
 })
@@ -29,7 +29,7 @@ export class MessageComponent extends BaseComponent {
   timer: number = 0;
   contentTemplate?: TemplateRef<any>;
 
-  @ContentChildren(DevTemplateDirective) set templates(value: QueryList<DevTemplateDirective>) {
+  @ContentChildren(TemplateDirective) set templates(value: QueryList<TemplateDirective>) {
     this.contentTemplate = value.find(x => !x.name || x.name == 'content')?.template;
   }
 

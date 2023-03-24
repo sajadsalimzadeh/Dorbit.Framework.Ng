@@ -7,7 +7,7 @@ import {
   TemplateRef, ViewChild
 } from "@angular/core";
 import {TableService} from "../../services/table.service";
-import {DevTemplateDirective} from "../../../../directives/template/dev-template.directive";
+import {TemplateDirective} from "../../../../directives/template/template.directive";
 import {FormControl} from "@angular/forms";
 import {KeyValue} from "@angular/common";
 import {OverlayRef, OverlayService} from "../../../overlay/overlay.service";
@@ -15,7 +15,7 @@ import {OverlayRef, OverlayService} from "../../../overlay/overlay.service";
 type OperationKey = 'eq' | 'nq' | 'gt' | 'ge' | 'lt' | 'le' | 'sw' | 'ew' | 'in' | 'ni';
 
 @Component({
-  selector: 'dev-table-filter',
+  selector: 'd-table-filter',
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.scss']
 })
@@ -28,7 +28,7 @@ export class DataTableFilterComponent implements OnInit {
   @ViewChild('overlayTpl') overlayTpl!: TemplateRef<any>;
   @ViewChild('filterIconEl') filterIconEl!: ElementRef<HTMLElement>;
 
-  @ContentChildren(DevTemplateDirective) set templates(value: QueryList<DevTemplateDirective>) {
+  @ContentChildren(TemplateDirective) set templates(value: QueryList<TemplateDirective>) {
     const valueTemplate = value.find(x => !x.name || x.name == 'value')?.template;
     if (valueTemplate) this.template = valueTemplate;
   }

@@ -12,7 +12,7 @@ import {Colors, Sizes} from "../../types";
 import {BaseComponent} from "../base.component";
 
 @Component({
-  selector: 'dev-progress-bar',
+  selector: 'd-progress-bar',
   templateUrl: 'progress-bar.component.html',
   styleUrls: ['./progress-bar.component.scss']
 })

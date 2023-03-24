@@ -4,7 +4,7 @@ import {BaseComponent} from "../base.component";
 import {Formatter} from "./formatters/formatter";
 
 @Component({
-  selector: 'dev-code',
+  selector: 'd-code',
   templateUrl: 'code.component.html',
   styleUrls: ['./code.component.scss'],
 })

@@ -7,7 +7,7 @@ import {
   QueryList, ViewChild,
 } from '@angular/core';
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
-import {DevTemplateDirective} from "../../../directives/template/dev-template.directive";
+import {TemplateDirective} from "../../../directives/template/template.directive";
 import {FormControlService} from "../form-control.service";
 
 export interface MaskItem {
@@ -16,7 +16,7 @@ export interface MaskItem {
 }
 
 @Component({
-  selector: 'dev-input',
+  selector: 'd-input',
   templateUrl: 'input.component.html',
   styleUrls: ['./input.component.scss', '../control.scss'],
   providers: [createControlValueAccessor(InputComponent)]

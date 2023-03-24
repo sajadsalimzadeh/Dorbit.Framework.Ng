@@ -10,7 +10,7 @@ import {
   Type, ViewChild
 } from "@angular/core";
 import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, NgControl} from "@angular/forms";
-import {DevTemplateDirective} from "../../directives/template/dev-template.directive";
+import {TemplateDirective} from "../../directives/template/template.directive";
 import {FormControlService} from "./form-control.service";
 import {BaseComponent} from "../base.component";
 
@@ -57,8 +57,8 @@ export abstract class AbstractFormControl<T> extends BaseComponent implements Co
 
   validationsTemplate?: TemplateRef<any>;
 
-  @ContentChildren(DevTemplateDirective)
-  private set _templates(value: QueryList<DevTemplateDirective>) {
+  @ContentChildren(TemplateDirective)
+  private set _templates(value: QueryList<TemplateDirective>) {
     this.validationsTemplate = value.find(x => x.name == 'validation')?.template;
   }
 

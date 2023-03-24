@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
-import {DataTableComponent} from "./index.component";
+import {DataTableComponent} from "./data-table.component";
 import {CommonModule} from "@angular/common";
-import {DevTemplateModule} from "../../directives/template/dev-template.directive";
+import {DevTemplateModule} from "../../directives/template/template.directive";
 import {DataTableSortDirective} from "./directives/sort.directive";
 import {SelectModule} from "../form/select/select.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";

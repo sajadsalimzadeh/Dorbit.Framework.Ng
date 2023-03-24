@@ -1,14 +1,14 @@
 import {
   AfterViewInit,
   Component,
-  ContentChildren, ElementRef, EventEmitter, HostBinding, HostListener, Injector,
+  ContentChildren, EventEmitter, HostBinding, HostListener, Injector,
   Input,
   OnChanges, OnDestroy,
   OnInit, Output,
   QueryList,
   SimpleChanges, TemplateRef
 } from "@angular/core";
-import {DevTemplateDirective} from "../../directives/template/dev-template.directive";
+import {TemplateDirective} from "../../directives/template/template.directive";
 import {DataTableConfig, FilterFunc, SortFunc} from "./models";
 import {FormControl} from "@angular/forms";
 import {TableService} from "./services/table.service";
@@ -16,9 +16,9 @@ import {OverlayService} from "../overlay/overlay.service";
 import {BaseComponent} from "../base.component";
 
 @Component({
-  selector: 'dev-table',
-  templateUrl: './index.component.html',
-  styleUrls: ['./index.component.scss'],
+  selector: 'd-table',
+  templateUrl: './data-table.component.html',
+  styleUrls: ['./data-table.component.scss'],
   providers: [
     TableService,
   ]
@@ -68,8 +68,8 @@ export class DataTableComponent extends BaseComponent implements OnInit, OnChang
   summaryTemplate?: TemplateRef<any>;
   paginationStartTemplate?: TemplateRef<any>;
 
-  @ContentChildren(DevTemplateDirective)
-  set devTemplates(value: QueryList<DevTemplateDirective>) {
+  @ContentChildren(TemplateDirective)
+  set dTemplates(value: QueryList<TemplateDirective>) {
     this.captionTemplate = value.find(x => x.name == 'caption')?.template;
     this.headerTemplate = value.find(x => x.name == 'header')?.template;
     this.filterTemplate = value.find(x => x.name == 'filter')?.template;

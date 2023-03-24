@@ -21,7 +21,7 @@ export interface OverlayOptions {
 
 
 @Component({
-  selector: 'dev-overlay',
+  selector: 'd-overlay',
   templateUrl: './overlay.component.html',
   styleUrls: ['./overlay.component.scss']
 })

@@ -1,10 +1,10 @@
 import {Directive, Input, TemplateRef} from "@angular/core";
-import {DevTemplateDirective} from "../../../directives/template/dev-template.directive";
+import {TemplateDirective as BaseTemplateDirective} from "../../../directives/template/template.directive";
 
 @Directive({
-  selector: '[devTemplate]'
+  selector: '[dTemplate]'
 })
-export class TemplateDirective extends DevTemplateDirective {
+export class TemplateDirective extends BaseTemplateDirective {
   @Input() header?: string;
   @Input() icon?: string;
 

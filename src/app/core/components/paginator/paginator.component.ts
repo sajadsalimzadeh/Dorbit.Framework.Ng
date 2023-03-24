@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '
 import {BaseComponent} from "../base.component";
 
 @Component({
-  selector: 'dev-paginator',
+  selector: 'd-paginator',
   templateUrl: 'paginator.component.html',
   styleUrls: ['./paginator.component.scss']
 })

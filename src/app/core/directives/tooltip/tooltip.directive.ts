@@ -39,7 +39,7 @@ export class TooltipDirective {
   show() {
     if (this.overlayRef) return;
     const classes: any = {};
-    classes['dev-tooltip-overlay'] = true;
+    classes['d-tooltip-overlay'] = true;
     classes[this.alignment] = true
     classes[this.color] = true
 

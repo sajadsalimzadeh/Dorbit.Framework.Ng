@@ -2,7 +2,7 @@ import {Component, HostListener, Input, OnInit} from '@angular/core';
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
 
 @Component({
-  selector: 'dev-checkbox',
+  selector: 'd-checkbox',
   templateUrl: 'checkbox.component.html',
   styleUrls: ['./checkbox.component.scss', '../control.scss'],
   providers: [createControlValueAccessor(CheckboxComponent)]

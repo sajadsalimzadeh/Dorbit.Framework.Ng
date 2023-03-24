@@ -1,17 +1,17 @@
 <h1>Data Table</h1>
 <hr>
 <app-card [filenames]="['index.component.html', 'index.component.ts']" component="data-table" header="Data Table">
-  <dev-table [items]="items" [config]="config" style="height: 750px">
+  <d-table [items]="items" [config]="config" style="height: 750px">
 
     <ng-template #filterTextTpl let-control="control">
       <input class="form-control" [formControl]="control" placeholder="Value"/>
     </ng-template>
 
-    <ng-template devTemplate="caption">
+    <ng-template dTemplate="caption">
       Caption
     </ng-template>
 
-    <ng-template devTemplate="header">
+    <ng-template dTemplate="header">
       <tr>
         <th style="width: 50px"></th>
         <th style="width: 50px"></th>
@@ -25,46 +25,46 @@
           <div class="flex-row flex-align-center">
             <span class="flex-1">Firstname</span>
             <i class="sort-icon"></i>
-            <dev-table-filter [template]="filterTextTpl" field="first_name"></dev-table-filter>
+            <d-table-filter [template]="filterTextTpl" field="first_name"></d-table-filter>
           </div>
         </th>
         <th sort-by="last_name">
           <div class="flex-row flex-align-center">
             <span class="flex-1">Lastname</span>
             <i class="sort-icon"></i>
-            <dev-table-filter [template]="filterTextTpl" field="last_name"></dev-table-filter>
+            <d-table-filter [template]="filterTextTpl" field="last_name"></d-table-filter>
           </div>
         </th>
         <th sort-by="email">
           <div class="flex-row flex-align-center">
             <span class="flex-1">Email</span>
             <i class="sort-icon"></i>
-            <dev-table-filter [template]="filterTextTpl"></dev-table-filter>
+            <d-table-filter [template]="filterTextTpl"></d-table-filter>
           </div>
         </th>
         <th sort-by="gender">
           <div class="flex-row flex-align-center">
             <span class="flex-1">Gender</span>
             <i class="sort-icon"></i>
-            <dev-table-filter [template]="filterTextTpl"></dev-table-filter>
+            <d-table-filter [template]="filterTextTpl"></d-table-filter>
           </div>
         </th>
         <th sort-by="ip_address">
           <div class="flex-row flex-align-center">
             <span class="flex-1">IP Address</span>
             <i class="sort-icon"></i>
-            <dev-table-filter [template]="filterTextTpl"></dev-table-filter>
+            <d-table-filter [template]="filterTextTpl"></d-table-filter>
           </div>
         </th>
       </tr>
     </ng-template>
-    <ng-template devTemplate="body" let-item>
+    <ng-template dTemplate="body" let-item>
       <tr>
         <td>
-          <dev-table-row-expander [item]="item"></dev-table-row-expander>
+          <d-table-row-expander [item]="item"></d-table-row-expander>
         </td>
         <td>
-          <dev-checkbox [(ngModel)]="item['selected']"></dev-checkbox>
+          <d-checkbox [(ngModel)]="item['selected']"></d-checkbox>
         </td>
         <td>{{item.id}}</td>
         <td>{{item.first_name}}</td>
@@ -74,10 +74,10 @@
         <td>{{item.ip_address}}</td>
       </tr>
     </ng-template>
-    <ng-template devTemplate="detail" let-item>
+    <ng-template dTemplate="detail" let-item>
       {{item.email}}
     </ng-template>
-    <ng-template devTemplate="footer">
+    <ng-template dTemplate="footer">
       <tr>
         <th></th>
         <th></th>
@@ -89,5 +89,5 @@
         <th>IP Address</th>
       </tr>
     </ng-template>
-  </dev-table>
+  </d-table>
 </app-card>

@@ -2,67 +2,67 @@
 <hr>
 <app-card [filenames]="['index.component.html', 'index.component.ts']" class="mt-6" component="dialog" header="Size">
   <div class="flex-row flex-gap-3">
-    <dev-button (click)="create({template: shortTpl, title: 'Short Content'})">
+    <d-button (click)="create({template: shortTpl, title: 'Short Content'})">
       Short Content
-    </dev-button>
-    <dev-button (click)="create({template: longTpl, title: 'Long Content'})">
+    </d-button>
+    <d-button (click)="create({template: longTpl, title: 'Long Content'})">
       Long Content
-    </dev-button>
+    </d-button>
   </div>
 </app-card>
 <app-card [filenames]="['index.component.html', 'index.component.ts']" class="mt-6" component="dialog" header="Buttons">
   <div class="flex-row flex-gap-3">
-    <dev-button (click)="create({template: shortTpl, title: 'Close'})">
+    <d-button (click)="create({template: shortTpl, title: 'Close'})">
       Close
-    </dev-button>
-    <dev-button (click)="create({template: shortTpl, title: 'Mask Close', closable: false, maskClosable: true})">
+    </d-button>
+    <d-button (click)="create({template: shortTpl, title: 'Mask Close', closable: false, maskClosable: true})">
       Mask Close
-    </dev-button>
-    <dev-button (click)="create({template: shortTpl, title: 'Maximize', maximizable: true})">
+    </d-button>
+    <d-button (click)="create({template: shortTpl, title: 'Maximize', maximizable: true})">
       Maximize
-    </dev-button>
-    <dev-button (click)="create({template: shortTpl, title: 'Minimize', minimizable: true})">
+    </d-button>
+    <d-button (click)="create({template: shortTpl, title: 'Minimize', minimizable: true})">
       Minimize
-    </dev-button>
-    <dev-button (click)="create({template: shortTpl, title: 'No Mask', mask: false})">
+    </d-button>
+    <d-button (click)="create({template: shortTpl, title: 'No Mask', mask: false})">
       No Mask
-    </dev-button>
-    <dev-button (click)="create({template: shortTpl, title: 'Maximize',
+    </d-button>
+    <d-button (click)="create({template: shortTpl, title: 'Maximize',
     maskClosable: true,
     maximizable: true,
     minimizable: true
-    })">All</dev-button>
+    })">All</d-button>
   </div>
 </app-card>
 <app-card [filenames]="['index.component.html', 'index.component.ts']" class="mt-6" component="dialog" header="Positions">
   <div class="flex-row flex-gap-3">
-    <dev-button (click)="create({template: shortTpl, position: 'top-start', title: 'top-start'})">
+    <d-button (click)="create({template: shortTpl, position: 'top-start', title: 'top-start'})">
       top start
-    </dev-button>
-    <dev-button (click)="create({template: shortTpl, position: 'top-center', title: 'top-center'})">
+    </d-button>
+    <d-button (click)="create({template: shortTpl, position: 'top-center', title: 'top-center'})">
       top center
-    </dev-button>
-    <dev-button (click)="create({template: shortTpl, position: 'top-end', title: 'top-end'})">
+    </d-button>
+    <d-button (click)="create({template: shortTpl, position: 'top-end', title: 'top-end'})">
       top end
-    </dev-button>
-    <dev-button (click)="create({template: shortTpl, position: 'middle-start', title: 'middle-start'})">
+    </d-button>
+    <d-button (click)="create({template: shortTpl, position: 'middle-start', title: 'middle-start'})">
       middle start
-    </dev-button>
-    <dev-button (click)="create({template: shortTpl, position: 'middle-center', title: 'middle-center'})">
+    </d-button>
+    <d-button (click)="create({template: shortTpl, position: 'middle-center', title: 'middle-center'})">
       middle center
-    </dev-button>
-    <dev-button (click)="create({template: shortTpl, position: 'middle-end', title: 'middle-end'})">
+    </d-button>
+    <d-button (click)="create({template: shortTpl, position: 'middle-end', title: 'middle-end'})">
       middle end
-    </dev-button>
-    <dev-button (click)="create({template: shortTpl, position: 'bottom-start', title: 'bottom-start'})">
+    </d-button>
+    <d-button (click)="create({template: shortTpl, position: 'bottom-start', title: 'bottom-start'})">
       bottom start
-    </dev-button>
-    <dev-button (click)="create({template: shortTpl, position: 'bottom-center', title: 'bottom-center'})">
+    </d-button>
+    <d-button (click)="create({template: shortTpl, position: 'bottom-center', title: 'bottom-center'})">
       bottom center
-    </dev-button>
-    <dev-button (click)="create({template: shortTpl, position: 'bottom-end', title: 'bottom-end'})">
+    </d-button>
+    <d-button (click)="create({template: shortTpl, position: 'bottom-end', title: 'bottom-end'})">
       bottom end
-    </dev-button>
+    </d-button>
   </div>
 </app-card>
 

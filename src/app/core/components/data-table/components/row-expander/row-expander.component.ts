@@ -3,7 +3,7 @@ import {TableService} from "../../services/table.service";
 
 
 @Component({
-  selector: 'dev-table-row-expander',
+  selector: 'd-table-row-expander',
   templateUrl: './row-expander.component.html',
   styleUrls: ['./row-expander.component.scss']
 })

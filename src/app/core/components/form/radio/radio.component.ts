@@ -2,7 +2,7 @@ import {Component, HostListener, Input} from '@angular/core';
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
 
 @Component({
-  selector: 'dev-radio',
+  selector: 'd-radio',
   templateUrl: 'radio.component.html',
   styleUrls: ['./radio.component.scss', '../control.scss'],
   providers: [createControlValueAccessor(RadioComponent)]

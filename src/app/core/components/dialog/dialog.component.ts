@@ -31,7 +31,7 @@ export interface DialogContext {
 const minimizeSpaces: DialogComponent[] = [];
 
 @Component({
-  selector: 'dev-dialog',
+  selector: 'd-dialog',
   templateUrl: 'dialog.component.html',
   styleUrls: ['./dialog.component.scss']
 })

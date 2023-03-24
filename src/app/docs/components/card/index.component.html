@@ -1,4 +1,4 @@
-<dev-card>
+<d-card>
   <div class="header">
     <div class="title">
       <h3>{{header}}</h3>
@@ -16,10 +16,10 @@
   <ng-content></ng-content>
   <ng-container *ngIf="files.length">
     <hr>
-    <dev-tab class="code-tabs">
-      <ng-template *ngFor="let file of files" devTemplate="tab" [header]="file.name">
-        <dev-code [data]="file.content"></dev-code>
+    <d-tab class="code-tabs">
+      <ng-template *ngFor="let file of files" dTemplate="tab" [header]="file.name">
+        <d-code [data]="file.content"></d-code>
       </ng-template>
-    </dev-tab>
+    </d-tab>
   </ng-container>
-</dev-card>
+</d-card>

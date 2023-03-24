@@ -5,13 +5,13 @@ import {
   QueryList,
   TemplateRef,
 } from '@angular/core';
-import {DevTemplateDirective} from "../../../directives/template/dev-template.directive";
+import {TemplateDirective} from "../../../directives/template/template.directive";
 import {AbstractFormControl, createControlValueAccessor, ValidationError} from "../form-control.directive";
 import {FormControlService} from "../form-control.service";
 import {ControlGroupService} from "./control-group.service";
 
 @Component({
-  selector: 'dev-control-group',
+  selector: 'd-control-group',
   templateUrl: 'control-group.component.html',
   styleUrls: ['./control-group.component.scss', '../control.scss'],
   providers: [createControlValueAccessor(ControlGroupComponent), FormControlService]
@@ -32,7 +32,7 @@ export class ControlGroupComponent extends AbstractFormControl<any> {
     e.stopPropagation();
   }
 
-  @ContentChildren(DevTemplateDirective) set templates(value: QueryList<DevTemplateDirective>) {
+  @ContentChildren(TemplateDirective) set templates(value: QueryList<TemplateDirective>) {
     this.startTemplate = value.find(x => x.name == 'start')?.template;
     this.endTemplate = value.find(x => x.name == 'end')?.template;
   }
