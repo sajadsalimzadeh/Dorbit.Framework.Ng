@@ -35,11 +35,11 @@
               }
             ],
             "styles": [
-              "src/styles.scss",
               "src/app/core/assets/styles/all.scss",
               "src/app/core/assets/highlight/github.css",
               "src/app/core/assets/fonts/FontAwesome/css/all.css",
-              "src/app/core/assets/fonts/VazirMatn/style.css"
+              "src/app/core/assets/fonts/VazirMatn/style.css",
+              "src/styles.scss"
             ],
             "scripts": []
           },
