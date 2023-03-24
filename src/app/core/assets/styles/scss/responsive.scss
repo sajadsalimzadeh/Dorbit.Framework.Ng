@@ -35,7 +35,7 @@
 $i: 1;
 @while $i <= 12 {
   .col-#{$i} {width: #{math.div($i*100,12) + 0%};}
-  $i: $i +1;
+  $i: $i + 1;
 }
 
 @each $screen in $screens {
@@ -45,7 +45,7 @@ $i: 1;
     $i: 1;
     @while $i <= 12 {
       .col-#{$name}-#{$i} {width: #{math.div($i*100,12) + 0%};}
-      $i: $i +1;
+      $i: $i + 1;
     }
   }
 }

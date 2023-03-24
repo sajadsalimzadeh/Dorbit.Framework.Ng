@@ -8,9 +8,10 @@
 @import "scss/shimmer";
 @import "scss/table";
 @import "scss/typography";
-
 @import "themes/default-light";
+@import "themes/default-dark";
 
 body {
+  color: var(--color-black);
   font-size: var(--font-size-base);
 }
