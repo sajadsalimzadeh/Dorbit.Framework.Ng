@@ -14,7 +14,7 @@ import {HIGHLIGHT_OPTIONS} from "ngx-highlightjs";
     BrowserModule,
     RouterModule.forRoot([
       {path: '', loadChildren: () => import('./docs/pages/index.module').then(x => x.Module)}
-    ]),
+    ], {useHash: true}),
     DorbitModule.forRoot(),
     FormsModule,
   ],
