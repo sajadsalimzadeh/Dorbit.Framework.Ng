@@ -5,12 +5,12 @@
 
   dev-card {
     flex: 1;
+  }
+}
 
-    ::ng-deep {
-      .tab-container {
-        padding: 0 !important;
-      }
-    }
+::ng-deep {
+  .code-tabs .tab-container {
+    padding: 0 !important;
   }
 }
 
