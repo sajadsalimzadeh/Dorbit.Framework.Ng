@@ -2,7 +2,7 @@ import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {IndexComponent} from "./index.component";
 import {CommonModule} from "@angular/common";
-import {DevModule} from "../../core/dev.module";
+import {DorbitModule} from "../../core/dorbit.module";
 
 @NgModule({
   imports: [
@@ -28,7 +28,7 @@ import {DevModule} from "../../core/dev.module";
         {path: 'code', loadChildren: () => import('./code/index.module').then(x => x.Module)},
       ]
     }]),
-    DevModule
+    DorbitModule
   ],
   declarations: [
     IndexComponent

@@ -2,7 +2,7 @@ import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {IndexComponent} from "./index.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {DevModule} from "../../../../core/dev.module";
+import {DorbitModule} from "../../../../core/dorbit.module";
 import {DocModule} from "../../../components/doc.module";
 
 @NgModule({
@@ -11,7 +11,7 @@ import {DocModule} from "../../../components/doc.module";
         ReactiveFormsModule,
         RouterModule.forChild([{path: '', component: IndexComponent}]),
 
-        DevModule,
+        DorbitModule,
         DocModule,
     ],
   declarations: [

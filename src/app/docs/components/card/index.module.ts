@@ -2,7 +2,7 @@ import {NgModule} from "@angular/core";
 import {IndexComponent} from "./index.component";
 import {CommonModule} from "@angular/common";
 import {HttpClientModule} from "@angular/common/http";
-import {DevModule} from "../../../core/dev.module";
+import {DorbitModule} from "../../../core/dorbit.module";
 
 
 @NgModule({
@@ -10,7 +10,7 @@ import {DevModule} from "../../../core/dev.module";
     CommonModule,
     HttpClientModule,
 
-    DevModule,
+    DorbitModule,
   ],
   declarations: [IndexComponent],
   exports: [IndexComponent]

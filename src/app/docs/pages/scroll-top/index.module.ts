@@ -3,7 +3,7 @@ import {RouterModule} from "@angular/router";
 import {IndexComponent} from "./index.component";
 import {CommonModule} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {DevModule} from "../../../core/dev.module";
+import {DorbitModule} from "../../../core/dorbit.module";
 
 @NgModule({
   imports: [
@@ -12,7 +12,7 @@ import {DevModule} from "../../../core/dev.module";
     ReactiveFormsModule,
     RouterModule.forChild([{path: '', component: IndexComponent}]),
 
-    DevModule,
+    DorbitModule,
   ],
   declarations: [
     IndexComponent

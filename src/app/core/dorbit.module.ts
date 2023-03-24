@@ -76,11 +76,11 @@ import {CodeModule} from "./components/code/code.module";
     CodeModule,
   ],
 })
-export class DevModule {
+export class DorbitModule {
 
-  static forRoot(): ModuleWithProviders<DevModule> {
+  static forRoot(): ModuleWithProviders<DorbitModule> {
     return {
-      ngModule: DevModule,
+      ngModule: DorbitModule,
       providers: [
         { provide: ErrorHandler, useClass: GlobalErrorHandler },
       ]
