@@ -1,6 +1,7 @@
 ::ng-deep {
   body {
     margin: 0;
+    background-color: var(--color-white);
   }
 }
 
@@ -17,7 +18,7 @@ header {
   justify-content: stretch;
   font-size: var(--font-size-10);
   background-color: var(--color-white);
-  border-bottom: 1px solid var(--color-gray--7);
+  border-bottom: 1px solid var(--color-gray--4);
 
   .toggle-menu {
     display: flex;
@@ -33,10 +34,10 @@ header {
   }
 
   .title-box {
+    flex: 1;
     gap: .5em;
     display: flex;
     padding: .4em .5em;
-    width: $aside-width;
     align-items: center;
 
     .icon {
@@ -54,7 +55,7 @@ header {
 
 main {
   display: flex;
-  background-color: var(--color-gray--1);
+  background-color: rgba(var(--color-primary-rgb), 0.04);
 
   aside {
     display: flex;
@@ -65,7 +66,7 @@ main {
     transition: margin 300ms ease;
     background-color: var(--color-white);
     height: calc(100vh - $header-height);
-    border-inline-end: 1px solid var(--color-gray--7);
+    border-inline-end: 1px solid var(--color-gray--4);
 
     &:not(.open) {
       margin-inline-start: -$aside-width;

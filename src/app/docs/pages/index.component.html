@@ -21,6 +21,11 @@
     <i class="icon fab fa-angular"></i>
     <span class="text">NGULAR Around Development Orbit (<a href="https://devor.ir" target="_blank">Devor.ir</a>)</span>
   </div>
+  <div class="flex-row flex-align-center mxe-5">
+    <dev-control-group label="Theme" labelState="floating">
+      <dev-select [items]="themes" [(ngModel)]="theme" (onChange)="setTheme($event)"></dev-select>
+    </dev-control-group>
+  </div>
 </header>
 <main>
   <aside [ngClass]="{open: isMenuOpen}">

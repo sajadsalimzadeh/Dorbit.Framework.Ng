@@ -7,15 +7,15 @@ import {DevModule} from "../../../core/dev.module";
 import {DocModule} from "../../components/doc.module";
 
 @NgModule({
-    imports: [
-        FormsModule,
-        CommonModule,
-        ReactiveFormsModule,
-        RouterModule.forChild([{path: '', component: IndexComponent}]),
+  imports: [
+    FormsModule,
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule.forChild([{path: '', component: IndexComponent}]),
 
-        DevModule,
-        DocModule,
-    ],
+    DevModule,
+    DocModule,
+  ],
   declarations: [
     IndexComponent
   ]

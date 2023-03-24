@@ -1,5 +1,6 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, HostBinding, OnInit} from "@angular/core";
 import {NavigationEnd, Router, RouterEvent} from "@angular/router";
+import {Themes} from "../../core/types";
 
 @Component({
   selector: 'doc-layout',
@@ -8,7 +9,8 @@ import {NavigationEnd, Router, RouterEvent} from "@angular/router";
 })
 export class IndexComponent implements OnInit {
   menus = [
-    {text: 'Color Pallet', link: 'color-pallet-pallet', icon: 'far fa-palette'},
+    {text: 'Get Started', link: 'get-started', icon: 'far fa-home'},
+    {text: 'Color Pallet', link: 'color-pallet', icon: 'far fa-palette'},
     {text: 'Button', link: 'button', icon: 'far fa-computer-mouse'},
     {text: 'Timeline', link: 'timeline', icon: 'far fa-timeline'},
     {text: 'Data Table', link: 'data-table', icon: 'far fa-table'},
@@ -43,6 +45,9 @@ export class IndexComponent implements OnInit {
 
   isMenuOpen: boolean = true;
 
+  theme: Themes = 'default-light';
+  themes: Themes[] = ['default-light', "default-dark"]
+
   constructor(private router: Router) {
   }
 
@@ -53,6 +58,11 @@ export class IndexComponent implements OnInit {
         this.processUrl(e.url);
       }
     });
+    this.setTheme(this.theme)
+  }
+
+  setTheme(theme: Themes) {
+    document.documentElement.className = 'theme-' + theme;
   }
 
   selectMenu(menu: any) {

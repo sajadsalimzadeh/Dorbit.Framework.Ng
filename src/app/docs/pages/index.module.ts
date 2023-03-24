@@ -2,6 +2,7 @@ import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {IndexComponent} from "./index.component";
 import {CommonModule} from "@angular/common";
+import {DevModule} from "../../core/dev.module";
 
 @NgModule({
   imports: [
@@ -9,11 +10,12 @@ import {CommonModule} from "@angular/common";
     RouterModule.forChild([{
       path: '', component: IndexComponent, children: [
 
+        {path: 'get-started', loadChildren: () => import('./get-started/index.module').then(x => x.Module)},
         {path: 'timeline', loadChildren: () => import('./timeline/index.module').then(x => x.Module)},
         {path: 'data-table', loadChildren: () => import('./data-table/index.module').then(x => x.Module)},
         {path: 'forms', loadChildren: () => import('./forms/index.module').then(x => x.Module)},
         {path: 'button', loadChildren: () => import('./button/index.module').then(x => x.Module)},
-        {path: 'color-pallet-pallet', loadChildren: () => import('./color-pallet/index.module').then(x => x.Module)},
+        {path: 'color-pallet', loadChildren: () => import('./color-pallet/index.module').then(x => x.Module)},
         {path: 'paginator', loadChildren: () => import('./paginator/index.module').then(x => x.Module)},
         {path: 'scroll-top', loadChildren: () => import('./scroll-top/index.module').then(x => x.Module)},
         {path: 'progress-bar', loadChildren: () => import('./progress-bar/index.module').then(x => x.Module)},
@@ -25,7 +27,8 @@ import {CommonModule} from "@angular/common";
         {path: 'tooltip', loadChildren: () => import('./tooltip/index.module').then(x => x.Module)},
         {path: 'code', loadChildren: () => import('./code/index.module').then(x => x.Module)},
       ]
-    }])
+    }]),
+    DevModule
   ],
   declarations: [
     IndexComponent
