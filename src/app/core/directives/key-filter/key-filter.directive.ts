@@ -4,10 +4,10 @@ import {CommonModule} from "@angular/common";
 const intRegex = /^[0-9]$/;
 
 @Directive({
-  selector: '[devKeyFilter]'
+  selector: '[dKeyFilter]'
 })
 export class DevKeyFilterDirective {
-  @Input('devKeyFilter') devKeyFilter!: 'p-int' | 'int' | 'n-int' | 'p-num' | 'num' | 'n-num' | 'hex' | 'email' | 'alpha' | 'alphnum' | string;
+  @Input('dKeyFilter') dKeyFilter!: 'p-int' | 'int' | 'n-int' | 'p-num' | 'num' | 'n-num' | 'hex' | 'email' | 'alpha' | 'alphnum' | string;
 
   @HostListener('keydown', ['$event'])
   onKeyDown(e: KeyboardEvent) {
@@ -15,7 +15,7 @@ export class DevKeyFilterDirective {
     if (!(target instanceof HTMLInputElement)) return;
     if (e.key.length != 1) return;
 
-    switch (this.devKeyFilter) {
+    switch (this.dKeyFilter) {
       case 'p-int':
         if (target.value.length == 0 && /^\+$/.test(e.key)) {
           return;
@@ -80,17 +80,23 @@ export class DevKeyFilterDirective {
         }
         break;
       case 'email':
-        if (!e.key.match(/^[0-9]$/)) {
+        if(target.value.includes('@') && e.key == '@') e.preventDefault();
+        else if (!e.key.match(/^[0-9a-zA-Z.]$/)) {
           e.preventDefault();
         }
         break;
       case 'alpha':
-        if (!e.key.match(/^[a-zA-Z]$/)) {
+        if (!e.key.match(/^[a-zA-Z\s]$/)) {
           e.preventDefault();
         }
         break;
       case 'alphanum':
-        if (!e.key.match(/^[a-zA-Z0-9]$/)) {
+        if (!e.key.match(/^[a-zA-Z0-9\s]$/)) {
+          e.preventDefault();
+        }
+        break;
+      case 'persian':
+        if(!e.key.match(/^[\u0600-\u06FF\s]+$/)) {
           e.preventDefault();
         }
         break;
