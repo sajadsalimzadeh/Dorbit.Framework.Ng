@@ -12,12 +12,12 @@ import {OverlayAlignments} from "../../components/overlay/overlay.component";
 import {Colors} from "../../types";
 
 @Directive({
-  selector: '[devTooltip]'
+  selector: '[dTooltip]'
 })
 export class TooltipDirective {
-  @Input('devTooltip') text!: string;
-  @Input('devTooltipAlignment') alignment: OverlayAlignments = 'bottom-center';
-  @Input('devTooltipColor') color: Colors = 'gray-4';
+  @Input('dTooltip') text!: string;
+  @Input('dTooltipAlignment') alignment: OverlayAlignments = 'bottom-center';
+  @Input('dTooltipColor') color: Colors = 'gray-4';
 
   @ViewChild('defaultTemplate') defaultTemplate!: TemplateRef<any>
 
