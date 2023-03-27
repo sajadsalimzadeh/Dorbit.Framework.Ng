@@ -33,6 +33,7 @@ import {DialogModule} from "./components/dialog/dialog.module";
 import {TooltipModule} from "./directives/tooltip/tooltip.directive";
 import {TabModule} from "./components/tab/tab.module";
 import {CodeModule} from "./components/code/code.module";
+import {TreeModule} from "./components/tree/tree.module";
 
 @NgModule({
   imports: [
@@ -74,6 +75,7 @@ import {CodeModule} from "./components/code/code.module";
     TooltipModule,
     TabModule,
     CodeModule,
+    TreeModule,
   ],
 })
 export class DorbitModule {

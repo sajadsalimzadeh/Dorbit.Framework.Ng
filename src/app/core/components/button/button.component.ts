@@ -1,4 +1,14 @@
-import {Component, ElementRef, HostBinding, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostBinding,
+  HostListener,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import {BaseComponent} from "../base.component";
 
 @Component({
@@ -20,6 +30,10 @@ export class ButtonComponent extends BaseComponent implements OnInit, OnChanges 
   @ViewChild('textEl') set textRef(value: ElementRef<HTMLElement>) {
     this.emptyContent = !value.nativeElement?.innerText && !value.nativeElement?.innerHTML;
     this.render();
+  }
+
+  @HostListener('click', ['$event']) onClick(e: MouseEvent) {
+    e.stopPropagation();
   }
 
   activeIcon?: string;
