@@ -26,6 +26,7 @@ import {DorbitModule} from "../../core/dorbit.module";
         {path: 'dialog', loadChildren: () => import('./dialog/index.module').then(x => x.Module)},
         {path: 'tooltip', loadChildren: () => import('./tooltip/index.module').then(x => x.Module)},
         {path: 'code', loadChildren: () => import('./code/index.module').then(x => x.Module)},
+        {path: 'tree', loadChildren: () => import('./tree/index.module').then(x => x.Module)},
       ]
     }]),
     DorbitModule

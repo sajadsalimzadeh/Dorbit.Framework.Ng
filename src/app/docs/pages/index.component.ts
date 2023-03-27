@@ -24,6 +24,7 @@ export class IndexComponent implements OnInit {
     {text: 'Dialog', link: 'dialog', icon: 'far fa-rectangle-history'},
     {text: 'Tooltip', link: 'tooltip', icon: 'far fa-message-middle-top'},
     {text: 'Code', link: 'code', icon: 'far fa-code'},
+    {text: 'Tree', link: 'tree', icon: 'far fa-list-tree'},
     {
       text: 'Forms', icon: 'far fa-input-text', children: [
         {text: 'Input', link: 'forms/input', icon: 'far fa-input-text'},

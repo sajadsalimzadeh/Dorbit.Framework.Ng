@@ -1,0 +1,68 @@
+<h1>Tree</h1>
+<hr>
+<app-card [filenames]="filenames" class="mt-6" component="tree" header="Basic">
+  <div class="flex-column flex-gap-3">
+    <d-tree [items]="itemsBasic">
+      <ng-template dTemplate="item" let-item>
+        {{item.name}}
+      </ng-template>
+    </d-tree>
+  </div>
+</app-card>
+<app-card [filenames]="filenames" class="mt-6" component="tree" header="Selectable">
+  <div>
+    <d-radio value="multiple" [(ngModel)]="selectionMode">Multiple</d-radio>
+    <d-radio value="single" [(ngModel)]="selectionMode">Single</d-radio>
+    <d-radio value="single-leaf" [(ngModel)]="selectionMode">Single Leaf</d-radio>
+    <d-radio value="multiple-leaf" [(ngModel)]="selectionMode">Multiple Leaf</d-radio>
+  </div>
+  <div class="flex-column flex-gap-3">
+    <d-tree [items]="itemsSelectable" [selection]="selectionMode">
+      <ng-template dTemplate="item" let-item>
+        {{item.name}}
+      </ng-template>
+    </d-tree>
+  </div>
+</app-card>
+<app-card [filenames]="filenames" class="mt-6" component="tree" header="Prepend">
+  <div class="flex-column flex-gap-3">
+    <d-tree [items]="itemsPrepend">
+      <ng-template dTemplate="item" let-item>
+        {{item.name}}
+      </ng-template>
+      <ng-template dTemplate="prepend" let-item>
+        <d-checkbox [(ngModel)]="item.selected"></d-checkbox>
+      </ng-template>
+    </d-tree>
+  </div>
+</app-card>
+<app-card [filenames]="filenames" class="mt-6" component="tree" header="Append">
+  <div class="flex-column flex-gap-3">
+    <d-tree [items]="itemsAppend" color="warning" [selection]="'single'">
+      <ng-template dTemplate="item" let-item>
+        {{item.name}}
+      </ng-template>
+      <ng-template dTemplate="append" let-item>
+        <d-button size="xs" icon="far fa-times" color="danger">delete</d-button>
+      </ng-template>
+    </d-tree>
+  </div>
+</app-card>
+<app-card [filenames]="filenames" class="mt-6" component="tree" header="Colors">
+  <div class="flex-column flex-gap-3">
+    <d-tree [items]="itemsColored" color="warning" selection="single">
+      <ng-template dTemplate="item" let-item>
+        {{item.name}}
+      </ng-template>
+    </d-tree>
+  </div>
+</app-card>
+<app-card [filenames]="filenames" class="mt-6" component="tree" header="Expansion">
+  <div class="flex-column flex-gap-3">
+    <d-tree [items]="itemsExpansion" color="link-shade" selection="single" expansion="single">
+      <ng-template dTemplate="item" let-item>
+        {{item.name}}
+      </ng-template>
+    </d-tree>
+  </div>
+</app-card>
