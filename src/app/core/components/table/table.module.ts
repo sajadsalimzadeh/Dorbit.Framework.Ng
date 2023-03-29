@@ -1,5 +1,5 @@
 import {NgModule} from "@angular/core";
-import {DataTableComponent} from "./data-table.component";
+import {TableComponent} from "./table.component";
 import {CommonModule} from "@angular/common";
 import {DevTemplateModule} from "../../directives/template/template.directive";
 import {DataTableSortDirective} from "./directives/sort.directive";
@@ -21,13 +21,13 @@ import { PaginatorModule } from "../paginator/paginator.module";
     PaginatorModule,
   ],
   declarations: [
-    DataTableComponent,
+    TableComponent,
     DataTableRowExpanderComponent,
     DataTableFilterComponent,
     DataTableSortDirective,
   ],
   exports: [
-    DataTableComponent,
+    TableComponent,
     DataTableRowExpanderComponent,
     DataTableFilterComponent,
     DataTableSortDirective,
@@ -38,4 +38,4 @@ import { PaginatorModule } from "../paginator/paginator.module";
     OverlayService
   ]
 })
-export class DataTableModule {}
+export class TableModule {}

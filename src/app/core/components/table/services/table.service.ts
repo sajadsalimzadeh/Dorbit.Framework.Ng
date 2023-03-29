@@ -1,12 +1,12 @@
 import {Injectable} from "@angular/core";
-import {DataTableComponent} from "../data-table.component";
+import {TableComponent} from "../table.component";
 import {DataTableFilterComponent} from "../components/filter/filter.component";
 import {Subject} from "rxjs";
 import {SortEvent} from "../directives/sort.directive";
 
 @Injectable()
 export class TableService {
-  dataTable!: DataTableComponent;
+  dataTable!: TableComponent;
   filters: DataTableFilterComponent[] = [];
 
   onFilterChange = new Subject();

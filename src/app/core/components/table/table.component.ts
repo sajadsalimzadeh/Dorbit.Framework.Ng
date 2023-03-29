@@ -17,13 +17,13 @@ import {BaseComponent} from "../base.component";
 
 @Component({
   selector: 'd-table',
-  templateUrl: './data-table.component.html',
-  styleUrls: ['./data-table.component.scss'],
+  templateUrl: './table.component.html',
+  styleUrls: ['./table.component.scss'],
   providers: [
     TableService,
   ]
 })
-export class DataTableComponent extends BaseComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
+export class TableComponent extends BaseComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 
   @Input() items: any[] = [];
   @Input() totalCount: number = 0;
