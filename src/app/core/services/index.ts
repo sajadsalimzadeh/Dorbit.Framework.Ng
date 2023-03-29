@@ -3,3 +3,4 @@ export * from './error-handler.service';
 export * from './cache.service';
 export * from './http.service';
 export * from './crud.service';
+export * from './configuration.service';
