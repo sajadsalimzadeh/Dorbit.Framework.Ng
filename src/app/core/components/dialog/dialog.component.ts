@@ -22,6 +22,9 @@ export interface DialogOptions {
   closable?: boolean;
   maximizable?: boolean;
   minimizable?: boolean;
+
+  isMaximize?: boolean;
+  isMinimize?: boolean;
 }
 
 export interface DialogContext {
@@ -66,7 +69,7 @@ export class DialogComponent extends BaseComponent implements OnInit, DialogOpti
 
   @HostListener('click', ['$event'])
   onClick(e: MouseEvent) {
-    if(this.maskClosable) {
+    if (this.maskClosable) {
       this.close();
     }
   }
@@ -80,7 +83,7 @@ export class DialogComponent extends BaseComponent implements OnInit, DialogOpti
     this.removeMinimizeSpace();
   }
 
-  removeMinimizeSpace() {
+  private removeMinimizeSpace() {
     const minimizeIndex = minimizeSpaces.indexOf(this);
     if (minimizeIndex > -1) {
       minimizeSpaces.splice(minimizeIndex, 1);
