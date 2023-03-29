@@ -1,7 +1,7 @@
 import {ErrorHandler, ModuleWithProviders, NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {DataTableModule} from "./components/data-table/data-table.module";
+import {TableModule} from "./components/table/table.module";
 import {SelectModule} from "./components/form/select/select.module";
 import {DatePickerModule} from "./components/form/date-picker/date-picker.module";
 import {DevTemplateModule} from "./directives/template/template.directive";
@@ -35,6 +35,7 @@ import {TabModule} from "./components/tab/tab.module";
 import {CodeModule} from "./components/code/code.module";
 import {JDatePipeModule} from "./pipes/jdate/jdate.pipe";
 import {TreeModule} from "./components/tree/tree.module";
+import {RDatePipeModule} from "./pipes/rdate/rdate.pipe";
 
 @NgModule({
   imports: [],
@@ -44,7 +45,7 @@ import {TreeModule} from "./components/tree/tree.module";
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
-    DataTableModule,
+    TableModule,
     SelectModule,
     DatePickerModule,
     DevTemplateModule,
@@ -76,6 +77,7 @@ import {TreeModule} from "./components/tree/tree.module";
     CodeModule,
     TreeModule,
     JDatePipeModule,
+    RDatePipeModule,
   ],
 })
 export class DorbitModule {
