@@ -8,7 +8,7 @@ export abstract class HttpService {
     protected http: HttpClient;
     protected cacheService: CacheService;
 
-    protected constructor(protected injector: Injector) {
+    constructor(protected injector: Injector) {
         this.http = injector.get(HttpClient);
         this.cacheService = injector.get(CacheService);
     }

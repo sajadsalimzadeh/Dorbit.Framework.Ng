@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import mockData from "./mock-data";
-import {DataTableConfig} from "src/app/core/components/data-table/models";
+import {DataTableConfig} from "src/app/core/components/table/models";
 
 @Component({
   selector: 'doc-data-table',
