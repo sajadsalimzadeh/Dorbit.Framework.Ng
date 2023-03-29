@@ -42,7 +42,7 @@
       <ng-template dTemplate="item" let-item>
         {{item.name}}
       </ng-template>
-      <ng-template dTemplate="append" let-item>
+      <ng-template dTemplate="append">
         <d-button size="xs" icon="far fa-times" color="danger">delete</d-button>
       </ng-template>
     </d-tree>
@@ -58,8 +58,12 @@
   </div>
 </app-card>
 <app-card [filenames]="filenames" class="mt-6" component="tree" header="Expansion">
+  <div>
+    <d-radio value="multiple" [(ngModel)]="expansionMode">Multiple</d-radio>
+    <d-radio value="single" [(ngModel)]="expansionMode">Single</d-radio>
+  </div>
   <div class="flex-column flex-gap-3">
-    <d-tree [items]="itemsExpansion" color="link-shade" selection="single" expansion="single">
+    <d-tree [items]="itemsExpansion" color="link-shade" selection="single" [expansion]="expansionMode">
       <ng-template dTemplate="item" let-item>
         {{item.name}}
       </ng-template>

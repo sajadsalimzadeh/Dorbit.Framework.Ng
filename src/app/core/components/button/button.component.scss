@@ -10,11 +10,12 @@
   &.outline {border: 1px solid var(--color-component);}
   &.text, &.outline {
     color: var(--color-component);
-    background-color: transparent;
     &:hover {background-color: rgba(var(--color-component-rgb), .1);}
   }
 
   &.disabled {opacity: .5 !important;}
+  &.text {background-color: var(--color-white);}
+  &.outline {background-color: var(--color-white);}
 
   &.fill {
     &:hover {
@@ -45,8 +46,8 @@
 
     &.empty-content {
       padding: 0;
-      width: 2.2em;
-      height: 2.2em;
+      width: 2.7em;
+      height: 2.7em;
     }
 
     &.has-content {
@@ -55,7 +56,7 @@
   }
   button {
     font-size: .9em;
-    padding: .5em 1em;
+    padding: .7em 1.1em;
 
     &.icon-start .icon {margin-inline-end: var(--size-3);}
     &.icon-end .icon {margin-inline-start: var(--size-3);}

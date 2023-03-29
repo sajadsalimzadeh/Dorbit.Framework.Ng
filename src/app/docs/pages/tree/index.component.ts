@@ -8,7 +8,8 @@ import {getMock} from "./mock";
 })
 export class IndexComponent {
 
-  selectionMode = 'multiple';
+  selectionMode: any = 'multiple';
+  expansionMode: any = 'single';
   itemsBasic = getMock();
   itemsPrepend = getMock();
   itemsAppend = getMock();

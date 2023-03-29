@@ -14,15 +14,15 @@ export interface TreeItem {
 
 @Component({
   selector: 'd-tree',
-  templateUrl: 'tree.component.html',
+  templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss']
 })
 export class TreeComponent extends BaseComponent implements OnChanges {
 
   @Input() items: any[] = [];
   @Input() verticalLines: boolean = true;
-  @Input() expansion: '' | 'multiple' | 'single' | string = 'multiple';
-  @Input() selection: '' | 'single' | 'multiple' | 'single-leaf' | 'multiple-leaf' | string  = '';
+  @Input() expansion: '' | 'multiple' | 'single' = 'multiple';
+  @Input() selection: '' | 'single' | 'multiple' | 'single-leaf' | 'multiple-leaf'  = '';
   @Input() fields = {
     key: 'id',
     parent: 'parentId',

@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MessagesService} from "../../../core/components/message/messages.service";
-import {Colors, Sizes} from "../../../core/types";
+import {MessageService} from "../../../core/components/message/services/message.service";
 import {Message} from "../../../core/components/message/models";
 
 @Component({
@@ -10,7 +9,7 @@ import {Message} from "../../../core/components/message/models";
 })
 export class IndexComponent implements OnInit {
 
-  constructor(private messageService: MessagesService) {
+  constructor(private messageService: MessageService) {
   }
 
   create(options: Message) {

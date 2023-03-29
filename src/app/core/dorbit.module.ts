@@ -7,7 +7,7 @@ import {DatePickerModule} from "./components/form/date-picker/date-picker.module
 import {DevTemplateModule} from "./directives/template/template.directive";
 import {HttpClientModule} from "@angular/common/http";
 import {OverlayModule} from "./components/overlay/overlay.module";
-import {GlobalErrorHandler} from "./services/error-handler.service";
+import {GlobalErrorHandler} from "./services";
 import {TimelineModule} from "./components/timeline/timeline.module";
 import {ButtonModule} from "./components/button/button.module";
 import {CheckboxModule} from "./components/form/checkbox/checkbox.module";
@@ -33,13 +33,12 @@ import {DialogModule} from "./components/dialog/dialog.module";
 import {TooltipModule} from "./directives/tooltip/tooltip.directive";
 import {TabModule} from "./components/tab/tab.module";
 import {CodeModule} from "./components/code/code.module";
+import {JDatePipeModule} from "./pipes/jdate/jdate.pipe";
 import {TreeModule} from "./components/tree/tree.module";
 
 @NgModule({
-  imports: [
-  ],
-  declarations: [
-  ],
+  imports: [],
+  declarations: [],
   exports: [
     FormsModule,
     CommonModule,
@@ -76,6 +75,7 @@ import {TreeModule} from "./components/tree/tree.module";
     TabModule,
     CodeModule,
     TreeModule,
+    JDatePipeModule,
   ],
 })
 export class DorbitModule {
@@ -84,7 +84,7 @@ export class DorbitModule {
     return {
       ngModule: DorbitModule,
       providers: [
-        { provide: ErrorHandler, useClass: GlobalErrorHandler },
+        {provide: ErrorHandler, useClass: GlobalErrorHandler},
       ]
     }
   }
