@@ -1,10 +1,10 @@
 import {Injectable} from "@angular/core";
 import {Subject} from "rxjs";
-import {Message} from "./models";
+import {Message} from "../models";
 
 
 @Injectable({providedIn: 'root'})
-export class MessagesService {
+export class MessageService {
   private onMessage = new Subject<Message>();
 
   show(message: Message) {

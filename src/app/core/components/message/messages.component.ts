@@ -3,7 +3,7 @@ import {
 } from '@angular/core';
 import {BaseComponent} from "../base.component";
 import {TemplateDirective} from "../../directives/template/template.directive";
-import {MessagesService} from "./messages.service";
+import {MessageService} from "./services/message.service";
 import {Subscription} from "rxjs";
 import {Message} from "./models";
 import {Positions} from "../../types";
@@ -26,7 +26,7 @@ export class MessagesComponent extends BaseComponent {
 
   private listenSubscription?: Subscription;
 
-  constructor(injector: Injector, private messageService: MessagesService) {
+  constructor(injector: Injector, private messageService: MessageService) {
     super(injector);
   }
 
