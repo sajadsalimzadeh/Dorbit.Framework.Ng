@@ -1,4 +1,4 @@
-import {EventEmitter, Inject, Injectable, InjectionToken} from "@angular/core";
+import {EventEmitter, Inject, Injectable, InjectionToken, Optional} from "@angular/core";
 import {Observable} from "rxjs";
 import {TimeSpan} from "../models/time-span";
 
@@ -13,16 +13,14 @@ interface CacheItem<T> {
   data: T;
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class CacheService {
 
   constructor(
-    @Inject(CACHE_PREFIX) private prefix: string = 'cache-',
-    @Inject(CACHE_STORAGE) private storage: Storage = localStorage,
-    @Inject(CACHE_DEFAULT_LIFETIME) private defaultLifeTime: TimeSpan = new TimeSpan(0, 1),
-    ) {
+    @Optional() @Inject(CACHE_PREFIX) private prefix: string = 'cache-',
+    @Optional() @Inject(CACHE_STORAGE) private storage: Storage = localStorage,
+    @Optional() @Inject(CACHE_DEFAULT_LIFETIME) private defaultLifeTime: TimeSpan = new TimeSpan(0, 1),
+  ) {
 
   }
 

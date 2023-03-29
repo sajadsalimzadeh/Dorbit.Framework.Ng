@@ -34,8 +34,45 @@ import {TooltipModule} from "./directives/tooltip/tooltip.directive";
 import {TabModule} from "./components/tab/tab.module";
 import {CodeModule} from "./components/code/code.module";
 import {JDatePipeModule} from "./pipes/jdate/jdate.pipe";
-import {TreeModule} from "./components/tree/tree.module";
 import {RDatePipeModule} from "./pipes/rdate/rdate.pipe";
+import {TreeModule} from "./components/tree/tree.module";
+import {RouterModule} from "@angular/router";
+
+const MODULES = [
+  TableModule,
+  SelectModule,
+  DatePickerModule,
+  DevTemplateModule,
+  OverlayModule,
+  TimelineModule,
+  ButtonModule,
+  CheckboxModule,
+  InputModule,
+  ControlGroupModule,
+  ButtonGroupModule,
+  ChipsModule,
+  SwitchModule,
+  RadioModule,
+  RateModule,
+  VolumeModule,
+  PaginatorModule,
+  ColorPickerModule,
+  KeyFilterModule,
+  PasswordModule,
+  ProgressBarModule,
+  ScrollTopModule,
+  SkeletonModule,
+  CardModule,
+  TagModule,
+  MessagesModule,
+  DialogModule,
+  TooltipModule,
+  TabModule,
+  CodeModule,
+  TreeModule,
+  JDatePipeModule,
+  RDatePipeModule,
+];
 
 @NgModule({
   imports: [],
@@ -45,39 +82,9 @@ import {RDatePipeModule} from "./pipes/rdate/rdate.pipe";
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
-    TableModule,
-    SelectModule,
-    DatePickerModule,
-    DevTemplateModule,
-    OverlayModule,
-    TimelineModule,
-    ButtonModule,
-    CheckboxModule,
-    InputModule,
-    ControlGroupModule,
-    ButtonGroupModule,
-    ChipsModule,
-    SwitchModule,
-    RadioModule,
-    RateModule,
-    VolumeModule,
-    PaginatorModule,
-    ColorPickerModule,
-    KeyFilterModule,
-    PasswordModule,
-    ProgressBarModule,
-    ScrollTopModule,
-    SkeletonModule,
-    CardModule,
-    TagModule,
-    MessagesModule,
-    DialogModule,
-    TooltipModule,
-    TabModule,
-    CodeModule,
-    TreeModule,
-    JDatePipeModule,
-    RDatePipeModule,
+    RouterModule,
+
+    ...MODULES
   ],
 })
 export class DorbitModule {
