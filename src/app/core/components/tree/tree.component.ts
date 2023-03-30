@@ -40,9 +40,9 @@ export class TreeComponent extends BaseComponent implements OnChanges {
   appendTemplate?: TemplateRef<any>;
 
   @ContentChildren(TemplateDirective) set templates(value: QueryList<TemplateDirective>) {
-    this.itemTemplate = value.find(x => x.name == "item")?.template;
-    this.prependTemplate = value.find(x => x.name == "prepend")?.template;
-    this.appendTemplate = value.find(x => x.name == "append")?.template;
+    this.itemTemplate = value.find(x => x.includesName("item"))?.template;
+    this.prependTemplate = value.find(x => x.includesName("prepend"))?.template;
+    this.appendTemplate = value.find(x => x.includesName("append"))?.template;
   }
 
   roots: TreeItem[] = [];

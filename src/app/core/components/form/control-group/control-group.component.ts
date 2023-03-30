@@ -33,8 +33,8 @@ export class ControlGroupComponent extends AbstractFormControl<any> {
   }
 
   @ContentChildren(TemplateDirective) set templates(value: QueryList<TemplateDirective>) {
-    this.startTemplate = value.find(x => x.name == 'start')?.template;
-    this.endTemplate = value.find(x => x.name == 'end')?.template;
+    this.startTemplate = value.find(x => x.includesName('start'))?.template;
+    this.endTemplate = value.find(x => x.includesName('end'))?.template;
   }
 
   constructor(injector: Injector, private controlGroupService: ControlGroupService) {

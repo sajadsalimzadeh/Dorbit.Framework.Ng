@@ -21,7 +21,7 @@ export class MessagesComponent extends BaseComponent {
   contentTemplate?: TemplateRef<any>;
 
   @ContentChildren(TemplateDirective) set templates(value: QueryList<TemplateDirective>) {
-    this.contentTemplate = value.find(x => !x.name || x.name == 'content')?.template;
+    this.contentTemplate = value.find(x => x.includesName('default', true))?.template;
   }
 
   private listenSubscription?: Subscription;

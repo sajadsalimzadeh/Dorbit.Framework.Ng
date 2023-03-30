@@ -13,7 +13,7 @@ export class CardComponent extends BaseComponent implements OnChanges {
   toolbarTemplate?: TemplateRef<any>;
 
   @ContentChildren(TemplateDirective) set templates(value: QueryList<TemplateDirective>) {
-    this.titleTemplate = value.find(x => x.name == 'title')?.template;
-    this.toolbarTemplate = value.find(x => x.name == 'toolbar')?.template;
+    this.titleTemplate = value.find(x => x.includesName('title'))?.template;
+    this.toolbarTemplate = value.find(x => x.includesName('toolbar'))?.template;
   }
 }

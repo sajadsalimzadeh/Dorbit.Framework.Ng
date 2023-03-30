@@ -70,14 +70,14 @@ export class TableComponent extends BaseComponent implements OnInit, OnChanges, 
 
   @ContentChildren(TemplateDirective)
   set dTemplates(value: QueryList<TemplateDirective>) {
-    this.captionTemplate = value.find(x => x.name == 'caption')?.template;
-    this.headerTemplate = value.find(x => x.name == 'header')?.template;
-    this.filterTemplate = value.find(x => x.name == 'filter')?.template;
-    this.bodyTemplate = value.find(x => x.name == 'body')?.template;
-    this.detailTemplate = value.find(x => x.name == 'detail')?.template;
-    this.footerTemplate = value.find(x => x.name == 'footer')?.template;
-    this.paginationStartTemplate = value.find(x => x.name == 'paginationStart')?.template;
-    this.summaryTemplate = value.find(x => x.name == 'summary')?.template;
+    this.captionTemplate = value.find(x => x.includesName('caption'))?.template;
+    this.headerTemplate = value.find(x => x.includesName('header'))?.template;
+    this.filterTemplate = value.find(x => x.includesName('filter'))?.template;
+    this.bodyTemplate = value.find(x => x.includesName('body'))?.template;
+    this.detailTemplate = value.find(x => x.includesName('detail'))?.template;
+    this.footerTemplate = value.find(x => x.includesName('footer'))?.template;
+    this.paginationStartTemplate = value.find(x => x.includesName('paginationStart'))?.template;
+    this.summaryTemplate = value.find(x => x.includesName('summary'))?.template;
   }
 
   renderedItems: any[] = [];

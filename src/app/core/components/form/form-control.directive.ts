@@ -59,7 +59,7 @@ export abstract class AbstractFormControl<T> extends BaseComponent implements Co
 
   @ContentChildren(TemplateDirective)
   private set _templates(value: QueryList<TemplateDirective>) {
-    this.validationsTemplate = value.find(x => x.name == 'validation')?.template;
+    this.validationsTemplate = value.find(x => x.includesName('validation'))?.template;
   }
 
   focused: boolean = false;

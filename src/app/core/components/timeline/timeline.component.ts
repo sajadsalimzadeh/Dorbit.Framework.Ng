@@ -20,8 +20,8 @@ export class TimelineComponent extends BaseComponent {
   oppositeTemplate?: TemplateRef<any>;
 
   @ContentChildren(TemplateDirective) set templates(value: QueryList<TemplateDirective>) {
-    this.pointTemplate = value.find(x => x.name == 'point')?.template;
-    this.oppositeTemplate = value.find(x => x.name == 'opposite')?.template;
-    this.contentTemplate = value.find(x => !x.name || x.name == 'content')?.template;
+    this.pointTemplate = value.find(x => x.includesName('point'))?.template;
+    this.oppositeTemplate = value.find(x => x.includesName('opposite'))?.template;
+    this.contentTemplate = value.find(x => x.includesName('default', true))?.template;
   }
 }

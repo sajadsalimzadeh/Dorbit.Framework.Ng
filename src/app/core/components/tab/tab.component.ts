@@ -17,7 +17,7 @@ export class TabComponent extends BaseComponent {
   tabsTemplates: TemplateDirective[] = [];
 
   @ContentChildren(TemplateDirective) set templates(value: QueryList<TemplateDirective>) {
-    this.tabsTemplates = value.filter(x => x.name == 'tab');
+    this.tabsTemplates = value.filter(x => x.includesName('tab'));
     if (this.tabsTemplates.length > 0) {
       this.activeTab = this.tabsTemplates[0];
     }

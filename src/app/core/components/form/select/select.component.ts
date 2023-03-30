@@ -44,7 +44,7 @@ export class SelectComponent extends AbstractFormControl<any | any[]> {
 
   @ContentChildren(TemplateDirective) set templates(value: QueryList<TemplateDirective>) {
     if (value) {
-      this.optionTemplate = value.find(x => x.name == 'option');
+      this.optionTemplate = value.find(x => x.includesName('option'));
     }
   }
 

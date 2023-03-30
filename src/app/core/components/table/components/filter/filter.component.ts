@@ -29,7 +29,7 @@ export class DataTableFilterComponent implements OnInit {
   @ViewChild('filterIconEl') filterIconEl!: ElementRef<HTMLElement>;
 
   @ContentChildren(TemplateDirective) set templates(value: QueryList<TemplateDirective>) {
-    const valueTemplate = value.find(x => !x.name || x.name == 'value')?.template;
+    const valueTemplate = value.find(x => x.includesName('default', true))?.template;
     if (valueTemplate) this.template = valueTemplate;
   }
 
