@@ -1,0 +1,59 @@
+<h1>Timeline</h1>
+<hr>
+
+<div class="flex-row flex-stretch flex-gap-7">
+  <app-card [filenames]="['index.component.html', 'index.component.ts']" class="mt-6 flex-1" component="timeline"
+            header="Basic">
+    <d-timeline [items]="items">
+      <ng-template dTemplate let-item>{{item.text}}</ng-template>
+    </d-timeline>
+  </app-card>
+  <app-card [filenames]="['index.component.html', 'index.component.ts']" class="flex-1" component="timeline"
+            header="Align Start">
+    <d-timeline [items]="items" align="start">
+      <ng-template dTemplate let-item>{{item.text}}</ng-template>
+    </d-timeline>
+  </app-card>
+</div>
+<div class="flex-row flex-stretch flex-gap-7">
+  <app-card [filenames]="['index.component.html', 'index.component.ts']" class="flex-1" component="timeline"
+            header="Align End">
+    <d-timeline [items]="items" align="end">
+      <ng-template dTemplate let-item>{{item.text}}</ng-template>
+    </d-timeline>
+  </app-card>
+  <app-card [filenames]="['index.component.html', 'index.component.ts']" class="flex-1" component="timeline"
+            header="Align Alternate With Opposite">
+    <d-timeline [items]="items">
+      <ng-template dTemplate let-item>{{item.text}}</ng-template>
+      <ng-template dTemplate="opposite" let-item>{{item.date}}</ng-template>
+    </d-timeline>
+  </app-card>
+</div>
+<div class="flex-row flex-stretch flex-gap-7">
+  <app-card [filenames]="['index.component.html', 'index.component.ts']" class="flex-1" component="timeline"
+            header="Vertical Basic">
+    <d-timeline [items]="items" orientation="vertical">
+      <ng-template dTemplate let-item>{{item.text}}</ng-template>
+    </d-timeline>
+  </app-card>
+  <app-card [filenames]="['index.component.html', 'index.component.ts']" class="flex-1" component="timeline"
+            header="Vertical Align Start">
+    <d-timeline [items]="items" orientation="vertical" align="start">
+      <ng-template dTemplate let-item>{{item.text}}</ng-template>
+    </d-timeline>
+  </app-card>
+  <app-card [filenames]="['index.component.html', 'index.component.ts']" class="flex-1" component="timeline"
+            header="Vertical Align End">
+    <d-timeline [items]="items" orientation="vertical" align="end">
+      <ng-template dTemplate let-item>{{item.text}}</ng-template>
+    </d-timeline>
+  </app-card>
+  <app-card [filenames]="['index.component.html', 'index.component.ts']" class="flex-1" component="timeline"
+            header="Vertical Align Alternate With Opposite">
+    <d-timeline [items]="items" orientation="vertical" color="danger">
+      <ng-template dTemplate let-item>{{item.text}}</ng-template>
+      <ng-template dTemplate="opposite" let-item>{{item.date}}</ng-template>
+    </d-timeline>
+  </app-card>
+</div>

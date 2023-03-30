@@ -1,7 +1,0 @@
-# Ignore everything
-.*
-node_modules
-src
-angular*
-package*
-tsconfig*
