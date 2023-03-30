@@ -16,7 +16,7 @@ import {DorbitModule} from "@core";
     RouterModule.forRoot([
       {path: 'get-started', loadChildren: () => import('./pages/get-started/index.module').then(x => x.Module)},
       {path: 'timeline', loadChildren: () => import('./pages/timeline/index.module').then(x => x.Module)},
-      {path: 'data-table', loadChildren: () => import('./pages/data-table/index.module').then(x => x.Module)},
+      {path: 'data-table', loadChildren: () => import('./pages/table/index.module').then(x => x.Module)},
       {path: 'forms', loadChildren: () => import('./pages/forms/index.module').then(x => x.Module)},
       {path: 'button', loadChildren: () => import('./pages/button/index.module').then(x => x.Module)},
       {path: 'color-pallet', loadChildren: () => import('./pages/color-pallet/index.module').then(x => x.Module)},
