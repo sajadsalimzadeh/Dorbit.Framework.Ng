@@ -55,8 +55,6 @@
     }
   }
   button {
-    font-size: .9em;
-    padding: .7em 1.1em;
 
     &.icon-start .icon {margin-inline-end: var(--size-3);}
     &.icon-end .icon {margin-inline-start: var(--size-3);}
@@ -86,7 +84,10 @@ button {
   display: flex;
   color: inherit;
   cursor: pointer;
+  font-size: .9em;
+  padding: .7em 1.1em;
   align-items: center;
+  font-family: inherit;
   justify-content: center;
   background-color: transparent;
 }

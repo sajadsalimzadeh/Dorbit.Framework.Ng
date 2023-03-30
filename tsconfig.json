@@ -5,7 +5,7 @@
     "baseUrl": "./",
     "paths": {
       "@core": [
-        "dist/core"
+        "projects/core/src"
       ]
     },
     "outDir": "./dist/out-tsc",

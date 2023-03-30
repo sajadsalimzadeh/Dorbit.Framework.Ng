@@ -68,7 +68,8 @@
               }
             ],
             "styles": [
-              "projects/core/src/assets/styles/all.scss",
+              "projects/core/assets/styles/all.scss",
+              "projects/core/assets/fonts/FontAwesome/css/all.css",
               "projects/docs/src/styles.scss"
             ],
             "scripts": []

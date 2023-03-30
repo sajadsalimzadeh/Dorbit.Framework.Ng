@@ -8,6 +8,10 @@ body {
   font-family: var(--font-family);
   font-size: var(--font-size-base);
   background-color: var(--color-white);
+
+  * {
+    font-family: inherit;
+  }
 }
 
 h1 {font-size: 2em;}
