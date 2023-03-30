@@ -1,11 +1,14 @@
 {
-  "name": "core",
-  "version": "0.0.1",
+  "name": "dorbit-ng",
+  "version": "0.0.3",
   "peerDependencies": {
     "@angular/common": "^15.0.0",
     "@angular/core": "^15.0.0"
   },
   "dependencies": {
+    "jalali-moment": "^3.3.11",
+    "moment": "^2.29.4",
+    "ngx-highlightjs": "^8.0.0",
     "tslib": "^2.3.0"
   }
 }
