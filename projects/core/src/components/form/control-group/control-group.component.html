@@ -3,8 +3,8 @@
     <ng-container *ngTemplateOutlet="startTemplate"></ng-container>
   </div>
   <div class="control-box-container">
-    <label class="label-box" *ngIf="label" [ngClass]="labelState">{{label}}</label>
     <ng-content></ng-content>
+    <label class="label-box" *ngIf="label" [ngClass]="labelState">{{label}}</label>
   </div>
   <div class="side-box end-box" *ngIf="endTemplate">
     <ng-container *ngTemplateOutlet="endTemplate"></ng-container>
