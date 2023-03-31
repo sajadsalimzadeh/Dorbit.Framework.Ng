@@ -7,7 +7,7 @@ import {OverlayRef, OverlayService} from "../../overlay/overlay.service";
 @Component({
   selector: 'd-password',
   templateUrl: 'password.component.html',
-  styleUrls: ['./password.component.scss', '../control.scss'],
+  styleUrls: ['../control.scss', './password.component.scss'],
   providers: [createControlValueAccessor(PasswordComponent)]
 })
 export class PasswordComponent extends AbstractFormControl<string> {

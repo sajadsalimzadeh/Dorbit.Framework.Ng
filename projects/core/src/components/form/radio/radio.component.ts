@@ -4,7 +4,7 @@ import {AbstractFormControl, createControlValueAccessor} from "../form-control.d
 @Component({
   selector: 'd-radio',
   templateUrl: 'radio.component.html',
-  styleUrls: ['./radio.component.scss', '../control.scss'],
+  styleUrls: ['../control.scss', './radio.component.scss'],
   providers: [createControlValueAccessor(RadioComponent)]
 })
 export class RadioComponent extends AbstractFormControl<boolean | null> {

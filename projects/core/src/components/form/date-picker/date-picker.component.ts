@@ -33,7 +33,7 @@ interface DateValue {
 @Component({
   selector: 'd-date-picker',
   templateUrl: './date-picker.component.html',
-  styleUrls: ['./date-picker.component.scss', '../control.scss'],
+  styleUrls: ['../control.scss', './date-picker.component.scss'],
   providers: [createControlValueAccessor(DatePickerComponent)]
 })
 export class DatePickerComponent extends AbstractFormControl<any> {

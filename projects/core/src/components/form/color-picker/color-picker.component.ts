@@ -4,7 +4,7 @@ import {AbstractFormControl, createControlValueAccessor} from "../form-control.d
 @Component({
   selector: 'd-color-picker',
   templateUrl: 'color-picker.component.html',
-  styleUrls: ['./color-picker.component.scss', '../control.scss'],
+  styleUrls: ['../control.scss', './color-picker.component.scss'],
   providers: [createControlValueAccessor(ColorPickerComponent)]
 })
 export class ColorPickerComponent extends AbstractFormControl<string> implements AfterViewInit {

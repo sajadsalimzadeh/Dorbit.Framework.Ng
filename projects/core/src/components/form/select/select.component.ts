@@ -17,7 +17,7 @@ type Func = (item: any) => any;
 @Component({
   selector: 'd-select',
   templateUrl: './select.component.html',
-  styleUrls: ['./select.component.scss', '../control.scss'],
+  styleUrls: ['../control.scss', './select.component.scss'],
   providers: [createControlValueAccessor(SelectComponent)]
 })
 export class SelectComponent extends AbstractFormControl<any | any[]> {

@@ -1,11 +1,11 @@
 import {
   Component,
-  ContentChildren, ElementRef, HostBinding, Injector,
+  ContentChildren, ElementRef, Injector,
   Input,
   QueryList,
   TemplateRef,
 } from '@angular/core';
-import {TemplateDirective} from "../../../directives/template/template.directive";
+import {TemplateDirective} from "../../../directives";
 import {AbstractFormControl, createControlValueAccessor, ValidationError} from "../form-control.directive";
 import {FormControlService} from "../form-control.service";
 import {ControlGroupService} from "./control-group.service";
@@ -13,7 +13,7 @@ import {ControlGroupService} from "./control-group.service";
 @Component({
   selector: 'd-control-group',
   templateUrl: 'control-group.component.html',
-  styleUrls: ['./control-group.component.scss', '../control.scss'],
+  styleUrls: ['../control.scss', './control-group.component.scss'],
   providers: [createControlValueAccessor(ControlGroupComponent), FormControlService]
 })
 export class ControlGroupComponent extends AbstractFormControl<any> {

@@ -10,7 +10,7 @@ export interface VolumeRange {
 @Component({
   selector: 'd-volume',
   templateUrl: 'volume.component.html',
-  styleUrls: ['./volume.component.scss', '../control.scss'],
+  styleUrls: ['../control.scss', './volume.component.scss'],
   providers: [createControlValueAccessor(VolumeComponent)]
 })
 export class VolumeComponent extends AbstractFormControl<number | VolumeRange> implements AfterViewInit {

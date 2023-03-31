@@ -7,7 +7,7 @@ import {Chips} from "./models";
 @Component({
   selector: 'd-chips',
   templateUrl: './chips.component.html',
-  styleUrls: ['./chips.component.scss', '../control.scss'],
+  styleUrls: ['../control.scss', './chips.component.scss'],
   providers: [createControlValueAccessor(ChipsComponent)]
 })
 export class ChipsComponent extends AbstractFormControl<Chips> {

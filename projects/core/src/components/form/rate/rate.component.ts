@@ -1,10 +1,10 @@
-import {Component, HostListener, Input, SimpleChanges} from '@angular/core';
+import {Component, HostListener, Input} from '@angular/core';
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
 
 @Component({
   selector: 'd-rate',
   templateUrl: 'rate.component.html',
-  styleUrls: ['./rate.component.scss', '../control.scss'],
+  styleUrls: ['../control.scss', './rate.component.scss'],
   providers: [createControlValueAccessor(RateComponent)]
 })
 export class RateComponent extends AbstractFormControl<number> {

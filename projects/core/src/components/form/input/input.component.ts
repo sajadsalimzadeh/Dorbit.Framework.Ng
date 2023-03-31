@@ -1,14 +1,9 @@
 import {
   Component,
-  ContentChildren, ElementRef, Injector,
+  Injector,
   Input,
-  OnChanges, OnDestroy,
-  OnInit,
-  QueryList, ViewChild,
 } from '@angular/core';
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
-import {TemplateDirective} from "../../../directives/template/template.directive";
-import {FormControlService} from "../form-control.service";
 
 export interface MaskItem {
   placeholder: string;
@@ -18,7 +13,7 @@ export interface MaskItem {
 @Component({
   selector: 'd-input',
   templateUrl: 'input.component.html',
-  styleUrls: ['./input.component.scss', '../control.scss'],
+  styleUrls: ['../control.scss', './input.component.scss'],
   providers: [createControlValueAccessor(InputComponent)]
 })
 export class InputComponent extends AbstractFormControl<string> {
