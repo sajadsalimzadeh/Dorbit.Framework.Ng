@@ -2,7 +2,7 @@
   <ul *ngIf="!parent || parent.open">
     <li *ngFor="let menu of menus" [ngClass]="{active: (menu == activeMenu), open: menu.open}">
       <a [routerLink]="menu.link" (click)="selectMenu(menu)">
-        <i class="icon-start" [ngClass]="menu.icon"></i>
+        <i *ngIf="menu.icon" class="icon-start" [ngClass]="menu.icon"></i>
         <span>{{menu.text}}</span>
         <i *ngIf="menu.children" class="icon-end far fa-angle-right"></i>
       </a>

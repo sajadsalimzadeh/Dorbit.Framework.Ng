@@ -1,0 +1,14 @@
+<app-card [filenames]="filenames" component="table/dynamic-columns" header="Dynamic Columns">
+  <d-table [items]="items" style="height: 600px">
+    <ng-template dTemplate="header,footer">
+      <tr>
+        <th *ngFor="let col of columns">{{col.title}}</th>
+      </tr>
+    </ng-template>
+    <ng-template dTemplate="body" let-item>
+      <tr>
+        <td *ngFor="let col of columns">{{item[col.field]}}</td>
+      </tr>
+    </ng-template>
+  </d-table>
+</app-card>

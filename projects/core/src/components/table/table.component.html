@@ -32,7 +32,7 @@
     </table>
   </div>
 </div>
-<div class="pagination" *ngIf="config.paging">
+<div class="pagination" *ngIf="config.paging?.enable">
   <div class="pagination-start">
     <ng-container *ngIf="paginationStartTemplate">
       <ng-container *ngTemplateOutlet="paginationStartTemplate; context: {}"></ng-container>
@@ -43,10 +43,10 @@
       {{pageReportTemplate}}
     </div>
     <div class="page-numbers">
-      <d-paginator [page]="config.paging.page" [totalCount]="totalCount" [pageSize]="config.paging.size" (onSelect)="onPageSelect($event)"></d-paginator>
+      <d-paginator [size]="size" [page]="config.paging.page" [totalCount]="totalCount" [pageSize]="config.paging.size" (onSelect)="onPageSelect($event)"></d-paginator>
     </div>
     <div class="page-row-count page-numbers-around">
-      <d-select [items]="config.paging.pageSizes"
+      <d-select [size]="size" [items]="config.paging.pageSizes"
                   [(ngModel)]="config.paging.size"
                   (ngModelChange)="render()"
                   class="limit-select"

@@ -1,0 +1,27 @@
+<app-card [filenames]="filenames" component="table/row-expand" header="Row Expand">
+  <d-table [items]="items" [config]="config" style="height: 600px">
+    <ng-template dTemplate="header,footer">
+      <tr>
+        <th style="width: 50px;"></th>
+        <th>Id</th>
+        <th>Firstname</th>
+        <th>Lastname</th>
+      </tr>
+    </ng-template>
+    <ng-template dTemplate="body" let-item>
+      <tr>
+        <td>
+          <d-table-row-expander [item]="item"></d-table-row-expander>
+        </td>
+        <td>{{item.id}}</td>
+        <td>{{item.first_name}}</td>
+        <td>{{item.last_name}}</td>
+      </tr>
+    </ng-template>
+    <ng-template dTemplate="detail" let-item>
+      <div>Email: {{item.email}}</div>
+      <div>Gender : {{item.gender}}</div>
+      <div>Ip Address : {{item.ip_address}}</div>
+    </ng-template>
+  </d-table>
+</app-card>

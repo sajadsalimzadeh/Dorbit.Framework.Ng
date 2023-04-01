@@ -29,8 +29,24 @@ export class IndexComponent implements OnInit {
         {text: 'Password', link: 'forms/password', icon: 'far fa-key'},
       ]
     },
+    {
+      text: 'Table', icon: 'far fa-table', children: [
+        {text: 'Basic', link: 'table/basic'},
+        {text: 'Column Group', link: 'table/column-group'},
+        // {text: 'Column Reorder', link: 'table/column-reorder'},
+        // {text: 'Column Resize', link: 'table/column-resize'},
+        {text: 'Dynamic Columns', link: 'table/dynamic-column'},
+        {text: 'Filter', link: 'table/filter'},
+        // {text: 'Lazy Load', link: 'table/lazy-load'},
+        {text: 'Paginator', link: 'table/paginator'},
+        {text: 'Row Expand', link: 'table/row-expand'},
+        {text: 'Row Selection', link: 'table/row-selection'},
+        {text: 'Size', link: 'table/size'},
+        {text: 'Sort', link: 'table/sort'},
+        {text: 'Stateful', link: 'table/stateful'},
+      ]
+    },
     {text: 'Timeline', link: 'timeline', icon: 'far fa-timeline'},
-    {text: 'Table', link: 'table', icon: 'far fa-table'},
     {text: 'Paginator', link: 'paginator', icon: 'far fa-ellipsis-stroke'},
     {text: 'Progress Bar', link: 'progress-bar', icon: 'far fa-bars-progress'},
     {text: 'Scroll top', link: 'scroll-top', icon: 'far fa-up-down'},

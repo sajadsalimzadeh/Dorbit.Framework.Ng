@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import mockData from "./mock-data";
+import mockData from "../mock-data";
 import {DataTableConfig} from "projects/core/src/components/table/models";
 
 @Component({
@@ -12,18 +12,10 @@ export class IndexComponent {
   filenames = ['index.component.html', 'index.component.ts'];
   config = new DataTableConfig();
 
-  constructor() {
-  }
-
   ngOnInit(): void {
     this.config.paging.size = 10;
     this.config.selecting.mode = 'multiple';
     this.config.sorting.field = 'id';
     // this.config.settings.selectMultipleWithMetaKey = true;
-    this.load();
-  }
-
-  load() {
-    this.items = mockData;
   }
 }

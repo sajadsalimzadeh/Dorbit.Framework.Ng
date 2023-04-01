@@ -9,7 +9,7 @@ export class DataTableConfig {
 }
 
 export class SelectingConfig {
-  enable = true;
+  enable = false;
 
   key = 'selected';
   mode: 'single' | 'multiple' = 'single';
@@ -22,7 +22,7 @@ export class LayoutConfig {
 }
 
 export class PagingConfig {
-  enable = true;
+  enable = false;
 
   page = 0;
   size = 10;
@@ -31,7 +31,7 @@ export class PagingConfig {
 }
 
 export class SortingConfig {
-  enable = true;
+  enable = false;
 
   showNumbers = true;
   showRowCountSelect = true;

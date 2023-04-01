@@ -1,19 +1,8 @@
-<h1>Data Table</h1>
-<hr>
-<app-card [filenames]="filenames" component="table" header="Data Table">
+<app-card [filenames]="filenames" component="table/sort" header="Sort">
   <d-table [items]="items" [config]="config" style="height: 600px">
-    <ng-template #filterTextTpl let-control="control">
-      <input class="form-control" [formControl]="control" placeholder="Value"/>
-    </ng-template>
 
-    <ng-template dTemplate="caption">
-      <d-button icon="far fa-plus">Add New Record</d-button>
-    </ng-template>
-
-    <ng-template dTemplate="header">
+    <ng-template dTemplate="header,footer">
       <tr>
-        <th style="width: 50px"></th>
-        <th style="width: 50px"></th>
         <th sort-by="id">
           <div class="flex-row flex-align-center">
             <span class="flex-1">Id</span>
@@ -24,68 +13,42 @@
           <div class="flex-row flex-align-center">
             <span class="flex-1">Firstname</span>
             <i class="sort-icon"></i>
-            <d-table-filter [template]="filterTextTpl" field="first_name"></d-table-filter>
           </div>
         </th>
         <th sort-by="last_name">
           <div class="flex-row flex-align-center">
             <span class="flex-1">Lastname</span>
             <i class="sort-icon"></i>
-            <d-table-filter [template]="filterTextTpl" field="last_name"></d-table-filter>
           </div>
         </th>
         <th sort-by="email">
           <div class="flex-row flex-align-center">
             <span class="flex-1">Email</span>
             <i class="sort-icon"></i>
-            <d-table-filter [template]="filterTextTpl"></d-table-filter>
           </div>
         </th>
         <th sort-by="gender">
           <div class="flex-row flex-align-center">
             <span class="flex-1">Gender</span>
             <i class="sort-icon"></i>
-            <d-table-filter [template]="filterTextTpl"></d-table-filter>
           </div>
         </th>
         <th sort-by="ip_address">
           <div class="flex-row flex-align-center">
             <span class="flex-1">IP Address</span>
             <i class="sort-icon"></i>
-            <d-table-filter [template]="filterTextTpl"></d-table-filter>
           </div>
         </th>
       </tr>
     </ng-template>
     <ng-template dTemplate="body" let-item>
       <tr>
-        <td>
-          <d-table-row-expander [item]="item"></d-table-row-expander>
-        </td>
-        <td>
-          <d-checkbox [(ngModel)]="item['selected']"></d-checkbox>
-        </td>
         <td>{{item.id}}</td>
         <td>{{item.first_name}}</td>
         <td>{{item.last_name}}</td>
         <td>{{item.email}}</td>
         <td>{{item.gender}}</td>
         <td>{{item.ip_address}}</td>
-      </tr>
-    </ng-template>
-    <ng-template dTemplate="detail" let-item>
-      {{item.email}}
-    </ng-template>
-    <ng-template dTemplate="footer">
-      <tr>
-        <th></th>
-        <th></th>
-        <th>#</th>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
-        <th>Gender</th>
-        <th>IP Address</th>
       </tr>
     </ng-template>
   </d-table>
