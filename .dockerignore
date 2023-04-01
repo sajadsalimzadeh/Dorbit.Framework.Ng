@@ -1,0 +1,8 @@
+# Ignore everything
+.*
+dist/core
+node_modules
+projects
+angular*
+package*
+tsconfig*
