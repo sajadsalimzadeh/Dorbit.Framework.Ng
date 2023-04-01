@@ -11,20 +11,8 @@ export class IndexComponent implements OnInit {
   menus = [
     {text: 'Get Started', link: 'get-started', icon: 'far fa-home'},
     {text: 'Color Pallet', link: 'color-pallet', icon: 'far fa-palette'},
+    {text: 'Grid', link: 'grid', icon: 'far fa-table'},
     {text: 'Button', link: 'button', icon: 'far fa-computer-mouse'},
-    {text: 'Timeline', link: 'timeline', icon: 'far fa-timeline'},
-    {text: 'Data Table', link: 'data-table', icon: 'far fa-table'},
-    {text: 'Paginator', link: 'paginator', icon: 'far fa-ellipsis-stroke'},
-    {text: 'Progress Bar', link: 'progress-bar', icon: 'far fa-bars-progress'},
-    {text: 'Scroll top', link: 'scroll-top', icon: 'far fa-up-down'},
-    {text: 'Skeleton', link: 'skeleton', icon: 'far fa-loader'},
-    {text: 'Tab', link: 'tab', icon: 'far fa-list-dropdown'},
-    {text: 'Tag', link: 'tag', icon: 'far fa-tag'},
-    {text: 'Message', link: 'message', icon: 'far fa-envelope'},
-    {text: 'Dialog', link: 'dialog', icon: 'far fa-rectangle-history'},
-    {text: 'Tooltip', link: 'tooltip', icon: 'far fa-message-middle-top'},
-    {text: 'Code', link: 'code', icon: 'far fa-code'},
-    {text: 'Tree', link: 'tree', icon: 'far fa-list-tree'},
     {
       text: 'Forms', icon: 'far fa-input-text', children: [
         {text: 'Input', link: 'forms/input', icon: 'far fa-input-text'},
@@ -41,6 +29,19 @@ export class IndexComponent implements OnInit {
         {text: 'Password', link: 'forms/password', icon: 'far fa-key'},
       ]
     },
+    {text: 'Timeline', link: 'timeline', icon: 'far fa-timeline'},
+    {text: 'Table', link: 'table', icon: 'far fa-table'},
+    {text: 'Paginator', link: 'paginator', icon: 'far fa-ellipsis-stroke'},
+    {text: 'Progress Bar', link: 'progress-bar', icon: 'far fa-bars-progress'},
+    {text: 'Scroll top', link: 'scroll-top', icon: 'far fa-up-down'},
+    {text: 'Skeleton', link: 'skeleton', icon: 'far fa-loader'},
+    {text: 'Tab', link: 'tab', icon: 'far fa-list-dropdown'},
+    {text: 'Tag', link: 'tag', icon: 'far fa-tag'},
+    {text: 'Message', link: 'message', icon: 'far fa-envelope'},
+    {text: 'Dialog', link: 'dialog', icon: 'far fa-rectangle-history'},
+    {text: 'Tooltip', link: 'tooltip', icon: 'far fa-message-middle-top'},
+    {text: 'Code', link: 'code', icon: 'far fa-code'},
+    {text: 'Tree', link: 'tree', icon: 'far fa-list-tree'},
   ];
   activeMenu: any;
 
