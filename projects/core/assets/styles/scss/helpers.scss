@@ -53,3 +53,10 @@ $helpers: (
 @each $color in $colors {
   .text-#{$color} {color: var(--color-#{$color}) !important;}
 }
+
+$widths: (10, 20, 25, 30, 40, 50, 60, 70, 75, 80, 90, 100);
+@each $width in $widths {
+  .w-#{$width} {width: $width + 0%;}
+}
+.w-33 {width: 33.333%;}
+.w-66 {width: 66.666%;}
