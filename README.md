@@ -2,7 +2,7 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.2.
 
-[DEMO](https://angular-components-sajadsalimzadeh.fandogh.cloud)
+[DEMO](http://ng.dorbit.ir)
 
 ![Light Theme](https://raw.githubusercontent.com/sajadsalimzadeh/angular-components/main/screenshot-light.png)
 ![Dark Theme](https://raw.githubusercontent.com/sajadsalimzadeh/angular-components/main/screenshot-dark.png)
