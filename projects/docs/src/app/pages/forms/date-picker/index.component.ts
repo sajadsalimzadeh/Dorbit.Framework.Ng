@@ -8,7 +8,7 @@ import { FormControl } from "@angular/forms";
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent {
-  geregorianFormControl = new FormControl('');
+  gregorianFormControl = new FormControl('');
   jalaliFormControl = new FormControl('');
 
 }

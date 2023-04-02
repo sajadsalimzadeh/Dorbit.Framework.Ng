@@ -5,6 +5,8 @@ import {DatePickerInlineComponent} from "./date-picker-inline.component";
 import {ControlGroupModule} from "../control-group/control-group.module";
 import {SelectModule} from "../select/select.module";
 
+export * from './date-picker-inline.component';
+
 @NgModule({
   imports: [
     CommonModule,

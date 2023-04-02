@@ -20,9 +20,9 @@ export class DatePickerInlineComponent extends AbstractFormControl<string> {
   @Input() locale: 'fa' | 'en' = 'en';
 
   form = new FormGroup({
-    day: new FormControl(1, [Validators.min(1), Validators.max(31)]),
-    month: new FormControl(2, [Validators.min(1), Validators.max(12)]),
-    year: new FormControl(2000, [Validators.min(1100), Validators.max(2300)]),
+    day: new FormControl<number | null>(null, [Validators.min(1), Validators.max(31)]),
+    month: new FormControl<number | null>(null, [Validators.min(1), Validators.max(12)]),
+    year: new FormControl<number | null>(null, [Validators.min(1100), Validators.max(2300)]),
   });
 
   days: Option[] = [];
@@ -33,6 +33,17 @@ export class DatePickerInlineComponent extends AbstractFormControl<string> {
     super.ngOnInit();
 
     this.form.valueChanges.subscribe(() => this.updateValue());
+
+    this.subscription.add(this.onChange.subscribe(e => {
+      moment.locale(this.locale);
+      const m = moment(e)
+
+      this.form.patchValue({
+        day: m.date(),
+        month: m.month() + 1,
+        year: m.year(),
+      })
+    }))
   }
 
   private updateValue() {
