@@ -1,7 +1,7 @@
 <h1>Select</h1>
 <hr>
 <app-card header="Sizes" class="mt-6" component="forms/select">
-  <div class="flex-column flex-gap-5 flex-align-start">
+  <div class="flex-column flex-gap-5">
     <d-select size="xs" placeholder="Choose one ..." [items]="items" [formControl]="formControl"></d-select>
     <d-select size="sm" placeholder="Choose one ..." [items]="items" [formControl]="formControl"></d-select>
     <d-select size="md" placeholder="Choose one ..." [items]="items" [formControl]="formControl"></d-select>
@@ -10,8 +10,8 @@
   </div>
 </app-card>
 <app-card header="Multiple" class="mt-6" component="forms/select">
-  <div class="flex-column flex-gap-5 flex-align-start">
+  <div class="flex-column flex-gap-5">
     <d-select placeholder="Choose one ..." [items]="items2" [formControl]="formControlMultiple"
-                mode="multiple"></d-select>
+              mode="multiple"></d-select>
   </div>
 </app-card>

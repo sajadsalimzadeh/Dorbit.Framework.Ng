@@ -30,7 +30,15 @@
   </div>
 </app-card>
 <app-card header="Rounded" class="mt-6" component="tag">
-  <div class="flex-row flex-gap-3">
+  <div class="flex-row flex-gap-3 py-4">
+    <d-tag color="primary" [rounded]="true">primary</d-tag>
+    <d-tag color="secondary" [rounded]="true">secondary</d-tag>
+    <d-tag color="success" [rounded]="true">success</d-tag>
+    <d-tag color="warning" [rounded]="true">warning</d-tag>
+    <d-tag color="danger" [rounded]="true">danger</d-tag>
+    <d-tag color="link" [rounded]="true">link</d-tag>
+  </div>
+  <div class="flex-row flex-gap-3 py-4">
     <d-tag icon="far fa-key" color="primary" [rounded]="true">primary</d-tag>
     <d-tag icon="far fa-user" color="secondary" [rounded]="true">secondary</d-tag>
     <d-tag icon="far fa-check" color="success" [rounded]="true">success</d-tag>

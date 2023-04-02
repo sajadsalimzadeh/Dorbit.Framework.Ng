@@ -7,7 +7,6 @@ import {AbstractControl, FormControl, ValidatorFn, Validators} from "@angular/fo
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent {
-  text = 'text string';
   formControl = new FormControl('');
   items = [
     'option 1',

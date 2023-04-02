@@ -14,3 +14,9 @@
     <d-date-picker [formControl]="jalaliFormControl" locale="fa" placeholder="Choose Date ..."></d-date-picker>
   </div>
 </app-card>
+<app-card header="Date Picker Inline" class="mt-6" component="forms/date-picker">
+  <div class="flex-column flex-gap-4 py-1" style="width: 300px">
+    <d-date-picker-inline [formControl]="jalaliFormControl"></d-date-picker-inline>
+  </div>
+</app-card>
+

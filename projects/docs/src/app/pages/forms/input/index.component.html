@@ -2,21 +2,21 @@
 <hr>
 <app-card header="Sizes" class="mt-6" component="forms/input">
   <div class="flex-column flex-gap-5">
-    <d-input size="xs" [ngModel]="text"></d-input>
-    <d-input size="sm" [ngModel]="text"></d-input>
-    <d-input size="md" [ngModel]="text"></d-input>
-    <d-input size="lg" [ngModel]="text"></d-input>
-    <d-input size="xl" [ngModel]="text"></d-input>
+    <d-input size="xs" [formControl]="formControl" placeholder="please enter your name ..."></d-input>
+    <d-input size="sm" [formControl]="formControl" placeholder="please enter your name ..."></d-input>
+    <d-input size="md" [formControl]="formControl" placeholder="please enter your name ..."></d-input>
+    <d-input size="lg" [formControl]="formControl" placeholder="please enter your name ..."></d-input>
+    <d-input size="xl" [formControl]="formControl" placeholder="please enter your name ..."></d-input>
   </div>
 </app-card>
 <app-card header="Placeholder" class="mt-6" component="forms/input">
   <div class="flex-column flex-gap-5">
-    <d-input placeholder="please enter your name ...."></d-input>
+    <d-input [formControl]="formControl" placeholder="please enter your name ...."></d-input>
   </div>
 </app-card>
 <app-card header="Textarea" class="mt-6" component="forms/input">
   <div class="flex-column flex-gap-5">
-    <d-input type="textarea" [formControl]="formControl"></d-input>
+    <d-input type="textarea" rows="5" [formControl]="formControl" placeholder="please enter your text ..."></d-input>
   </div>
 </app-card>
 <app-card header="Control Group" class="mt-6" component="forms/input">
@@ -29,6 +29,24 @@
       <ng-template dTemplate="start"><i class="far fa-search"></i></ng-template>
       <ng-template dTemplate="end"><i class="far fa-info"></i></ng-template>
       <d-input placeholder="please enter your name ...." [formControl]="formControl"></d-input>
+    </d-control-group>
+  </div>
+</app-card>
+<app-card header="Control Group Sizes" class="mt-6" component="forms/input">
+  <div class="flex-column flex-gap-6">
+    <d-control-group label="Extra Small" size="xs" [formControl]="formControl">
+      <d-input placeholder="please enter your name ..."></d-input>
+    </d-control-group>
+    <d-control-group label="Small" size="sm" [formControl]="formControl">
+      <d-input placeholder="please enter your name ..."></d-input>
+    </d-control-group>
+    <d-control-group label="Medium" size="md" [formControl]="formControl">
+      <d-input placeholder="please enter your name ..."></d-input>
+    </d-control-group>
+    <d-control-group label="Large" size="lg" [formControl]="formControl">
+      <d-input placeholder="please enter your name ..."></d-input></d-control-group>
+    <d-control-group label="Extra Large" size="xl" [formControl]="formControl">
+      <d-input placeholder="please enter your name ..."></d-input>
     </d-control-group>
   </div>
 </app-card>
