@@ -3,6 +3,7 @@ export * from './form/form-control.directive';
 export * from './table/table.module';
 export * from './form/select/select.module';
 export * from './form/date-picker/date-picker.module';
+export * from './form/date-picker-inline/date-picker-inline.module';
 export * from './overlay/overlay.module';
 export * from './timeline/timeline.module';
 export * from './button/button.module';

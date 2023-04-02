@@ -65,6 +65,7 @@ export abstract class AbstractFormControl<T> extends BaseComponent implements Co
   focused: boolean = false;
 
   formControl!: FormControl<T>;
+  protected ngControl?: NgControl | null;
 
   protected _onChange: any;
   protected _touch: any;
@@ -81,29 +82,21 @@ export abstract class AbstractFormControl<T> extends BaseComponent implements Co
 
   override ngOnInit(): void {
     this.init();
+    this.render();
   }
 
   override ngOnChanges(changes: SimpleChanges): void {
-    this.init();
+    if (!this.formControl) return;
+    this.render();
   }
 
   init() {
-    if (this.formControl) return;
-    const control = this.injector.get(NgControl, undefined, {optional: true});
-    if (control?.control) {
-      this.formControl = (control.control as FormControl);
-    }
-    if (this.formControlService) {
-      if (this.formControlService.size) {
-        this.size = this.formControlService.size;
-      }
-      if (this.formControlService.formControl) {
-        this.formControl = this.formControlService.formControl;
-      }
-    }
-    if (!this.formControl) {
-      this.formControl = new FormControl<any>(null);
-    }
+    this.ngControl = this.injector.get(NgControl, undefined, {optional: true});
+    const fcs = this.formControlService;
+    this.formControl = (this.ngControl?.control ?? fcs?.formControl ?? new FormControl) as FormControl;
+    this.size = (fcs?.size ?? this.size);
+
+    //============== Listener ===============\\
     let value: any;
     this.subscription.add(this.formControl.valueChanges.subscribe((e) => {
       if (value === e) return;
@@ -111,7 +104,6 @@ export abstract class AbstractFormControl<T> extends BaseComponent implements Co
       this.render();
       this.onChange.emit(e);
     }));
-    this.render();
   }
 
   registerOnChange(fn: any): void {
