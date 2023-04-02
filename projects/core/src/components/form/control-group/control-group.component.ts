@@ -9,6 +9,7 @@ import {TemplateDirective} from "../../../directives";
 import {AbstractFormControl, createControlValueAccessor, ValidationError} from "../form-control.directive";
 import {FormControlService} from "../form-control.service";
 import {ControlGroupService} from "./control-group.service";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'd-control-group',
@@ -42,13 +43,13 @@ export class ControlGroupComponent extends AbstractFormControl<any> {
   }
 
   override init() {
-
+    super.init();
     if (this.formControlService) {
-      this.formControlService.formControl = this.formControl;
+      if(this.ngControl?.control) {
+        this.formControlService.formControl = this.formControl;
+      }
       this.formControlService.size = this.size;
     }
-
-    super.init();
   }
 
   override render() {

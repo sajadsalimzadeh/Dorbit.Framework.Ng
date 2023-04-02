@@ -2,10 +2,12 @@
   <div class="control-container flex-1">
     <ng-container *ngSwitchCase="'textarea'">
     <textarea #inputEl class="control" [ngModel]="formControl.value" [placeholder]="placeholder"
+              [minlength]="minlength" [maxlength]="maxlength" [rows]="rows" [cols]="cols"
               (ngModelChange)="formControl.setValue($event)" (focus)="focus()" (blur)="blur()"></textarea>
     </ng-container>
     <ng-container *ngSwitchDefault>
       <input #inputEl class="control" [type]="type" [ngModel]="formControl.value" [placeholder]="placeholder"
+             [minlength]="minlength" [maxlength]="maxlength"
              (ngModelChange)="formControl.setValue($event)" (focus)="focus()" (blur)="blur()"
              (keyup)="render()" (keydown)="onKeyDown($event)"/>
     </ng-container>

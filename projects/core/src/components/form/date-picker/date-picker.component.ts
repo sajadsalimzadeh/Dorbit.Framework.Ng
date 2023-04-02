@@ -124,6 +124,7 @@ export class DatePickerComponent extends AbstractFormControl<any> {
 
     this.pickerClasses['dir-ltr'] = this.locale != 'fa';
     this.pickerClasses['dir-rtl'] = this.locale == 'fa';
+    this.pickerClasses[this.size] = true;
 
     this.render();
   }

@@ -1,5 +1,5 @@
 :host {
-  gap: 1em;
+  gap: .5em;
   height: 2em;
   display: flex;
   padding: .2em .8em;
@@ -9,6 +9,6 @@
   background-color: var(--color-component);
 
   &.rounded {
-    border-radius: 2em;
+    border-radius: 3em;
   }
 }

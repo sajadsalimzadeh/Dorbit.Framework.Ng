@@ -1,6 +1,6 @@
 import {
   Component,
-  ContentChildren, HostBinding,
+  ContentChildren, ElementRef, HostBinding,
   HostListener, Injector,
   Input,
   QueryList,
@@ -20,9 +20,11 @@ type Func = (item: any) => any;
   styleUrls: ['../control.scss', './select.component.scss'],
   providers: [createControlValueAccessor(SelectComponent)]
 })
-export class SelectComponent extends AbstractFormControl<any | any[]> {
+export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
   @Input() items: any[] = [];
   @Input() mode: 'single' | 'multiple' = 'single';
+  @Input() clearable: boolean = true;
+  @Input() filterable: boolean = true;
   @Input() valueField: string | Func = 'value';
   @Input() textField: string | Func = 'text';
   @Input() searchPlaceHolder: string = 'Search ....';
@@ -39,6 +41,8 @@ export class SelectComponent extends AbstractFormControl<any | any[]> {
 
   @ViewChild('itemsTpl') itemsTpl?: TemplateRef<any>;
   @ViewChild(InputComponent) inputComponent?: InputComponent;
+
+  @ViewChild('itemsContainerEl') itemsContainerEl?: ElementRef<HTMLUListElement>;
 
   optionTemplate?: TemplateDirective;
 
@@ -101,10 +105,6 @@ export class SelectComponent extends AbstractFormControl<any | any[]> {
     super.ngOnChanges(changes);
   }
 
-  private getSelectedItems(): any[] {
-    return this.items.filter(x => x.selected);
-  }
-
   private handleHoveredIndex(e: KeyboardEvent, bySearchInput = false) {
     if (!this.overlayRef && !bySearchInput) return;
     e.stopPropagation();
@@ -137,27 +137,9 @@ export class SelectComponent extends AbstractFormControl<any | any[]> {
     }
   }
 
-  private updateFormControlValue() {
-    const selectedItems = this.getSelectedItems();
-    if (this.mode === 'single') {
-      if (selectedItems.length == 0) {
-        this.formControl.setValue(null);
-      } else {
-        this.formControl.setValue(this.getValue(selectedItems[0]));
-      }
-    } else {
-      if (selectedItems.length == 0) {
-        this.formControl.setValue(null);
-      } else {
-        this.formControl.setValue(selectedItems.map(x => this.getValue(x)));
-      }
-    }
-    this.render();
-  }
-
   private updateItemsSelectedState() {
     const values = this.formControl.value;
-    if(Array.isArray(values)) {
+    if (Array.isArray(values)) {
       this.items.forEach(x => x.selected = values.findIndex(y => this.comparator(x, y)) > -1);
     } else {
       this.items.forEach(x => x.selected = this.comparator(x, values));
@@ -165,8 +147,9 @@ export class SelectComponent extends AbstractFormControl<any | any[]> {
   }
 
   override render() {
-    this.updateItemsSelectedState();
     super.render();
+    this.updateItemsSelectedState();
+    this.search();
   }
 
   getValue(item: any): any {
@@ -181,18 +164,21 @@ export class SelectComponent extends AbstractFormControl<any | any[]> {
     e?.stopPropagation();
 
     if (this.mode == 'single') {
-      this.items.forEach(x => x.selected = false);
+      this.formControl.setValue(this.getValue(item));
       this.close();
+    } else {
+      const selectedItems = (Array.isArray(this.formControl.value) ? this.formControl.value : []) as T[];
+      const value = this.getValue(item);
+      const findIndex = selectedItems.findIndex(x => x == value);
+      if (findIndex > -1) selectedItems.splice(findIndex, 1);
+      else selectedItems.push(value);
+      this.formControl.setValue([...selectedItems]);
     }
-
-    item.selected = !item.selected;
-    this.updateFormControlValue();
-    this.hoveredIndex = this.renderedItems.findIndex(x => x.selected);
+    this.render();
   }
 
   search() {
     this.renderedItems = this.items.filter(() => true);
-
     if (this.searchFormControl.value) {
       const value = this.searchFormControl.value.toString().toLowerCase();
       this.renderedItems = this.renderedItems.filter(x => {
@@ -201,6 +187,10 @@ export class SelectComponent extends AbstractFormControl<any | any[]> {
         return false;
       })
     }
+  }
+
+  clear() {
+    this.formControl.reset();
   }
 
   private open() {
@@ -213,6 +203,17 @@ export class SelectComponent extends AbstractFormControl<any | any[]> {
       setTimeout(() => {
         this.inputComponent?.inputEl?.nativeElement.focus();
       }, 10);
+
+      setTimeout(() => {
+        const containerEl = this.itemsContainerEl?.nativeElement;
+        if (containerEl) {
+          const selectedItemEl = containerEl.querySelector('.selected') as HTMLLIElement;
+          console.log(selectedItemEl?.offsetTop)
+          if (selectedItemEl) {
+            containerEl.scrollTop = (selectedItemEl.offsetTop - (containerEl.offsetHeight / 2));
+          }
+        }
+      }, 100);
     }
   }
 

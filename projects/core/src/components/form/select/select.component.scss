@@ -11,14 +11,23 @@
 }
 
 :host {
-  width: 250px;
   position: relative;
 
   &.open .control-box input:focus ~ .text  {
       color: var(--color-gray--5);
   }
 }
+
+.remove {
+  color: var(--color-gray--10);
+}
+
+.selected-items-container {
+  padding-inline-end: 0 !important;
+}
+
 .selected-items {
+  flex: 1;
   display: flex;
   flex-wrap: wrap;
 
@@ -48,6 +57,7 @@
 
 .items-container {
   display: flex;
+  min-width: 100%;
   max-width: 250px;
   overflow: hidden;
   flex-direction: column;
@@ -86,8 +96,10 @@
   flex-direction: column;
 
   li {
+    gap: .4em;
     display: flex;
     cursor: pointer;
+    padding: .4em .5em;
     align-items: center;
 
     &:hover, &.hovered {
@@ -110,7 +122,6 @@
 
     .text {
       display: flex;
-      padding: .4em .8em;
       align-items: center;
     }
   }

@@ -22,13 +22,16 @@
         top: 0;
         z-index: 100;
         margin: 0 1em;
+        height: 0.7em;
+        display: flex;
         font-size: .8em;
         padding: 0 0.5em;
         position: absolute;
-        transition: all 300ms ease;
+        align-items: center;
+        transition: all .3s ease;
         color: var(--color-gray-8);
         background-color: var(--color-white);
-        transform: translateY(calc(-50% - .1em));
+        transform: translateY(calc(-50% - 0.1em));
       }
 
       &::ng-deep > *:not(.label-box) {

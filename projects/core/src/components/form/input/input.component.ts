@@ -20,6 +20,10 @@ export class InputComponent extends AbstractFormControl<string> {
   @Input() type: 'text' | 'password' | 'email' | 'textarea' | 'number' = 'text';
   @Input() mask?: string | MaskItem[];
   @Input() pattern?: string;
+  @Input() minlength: number | string | null = null;
+  @Input() maxlength: number | string | null = null;
+  @Input() rows: number | string | null = null;
+  @Input() cols: number | string | null = null;
 
   maskValue: string = '';
 

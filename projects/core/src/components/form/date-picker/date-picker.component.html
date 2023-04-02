@@ -19,15 +19,15 @@
           <div class="week-day" *ngFor="let weekDay of weekDays">{{weekDay}}</div>
         </div>
         <div class="days">
-          <div class="day" *ngFor="let date of dates; let index = index" 
-            [ngClass]="{active: date.isSelected,today: date.isToday,holiday: date.isHoliday,'this-month': date.isCurrentMonth}" 
+          <div class="day" *ngFor="let date of dates; let index = index"
+            [ngClass]="{active: date.isSelected,today: date.isToday,holiday: date.isHoliday,'this-month': date.isCurrentMonth}"
             (mousedown)="selectDate(date)">
             <span>{{date.day}}</span>
           </div>
         </div>
       </div>
       <div class="today-button" (click)="selectDate(todayValue)">
-        امروز
+        {{(locale == 'fa' ?  'امروز' : 'Today')}}
       </div>
     </div>
     <div class="month-picker" [ngClass]="{show: (view == 'month')}">
