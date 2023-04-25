@@ -1,7 +1,7 @@
 import {Colors, Sizes} from "../../../types";
 
 export interface Message {
-  scope?: string;
+  container?: string;
   color?: Colors;
   size?: Sizes;
   title?: string;
@@ -13,4 +13,5 @@ export interface Message {
   showTimer?: boolean;
   timerInterval?: number;
   show?: boolean;
+  progress?: number;
 }

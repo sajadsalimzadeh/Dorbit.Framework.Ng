@@ -1,6 +1,8 @@
 import {
   Component,
-  ContentChildren, EventEmitter, HostBinding,
+  ContentChildren,
+  EventEmitter,
+  HostBinding,
   Injector,
   Input, Output,
   QueryList,
@@ -17,6 +19,8 @@ import {Message} from "../../models";
 })
 export class MessageComponent extends BaseComponent {
   @Input() item!: Message;
+  @Input() items!: Message[];
+  @Input() timerEnable: boolean = true;
 
   @Output() onRemove = new EventEmitter<Message>();
 
@@ -26,6 +30,8 @@ export class MessageComponent extends BaseComponent {
   }
 
   timer: number = 0;
+  progress: number = 100;
+
   contentTemplate?: TemplateRef<any>;
 
   @ContentChildren(TemplateDirective) set templates(value: QueryList<TemplateDirective>) {
@@ -64,22 +70,38 @@ export class MessageComponent extends BaseComponent {
           break;
       }
     }
+    this.item.show = true;
+
     super.ngOnInit();
 
-    if (this.item.showTimer && this.item.duration) {
+    if (this.item.duration) {
       const duration = this.item.duration;
-      const startTime = new Date().getTime();
-      const interval = setInterval(() => {
-        this.timer = duration - (new Date().getTime() - startTime);
-        if (this.timer < 0) {
-          this.timer = 0;
-          clearInterval(interval);
-        }
-      }, this.item.timerInterval ?? 30);
+      if (this.item.showTimer) {
+        this.timer = this.item.duration;
+        const speed = 50;
+        const interval = setInterval(() => {
+          if (!this.timerEnable) return;
+          this.timer -= speed;
+          this.progress = (this.timer * 100 / duration);
+          if (this.timer < 0) {
+            this.timer = 0;
+            this.remove();
+            clearInterval(interval);
+          }
+        }, this.item.timerInterval ?? speed);
+      } else {
+        setTimeout(() => {
+          this.remove();
+        }, this.item.duration);
+      }
     }
   }
 
   remove() {
-    this.onRemove.emit(this.item);
+    this.item.show = false;
+    setTimeout(() => {
+      const index = this.items.indexOf(this.item);
+      if (index > -1) this.items.splice(index, 1);
+    }, 200);
   }
 }

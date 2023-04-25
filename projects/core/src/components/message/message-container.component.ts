@@ -1,5 +1,5 @@
 import {
-  Component, ContentChildren, Injector, Input, QueryList, SimpleChanges, TemplateRef,
+  Component, ContentChildren, HostListener, Injector, Input, QueryList, SimpleChanges, TemplateRef,
 } from '@angular/core';
 import {BaseComponent} from "../base.component";
 import {TemplateDirective} from "../../directives";
@@ -8,20 +8,29 @@ import {Subscription} from "rxjs";
 import {Message} from "./models";
 import {Positions} from "../../types";
 
-
 export * from './models';
 export * from './services/message.service';
 export * from './components/message/message.component';
 
 @Component({
-  selector: 'd-messages',
-  templateUrl: 'message.component.html',
-  styleUrls: ['./messages.component.scss']
+  selector: 'd-message-container',
+  templateUrl: 'message-container.component.html',
+  styleUrls: ['./message-container.component.scss']
 })
-export class MessagesComponent extends BaseComponent {
-  @Input() scope?: string;
+export class MessageContainerComponent extends BaseComponent {
+  @Input() name?: string;
   @Input() items: Message[] = [];
   @Input() position: 'static' | Positions  = 'static';
+
+  @HostListener('mouseenter')
+  onMouseEnter() {
+    this.timerEnable = false;
+  }
+
+  @HostListener('mouseleave')
+  onMouseLeave() {
+    this.timerEnable = true;
+  }
 
   contentTemplate?: TemplateRef<any>;
 
@@ -29,6 +38,7 @@ export class MessagesComponent extends BaseComponent {
     this.contentTemplate = value.find(x => x.includesName('default', true))?.template;
   }
 
+  timerEnable: boolean = true;
   private listenSubscription?: Subscription;
 
   constructor(injector: Injector, private messageService: MessageService) {
@@ -39,7 +49,7 @@ export class MessagesComponent extends BaseComponent {
     super.ngOnInit();
 
     this.listenSubscription?.unsubscribe();
-    this.listenSubscription = this.messageService.listen(this.scope, (m) => {
+    this.listenSubscription = this.messageService.listen(this.name, (m) => {
       if (!this.items) this.items = [];
       if (m.delay) {
         setTimeout(() => {
@@ -66,18 +76,5 @@ export class MessagesComponent extends BaseComponent {
 
   addMessage(m: Message) {
     this.items.push(m);
-    if (m.duration) {
-      setTimeout(() => {
-        this.removeMessage(m);
-      }, m.duration);
-    }
-    m.show = true;
-  }
-
-  removeMessage(m: Message) {
-    m.show = false;
-    setTimeout(() => {
-      this.items.splice(this.items.indexOf(m), 1);
-    }, 200);
   }
 }

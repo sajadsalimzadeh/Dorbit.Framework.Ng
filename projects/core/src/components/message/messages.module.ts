@@ -1,18 +1,18 @@
 import {NgModule} from '@angular/core';
 
-import {MessagesComponent} from './messages.component';
+import {MessageContainerComponent} from './message-container.component';
 import {CommonModule} from "@angular/common";
 import {DevTemplateModule} from "../../directives";
 import {MessageComponent} from "./components/message/message.component";
 
 export * from './models';
-export * from './messages.component';
+export * from './message-container.component';
 export * from './components/message/message.component';
 
 @NgModule({
   imports: [CommonModule, DevTemplateModule],
-  declarations: [MessagesComponent, MessageComponent],
-  exports: [MessagesComponent, MessageComponent],
+  declarations: [MessageContainerComponent, MessageComponent],
+  exports: [MessageContainerComponent, MessageComponent],
   providers: [],
 })
 export class MessagesModule {

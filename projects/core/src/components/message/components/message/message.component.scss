@@ -1,10 +1,13 @@
 :host {
-  display: block;
+  display: flex;
   margin: .3em 0;
   overflow: hidden;
   max-height: 300px;
   position: relative;
+  justify-content: flex-end;
   border-radius: var(--radius-2);
+  border-end-start-radius: 0;
+  border-start-start-radius: 0;
   transition: max-height 200ms ease;
   background-color: var(--color-white);
 
@@ -18,11 +21,10 @@
 }
 
 .message {
+  flex: 1;
   display: flex;
   padding: .7em 1.1em;
-  border-radius: inherit;
   color: var(--color-component);
-  border: .1em solid rgba(var(--color-component-rgb), .15);
   border-inline-start: .5em solid var(--color-component);
   background-color: rgba(var(--color-component-rgb), .1);
 
@@ -73,6 +75,14 @@
   .body {
     font-size: .8em;
   }
+}
+
+.progress {
+  bottom: 0;
+  height: .2em;
+  position: absolute;
+  transition: width 50ms linear;
+  background-color: var(--color-component);
 }
 
 @keyframes fade-in {
