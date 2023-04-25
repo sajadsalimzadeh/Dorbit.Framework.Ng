@@ -18,7 +18,7 @@ export class PaginatorComponent extends BaseComponent implements OnChanges {
   @Input() showFirstArrow: boolean = true;
   @Input() showLastArrow: boolean = true;
 
-  @Output() onSelect = new EventEmitter<number>();
+  @Output() onChange = new EventEmitter<number>();
 
   pageNumbers: number[] = [];
 
@@ -28,7 +28,7 @@ export class PaginatorComponent extends BaseComponent implements OnChanges {
 
   select(page: number) {
     if (!page || page < 0 || page > this.pageNumbers[this.pageNumbers.length - 1]) return;
-    this.onSelect.emit(page - 1);
+    this.onChange.emit(page - 1);
   }
 
   override render() {
@@ -41,7 +41,7 @@ export class PaginatorComponent extends BaseComponent implements OnChanges {
 
     if (lastPage <= 7) {
       this.pageNumbers = [];
-      for (let i = 1; i < lastPage; i++) {
+      for (let i = 1; i <= lastPage + 1; i++) {
         this.pageNumbers.push(i);
       }
     } else {

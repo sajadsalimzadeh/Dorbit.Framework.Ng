@@ -97,7 +97,7 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
   }
 
   override ngOnChanges(changes: SimpleChanges): void {
-    if (changes['items']) {
+    if ('items' in changes) {
       this.items.filter(x => typeof x !== 'object').forEach((x, i) => {
         this.items[i] = {text: x, value: x};
       });

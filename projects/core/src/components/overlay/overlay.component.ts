@@ -64,8 +64,7 @@ export class OverlayComponent extends BaseComponent implements OnInit, OverlayOp
     const height = rect.height;
     const top = rect.top + window.scrollY;
     const left = rect.left + window.scrollX;
-    const right = rect.right + window.scrollX;
-
+    const right = window.innerWidth - rect.right + window.scrollX;
     const dir = getComputedStyle(document.body).direction;
 
     let alignment = this.alignment ?? 'bottom-start';
@@ -95,16 +94,14 @@ export class OverlayComponent extends BaseComponent implements OnInit, OverlayOp
       if (alignment == 'end-top') alignment = 'end-bottom';
     }
 
-
     this.styles.width = +'px';
-    this.styles.left = left + 'px';
 
     if (alignment.startsWith('top') || alignment.startsWith('bottom')) {
       this.styles.width = width + 'px';
       if (dir == 'ltr') {
         this.styles.left = left + 'px';
       } else {
-        this.styles.left = right + 'px';
+        this.styles.right = right + 'px';
       }
 
       if (alignment.startsWith('top')) {

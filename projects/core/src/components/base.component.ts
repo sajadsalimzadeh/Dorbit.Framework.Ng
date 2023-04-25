@@ -28,7 +28,7 @@ export abstract class BaseComponent implements OnInit, OnChanges, OnDestroy {
 
   protected subscription = new Subscription();
 
-  protected elementRef: ElementRef<HTMLElement>;
+  elementRef: ElementRef<HTMLElement>;
 
   constructor(protected injector: Injector) {
     this.elementRef = injector.get(ElementRef);
