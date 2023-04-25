@@ -1,6 +1,7 @@
 import {Component, HostBinding, OnInit} from "@angular/core";
 import {NavigationEnd, Router} from "@angular/router";
 import {Themes} from "@core";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,12 @@ import {Themes} from "@core";
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent implements OnInit {
+
+  @HostBinding('class')
+  theme: Themes = 'default-light';
+  themes: Themes[] = ['default-light', "default-dark"];
+
+
   menus = [
     {text: 'Get Started', link: 'get-started', icon: 'far fa-home'},
     {text: 'Color Pallet', link: 'color-pallet', icon: 'far fa-palette'},
@@ -62,10 +69,7 @@ export class IndexComponent implements OnInit {
   activeMenu: any;
 
   isMenuOpen: boolean = true;
-
-  @HostBinding('class')
-  theme: Themes = 'default-light';
-  themes: Themes[] = ['default-light', "default-dark"]
+  rtlControl = new FormControl(false);
 
   constructor(private router: Router) {
   }
@@ -77,7 +81,11 @@ export class IndexComponent implements OnInit {
         this.processUrl(e.url);
       }
     });
-    this.setTheme(this.theme)
+    this.setTheme(this.theme);
+
+    this.rtlControl.valueChanges.subscribe(e => {
+      document.dir = (e ? 'rtl' : 'ltr')
+    });
   }
 
   setTheme(theme: Themes) {

@@ -22,7 +22,10 @@
     <span class="text">NGULAR Around Development Orbit (<a href="https://devor.ir" target="_blank">Dorbit.ir</a>)</span>
   </div>
   <div class="flex-row flex-align-center mxe-5">
-    <d-control-group label="Theme" [(ngModel)]="theme">
+    <d-checkbox [formControl]="rtlControl">Right to Left</d-checkbox>
+  </div>
+  <div class="flex-row flex-align-center mxe-5">
+    <d-control-group label="Theme" [(ngModel)]="theme" style="width: 200px">
       <d-select [items]="themes" (onChange)="setTheme($event)"></d-select>
     </d-control-group>
   </div>
