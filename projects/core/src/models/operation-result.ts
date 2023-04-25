@@ -9,14 +9,7 @@ export interface QueryResult<T> extends OperationResult {
 }
 
 export interface PagedListResult<T = any> extends QueryResult<T[]> {
-    indexFrom: number;
-    pageIndex: number;
-    pageSize: number;
     totalCount: number;
-    totalPages: number;
-    hasNextPage: boolean;
-    hasPreviousPage: boolean;
-    items: T[];
 }
 export interface OdataPagedListResult<T = any> extends PagedListResult<T>{
   value: T[];
