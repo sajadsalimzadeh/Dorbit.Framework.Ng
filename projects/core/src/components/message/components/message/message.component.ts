@@ -30,7 +30,7 @@ export class MessageComponent extends BaseComponent {
   }
 
   timer: number = 0;
-  progress: number = 100;
+  progress: number = 0;
 
   contentTemplate?: TemplateRef<any>;
 
