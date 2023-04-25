@@ -1,11 +1,37 @@
+import {Subject} from "rxjs";
+import {OperationKey} from "../components/filter/filter.component";
 
-export class DataTableConfig {
+export class TableConfig<T = any> {
   paging = new PagingConfig();
   sorting = new SortingConfig();
   selecting = new SelectingConfig();
   layout = new LayoutConfig();
+  filter = new FilterConfig();
 
-  settings = new Settings();
+  lazyLoading: boolean = false;
+
+  onRowClick = new Subject<T>();
+  onRowSelect = new Subject<T>();
+  onRowDeSelect = new Subject<T>();
+  onStateChange = new Subject<State>();
+  onFilterChange = new Subject<void>();
+  onSortChange = new Subject<void>();
+  onPageChange = new Subject<void>();
+  onPageSizeChange = new Subject<void>();
+}
+
+export interface StateFilter {
+  field: string;
+  operation: OperationKey;
+  value: string;
+}
+
+export interface State {
+  page: number;
+  pageSize: number;
+  sortField: string;
+  sortDir: 'asc' | 'desc';
+  filters: StateFilter[];
 }
 
 export class SelectingConfig {
@@ -21,8 +47,12 @@ export class LayoutConfig {
   bordered: boolean = true;
 }
 
+export class FilterConfig {
+
+}
+
 export class PagingConfig {
-  enable = false;
+  enable = true;
 
   page = 0;
   size = 10;
@@ -41,7 +71,9 @@ export class SortingConfig {
   dir: SortDir = 'asc';
 }
 
-export class Settings {
+export interface TableData<T = any> {
+  totalCount: number;
+  items: T[];
 }
 
 export type SortDir = 'asc' | 'desc';

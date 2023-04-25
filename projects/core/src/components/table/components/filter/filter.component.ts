@@ -12,7 +12,7 @@ import {FormControl} from "@angular/forms";
 import {KeyValue} from "@angular/common";
 import {OverlayRef, OverlayService} from "../../../overlay/overlay.service";
 
-type OperationKey = 'eq' | 'nq' | 'gt' | 'ge' | 'lt' | 'le' | 'sw' | 'ew' | 'in' | 'ni';
+export type OperationKey = 'eq' | 'nq' | 'gt' | 'ge' | 'lt' | 'le' | 'sw' | 'ew' | 'in' | 'ni';
 
 @Component({
   selector: 'd-table-filter',
@@ -41,7 +41,7 @@ export class DataTableFilterComponent implements OnInit {
   }
 
   overlayRef?: OverlayRef;
-  valueControl = new FormControl(null);
+  valueControl = new FormControl<any>(null);
   operationControl = new FormControl<OperationKey>('in');
   operations: KeyValue<OperationKey, string>[] = [
     {key: 'eq', value: 'Equals'},

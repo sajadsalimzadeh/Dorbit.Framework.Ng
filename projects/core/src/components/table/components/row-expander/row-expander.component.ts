@@ -26,7 +26,7 @@ export class DataTableRowExpanderComponent {
 
   toggle() {
     if(this.mode == 'single') {
-      this.tableService.dataTable.items
+      this.tableService.dataTable.data.items
         .filter(x => x['rowExpanded'] && x != this.item)
         .forEach(x => x['rowExpanded'] = false);
     }

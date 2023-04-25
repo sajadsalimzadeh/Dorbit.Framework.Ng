@@ -13,20 +13,29 @@
 
   &.table-striped ::ng-deep {
     table {
-      .item-box:nth-child(2n) {
+      .item-box:nth-child(2n+1) {
         background-color: var(--color-gray--1);
       }
 
-      .item-box:nth-child(2n+1) {
+      .item-box:nth-child(2n) {
         background-color: var(--color-white);
       }
     }
   }
 
   &.table-bordered ::ng-deep {
+
     table {
-      td, th {
-        border-inline-end: 1px solid var(--color-gray--2);
+      thead,tfoot {
+        th:not(:last-child) {border-inline-end: 1px solid var(--color-gray--5);}
+      }
+
+      .item-box:nth-child(2n+1) {
+        td:not(:last-child) {border-inline-end: 1px solid var(--color-gray--5);}
+      }
+
+      .item-box:nth-child(2n) {
+        td:not(:last-child) {border-inline-end: 1px solid var(--color-gray--3);}
       }
     }
   }
@@ -52,7 +61,43 @@
   flex: 1;
   display: flex;
   overflow: hidden;
+  position: relative;
   flex-direction: column;
+
+  &.loading {
+
+    &::before, &::after {
+      content: '';
+      z-index: 100;
+      position: absolute;
+    }
+
+    &::before {
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(var(--color-black-rgb), .3);
+    }
+
+    &::after {
+      $size: 4em;
+      width: $size;
+      height: $size;
+      border-radius: 50%;
+      top: calc(50% - $size);
+      left: calc(50% - $size);
+      border-width: .5em;
+      border-style: solid;
+      animation: spinner 1s linear infinite;
+      border-color: transparent var(--color-white) var(--color-white);
+    }
+
+    @keyframes spinner {
+      0% {transform: rotate(0deg);}
+      100% {transform: rotate(360deg);}
+    }
+  }
 
   .scroll-container {
     height: 100%;
@@ -76,6 +121,13 @@
     border-radius: var(--radius-2);
     background-color: var(--color-white);
     border: 1px solid var(--color-gray--4);
+
+    &.no-data {
+      background-size: auto 35%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-image: url(./images/empty.png);
+    }
 
     .scroll-container {
       top: 0;
@@ -101,10 +153,11 @@
         color: var(--color-gray-4);
 
         td, th {
-          padding: 0 .5em;
+          padding: .5em .5em;
         }
 
         th {
+          font-weight: normal;
           text-align: justify;
 
           &.sortable {
@@ -143,44 +196,12 @@
         }
 
         thead, tfoot {
-          height: 3em;
+          height: 3.5em;
           position: sticky;
+          background-color: var(--color-gray--2);
 
           tr {
             position: relative;
-
-            th:first-child {
-            }
-          }
-
-          th {
-            background-color: var(--color-gray--2);
-          }
-
-          &::before {
-            left: 0;
-            right: 0;
-            z-index: 1;
-            content: '';
-            height: 1px;
-            position: absolute;
-            background-color: var(--color-gray--4);
-          }
-        }
-
-        thead {
-          top: 0;
-
-          &::before {
-            bottom: 0;
-          }
-        }
-
-        tfoot {
-          bottom: 0;
-
-          &::before {
-            top: 0;
           }
         }
 
@@ -235,6 +256,7 @@
     .current-page-report {
       text-align: end;
       white-space: nowrap;
+      color: var(--color-gray-8);
     }
 
     .page-numbers {

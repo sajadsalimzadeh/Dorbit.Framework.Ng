@@ -1,19 +1,24 @@
 import {
   AfterViewInit,
   Component,
-  ContentChildren, EventEmitter, HostBinding, HostListener, Injector,
+  ContentChildren,
+  HostBinding,
+  HostListener,
+  Injector,
   Input,
   OnChanges, OnDestroy,
-  OnInit, Output,
+  OnInit,
   QueryList,
   SimpleChanges, TemplateRef
 } from "@angular/core";
 import {TemplateDirective} from "../../directives";
-import {DataTableConfig, FilterFunc, SortFunc} from "./models";
+import {TableConfig, FilterFunc, SortFunc, TableData} from "./models";
 import {FormControl} from "@angular/forms";
 import {TableService} from "./services/table.service";
 import {OverlayService} from "../overlay/overlay.service";
 import {BaseComponent} from "../base.component";
+import {LoadingService} from "../../services";
+import {OperationKey} from "./components/filter/filter.component";
 
 @Component({
   selector: 'd-table',
@@ -25,13 +30,8 @@ import {BaseComponent} from "../base.component";
 })
 export class TableComponent extends BaseComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 
-  @Input() items: any[] = [];
-  @Input() totalCount: number = 0;
-  @Input() config: DataTableConfig = new DataTableConfig();
-
-  @Output() onRowClick = new EventEmitter<any>();
-  @Output() onRowSelect = new EventEmitter<any>();
-  @Output() onRowDeSelect = new EventEmitter<any>();
+  @Input() data: TableData = {totalCount: 0, items: []};
+  @Input() config: TableConfig = new TableConfig();
 
   @HostBinding('class.table-striped')
   get isTableStriped() {
@@ -80,6 +80,11 @@ export class TableComponent extends BaseComponent implements OnInit, OnChanges, 
     this.summaryTemplate = value.find(x => x.includesName('summary'))?.template;
   }
 
+  tableService: TableService;
+  overlayService: OverlayService;
+  loadingService: LoadingService;
+
+  loading: boolean = false;
   renderedItems: any[] = [];
   pageNumbers: number[] = [];
   pageRowCountControl = new FormControl(10);
@@ -91,22 +96,26 @@ export class TableComponent extends BaseComponent implements OnInit, OnChanges, 
   dataScrollBarWidth: number = 20;
   dataTableScrollThumbStyles: any = {};
 
-  constructor(injector: Injector, private tableService: TableService, overlayService: OverlayService) {
+
+  constructor(injector: Injector) {
     super(injector);
-    tableService.dataTable = this;
-    overlayService.singleton = false;
+    this.tableService = injector.get(TableService);
+    this.overlayService = injector.get(OverlayService);
+    this.loadingService = injector.get(LoadingService);
+
+    this.tableService.dataTable = this;
+    this.overlayService.singleton = false;
   }
 
   override ngOnInit(): void {
-    this.pageRowCountControl.valueChanges.subscribe(e => this.render());
     this.pageRowCountControl.setValue(this.config.paging.size);
 
-    this.onRowClick.subscribe(item => {
+    this.subscription.add(this.config.onRowClick.subscribe(item => {
       if (this.config.selecting.enable) {
         const clearSelectedRow = () => {
-          this.items.filter(x => x[this.config.selecting.key] && x != item).forEach(x => {
+          this.data.items.filter(x => x[this.config.selecting.key] && x != item).forEach(x => {
             x[this.config.selecting.key] = false;
-            this.onRowDeSelect.emit(x);
+            this.config.onRowDeSelect.next(x);
           });
         };
 
@@ -125,11 +134,25 @@ export class TableComponent extends BaseComponent implements OnInit, OnChanges, 
           this.toggleSelectItem(item);
         }
       }
-    });
+    }));
 
-    this.tableService.onFilterChange.subscribe(() => {
+    this.subscription.add(this.loadingService.onLoading.subscribe(e => {
+      Promise.resolve().then(() => this.loading = e);
+    }));
+
+    this.subscription.add(this.tableService.onFilterChange.subscribe(() => {
       this.render();
-    });
+      this.config.onFilterChange.next();
+    }));
+
+    this.subscription.add(this.tableService.onSortChange.subscribe(() => {
+      this.config.onSortChange.next();
+    }));
+
+    this.subscription.add(this.config.onFilterChange.subscribe(() => this.stateChange()));
+    this.subscription.add(this.config.onSortChange.subscribe(() => this.stateChange()));
+    this.subscription.add(this.config.onPageChange.subscribe(() => this.stateChange()));
+    this.subscription.add(this.config.onPageSizeChange.subscribe(() => this.stateChange()));
 
     if (this.config.sorting.field) {
       setTimeout(() => {
@@ -141,8 +164,32 @@ export class TableComponent extends BaseComponent implements OnInit, OnChanges, 
     }
   }
 
+  private stateChange() {
+    this.config.onStateChange.next({
+      page: this.config.paging.page,
+      pageSize: this.config.paging.size,
+      sortField: (typeof this.config.sorting.field === 'string' ? this.config.sorting.field : null) as string,
+      sortDir: this.config.sorting.dir,
+      filters: this.tableService.filters.map(x => {
+        return {
+          field: x.field as string,
+          operation: x.operationControl.value as OperationKey,
+          value: x.valueControl.value as any
+        };
+      })
+    })
+  }
+
   override ngOnChanges(changes: SimpleChanges): void {
-    if (this.totalCount == 0) this.totalCount = this.items.length;
+    if (!this.data) {
+      this.data = {
+        totalCount: 0,
+        items: []
+      }
+    }
+    if (!this.data.totalCount) {
+      this.data.totalCount = this.data.items.length;
+    }
     this.render();
   }
 
@@ -157,7 +204,7 @@ export class TableComponent extends BaseComponent implements OnInit, OnChanges, 
   selectItem(item: any) {
     const isRowSelected = item[this.config.selecting.key];
     if (!isRowSelected) {
-      this.onRowSelect.emit(item);
+      this.config.onRowSelect.next(item);
     }
     item[this.config.selecting.key] = true;
   }
@@ -166,28 +213,27 @@ export class TableComponent extends BaseComponent implements OnInit, OnChanges, 
     const isRowSelected = item[this.config.selecting.key];
     item[this.config.selecting.key] = !item[this.config.selecting.key];
     if (isRowSelected) {
-      this.onRowDeSelect.emit(item);
+      this.config.onRowDeSelect.next(item);
     } else {
-      this.onRowSelect.emit(item);
+      this.config.onRowSelect.next(item);
     }
   }
 
   override render() {
     super.render();
 
-    this.renderedItems = this.items.filter(() => true);
-    this.renderedItems = this.filterItems(this.renderedItems);
-    this.renderedItems = this.sortItems(this.renderedItems);
-    this.renderedItems = this.pagingItems(this.renderedItems);
+    this.renderedItems = this.data.items.filter(() => true);
 
-    setTimeout(() => {
-      this.sizingHeaderAndFooters();
-    }, 10);
+    if(!this.config.lazyLoading) {
+      this.renderedItems = this.filterItems(this.renderedItems);
+      this.renderedItems = this.sortItems(this.renderedItems);
+      this.renderedItems = this.pagingItems(this.renderedItems);
+    }
 
     const first = this.config.paging.page * this.config.paging.size + 1;
     const last = first + this.config.paging.size - 1;
     this.pageReportTemplate = this.config.paging.pageReportTemplate
-      .replace('{totalRecords}', this.totalCount.toString())
+      .replace('{totalRecords}', this.data.totalCount.toString())
       .replace('{first}', first.toString())
       .replace('{last}', last.toString());
   }
@@ -197,7 +243,7 @@ export class TableComponent extends BaseComponent implements OnInit, OnChanges, 
       let func: FilterFunc | undefined;
       if (x.operationControl?.value && x.valueControl.value && x.field) {
         let value = x.valueControl.value as any;
-        if(typeof value === 'string') value = value.toLowerCase();
+        if (typeof value === 'string') value = value.toLowerCase();
         if (x.comparator) {
           const comparator = x.comparator;
           func = (x) => {
@@ -258,34 +304,14 @@ export class TableComponent extends BaseComponent implements OnInit, OnChanges, 
     return items;
   }
 
-  sizingHeaderAndFooters() {
-    // const el = this.elementRef.nativeElement as HTMLElement;
-    //
-    // const dataEl = el.querySelector('.data') as HTMLElement;
-    //
-    // const dataTableEl = dataEl.querySelector('.data-table .scroll-container') as HTMLElement;
-    // this.dataScrollBarWidth = dataTableEl.offsetWidth - dataTableEl.clientWidth;
-    //
-    // const dataHeaderEl = dataEl.querySelector('.data-header') as HTMLElement;
-    // const dataFooterEl = dataEl.querySelector('.data-footer') as HTMLElement;
-    //
-    // dataHeaderEl.style.paddingInlineEnd = this.dataScrollBarWidth + 'px';
-    // dataFooterEl.style.paddingInlineEnd = this.dataScrollBarWidth + 'px';
-    //
-    // const header_ths = dataHeaderEl.querySelectorAll('thead:first-child>tr th');
-    // const footer_ths = dataFooterEl.querySelectorAll('tfoot:first-child>tr th');
-    // const data_tds = dataTableEl.querySelectorAll('.data-table tbody:first-child>tr td');
-    //
-    // data_tds.forEach((td, index) => {
-    //   const header_th = header_ths.item(index) as HTMLElement;
-    //   if (header_th) header_th.style.width = td.clientWidth + 1 + 'px';
-    //   const footer_th = footer_ths.item(index) as HTMLElement;
-    //   if (footer_th) footer_th.style.width = td.clientWidth + 1 + 'px';
-    // })
+  onPageSizeChange() {
+    this.config.onPageSizeChange.next();
+    this.render();
   }
 
-  onPageSelect(page: number) {
+  onPageChange(page: number) {
     this.config.paging.page = page;
+    this.config.onPageChange.next();
     this.render();
   }
 }

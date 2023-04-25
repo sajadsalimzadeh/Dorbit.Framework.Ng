@@ -1,8 +1,8 @@
 <div *ngIf="captionTemplate" class="caption">
   <ng-container *ngTemplateOutlet="captionTemplate; context: {}"></ng-container>
 </div>
-<div class="data">
-  <div class="data-table">
+<div class="data" [ngClass]="{loading: loading}">
+  <div class="data-table" [ngClass]="{'no-data': (data.totalCount == 0)}">
     <table>
       <thead *ngIf="headerTemplate">
       <ng-container *ngTemplateOutlet="headerTemplate; context: {}"></ng-container>
@@ -10,7 +10,7 @@
       <ng-container *ngFor="let item of renderedItems">
         <tbody *ngIf="bodyTemplate" class="item-box"
                [ngClass]="{selected: item[config.selecting.key]}"
-               (click)="onRowClick.emit(item)">
+               (click)="config.onRowClick.next(item)">
         <ng-container *ngTemplateOutlet="bodyTemplate; context: {$implicit: item}"></ng-container>
         </tbody>
         <tbody *ngIf="detailTemplate && item['rowExpanded']" class="item-detail-box">
@@ -43,12 +43,12 @@
       {{pageReportTemplate}}
     </div>
     <div class="page-numbers">
-      <d-paginator [size]="size" [page]="config.paging.page" [totalCount]="totalCount" [pageSize]="config.paging.size" (onSelect)="onPageSelect($event)"></d-paginator>
+      <d-paginator [size]="size" [page]="config.paging.page" [totalCount]="data.totalCount" [pageSize]="config.paging.size" (onChange)="onPageChange($event)"></d-paginator>
     </div>
     <div class="page-row-count page-numbers-around">
       <d-select [size]="size" [items]="config.paging.pageSizes"
                   [(ngModel)]="config.paging.size"
-                  (ngModelChange)="render()"
+                  (ngModelChange)="onPageSizeChange()"
                   class="limit-select"
                   name="pageRowCountControl">
       </d-select>
