@@ -2,9 +2,12 @@
   <ul [ngClass]="cls">
     <li *ngFor="let item of items" (click)="onItemClick(item, $event)" [ngClass]="{
     expanded: item.value[fields.expanded],
-    selected: item.value[fields.selected]
+    selected: item.value[fields.selected],
+    droppable: item.value.droppable
     }">
-      <div class="data-item">
+      <div class="data-item"
+           [draggable]="draggable" (dragover)="onDragOver(item, $event)"
+           (drag)="onItemDrag(item)" (drop)="onItemDrop(item)" (dragenter)="onDragEnter(item)">
         <div class="icon" [ngClass]="item.icon" (click)="onIconClick(item, $event)">
           <ng-container *ngIf="item.children?.length; else noChildrenIconTpl">
             <i *ngIf="item.value[fields.expanded]" class="open" [ngClass]="icons.collapse"></i>
@@ -14,7 +17,7 @@
             <i class="leaf" [ngClass]="icons.leaf"></i>
           </ng-template>
         </div>
-        <div class="prepend" *ngIf="prependTemplate">
+        <div class="prepend" *ngIf="prependTemplate" (click)="$event.stopPropagation()">
           <ng-container *ngTemplateOutlet="prependTemplate; context: {$implicit: item.value}"></ng-container>
         </div>
         <div class="content">
@@ -25,7 +28,7 @@
             {{item.value}}
           </ng-template>
         </div>
-        <div class="append" *ngIf="appendTemplate">
+        <div class="append" *ngIf="appendTemplate" (click)="$event.stopPropagation()">
           <ng-container *ngTemplateOutlet="appendTemplate; context: {$implicit: item.value}"></ng-container>
         </div>
       </div>

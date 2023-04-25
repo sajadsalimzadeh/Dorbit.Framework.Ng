@@ -1,7 +1,15 @@
-import {Component, ContentChildren, Input, OnChanges, QueryList, SimpleChanges, TemplateRef} from '@angular/core';
+import {
+  Component,
+  ContentChildren, EventEmitter, HostListener,
+  Input,
+  OnChanges,
+  Output,
+  QueryList,
+  SimpleChanges,
+  TemplateRef
+} from '@angular/core';
 import {BaseComponent} from "../base.component";
 import {TabTemplateDirective} from "../tab/directive/tab-template.directive";
-import {filter} from "rxjs";
 
 export interface TreeItem {
   key: any;
@@ -12,6 +20,11 @@ export interface TreeItem {
   parent?: TreeItem;
 }
 
+export interface DropEvent {
+  source: TreeItem;
+  destination: TreeItem;
+}
+
 @Component({
   selector: 'd-tree',
   templateUrl: './tree.component.html',
@@ -20,6 +33,7 @@ export interface TreeItem {
 export class TreeComponent extends BaseComponent implements OnChanges {
 
   @Input() items: any[] = [];
+  @Input() draggable: boolean = false;
   @Input() verticalLines: boolean = true;
   @Input() expansion: '' | 'multiple' | 'single' = 'multiple';
   @Input() selection: '' | 'single' | 'multiple' | 'single-leaf' | 'multiple-leaf'  = '';
@@ -35,6 +49,14 @@ export class TreeComponent extends BaseComponent implements OnChanges {
     leaf: 'far fa-file',
   }
 
+  @Output() onSelect = new EventEmitter<any>();
+  @Output() onDrop = new EventEmitter<DropEvent>();
+
+  @HostListener('window:dragend')
+  onWindowMouseUp() {
+    this.items.forEach(x => x.droppable = false);
+  }
+
   itemTemplate?: TemplateRef<any>;
   prependTemplate?: TemplateRef<any>;
   appendTemplate?: TemplateRef<any>;
@@ -45,15 +67,31 @@ export class TreeComponent extends BaseComponent implements OnChanges {
     this.appendTemplate = value.find(x => x.includesName("append"))?.template;
   }
 
+  dragItem?: TreeItem;
   roots: TreeItem[] = [];
   optimizedItems: TreeItem[] = [];
 
   override ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
-
-    if(changes['items']) {
-      this.optimizedItems = this.getOptimizedItems();
+    if('items' in changes) {
+      this.optimizeItems();
     }
+  }
+
+  optimizeItems() {
+    this.optimizedItems = [];
+    this.items?.forEach(item => {
+      this.optimizedItems.push({
+        key: item[this.fields.key],
+        value: item,
+        parentKey: item[this.fields.parent],
+      });
+    });
+    this.optimizedItems.forEach(x => {
+      x.parent = this.optimizedItems.find(y => y.key == x.parentKey);
+      x.children = this.optimizedItems.filter(y => y.parentKey == x.key);
+    })
+    this.render();
   }
 
   override render() {
@@ -62,22 +100,6 @@ export class TreeComponent extends BaseComponent implements OnChanges {
     this.classes['vertical-lines'] = this.verticalLines;
 
     this.roots = this.optimizedItems.filter(x => !x.parent);
-  }
-
-  private getOptimizedItems(): TreeItem[] {
-    const result: TreeItem[] = [];
-    this.items.forEach(item => {
-      result.push({
-        key: item[this.fields.key],
-        value: item,
-        parentKey: item[this.fields.parent],
-      });
-    });
-    result.forEach(x => {
-      x.parent = result.find(y => y.key == x.parentKey);
-      x.children = result.filter(y => y.parentKey == x.key);
-    })
-    return result;
   }
 
   onItemClick(item: TreeItem, e: MouseEvent) {
@@ -116,5 +138,32 @@ export class TreeComponent extends BaseComponent implements OnChanges {
         item.value[this.fields.selected] = state;
       }
     }
+  }
+
+  onDragOver(item: TreeItem, e: Event) {
+    let tmpItem: any = item;
+    while(tmpItem) {
+      if(tmpItem == this.dragItem) return;
+      tmpItem = tmpItem.parent;
+    }
+    e.preventDefault();
+  }
+
+  onItemDrag(item: TreeItem) {
+    this.dragItem = item;
+  }
+
+  onItemDrop(item: TreeItem) {
+    if(this.dragItem) {
+      this.onDrop.emit({
+        source: this.dragItem,
+        destination: item
+      });
+    }
+  }
+
+  onDragEnter(item: TreeItem) {
+    this.items.forEach(x => x.droppable = false);
+    item.value.droppable = true;
   }
 }
