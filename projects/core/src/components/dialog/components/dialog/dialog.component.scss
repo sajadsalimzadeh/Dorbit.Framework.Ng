@@ -2,7 +2,7 @@
 $animation: 300ms ease;
 
 :host {
-  z-index: 10000000000;
+  transition: opacity 300ms ease;
 
   &.middle-center .dialog,
   &.top-start .dialog,
@@ -24,6 +24,7 @@ $animation: 300ms ease;
   &.bottom-center .dialog {animation: bottom-in $animation;}
 
   &.closing {
+    opacity: 0;
 
     &.middle-center .dialog,
     &.top-start .dialog,

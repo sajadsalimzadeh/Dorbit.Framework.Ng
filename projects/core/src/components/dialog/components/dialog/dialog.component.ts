@@ -1,8 +1,9 @@
-import {Component, ComponentRef, HostListener, OnInit, TemplateRef} from '@angular/core';
-import {BaseComponent} from "../base.component";
-import {Positions} from "../../types";
+import {Component, ComponentRef, EventEmitter, HostListener, OnInit, Output, TemplateRef} from '@angular/core';
+import {BaseComponent} from "../../../base.component";
+import {Positions} from "../../../../types";
 
 export interface DialogOptions {
+  container?: string;
   template: TemplateRef<any>;
 
   width?: string;
@@ -39,6 +40,8 @@ const minimizeSpaces: DialogComponent[] = [];
   styleUrls: ['./dialog.component.scss']
 })
 export class DialogComponent extends BaseComponent implements OnInit, DialogOptions, DialogContext {
+  @Output() onClose = new EventEmitter<void>();
+
   componentRef!: ComponentRef<DialogComponent>;
 
   template!: TemplateRef<any>;
@@ -69,7 +72,14 @@ export class DialogComponent extends BaseComponent implements OnInit, DialogOpti
 
   @HostListener('click', ['$event'])
   onClick(e: MouseEvent) {
-    if (this.maskClosable) {
+    if (this.maskClosable && e.target == this.elementRef.nativeElement) {
+      this.close();
+    }
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  onWindowKeyDown(e: KeyboardEvent) {
+    if(e.key == 'Escape') {
       this.close();
     }
   }
@@ -89,10 +99,6 @@ export class DialogComponent extends BaseComponent implements OnInit, DialogOpti
       minimizeSpaces.splice(minimizeIndex, 1);
       minimizeSpaces.forEach(x => x.render());
     }
-  }
-
-  onDialogClick(e: MouseEvent) {
-    e.stopPropagation();
   }
 
   override render() {
@@ -129,10 +135,14 @@ export class DialogComponent extends BaseComponent implements OnInit, DialogOpti
 
   close() {
     if (this.isMinimize) {
-      this.componentRef.destroy()
+      this.componentRef.destroy();
+      this.onClose.emit();
     } else {
       this.isClosing = true;
-      setTimeout(() => this.componentRef.destroy(), this.closeDuration);
+      setTimeout(() => {
+        this.componentRef.destroy();
+        this.onClose.emit();
+      }, this.closeDuration);
       this.render();
     }
   }
