@@ -2,20 +2,20 @@
 <hr>
 <app-card header="Sizes" class="mt-6" component="paginator">
   <div class="flex-column flex-gap-4 py-3">
-    <d-paginator size="xs" [page]="page" [totalCount]="100" (onSelect)="page = $event"></d-paginator>
-    <d-paginator size="sm" [page]="page" [totalCount]="100" (onSelect)="page = $event"></d-paginator>
-    <d-paginator size="md" [page]="page" [totalCount]="100" (onSelect)="page = $event"></d-paginator>
-    <d-paginator size="lg" [page]="page" [totalCount]="100" (onSelect)="page = $event"></d-paginator>
-    <d-paginator size="xl" [page]="page" [totalCount]="100" (onSelect)="page = $event"></d-paginator>
+    <d-paginator size="xs" [page]="page" [totalCount]="100" (onChange)="page = $event"></d-paginator>
+    <d-paginator size="sm" [page]="page" [totalCount]="100" (onChange)="page = $event"></d-paginator>
+    <d-paginator size="md" [page]="page" [totalCount]="100" (onChange)="page = $event"></d-paginator>
+    <d-paginator size="lg" [page]="page" [totalCount]="100" (onChange)="page = $event"></d-paginator>
+    <d-paginator size="xl" [page]="page" [totalCount]="100" (onChange)="page = $event"></d-paginator>
   </div>
 </app-card>
 <app-card header="Colors" class="mt-6" component="paginator">
   <div class="flex-column flex-gap-4 py-3">
-    <d-paginator [page]="page" [totalCount]="100" (onSelect)="page = $event" color="primary"></d-paginator>
-    <d-paginator [page]="page" [totalCount]="100" (onSelect)="page = $event" color="secondary"></d-paginator>
-    <d-paginator [page]="page" [totalCount]="100" (onSelect)="page = $event" color="success"></d-paginator>
-    <d-paginator [page]="page" [totalCount]="100" (onSelect)="page = $event" color="warning"></d-paginator>
-    <d-paginator [page]="page" [totalCount]="100" (onSelect)="page = $event" color="danger"></d-paginator>
-    <d-paginator [page]="page" [totalCount]="100" (onSelect)="page = $event" color="link"></d-paginator>
+    <d-paginator [page]="page" [totalCount]="100" (onChange)="page = $event" color="primary"></d-paginator>
+    <d-paginator [page]="page" [totalCount]="100" (onChange)="page = $event" color="secondary"></d-paginator>
+    <d-paginator [page]="page" [totalCount]="100" (onChange)="page = $event" color="success"></d-paginator>
+    <d-paginator [page]="page" [totalCount]="100" (onChange)="page = $event" color="warning"></d-paginator>
+    <d-paginator [page]="page" [totalCount]="100" (onChange)="page = $event" color="danger"></d-paginator>
+    <d-paginator [page]="page" [totalCount]="100" (onChange)="page = $event" color="link"></d-paginator>
   </div>
 </app-card>

@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import mockData from "../mock-data";
-import {DataTableConfig} from "projects/core/src/components/table/models";
+import {getTableData} from "../index.component";
 
 @Component({
   selector: 'doc-table-lazy-load',
@@ -8,7 +7,7 @@ import {DataTableConfig} from "projects/core/src/components/table/models";
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent implements OnInit {
-  items: any[] = mockData.slice(0, 10);
+  data = getTableData();
   filenames = ['index.component.html', 'index.component.ts'];
 
   ngOnInit(): void {

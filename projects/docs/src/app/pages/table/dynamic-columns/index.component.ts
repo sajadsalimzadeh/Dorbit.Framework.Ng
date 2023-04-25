@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import mockData from "../mock-data";
+import {getTableData} from "../index.component";
 
 @Component({
   selector: 'doc-data-table',
@@ -7,7 +7,7 @@ import mockData from "../mock-data";
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent {
-  items: any[] = mockData.slice(0, 10);
+  data = getTableData();
   filenames = ['index.component.html', 'index.component.ts'];
   columns = [
     {title: 'Id', field: 'id'},

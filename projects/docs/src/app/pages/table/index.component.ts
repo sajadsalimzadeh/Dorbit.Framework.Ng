@@ -1,6 +1,14 @@
 import {Component} from '@angular/core';
 import mockData from "./mock-data";
-import {DataTableConfig} from "projects/core/src/components/table/models";
+import {TableData, TableConfig} from "projects/core/src/components/table/models";
+
+export function getTableData(from = 0, to = 10): TableData {
+  const items = mockData.slice(from, to);
+  return {
+    items: items,
+    totalCount: items.length,
+  }
+}
 
 @Component({
   selector: 'doc-data-table',
@@ -8,9 +16,9 @@ import {DataTableConfig} from "projects/core/src/components/table/models";
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent {
-  items: any[] = mockData.slice(0, 10);
+  data = getTableData();
+  config = new TableConfig();
   filenames = ['index.component.html', 'index.component.ts'];
-  config = new DataTableConfig();
 
   constructor() {
   }
@@ -20,10 +28,5 @@ export class IndexComponent {
     this.config.selecting.mode = 'multiple';
     this.config.sorting.field = 'id';
     // this.config.settings.selectMultipleWithMetaKey = true;
-    this.load();
-  }
-
-  load() {
-    this.items = mockData;
   }
 }

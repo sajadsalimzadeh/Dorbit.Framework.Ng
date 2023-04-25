@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import mockData from "../mock-data";
-import {DataTableConfig} from "projects/core/src/components/table/models";
+import {TableConfig} from "projects/core/src/components/table/models";
+import {getTableData} from "../index.component";
 
 @Component({
   selector: 'doc-table-row-selection',
@@ -8,9 +8,9 @@ import {DataTableConfig} from "projects/core/src/components/table/models";
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent implements OnInit {
-  items: any[] = mockData.slice(0, 10);
+  data = getTableData();
+  config = new TableConfig();
   filenames = ['index.component.html', 'index.component.ts'];
-  config = new DataTableConfig();
 
   ngOnInit(): void {
     this.config.selecting.enable = true;
