@@ -1,12 +1,12 @@
 import {EventEmitter, Inject, Injectable, InjectionToken, Optional} from "@angular/core";
-import {Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import {TimeSpan} from "../models/time-span";
 
 export const CACHE_PREFIX = new InjectionToken<string>('');
 export const CACHE_STORAGE = new InjectionToken<Storage>('');
 export const CACHE_DEFAULT_LIFETIME = new InjectionToken<TimeSpan>('');
 
-const sameKeyEvent: { [key: string]: EventEmitter<any> } = {}
+const sameKeyEvent: { [key: string]: Subject<any> } = {}
 
 interface CacheItem<T> {
   expireTime: number;
@@ -62,22 +62,22 @@ export class CacheService {
         ob.next(result);
         ob.complete();
       } else if (sameKeyEvent[key]) {
-        sameKeyEvent[key].subscribe(res => {
-          ob.next(res);
-          ob.complete();
-        })
+        sameKeyEvent[key].subscribe({
+          next: res => ob.next(res),
+          error: e => ob.error(e),
+          complete: () => ob.complete(),
+        });
       } else {
         sameKeyEvent[key] = new EventEmitter();
         action.subscribe({
           next: res => {
-            sameKeyEvent[key].emit(res);
+            sameKeyEvent[key].next(res);
             delete sameKeyEvent[key];
             this.set(key, res, lifetime);
             ob.next(res);
-            ob.complete();
           },
-          error: ob.error,
-          complete: ob.complete
+          error: e => ob.error(e),
+          complete: () => ob.complete()
         });
       }
     })
