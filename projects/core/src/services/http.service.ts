@@ -11,6 +11,7 @@ export abstract class HttpService {
   protected http: CustomHttpClient;
   protected baseUrl: string;
   protected cacheService: CacheService;
+  protected repository?: string;
 
   constructor(protected injector: Injector) {
     const handler = new CustomHttpHandler(

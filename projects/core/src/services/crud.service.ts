@@ -4,7 +4,6 @@ import {HttpService} from "./http.service";
 
 @Injectable({providedIn: 'root'})
 export abstract class CrudService<T = any> extends HttpService {
-  protected abstract repository: string;
 
   select(query?: ODataQueryOptions, own?: boolean) {
     if (!query) query = new ODataQueryOptions();
