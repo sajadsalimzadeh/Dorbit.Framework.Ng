@@ -80,7 +80,12 @@ export class TreeComponent extends BaseComponent implements OnChanges {
 
   optimizeItems() {
     this.optimizedItems = [];
-    this.items?.forEach(item => {
+    const items = (this.items ?? []).sort((x1,x2) => {
+      const key1 = x1[this.fields.key];
+      const key2 = x2[this.fields.key];
+      return (key2 < key1 ? 1 : (key2 > key1 ? -1 : 0));
+    });
+    items.forEach(item => {
       this.optimizedItems.push({
         key: item[this.fields.key],
         value: item,

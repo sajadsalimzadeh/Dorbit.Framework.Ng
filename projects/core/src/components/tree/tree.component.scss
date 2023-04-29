@@ -1,17 +1,18 @@
 :host {
   padding: .5em;
   display: block;
+  color: var(--color-component);
   border: 1px solid var(--color-gray--4);
 
   &.vertical-lines {
     ul ul::before {
-      content: '';
-      position: absolute;
       top: 0;
       bottom: 0;
+      content: '';
       width: .05em;
-      margin-inline-start: -1em;
-      background-color: var(--color-gray--7);
+      position: absolute;
+      margin-inline-start: -.5em;
+      background-color: var(--color-gray--4);
     }
   }
 }
@@ -28,7 +29,7 @@ ul {
   }
 
   ul {
-    padding-inline-start: 2em;
+    padding-inline-start: 1.5em;
   }
 
   li {
@@ -45,6 +46,7 @@ ul {
       position: relative;
       align-items: stretch;
       justify-content: stretch;
+      border-bottom: 1px solid var(--color-gray--2);
 
       &:hover {
         background-color: var(--color-gray--2);
