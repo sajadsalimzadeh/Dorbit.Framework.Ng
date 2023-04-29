@@ -4,7 +4,14 @@
   </div>
   <div class="control-box-container">
     <ng-content></ng-content>
-    <label class="label-box" *ngIf="label" [ngClass]="labelState">{{label}}</label>
+    <label class="label-box" *ngIf="label || labelTemplate" [ngClass]="labelMode">
+      <ng-container *ngIf="labelTemplate; else elseLabelTpl">
+        <ng-container *ngTemplateOutlet="labelTemplate; context: {label: label}"></ng-container>
+      </ng-container>
+      <ng-template #elseLabelTpl>
+        {{label}}
+      </ng-template>
+    </label>
   </div>
   <div class="side-box end-box" *ngIf="endTemplate">
     <ng-container *ngTemplateOutlet="endTemplate"></ng-container>

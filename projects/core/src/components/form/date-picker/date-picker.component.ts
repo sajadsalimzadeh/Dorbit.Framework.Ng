@@ -37,7 +37,7 @@ interface DateValue {
   providers: [createControlValueAccessor(DatePickerComponent)]
 })
 export class DatePickerComponent extends AbstractFormControl<any> {
-  @Input() locale: 'en' | 'fa' = 'en';
+  @Input() type: 'gregorian' | 'jalali' = 'gregorian';
   @Input() format = 'YYYY/MM/DD';
 
   @Output() onLeave = new EventEmitter<any>();
@@ -49,6 +49,10 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   @HostListener('window:click', ['$event'])
   onWindowClick(e: MouseEvent) {
     this.close();
+  }
+
+  get locale() {
+    return this.type == 'jalali' ? 'fa' : 'en';
   }
 
   override onClick(e: MouseEvent) {
@@ -87,18 +91,18 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   }
 
   createDate(inp?: string): { value: Moment, isValid: boolean } {
-    moment.locale(this.locale, {useGregorianParser: this.locale == 'fa'});
+    moment.locale(this.locale, {useGregorianParser: this.type == 'jalali'});
     let result: any = {isValid: true};
     if (inp) {
       try {
-        const m = moment.from(inp, this.locale, this.format);
+        const m = moment.from(inp, this.type, this.format);
         if (m.isValid()) result.value = m;
         else result.isValid = false;
       } catch {
         result.isValid = false;
       }
     } else result.isValid = false;
-    if (!result.value) result.value = moment(new Date(), this.locale, this.format);
+    if (!result.value) result.value = moment(new Date(), this.type, this.format);
     return result;
   }
 
@@ -122,8 +126,8 @@ export class DatePickerComponent extends AbstractFormControl<any> {
       monthMoment.add(1, 'month');
     }
 
-    this.pickerClasses['dir-ltr'] = this.locale != 'fa';
-    this.pickerClasses['dir-rtl'] = this.locale == 'fa';
+    this.pickerClasses['dir-ltr'] = this.type != 'jalali';
+    this.pickerClasses['dir-rtl'] = this.type == 'jalali';
     this.pickerClasses[this.size] = true;
 
     this.render();
@@ -224,7 +228,7 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   }
 
   selectDate(date: DateValue) {
-    if (this.locale == 'fa') {
+    if (this.type == 'jalali') {
       this.selectedDate = this.createDate().value;
       this.selectedDate.jDate(date.day);
       this.selectedDate.jMonth(date.month);
@@ -241,14 +245,14 @@ export class DatePickerComponent extends AbstractFormControl<any> {
 
   selectMonth(month: number) {
     this.view = 'calendar';
-    if (this.locale == 'fa') this.selectedDate.jMonth(month);
+    if (this.type == 'jalali') this.selectedDate.jMonth(month);
     else this.selectedDate.month(month);
     this.render();
   }
 
   selectYear(year: number) {
     this.view = 'month';
-    if (this.locale == 'fa') this.selectedDate.jYear(year);
+    if (this.type == 'jalali') this.selectedDate.jYear(year);
     else this.selectedDate.year(year);
     this.render();
   }

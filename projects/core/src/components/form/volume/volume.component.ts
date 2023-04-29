@@ -34,12 +34,12 @@ export class VolumeComponent extends AbstractFormControl<number | VolumeRange> i
   private onMouseMove?: (e: MouseEvent) => void;
 
   private getRange(): VolumeRange {
-    if (typeof this.formControl.value === 'object') {
+    if (typeof this.formControl?.value === 'object') {
       return this.formControl.value;
     }
     return {
       start: this.min,
-      end: this.formControl.value
+      end: this.formControl?.value
     }
   }
 
@@ -107,13 +107,13 @@ export class VolumeComponent extends AbstractFormControl<number | VolumeRange> i
       if (value < this.min) value = this.min;
       if (value > this.max) value = this.max;
       if (this.mode === 'single') {
-        this.formControl.setValue(value);
+        this.formControl?.setValue(value);
       } else {
         const range = this.getRange();
         if (type == 'start' && value > range['end']) value = range['end'];
         if (type == 'end' && value < range['start']) value = range['start'];
         range[type] = value;
-        this.formControl.setValue({...range});
+        this.formControl?.setValue({...range});
       }
     }
     const firstValue = getValue();

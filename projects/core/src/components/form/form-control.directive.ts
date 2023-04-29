@@ -9,7 +9,14 @@ import {
   SimpleChanges, TemplateRef,
   Type, ViewChild
 } from "@angular/core";
-import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, NgControl} from "@angular/forms";
+import {
+  AbstractControl,
+  ControlContainer,
+  ControlValueAccessor,
+  FormControl, FormControlDirective, FormGroupDirective,
+  NG_VALUE_ACCESSOR,
+  NgControl
+} from "@angular/forms";
 import {TemplateDirective} from "../../directives/template/template.directive";
 import {FormControlService} from "./form-control.service";
 import {BaseComponent} from "../base.component";
@@ -33,6 +40,8 @@ let tabIndex = 0;
 export abstract class AbstractFormControl<T> extends BaseComponent implements ControlValueAccessor, OnInit, OnChanges, OnDestroy {
   @Input() placeholder: string = '';
   @Input() @HostBinding('tabIndex') tabIndex: number | undefined = tabIndex++;
+  @Input() formControl: FormControl<any> | any;
+  @Input() formControlName?: string;
 
   @Output() onChange = new EventEmitter<T>();
 
@@ -62,15 +71,13 @@ export abstract class AbstractFormControl<T> extends BaseComponent implements Co
     this.validationsTemplate = value.find(x => x.includesName('validation'))?.template;
   }
 
-  focused: boolean = false;
-
-  formControl!: FormControl<T>;
-  protected ngControl?: NgControl | null;
-
-  protected _onChange: any;
   protected _touch: any;
-
+  protected _onChange: any;
+  protected ngControl?: NgControl | null;
+  protected controlContainer?: ControlContainer | null;
   protected formControlService: FormControlService | null;
+
+  focused: boolean = false;
 
   constructor(injector: Injector) {
     super(injector);
@@ -92,13 +99,20 @@ export abstract class AbstractFormControl<T> extends BaseComponent implements Co
 
   init() {
     this.ngControl = this.injector.get(NgControl, undefined, {optional: true});
-    const fcs = this.formControlService;
-    this.formControl = (this.ngControl?.control ?? fcs?.formControl ?? new FormControl) as FormControl;
-    this.size = (fcs?.size ?? this.size);
+    this.controlContainer = this.injector.get(ControlContainer, undefined, {optional: true});
+
+    if (this.formControlName && this.controlContainer instanceof FormGroupDirective) {
+      this.formControl = this.controlContainer.form.get(this.formControlName) as FormControl;
+    }
+    if (!this.formControl) this.formControl = this.ngControl?.control as FormControl;
+    if (!this.formControl && this.formControlService?.formControl) this.formControl = this.formControlService.formControl;
+    if (!this.formControl) this.formControl = new FormControl();
+
+    this.size = this.formControlService?.size ?? this.size;
 
     //============== Listener ===============\\
     let value: any;
-    this.subscription.add(this.formControl.valueChanges.subscribe((e) => {
+    this.subscription.add(this.formControl.valueChanges.subscribe((e: any) => {
       if (value === e) return;
       value = e;
       this.render();
@@ -125,8 +139,8 @@ export abstract class AbstractFormControl<T> extends BaseComponent implements Co
   }
 
   writeValue(value: T): void {
-    if (this.formControl.value !== value) {
-      this.formControl.setValue(value);
+    if (this.formControl?.value !== value) {
+      this.formControl?.setValue(value);
     }
   }
 

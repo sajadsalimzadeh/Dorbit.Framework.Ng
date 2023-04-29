@@ -19,7 +19,7 @@ import {FormControl} from "@angular/forms";
 })
 export class ControlGroupComponent extends AbstractFormControl<any> {
   @Input() label: string = '';
-  @Input() labelState: 'floating' | 'fix' = 'fix';
+  @Input() labelMode: 'floating' | 'fix' = 'fix';
   @Input() hint: string = '';
 
   controlEl!: ElementRef<HTMLInputElement>;
@@ -27,15 +27,17 @@ export class ControlGroupComponent extends AbstractFormControl<any> {
   errors: (ValidationError | any)[] = [];
   startTemplate?: TemplateRef<any>;
   endTemplate?: TemplateRef<any>;
-
-  override onFocus(e: FocusEvent) {
-    super.onFocus(e);
-    e.stopPropagation();
-  }
+  labelTemplate?: TemplateRef<any>;
 
   @ContentChildren(TemplateDirective) set templates(value: QueryList<TemplateDirective>) {
     this.startTemplate = value.find(x => x.includesName('start'))?.template;
     this.endTemplate = value.find(x => x.includesName('end'))?.template;
+    this.labelTemplate = value.find(x => x.includesName('label'))?.template;
+  }
+
+  override onFocus(e: FocusEvent) {
+    super.onFocus(e);
+    e.stopPropagation();
   }
 
   constructor(injector: Injector, private controlGroupService: ControlGroupService) {
@@ -90,7 +92,7 @@ export class ControlGroupComponent extends AbstractFormControl<any> {
     }
 
     this.classes['float-label'] = (
-      this.labelState == 'floating' &&
+      this.labelMode == 'floating' &&
       (!this.focused && !this.formControl.value && this.formControl.value !== false)
     );
     this.classes['has-below-box'] = true;

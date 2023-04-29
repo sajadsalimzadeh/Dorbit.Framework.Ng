@@ -27,13 +27,12 @@
         </div>
       </div>
       <div class="today-button" (click)="selectDate(todayValue)">
-        {{(locale == 'fa' ?  'امروز' : 'Today')}}
+        {{(type == 'jalali' ?  'امروز' : 'Today')}}
       </div>
     </div>
     <div class="month-picker" [ngClass]="{show: (view == 'month')}">
-      <div class="month" *ngFor="let month of months;let index = index" [ngClass]="{
-    active: (selectedValue.month == index)
-  }" (click)="selectMonth(index)">
+      <div class="month" *ngFor="let month of months;let index = index"
+           [ngClass]="{active: (selectedValue.month == index)}" (click)="selectMonth(index)">
         {{month}}
       </div>
     </div>

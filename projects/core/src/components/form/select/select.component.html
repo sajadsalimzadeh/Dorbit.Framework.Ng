@@ -37,7 +37,14 @@
     </ng-template>
   </div>
   <div class="control-container">
-    <div class="arrow"></div>
+    <ng-container *ngIf="loading; else arrowTpl">
+      <div class="loading">
+        <i class=" far fa-loader"></i>
+      </div>
+    </ng-container>
+    <ng-template #arrowTpl>
+      <div class="arrow"></div>
+    </ng-template>
   </div>
 </div>
 <ng-template #itemsTpl>

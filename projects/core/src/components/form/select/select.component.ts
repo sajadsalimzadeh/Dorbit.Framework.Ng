@@ -1,8 +1,8 @@
 import {
   Component,
-  ContentChildren, ElementRef, HostBinding,
+  ContentChildren, ElementRef, EventEmitter, HostBinding,
   HostListener, Injector,
-  Input,
+  Input, Output,
   QueryList,
   SimpleChanges, TemplateRef, ViewChild
 } from "@angular/core";
@@ -28,7 +28,11 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
   @Input() valueField: string | Func = 'value';
   @Input() textField: string | Func = 'text';
   @Input() searchPlaceHolder: string = 'Search ....';
+  @Input() isLazySearch: boolean = false;
+  @Input() loading: boolean = false;
   @Input() comparator = (item: any, value: any) => this.getValue(item) == value;
+
+  @Output() onSearch = new EventEmitter<string | null>();
 
   @HostBinding('class.open') get isOpen() {
     return !!this.overlayRef;
@@ -64,10 +68,6 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
     super.onFocus(e);
   }
 
-  get selectedItems() {
-    return this.items.filter(x => x.selected);
-  }
-
   overlayRef?: OverlayRef;
 
   searchFormControl = new FormControl('');
@@ -76,6 +76,7 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
   hoveredItem: any;
 
   renderedItems: any[] = [];
+  selectedItems: any[] = [];
 
   constructor(injector: Injector, private overlayService: OverlayService) {
     super(injector);
@@ -94,13 +95,23 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
       this.search();
     }));
     this.search();
+
+    this.subscription.add(this.searchFormControl.valueChanges.subscribe(e => {
+      this.onSearch.emit(e);
+      this.updateItemsSelectedState();
+    }));
   }
 
   override ngOnChanges(changes: SimpleChanges): void {
     if ('items' in changes) {
-      this.items.filter(x => typeof x !== 'object').forEach((x, i) => {
-        this.items[i] = {text: x, value: x};
-      });
+      if (this.items) {
+        this.items.filter(x => typeof x !== 'object').forEach((x, i) => {
+          this.items[i] = {text: x, value: x};
+        });
+      } else {
+        this.items = [];
+      }
+      this.updateItemsSelectedState();
     }
     super.ngOnChanges(changes);
   }
@@ -138,11 +149,12 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
   }
 
   private updateItemsSelectedState() {
+    if (!this.formControl) return;
     const values = this.formControl.value;
     if (Array.isArray(values)) {
-      this.items.forEach(x => x.selected = values.findIndex(y => this.comparator(x, y)) > -1);
+      this.selectedItems = this.items.filter(x => values.findIndex(y => this.comparator(x, y)) > -1);
     } else {
-      this.items.forEach(x => x.selected = this.comparator(x, values));
+      this.selectedItems = this.items.filter(x => x.selected = this.comparator(x, values));
     }
   }
 
@@ -179,7 +191,7 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
 
   search() {
     this.renderedItems = this.items.filter(() => true);
-    if (this.searchFormControl.value) {
+    if (!this.isLazySearch && this.searchFormControl.value) {
       const value = this.searchFormControl.value.toString().toLowerCase();
       this.renderedItems = this.renderedItems.filter(x => {
         const text = this.getText(x);

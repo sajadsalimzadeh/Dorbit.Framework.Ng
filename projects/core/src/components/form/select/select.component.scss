@@ -18,6 +18,10 @@
   }
 }
 
+.loading {
+  animation: spin 200ms linear infinite;
+}
+
 .remove {
   color: var(--color-gray--10);
 }
@@ -125,4 +129,9 @@
       align-items: center;
     }
   }
+}
+
+@keyframes spin {
+  0%{transform: rotate(0deg)}
+  100%{transform: rotate(360deg)}
 }

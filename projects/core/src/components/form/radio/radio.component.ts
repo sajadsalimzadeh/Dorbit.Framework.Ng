@@ -7,7 +7,7 @@ import {AbstractFormControl, createControlValueAccessor} from "../form-control.d
   styleUrls: ['../control.scss', './radio.component.scss'],
   providers: [createControlValueAccessor(RadioComponent)]
 })
-export class RadioComponent extends AbstractFormControl<boolean | null> {
+export class RadioComponent extends AbstractFormControl<any> {
 
   @Input() value: any;
 

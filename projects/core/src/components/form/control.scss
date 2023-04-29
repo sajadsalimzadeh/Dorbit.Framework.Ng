@@ -64,8 +64,12 @@
   }
 
   .arrow {
-    justify-content: flex-end;
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
     color: var(--color-gray-9);
+    background-color: inherit;
 
     &::before {
       content: '▼';
