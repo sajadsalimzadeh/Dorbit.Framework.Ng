@@ -1,5 +1,5 @@
 import {
-  Component, ContentChildren, Input, QueryList,
+  Component, ContentChildren, EventEmitter, Input, Output, QueryList,
 } from '@angular/core';
 import {BaseComponent} from "../base.component";
 import {Orientation} from "../../types";
@@ -13,13 +13,15 @@ import {TabTemplateDirective} from "./directive/tab-template.directive";
 export class TabComponent extends BaseComponent {
   @Input() orientation: Orientation = 'horizontal';
 
+  @Output() onTabChange = new EventEmitter<string>();
+
   activeTab?: TabTemplateDirective;
   tabsTemplates: TabTemplateDirective[] = [];
 
   @ContentChildren(TabTemplateDirective) set templates(value: QueryList<TabTemplateDirective>) {
     this.tabsTemplates = value.filter(x => x.includesName('tab'));
-    if (this.tabsTemplates.length > 0) {
-      this.activeTab = this.tabsTemplates[0];
+    if (!this.activeTab && this.tabsTemplates.length > 0) {
+      this.setTab(this.tabsTemplates[0]);
     }
   }
 
@@ -27,5 +29,10 @@ export class TabComponent extends BaseComponent {
     super.render();
 
     this.classes[this.orientation] = true;
+  }
+
+  setTab(tab: TabTemplateDirective) {
+    this.onTabChange.emit(tab.key);
+    this.activeTab = tab;
   }
 }

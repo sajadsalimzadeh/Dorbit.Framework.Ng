@@ -1,5 +1,5 @@
 <ul class="tab-list">
-  <li *ngFor="let tab of tabsTemplates" [ngClass]="{active: tab == activeTab}" (click)="activeTab = tab">
+  <li *ngFor="let tab of tabsTemplates" [ngClass]="{active: tab == activeTab}" (click)="setTab(tab)">
     <i *ngIf="tab.icon" [ngClass]="tab.icon"></i>
     <span>{{tab.header}}</span>
   </li>
@@ -7,7 +7,6 @@
 <div class="tab-container">
   <ng-container *ngIf="activeTab">
     <ng-container *ngTemplateOutlet="activeTab.template; context: {$implicit: activeTab}">
-
     </ng-container>
   </ng-container>
 </div>
