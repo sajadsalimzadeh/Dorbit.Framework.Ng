@@ -6,6 +6,7 @@
     <ng-template #elseTpl>
       <div class="text" *ngIf="text">{{text}}</div>
       <div class="html" *ngIf="html" [innerHTML]="html"></div>
+      <ng-content></ng-content>
     </ng-template>
   </div>
 </ng-container>

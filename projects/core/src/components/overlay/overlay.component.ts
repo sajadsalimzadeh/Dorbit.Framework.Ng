@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, TemplateRef} from "@angular/core";
+import {Component, HostListener, Input, OnInit, TemplateRef} from "@angular/core";
 import {OverlayRef} from "./overlay.service";
 import {Colors} from "../../types";
 import {BaseComponent} from "../base.component";
@@ -10,7 +10,8 @@ export type OverlayAlignments =
   'end-top' | 'end-center' | 'end-bottom';
 
 export interface OverlayOptions {
-  targetElement?: HTMLElement;
+  autoClose?: boolean;
+  ref?: HTMLElement;
   template?: TemplateRef<any>;
   text?: string;
   html?: string;
@@ -26,12 +27,14 @@ export interface OverlayOptions {
   styleUrls: ['./overlay.component.scss']
 })
 export class OverlayComponent extends BaseComponent implements OnInit, OverlayOptions {
+  @Input() ref?: HTMLElement;
+  @Input() alignment?: OverlayAlignments;
+
+  autoClose = true;
   overlayRef!: OverlayRef;
-  targetElement?: HTMLElement;
   template?: TemplateRef<any>;
   text?: string;
   html?: string;
-  alignment?: OverlayAlignments;
 
   verticalThreshold = 300;
   horizontalThreshold = 300;
@@ -54,9 +57,9 @@ export class OverlayComponent extends BaseComponent implements OnInit, OverlayOp
 
   override render() {
     super.render();
-    if (!this.targetElement) return;
+    if (!this.ref) return;
 
-    const rect = this.targetElement.getBoundingClientRect();
+    const rect = this.ref.getBoundingClientRect();
     const topOfScreen = window.innerHeight + window.scrollY;
     const horizontalOfScreen = window.innerWidth + window.scrollX;
 

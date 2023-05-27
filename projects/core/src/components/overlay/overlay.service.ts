@@ -1,8 +1,9 @@
-import {ComponentRef, EventEmitter, Injectable, TemplateRef} from "@angular/core";
+import {ComponentRef, EventEmitter, Injectable} from "@angular/core";
 import {DomService} from "../../services/dom.service";
 import {OverlayComponent, OverlayOptions} from "./overlay.component";
 
 export interface OverlayRef {
+  autoClose: boolean;
   componentRef: ComponentRef<OverlayComponent>;
 
   destroy: () => void;
@@ -12,22 +13,20 @@ export interface OverlayRef {
 @Injectable({providedIn: 'root'})
 export class OverlayService {
   refs: OverlayRef[] = [];
-  singleton = true;
   defaultOptions: OverlayOptions = {}
 
   constructor(private domService: DomService) {
   }
 
-  create(options= this.defaultOptions) {
-    if(this.singleton) {
-      this.refs.forEach(x => x.destroy());
-    }
-    if(!options.targetElement) options.targetElement = document.body;
+  create(options = this.defaultOptions) {
+    this.refs.filter(x => !x.autoClose).forEach(x => x.destroy());
+    if (!options.ref) options.ref = document.body;
 
     const componentRef = this.domService.createByComponent(OverlayComponent);
     const component = componentRef.instance;
     Object.assign(component, options);
     const overlayRef = {
+      autoClose: options.autoClose ?? true,
       componentRef: componentRef,
       destroy: () => {
         componentRef.destroy();
@@ -37,8 +36,10 @@ export class OverlayService {
       onDestroy: new EventEmitter<any>()
     } as OverlayRef;
     component.overlayRef = overlayRef;
-    componentRef.onDestroy = () => { overlayRef.destroy(); };
-    this.refs.push(overlayRef)
+    componentRef.onDestroy = () => {
+      overlayRef.destroy();
+    };
+    this.refs.push(overlayRef);
     return overlayRef;
   }
 }
