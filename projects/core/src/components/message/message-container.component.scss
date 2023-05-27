@@ -1,5 +1,6 @@
 :host {
-  z-index: 10000;
+  z-index: 10000000;
+  position: relative;
 
   &.fix {
     left: 0;
@@ -59,12 +60,12 @@
     flex-direction: column;
 
     li {
-      padding: 0 .9em;
+      padding: 0 .9rem;
       &:first-child {
-        padding-top: .7em;
+        padding-top: .7rem;
       }
       &:last-child {
-        padding-bottom: .7em;
+        padding-bottom: .7rem;
       }
     }
   }

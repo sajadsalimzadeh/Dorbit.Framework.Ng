@@ -1,18 +1,18 @@
 :host {
   outline: none;
-  padding: .4em .4em;
+  padding: .4rem .4rem;
   align-items: center;
   display: inline-flex;
   border-radius: var(--radius-10);
 
-  .switch-box {font-size: .8em;}
-  label {font-size: .9em;}
+  .switch-box {font-size: .8rem;}
+  label {font-size: .9rem;}
 
   &, * {cursor: pointer;}
   &:hover, &:focus {background-color: rgba(var(--color-component-rgb), .1);}
   &.checked .switch-box {background-color: var(--color-component);border-color: var(--color-component);}
 
-  $base-size: 1.5em;
+  $base-size: 1.5rem;
   $border-size: 3px;
 
   &.checked .switch-box::after {

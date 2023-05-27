@@ -1,6 +1,6 @@
 :host {
   outline: none;
-  padding: .1em .4em;
+  padding: .1rem .4rem;
   align-items: center;
   display: inline-flex;
   border-radius: var(--radius-10);
@@ -10,24 +10,24 @@
   &.checked .radio-box {
     border-color: var(--color-component);
     background-color: var(--color-component);
-    box-shadow: inset 0 0 0 .15em var(--color-white);
+    box-shadow: inset 0 0 0 .15rem var(--color-white);
   }
 
   .radio-box {
-    width: 1.2em;
-    height: 1.2em;
+    width: 1.2rem;
+    height: 1.2rem;
     position: relative;
     border-radius: 50%;
     display: inline-flex;
     transition: opacity 200ms ease;
     background-color: var(--color-white);
-    border: .1em solid var(--color-gray--8);
+    border: .1rem solid var(--color-gray--8);
   }
 
   label {
     display: flex;
     align-items: center;
-    margin-inline: .4em;
+    margin-inline: .4rem;
 
     &:empty {
       display: none;

@@ -21,17 +21,17 @@
       .label-box {
         top: 0;
         z-index: 100;
-        margin: 0 1em;
-        height: 0.7em;
+        margin: 0 .5rem;
+        height: 0.7rem;
         display: flex;
         font-size: .8em;
-        padding: 0 0.5em;
+        padding: 0 0.5rem;
         position: absolute;
         align-items: center;
         transition: all .3s ease;
         color: var(--color-gray-8);
         background-color: var(--color-white);
-        transform: translateY(calc(-50% - 0.1em));
+        transform: translateY(calc(-50% - 0.1rem));
       }
 
       &::ng-deep > *:not(.label-box) {
@@ -84,10 +84,10 @@
 
   .below-box {
     z-index: 5;
-    padding: .3em 1em;
+    padding: .3rem 1rem;
     position: absolute;
     transform-origin: top;
-    top: calc(100% + .5em);
+    top: calc(100% + .5rem);
     border-radius: var(--radius-2);
     animation: below-box-animation 200ms ease;
   }
@@ -98,12 +98,12 @@
   }
 
   .validation-box {
-    gap: .2em;
+    gap: .2rem;
     margin: 0;
     display: flex;
     flex-direction: column;
     color: var(--color-white);
-    padding-inline-start: 2em;
+    padding-inline-start: 2rem;
     background-color: var(--color-danger-shade);
   }
 
@@ -113,7 +113,7 @@
     }
 
     &.focused .control-box {
-      box-shadow: 0 0 0 .2em rgba(var(--color-danger-rgb), .2);
+      box-shadow: 0 0 0 .2rem rgba(var(--color-danger-rgb), .2);
     }
   }
 }

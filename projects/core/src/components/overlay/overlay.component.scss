@@ -53,7 +53,7 @@
 }
 
 ::ng-deep {
-  @import "../../directives/tooltip/tooltip-directive";
+  @import "../tooltip/tooltip-directive";
 }
 
 @keyframes scale-vertical {

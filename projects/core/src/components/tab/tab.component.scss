@@ -13,10 +13,10 @@
     justify-content: stretch;
 
     li {
-      gap: .5em;
+      gap: .5rem;
       display: flex;
       cursor: pointer;
-      padding: .8em 1.2em;
+      padding: .8rem 1.2rem;
       align-items: center;
       color: var(--color-gray-7);
 
@@ -75,6 +75,6 @@
   }
 
   .tab-container {
-    padding: 1em;
+    padding: 1rem;
   }
 }

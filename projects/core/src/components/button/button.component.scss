@@ -62,13 +62,17 @@
 
   .icon {
     display: flex;
+    font-size: 1.1em;
     position: relative;
     align-items: center;
     justify-content: center;
-    animation: loading-width 500ms linear;
   }
 
   &.loading {
+
+    .icon {
+      animation: loading-width 500ms linear;
+    }
 
     .icon::before {
       animation: loading-spinner .8s linear infinite;
@@ -84,8 +88,8 @@ button {
   display: flex;
   color: inherit;
   cursor: pointer;
-  font-size: .9em;
-  padding: .7em 1.1em;
+  font-size: 1em;
+  padding: .9em 1.1em;
   align-items: center;
   font-family: inherit;
   justify-content: center;

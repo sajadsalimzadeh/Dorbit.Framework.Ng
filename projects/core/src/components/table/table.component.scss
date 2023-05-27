@@ -1,5 +1,21 @@
 @import "../../../assets/styles/mixin";
 
+@mixin selected-row {
+  @include selected-color;
+
+  td {
+    border-inline-end: 1px solid rgba(var(--color-primary-rgb), 0.15) !important;
+  }
+
+  ::ng-deep {
+    tr, & + tbody tr {
+      border-top: 1px solid rgba(var(--color-primary-rgb), 0.2) !important;
+    }
+  }
+}
+
+$border-color: rgba(var(--color-black-rgb), .05);
+
 :host {
   width: 100%;
   display: flex;
@@ -13,11 +29,11 @@
 
   &.table-striped ::ng-deep {
     table {
-      .item-box:nth-child(2n+1) {
+      .main-tbody:nth-child(2n+1) {
         background-color: var(--color-gray--1);
       }
 
-      .item-box:nth-child(2n) {
+      .main-tbody:nth-child(2n) {
         background-color: var(--color-white);
       }
     }
@@ -26,35 +42,42 @@
   &.table-bordered ::ng-deep {
 
     table {
-      thead,tfoot {
-        th:not(:last-child) {border-inline-end: 1px solid var(--color-gray--5);}
+      thead, tfoot {
+        th:not(:last-child) {border-inline-end: 1px solid $border-color;}
       }
 
-      .item-box:nth-child(2n+1) {
-        td:not(:last-child) {border-inline-end: 1px solid var(--color-gray--5);}
+      .main-tbody:nth-child(2n+1) {
+        td:not(:last-child) {border-inline-end: 1px solid $border-color;}
       }
 
-      .item-box:nth-child(2n) {
-        td:not(:last-child) {border-inline-end: 1px solid var(--color-gray--3);}
+      .main-tbody:nth-child(2n) {
+        td:not(:last-child) {border-inline-end: 1px solid $border-color;}
       }
     }
   }
 
-  &.selectable ::ng-deep {
+  &.hovered ::ng-deep {
     table {
-      .item-box {
+      .main-tbody {
         cursor: pointer;
 
         &:hover {
-          background-color: var(--color-gray--2);
+          @include selected-row;
         }
       }
     }
   }
+
+  .filter-box td {
+    padding: 0 !important;
+  }
 }
 
 .caption {
-  padding: .8em 0;
+  padding: .8rem 0;
+  border-style: solid;
+  border-width: 1px 1px 0;
+  border-color: var(--color-gray--4);
 }
 
 .data {
@@ -77,20 +100,20 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: rgba(var(--color-black-rgb), .3);
+      background-color: rgba(var(--color-black-rgb), .05);
     }
 
     &::after {
-      $size: 4em;
+      $size: 4rem;
       width: $size;
       height: $size;
       border-radius: 50%;
       top: calc(50% - $size);
       left: calc(50% - $size);
-      border-width: .5em;
+      border-width: .5rem;
       border-style: solid;
       animation: spinner 1s linear infinite;
-      border-color: transparent var(--color-white) var(--color-white);
+      border-color: transparent var(--color-gray-7) var(--color-gray-7);
     }
 
     @keyframes spinner {
@@ -107,7 +130,7 @@
   }
 
   .data-header, .data-footer {
-    border: 1px solid var(--color-gray--2);
+    border: 1px solid $border-color;
     background-color: var(--color-gray--4);
   }
 
@@ -120,7 +143,7 @@
     position: relative;
     border-radius: var(--radius-2);
     background-color: var(--color-white);
-    border: 1px solid var(--color-gray--4);
+    border: 1px solid $border-color;
 
     &.no-data {
       background-size: auto 35%;
@@ -152,12 +175,16 @@
         border-collapse: collapse;
         color: var(--color-gray-4);
 
+        tr {
+          background-color: inherit;
+        }
+
         td, th {
-          padding: .5em .5em;
+          padding: .5rem .5rem;
         }
 
         th {
-          font-weight: normal;
+          font-weight: bold;
           text-align: justify;
 
           &.sortable {
@@ -171,7 +198,7 @@
             }
 
             .sort-icon {
-              padding: .4em .5em;
+              padding: .4rem .5rem;
             }
 
             &:not(.sort-dir) {
@@ -195,8 +222,11 @@
           }
         }
 
+        thead {top: 0;}
+        tfoot {bottom: -1px;}
         thead, tfoot {
-          height: 3.5em;
+          z-index: 10;
+          height: 3.5rem;
           position: sticky;
           background-color: var(--color-gray--2);
 
@@ -206,20 +236,10 @@
         }
 
         tbody {
-          height: 3em;
+          height: 3rem;
 
           &.selected {
-            @include selected-color;
-
-            td {
-              border-inline-end: 1px solid rgba(var(--color-primary-rgb), 0.15) !important;
-            }
-
-            ::ng-deep {
-              tr, & + tbody tr {
-                border-top: 1px solid rgba(var(--color-primary-rgb), 0.15) !important;
-              }
-            }
+            @include selected-row;
           }
         }
       }
@@ -239,19 +259,75 @@
       }
     }
   }
+
+  ::ng-deep {
+    .sticky-column-start, .sticky-column-end {
+      position: sticky;
+      background-color: inherit !important;
+
+      &::before {
+        top: 0;
+        bottom: 0;
+        content: '';
+        position: absolute;
+        border-inline-start: 1px solid $border-color;
+      }
+    }
+  }
+
+  :host-context([dir=ltr]) {
+    ::ng-deep {
+      .sticky-column-start {
+        left: 0;
+        &::before {
+          right: 0;
+        }
+      }
+
+      .sticky-column-end {
+        right: 0;
+        &::before {
+          left: 0;
+        }
+      }
+    }
+  }
+
+  :host-context([dir=rtl]) {
+    ::ng-deep {
+      .sticky-column-start {
+        right: 0;
+        &::before {
+          left: 0;
+        }
+      }
+
+      .sticky-column-end {
+        left: 0;
+        &::before {
+          right: 0;
+        }
+      }
+    }
+  }
 }
 
 .pagination {
   display: flex;
-  padding: .5em;
+  border-style: solid;
+  border-width: 0 1px 1px;
+  border-color: var(--color-gray--4);
 
-  .pagination-start {
+  .summary {
     flex: 1;
+    display: flex;
+    align-items: center;
   }
 
   .paginator {
     display: flex;
     align-items: center;
+    padding: 0.5rem;
 
     .current-page-report {
       text-align: end;
@@ -260,7 +336,7 @@
     }
 
     .page-numbers {
-      padding: 0 2em;
+      padding: 0 2rem;
     }
 
     .page-row-count {

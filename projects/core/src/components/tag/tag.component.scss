@@ -1,14 +1,14 @@
 :host {
-  gap: .5em;
-  height: 2em;
+  gap: .5rem;
+  height: 2rem;
   display: flex;
-  padding: .2em .8em;
+  padding: .2rem .8rem;
   align-items: center;
   color: var(--color-white);
   border-radius: var(--radius-2);
   background-color: var(--color-component);
 
   &.rounded {
-    border-radius: 3em;
+    border-radius: 3rem;
   }
 }
