@@ -1,5 +1,7 @@
 import {ErrorHandler, ModuleWithProviders, NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
+import {RouterModule} from "@angular/router";
+import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {
   TableModule,
@@ -28,30 +30,26 @@ import {
   MessagesModule,
   DialogModule,
   TabModule,
-  CodeModule,
   TreeModule,
   DatePickerInlineModule,
+  ListModule,
+  TemplateModule,
+  KeyFilterModule,
+  TooltipModule,
 } from './components';
 import {
   JDatePipeModule,
   RDatePipeModule,
 } from './pipes';
 import {
-  DevTemplateModule,
-  KeyFilterModule,
-  TooltipModule,
-} from './directives';
-import {
   GlobalErrorHandler
 } from './services';
-import {RouterModule} from "@angular/router";
-import {HttpClientModule} from "@angular/common/http";
 
 const MODULES = [
   TableModule,
   SelectModule,
   DatePickerModule,
-  DevTemplateModule,
+  TemplateModule,
   OverlayModule,
   TimelineModule,
   ButtonModule,
@@ -77,11 +75,11 @@ const MODULES = [
   DialogModule,
   TooltipModule,
   TabModule,
-  CodeModule,
   TreeModule,
   JDatePipeModule,
   RDatePipeModule,
   DatePickerInlineModule,
+  ListModule,
 ];
 
 @NgModule({

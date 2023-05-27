@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 import {PasswordComponent} from './password.component';
 import {CommonModule} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {DevTemplateModule} from "../../../directives";
+import {TemplateModule} from "../../template/template.directive";
 
 export * from './password.component';
 
@@ -13,7 +13,7 @@ export * from './password.component';
     ReactiveFormsModule
   ],
   declarations: [PasswordComponent],
-  exports: [PasswordComponent, DevTemplateModule],
+  exports: [PasswordComponent, TemplateModule],
   providers: [],
 })
 export class PasswordModule {

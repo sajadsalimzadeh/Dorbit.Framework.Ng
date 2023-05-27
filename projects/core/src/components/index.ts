@@ -27,5 +27,9 @@ export * from './tag/tag.module';
 export * from './message/messages.module';
 export * from './dialog/dialog.module';
 export * from './tab/tab.module';
-export * from './code/code.module';
 export * from './tree/tree.module';
+export * from './list/list.module';
+
+export * from './template/template.directive';
+export * from './key-filter/key-filter.directive';
+export * from './tooltip/tooltip.directive';

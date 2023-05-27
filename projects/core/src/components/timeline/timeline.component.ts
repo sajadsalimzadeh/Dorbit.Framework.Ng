@@ -1,5 +1,5 @@
 import {Component, ContentChildren, Input, QueryList, TemplateRef} from "@angular/core";
-import {TemplateDirective} from "../../directives";
+import {TemplateDirective} from "../template/template.directive";
 import {Orientation} from "../../types";
 import {BaseComponent} from "../base.component";
 

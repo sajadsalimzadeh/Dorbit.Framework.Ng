@@ -1,6 +1,6 @@
 import {Component, ContentChildren, OnChanges, QueryList, TemplateRef} from '@angular/core';
 import {BaseComponent} from "../base.component";
-import {TemplateDirective} from "../../directives/template/template.directive";
+import {TemplateDirective} from "../template/template.directive";
 
 @Component({
   selector: 'd-card',

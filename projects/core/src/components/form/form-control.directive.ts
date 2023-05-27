@@ -10,14 +10,14 @@ import {
   Type, ViewChild
 } from "@angular/core";
 import {
-  AbstractControl,
   ControlContainer,
   ControlValueAccessor,
-  FormControl, FormControlDirective, FormGroupDirective,
+  FormControl,
+  FormGroupDirective,
   NG_VALUE_ACCESSOR,
   NgControl
 } from "@angular/forms";
-import {TemplateDirective} from "../../directives/template/template.directive";
+import {TemplateDirective} from "../template/template.directive";
 import {FormControlService} from "./form-control.service";
 import {BaseComponent} from "../base.component";
 

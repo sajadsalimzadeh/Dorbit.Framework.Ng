@@ -1,4 +1,4 @@
-import {Directive, Input, TemplateRef} from "@angular/core";
+import {Directive, Input} from "@angular/core";
 import {TemplateDirective as BaseTemplateDirective} from "../../template/template.directive";
 
 @Directive({

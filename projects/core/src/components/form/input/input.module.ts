@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 import {InputComponent} from './input.component';
 import {CommonModule} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {DevTemplateModule} from "../../../directives";
+import {TemplateModule} from "../../template/template.directive";
 
 export * from './input.component';
 
@@ -13,7 +13,7 @@ export * from './input.component';
     ReactiveFormsModule
   ],
   declarations: [InputComponent],
-  exports: [InputComponent, DevTemplateModule],
+  exports: [InputComponent, TemplateModule],
   providers: [],
 })
 export class InputModule {
