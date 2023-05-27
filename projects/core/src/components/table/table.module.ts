@@ -1,14 +1,15 @@
 import {NgModule} from "@angular/core";
 import {TableComponent} from "./table.component";
 import {CommonModule} from "@angular/common";
-import {DevTemplateModule} from "../../directives";
-import {DataTableSortDirective} from "./directives/sort.directive";
+import {TemplateModule} from "../template/template.directive";
+import {TableSortDirective} from "./directives/sort.directive";
 import {SelectModule} from "../form/select/select.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {DataTableRowExpanderComponent} from "./components/row-expander/row-expander.component";
-import {DataTableFilterComponent} from "./components/filter/filter.component";
+import {TableRowExpanderComponent} from "./components/row-expander/row-expander.component";
+import {TableFilterComponent} from "./components/filter/filter.component";
 import {OverlayService} from "../overlay/overlay.service";
 import {PaginatorModule} from "../paginator/paginator.module";
+import {TableTemplateDirective} from "./directives/table-template.directive";
 
 export * from './models';
 export * from './table.component';
@@ -22,23 +23,25 @@ export * from './components/row-expander/row-expander.component';
     FormsModule,
     ReactiveFormsModule,
 
-    DevTemplateModule,
+    TemplateModule,
     SelectModule,
     PaginatorModule,
   ],
   declarations: [
     TableComponent,
-    DataTableRowExpanderComponent,
-    DataTableFilterComponent,
-    DataTableSortDirective,
+    TableTemplateDirective,
+    TableRowExpanderComponent,
+    TableFilterComponent,
+    TableSortDirective,
   ],
   exports: [
     TableComponent,
-    DataTableRowExpanderComponent,
-    DataTableFilterComponent,
-    DataTableSortDirective,
+    TableTemplateDirective,
+    TableRowExpanderComponent,
+    TableFilterComponent,
+    TableSortDirective,
 
-    DevTemplateModule,
+    TemplateModule,
   ],
   providers: [
     OverlayService

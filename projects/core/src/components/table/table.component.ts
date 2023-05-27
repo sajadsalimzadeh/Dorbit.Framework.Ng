@@ -11,7 +11,7 @@ import {
   QueryList,
   SimpleChanges, TemplateRef
 } from "@angular/core";
-import {TemplateDirective} from "../../directives";
+import {TemplateDirective} from "../template/template.directive";
 import {TableConfig, FilterFunc, SortFunc, TableData} from "./models";
 import {FormControl} from "@angular/forms";
 import {TableService} from "./services/table.service";
@@ -43,6 +43,11 @@ export class TableComponent extends BaseComponent implements OnInit, OnChanges, 
     return this.config.layout.bordered;
   }
 
+  @HostBinding('class.hovered')
+  get isTableHovered() {
+    return this.config.layout.hovered;
+  }
+
   @HostBinding('class.selectable')
   get isSelectable() {
     return this.config.selecting.enable;
@@ -66,7 +71,6 @@ export class TableComponent extends BaseComponent implements OnInit, OnChanges, 
   detailTemplate?: TemplateRef<any>;
   footerTemplate?: TemplateRef<any>;
   summaryTemplate?: TemplateRef<any>;
-  paginationStartTemplate?: TemplateRef<any>;
 
   @ContentChildren(TemplateDirective)
   set dTemplates(value: QueryList<TemplateDirective>) {
@@ -76,7 +80,6 @@ export class TableComponent extends BaseComponent implements OnInit, OnChanges, 
     this.bodyTemplate = value.find(x => x.includesName('body'))?.template;
     this.detailTemplate = value.find(x => x.includesName('detail'))?.template;
     this.footerTemplate = value.find(x => x.includesName('footer'))?.template;
-    this.paginationStartTemplate = value.find(x => x.includesName('paginationStart'))?.template;
     this.summaryTemplate = value.find(x => x.includesName('summary'))?.template;
   }
 
@@ -84,7 +87,6 @@ export class TableComponent extends BaseComponent implements OnInit, OnChanges, 
   overlayService: OverlayService;
   loadingService: LoadingService;
 
-  loading: boolean = false;
   renderedItems: any[] = [];
   pageNumbers: number[] = [];
   pageRowCountControl = new FormControl(10);
@@ -104,7 +106,6 @@ export class TableComponent extends BaseComponent implements OnInit, OnChanges, 
     this.loadingService = injector.get(LoadingService);
 
     this.tableService.dataTable = this;
-    this.overlayService.singleton = false;
   }
 
   override ngOnInit(): void {
@@ -136,10 +137,6 @@ export class TableComponent extends BaseComponent implements OnInit, OnChanges, 
       }
     }));
 
-    this.subscription.add(this.loadingService.onLoading.subscribe(e => {
-      Promise.resolve().then(() => this.loading = e);
-    }));
-
     this.subscription.add(this.tableService.onFilterChange.subscribe(() => {
       this.render();
       this.config.onFilterChange.next();
@@ -158,7 +155,7 @@ export class TableComponent extends BaseComponent implements OnInit, OnChanges, 
       setTimeout(() => {
         this.tableService.onSortChange.next({
           field: this.config.sorting.field,
-          keepDirection: true,
+          dir: 'asc',
         });
       }, 50);
     }
@@ -230,10 +227,12 @@ export class TableComponent extends BaseComponent implements OnInit, OnChanges, 
       this.renderedItems = this.pagingItems(this.renderedItems);
     }
 
+    const count = this.data.totalCount;
     const first = this.config.paging.page * this.config.paging.size + 1;
-    const last = first + this.config.paging.size - 1;
+    let last = first + this.config.paging.size - 1;
+    if(last > count) last = count;
     this.pageReportTemplate = this.config.paging.pageReportTemplate
-      .replace('{totalRecords}', this.data.totalCount.toString())
+      .replace('{totalRecords}', count.toString())
       .replace('{first}', first.toString())
       .replace('{last}', last.toString());
   }

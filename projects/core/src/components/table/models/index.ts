@@ -45,6 +45,7 @@ export class SelectingConfig {
 export class LayoutConfig {
   striped: boolean = true;
   bordered: boolean = true;
+  hovered: boolean = false;
 }
 
 export class FilterConfig {

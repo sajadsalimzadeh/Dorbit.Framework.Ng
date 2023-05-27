@@ -7,7 +7,7 @@ import {TableService} from "../../services/table.service";
   templateUrl: './row-expander.component.html',
   styleUrls: ['./row-expander.component.scss']
 })
-export class DataTableRowExpanderComponent {
+export class TableRowExpanderComponent {
   @Input() item: any;
   @Input() mode: 'single' | 'multiple' = 'single';
 

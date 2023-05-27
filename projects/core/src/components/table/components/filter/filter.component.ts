@@ -7,7 +7,7 @@ import {
   TemplateRef, ViewChild
 } from "@angular/core";
 import {TableService} from "../../services/table.service";
-import {TemplateDirective} from "../../../../directives/template/template.directive";
+import {TemplateDirective} from "../../../template/template.directive";
 import {FormControl} from "@angular/forms";
 import {KeyValue} from "@angular/common";
 import {OverlayRef, OverlayService} from "../../../overlay/overlay.service";
@@ -19,7 +19,7 @@ export type OperationKey = 'eq' | 'nq' | 'gt' | 'ge' | 'lt' | 'le' | 'sw' | 'ew'
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.scss']
 })
-export class DataTableFilterComponent implements OnInit {
+export class TableFilterComponent implements OnInit {
   @Input('field') field!: string;
   @Input('comparator') comparator?: (x: any) => boolean;
   @Input() overlay: boolean = true;
@@ -71,7 +71,7 @@ export class DataTableFilterComponent implements OnInit {
     if (this.overlayRef) return;
     this.overlayRef = this.overlayService.create({
       template: this.overlayTpl,
-      targetElement: this.filterIconEl.nativeElement
+      ref: this.filterIconEl.nativeElement
     });
     this.overlayRef.onDestroy.subscribe(() => this.overlayRef = undefined);
   }

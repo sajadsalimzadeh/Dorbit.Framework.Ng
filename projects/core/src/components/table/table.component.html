@@ -1,14 +1,17 @@
 <div *ngIf="captionTemplate" class="caption">
   <ng-container *ngTemplateOutlet="captionTemplate; context: {}"></ng-container>
 </div>
-<div class="data" [ngClass]="{loading: loading}">
+<div class="data" [ngClass]="{loading: loadingService.loading}">
   <div class="data-table" [ngClass]="{'no-data': (data.totalCount == 0)}">
     <table>
       <thead *ngIf="headerTemplate">
       <ng-container *ngTemplateOutlet="headerTemplate; context: {}"></ng-container>
       </thead>
+      <tbody *ngIf="filterTemplate" class="main-tbody filter-box">
+      <ng-container *ngTemplateOutlet="filterTemplate; context: {}"></ng-container>
+      </tbody>
       <ng-container *ngFor="let item of renderedItems">
-        <tbody *ngIf="bodyTemplate" class="item-box"
+        <tbody *ngIf="bodyTemplate" class="main-tbody"
                [ngClass]="{selected: item[config.selecting.key]}"
                (click)="config.onRowClick.next(item)">
         <ng-container *ngTemplateOutlet="bodyTemplate; context: {$implicit: item}"></ng-container>
@@ -33,9 +36,9 @@
   </div>
 </div>
 <div class="pagination" *ngIf="config.paging?.enable">
-  <div class="pagination-start">
-    <ng-container *ngIf="paginationStartTemplate">
-      <ng-container *ngTemplateOutlet="paginationStartTemplate; context: {}"></ng-container>
+  <div class="summary">
+    <ng-container *ngIf="summaryTemplate">
+      <ng-container *ngTemplateOutlet="summaryTemplate; context: {}"></ng-container>
     </ng-container>
   </div>
   <div class="paginator">
@@ -47,14 +50,13 @@
     </div>
     <div class="page-row-count page-numbers-around">
       <d-select [size]="size" [items]="config.paging.pageSizes"
-                  [(ngModel)]="config.paging.size"
-                  (ngModelChange)="onPageSizeChange()"
-                  class="limit-select"
-                  name="pageRowCountControl">
+                [(ngModel)]="config.paging.size"
+                [searchable]="false"
+                [clearable]="false"
+                (ngModelChange)="onPageSizeChange()"
+                class="limit-select"
+                name="pageRowCountControl">
       </d-select>
     </div>
   </div>
-</div>
-<div *ngIf="summaryTemplate" class="summary">
-  <ng-container *ngTemplateOutlet="summaryTemplate; context: {}"></ng-container>
 </div>
