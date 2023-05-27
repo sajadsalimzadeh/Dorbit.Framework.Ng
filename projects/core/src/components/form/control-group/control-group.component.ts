@@ -1,15 +1,17 @@
 import {
   Component,
-  ContentChildren, ElementRef, Injector,
+  ContentChildren,
+  ElementRef,
+  HostListener,
+  Injector,
   Input,
   QueryList,
   TemplateRef,
 } from '@angular/core';
-import {TemplateDirective} from "../../../directives";
+import {TemplateDirective} from "../../template/template.directive";
 import {AbstractFormControl, createControlValueAccessor, ValidationError} from "../form-control.directive";
 import {FormControlService} from "../form-control.service";
 import {ControlGroupService} from "./control-group.service";
-import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'd-control-group',
@@ -25,14 +27,20 @@ export class ControlGroupComponent extends AbstractFormControl<any> {
   controlEl!: ElementRef<HTMLInputElement>;
 
   errors: (ValidationError | any)[] = [];
-  startTemplate?: TemplateRef<any>;
-  endTemplate?: TemplateRef<any>;
+  prependTemplate?: TemplateRef<any>;
+  appendTemplate?: TemplateRef<any>;
   labelTemplate?: TemplateRef<any>;
 
   @ContentChildren(TemplateDirective) set templates(value: QueryList<TemplateDirective>) {
-    this.startTemplate = value.find(x => x.includesName('start'))?.template;
-    this.endTemplate = value.find(x => x.includesName('end'))?.template;
+    this.prependTemplate = value.find(x => x.includesName('prepend'))?.template;
+    this.appendTemplate = value.find(x => x.includesName('append'))?.template;
     this.labelTemplate = value.find(x => x.includesName('label'))?.template;
+  }
+
+  @HostListener('click', ['$event']) override onClick(e: MouseEvent) {
+    super.onClick(e);
+    const control = this.elementRef.nativeElement.querySelector('.control') as HTMLElement;
+    control?.focus();
   }
 
   override onFocus(e: FocusEvent) {

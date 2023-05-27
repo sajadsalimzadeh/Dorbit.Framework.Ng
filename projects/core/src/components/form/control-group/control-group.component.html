@@ -1,6 +1,6 @@
 <div class="control-box">
-  <div class="side-box start-box" *ngIf="startTemplate">
-    <ng-container *ngTemplateOutlet="startTemplate"></ng-container>
+  <div class="side-box start-box" *ngIf="prependTemplate">
+    <ng-container *ngTemplateOutlet="prependTemplate"></ng-container>
   </div>
   <div class="control-box-container">
     <ng-content></ng-content>
@@ -13,8 +13,8 @@
       </ng-template>
     </label>
   </div>
-  <div class="side-box end-box" *ngIf="endTemplate">
-    <ng-container *ngTemplateOutlet="endTemplate"></ng-container>
+  <div class="side-box end-box" *ngIf="appendTemplate">
+    <ng-container *ngTemplateOutlet="appendTemplate"></ng-container>
   </div>
 </div>
 <ng-container *ngIf="focused">
