@@ -39,6 +39,7 @@ interface DateValue {
 export class DatePickerComponent extends AbstractFormControl<any> {
   @Input() type: 'gregorian' | 'jalali' = 'gregorian';
   @Input() format = 'YYYY/MM/DD';
+  @Input() locale?: string;
 
   @Output() onLeave = new EventEmitter<any>();
   @Output() onChooseDate = new EventEmitter<string>();
@@ -47,12 +48,8 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   @ViewChild('yearPickerEl') yearPickerEl?: ElementRef<HTMLDivElement>;
 
   @HostListener('window:click', ['$event'])
-  onWindowClick(e: MouseEvent) {
+  onWindowClick() {
     this.close();
-  }
-
-  get locale() {
-    return this.type == 'jalali' ? 'fa' : 'en';
   }
 
   override onClick(e: MouseEvent) {
@@ -73,7 +70,6 @@ export class DatePickerComponent extends AbstractFormControl<any> {
 
   todayDate!: Moment;
   selectedDate!: Moment;
-  selectedDates: DateValue[] = [];
 
   todayValue!: DateValue;
   selectedValue!: DateValue;
@@ -90,19 +86,23 @@ export class DatePickerComponent extends AbstractFormControl<any> {
     super(injector)
   }
 
+  private getLocale() {
+    return this.locale ?? (this.type == 'jalali' ? 'fa' : 'en');
+  }
+
   createDate(inp?: string): { value: Moment, isValid: boolean } {
-    moment.locale(this.locale, {useGregorianParser: this.type == 'jalali'});
+    moment.locale(this.getLocale(), {useGregorianParser: this.type == 'gregorian'});
     let result: any = {isValid: true};
     if (inp) {
       try {
-        const m = moment.from(inp, this.type, this.format);
+        const m = moment.from(inp, this.getLocale(), this.format);
         if (m.isValid()) result.value = m;
         else result.isValid = false;
       } catch {
         result.isValid = false;
       }
     } else result.isValid = false;
-    if (!result.value) result.value = moment(new Date(), this.type, this.format);
+    if (!result.value) result.value = moment(new Date(), this.getLocale(), this.format);
     return result;
   }
 
@@ -129,12 +129,6 @@ export class DatePickerComponent extends AbstractFormControl<any> {
     this.pickerClasses['dir-ltr'] = this.type != 'jalali';
     this.pickerClasses['dir-rtl'] = this.type == 'jalali';
     this.pickerClasses[this.size] = true;
-
-    this.render();
-  }
-
-  gotoCurrentDay() {
-    this.selectedDate = this.todayDate.clone();
 
     this.render();
   }
@@ -286,8 +280,9 @@ export class DatePickerComponent extends AbstractFormControl<any> {
     if (this.pickerTpl && !this.overlayRef) {
       this.onInputChange(this.formControl.value);
       this.overlayRef = this.overlayService.create({
+        autoClose: false,
         template: this.pickerTpl,
-        targetElement: this.elementRef.nativeElement
+        ref: this.elementRef.nativeElement
       });
       this.overlayRef.onDestroy.subscribe(() => this.overlayRef = undefined);
     }
