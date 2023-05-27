@@ -3,6 +3,7 @@ import {IndexComponent} from "./index.component";
 import {CommonModule} from "@angular/common";
 import {HttpClientModule} from "@angular/common/http";
 import {DorbitModule} from "@core";
+import {CodeModule} from "../code/code.module";
 
 
 @NgModule({
@@ -11,6 +12,7 @@ import {DorbitModule} from "@core";
     HttpClientModule,
 
     DorbitModule,
+    CodeModule,
   ],
   declarations: [IndexComponent],
   exports: [IndexComponent]

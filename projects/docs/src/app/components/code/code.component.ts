@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
-import {BaseComponent} from "../base.component";
+import {BaseComponent} from "@core";
 
 @Component({
   selector: 'd-code',
