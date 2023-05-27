@@ -2,7 +2,7 @@ import {
   Component, ContentChildren, HostListener, Injector, Input, QueryList, SimpleChanges, TemplateRef,
 } from '@angular/core';
 import {BaseComponent} from "../base.component";
-import {TemplateDirective} from "../../directives";
+import {TemplateDirective} from "../template/template.directive";
 import {MessageService} from "./services/message.service";
 import {Subscription} from "rxjs";
 import {Message} from "./models";

@@ -8,7 +8,7 @@ import {
   QueryList,
   TemplateRef,
 } from '@angular/core';
-import {TemplateDirective} from "../../../../directives";
+import {TemplateDirective} from "../../../template/template.directive";
 import {BaseComponent} from "../../../base.component";
 import {Message} from "../../models";
 
