@@ -31,6 +31,11 @@ export class CheckboxComponent extends AbstractFormControl<boolean | null> {
     super.render();
     const value = this.formControl.value;
     this.classes['fill'] = (value === true || value === null || value === undefined);
+    let valueName: string;
+    if(value === true) valueName = 'true';
+    else if(value === null || value === undefined) valueName = 'null';
+    else valueName = 'false';
+    this.classes['value-' + valueName] = true;
   }
 
   toggle() {
