@@ -6,7 +6,7 @@ import {
   QueryList,
   SimpleChanges, TemplateRef, ViewChild
 } from "@angular/core";
-import {TemplateDirective} from "../../../directives/template/template.directive";
+import {TemplateDirective} from "../../template/template.directive";
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
 import {OverlayRef, OverlayService} from "../../overlay/overlay.service";
 import {InputComponent} from "../input/input.component";
@@ -24,9 +24,9 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
   @Input() items: any[] = [];
   @Input() mode: 'single' | 'multiple' = 'single';
   @Input() clearable: boolean = true;
-  @Input() filterable: boolean = true;
   @Input() valueField: string | Func = 'value';
   @Input() textField: string | Func = 'text';
+  @Input() searchable: boolean = true;
   @Input() searchPlaceHolder: string = 'Search ....';
   @Input() isLazySearch: boolean = false;
   @Input() loading: boolean = false;
@@ -208,8 +208,9 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
   private open() {
     if (this.itemsTpl && this.elementRef.nativeElement && !this.overlayRef) {
       this.overlayRef = this.overlayService.create({
+        autoClose: false,
         template: this.itemsTpl,
-        targetElement: this.elementRef.nativeElement,
+        ref: this.elementRef.nativeElement,
       })
       this.overlayRef.onDestroy.subscribe(() => this.overlayRef = undefined);
       setTimeout(() => {

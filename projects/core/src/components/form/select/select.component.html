@@ -15,7 +15,7 @@
 <div class="control-box">
   <div class="control-container selected-items-container flex-1">
     <ng-container *ngIf="selectedItems.length == 0; else hasSelectedItemTpl">
-      <div class="full-absolute placeholder" *ngIf="placeholder">
+      <div class="full-absolute placeholder px-4" *ngIf="placeholder">
         {{placeholder}}
       </div>
     </ng-container>
@@ -36,7 +36,7 @@
       </ng-container>
     </ng-template>
   </div>
-  <div class="control-container">
+  <div class="control-container icon-container">
     <ng-container *ngIf="loading; else arrowTpl">
       <div class="loading">
         <i class=" far fa-loader"></i>
@@ -49,7 +49,7 @@
 </div>
 <ng-template #itemsTpl>
   <div class="items-container" [ngClass]="size">
-    <div class="filter-box" *ngIf="filterable">
+    <div class="filter-box" *ngIf="searchable">
       <d-control-group class="filter-control-group" [size]="size" [formControl]="searchFormControl">
         <ng-template dTemplate="end"><i class="far fa-search"></i></ng-template>
         <d-input [placeholder]="searchPlaceHolder" [tabIndex]="tabIndex"/>
