@@ -3,7 +3,7 @@ import {
 } from '@angular/core';
 import {BaseComponent} from "../base.component";
 import {Orientation} from "../../types";
-import {TabTemplateDirective} from "./directive/tab-template.directive";
+import {TabTemplateDirective} from "./components/tab-template.directive";
 
 @Component({
   selector: 'd-tab',

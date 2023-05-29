@@ -5,6 +5,7 @@ import {CommonModule} from "@angular/common";
 import {DialogContainerComponent} from "./dialog-container.component";
 
 export * from './services/dialog.service';
+export * from './dialog-container.component';
 export * from './components/dialog/dialog.component';
 
 @NgModule({

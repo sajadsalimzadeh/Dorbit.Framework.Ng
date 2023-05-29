@@ -9,7 +9,7 @@ import {
   TemplateRef
 } from '@angular/core';
 import {BaseComponent} from "../base.component";
-import {TabTemplateDirective} from "../tab/directive/tab-template.directive";
+import {TabTemplateDirective} from "../tab/components/tab-template.directive";
 
 export interface TreeItem {
   key: any;

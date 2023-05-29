@@ -4,6 +4,7 @@ import {CommonModule} from "@angular/common";
 import {OverlayDirective} from "./overlay.directive";
 
 export * from './overlay.component';
+export * from './overlay.directive';
 export * from './overlay.service';
 
 @NgModule({
