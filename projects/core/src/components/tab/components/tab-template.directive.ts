@@ -5,7 +5,7 @@ import {TemplateDirective} from "../../template/template.directive";
   selector: '[dTemplate]'
 })
 export class TabTemplateDirective extends TemplateDirective {
-  @Input() key?: string;
+  @Input() key?: any;
   @Input() header?: string;
   @Input() icon?: string;
 
