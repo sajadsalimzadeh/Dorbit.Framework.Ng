@@ -2,11 +2,14 @@
   box-sizing: border-box;
 }
 
+html {
+  color: var(--color-black);
+  font-size: var(--font-size-base);
+}
+
 body {
   line-height: 1.75em;
-  color: var(--color-black);
   font-family: var(--font-family);
-  font-size: var(--font-size-base);
   background-color: var(--color-white);
 
   * {
@@ -28,4 +31,5 @@ hr {
   border-color: var(--color-gray--3);
 }
 
+a {cursor: pointer;}
 a:link, a:visited {color: var(--color-link);}

@@ -2,6 +2,7 @@
 @import "../variables";
 
 $helpers: (
+    ("m", "margin"),
     ("mx", "margin-inline-start", "margin-inline-end"),
     ("mxs", "margin-inline-start"),
     ("mxe", "margin-inline-end"),
@@ -12,6 +13,7 @@ $helpers: (
     ("mr", "margin-right"),
     ("mt", "margin-top"),
     ("mb", "margin-bottom"),
+    ("p", "padding"),
     ("px", "padding-inline-start", "padding-inline-end"),
     ("pxs", "padding-inline-start"),
     ("pxe", "padding-inline-end"),
@@ -40,23 +42,29 @@ $helpers: (
   }
 }
 
-@each $screen in $screens {
-  $name: nth($screen, 1);
-  .#{$name} {font-size: var(--font-size-#{$name}) !important;}
-}
-
+.xxs {font-size: var(--font-size-xxs);}
+.xs {font-size: var(--font-size-xs);}
+.sm {font-size: var(--font-size-sm);}
+.md {font-size: var(--font-size-md);}
+.lg {font-size: var(--font-size-lg);}
+.xl {font-size: var(--font-size-xl);}
+.xxl {font-size: var(--font-size-xxl);}
 
 @each $color in $colors {
   .bg-#{$color} {background-color: var(--color-#{$color}) !important;}
 }
 
 @each $color in $colors {
-  .text-#{$color} {color: var(--color-#{$color}) !important;}
+  .color-#{$color} {color: var(--color-#{$color}) !important;}
 }
 
-$widths: (10, 20, 25, 30, 40, 50, 60, 70, 75, 80, 90, 100);
-@each $width in $widths {
-  .w-#{$width} {width: $width + 0%;}
+$sizes: (10, 20, 25, 30, 40, 50, 60, 70, 75, 80, 90, 100);
+@each $size in $sizes {
+  .w-#{$size} {width: $size + 0%;}
+  .h-#{$size} {height: $size + 0%;}
 }
 .w-33 {width: 33.333%;}
 .w-66 {width: 66.666%;}
+
+.h-33 {height: 33.333%;}
+.h-66 {height: 66.666%;}
