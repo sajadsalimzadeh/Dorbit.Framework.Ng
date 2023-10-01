@@ -7,15 +7,28 @@
     background-color: var(--color-component);
     //&.disabled {color: rgba(var(--color-white-rgb), .8);}
   }
-  &.outline {border: 1px solid var(--color-component);}
-  &.text, &.outline {
-    color: var(--color-component);
-    &:hover {background-color: rgba(var(--color-component-rgb), .1);}
+
+  &.outline {
+    border: 1px solid var(--color-component);
   }
 
-  &.disabled {opacity: .8 !important;filter: blur(.5px)}
+  &.text, &.outline {
+    color: var(--color-component);
+
+    &:hover {
+      background-color: rgba(var(--color-component-rgb), .1);
+    }
+  }
+
+  &.disabled {
+    opacity: .8 !important;
+    filter: blur(.5px)
+  }
+
   //&.text {background-color: var(--color-white);}
-  &.outline {background-color: var(--color-white);}
+  &.outline {
+    background-color: var(--color-white);
+  }
 
   &.fill {
     &:hover {
@@ -24,7 +37,9 @@
   }
 
   &.icon-start {
-    i {order: 1;}
+    i {
+      order: 1;
+    }
   }
 
   .text {
@@ -32,7 +47,9 @@
   }
 
   &.icon-end {
-    i {order: 10;}
+    i {
+      order: 10;
+    }
   }
 
   &.empty-content {
@@ -93,6 +110,10 @@ button {
 }
 
 @keyframes loading-width {
-  0% {max-width: 0;}
-  100% {max-width: 100px;}
+  0% {
+    max-width: 0;
+  }
+  100% {
+    max-width: 100px;
+  }
 }

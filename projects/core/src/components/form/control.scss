@@ -5,6 +5,7 @@
 
   &.focused {
     z-index: 100;
+
     .control-box {
       border-color: var(--color-primary-tint);
       box-shadow: 0 0 0 .1em rgba(var(--color-primary-rgb), 1);
@@ -16,10 +17,14 @@
     }
   }
 
-  ::ng-deep .control {padding-inline: 1em !important;}
+  ::ng-deep .control {
+    padding-inline: 1em !important;
+  }
 
   &.xxs, &.xs {
-    .control-box {border-radius: var(--radius-2);}
+    .control-box {
+      border-radius: var(--radius-2);
+    }
   }
 }
 

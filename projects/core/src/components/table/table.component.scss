@@ -43,15 +43,21 @@ $border-color: rgba(var(--color-black-rgb), .05);
 
     table {
       thead, tfoot {
-        th:not(:last-child) {border-inline-end: 1px solid $border-color;}
+        th:not(:last-child) {
+          border-inline-end: 1px solid $border-color;
+        }
       }
 
       .main-tbody:nth-child(2n+1) {
-        td:not(:last-child) {border-inline-end: 1px solid $border-color;}
+        td:not(:last-child) {
+          border-inline-end: 1px solid $border-color;
+        }
       }
 
       .main-tbody:nth-child(2n) {
-        td:not(:last-child) {border-inline-end: 1px solid $border-color;}
+        td:not(:last-child) {
+          border-inline-end: 1px solid $border-color;
+        }
       }
     }
   }
@@ -179,6 +185,7 @@ $border-color: rgba(var(--color-black-rgb), .05);
 
             &:hover {
               background-color: var(--color-gray--4);
+
               .sort-icon::before {
                 opacity: 1 !important;
               }
@@ -196,11 +203,13 @@ $border-color: rgba(var(--color-black-rgb), .05);
                 font-style: normal;
               }
             }
+
             &.sort-dir.asc .sort-icon::before {
               font-family: "Font Awesome 6 Pro";
               content: '\f884';
               font-style: normal;
             }
+
             &.sort-dir.desc .sort-icon::before {
               font-family: "Font Awesome 6 Pro";
               content: '\f161';
@@ -209,8 +218,14 @@ $border-color: rgba(var(--color-black-rgb), .05);
           }
         }
 
-        thead {top: 0;}
-        tfoot {bottom: -1px;}
+        thead {
+          top: 0;
+        }
+
+        tfoot {
+          bottom: -1px;
+        }
+
         thead, tfoot {
           z-index: 10;
           height: 3.5rem;
@@ -266,6 +281,7 @@ $border-color: rgba(var(--color-black-rgb), .05);
     ::ng-deep {
       .sticky-column-start {
         left: 0;
+
         &::before {
           right: 0;
         }
@@ -273,6 +289,7 @@ $border-color: rgba(var(--color-black-rgb), .05);
 
       .sticky-column-end {
         right: 0;
+
         &::before {
           left: 0;
         }
@@ -284,6 +301,7 @@ $border-color: rgba(var(--color-black-rgb), .05);
     ::ng-deep {
       .sticky-column-start {
         right: 0;
+
         &::before {
           left: 0;
         }
@@ -291,6 +309,7 @@ $border-color: rgba(var(--color-black-rgb), .05);
 
       .sticky-column-end {
         left: 0;
+
         &::before {
           right: 0;
         }

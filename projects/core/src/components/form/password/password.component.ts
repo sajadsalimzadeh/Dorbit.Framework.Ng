@@ -1,6 +1,4 @@
-import {
-  Component, Injector, Input, TemplateRef, ViewChild,
-} from '@angular/core';
+import {Component, Injector, Input, TemplateRef, ViewChild,} from '@angular/core';
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
 import {OverlayRef, OverlayService} from "../../overlay/overlay.service";
 

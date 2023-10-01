@@ -35,12 +35,15 @@ export class MessageService {
   warn(message: Message | string) {
     return this.show({...this.getMessage(message), color: 'warning'})
   }
+
   success(message: Message | string) {
     return this.show({...this.getMessage(message), color: 'success'})
   }
+
   error(message: Message | string) {
     return this.show({...this.getMessage(message), color: 'danger'})
   }
+
   info(message: Message | string) {
     return this.show({...this.getMessage(message), color: 'link'})
   }

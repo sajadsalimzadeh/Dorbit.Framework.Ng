@@ -1,4 +1,3 @@
-
 class ResourceService {
   resources: any = {};
 

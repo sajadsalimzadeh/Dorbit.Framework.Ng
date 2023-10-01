@@ -9,7 +9,7 @@ declare global {
 Array.prototype.distinct = function () {
   let items: any[] = [];
   for (const x of this) {
-    if(items.includes(x)) continue;
+    if (items.includes(x)) continue;
     items.push(x);
   }
   return items;

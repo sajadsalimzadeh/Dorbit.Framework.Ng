@@ -1,8 +1,4 @@
-import {
-  Component,
-  Injector,
-  Input,
-} from '@angular/core';
+import {Component, Injector, Input,} from '@angular/core';
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
 import {KeyFilters} from "../../key-filter/key-filter.directive";
 

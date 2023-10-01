@@ -77,7 +77,7 @@ export class Logger {
       } else {
         persistLogs?.add(log);
       }
-    } catch(e) {
+    } catch (e) {
       console.error(e)
     }
   }

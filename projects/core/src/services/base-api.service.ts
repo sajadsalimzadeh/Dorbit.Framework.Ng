@@ -1,6 +1,5 @@
 import {HttpClient, HttpContext, HttpEvent, HttpHandler, HttpHeaders, HttpParams, HttpRequest, HttpResponse} from "@angular/common/http";
-import {Injectable, InjectionToken, Injector, Type} from "@angular/core";
-import {CacheService} from "./cache.service";
+import {Injectable, InjectionToken, Injector} from "@angular/core";
 import {Observable, tap} from "rxjs";
 import {LoadingService} from "./loading.service";
 

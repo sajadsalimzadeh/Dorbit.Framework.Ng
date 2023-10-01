@@ -1,4 +1,4 @@
-import {EventEmitter, Inject, Injectable, InjectionToken, Optional} from "@angular/core";
+import {EventEmitter, InjectionToken} from "@angular/core";
 import {Observable, Subject} from "rxjs";
 import {TimeSpan} from "../models";
 import {IndexedDB, ITable} from "../utils";

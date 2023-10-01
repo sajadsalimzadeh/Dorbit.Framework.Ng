@@ -1,16 +1,6 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  HostListener,
-  Injector,
-  Input,
-  Output,
-  TemplateRef,
-  ViewChild
-} from "@angular/core";
+import {Component, ElementRef, EventEmitter, HostListener, Injector, Input, Output, TemplateRef, ViewChild} from "@angular/core";
 import * as moment from 'jalali-moment';
-import {Moment} from "jalali-moment";
+import {Moment} from 'jalali-moment';
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
 import {OverlayRef, OverlayService} from "../../overlay/overlay.service";
 import {OverlayAlignments} from "../../overlay/overlay.component";
@@ -150,7 +140,7 @@ export class DatePickerComponent extends AbstractFormControl<any> {
 
   onInputChange(e: Event) {
     const input = (e.target as HTMLInputElement);
-    if(input) this.updateValue(input.value);
+    if (input) this.updateValue(input.value);
 
     this.selectedDate = this.createDate(this.formControl.value).value;
 

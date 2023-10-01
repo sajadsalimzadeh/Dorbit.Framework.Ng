@@ -20,14 +20,14 @@
         </div>
         <div class="days">
           <div class="day" *ngFor="let date of dates; let index = index"
-            [ngClass]="{active: date.isSelected,today: date.isToday,holiday: date.isHoliday,'this-month': date.isCurrentMonth}"
-            (mousedown)="selectDate(date)">
+               [ngClass]="{active: date.isSelected,today: date.isToday,holiday: date.isHoliday,'this-month': date.isCurrentMonth}"
+               (mousedown)="selectDate(date)">
             <span>{{date.day}}</span>
           </div>
         </div>
       </div>
       <div class="today-button" (click)="selectDate(todayValue)">
-        {{(type == 'jalali' ?  'امروز' : 'Today')}}
+        {{(type == 'jalali' ? 'امروز' : 'Today')}}
       </div>
     </div>
     <div class="month-picker" [ngClass]="{show: (view == 'month')}">

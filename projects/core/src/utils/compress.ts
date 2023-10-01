@@ -37,6 +37,7 @@ export class Compressor {
     }
     return ASCII;
   }
+
   static decompress(str: string) {
     let i, tmp = [],
       dictionary = [],
@@ -51,9 +52,9 @@ export class Compressor {
       dictionary[i] = String.fromCharCode(i);
     }
 
-    if(compressed) {
+    if (compressed) {
       // convert string into Array.
-      for(i = 0; i < compressed.length; i += 1) {
+      for (i = 0; i < compressed.length; i += 1) {
         compressArray.push(compressed[i].charCodeAt(0));
       }
     }

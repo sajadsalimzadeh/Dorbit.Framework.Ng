@@ -1,5 +1,5 @@
 import {IDatabase, ITable, ITableConfig} from "./database";
-import {BehaviorSubject, Subject} from "rxjs";
+import {Subject} from "rxjs";
 
 export class IndexedDB implements IDatabase {
   private db!: IDBDatabase;

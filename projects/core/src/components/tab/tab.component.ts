@@ -1,7 +1,4 @@
-import {
-  Component, ContentChildren, EventEmitter, HostBinding, Input, Output, QueryList,
-} from '@angular/core';
-import {BaseComponent} from "../base.component";
+import {Component, ContentChildren, EventEmitter, HostBinding, Input, Output, QueryList,} from '@angular/core';
 import {Orientation} from "../../types";
 import {TabTemplateDirective} from "./components/tab-template.directive";
 import {AbstractFormControl, createControlValueAccessor} from "../form";
@@ -32,7 +29,7 @@ export class TabComponent extends AbstractFormControl<any> {
 
     this.subscription.add(this.onChange.subscribe(e => {
       const tab = this.tabsTemplates.find(x => x.key == e);
-      if(tab) this.setTab(tab)
+      if (tab) this.setTab(tab)
     }))
   }
 
@@ -43,7 +40,7 @@ export class TabComponent extends AbstractFormControl<any> {
   }
 
   setTab(tab: TabTemplateDirective) {
-    if(this.activeTab == tab) return;
+    if (this.activeTab == tab) return;
     this.onTabChange.emit(tab.key);
     this.activeTab = tab;
     this.formControl?.setValue(tab.key)

@@ -1,22 +1,24 @@
 import {
   ContentChildren,
-  Directive, ElementRef, EventEmitter,
-  forwardRef, HostBinding, HostListener,
-  Injector, Input,
+  Directive,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  HostBinding,
+  HostListener,
+  Injector,
+  Input,
   OnChanges,
   OnDestroy,
-  OnInit, Output, QueryList,
-  SimpleChanges, TemplateRef,
-  Type, ViewChild
+  OnInit,
+  Output,
+  QueryList,
+  SimpleChanges,
+  TemplateRef,
+  Type,
+  ViewChild
 } from "@angular/core";
-import {
-  ControlContainer,
-  ControlValueAccessor,
-  FormControl,
-  FormGroupDirective,
-  NG_VALUE_ACCESSOR,
-  NgControl
-} from "@angular/forms";
+import {ControlContainer, ControlValueAccessor, FormControl, FormGroupDirective, NG_VALUE_ACCESSOR, NgControl} from "@angular/forms";
 import {TemplateDirective} from "../template/template.directive";
 import {FormControlService} from "./form-control.service";
 import {BaseComponent} from "../base.component";
@@ -47,7 +49,7 @@ export abstract class AbstractFormControl<T> extends BaseComponent implements Co
   @Input() styleControl?: any;
 
   private _autofocus: boolean = false;
-  @Input() set autofocus(value: {delay: number} | boolean | undefined) {
+  @Input() set autofocus(value: { delay: number } | boolean | undefined) {
     this._autofocus = (typeof value === 'boolean' ? value : true);
     const delay = (typeof value === 'object' ? value.delay : 10) ?? 10;
     setTimeout(() => {
@@ -59,6 +61,7 @@ export abstract class AbstractFormControl<T> extends BaseComponent implements Co
       })
     }, delay);
   }
+
   get autofocus() {
     return this._autofocus;
   }

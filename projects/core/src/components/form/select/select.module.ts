@@ -25,4 +25,5 @@ export * from './select.component';
     SelectComponent,
   ]
 })
-export class SelectModule {}
+export class SelectModule {
+}

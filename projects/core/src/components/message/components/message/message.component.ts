@@ -1,14 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  ContentChildren,
-  EventEmitter,
-  HostBinding,
-  Injector,
-  Input, Output,
-  QueryList,
-  TemplateRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ContentChildren, EventEmitter, Injector, Input, Output, QueryList, TemplateRef,} from '@angular/core';
 import {TemplateDirective} from "../../../template/template.directive";
 import {BaseComponent} from "../../../base.component";
 import {Message} from "../../models";

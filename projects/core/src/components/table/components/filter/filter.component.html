@@ -11,7 +11,7 @@
     <div class="overlay-box">
       <div class="operation">
         <d-select [items]="operations" [formControl]="operationControl" valueField="key"
-                    textField="value"></d-select>
+                  textField="value"></d-select>
       </div>
       <div class="value-box" *ngIf="overlay && template">
         <ng-container *ngTemplateOutlet="template; context: {$implicit: this, control: valueControl}">

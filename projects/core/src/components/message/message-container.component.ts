@@ -17,7 +17,7 @@ export * from './components/message/message.component';
 export class MessageContainerComponent extends BaseComponent {
   @Input() name?: string;
   @Input() items: Message[] = [];
-  @Input() position: 'static' | Positions  = 'static';
+  @Input() position: 'static' | Positions = 'static';
 
   @HostListener('mouseenter')
   onMouseEnter() {

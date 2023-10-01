@@ -10,7 +10,9 @@ import {AbstractFormControl, createControlValueAccessor} from "../form-control.d
 export class SwitchComponent extends AbstractFormControl<boolean | null> {
 
   @HostListener('keydown.space')
-  onKeyDownSpace() {this.toggle();}
+  onKeyDownSpace() {
+    this.toggle();
+  }
 
   override onClick(e: MouseEvent) {
     this.toggle();
