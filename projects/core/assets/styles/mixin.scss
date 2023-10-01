@@ -1,6 +1,6 @@
 @mixin selected-color {
   color: var(--color-primary-shade);
-  background-color: var(--color-primary-tint);
+  background-color: rgba(var(--color-primary-rgb), .1);
 }
 
 @mixin shadow {

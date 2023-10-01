@@ -3,6 +3,8 @@
  */
 
 export * from './dorbit.module';
+export * from './dorbit.config';
+export * from './interceptors';
 export * from './components';
 export * from './pipes';
 export * from './models';

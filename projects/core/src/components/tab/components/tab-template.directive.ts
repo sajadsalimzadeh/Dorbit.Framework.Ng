@@ -2,10 +2,10 @@ import {Directive, Input, TemplateRef} from "@angular/core";
 import {TemplateDirective} from "../../template/template.directive";
 
 @Directive({
-  selector: '[dTemplate]'
+  selector: '[dTab]'
 })
 export class TabTemplateDirective extends TemplateDirective {
-  @Input() key?: any;
+  @Input('dTab') key?: any;
   @Input() header?: string;
   @Input() icon?: string;
 

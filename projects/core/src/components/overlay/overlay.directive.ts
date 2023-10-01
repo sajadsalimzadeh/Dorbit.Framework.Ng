@@ -1,4 +1,4 @@
-import {Directive, HostListener, Injector, Input, OnInit, TemplateRef} from '@angular/core';
+import {Directive, HostListener, Injector, Input, OnInit} from '@angular/core';
 import {BaseComponent} from "../base.component";
 import {OverlayRef, OverlayService} from "./overlay.service";
 import {OverlayOptions} from './overlay.component'
@@ -9,22 +9,30 @@ import {OverlayOptions} from './overlay.component'
 export class OverlayDirective extends BaseComponent implements OnInit {
   @Input('dOverlay') options!: OverlayOptions;
 
-  @HostListener('click', ['$event']) onClick(e: MouseEvent) {
+  @HostListener('focus', ['$event']) onFocus(e: Event) {
     e.stopPropagation();
-    if(this.overlayRef) return;
-    this.overlayRef = this.overlayService.create({
-      ...this.options,
-      autoClose: true,
-      ref: this.elementRef.nativeElement,
-    });
-    this.overlayRef.onDestroy.subscribe(() => {
-      this.overlayRef = undefined;
-    });
+    this.create();
+  }
+  @HostListener('click', ['$event']) onClick(e: Event) {
+    e.stopPropagation();
+    this.create();
   }
 
   overlayRef?: OverlayRef;
 
   constructor(injector: Injector, private overlayService: OverlayService) {
     super(injector);
+  }
+
+  create() {
+    if(this.overlayRef) return;
+    this.overlayRef = this.overlayService.create({
+      autoClose: true,
+      ...this.options,
+      ref: this.elementRef.nativeElement,
+    });
+    this.overlayRef.onDestroy.subscribe(() => {
+      this.overlayRef = undefined;
+    });
   }
 }

@@ -3,9 +3,9 @@
   border-radius: var(--radius-2);
 
   &.fill {
-    color: var(--color-white);
+    color: var(--color-component-text);
     background-color: var(--color-component);
-    &.disabled {color: rgba(var(--color-white-rgb), .8);}
+    //&.disabled {color: rgba(var(--color-white-rgb), .8);}
   }
   &.outline {border: 1px solid var(--color-component);}
   &.text, &.outline {
@@ -13,13 +13,13 @@
     &:hover {background-color: rgba(var(--color-component-rgb), .1);}
   }
 
-  &.disabled {opacity: .5 !important;}
-  &.text {background-color: var(--color-white);}
+  &.disabled {opacity: .8 !important;filter: blur(.5px)}
+  //&.text {background-color: var(--color-white);}
   &.outline {background-color: var(--color-white);}
 
   &.fill {
     &:hover {
-      opacity: .8;
+      opacity: .95;
     }
   }
 
@@ -54,11 +54,6 @@
       border-radius: var(--radius-10);
     }
   }
-  button {
-
-    &.icon-start .icon {margin-inline-end: var(--size-3);}
-    &.icon-end .icon {margin-inline-start: var(--size-3);}
-  }
 
   .icon {
     display: flex;
@@ -75,12 +70,13 @@
     }
 
     .icon::before {
-      animation: loading-spinner .8s linear infinite;
+      animation: spinner .8s linear infinite;
     }
   }
 }
 
 button {
+  gap: var(--size-3);
   width: 100%;
   height: 100%;
   border: none;
@@ -88,8 +84,8 @@ button {
   display: flex;
   color: inherit;
   cursor: pointer;
-  font-size: 1em;
-  padding: .9em 1.1em;
+  font-size: 1.2em;
+  padding: .6em .9em;
   align-items: center;
   font-family: inherit;
   justify-content: center;
@@ -99,9 +95,4 @@ button {
 @keyframes loading-width {
   0% {max-width: 0;}
   100% {max-width: 100px;}
-}
-
-@keyframes loading-spinner {
-  0% {transform: rotate(0deg);}
-  100% {transform: rotate(360deg);}
 }

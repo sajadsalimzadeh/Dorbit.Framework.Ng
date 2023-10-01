@@ -9,12 +9,12 @@ export class LoadingService {
 
   onLoading = new Subject<boolean>();
 
-  startLoading() {
+  start() {
     this.counters++;
     this.onLoading.next(this.counters > 0);
   }
 
-  endLoading() {
+  end() {
     this.counters--;
     this.onLoading.next(this.counters > 0);
   }

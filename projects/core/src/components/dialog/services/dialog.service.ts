@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {DomService} from "../../../services/dom.service";
+import {DomService} from "../../../services";
 import {DialogComponent, DialogOptions} from "../components/dialog/dialog.component";
 import {DialogContainerComponent} from "../dialog-container.component";
 import {Subject} from "rxjs";
@@ -16,8 +16,10 @@ export class DialogService {
   constructor(private domService: DomService) {
   }
 
-  show(options: DialogOptions): DialogRef {
-    let container = this.containers.find(x => x.name == options.container);
+  open(options: DialogOptions): DialogRef {
+    const container = this.containers.find(x => x.name == options.container);
+    const parentElement = container?.elementRef.nativeElement.parentNode as HTMLElement;
+    options.maxHeight ??= `calc(${parentElement.clientHeight}px - 1.6rem)`;
     const componentRef = this.domService.createByComponent(DialogComponent, container?.elementRef.nativeElement);
     Object.assign(componentRef.instance, options);
     componentRef.instance.componentRef = componentRef;

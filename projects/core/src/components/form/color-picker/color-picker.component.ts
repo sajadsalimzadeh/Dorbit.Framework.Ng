@@ -56,7 +56,6 @@ export class ColorPickerComponent extends AbstractFormControl<string> implements
     super.render();
 
     if(this.colorCtx) {
-      console.log(this.colorCtx.canvas.width, this.colorCtx.canvas.height)
       this.colorCtx.clearRect(0, 0, this.colorCtx.canvas.width, this.colorCtx.canvas.height);
 
       this.colorCtx.fillStyle = '#fff';

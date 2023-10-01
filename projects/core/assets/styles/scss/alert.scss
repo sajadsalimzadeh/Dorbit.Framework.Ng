@@ -1,0 +1,17 @@
+@import "../variables";
+
+.alert {
+  padding: 1rem;
+  border-width: 1px;
+  border-radius: 6px;
+  border-style: solid;
+  text-align: justify;
+
+  @each $color in $main-colors {
+    &.alert-#{$color} {
+      color: var(--color-#{$color});
+      background-color: var(--color-#{$color}-tint);
+      border-color: rgba(var(--color-#{$color}-rgb), .2);
+    }
+  }
+}

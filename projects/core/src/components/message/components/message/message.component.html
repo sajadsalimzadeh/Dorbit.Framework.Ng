@@ -14,12 +14,12 @@
         {{item.body}}
       </div>
     </div>
-    <div class="timer-box" *ngIf="timer">
+    <div class="timer-box" *ngIf="item.showTimeString && timer">
       {{(timer / 1000).toFixed(2)}}s
     </div>
     <div class="remove-box" *ngIf="item.removable" (click)="remove()">
-      <i class="fa fa-times"></i>
+      <i class="icons-core-close"></i>
     </div>
   </ng-template>
 </div>
-<div class="progress" [style.width]="progress + '%'"></div>
+<div class="progress"></div>

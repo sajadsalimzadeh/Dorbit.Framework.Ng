@@ -1,21 +1,21 @@
-<div class="placement">
+<d-position [position]="position">
   <div class="dialog" [style]="dialogStyles">
     <div class="header">
       <div class="title">
         {{title}}
       </div>
       <div class="button minimize" *ngIf="minimizable" (click)="minimize()">
-        <i class="far fa-minus"></i>
+        <i class="icons-core-minus"></i>
       </div>
       <div class="button maximize" *ngIf="!isMinimize && maximizable" (click)="maximize()">
-        <i class="far" [ngClass]="(isMaximize ? 'fa-arrows-minimize' : 'fa-arrows-maximize')"></i>
+        <i [ngClass]="(isMaximize ? 'icons-core-minimize' : 'icons-core-maximize')"></i>
       </div>
       <div class="button close" *ngIf="closable" (click)="close()">
-        <i class="far fa-times"></i>
+        <i class="icons-core-close"></i>
       </div>
     </div>
     <div class="body">
-      <ng-container *ngTemplateOutlet="template; context: {$implicit: this}"></ng-container>
+      <ng-container *ngTemplateOutlet="template; context: {$implicit: this, context: context}"></ng-container>
     </div>
   </div>
-</div>
+</d-position>

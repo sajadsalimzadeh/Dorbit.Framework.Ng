@@ -10,12 +10,14 @@
 .flex-align-start {align-items: flex-start !important;}
 .flex-align-center {align-items: center !important;}
 .flex-align-end {align-items: flex-end !important;}
+.flex-align-stretch {align-items: stretch !important;}
 
 .flex-justify-start {justify-content: flex-start !important;}
 .flex-justify-center {justify-content: center !important;}
 .flex-justify-end {justify-content: flex-end !important;}
 .flex-justify-space-between {justify-content: space-between !important;}
 .flex-justify-space-around {justify-content: space-around !important;}
+.flex-justify-stretch {justify-content: stretch !important;}
 
 .flex-wrap {flex-wrap: wrap !important;}
 .flex-stretch {justify-content: stretch !important;}
@@ -66,5 +68,19 @@ $i: 1;
     @media (min-width: $resolution) {
       width: $width;
     }
+  }
+}
+
+.dock {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+
+  &.dock-scroll {
+    display: flex;
+    overflow: auto;
+    flex-direction: column;
   }
 }

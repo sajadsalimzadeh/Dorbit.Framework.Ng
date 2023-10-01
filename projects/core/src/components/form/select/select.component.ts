@@ -34,6 +34,11 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
 
   @Output() onSearch = new EventEmitter<string | null>();
 
+  @ViewChild('itemsTpl') itemsTpl?: TemplateRef<any>;
+  @ViewChild(InputComponent) inputComponent?: InputComponent;
+
+  @ViewChild('itemsContainerEl') itemsContainerEl?: ElementRef<HTMLUListElement>;
+
   @HostBinding('class.open') get isOpen() {
     return !!this.overlayRef;
   }
@@ -43,29 +48,23 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
     this.handleHoveredIndex(e);
   }
 
-  @ViewChild('itemsTpl') itemsTpl?: TemplateRef<any>;
-  @ViewChild(InputComponent) inputComponent?: InputComponent;
-
-  @ViewChild('itemsContainerEl') itemsContainerEl?: ElementRef<HTMLUListElement>;
-
-  optionTemplate?: TemplateDirective;
+  optionTemplate?: TemplateRef<any>;
 
   @ContentChildren(TemplateDirective) set templates(value: QueryList<TemplateDirective>) {
     if (value) {
-      this.optionTemplate = value.find(x => x.includesName('option'));
+      this.optionTemplate = value.find(x => x.includesName('option', true))?.template;
     }
   }
 
   override onClick(e: MouseEvent) {
     e.stopPropagation();
-    this.open();
     super.onClick(e);
   }
 
   override onFocus(e: FocusEvent) {
-    e.preventDefault();
-    this.open();
+    e.stopPropagation();
     super.onFocus(e);
+    this.open();
   }
 
   overlayRef?: OverlayRef;
@@ -214,14 +213,15 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
       })
       this.overlayRef.onDestroy.subscribe(() => this.overlayRef = undefined);
       setTimeout(() => {
-        this.inputComponent?.inputEl?.nativeElement.focus();
+        if(this.renderedItems.length > 10) {
+          this.inputComponent?.inputEl?.nativeElement.focus();
+        }
       }, 10);
 
       setTimeout(() => {
         const containerEl = this.itemsContainerEl?.nativeElement;
         if (containerEl) {
           const selectedItemEl = containerEl.querySelector('.selected') as HTMLLIElement;
-          console.log(selectedItemEl?.offsetTop)
           if (selectedItemEl) {
             containerEl.scrollTop = (selectedItemEl.offsetTop - (containerEl.offsetHeight / 2));
           }

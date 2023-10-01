@@ -1,12 +1,6 @@
-import {HttpClient} from "@angular/common/http";
-import {Injectable} from "@angular/core";
 
-@Injectable({providedIn: 'root'})
-export class ResourceService {
-  private resources: any = {};
-
-  constructor(private http: HttpClient) {
-  }
+class ResourceService {
+  resources: any = {};
 
   get(name: string) {
     return this.resources[name];
@@ -18,10 +12,28 @@ export class ResourceService {
         resolve(this.resources[name]);
         return;
       }
-      this.http.get<any>(url).subscribe(res => {
-        this.resources[name] = res;
-        resolve(res);
-      }, e => reject(e));
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', url);
+      xhr.addEventListener('readystatechange', () => {
+        if (xhr.readyState == 4) {
+          if (xhr.status == 200) {
+            const res = JSON.parse(xhr.responseText);
+            this.resources[name] = res;
+            resolve(res);
+          } else {
+            reject();
+          }
+        }
+      });
+      xhr.send();
     })
   }
+
+  merge(name: string, ...sources: string[]) {
+    const resource: any = {};
+    sources.forEach(x => Object.assign(resource, this.resources[x]));
+    return this.resources[name] = resource;
+  }
 }
+
+export const resourceService = new ResourceService();

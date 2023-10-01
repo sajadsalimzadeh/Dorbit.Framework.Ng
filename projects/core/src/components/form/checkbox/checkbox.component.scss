@@ -1,8 +1,9 @@
 :host {
+  gap: .7em;
+  padding: 0;
   outline: none;
   align-items: center;
   display: inline-flex;
-  padding: .2rem .2rem;
   border-radius: var(--radius-2);
 
   &, * {cursor: pointer;}
@@ -15,7 +16,7 @@
   .check-box {
     width: 0;
     height: 0;
-    padding: .7rem;
+    padding: .7em;
     position: relative;
     border-width: .2rem;
     align-items: center;
@@ -45,8 +46,8 @@
 
   label {
     display: flex;
+    font-size: 1.2em;
     align-items: center;
-    margin-inline: var(--size-3);
 
     &:empty {
       display: none;

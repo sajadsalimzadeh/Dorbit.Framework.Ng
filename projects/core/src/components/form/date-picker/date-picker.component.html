@@ -1,10 +1,10 @@
 <div class="control-box">
   <div class="control-container flex-1">
-    <input class="control" #inputEl [ngModel]="formControl.value" [placeholder]="placeholder"
-           (ngModelChange)="onInputChange($event)" (focus)="focus()" (blur)="blur()"/>
+    <input class="control" #inputEl [ngModel]="formControl.value" [placeholder]="placeholder" [ngClass]="classControl"
+           (change)="onInputChange($event)" (focus)="focus()" (blur)="blur()" [dir]="dir"/>
   </div>
   <div class="control-container">
-    <i class="clear far fa-times" *ngIf="formControl.value" (click)="clear()"></i>
+    <i class="clear icons-core-close" *ngIf="formControl.value" (click)="clear()"></i>
   </div>
 </div>
 <ng-template #pickerTpl>

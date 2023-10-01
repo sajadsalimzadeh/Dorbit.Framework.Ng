@@ -13,6 +13,7 @@ import * as moment from 'jalali-moment';
 import {Moment} from "jalali-moment";
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
 import {OverlayRef, OverlayService} from "../../overlay/overlay.service";
+import {OverlayAlignments} from "../../overlay/overlay.component";
 
 type ViewMode = 'calendar' | 'month' | 'year';
 
@@ -40,6 +41,7 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   @Input() type: 'gregorian' | 'jalali' = 'gregorian';
   @Input() format = 'YYYY/MM/DD';
   @Input() locale?: string;
+  @Input() alignment: OverlayAlignments = 'start-bottom';
 
   @Output() onLeave = new EventEmitter<any>();
   @Output() onChooseDate = new EventEmitter<string>();
@@ -146,8 +148,9 @@ export class DatePickerComponent extends AbstractFormControl<any> {
     this.formControl.setValue(value);
   }
 
-  onInputChange(e: string) {
-    this.updateValue(e);
+  onInputChange(e: Event) {
+    const input = (e.target as HTMLInputElement);
+    if(input) this.updateValue(input.value);
 
     this.selectedDate = this.createDate(this.formControl.value).value;
 
@@ -282,6 +285,7 @@ export class DatePickerComponent extends AbstractFormControl<any> {
       this.overlayRef = this.overlayService.create({
         autoClose: false,
         template: this.pickerTpl,
+        alignment: this.alignment,
         ref: this.elementRef.nativeElement
       });
       this.overlayRef.onDestroy.subscribe(() => this.overlayRef = undefined);

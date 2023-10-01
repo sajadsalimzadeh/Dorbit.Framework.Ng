@@ -1,4 +1,4 @@
-<button [type]="type" [disabled]="disabled" [ngClass]="classes">
+<button [type]="type" [disabled]="disabled || loading" (click)="onClick.emit($event)">
   <span class="text" #textEl>
     <ng-content></ng-content>
   </span>

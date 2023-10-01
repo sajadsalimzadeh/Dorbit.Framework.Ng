@@ -1,5 +1,5 @@
 <div class="icon-box" [ngClass]="{active: (!!valueControl.value)}" (click)="openFilterOverlay($event)">
-  <i class="far fa-filter" #filterIconEl></i>
+  <i class="icons-core-filter" #filterIconEl></i>
 </div>
 <div *ngIf="!overlay && template">
   <ng-container *ngTemplateOutlet="template; context: {$implicit: this, control: valueControl}">

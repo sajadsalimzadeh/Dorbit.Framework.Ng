@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   ContentChildren,
   EventEmitter,
@@ -24,11 +25,6 @@ export class MessageComponent extends BaseComponent {
 
   @Output() onRemove = new EventEmitter<Message>();
 
-  @HostBinding('class.show')
-  get show() {
-    return this.item.show;
-  }
-
   timer: number = 0;
   progress: number = 0;
 
@@ -38,7 +34,7 @@ export class MessageComponent extends BaseComponent {
     this.contentTemplate = value.find(x => x.includesName('default', true))?.template;
   }
 
-  constructor(injector: Injector) {
+  constructor(injector: Injector, private changeDetectionRef: ChangeDetectorRef) {
     super(injector);
   }
 
@@ -51,26 +47,26 @@ export class MessageComponent extends BaseComponent {
     if (typeof this.item.icon === 'undefined') {
       switch (this.color) {
         case 'primary':
-          this.item.icon = 'far fa-info-circle';
+          this.item.icon = 'icons-core-info-circle';
           break;
         case 'secondary':
-          this.item.icon = 'far fa-circle-exclamation';
+          this.item.icon = 'icons-core-exclamation-circle';
           break;
         case 'warning':
-          this.item.icon = 'far fa-warning';
+          this.item.icon = 'icons-core-warning';
           break;
         case 'success':
-          this.item.icon = 'far fa-check';
+          this.item.icon = 'icons-core-check';
           break;
         case 'link':
-          this.item.icon = 'far fa-link';
+          this.item.icon = 'icons-core-link';
           break;
         case 'danger':
-          this.item.icon = 'far fa-times-circle';
+          this.item.icon = 'icons-core-close-circle';
           break;
       }
     }
-    this.item.show = true;
+    this.elementRef.nativeElement.classList.add('show');
 
     super.ngOnInit();
 
@@ -78,11 +74,13 @@ export class MessageComponent extends BaseComponent {
       const duration = this.item.duration;
       if (this.item.showTimer) {
         this.timer = this.item.duration;
+        const progressEl = this.elementRef.nativeElement.querySelector('.progress') as HTMLElement;
         const speed = 50;
         const interval = setInterval(() => {
           if (!this.timerEnable) return;
           this.timer -= speed;
           this.progress = (this.timer * 100 / duration);
+          progressEl.style.width = `${this.progress}%`;
           if (this.timer < 0) {
             this.timer = 0;
             this.remove();
@@ -98,10 +96,12 @@ export class MessageComponent extends BaseComponent {
   }
 
   remove() {
-    this.item.show = false;
+    this.elementRef.nativeElement.classList.remove('show');
+    this.changeDetectionRef.detectChanges();
     setTimeout(() => {
       const index = this.items.indexOf(this.item);
       if (index > -1) this.items.splice(index, 1);
+      this.changeDetectionRef.detectChanges();
     }, 200);
   }
 }

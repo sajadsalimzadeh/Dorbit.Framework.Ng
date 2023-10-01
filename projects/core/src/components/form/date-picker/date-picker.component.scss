@@ -8,11 +8,13 @@
     right: initial;
     padding: 0 .8rem;
     color: var(--color-gray-8);
-    font-size: var(--font-size-5);
+    font-size: 1em;
   }
 
   .clear {
     cursor: pointer;
+    padding: 0 1rem;
+    color: var(--color-gray--10);
   }
 }
 
@@ -55,7 +57,7 @@
   .year-month {
     display: flex;
     font-weight: bold;
-    font-size: .9rem;
+    font-size: 1.2em;
     border-bottom: 1px solid var(--color-gray--2);
 
     > div {
@@ -76,7 +78,7 @@
     .week-days {
       display: flex;
       font-weight: bold;
-      font-size: .9rem;
+      font-size: 1.1em;
       border-bottom: 1px solid var(--color-gray--2);
 
       .week-day {
@@ -89,7 +91,7 @@
     .days {
       flex: 1;
       display: grid;
-      padding: .5rem 0;
+      padding: .5em 0;
       grid-row-gap: .6rem;
       border-bottom: 1px solid var(--color-gray--2);
       grid-template-columns: auto auto auto auto auto auto auto;
@@ -99,11 +101,11 @@
         cursor: pointer;
         align-items: center;
         justify-content: center;
-        font-size: .9rem;
+        font-size: 1.2rem;
 
         span {
-          width: 2.5rem;
-          height: 2.5rem;
+          width: 2.5em;
+          height: 2.5em;
           border-radius: 50%;
 
           @include center;
@@ -140,11 +142,11 @@
 
   .today-button {
     @include hover;
-    padding: .5rem 0;
+    padding: .8em 0;
     cursor: pointer;
     font-weight: bold;
     text-align: center;
-    font-size: 1.1rem;
+    font-size: 1.3em;
   }
 }
 

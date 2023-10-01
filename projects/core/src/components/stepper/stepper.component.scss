@@ -1,0 +1,123 @@
+@use "sass:math";
+
+.steps {
+  margin: 0 0 .5rem;
+  display: flex;
+  list-style: none;
+  padding: 1rem 0 3rem;
+  align-items: center;
+  border-radius: 6px;
+  background-color: var(--color-white);
+
+  $size: 4rem;
+
+  .step {
+    flex: 1;
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+
+    .lines {
+      top: 50%;
+      left: 0;
+      right: 0;
+      display: flex;
+      position: absolute;
+      transform: translateY(-50%);
+
+      &::before, &::after {
+        flex: 1;
+        height: 2px;
+        content: '';
+        display: block;
+        background-color: var(--color-gray--7);
+      }
+    }
+
+    .content {
+      z-index: 10;
+      display: flex;
+      position: relative;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+
+
+      .image {
+        width: $size;
+        height: $size;
+        display: flex;
+        font-size: 2rem;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--color-white);
+        border: 2px solid var(--color-gray--7);
+
+        img {
+          max-width: 60%;
+        }
+      }
+
+      .circle {
+        width: 1.3rem;
+        height: 1.3rem;
+        border-radius: 50%;
+        background-color: var(--color-white);
+        border: 2px solid var(--color-gray--7);
+      }
+
+      .title {
+        position: absolute;
+        text-align: center;
+        top: calc(100% + .5rem);
+        color: var(--color-gray-5);
+      }
+    }
+
+    &.done {
+      .lines::before, .lines::after {
+        background-color: var(--color-success);
+      }
+
+      .content {
+        .image {
+          border-color: var(--color-success);
+        }
+
+        .icon {
+          color: var(--color-success-text);
+          background-color: var(--color-success);
+        }
+
+        .circle {
+          border-color: var(--color-white);
+          background-color: var(--color-success);
+        }
+      }
+    }
+
+    &.active {
+
+      .lines::before {
+        background-color: var(--color-primary);
+      }
+
+      .content {
+        .image {
+          border-color: var(--color-primary);
+        }
+
+        i {
+          color: var(--color-primary);
+        }
+
+        .circle {
+          border-color: var(--color-white);
+          background-color: var(--color-primary);
+        }
+      }
+    }
+  }
+}

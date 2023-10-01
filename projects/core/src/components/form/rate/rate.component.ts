@@ -10,8 +10,8 @@ import {AbstractFormControl, createControlValueAccessor} from "../form-control.d
 export class RateComponent extends AbstractFormControl<number> {
 
   @Input() count: number = 5;
-  @Input() icon: string = 'far fa-star';
-  @Input() iconActive: string = 'fas fa-star';
+  @Input() icon: string = 'icons-core-star';
+  @Input() iconActive: string = 'icons-core-star-fill';
 
   items: boolean[] = [];
 

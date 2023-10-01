@@ -1,10 +1,7 @@
-import {
-  Component, ContentChildren, HostListener, Injector, Input, QueryList, SimpleChanges, TemplateRef,
-} from '@angular/core';
+import {ChangeDetectorRef, Component, ContentChildren, HostListener, Injector, Input, QueryList, TemplateRef} from '@angular/core';
 import {BaseComponent} from "../base.component";
 import {TemplateDirective} from "../template/template.directive";
 import {MessageService} from "./services/message.service";
-import {Subscription} from "rxjs";
 import {Message} from "./models";
 import {Positions} from "../../types";
 
@@ -39,38 +36,35 @@ export class MessageContainerComponent extends BaseComponent {
   }
 
   timerEnable: boolean = true;
-  private listenSubscription?: Subscription;
 
-  constructor(injector: Injector, private messageService: MessageService) {
+  constructor(injector: Injector, private messageService: MessageService, private changeDetectionRef: ChangeDetectorRef) {
     super(injector);
   }
 
   override ngOnInit() {
     super.ngOnInit();
 
-    this.listenSubscription?.unsubscribe();
-    this.listenSubscription = this.messageService.listen(this.name, (m) => {
-      if (!this.items) this.items = [];
-      if (m.delay) {
-        setTimeout(() => {
-          this.addMessage(m);
-        }, m.delay)
-      } else {
-        this.addMessage(m);
+    this.subscription.add(this.messageService.onMessage.subscribe((message) => {
+      if (this.name == message.container) {
+        if (!this.items) this.items = [];
+        if (message.delay) {
+          setTimeout(() => {
+            this.addMessage(message);
+          }, message.delay)
+        } else {
+          this.addMessage(message);
+        }
+        this.changeDetectionRef.detectChanges();
       }
-    });
-  }
-
-  override ngOnChanges(changes: SimpleChanges) {
-    super.ngOnChanges(changes);
+    }));
   }
 
   override render() {
     super.render();
 
-    this.classes[this.position] = true;
+    this.setClass(this.position);
     if (this.position !== 'static') {
-      this.classes['fix'] = true;
+      this.setClass('fix');
     }
   }
 

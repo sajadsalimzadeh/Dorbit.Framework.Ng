@@ -10,33 +10,47 @@ $screens: (
     ('xl', 1200px, 1140px),
     ('xxl', 1400px, 1320px),
 );
+
+$tint-colors: (
+  'primary-tint',
+  'secondary-tint',
+  'success-tint',
+  'warning-tint',
+  'danger-tint',
+  'link-tint',
+);
+
+$shade-colors: (
+  'primary-shade',
+  'secondary-shade',
+  'success-shade',
+  'warning-shade',
+  'link-shade',
+);
+
 $main-colors: (
   'white',
   'black',
   'primary',
-  'primary-tint',
-  'primary-shade',
   'secondary',
-  'secondary-tint',
-  'secondary-shade',
   'success',
-  'success-tint',
-  'success-shade',
   'warning',
-  'warning-tint',
-  'warning-shade',
   'danger',
-  'danger-tint',
-  'danger-shade',
   'link',
-  'link-tint',
-  'link-shade',
 );
 $sub-colors: ();
 $colors: ();
 
-@each $primary-color in $main-colors {
-  $colors: list.append($colors, $primary-color);
+@each $color in $tint-colors {
+  $colors: list.append($colors, $color);
+}
+
+@each $color in $main-colors {
+  $colors: list.append($colors, $color);
+}
+
+@each $color in $shade-colors {
+  $colors: list.append($colors, $color);
 }
 
 @each $counter in $counters {

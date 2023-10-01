@@ -17,9 +17,11 @@ export interface OverlayOptions {
   html?: string;
   ngClasses?: any;
   color?: Colors;
+  styles?: any;
   alignment?: OverlayAlignments;
+  verticalThreshold?: number;
+  horizontalThreshold?: number;
 }
-
 
 @Component({
   selector: 'd-overlay',
@@ -35,6 +37,7 @@ export class OverlayComponent extends BaseComponent implements OnInit, OverlayOp
   template?: TemplateRef<any>;
   text?: string;
   html?: string;
+  styles?: any;
 
   verticalThreshold = 300;
   horizontalThreshold = 300;
@@ -52,6 +55,7 @@ export class OverlayComponent extends BaseComponent implements OnInit, OverlayOp
 
   @HostListener('click', ['$event'])
   onClick(e: MouseEvent) {
+    console.log('overlay click')
     e.stopPropagation();
   }
 
@@ -97,35 +101,37 @@ export class OverlayComponent extends BaseComponent implements OnInit, OverlayOp
       if (alignment == 'end-top') alignment = 'end-bottom';
     }
 
-    this.styles.width = +'px';
+    const styles = this.elementRef.nativeElement.style;
+
+    styles.width = width + 'px';
 
     if (alignment.startsWith('top') || alignment.startsWith('bottom')) {
-      this.styles.width = width + 'px';
+      styles.width = width + 'px';
       if (dir == 'ltr') {
-        this.styles.left = left + 'px';
+        styles.left = left + 'px';
       } else {
-        this.styles.right = right + 'px';
+        styles.right = right + 'px';
       }
 
       if (alignment.startsWith('top')) {
-        this.styles.top = top + 'px';
+        styles.top = top + 'px';
       } else {
-        this.styles.top = top + height + 'px';
+        styles.top = top + height + 'px';
       }
     }
 
     if (alignment.startsWith('start') || alignment.startsWith('end')) {
-      this.styles.top = top + 'px';
-      this.styles.height = height + 'px';
+      // styles.top = top + 'px';
+      styles.height = height + 'px';
 
       if (dir == 'ltr' && alignment.startsWith('start')) {
-        this.styles.left = left + 'px';
+        styles.right = right + width + 'px';
       } else if (dir == 'ltr' && alignment.startsWith('end')) {
-        this.styles.left = left + width + 'px';
+        styles.left = left + width + 'px';
       } else if (dir == 'rtl' && alignment.startsWith('start')) {
-        this.styles.right = right + 'px';
+        styles.left = left + width + 'px';
       } else if (dir == 'rtl' && alignment.startsWith('end')) {
-        this.styles.right = right + width + 'px';
+        styles.right = right + width + 'px';
       }
     }
     this.overlayClasses = {};

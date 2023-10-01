@@ -19,7 +19,7 @@ export class SwitchComponent extends AbstractFormControl<boolean | null> {
 
   override render() {
     super.render();
-    this.classes['checked'] = !!this.formControl?.value;
+    this.setClass('checked', !!this.formControl?.value);
   }
 
   toggle() {

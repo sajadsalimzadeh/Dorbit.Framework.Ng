@@ -10,21 +10,17 @@ import {
 } from "@angular/core";
 import {Colors, Sizes} from "../types";
 import {Subscription} from "rxjs";
+import {DorbitConfig} from "../dorbit.config";
 
 
 @Directive()
 export abstract class BaseComponent implements OnInit, OnChanges, OnDestroy {
+
   @Input() size: Sizes = 'md';
   @Input() color: Colors = 'primary';
+  @Input() colorText: Colors = 'primary';
   @Input() ngClasses?: any;
-
-  direction: 'rtl' | 'ltr' = 'ltr';
-
-  @HostBinding('class')
-  classes: any = {};
-
-  @HostBinding('style')
-  styles: any = {};
+  @Input() dir: '' | 'rtl' | 'ltr' = '';
 
   protected subscription = new Subscription();
 
@@ -32,9 +28,12 @@ export abstract class BaseComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(protected injector: Injector) {
     this.elementRef = injector.get(ElementRef);
+
+    Object.assign(this, DorbitConfig.getConfig(Object.getPrototypeOf(this).constructor));
   }
 
   ngOnInit() {
+    Object.assign(this, DorbitConfig.getConfig(Object.getPrototypeOf(this).constructor));
     this.render();
   }
 
@@ -47,25 +46,36 @@ export abstract class BaseComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   render() {
-    this.classes = {...this.ngClasses};
-    this.styles = {};
-    this.classes[this.size] = true;
-    this.classes[this.color] = true;
+    this.resetClasses();
+    if (this.ngClasses) {
+      for (let className of this.ngClasses) {
+        this.setClass(className, !!this.ngClasses[className])
+      }
+    }
+    this.setClass(this.size);
+    this.setClass(this.color);
 
     if (this.elementRef) {
-      this.direction = getComputedStyle(this.elementRef.nativeElement).direction as any;
-      this.classes['direction-' + this.direction] = true;
+      if (!this.dir) {
+        this.dir = getComputedStyle(this.elementRef.nativeElement).direction as any;
+      }
+      this.setClass('direction-' + this.dir, true);
     }
 
-    let color = '', colorRgb = '';
+    let color = '',
+      colorRgb = '',
+      colorText = '';
     // Handle HEX Format
     if (this.color.startsWith('#')) {
       color = this.color;
       colorRgb = this.hexToRgb(this.color);
+      colorText = this.colorText;
     }
     // Handle RGB And RGBA Format
     else if (this.color.startsWith('rgb')) {
       color = this.color;
+      colorText = this.colorText;
+
       const rgbColors = /[0-9]+/.exec(this.color);
       if (rgbColors && rgbColors.length > 2) colorRgb = `${rgbColors[0]}, ${rgbColors[1]}, ${rgbColors[2]}`;
     }
@@ -73,9 +83,11 @@ export abstract class BaseComponent implements OnInit, OnChanges, OnDestroy {
     else {
       color = `var(--color-${this.color})`;
       colorRgb = `var(--color-${this.color}-rgb)`;
+      colorText = `var(--color-${this.color}-text)`;
     }
     this.elementRef.nativeElement.style.setProperty('--color-component', color);
     this.elementRef.nativeElement.style.setProperty('--color-component-rgb', colorRgb);
+    this.elementRef.nativeElement.style.setProperty('--color-component-text', colorText);
   }
 
   private hexToRgb(hex: string) {
@@ -91,5 +103,22 @@ export abstract class BaseComponent implements OnInit, OnChanges, OnDestroy {
       return `${r},${g},${b}`;
     }
     return '';
+  }
+
+  classNames: string[] = [];
+
+  resetClasses(element: Element = this.elementRef.nativeElement) {
+    this.classNames.forEach(x => element.classList.remove(x));
+  }
+
+  setClass(className: string, status: boolean = true, element: Element = this.elementRef.nativeElement) {
+    if (!this.classNames.includes(className)) {
+      this.classNames.push(className);
+    }
+    if (status) {
+      element.classList.add(className);
+    } else {
+      element.classList.remove(className);
+    }
   }
 }

@@ -1,10 +1,10 @@
-export interface OperationResult<T = any> {
+export interface OperationResult {
     success: boolean;
     message?: string;
     code?: number;
 }
 
-export interface QueryResult<T> extends OperationResult {
+export interface QueryResult<T = any> extends OperationResult {
     data?: T;
 }
 

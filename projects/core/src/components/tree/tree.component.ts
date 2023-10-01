@@ -9,7 +9,7 @@ import {
   TemplateRef
 } from '@angular/core';
 import {BaseComponent} from "../base.component";
-import {TabTemplateDirective} from "../tab/components/tab-template.directive";
+import {TemplateDirective} from "../template/template.directive";
 
 export interface TreeItem {
   key: any;
@@ -36,7 +36,7 @@ export class TreeComponent extends BaseComponent implements OnChanges {
   @Input() draggable: boolean = false;
   @Input() verticalLines: boolean = true;
   @Input() expansion: '' | 'multiple' | 'single' = 'multiple';
-  @Input() selection: '' | 'single' | 'multiple' | 'single-leaf' | 'multiple-leaf'  = '';
+  @Input() selection: '' | 'single' | 'multiple' | 'single-leaf' | 'multiple-leaf' = '';
   @Input() fields = {
     key: 'id',
     parent: 'parentId',
@@ -44,9 +44,9 @@ export class TreeComponent extends BaseComponent implements OnChanges {
     selected: 'selected',
   };
   @Input() icons = {
-    collapse: 'far fa-angle-right',
-    expand: 'far fa-angle-down',
-    leaf: 'far fa-file',
+    collapse: 'icons-core-angle-right',
+    expand: 'icons-core-angle-down',
+    leaf: 'icons-core-file',
   }
 
   @Output() onSelect = new EventEmitter<any>();
@@ -61,7 +61,7 @@ export class TreeComponent extends BaseComponent implements OnChanges {
   prependTemplate?: TemplateRef<any>;
   appendTemplate?: TemplateRef<any>;
 
-  @ContentChildren(TabTemplateDirective) set templates(value: QueryList<TabTemplateDirective>) {
+  @ContentChildren(TemplateDirective) set templates(value: QueryList<TemplateDirective>) {
     this.itemTemplate = value.find(x => x.includesName("item"))?.template;
     this.prependTemplate = value.find(x => x.includesName("prepend"))?.template;
     this.appendTemplate = value.find(x => x.includesName("append"))?.template;
@@ -73,14 +73,14 @@ export class TreeComponent extends BaseComponent implements OnChanges {
 
   override ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
-    if('items' in changes) {
+    if ('items' in changes) {
       this.optimizeItems();
     }
   }
 
   optimizeItems() {
     this.optimizedItems = [];
-    const items = (this.items ?? []).sort((x1,x2) => {
+    const items = (this.items ?? []).sort((x1, x2) => {
       const key1 = x1[this.fields.key];
       const key2 = x2[this.fields.key];
       return (key2 < key1 ? 1 : (key2 > key1 ? -1 : 0));
@@ -102,7 +102,7 @@ export class TreeComponent extends BaseComponent implements OnChanges {
   override render() {
     super.render();
 
-    this.classes['vertical-lines'] = this.verticalLines;
+    this.setClass('vertical-lines', this.verticalLines);
 
     this.roots = this.optimizedItems.filter(x => !x.parent);
   }
@@ -119,9 +119,9 @@ export class TreeComponent extends BaseComponent implements OnChanges {
   }
 
   toggleExpansion(item: TreeItem) {
-    if(this.expansion) {
+    if (this.expansion) {
       const state = !item.value[this.fields.expanded];
-      if(this.expansion.includes('single')) {
+      if (this.expansion.includes('single')) {
         const items = (item.parent?.children ?? this.roots);
         items.forEach(x => x.value[this.fields.expanded] = false);
       }
@@ -130,16 +130,18 @@ export class TreeComponent extends BaseComponent implements OnChanges {
   }
 
   toggleSelection(item: TreeItem) {
-    if(this.selection) {
+    if (this.selection) {
       const state = !item.value[this.fields.selected];
-      const clear = () => {this.items.forEach(x => x[this.fields.selected] = false);}
-      if(this.selection.includes('leaf')) {
-        if(!item.children?.length) {
-          if(this.selection.includes('single')) clear();
+      const clear = () => {
+        this.items.forEach(x => x[this.fields.selected] = false);
+      }
+      if (this.selection.includes('leaf')) {
+        if (!item.children?.length) {
+          if (this.selection.includes('single')) clear();
           item.value[this.fields.selected] = state;
         }
       } else {
-        if(this.selection.includes('single')) clear();
+        if (this.selection.includes('single')) clear();
         item.value[this.fields.selected] = state;
       }
     }
@@ -147,8 +149,8 @@ export class TreeComponent extends BaseComponent implements OnChanges {
 
   onDragOver(item: TreeItem, e: Event) {
     let tmpItem: any = item;
-    while(tmpItem) {
-      if(tmpItem == this.dragItem) return;
+    while (tmpItem) {
+      if (tmpItem == this.dragItem) return;
       tmpItem = tmpItem.parent;
     }
     e.preventDefault();
@@ -159,7 +161,7 @@ export class TreeComponent extends BaseComponent implements OnChanges {
   }
 
   onItemDrop(item: TreeItem) {
-    if(this.dragItem) {
+    if (this.dragItem) {
       this.onDrop.emit({
         source: this.dragItem,
         destination: item

@@ -7,7 +7,7 @@
     right: 0;
     height: 0;
     display: flex;
-    position: fixed;
+    position: absolute;
 
     &.top-start,
     &.top-center,
@@ -52,21 +52,15 @@
 
   ul {
     margin: 0;
-    padding: 0;
     display: flex;
-    min-width: 350px;
+    padding: .5rem;
+    min-width: 250px;
     list-style: none;
     align-content: stretch;
     flex-direction: column;
 
-    li {
-      padding: 0 .9rem;
-      &:first-child {
-        padding-top: .7rem;
-      }
-      &:last-child {
-        padding-bottom: .7rem;
-      }
+    d-message {
+      gap: .9rem;
     }
   }
 }

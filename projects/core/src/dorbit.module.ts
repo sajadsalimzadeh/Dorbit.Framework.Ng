@@ -24,10 +24,10 @@ import {
   PasswordModule,
   ProgressBarModule,
   ScrollTopModule,
-  SkeletonModule,
+  ShimmerModule,
   CardModule,
   TagModule,
-  MessagesModule,
+  MessageModule,
   DialogModule,
   TabModule,
   TreeModule,
@@ -36,6 +36,10 @@ import {
   TemplateModule,
   KeyFilterModule,
   TooltipModule,
+  InputSplitModule,
+  StepperModule,
+  ProgressCircleModule,
+  PositionModule,
 } from './components';
 import {
   JDatePipeModule,
@@ -44,6 +48,7 @@ import {
 import {
   GlobalErrorHandler
 } from './services';
+import {DateModule} from "./components/date/date.module";
 
 const MODULES = [
   TableModule,
@@ -68,10 +73,10 @@ const MODULES = [
   PasswordModule,
   ProgressBarModule,
   ScrollTopModule,
-  SkeletonModule,
+  ShimmerModule,
   CardModule,
   TagModule,
-  MessagesModule,
+  MessageModule,
   DialogModule,
   TooltipModule,
   TabModule,
@@ -80,6 +85,11 @@ const MODULES = [
   RDatePipeModule,
   DatePickerInlineModule,
   ListModule,
+  InputSplitModule,
+  StepperModule,
+  ProgressCircleModule,
+  PositionModule,
+  DateModule,
 ];
 
 @NgModule({
@@ -96,8 +106,8 @@ const MODULES = [
   ],
 })
 export class DorbitModule {
-
   static forRoot(): ModuleWithProviders<DorbitModule> {
+
     return {
       ngModule: DorbitModule,
       providers: [

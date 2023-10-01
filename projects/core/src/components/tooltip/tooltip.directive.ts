@@ -18,6 +18,7 @@ export class TooltipDirective {
   @Input('dTooltip') text!: string;
   @Input('dTooltipAlignment') alignment: OverlayAlignments = 'bottom-center';
   @Input('dTooltipColor') color: Colors = 'gray-4';
+  @Input('dTooltipStyle') styles: any;
 
   @ViewChild('defaultTemplate') defaultTemplate!: TemplateRef<any>
 
@@ -47,6 +48,7 @@ export class TooltipDirective {
     this.overlayRef = this.overrideService.create({
       text: this.text,
       ngClasses: classes,
+      styles: this.styles,
       color: this.color,
       alignment: this.alignment,
       ref: this.elementRef.nativeElement,

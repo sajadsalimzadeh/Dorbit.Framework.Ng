@@ -23,23 +23,23 @@ export class CheckboxComponent extends AbstractFormControl<boolean | null> {
   override writeValue(value: boolean | null) {
     super.writeValue(value);
     if(this.mode == 'binary' && !value && value !== false) {
-      this.formControl.setValue(false);
+      this.formControl?.setValue(false);
     }
   }
 
   override render() {
     super.render();
-    const value = this.formControl.value;
-    this.classes['fill'] = (value === true || value === null || value === undefined);
+    const value = this.formControl?.value;
+    this.setClass('fill', (value === true || value === null || value === undefined));
     let valueName: string;
     if(value === true) valueName = 'true';
     else if(value === null || value === undefined) valueName = 'null';
     else valueName = 'false';
-    this.classes['value-' + valueName] = true;
+    this.setClass('value-' + valueName);
   }
 
   toggle() {
-    let value = this.formControl.value;
+    let value = this.formControl?.value;
     if (this.mode == 'ternary' && value === null || value === undefined) {
       value = false;
     } else if(value) {

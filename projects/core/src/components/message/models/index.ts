@@ -11,7 +11,7 @@ export interface Message {
   duration?: number;
   removable?: boolean;
   showTimer?: boolean;
+  showTimeString?: boolean;
   timerInterval?: number;
-  show?: boolean;
   progress?: number;
 }

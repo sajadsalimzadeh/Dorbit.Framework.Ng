@@ -23,7 +23,7 @@ export class RadioComponent extends AbstractFormControl<any> {
 
   override render() {
     super.render();
-    this.classes['checked'] = this.formControl.value == this.value;
+    this.setClass('checked', this.formControl.value == this.value);
   }
 
   toggle() {

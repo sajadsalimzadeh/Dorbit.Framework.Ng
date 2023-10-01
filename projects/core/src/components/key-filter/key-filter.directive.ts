@@ -3,14 +3,17 @@ import {CommonModule} from "@angular/common";
 
 const intRegex = /^[0-9]$/;
 
+export type KeyFilters = 'p-int' | 'int' | 'n-int' | 'p-num' | 'num' | 'n-num' | 'hex' | 'email' | 'alpha' | 'alphnum' | 'persian' | string;
+
 @Directive({
   selector: '[dKeyFilter]'
 })
 export class DevKeyFilterDirective {
-  @Input('dKeyFilter') dKeyFilter!: 'p-int' | 'int' | 'n-int' | 'p-num' | 'num' | 'n-num' | 'hex' | 'email' | 'alpha' | 'alphnum' | string;
+  @Input('dKeyFilter') dKeyFilter?: KeyFilters;
 
   @HostListener('keydown', ['$event'])
   onKeyDown(e: KeyboardEvent) {
+    if(!this.dKeyFilter) return;
     const target = e.target;
     if (!(target instanceof HTMLInputElement)) return;
     if (e.key.length != 1) return;

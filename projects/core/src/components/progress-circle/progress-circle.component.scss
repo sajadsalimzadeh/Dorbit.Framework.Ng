@@ -1,0 +1,22 @@
+:host {
+  display: block;
+
+
+  ::ng-deep svg {
+    text {
+      text-anchor: middle;
+      dominant-baseline: middle;
+      fill: var(--color-gray-7);
+    }
+
+    .overlay {
+      fill: var(--color-gray--3);
+      stroke: var(--color-gray--8);
+    }
+
+    .progress {
+      fill: none;
+      stroke: var(--color-component);
+    }
+  }
+}

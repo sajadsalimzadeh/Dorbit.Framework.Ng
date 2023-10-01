@@ -1,12 +1,12 @@
 <ng-template #itemTpl let-item let-type="type">
   <div class="item" [ngClass]="'type-' + type">
     <ng-container *ngIf="optionTemplate; else elseTextTemplate">
-      <ng-container *ngTemplateOutlet="optionTemplate.template; context: {$implicit: item}"></ng-container>
+      <ng-container *ngTemplateOutlet="optionTemplate; context: {$implicit: item}"></ng-container>
     </ng-container>
     <ng-template #elseTextTemplate>
       <span class="text">{{getText(item)}}</span>
       <ng-container *ngIf="mode == 'multiple' && type == 'value'">
-        <i class="remove far fa-times-circle" (click)="select(item, $event)"></i>
+        <i class="remove icons-core-close-circle" (click)="select(item, $event)"></i>
       </ng-container>
     </ng-template>
   </div>
@@ -32,14 +32,14 @@
         </ng-container>
       </div>
       <ng-container *ngIf="clearable && mode == 'single'">
-        <i class="remove far fa-times" (click)="clear()"></i>
+        <i class="remove icons-core-close" (click)="clear()"></i>
       </ng-container>
     </ng-template>
   </div>
   <div class="control-container icon-container">
     <ng-container *ngIf="loading; else arrowTpl">
       <div class="loading">
-        <i class=" far fa-loader"></i>
+        <i class="icons-core-loader"></i>
       </div>
     </ng-container>
     <ng-template #arrowTpl>
@@ -49,11 +49,8 @@
 </div>
 <ng-template #itemsTpl>
   <div class="items-container" [ngClass]="size">
-    <div class="filter-box" *ngIf="searchable">
-      <d-control-group class="filter-control-group" [size]="size" [formControl]="searchFormControl">
-        <ng-template dTemplate="end"><i class="far fa-search"></i></ng-template>
-        <d-input [placeholder]="searchPlaceHolder" [tabIndex]="tabIndex"/>
-      </d-control-group>
+    <div class="filter-box" *ngIf="searchable && items.length > 10">
+      <d-input [size]="size" [formControl]="searchFormControl" [placeholder]="searchPlaceHolder" [tabIndex]="tabIndex"/>
     </div>
     <div class="scroll-container" #itemsContainerEl>
       <ul class="items">

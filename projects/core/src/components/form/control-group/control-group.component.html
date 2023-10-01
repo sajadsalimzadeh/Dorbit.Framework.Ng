@@ -1,4 +1,4 @@
-<div class="control-box">
+<div class="control-box" [dOverlay]="{template: validationBoxTpl, verticalThreshold: 10, autoClose: true}">
   <div class="side-box start-box" *ngIf="prependTemplate">
     <ng-container *ngTemplateOutlet="prependTemplate"></ng-container>
   </div>
@@ -17,18 +17,23 @@
     <ng-container *ngTemplateOutlet="appendTemplate"></ng-container>
   </div>
 </div>
-<ng-container *ngIf="focused">
-  <ul class="below-box validation-box" *ngIf="errors?.length; else noErrorTpl">
-    <li *ngFor="let error of errors">
-      <span>{{error.message}}</span>
-      <ng-container *ngIf="!focused && errors.length > 1">
-        <span> and {{errors.length - 1}} more errors.</span>
-      </ng-container>
-    </li>
-  </ul>
-  <ng-template #noErrorTpl>
-    <div class="below-box hint-box" *ngIf="hint">
-      {{hint}}
+<ng-template #validationBoxTpl>
+  <ng-container *ngIf="focused && formControl?.dirty">
+    <div class="control-group-below-box">
+      <ul class="validation-box" *ngIf="errors?.length; else noErrorTpl">
+        <li *ngFor="let error of errors">
+          <span>{{error.message}}</span>
+          <ng-container *ngIf="!focused && errors.length > 1">
+            <span>{{errors.length - 1}}</span>
+            <span>more errors</span>
+          </ng-container>
+        </li>
+      </ul>
+      <ng-template #noErrorTpl>
+        <div class="hint-box" *ngIf="hint">
+          {{hint}}
+        </div>
+      </ng-template>
     </div>
-  </ng-template>
-</ng-container>
+  </ng-container>
+</ng-template>

@@ -1,6 +1,6 @@
 :host {
   display: flex;
-  margin: .3rem 0;
+  margin: .3em 0;
   overflow: hidden;
   max-height: 300px;
   position: relative;
@@ -23,9 +23,9 @@
 .message {
   flex: 1;
   display: flex;
-  padding: .7rem 1.1rem;
+  padding: .7em 1.1em;
   color: var(--color-component);
-  border-inline-start: .5rem solid var(--color-component);
+  border-inline-start: .5em solid var(--color-component);
   background-color: rgba(var(--color-component-rgb), .1);
 
   >div {
@@ -41,16 +41,16 @@
   }
 
   .icon-box {
-    font-size: 1.5rem;
-    padding-inline-end: .8rem;
+    font-size: 1.5em;
+    padding-inline-end: .8em;
   }
 
   .remove-box {
     opacity: .5;
-    font-size: 1rem;
+    font-size: 1em;
     cursor: pointer;
-    padding-inline-start: .8rem;
-    padding-inline-end: .4rem;
+    padding-inline-start: .8em;
+    padding-inline-end: .4em;
     transition: opacity 200ms ease;
 
     &:hover {
@@ -59,9 +59,9 @@
   }
 
   .timer-box {
-    font-size: .8rem;
-    padding-inline-start: .8rem;
-    padding-inline-end: .4rem;
+    font-size: .8em;
+    padding-inline-start: .8em;
+    padding-inline-end: .4em;
   }
 
   .content {
@@ -69,17 +69,17 @@
   }
 
   .title {
-    font-size: 1.2rem;
+    font-size: 1.2em;
   }
 
   .body {
-    font-size: .8rem;
+    font-size: 1em;
   }
 }
 
 .progress {
   bottom: 0;
-  height: .2rem;
+  height: .3em;
   position: absolute;
   transition: width 50ms linear;
   background-color: var(--color-component);

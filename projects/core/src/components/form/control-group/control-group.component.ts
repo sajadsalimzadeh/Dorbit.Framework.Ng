@@ -11,7 +11,7 @@ import {
 import {TemplateDirective} from "../../template/template.directive";
 import {AbstractFormControl, createControlValueAccessor, ValidationError} from "../form-control.directive";
 import {FormControlService} from "../form-control.service";
-import {ControlGroupService} from "./control-group.service";
+import {ControlGroupValidationService} from "./control-group-validation.service";
 
 @Component({
   selector: 'd-control-group',
@@ -48,7 +48,7 @@ export class ControlGroupComponent extends AbstractFormControl<any> {
     e.stopPropagation();
   }
 
-  constructor(injector: Injector, private controlGroupService: ControlGroupService) {
+  constructor(injector: Injector, private controlGroupValidationService: ControlGroupValidationService) {
     super(injector);
   }
 
@@ -71,7 +71,7 @@ export class ControlGroupComponent extends AbstractFormControl<any> {
         const error = this.formControl.errors[errorsKey];
         if (!error) continue;
         if (typeof error === 'object') {
-          let message = (error.message ? error.message : this.controlGroupService.validationMessages[errorsKey])?.toString() ?? '';
+          let message = (error.message ? error.message : this.controlGroupValidationService.getMessage(errorsKey))?.toString() ?? '';
           for (const key in error) {
             message = message.replace(`{${key}}`, error[key]);
           }
@@ -85,7 +85,7 @@ export class ControlGroupComponent extends AbstractFormControl<any> {
         } else if (typeof error === 'boolean') {
           this.errors.push({
             type: errorsKey,
-            message: this.controlGroupService.validationMessages[errorsKey],
+            message: this.controlGroupValidationService.getMessage(errorsKey),
             order: 100,
           });
         } else if (typeof error === 'string') {
@@ -99,10 +99,10 @@ export class ControlGroupComponent extends AbstractFormControl<any> {
       this.errors = this.errors.sort((x1, x2) => (x1.order < x2.order ? -1 : (x1.order > x2.order ? 1 : 0)));
     }
 
-    this.classes['float-label'] = (
+    this.setClass('float-label', (
       this.labelMode == 'floating' &&
       (!this.focused && !this.formControl.value && this.formControl.value !== false)
-    );
-    this.classes['has-below-box'] = true;
+    ));
+    this.setClass('has-below-box');
   }
 }

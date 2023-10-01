@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild} from '@angular/core';
 import {BaseComponent} from "../base.component";
 
 @Component({
@@ -15,44 +15,36 @@ export class ButtonComponent extends BaseComponent implements OnInit, OnChanges 
   @Input() disabled?: boolean = false;
   @Input() mode: 'fill' | 'outline' | 'text' = 'fill';
   @Input() loading?: boolean = false;
-  @Input() loadingIcon?: string = 'fas fa-circle-notch';
+  @Input() loadingIcon?: string = 'icons-core-loading';
+
+  @Output() onClick = new EventEmitter();
 
   @ViewChild('textEl') set textRef(value: ElementRef<HTMLElement>) {
     this.emptyContent = !value.nativeElement?.innerText && !value.nativeElement?.innerHTML;
     this.render();
   }
 
+
   activeIcon?: string;
   emptyContent: boolean = false;
 
-  override ngOnInit() {
-  }
-
-  override ngOnChanges(changes: SimpleChanges): void {
-    this.render();
-  }
-
   override render() {
     super.render();
-    if(this.loading) {
+    if (this.loading) {
       this.activeIcon = this.loadingIcon;
-    }
-    else {
+    } else {
       this.activeIcon = this.icon;
     }
 
-    this.classes = {};
-    this.classes[this.color] = true;
-    this.classes[this.size] = true;
-    this.classes['rounded'] = this.rounded;
-    this.classes['outline'] = this.mode == 'outline';
-    this.classes['fill'] = this.mode == 'fill';
-    this.classes['text'] = this.mode == 'text';
-    this.classes['icon-start'] = this.activeIcon && this.iconPos == 'start';
-    this.classes['icon-end'] = this.activeIcon && this.iconPos == 'end';
-    this.classes['empty-content'] = this.emptyContent;
-    this.classes['has-content'] = !this.emptyContent;
-    this.classes['loading'] = this.loading;
-    this.classes['disabled'] = this.disabled;
+    this.setClass('rounded', this.rounded);
+    this.setClass('outline', this.mode == 'outline');
+    this.setClass('fill', this.mode == 'fill');
+    this.setClass('text', this.mode == 'text');
+    this.setClass('icon-start', !!this.activeIcon && this.iconPos == 'start');
+    this.setClass('icon-end', !!this.activeIcon && this.iconPos == 'end');
+    this.setClass('empty-content', this.emptyContent);
+    this.setClass('has-content', !this.emptyContent);
+    this.setClass('loading', this.loading);
+    this.setClass('disabled', this.disabled || this.loading);
   }
 }

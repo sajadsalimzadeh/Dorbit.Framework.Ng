@@ -38,12 +38,34 @@ let tabIndex = 0;
 
 @Directive()
 export abstract class AbstractFormControl<T> extends BaseComponent implements ControlValueAccessor, OnInit, OnChanges, OnDestroy {
+  @Input() name: string = '';
   @Input() placeholder: string = '';
   @Input() @HostBinding('tabIndex') tabIndex: number | undefined = tabIndex++;
-  @Input() formControl: FormControl<any> | any;
+  @Input() formControl!: FormControl<any>;
   @Input() formControlName?: string;
+  @Input() classControl?: any;
+  @Input() styleControl?: any;
+
+  private _autofocus: boolean = false;
+  @Input() set autofocus(value: {delay: number} | boolean | undefined) {
+    this._autofocus = (typeof value === 'boolean' ? value : true);
+    const delay = (typeof value === 'object' ? value.delay : 10) ?? 10;
+    setTimeout(() => {
+      this.inputEl?.nativeElement.setAttribute('autofocus', 'autofocus');
+      this.inputEl?.nativeElement.focus();
+
+      setTimeout(() => {
+        this.inputEl?.nativeElement.removeAttribute('autofocus');
+      })
+    }, delay);
+  }
+  get autofocus() {
+    return this._autofocus;
+  }
 
   @Output() onChange = new EventEmitter<T>();
+  @Output() onKeydown = new EventEmitter<KeyboardEvent>();
+  @Output() onKeyup = new EventEmitter<KeyboardEvent>();
 
   @HostListener('focus', ['$event'])
   onFocus(e: FocusEvent) {
@@ -54,6 +76,7 @@ export abstract class AbstractFormControl<T> extends BaseComponent implements Co
   @HostListener('blur', ['$event'])
   onBlur(_: FocusEvent) {
     this.focused = false;
+    this.formControl?.markAsTouched();
     this.render();
   }
 
@@ -88,6 +111,8 @@ export abstract class AbstractFormControl<T> extends BaseComponent implements Co
   }
 
   override ngOnInit(): void {
+    super.ngOnInit();
+
     this.init();
     this.render();
   }
@@ -117,6 +142,7 @@ export abstract class AbstractFormControl<T> extends BaseComponent implements Co
       value = e;
       this.render();
       this.onChange.emit(e);
+      this.formControl?.markAsDirty();
     }));
   }
 
@@ -146,7 +172,7 @@ export abstract class AbstractFormControl<T> extends BaseComponent implements Co
 
   override render() {
     super.render();
-    this.classes['focused'] = this.focused;
+    this.setClass('focused', this.focused);
   }
 
   focus() {

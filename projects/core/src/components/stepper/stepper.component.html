@@ -1,0 +1,17 @@
+<ul class="steps">
+  <li class="step" *ngFor="let step of steps; let index = index" [ngClass]="{done: index < activeStepIndex, active: index == activeStepIndex}"
+      (click)="goto(step, index)">
+    <div class="lines"></div>
+    <div class="content">
+      <i class="icon" *ngIf="step.icon" [ngClass]="step.icon"></i>
+      <img class="image" *ngIf="step.image" [src]="step.image" [alt]="step.title"/>
+      <div class="circle"></div>
+      <div class="title">{{step.title}}</div>
+    </div>
+  </li>
+</ul>
+<div class="content">
+  <ng-container *ngIf="activeStep">
+    <ng-container *ngTemplateOutlet="activeStep.template"></ng-container>
+  </ng-container>
+</div>

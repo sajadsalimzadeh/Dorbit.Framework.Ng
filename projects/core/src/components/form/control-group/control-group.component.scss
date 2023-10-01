@@ -2,6 +2,7 @@
   cursor: text;
   outline: none;
   position: relative;
+  background-color: var(--color-gray--2);
 
   &.float-label {
     .control-box .control-box-container .label-box {
@@ -22,15 +23,15 @@
         top: 0;
         z-index: 100;
         margin: 0 .5rem;
-        height: 0.7rem;
+        height: 0.3rem;
         display: flex;
-        font-size: .8em;
+        font-size: .9em;
         padding: 0 0.5rem;
         position: absolute;
         align-items: center;
         transition: all .3s ease;
-        color: var(--color-gray-8);
-        background-color: var(--color-white);
+        color: var(--color-gray-7);
+        background-color: var(--color-gray--2);
         transform: translateY(calc(-50% - 0.1rem));
       }
 
@@ -59,6 +60,7 @@
         > i {
           padding: 0 .8em;
         }
+
         > * {
           height: 100%;
           display: flex;
@@ -66,6 +68,7 @@
         }
       }
     }
+
     //.start-box {padding-inline-end: 0 !important;}
     //.end-box {padding-inline-start: 0 !important;}
 
@@ -81,44 +84,57 @@
     }
   }
 
-
-  .below-box {
-    z-index: 5;
-    padding: .3rem 1rem;
-    position: absolute;
-    transform-origin: top;
-    top: calc(100% + .5rem);
-    border-radius: var(--radius-2);
-    animation: below-box-animation 200ms ease;
-  }
-
-  .hint-box {
-    color: var(--color-gray-7);
-    background-color: var(--color-gray--4);
-  }
-
-  .validation-box {
-    gap: .2rem;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    color: var(--color-white);
-    padding-inline-start: 2rem;
-    background-color: var(--color-danger-shade);
-  }
-
-  &.ng-invalid {
+  &.ng-invalid.ng-touched {
     .control-box {
       border-color: rgba(var(--color-danger-rgb), .6) !important;
     }
 
     &.focused .control-box {
-      box-shadow: 0 0 0 .2rem rgba(var(--color-danger-rgb), .2);
+      box-shadow: 0 0 0 .1em rgba(var(--color-danger-rgb), .1);
     }
   }
 }
 
-@keyframes below-box-animation {
-  0% {opacity: 0; transform: scaleY(.1);}
-  100% {opacity: 1; transform: scaleY(1);}
+::ng-deep {
+
+
+  .control-group-below-box {
+    z-index: 5;
+    position: absolute;
+    transform-origin: top;
+    top: calc(100% + .5rem);
+    animation: below-box-animation 200ms ease;
+
+    @keyframes below-box-animation {
+      0% {
+        opacity: 0;
+        transform: scaleY(.1);
+      }
+      100% {
+        opacity: 1;
+        transform: scaleY(1);
+      }
+    }
+
+    > * {
+      padding: .3rem 1rem;
+      border-radius: var(--radius-2);
+    }
+
+    .hint-box {
+      color: var(--color-gray-7);
+      background-color: var(--color-gray--4);
+    }
+
+    .validation-box {
+      gap: .2rem;
+      margin: 0;
+      display: flex;
+      padding: .3rem 1rem;
+      flex-direction: column;
+      padding-inline-start: 2rem;
+      color: var(--color-white-fix);
+      background-color: var(--color-danger-shade);
+    }
+  }
 }

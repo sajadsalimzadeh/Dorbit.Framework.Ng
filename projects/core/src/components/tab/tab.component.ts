@@ -1,38 +1,51 @@
 import {
-  Component, ContentChildren, EventEmitter, Input, Output, QueryList,
+  Component, ContentChildren, EventEmitter, HostBinding, Input, Output, QueryList,
 } from '@angular/core';
 import {BaseComponent} from "../base.component";
 import {Orientation} from "../../types";
 import {TabTemplateDirective} from "./components/tab-template.directive";
+import {AbstractFormControl, createControlValueAccessor} from "../form";
 
 @Component({
   selector: 'd-tab',
   templateUrl: 'tab.component.html',
-  styleUrls: ['./tab.component.scss']
+  styleUrls: ['./tab.component.scss'],
+  providers: [createControlValueAccessor(TabComponent)]
 })
-export class TabComponent extends BaseComponent {
+export class TabComponent extends AbstractFormControl<any> {
   @Input() orientation: Orientation = 'horizontal';
-
+  @HostBinding('class.header-fill') @Input() headerFill: boolean = true;
   @Output() onTabChange = new EventEmitter<string>();
 
   activeTab?: TabTemplateDirective;
   tabsTemplates: TabTemplateDirective[] = [];
 
   @ContentChildren(TabTemplateDirective) set templates(value: QueryList<TabTemplateDirective>) {
-    this.tabsTemplates = value.filter(x => x.includesName('tab'));
+    this.tabsTemplates = value.toArray();
     if (!this.activeTab && this.tabsTemplates.length > 0) {
       this.setTab(this.tabsTemplates[0]);
     }
   }
 
+  override ngOnInit() {
+    super.ngOnInit();
+
+    this.subscription.add(this.onChange.subscribe(e => {
+      const tab = this.tabsTemplates.find(x => x.key == e);
+      if(tab) this.setTab(tab)
+    }))
+  }
+
   override render() {
     super.render();
 
-    this.classes[this.orientation] = true;
+    this.setClass(this.orientation);
   }
 
   setTab(tab: TabTemplateDirective) {
+    if(this.activeTab == tab) return;
     this.onTabChange.emit(tab.key);
     this.activeTab = tab;
+    this.formControl?.setValue(tab.key)
   }
 }

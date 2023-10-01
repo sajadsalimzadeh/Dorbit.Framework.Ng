@@ -10,6 +10,10 @@ export interface DialogOptions {
   minWidth?: string;
   maxWidth?: string;
 
+  height?: string;
+  minHeight?: string;
+  maxHeight?: string;
+
   position?: Positions;
   mask?: boolean;
   maskClosable?: boolean;
@@ -26,6 +30,8 @@ export interface DialogOptions {
 
   isMaximize?: boolean;
   isMinimize?: boolean;
+
+  context?: any;
 }
 
 export interface DialogContext {
@@ -50,6 +56,10 @@ export class DialogComponent extends BaseComponent implements OnInit, DialogOpti
   minWidth?: string;
   maxWidth?: string;
 
+  height?: string;
+  minHeight?: string;
+  maxHeight?: string;
+
   position: Positions = 'middle-center';
   mask: boolean = true;
   maskClosable: boolean = false;
@@ -70,6 +80,8 @@ export class DialogComponent extends BaseComponent implements OnInit, DialogOpti
 
   dialogStyles: any = {};
 
+  context?: any;
+
   @HostListener('click', ['$event'])
   onClick(e: MouseEvent) {
     if (this.maskClosable && e.target == this.elementRef.nativeElement) {
@@ -79,7 +91,7 @@ export class DialogComponent extends BaseComponent implements OnInit, DialogOpti
 
   @HostListener('window:keydown', ['$event'])
   onWindowKeyDown(e: KeyboardEvent) {
-    if(e.key == 'Escape') {
+    if (e.key == 'Escape') {
       this.close();
     }
   }
@@ -109,14 +121,18 @@ export class DialogComponent extends BaseComponent implements OnInit, DialogOpti
     this.dialogStyles['min-width'] = this.minWidth;
     this.dialogStyles['max-width'] = this.maxWidth;
 
-    this.classes['mask'] = this.mask;
-    this.classes['movable'] = this.movable;
-    this.classes['minimize'] = this.isMinimize;
-    this.classes['closing'] = this.isClosing;
+    this.dialogStyles['height'] = this.height;
+    this.dialogStyles['min-height'] = this.minHeight;
+    this.dialogStyles['max-height'] = this.maxHeight;
+
+    this.setClass('mask', this.mask);
+    this.setClass('movable', this.movable);
+    this.setClass('minimize', this.isMinimize);
+    this.setClass('closing', this.isClosing);
     if (this.isMinimize) {
       const minimizeIndex = minimizeSpaces.indexOf(this);
       if (minimizeIndex > -1) {
-        if (this.direction == 'ltr') {
+        if (this.dir == 'ltr') {
           this.dialogStyles['left'] = ((minimizeIndex % 5) * 20) + '%';
         } else {
           this.dialogStyles['right'] = ((minimizeIndex % 5) + 20) + '%';
@@ -124,10 +140,10 @@ export class DialogComponent extends BaseComponent implements OnInit, DialogOpti
         this.dialogStyles['transform'] = `translateY(${Math.floor(minimizeIndex / 5) * -100}%)`;
       }
     } else {
-      this.classes['maximize'] = this.isMaximize;
+      this.setClass('maximize', this.isMaximize);
     }
 
-    this.classes[this.position] = true;
+    this.setClass(this.position);
 
     this.dialogStyles['animation-duration'] = (this.openDuration + 50) + 'ms';
     this.dialogStyles['transition-duration'] = (this.closeDuration + 50) + 'ms';

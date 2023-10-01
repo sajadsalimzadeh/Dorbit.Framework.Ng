@@ -1,15 +1,13 @@
 :host {
-  height: 0;
   display: flex;
   position: absolute;
   z-index: 10000000000;
 
   .overlay-container {
+    height: 0;
     display: flex;
-    white-space: nowrap;
 
     &.top, &.bottom {
-      height: 0;
       min-width: 100%;
 
       ::ng-deep > * {
@@ -29,7 +27,6 @@
     &.top-end, &.bottom-end {justify-content: flex-end;}
 
     &.start, &.end {
-      width: 0;
       min-height: 100%;
 
       ::ng-deep > * {
@@ -49,6 +46,14 @@
     &.start-top, &.end-top {align-items: flex-start;}
     &.start-center, &.end-center {align-items: center;}
     &.start-bottom, &.end-bottom {align-items: flex-end;}
+  }
+
+  .content-box {
+    flex: 1;
+
+    .text {
+      text-align: justify;
+    }
   }
 }
 

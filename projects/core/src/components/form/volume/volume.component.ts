@@ -20,7 +20,6 @@ export class VolumeComponent extends AbstractFormControl<number | VolumeRange> i
   @Input() step = 1;
   @Input() orientation: Orientation = 'horizontal';
   @Input() mode: 'single' | 'multiple' = 'single';
-  @Input() dir: 'rtl' | 'ltr' = 'ltr';
 
   @ViewChild('valueBarEl') valueBarEl?: ElementRef<HTMLDivElement>;
 
@@ -49,8 +48,8 @@ export class VolumeComponent extends AbstractFormControl<number | VolumeRange> i
 
   override render() {
     super.render();
-    this.classes[this.dir] = true;
-    this.classes[this.orientation] = true;
+    this.setClass(this.dir);
+    this.setClass(this.orientation);
     this.processStyles();
   }
 

@@ -15,6 +15,6 @@ export class TagComponent extends BaseComponent {
   override render() {
     super.render();
 
-    this.classes['rounded'] = this.rounded;
+    this.setClass('rounded', this.rounded);
   }
 }

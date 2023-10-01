@@ -4,6 +4,7 @@ import {
   Input,
 } from '@angular/core';
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
+import {KeyFilters} from "../../key-filter/key-filter.directive";
 
 export interface MaskItem {
   placeholder: string;
@@ -17,13 +18,17 @@ export interface MaskItem {
   providers: [createControlValueAccessor(InputComponent)]
 })
 export class InputComponent extends AbstractFormControl<string> {
+
   @Input() type: 'text' | 'password' | 'email' | 'textarea' | 'number' = 'text';
+  @Input() mode: '' | 'fill' = '';
+  @Input() align: '' | 'left' | 'right' | 'center' | 'justify' = '';
   @Input() mask?: string | MaskItem[];
   @Input() pattern?: string;
   @Input() minlength: number | string | null = null;
   @Input() maxlength: number | string | null = null;
   @Input() rows: number | string | null = null;
   @Input() cols: number | string | null = null;
+  @Input() keyFilter?: KeyFilters;
 
   maskValue: string = '';
 
@@ -33,9 +38,21 @@ export class InputComponent extends AbstractFormControl<string> {
 
   override render() {
     super.render();
-    if(this.mask) {
+    if (this.mask) {
       this.loadMaskedValue();
     }
+  }
+
+  override init() {
+    super.init();
+
+    this.onKeydown.subscribe(e => {
+      if (this.mask) this.maskOnKeyDown(e)
+    });
+
+    this.onKeyup.subscribe(e => {
+      this.render();
+    })
   }
 
   private loadMaskedValue() {
@@ -75,21 +92,21 @@ export class InputComponent extends AbstractFormControl<string> {
           ignoreChar = false;
           continue;
         }
-        if(ch == 'y' && this.mask.indexOf('yyyy') == i) {
+        if (ch == 'y' && this.mask.indexOf('yyyy') == i) {
           items.push({placeholder: placeholder, pattern: /[1-2]/});
           items.push({placeholder: placeholder, pattern: /[0-9]/});
           items.push({placeholder: placeholder, pattern: /[0-9]/});
           items.push({placeholder: placeholder, pattern: /[0-9]/});
           i += 3;
-        } else if(ch == 'y' && this.mask.indexOf('yy') == i) {
+        } else if (ch == 'y' && this.mask.indexOf('yy') == i) {
           items.push({placeholder: placeholder, pattern: /[0-9]/});
           items.push({placeholder: placeholder, pattern: /[0-9]/});
           i += 1;
-        } else if(ch == 'm' && this.mask.indexOf('mm') == i) {
+        } else if (ch == 'm' && this.mask.indexOf('mm') == i) {
           items.push({placeholder: placeholder, pattern: /[0-1]/});
           items.push({placeholder: placeholder, pattern: /[0-9]/});
           i += 1;
-        } else if(ch == 'd' && this.mask.indexOf('dd') == i) {
+        } else if (ch == 'd' && this.mask.indexOf('dd') == i) {
           items.push({placeholder: placeholder, pattern: /[0-3]/});
           items.push({placeholder: placeholder, pattern: /[0-9]/});
           i += 1;
@@ -110,11 +127,7 @@ export class InputComponent extends AbstractFormControl<string> {
     return [];
   }
 
-  onKeyDown(e: KeyboardEvent) {
-    if (this.mask) this.maskOnKeyDow(e)
-  }
-
-  maskOnKeyDow(e: KeyboardEvent) {
+  maskOnKeyDown(e: KeyboardEvent) {
     if (e.key.length == 1) {
       this.maskValue += e.key;
     } else {

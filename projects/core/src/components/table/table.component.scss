@@ -115,11 +115,6 @@ $border-color: rgba(var(--color-black-rgb), .05);
       animation: spinner 1s linear infinite;
       border-color: transparent var(--color-gray-7) var(--color-gray-7);
     }
-
-    @keyframes spinner {
-      0% {transform: rotate(0deg);}
-      100% {transform: rotate(360deg);}
-    }
   }
 
   .scroll-container {
@@ -150,14 +145,6 @@ $border-color: rgba(var(--color-black-rgb), .05);
       background-position: center;
       background-repeat: no-repeat;
       background-image: url(./images/empty.png);
-    }
-
-    .scroll-container {
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      position: absolute;
     }
   }
 

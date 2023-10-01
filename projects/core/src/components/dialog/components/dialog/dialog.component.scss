@@ -2,7 +2,6 @@
 $animation: 300ms ease;
 
 :host {
-  z-index: 10000;
   transition: opacity 300ms ease;
 
   &.middle-center .dialog,
@@ -47,33 +46,13 @@ $animation: 300ms ease;
     &.bottom-center .dialog {animation: bottom-out $animation;}
   }
 
-  .placement {
-    display: flex;
-    position: absolute;
-  }
+  &.top-start, &.top-center, &.top-end {align-items: flex-start;}
+  &.middle-start, &.middle-center, &.middle-end {align-items: center;}
+  &.bottom-start, &.bottom-center, &.bottom-end {align-items: flex-end;}
 
-  &.top-start .placement, &.top-center .placement, &.top-end .placement {top: 0; align-items: flex-start;}
-  &.middle-start .placement, &.middle-center .placement, &.middle-end .placement {top: 50%; align-items: center;}
-  &.bottom-start .placement, &.bottom-center .placement, &.bottom-end .placement {bottom: 0; align-items: flex-end;}
-
-  &.top-start .placement, &.middle-start .placement, &.bottom-start .placement {justify-content: flex-start;}
-  &.top-center .placement, &.middle-center .placement, &.bottom-center .placement {left: 50%; justify-content: center;}
-  &.top-end .placement, &.middle-end .placement, &.bottom-end .placement {justify-content: flex-end;}
-
-  &.direction-ltr {
-    &.top-start .placement, &.middle-start .placement, &.bottom-start .placement {left: 0;}
-    &.top-end .placement, &.middle-end .placement, &.bottom-end .placement {right: 0;}
-  }
-
-  &.direction-rtl {
-    &.top-start .placement, &.middle-start .placement, &.bottom-start .placement {right: 0;}
-    &.top-end .placement, &.middle-end .placement, &.bottom-end .placement {left: 0;}
-  }
-
-  &.middle-start .placement {transform: translateY(-50%)}
-  &.middle-center .placement {transform: translate(-50%, -50%)}
-  &.middle-end .placement {transform: translateY(-50%)}
-  &.top-center .placement, &.bottom-center .placement {transform: translateX(-50%)}
+  &.top-start, &.middle-start, &.bottom-start {justify-content: flex-start;}
+  &.top-center, &.middle-center, &.bottom-center {justify-content: center;}
+  &.top-end, &.middle-end, &.bottom-end {justify-content: flex-end;}
 
   &.movable {
 
@@ -84,14 +63,13 @@ $animation: 300ms ease;
     left: 0;
     right: 0;
     bottom: 0;
-    position: fixed;
-    background-color: rgba(var(--color-black-rgb), 0.4);
+    z-index: 100000;
+    position: absolute;
+    background-color: rgba(var(--color-black-fix-rgb), 0.4);
   }
 
   &.maximize {
-    .placement {
-      transform: none;
-    }
+    transform: none;
 
     .dialog {
       top: 0;
@@ -101,16 +79,13 @@ $animation: 300ms ease;
       position: fixed;
       border-radius: 0;
       max-width: 100% !important;
-      max-height: 100% !important;
     }
   }
 
   &.minimize {
     z-index: 100;
+    transform: none;
     position: relative;
-    .placement {
-      transform: none;
-    }
 
     .dialog {
       bottom: 0;
@@ -119,7 +94,7 @@ $animation: 300ms ease;
       margin: 0 !important;
       border-radius: 0 !important;
       transition: all $animation !important;
-      box-shadow: 0 1px 20px 0 rgba(var(--color-black-rgb), 0) !important;
+      box-shadow: none !important;
     }
 
     .body {
@@ -129,27 +104,32 @@ $animation: 300ms ease;
 }
 
 .dialog {
-  max-width: 95%;
-  max-height: 95%;
-
+  overflow: auto;
   margin: .8rem;
-  padding: .8rem .7rem;
+  display: flex;
+  flex-direction: column;
+  max-width: calc(100% - 1.6rem);
   border-radius: var(--radius-3);
   animation: scale-in 300ms linear;
-  background-color: var(--color-white);
   transition: transform $animation;
-  box-shadow: 0 1px 20px 0 rgba(var(--color-black-rgb), .13);
+  background-color: var(--color-white);
+  box-shadow: 0 1px 20px 0 rgba(var(--color-black-fix-rgb), .13);
 
   .header {
+    top: 0;
     gap: .5rem;
     display: flex;
-    padding-bottom: .4rem;
+    z-index: 1000;
+    position: sticky;
+    padding: .8rem 1rem;
+    align-items: center;
+    background-color: inherit;
     border-bottom: 1px solid var(--color-gray--2);
 
     .title {
       flex: 1;
       display: flex;
-      font-size: 1.2rem;
+      font-size: 1.5rem;
       padding: .3em .5em;
       overflow: hidden;
       font-weight: bold;
@@ -185,7 +165,8 @@ $animation: 300ms ease;
   }
 
   .body {
-    padding: 0 .7rem;
+    flex: 1;
+    padding: 1rem;
   }
 }
 

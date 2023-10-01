@@ -1,12 +1,9 @@
 <ul>
-  <li *ngFor="let item of items" [ngClass]="{show: item.show}">
-    <d-message [item]="item" [items]="items" [timerEnable]="timerEnable">
-      <ng-container *ngIf="contentTemplate">
-        <ng-template dTemplate>
-          <ng-container *ngTemplateOutlet="contentTemplate; context: {$implicit: item}"></ng-container>
-        </ng-template>
-      </ng-container>
-      <div class="progress"></div>
-    </d-message>
-  </li>
+  <d-message *ngFor="let item of items" [item]="item" [items]="items" [timerEnable]="timerEnable">
+    <ng-container *ngIf="contentTemplate">
+      <ng-template dTemplate>
+        <ng-container *ngTemplateOutlet="contentTemplate; context: {$implicit: item}"></ng-container>
+      </ng-template>
+    </ng-container>
+  </d-message>
 </ul>
