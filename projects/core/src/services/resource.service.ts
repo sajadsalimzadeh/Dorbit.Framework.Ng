@@ -7,25 +7,13 @@ class ResourceService {
   }
 
   load(name: string, url: string): Promise<any> {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       if (this.resources[name]) {
         resolve(this.resources[name]);
         return;
       }
-      const xhr = new XMLHttpRequest();
-      xhr.open('GET', url);
-      xhr.addEventListener('readystatechange', () => {
-        if (xhr.readyState == 4) {
-          if (xhr.status == 200) {
-            const res = JSON.parse(xhr.responseText);
-            this.resources[name] = res;
-            resolve(res);
-          } else {
-            reject();
-          }
-        }
-      });
-      xhr.send();
+      this.resources[name] = await fetch(url);
+      resolve(this.resources[name]);
     })
   }
 

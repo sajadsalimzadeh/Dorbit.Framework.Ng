@@ -1,7 +1,7 @@
 import {Inject, Injectable, InjectionToken, Optional} from '@angular/core';
 import {HttpInterceptor, HttpEvent, HttpHandler, HttpRequest, HttpResponse} from '@angular/common/http';
-import {Observable, Subscriber, tap} from 'rxjs';
-import {CacheService, delay, IndexDbStorage, IStorage, SessionStorage, TimeSpan} from "@dorbit";
+import {Observable} from 'rxjs';
+import {CacheService, delay, IndexDbStorage, IStorage, TimeSpan} from "@dorbit";
 import {internetStateService} from "../services/internet-state.service";
 
 export interface HttpCacheBase {

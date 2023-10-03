@@ -2,7 +2,7 @@ import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {IndexComponent} from "./index.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {DorbitModule} from "@core";
+import {DorbitModule} from "@dorbit";
 import {DocModule} from "../../../components/doc.module";
 
 @NgModule({

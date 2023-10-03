@@ -40,6 +40,7 @@ import {
   StepperModule,
   ProgressCircleModule,
   PositionModule,
+  DateModule,
 } from './components';
 import {
   JDatePipeModule,
@@ -48,7 +49,6 @@ import {
 import {
   GlobalErrorHandler
 } from './services';
-import {DateModule} from "./components/date/date.module";
 
 const MODULES = [
   TableModule,

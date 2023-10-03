@@ -1,5 +1,5 @@
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {DialogOptions, DialogService} from "@core";
+import {DialogOptions, DialogService} from "@dorbit";
 
 @Component({
   selector: 'doc-dialog',
@@ -14,7 +14,7 @@ export class IndexComponent implements OnInit {
   }
 
   create(options: DialogOptions) {
-    this.dialogService.show({
+    this.dialogService.open({
       maxWidth: '600px',
       ...options
     });

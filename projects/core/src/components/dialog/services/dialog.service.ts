@@ -19,7 +19,7 @@ export class DialogService {
   open(options: DialogOptions): DialogRef {
     const container = this.containers.find(x => x.name == options.container);
     const parentElement = container?.elementRef.nativeElement.parentNode as HTMLElement;
-    options.maxHeight ??= `calc(${parentElement.clientHeight}px - 1.6rem)`;
+    options.maxHeight ??= `calc(${parentElement.clientHeight || document.body.clientHeight}px - 1.6rem)`;
     const componentRef = this.domService.createByComponent(DialogComponent, container?.elementRef.nativeElement);
     Object.assign(componentRef.instance, options);
     componentRef.instance.componentRef = componentRef;

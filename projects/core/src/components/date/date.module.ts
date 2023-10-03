@@ -1,7 +1,9 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {DatePipe} from "@dorbit";
+import {DatePipe} from "./date.pipe";
 
+
+export * from './date.pipe';
 
 @NgModule({
   imports: [CommonModule],

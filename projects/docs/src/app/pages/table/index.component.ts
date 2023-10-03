@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import mockData from "./mock-data";
-import {TableData, TableConfig} from "projects/core/src/components/table/models";
+import {TableData, TableConfig} from "@dorbit";
 
 export function getTableData(from = 0, to = 10): TableData {
   const items = mockData.slice(from, to);
