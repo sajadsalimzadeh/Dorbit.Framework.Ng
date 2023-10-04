@@ -166,7 +166,7 @@ export class CacheService {
             complete: () => ob.complete(),
           });
         } else {
-          sameKeyEvent[key] = new EventEmitter();
+          sameKeyEvent[key] = new Subject<any>();
           action.subscribe({
             next: res => {
               sameKeyEvent[key].next(res);

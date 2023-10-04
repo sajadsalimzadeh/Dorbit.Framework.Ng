@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import {EventEmitter, Injectable} from "@angular/core";
 import {DomService} from "../../../services";
 import {DialogComponent, DialogOptions} from "../components/dialog/dialog.component";
 import {DialogContainerComponent} from "../dialog-container.component";
@@ -6,7 +6,7 @@ import {Subject} from "rxjs";
 
 export interface DialogRef {
   close: () => void;
-  onClose: Subject<void>;
+  onClose: EventEmitter<void>;
 }
 
 @Injectable({providedIn: 'root'})
