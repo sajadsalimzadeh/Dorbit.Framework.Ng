@@ -12,6 +12,7 @@ import {TemplateDirective} from "../../template/template.directive";
 import {AbstractFormControl, createControlValueAccessor, ValidationError} from "../form-control.directive";
 import {FormControlService} from "../form-control.service";
 import {ControlGroupValidationService} from "./control-group-validation.service";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'd-control-group',
@@ -24,8 +25,6 @@ export class ControlGroupComponent extends AbstractFormControl<any> {
   @Input() labelMode: 'floating' | 'fix' = 'fix';
   @Input() hint: string = '';
 
-  controlEl!: ElementRef<HTMLInputElement>;
-
   errors: (ValidationError | any)[] = [];
   prependTemplate?: TemplateRef<any>;
   appendTemplate?: TemplateRef<any>;
@@ -37,7 +36,8 @@ export class ControlGroupComponent extends AbstractFormControl<any> {
     this.labelTemplate = value.find(x => x.includesName('label'))?.template;
   }
 
-  @HostListener('click', ['$event']) override onClick(e: MouseEvent) {
+  @HostListener('click', ['$event'])
+  override onClick(e: MouseEvent) {
     super.onClick(e);
     const control = this.elementRef.nativeElement.querySelector('.control') as HTMLElement;
     control?.focus();
@@ -54,11 +54,11 @@ export class ControlGroupComponent extends AbstractFormControl<any> {
 
   override init() {
     super.init();
-    if (this.formControlService) {
-      if(this.ngControl?.control) {
-        this.formControlService.formControl = this.formControl;
-      }
-      this.formControlService.size = this.size;
+
+    const formControlService = this.injector.get(FormControlService, null, {optional: true});
+    if (formControlService) {
+      formControlService.formControl = this.formControl;
+      formControlService.size = this.size;
     }
   }
 

@@ -1,4 +1,4 @@
-import {HttpClient, HttpContext, HttpEvent, HttpHandler, HttpHeaders, HttpParams, HttpRequest, HttpResponse} from "@angular/common/http";
+import {FetchBackend, HttpClient, HttpContext, HttpEvent, HttpHandler, HttpHeaders, HttpParams, HttpRequest, HttpResponse} from "@angular/common/http";
 import {Injectable, InjectionToken, Injector, Type} from "@angular/core";
 import {CacheService} from "./cache.service";
 import {Observable, tap} from "rxjs";
@@ -21,17 +21,17 @@ export interface HttpOptions {
   withCredentials?: boolean;
 }
 
-@Injectable({providedIn: 'root'})
+@Injectable()
 export abstract class BaseApiService {
   protected http: CustomHttpClient;
   protected baseApiUrl: string;
 
-  constructor(protected injector: Injector, repository?: string) {
+  protected constructor(protected injector: Injector, repository?: string) {
     this.baseApiUrl = injector.get(BASE_API_URL, '', {optional: true}) ?? '';
     const handler = new CustomHttpHandler(
       this.baseApiUrl,
       repository,
-      injector.get(HttpHandler),
+      new FetchBackend(),
       injector.get(LoadingService),
     );
     this.http = new CustomHttpClient(handler);

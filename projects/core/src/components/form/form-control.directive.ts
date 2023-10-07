@@ -12,7 +12,7 @@ import {
 import {
   ControlContainer,
   ControlValueAccessor,
-  FormControl,
+  FormControl, FormControlName,
   FormGroupDirective,
   NG_VALUE_ACCESSOR,
   NgControl
@@ -42,12 +42,11 @@ export abstract class AbstractFormControl<T> extends BaseComponent implements Co
   @Input() placeholder: string = '';
   @Input() @HostBinding('tabIndex') tabIndex: number | undefined = tabIndex++;
   @Input() formControl!: FormControl<any>;
-  @Input() formControlName?: string;
   @Input() classControl?: any;
   @Input() styleControl?: any;
 
   private _autofocus: boolean = false;
-  @Input() set autofocus(value: {delay: number} | boolean | undefined) {
+  @Input() set autofocus(value: { delay: number } | boolean | undefined) {
     this._autofocus = (typeof value === 'boolean' ? value : true);
     const delay = (typeof value === 'object' ? value.delay : 10) ?? 10;
     setTimeout(() => {
@@ -59,6 +58,7 @@ export abstract class AbstractFormControl<T> extends BaseComponent implements Co
       })
     }, delay);
   }
+
   get autofocus() {
     return this._autofocus;
   }
@@ -97,21 +97,16 @@ export abstract class AbstractFormControl<T> extends BaseComponent implements Co
   protected _touch: any;
   protected _onChange: any;
   protected ngControl?: NgControl | null;
-  protected controlContainer?: ControlContainer | null;
-  protected formControlService: FormControlService | null;
 
   focused: boolean = false;
 
   constructor(injector: Injector) {
     super(injector);
-    this.formControlService = injector.get(FormControlService, null, {optional: true});
-    if (this.formControlService) {
-      this.size = this.formControlService.size ?? 'md';
-    }
   }
 
   override ngOnInit(): void {
     super.ngOnInit();
+    this.ngControl = this.injector.get(NgControl, undefined, {optional: true});
 
     this.init();
     this.render();
@@ -123,17 +118,18 @@ export abstract class AbstractFormControl<T> extends BaseComponent implements Co
   }
 
   init() {
-    this.ngControl = this.injector.get(NgControl, undefined, {optional: true});
-    this.controlContainer = this.injector.get(ControlContainer, undefined, {optional: true});
-
-    if (this.formControlName && this.controlContainer instanceof FormGroupDirective) {
-      this.formControl = this.controlContainer.form.get(this.formControlName) as FormControl;
+    const formControlService = this.injector.get(FormControlService, null, {optional: true});
+    if (!this.formControl && formControlService?.formControl) {
+      this.formControl = formControlService.formControl;
     }
-    if (!this.formControl) this.formControl = this.ngControl?.control as FormControl;
-    if (!this.formControl && this.formControlService?.formControl) this.formControl = this.formControlService.formControl;
+    if(!this.formControl) {
+      if (this.ngControl && this.ngControl.control instanceof FormControl) {
+        this.formControl = this.ngControl.control;
+      }
+    }
     if (!this.formControl) this.formControl = new FormControl();
 
-    this.size = this.formControlService?.size ?? this.size;
+    this.size = formControlService?.size ?? this.size;
 
     //============== Listener ===============\\
     let value: any;

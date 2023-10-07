@@ -1,4 +1,4 @@
-import {Component, HostBinding, Input, OnChanges, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {BaseComponent} from "../base.component";
 import {Positions} from "../../types";
 
@@ -9,6 +9,11 @@ import {Positions} from "../../types";
 })
 export class PositionComponent extends BaseComponent implements OnInit, OnChanges {
 
-  @HostBinding('class')
   @Input({required: true}) position!: Positions;
+
+  override render() {
+    super.render();
+
+    this.setClass(this.position);
+  }
 }

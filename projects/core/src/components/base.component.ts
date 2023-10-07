@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Directive,
   ElementRef,
   HostBinding,
@@ -14,7 +15,7 @@ import {DorbitConfig} from "../dorbit.config";
 
 
 @Directive()
-export abstract class BaseComponent implements OnInit, OnChanges, OnDestroy {
+export abstract class BaseComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 
   @Input() size: Sizes = 'md';
   @Input() color: Colors = 'primary';
@@ -35,6 +36,9 @@ export abstract class BaseComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit() {
     Object.assign(this, DorbitConfig.getConfig(Object.getPrototypeOf(this).constructor));
     this.render();
+  }
+
+  ngAfterViewInit() {
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -111,7 +115,7 @@ export abstract class BaseComponent implements OnInit, OnChanges, OnDestroy {
     this.classNames.forEach(x => element.classList.remove(x));
   }
 
-  setClass(className: string, status: boolean = true, element: Element = this.elementRef.nativeElement) {
+  setClass(className: string, status?: boolean, element: Element = this.elementRef.nativeElement) {
     if (!this.classNames.includes(className)) {
       this.classNames.push(className);
     }

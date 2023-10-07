@@ -24,7 +24,6 @@ export class ButtonComponent extends BaseComponent implements OnInit, OnChanges 
     this.render();
   }
 
-
   activeIcon?: string;
   emptyContent: boolean = false;
 

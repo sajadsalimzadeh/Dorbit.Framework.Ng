@@ -38,6 +38,7 @@ export class InputComponent extends AbstractFormControl<string> {
 
   override render() {
     super.render();
+
     if (this.mask) {
       this.loadMaskedValue();
     }
@@ -75,7 +76,7 @@ export class InputComponent extends AbstractFormControl<string> {
       }
       this.maskValue = tempMaskedValue;
     }
-    this.formControl.setValue(newValue);
+    this.formControl?.setValue(newValue);
     const element = this.inputEl?.nativeElement;
     if (element) element.value = newValue;
   }

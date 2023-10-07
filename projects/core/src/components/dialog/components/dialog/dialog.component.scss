@@ -1,8 +1,8 @@
 @use "sass:math";
-$animation: 300ms ease;
+$animation: 200ms ease;
 
 :host {
-  transition: opacity 300ms ease;
+  transition: opacity $animation;
 
   &.middle-center .dialog,
   &.top-start .dialog,
@@ -104,9 +104,10 @@ $animation: 300ms ease;
 }
 
 .dialog {
-  overflow: auto;
   margin: .8rem;
   display: flex;
+  overflow: auto;
+  position: absolute;
   flex-direction: column;
   max-width: calc(100% - 1.6rem);
   border-radius: var(--radius-3);
