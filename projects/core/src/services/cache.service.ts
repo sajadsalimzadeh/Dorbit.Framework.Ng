@@ -1,4 +1,4 @@
-import {EventEmitter, Inject, Injectable, InjectionToken, Optional} from "@angular/core";
+import {EventEmitter, InjectionToken} from "@angular/core";
 import {Observable, Subject} from "rxjs";
 import {TimeSpan} from "../models";
 import {IndexedDB, ITable} from "../utils";
@@ -166,7 +166,7 @@ export class CacheService {
             complete: () => ob.complete(),
           });
         } else {
-          sameKeyEvent[key] = new EventEmitter();
+          sameKeyEvent[key] = new Subject<any>();
           action.subscribe({
             next: res => {
               sameKeyEvent[key].next(res);

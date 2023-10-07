@@ -55,7 +55,6 @@ export class OverlayComponent extends BaseComponent implements OnInit, OverlayOp
 
   @HostListener('click', ['$event'])
   onClick(e: MouseEvent) {
-    console.log('overlay click')
     e.stopPropagation();
   }
 

@@ -21,4 +21,5 @@ export * from './input-split.component';
   declarations: [InputSplitComponent],
   exports: [InputSplitComponent, InputModule]
 })
-export class InputSplitModule {}
+export class InputSplitModule {
+}

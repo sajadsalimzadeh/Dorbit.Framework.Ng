@@ -19,4 +19,5 @@ export * from './chips.component';
     ChipsComponent,
   ]
 })
-export class ChipsModule {}
+export class ChipsModule {
+}

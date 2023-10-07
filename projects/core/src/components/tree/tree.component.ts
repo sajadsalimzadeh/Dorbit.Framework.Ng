@@ -1,13 +1,4 @@
-import {
-  Component,
-  ContentChildren, EventEmitter, HostListener,
-  Input,
-  OnChanges,
-  Output,
-  QueryList,
-  SimpleChanges,
-  TemplateRef
-} from '@angular/core';
+import {Component, ContentChildren, EventEmitter, HostListener, Input, OnChanges, Output, QueryList, SimpleChanges, TemplateRef} from '@angular/core';
 import {BaseComponent} from "../base.component";
 import {TemplateDirective} from "../template/template.directive";
 

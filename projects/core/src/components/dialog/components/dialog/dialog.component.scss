@@ -1,4 +1,5 @@
 @use "sass:math";
+
 $animation: 200ms ease;
 
 :host {
@@ -12,16 +13,27 @@ $animation: 200ms ease;
   &.top-start .dialog,
   &.bottom-start .dialog,
   &.top-end .dialog,
-  &.bottom-end .dialog {animation: scale-in $animation;}
+  &.bottom-end .dialog {
+    animation: scale-in $animation;
+  }
 
   &.direction-ltr.middle-start .dialog,
-  &.direction-rtl.middle-end .dialog {animation: left-in $animation;}
+  &.direction-rtl.middle-end .dialog {
+    animation: left-in $animation;
+  }
 
   &.direction-rtl.middle-start .dialog,
-  &.direction-ltr.middle-end .dialog {animation: right-in $animation;}
+  &.direction-ltr.middle-end .dialog {
+    animation: right-in $animation;
+  }
 
-  &.top-center .dialog {animation: top-in $animation;}
-  &.bottom-center .dialog {animation: bottom-in $animation;}
+  &.top-center .dialog {
+    animation: top-in $animation;
+  }
+
+  &.bottom-center .dialog {
+    animation: bottom-in $animation;
+  }
 
   &.closing {
     opacity: 0;
@@ -34,25 +46,52 @@ $animation: 200ms ease;
     &.top-start .dialog,
     &.bottom-start .dialog,
     &.top-end .dialog,
-    &.bottom-end .dialog {animation: scale-out $animation;}
+    &.bottom-end .dialog {
+      animation: scale-out $animation;
+    }
 
     &.direction-ltr.middle-start .dialog,
-    &.direction-rtl.middle-end .dialog {animation: left-out $animation;}
+    &.direction-rtl.middle-end .dialog {
+      animation: left-out $animation;
+    }
 
     &.direction-rtl.middle-start .dialog,
-    &.direction-ltr.middle-end .dialog {animation: right-out $animation;}
+    &.direction-ltr.middle-end .dialog {
+      animation: right-out $animation;
+    }
 
-    &.top-center .dialog {animation: top-out $animation;}
-    &.bottom-center .dialog {animation: bottom-out $animation;}
+    &.top-center .dialog {
+      animation: top-out $animation;
+    }
+
+    &.bottom-center .dialog {
+      animation: bottom-out $animation;
+    }
   }
 
-  &.top-start, &.top-center, &.top-end {align-items: flex-start;}
-  &.middle-start, &.middle-center, &.middle-end {align-items: center;}
-  &.bottom-start, &.bottom-center, &.bottom-end {align-items: flex-end;}
+  &.top-start, &.top-center, &.top-end {
+    align-items: flex-start;
+  }
 
-  &.top-start, &.middle-start, &.bottom-start {justify-content: flex-start;}
-  &.top-center, &.middle-center, &.bottom-center {justify-content: center;}
-  &.top-end, &.middle-end, &.bottom-end {justify-content: flex-end;}
+  &.middle-start, &.middle-center, &.middle-end {
+    align-items: center;
+  }
+
+  &.bottom-start, &.bottom-center, &.bottom-end {
+    align-items: flex-end;
+  }
+
+  &.top-start, &.middle-start, &.bottom-start {
+    justify-content: flex-start;
+  }
+
+  &.top-center, &.middle-center, &.bottom-center {
+    justify-content: center;
+  }
+
+  &.top-end, &.middle-end, &.bottom-end {
+    justify-content: flex-end;
+  }
 
   &.movable {
 
@@ -157,7 +196,7 @@ $animation: 200ms ease;
         background-color: var(--color-gray--5);
       }
 
-      i,i::before {
+      i, i::before {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -172,44 +211,92 @@ $animation: 200ms ease;
 }
 
 @keyframes scale-in {
-  0% {transform: scale(0);}
-  100% {transform: scale(1);}
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
+
 @keyframes top-in {
-  0% {transform: translateY(-100%);}
-  100% {transform: translateY(0);}
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
+
 @keyframes left-in {
-  0% {transform: translateX(-100%);}
-  100% {transform: translateX(0);}
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
+
 @keyframes right-in {
-  0% {transform: translateX(100%);}
-  100% {transform: translateX(0);}
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
+
 @keyframes bottom-in {
-  0% {transform: translateY(100%);}
-  100% {transform: translateY(0);}
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
 
 //=== Out ===\\
 @keyframes scale-out {
-  0% {transform: scale(1);}
-  100% {transform: scale(0);}
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
 }
+
 @keyframes top-out {
-  0% {transform: translateY(0);}
-  100% {transform: translateY(-100%);}
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
 }
+
 @keyframes left-out {
-  0% {transform: translateX(0);}
-  100% {transform: translateX(-100%);}
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }
+
 @keyframes right-out {
-  0% {transform: translateX(0);}
-  100% {transform: translateX(100%);}
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }
+
 @keyframes bottom-out {
-  0% {transform: translateY(0);}
-  100% {transform: translateY(100%);}
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(100%);
+  }
 }

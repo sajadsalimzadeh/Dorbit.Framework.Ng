@@ -5,7 +5,9 @@ import {Subject} from "rxjs";
 export class LoadingService {
   private counters = 0;
 
-  get loading() {return this.counters > 0;}
+  get loading() {
+    return this.counters > 0;
+  }
 
   onLoading = new Subject<boolean>();
 

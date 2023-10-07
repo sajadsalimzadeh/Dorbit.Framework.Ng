@@ -5,8 +5,14 @@
   display: inline-flex;
   border-radius: var(--radius-10);
 
-  &, * {cursor: pointer;}
-  &:hover, &:focus {background-color: rgba(var(--color-component-rgb), .1);}
+  &, * {
+    cursor: pointer;
+  }
+
+  &:hover, &:focus {
+    background-color: rgba(var(--color-component-rgb), .1);
+  }
+
   &.checked .radio-box {
     border-color: var(--color-component);
     background-color: var(--color-component);

@@ -13,5 +13,7 @@ export class TableService {
   onFilterChange = new Subject();
   onSortChange = new Subject<SortEvent>();
 
-  get config(): TableConfig { return this.dataTable.config; }
+  get config(): TableConfig {
+    return this.dataTable.config;
+  }
 }

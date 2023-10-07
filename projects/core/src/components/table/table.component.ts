@@ -1,18 +1,6 @@
-import {
-  AfterViewInit,
-  Component,
-  ContentChildren,
-  HostBinding,
-  HostListener,
-  Injector,
-  Input,
-  OnChanges, OnDestroy,
-  OnInit,
-  QueryList,
-  SimpleChanges, TemplateRef
-} from "@angular/core";
+import {AfterViewInit, Component, ContentChildren, HostBinding, HostListener, Injector, Input, OnChanges, OnDestroy, OnInit, QueryList, SimpleChanges, TemplateRef} from "@angular/core";
 import {TemplateDirective} from "../template/template.directive";
-import {TableConfig, FilterFunc, SortFunc, TableData} from "./models";
+import {FilterFunc, SortFunc, TableConfig, TableData} from "./models";
 import {FormControl} from "@angular/forms";
 import {TableService} from "./services/table.service";
 import {OverlayService} from "../overlay/overlay.service";
@@ -221,7 +209,7 @@ export class TableComponent extends BaseComponent implements OnInit, OnChanges, 
 
     this.renderedItems = this.data.items.filter(() => true);
 
-    if(!this.config.lazyLoading) {
+    if (!this.config.lazyLoading) {
       this.renderedItems = this.filterItems(this.renderedItems);
       this.renderedItems = this.sortItems(this.renderedItems);
       this.renderedItems = this.pagingItems(this.renderedItems);
@@ -230,7 +218,7 @@ export class TableComponent extends BaseComponent implements OnInit, OnChanges, 
     const count = this.data.totalCount;
     const first = this.config.paging.page * this.config.paging.size + 1;
     let last = first + this.config.paging.size - 1;
-    if(last > count) last = count;
+    if (last > count) last = count;
     this.pageReportTemplate = this.config.paging.pageReportTemplate
       .replace('{totalRecords}', count.toString())
       .replace('{first}', first.toString())

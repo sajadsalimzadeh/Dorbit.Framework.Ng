@@ -12,7 +12,9 @@ export class TableRowExpanderComponent {
   @Input() mode: 'single' | 'multiple' = 'single';
 
   @HostBinding('class.expanded')
-  get expanded() {return !!this.item['rowExpanded']; }
+  get expanded() {
+    return !!this.item['rowExpanded'];
+  }
 
   @HostListener('click', ['$event'])
   onClick(e: Event) {
@@ -25,7 +27,7 @@ export class TableRowExpanderComponent {
   }
 
   toggle() {
-    if(this.mode == 'single') {
+    if (this.mode == 'single') {
       this.tableService.dataTable.data.items
         .filter(x => x['rowExpanded'] && x != this.item)
         .forEach(x => x['rowExpanded'] = false);

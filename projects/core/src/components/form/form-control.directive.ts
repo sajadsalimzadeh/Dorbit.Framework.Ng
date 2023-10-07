@@ -1,13 +1,22 @@
 import {
   ContentChildren,
-  Directive, ElementRef, EventEmitter,
-  forwardRef, HostBinding, HostListener,
-  Injector, Input,
+  Directive,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  HostBinding,
+  HostListener,
+  Injector,
+  Input,
   OnChanges,
   OnDestroy,
-  OnInit, Output, QueryList,
-  SimpleChanges, TemplateRef,
-  Type, ViewChild
+  OnInit,
+  Output,
+  QueryList,
+  SimpleChanges,
+  TemplateRef,
+  Type,
+  ViewChild
 } from "@angular/core";
 import {
   ControlContainer,

@@ -1,13 +1,4 @@
-import {
-  Component,
-  ContentChildren,
-  ElementRef,
-  HostListener,
-  Injector,
-  Input,
-  QueryList,
-  TemplateRef,
-} from '@angular/core';
+import {Component, ContentChildren, ElementRef, HostListener, Injector, Input, QueryList, TemplateRef,} from '@angular/core';
 import {TemplateDirective} from "../../template/template.directive";
 import {AbstractFormControl, createControlValueAccessor, ValidationError} from "../form-control.directive";
 import {FormControlService} from "../form-control.service";

@@ -13,6 +13,7 @@ export class ListComponent extends BaseComponent implements OnChanges {
   @Output() onItemClick = new EventEmitter<any>();
 
   itemTemplate?: TemplateRef<any>;
+
   @ContentChildren(TemplateDirective) set templates(value: QueryList<TemplateDirective>) {
     this.itemTemplate = value.find(x => x.includesName('item', true))?.template;
   }

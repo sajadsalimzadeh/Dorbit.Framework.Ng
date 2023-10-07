@@ -1,6 +1,4 @@
-import {
-  Component, Input,
-} from "@angular/core";
+import {Component, Input,} from "@angular/core";
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
 import {Chips} from "./models";
 
@@ -33,8 +31,8 @@ export class ChipsComponent extends AbstractFormControl<Chips> {
     if (e.key == this.separator || e.key === 'Enter') {
       this.processValue();
       e.preventDefault();
-    } else if(e.key === 'Backspace' && !this.value) {
-      if(this.formControl.value.length > 0) {
+    } else if (e.key === 'Backspace' && !this.value) {
+      if (this.formControl.value.length > 0) {
         this.remove(this.formControl.value.length - 1)
       }
     }

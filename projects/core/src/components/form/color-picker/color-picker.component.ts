@@ -26,14 +26,14 @@ export class ColorPickerComponent extends AbstractFormControl<string> implements
   ngAfterViewInit() {
 
     const colorCanvas = this.colorEl?.nativeElement;
-    if(colorCanvas) {
+    if (colorCanvas) {
       colorCanvas.width = this.canvasSize;
       colorCanvas.height = this.canvasSize;
       this.colorCtx = colorCanvas.getContext('2d') as CanvasRenderingContext2D;
     }
 
     const hueCanvas = this.hueEl?.nativeElement;
-    if(hueCanvas) {
+    if (hueCanvas) {
       hueCanvas.height = this.canvasSize;
       const hueCtx = hueCanvas.getContext('2d') as CanvasRenderingContext2D;
       const gradient = hueCtx.createLinearGradient(0, 0, 0, hueCtx.canvas.height);
@@ -55,13 +55,13 @@ export class ColorPickerComponent extends AbstractFormControl<string> implements
   override render() {
     super.render();
 
-    if(this.colorCtx) {
+    if (this.colorCtx) {
       this.colorCtx.clearRect(0, 0, this.colorCtx.canvas.width, this.colorCtx.canvas.height);
 
       this.colorCtx.fillStyle = '#fff';
       this.colorCtx.fillRect(0, 0, this.colorCtx.canvas.width, this.colorCtx.canvas.height);
 
-      const gradientH = this.colorCtx.createLinearGradient(0 , 0, this.colorCtx.canvas.width, 0);
+      const gradientH = this.colorCtx.createLinearGradient(0, 0, this.colorCtx.canvas.width, 0);
       gradientH.addColorStop(0, 'rgba(0,0,0,0)');
       gradientH.addColorStop(1, this.hue);
       this.colorCtx.fillStyle = gradientH;
@@ -77,8 +77,8 @@ export class ColorPickerComponent extends AbstractFormControl<string> implements
 
   onSelectorMouseDown(e: MouseEvent, type: 'color' | 'hue') {
     this.selector = type;
-    if(type == 'color') this.selectedContext = this.colorCtx;
-    else if(type == 'hue') this.selectedContext = this.hueCtx;
+    if (type == 'color') this.selectedContext = this.colorCtx;
+    else if (type == 'hue') this.selectedContext = this.hueCtx;
 
     window.removeEventListener('mouseup', this.onWindowMouseUp);
     window.addEventListener('mouseup', this.onWindowMouseUp = (we: MouseEvent) => {
@@ -87,15 +87,15 @@ export class ColorPickerComponent extends AbstractFormControl<string> implements
   }
 
   onSelectorMouseMove(e: MouseEvent, type: 'color' | 'hue') {
-    if(this.selector === type && this.selectedContext) {
+    if (this.selector === type && this.selectedContext) {
       e.stopPropagation();
       const rect = (e.target as HTMLElement).getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      const imageData = this.selectedContext.getImageData(x, y,1, 1);
+      const imageData = this.selectedContext.getImageData(x, y, 1, 1);
       const pixel = imageData.data;
       const color = `rgb(${pixel[0]},${pixel[1]},${pixel[2]})`;
-      if(type == 'hue') {
+      if (type == 'hue') {
         this.hue = color;
         this.render();
       } else {

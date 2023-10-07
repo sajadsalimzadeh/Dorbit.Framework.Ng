@@ -24,8 +24,7 @@ export class ControlGroupModule {
   static forRoot(): ModuleWithProviders<ControlGroupModule> {
     return {
       ngModule: ControlGroupModule,
-      providers: [
-      ]
+      providers: []
     }
   }
 }

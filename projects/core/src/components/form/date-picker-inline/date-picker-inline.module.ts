@@ -18,4 +18,5 @@ export * from './date-picker-inline.component';
   declarations: [DatePickerInlineComponent],
   exports: [DatePickerInlineComponent]
 })
-export class DatePickerInlineModule {}
+export class DatePickerInlineModule {
+}

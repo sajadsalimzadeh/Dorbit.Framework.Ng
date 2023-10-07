@@ -1,5 +1,5 @@
-import {Moment} from 'jalali-moment';
 import * as moment from 'jalali-moment';
+import {Moment} from 'jalali-moment';
 
 export class DateTime {
   protected moment: Moment;

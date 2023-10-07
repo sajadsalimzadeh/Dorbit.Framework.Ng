@@ -1,11 +1,4 @@
-import {
-  Component, ComponentRef,
-  ContentChildren, ElementRef, HostListener,
-  Input,
-  OnInit,
-  QueryList,
-  TemplateRef, ViewChild
-} from "@angular/core";
+import {Component, ContentChildren, ElementRef, HostListener, Input, OnInit, QueryList, TemplateRef, ViewChild} from "@angular/core";
 import {TableService} from "../../services/table.service";
 import {TemplateDirective} from "../../../template/template.directive";
 import {FormControl} from "@angular/forms";

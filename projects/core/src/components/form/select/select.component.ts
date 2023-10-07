@@ -1,11 +1,4 @@
-import {
-  Component,
-  ContentChildren, ElementRef, EventEmitter, HostBinding,
-  HostListener, Injector,
-  Input, Output,
-  QueryList,
-  SimpleChanges, TemplateRef, ViewChild
-} from "@angular/core";
+import {Component, ContentChildren, ElementRef, EventEmitter, HostBinding, HostListener, Injector, Input, Output, QueryList, SimpleChanges, TemplateRef, ViewChild} from "@angular/core";
 import {TemplateDirective} from "../../template/template.directive";
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
 import {OverlayRef, OverlayService} from "../../overlay/overlay.service";
@@ -213,7 +206,7 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
       })
       this.overlayRef.onDestroy.subscribe(() => this.overlayRef = undefined);
       setTimeout(() => {
-        if(this.renderedItems.length > 10) {
+        if (this.renderedItems.length > 10) {
           this.inputComponent?.inputEl?.nativeElement.focus();
         }
       }, 10);

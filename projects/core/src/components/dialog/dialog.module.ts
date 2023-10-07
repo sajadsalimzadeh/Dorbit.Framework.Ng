@@ -11,7 +11,7 @@ export * from './components/dialog/dialog.component';
 
 @NgModule({
   imports: [CommonModule, PositionModule],
-  declarations: [DialogComponent,DialogContainerComponent],
+  declarations: [DialogComponent, DialogContainerComponent],
   exports: [DialogContainerComponent],
   providers: [],
 })

@@ -3,7 +3,7 @@ export function setCounter(duration: number, callback?: (c: number) => void) {
     const interval = setInterval(() => {
       if (duration > 0) {
         duration--;
-        if(callback) callback(duration);
+        if (callback) callback(duration);
       } else {
         clearInterval(interval);
         resolve();

@@ -13,4 +13,5 @@ export * from './date-picker.component';
   declarations: [DatePickerComponent],
   exports: [DatePickerComponent]
 })
-export class DatePickerModule {}
+export class DatePickerModule {
+}

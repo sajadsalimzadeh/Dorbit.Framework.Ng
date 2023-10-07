@@ -9,8 +9,8 @@ export * from './components/tab-template.directive';
 
 @NgModule({
   imports: [CommonModule],
-  declarations: [TabComponent,TabTemplateDirective],
-  exports: [TabComponent,TabTemplateDirective],
+  declarations: [TabComponent, TabTemplateDirective],
+  exports: [TabComponent, TabTemplateDirective],
   providers: [],
 })
 export class TabModule {

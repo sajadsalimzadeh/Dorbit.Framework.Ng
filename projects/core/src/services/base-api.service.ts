@@ -1,6 +1,5 @@
 import {FetchBackend, HttpClient, HttpContext, HttpEvent, HttpHandler, HttpHeaders, HttpParams, HttpRequest, HttpResponse} from "@angular/common/http";
-import {Injectable, InjectionToken, Injector, Type} from "@angular/core";
-import {CacheService} from "./cache.service";
+import {Injectable, InjectionToken, Injector} from "@angular/core";
 import {Observable, tap} from "rxjs";
 import {LoadingService} from "./loading.service";
 
@@ -53,7 +52,7 @@ class CustomHttpHandler extends HttpHandler {
     super();
   }
 
-  handle(req: HttpRequest<any>): Observable<HttpEvent<any>> {
+  override handle(req: HttpRequest<any>): Observable<HttpEvent<any>> {
 
     if (!req.url.startsWith('http')) {
 
@@ -79,11 +78,11 @@ class CustomHttpHandler extends HttpHandler {
     this.loadingService.start();
     const timeout = setTimeout(() => {
       this.loadingService.end();
-    }, 120000)
+    }, 120000);
+
     return this.handler.handle(req).pipe(tap({
       next: e => {
         if (e instanceof HttpResponse) {
-          clearTimeout(timeout);
           this.loadingService.end();
         }
       },
@@ -92,6 +91,7 @@ class CustomHttpHandler extends HttpHandler {
         this.loadingService.end();
       },
       complete: () => {
+        clearTimeout(timeout);
       }
     }));
   }

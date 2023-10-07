@@ -30,8 +30,8 @@ export class AspectUtil {
     const methods = AspectUtil.getAllMethods(obj);
     for (let i = 0; i < methods.length; i++) {
       const methodName = methods[i];
-      if(methodName.startsWith('__')) continue;
-      if(options.condition && !options.condition(methodName)) continue;
+      if (methodName.startsWith('__')) continue;
+      if (options.condition && !options.condition(methodName)) continue;
       const originalValue = obj[methodName];
       if (typeof originalValue === 'function') {
         obj[methodName] = async (...args: any) => {
@@ -41,13 +41,13 @@ export class AspectUtil {
             args: args,
           };
           try {
-            if(options.before) await options.before(ctx);
+            if (options.before) await options.before(ctx);
             if (!ctx.result) ctx.result = await originalValue(...args);
-            if(options.after) await options.after(ctx);
+            if (options.after) await options.after(ctx);
             return ctx.result;
           } catch (e) {
             ctx.error = e;
-            if(options.exception) await options.exception(ctx);
+            if (options.exception) await options.exception(ctx);
             throw e;
           }
         }

@@ -1,4 +1,4 @@
-import {BehaviorSubject, Subject} from "rxjs";
+import {BehaviorSubject} from "rxjs";
 import {ICacheService, IndexDbStorage, IndexedDbCacheService, TimeSpan} from "@dorbit";
 
 
@@ -42,7 +42,7 @@ export abstract class StoreService<T extends object> {
   }
 
   async set(name: keyof T & string, value: any) {
-    if(value === undefined || value === null) delete this._store[name]
+    if (value === undefined || value === null) delete this._store[name]
     else this._store[name] = value;
     await this.save();
     this.onChange.next({store: this.store, changes: [name]});

@@ -1,8 +1,10 @@
 import {Inject, Injectable, InjectionToken, Optional} from '@angular/core';
 import {HttpInterceptor, HttpEvent, HttpHandler, HttpRequest, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {CacheService, delay, IndexDbStorage, IStorage, TimeSpan} from "@dorbit";
+import {TimeSpan} from "../models";
 import {internetStateService} from "../services/internet-state.service";
+import {CacheService, IndexDbStorage, IStorage} from "../services";
+import {delay} from "../utils";
 
 export interface HttpCacheBase {
   url: RegExp | string;

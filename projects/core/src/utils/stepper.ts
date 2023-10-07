@@ -36,7 +36,7 @@ export class Stepper<T> {
       (x.leaveStep == e.leaveStep && x.enterStep == e.enterStep)
     ).map(x => x.validator());
     Promise.all(validators).then((values) => {
-      if(values.indexOf(false) < 0) {
+      if (values.indexOf(false) < 0) {
         this._step = step;
         this.onChange.next(e);
       }
