@@ -6,12 +6,13 @@ class ResourceService {
   }
 
   load(name: string, url: string): Promise<any> {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
       if (this.resources[name]) {
         resolve(this.resources[name]);
         return;
       }
-      this.resources[name] = await fetch(url);
+      const res = await fetch(url);
+      this.resources[name] = await res.json();
       resolve(this.resources[name]);
     })
   }
