@@ -5,16 +5,13 @@ class ResourceService {
     return this.resources[name];
   }
 
-  load(name: string, url: string): Promise<any> {
-    return new Promise(async (resolve) => {
-      if (this.resources[name]) {
-        resolve(this.resources[name]);
-        return;
-      }
-      const res = await fetch(url);
-      this.resources[name] = await res.json();
-      resolve(this.resources[name]);
-    })
+  async load(name: string, url: string): Promise<any> {
+    if (this.resources[name]) {
+      return this.resources[name];
+    }
+    const res = await fetch(url);
+    this.resources[name] = await res.json();
+    return this.resources[name];
   }
 
   merge(name: string, ...sources: string[]) {
