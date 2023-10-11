@@ -62,9 +62,9 @@ export class MessageContainerComponent extends BaseComponent {
   override render() {
     super.render();
 
-    this.setClass(this.position);
+    this.setClass(this.position, true);
     if (this.position !== 'static') {
-      this.setClass('fix');
+      this.setClass('fix', true);
     }
   }
 

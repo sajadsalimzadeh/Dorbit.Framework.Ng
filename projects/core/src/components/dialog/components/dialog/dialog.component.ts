@@ -143,7 +143,7 @@ export class DialogComponent extends BaseComponent implements OnInit, DialogOpti
       this.setClass('maximize', this.isMaximize);
     }
 
-    this.setClass(this.position);
+    this.setClass(this.position, true);
 
     this.dialogStyles['animation-duration'] = (this.openDuration + 50) + 'ms';
     this.dialogStyles['transition-duration'] = (this.closeDuration + 50) + 'ms';

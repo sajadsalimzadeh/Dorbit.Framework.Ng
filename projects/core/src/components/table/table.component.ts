@@ -178,7 +178,7 @@ export class TableComponent extends BaseComponent implements OnInit, OnChanges, 
     this.render();
   }
 
-  ngAfterViewInit(): void {
+  override ngAfterViewInit(): void {
     this.render();
   }
 

@@ -25,12 +25,12 @@ export abstract class BaseApiService {
   protected http: CustomHttpClient;
   protected baseApiUrl: string;
 
-  protected constructor(protected injector: Injector, repository?: string) {
+  protected constructor(protected injector: Injector, protected repository?: string) {
     this.baseApiUrl = injector.get(BASE_API_URL, '', {optional: true}) ?? '';
     const handler = new CustomHttpHandler(
       this.baseApiUrl,
       repository,
-      new FetchBackend(),
+      injector.get(HttpHandler),
       injector.get(LoadingService),
     );
     this.http = new CustomHttpClient(handler);

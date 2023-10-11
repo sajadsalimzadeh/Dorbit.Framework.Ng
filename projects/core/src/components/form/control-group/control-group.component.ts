@@ -94,6 +94,6 @@ export class ControlGroupComponent extends AbstractFormControl<any> {
       this.labelMode == 'floating' &&
       (!this.focused && !this.formControl.value && this.formControl.value !== false)
     ));
-    this.setClass('has-below-box');
+    this.setClass('has-below-box', true);
   }
 }

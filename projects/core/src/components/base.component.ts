@@ -56,8 +56,8 @@ export abstract class BaseComponent implements OnInit, OnChanges, OnDestroy, Aft
         this.setClass(className, !!this.ngClasses[className])
       }
     }
-    this.setClass(this.size);
-    this.setClass(this.color);
+    this.setClass(this.size, true);
+    this.setClass(this.color, true);
 
     if (this.elementRef) {
       if (!this.dir) {

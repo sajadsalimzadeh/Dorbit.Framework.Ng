@@ -2,13 +2,13 @@
   <div class="control-container flex-1">
     <ng-container *ngSwitchCase="'textarea'">
     <textarea #inputEl class="control" [name]="name" [ngClass]="classControl" [ngModel]="formControl.value" [placeholder]="placeholder" [style]="styleControl"
-              [minlength]="minlength" [maxlength]="maxlength" [rows]="rows" [cols]="cols" [dir]="dir" [style.text-align]="align" [autofocus]="!!autofocus"
+              [minLength]="minLength" [maxLength]="maxLength" [rows]="rows" [cols]="cols" [dir]="dir" [style.text-align]="align" [autofocus]="!!autofocus"
               (ngModelChange)="formControl.setValue($event)" (focus)="focus()" (blur)="blur()" [disabled]="formControl.disabled"
               (keyup)="onKeyup.emit($event)" (keydown)="onKeydown.emit($event)"></textarea>
     </ng-container>
     <ng-container *ngSwitchDefault>
       <input #inputEl class="control" [name]="name" [ngClass]="classControl" [type]="type" [ngModel]="formControl.value" [placeholder]="placeholder"
-             [minlength]="minlength" [maxlength]="maxlength" [dir]="dir" [style.text-align]="align" [style]="styleControl" [autofocus]="!!autofocus"
+             [minLength]="minLength" [maxLength]="maxLength" [dir]="dir" [style.text-align]="align" [style]="styleControl" [autofocus]="!!autofocus"
              (ngModelChange)="formControl.setValue($event)" (focus)="focus()" (blur)="blur()" [disabled]="formControl.disabled"
              (keyup)="onKeyup.emit($event)" (keydown)="onKeydown.emit($event)" [dKeyFilter]="keyFilter"/>
     </ng-container>

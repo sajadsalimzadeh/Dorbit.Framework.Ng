@@ -1,5 +1,7 @@
 import {Component, Input, SimpleChanges} from '@angular/core';
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
+import {FormControl, Validators} from "@angular/forms";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'd-input-split',
@@ -16,42 +18,45 @@ export class InputSplitComponent extends AbstractFormControl<string> {
     }, 10)
   }
 
-  values: { text: string }[] = [];
+  values: FormControl[] = [];
+  valuesSubscription?: Subscription;
 
   override ngOnInit() {
     super.ngOnInit();
-
-    this.formControl.valueChanges.subscribe((e: string) => {
-      for (let i = 0; i < this.values.length; i++) {
-        this.values[i].text = (e.length > i ? e[i] : '');
-      }
-    })
   }
 
   override ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
 
     if ('length' in changes) {
+      this.valuesSubscription?.unsubscribe();
+      this.valuesSubscription = new Subscription();
       this.values = [];
       for (let i = 0; i < this.length; i++) {
-        this.values.push({text: ''});
+        const control = new FormControl('', [Validators.required, Validators.maxLength(1)]);
+        this.valuesSubscription?.add(control.valueChanges.subscribe(e => {
+          this.onValueChanged();
+        }));
+        this.values.push(control);
       }
     }
   }
 
   onValueChanged() {
-    const value = this.values.map(x => x.text).join('').substring(0, this.length).trim();
+    const value = this.values.map(x => x.value).join('').substring(0, this.length).trim();
     for (let i = 0; i < this.values.length; i++) {
-      this.values[i].text = (value.length > i ? value[i] : '');
+      if(this.values[i].value.length > 1) {
+        this.values[i].setValue(value[i]);
+      }
     }
-    this.focusByIndex(this.values.findIndex(x => !x.text));
+    this.focusByIndex(this.values.findIndex(x => !x.value));
     this.formControl.setValue(value);
   }
 
   onKeyUp(index: number, e: KeyboardEvent) {
     if (e.key === 'Backspace') {
-      if (!this.values[index].text) {
-        this.focusByIndex(this.values.findIndex(x => !x.text) - 1);
+      if (!this.values[index].value) {
+        this.focusByIndex(this.values.findIndex(x => !x.value) - 1);
       }
     }
   }

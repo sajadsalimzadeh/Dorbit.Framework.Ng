@@ -30,7 +30,7 @@ export class ProgressBarComponent extends BaseComponent implements OnChanges, Af
     this.render();
   }
 
-  ngAfterViewInit(): void {
+  override ngAfterViewInit(): void {
     this.render();
   }
 

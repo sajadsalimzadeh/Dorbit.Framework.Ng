@@ -36,7 +36,7 @@ export class TabComponent extends AbstractFormControl<any> {
   override render() {
     super.render();
 
-    this.setClass(this.orientation);
+    this.setClass(this.orientation, true);
   }
 
   setTab(tab: TabTemplateDirective) {

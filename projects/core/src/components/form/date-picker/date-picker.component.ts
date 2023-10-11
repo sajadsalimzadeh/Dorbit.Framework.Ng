@@ -4,6 +4,7 @@ import {Moment} from 'jalali-moment';
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
 import {OverlayRef, OverlayService} from "../../overlay/overlay.service";
 import {OverlayAlignments} from "../../overlay/overlay.component";
+import {FormControl} from "@angular/forms";
 
 type ViewMode = 'calendar' | 'month' | 'year';
 
@@ -29,7 +30,8 @@ interface DateValue {
 })
 export class DatePickerComponent extends AbstractFormControl<any> {
   @Input() type: 'gregorian' | 'jalali' = 'gregorian';
-  @Input() format = 'YYYY/MM/DD';
+  @Input() displayFormat = 'YYYY/MM/DD HH:mm:ss';
+  @Input() valueFormat = 'YYYY/MM/DD HH:mm:ss';
   @Input() locale?: string;
   @Input() alignment: OverlayAlignments = 'start-bottom';
 
@@ -71,6 +73,8 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   months: string[] = [];
   dates: DateValue[] = [];
 
+  displayFormControl = new FormControl('');
+
   constructor(
     injector: Injector,
     private overlayService: OverlayService,
@@ -78,32 +82,32 @@ export class DatePickerComponent extends AbstractFormControl<any> {
     super(injector)
   }
 
+  override ngOnInit() {
+    super.ngOnInit();
+
+    this.subscription.add(this.formControl.valueChanges.subscribe(e => {
+      try {
+        let m = moment.from(e, 'en', this.valueFormat);
+        if (this.type == 'jalali') {
+          m = m.locale('fa');
+        }
+        this.displayFormControl.setValue(m.format(this.displayFormat));
+      } catch {
+        this.displayFormControl.setValue('');
+      }
+    }));
+  }
+
   private getLocale() {
     return this.locale ?? (this.type == 'jalali' ? 'fa' : 'en');
   }
 
-  createDate(inp?: string): { value: Moment, isValid: boolean } {
-    moment.locale(this.getLocale(), {useGregorianParser: this.type == 'gregorian'});
-    let result: any = {isValid: true};
-    if (inp) {
-      try {
-        const m = moment.from(inp, this.getLocale(), this.format);
-        if (m.isValid()) result.value = m;
-        else result.isValid = false;
-      } catch {
-        result.isValid = false;
-      }
-    } else result.isValid = false;
-    if (!result.value) result.value = moment(new Date(), this.getLocale(), this.format);
-    return result;
-  }
-
   override init() {
     super.init();
-    this.todayDate = this.createDate().value;
+    this.todayDate = moment().locale(this.getLocale());
     this.todayValue = this.getDateTime(this.todayDate);
 
-    let firstDayOfWeek = this.createDate().value.startOf('month');
+    let firstDayOfWeek = moment().startOf('month');
     while (firstDayOfWeek.get('weekday') > 0) firstDayOfWeek.add(-1, 'day');
     this.weekDays = [];
     for (let i = 0; i < 7; i++) {
@@ -112,7 +116,7 @@ export class DatePickerComponent extends AbstractFormControl<any> {
     }
 
     this.months = [];
-    const monthMoment = this.createDate().value.startOf('year');
+    const monthMoment = moment().startOf('year');
     for (let i = 0; i < 12; i++) {
       this.months.push(monthMoment.format('MMMM'));
       monthMoment.add(1, 'month');
@@ -125,24 +129,17 @@ export class DatePickerComponent extends AbstractFormControl<any> {
     this.render();
   }
 
-  updateValue(value?: string) {
-    const date = this.createDate(value);
-    if (date.isValid) {
-      value = date.value.format(this.format);
-    } else {
-      value = undefined;
-    }
-    if (this._onChange) {
-      this._onChange(value);
-    }
-    this.formControl.setValue(value);
-  }
 
   onInputChange(e: Event) {
     const input = (e.target as HTMLInputElement);
-    if (input) this.updateValue(input.value);
-
-    this.selectedDate = this.createDate(this.formControl.value).value;
+    if (input) {
+      if(this.type == 'jalali') {
+        this.selectedDate = moment.from(input.value, 'fa', this.displayFormat);
+      } else {
+        this.selectedDate = moment.from(input.value, 'en', this.displayFormat);
+      }
+    }
+    this.formControl.setValue(this.selectedDate.locale('en').format(this.valueFormat))
 
     this.render();
   }
@@ -158,15 +155,14 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   override render() {
     if (!this.formControl) return;
     super.render();
-    if (!this.selectedDate) this.selectedDate = this.createDate(this.formControl.value).value;
-
+    if (!this.selectedDate) this.selectedDate = moment();
     this.selectedValue = this.getDateTime(this.selectedDate);
-
     this.createDays();
   }
 
   createDays() {
     if (!this.overlayRef) return;
+    this.selectedDate = this.selectedDate.locale(this.getLocale());
     let date = this.selectedDate.clone();
     const curtMonthDayCount = date.daysInMonth();
     const curtMonthWeekDay = date.clone().startOf('month').get('weekday');
@@ -215,8 +211,8 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   }
 
   selectDate(date: DateValue) {
+    this.selectedDate = moment();
     if (this.type == 'jalali') {
-      this.selectedDate = this.createDate().value;
       this.selectedDate.jDate(date.day);
       this.selectedDate.jMonth(date.month);
       this.selectedDate.jYear(date.year);
@@ -225,7 +221,7 @@ export class DatePickerComponent extends AbstractFormControl<any> {
       this.selectedDate.month(date.month);
       this.selectedDate.year(date.year);
     }
-    this.updateValue(this.selectedDate.format(this.format));
+    this.formControl.setValue(this.selectedDate.locale('en').format(this.valueFormat));
     this.render();
     this.close();
   }
@@ -245,7 +241,7 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   }
 
   clear() {
-    this.updateValue('');
+    this.formControl.setValue('');
   }
 
   showMonths() {

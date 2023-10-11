@@ -48,12 +48,12 @@ export class VolumeComponent extends AbstractFormControl<number | VolumeRange> i
 
   override render() {
     super.render();
-    this.setClass(this.dir);
-    this.setClass(this.orientation);
+    this.setClass(this.dir, true);
+    this.setClass(this.orientation, true);
     this.processStyles();
   }
 
-  ngAfterViewInit(): void {
+  override ngAfterViewInit(): void {
     this.processStyles();
   }
 

@@ -21,8 +21,7 @@ import {
 import {
   ControlContainer,
   ControlValueAccessor,
-  FormControl, FormControlName,
-  FormGroupDirective,
+  FormControl, FormControlName, FormGroup,
   NG_VALUE_ACCESSOR,
   NgControl
 } from "@angular/forms";
@@ -106,6 +105,7 @@ export abstract class AbstractFormControl<T> extends BaseComponent implements Co
   protected _touch: any;
   protected _onChange: any;
   protected ngControl?: NgControl | null;
+  protected controlContainer?: ControlContainer | null;
 
   focused: boolean = false;
 
@@ -115,6 +115,7 @@ export abstract class AbstractFormControl<T> extends BaseComponent implements Co
 
   override ngOnInit(): void {
     super.ngOnInit();
+    this.controlContainer = this.injector.get(ControlContainer, undefined, {optional: true});
     this.ngControl = this.injector.get(NgControl, undefined, {optional: true});
 
     this.init();
@@ -127,14 +128,24 @@ export abstract class AbstractFormControl<T> extends BaseComponent implements Co
   }
 
   init() {
+    if(this.ngControl) {
+      if(!this.formControl) {
+        if (this.ngControl instanceof FormControlName && this.controlContainer?.control instanceof FormGroup) {
+          if(this.ngControl.name) {
+            this.formControl = this.controlContainer?.control.controls[this.ngControl.name] as FormControl;
+          }
+        }
+      }
+      if (!this.formControl) {
+        if (this.ngControl.control instanceof FormControl)
+        {
+          this.formControl = this.ngControl.control;
+        }
+      }
+    }
     const formControlService = this.injector.get(FormControlService, null, {optional: true});
     if (!this.formControl && formControlService?.formControl) {
       this.formControl = formControlService.formControl;
-    }
-    if(!this.formControl) {
-      if (this.ngControl && this.ngControl.control instanceof FormControl) {
-        this.formControl = this.ngControl.control;
-      }
     }
     if (!this.formControl) this.formControl = new FormControl();
 

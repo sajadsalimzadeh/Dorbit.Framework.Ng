@@ -20,8 +20,8 @@ export class InputComponent extends AbstractFormControl<string> {
   @Input() align: '' | 'left' | 'right' | 'center' | 'justify' = '';
   @Input() mask?: string | MaskItem[];
   @Input() pattern?: string;
-  @Input() minlength: number | string | null = null;
-  @Input() maxlength: number | string | null = null;
+  @Input() minLength: number = 0;
+  @Input() maxLength: number = 100000000;
   @Input() rows: number | string | null = null;
   @Input() cols: number | string | null = null;
   @Input() keyFilter?: KeyFilters;

@@ -23,7 +23,7 @@ export class ColorPickerComponent extends AbstractFormControl<string> implements
   heuPos: number = 0;
   onWindowMouseUp: any;
 
-  ngAfterViewInit() {
+  override ngAfterViewInit() {
 
     const colorCanvas = this.colorEl?.nativeElement;
     if (colorCanvas) {

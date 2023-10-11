@@ -14,6 +14,6 @@ export class PositionComponent extends BaseComponent implements OnInit, OnChange
   override render() {
     super.render();
 
-    this.setClass(this.position);
+    this.setClass(this.position, true);
   }
 }

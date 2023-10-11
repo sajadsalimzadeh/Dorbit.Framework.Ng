@@ -32,7 +32,7 @@ export class ScrollTopComponent extends BaseComponent {
 
   override render() {
     super.render();
-    this.setClass(this.position);
+    this.setClass(this.position, true);
   }
 
   private initTarget() {
