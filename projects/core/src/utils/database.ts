@@ -23,7 +23,7 @@ export interface IDatabase {
 
   delete(tableName: string, id: any): Promise<void>;
 
-  deleteAll(tableName: string): Promise<void>;
+  deleteAll(tableName: string, keys?: any[]): Promise<void>;
 
   findAll(tableName: string, query: (key: any, value: any) => boolean, count: number): Promise<any[]>;
 
@@ -45,9 +45,9 @@ export interface ITable<T = any, TP = any> {
 
   delete(key: TP): Promise<void>;
 
-  deleteAll(): Promise<void>;
+  deleteAll(keys?: any[]): Promise<void>;
 
-  findAll(query: (key: any, value: any) => boolean, count: number): Promise<any[]>;
+  findAll(query: (key: any, value: any) => boolean, count: number): Promise<T[]>;
 
   findAllKey(query: (key: TP) => boolean, count: number): Promise<TP[]>;
 }

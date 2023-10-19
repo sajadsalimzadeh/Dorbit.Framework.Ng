@@ -1,4 +1,3 @@
-import {isDevMode} from "@angular/core";
 import {IndexedDB} from "./indexed-db";
 import {ITable} from "./database";
 
@@ -28,40 +27,46 @@ logStore.open().then(() => {
 
 export const loggerConfigs = {
   level: LogLevel.TRACE,
-  console: isDevMode(),
   lifetime: 30 * 24 * 60 * 60 * 1000,
 }
 
-interface Flags {
+interface Options {
   channel?: boolean;
-  inMemory?: boolean;
+  encryptor?: LogEncryptor;
+  data?: any;
+  console?: boolean;
+}
+
+export interface LogEncryptor {
+  encrypt: (text: string) => string;
 }
 
 export class Logger {
 
-  flags: Flags = {};
+  options: Options = {};
   name = 'root';
   enable: boolean = true;
-  inMemoryLogs: LogRecord[] = [];
 
-  private log(options: { message: string, data: any, level: LogLevel, flags?: Flags }) {
+  private log(message: string, level: LogLevel, options: Options) {
     try {
       if (!this.enable) return;
-      if (options.level < loggerConfigs.level) return;
-      if (loggerConfigs.console) {
-        if (options.level == LogLevel.TRACE) console.info(options.message, options.data);
-        else if (options.level == LogLevel.DEBUG) console.info(options.message, options.data);
-        else if (options.level == LogLevel.INFO) console.info(options.message, options.data);
-        else if (options.level == LogLevel.WARNING) console.warn(options.message, options.data);
-        else if (options.level == LogLevel.ERROR) console.error(options.message, options.data);
+      if (level < loggerConfigs.level) return;
+      if (options?.console) {
+        if (level == LogLevel.TRACE) console.log(message, options.data ?? []);
+        else if (level == LogLevel.DEBUG) console.log(message, options.data ?? []);
+        else if (level == LogLevel.INFO) console.log(message, options.data ?? []);
+        else if (level == LogLevel.WARNING) console.warn(message, options.data ?? []);
+        else if (level == LogLevel.ERROR) console.error(message, options.data ?? []);
       }
-      const flags = {...this.flags, ...options.flags};
+      const flags = {...this.options, ...options};
+      if (options.encryptor) {
+        message = options.encryptor.encrypt(message);
+      }
       const log = {
         name: this.name,
+        level: level,
+        message: message,
         data: options.data,
-        level: options.level,
-        message: options.message,
-        flags: flags
       } as LogRecord;
       if (log.data instanceof Error) {
         log.data = {
@@ -72,58 +77,48 @@ export class Logger {
         console.log('error', log)
       }
 
-      if (flags.inMemory) {
-        this.inMemoryLogs.push(log);
-      } else {
-        persistLogs?.add(log);
-      }
+      persistLogs?.add(log);
     } catch (e) {
       console.error(e)
     }
   }
 
-  debug(message: string, data?: any, flags?: Flags) {
-    this.log({
-      level: LogLevel.DEBUG,
-      message: message,
+  getTable() {
+    return persistLogs;
+  }
+
+  debug(message: string, data?: any, options?: Options) {
+    this.log(message, LogLevel.DEBUG, {
+      ...options,
       data: data,
-      flags: flags,
     });
   }
 
-  trace(message: string, data?: any, flags?: Flags) {
-    this.log({
-      level: LogLevel.TRACE,
-      message: message,
+  trace(message: string, data?: any, options?: Options) {
+    this.log(message, LogLevel.TRACE, {
+      ...options,
       data: data,
-      flags: flags,
     });
   }
 
-  info(message: string, data?: any, flags?: Flags) {
-    this.log({
-      level: LogLevel.INFO,
-      message: message,
+  info(message: string, data?: any, options?: Options) {
+    this.log(message, LogLevel.INFO, {
+      ...options,
       data: data,
-      flags: flags,
     });
   }
 
-  warn(message: string, data?: any, flags?: Flags) {
-    this.log({
-      level: LogLevel.WARNING,
-      message: message,
+  warn(message: string, data?: any, options?: Options) {
+    this.log(message, LogLevel.WARNING, {
+      ...options,
       data: data,
-      flags: flags,
     });
   }
 
-  error(message: string, data?: any, flags?: Flags) {
-    this.log({
-      level: LogLevel.ERROR,
-      message: message,
+  error(message: string, data?: any, options?: Options) {
+    this.log(message, LogLevel.ERROR, {
+      ...options,
       data: data,
-      flags: flags,
     });
   }
 

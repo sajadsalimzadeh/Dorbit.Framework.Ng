@@ -78,7 +78,7 @@ export class IndexedDB implements IDatabase {
         return table.set(value);
       },
       delete: (id: any) => this.delete(name, id),
-      deleteAll: () => this.deleteAll(name),
+      deleteAll: (keys: any[]) => this.deleteAll(name, keys),
       putBulk: (values: any[]) => this.putBulk(name, values),
       findAll: (query: (key: any, value: any) => boolean, count: number) => this.findAll(name, query, count),
       findAllKey: (query: (key: any) => boolean, count: number) => this.findAllKey(name, query, count),
@@ -112,7 +112,7 @@ export class IndexedDB implements IDatabase {
         }
         if (cursor) {
           if (query(cursor.key, cursor.value)) {
-            items.push(cursor.key);
+            items.push(cursor.value);
           }
           cursor.continue();
         } else {
@@ -167,13 +167,14 @@ export class IndexedDB implements IDatabase {
     return this.toPromise(() => store.delete(id));
   }
 
-  public async deleteAll(tableName: string) {
+  public async deleteAll(tableName: string, keys?: any[]) {
     const tx = this.db.transaction(tableName, 'readwrite');
     const store = tx.objectStore(tableName);
-    const keys = await this.toPromise(() => store.getAllKeys());
+    keys ??= await this.toPromise(() => store.getAllKeys()) ?? [];
 
     for (let i = 0; i < keys.length; i++) {
-      await this.toPromise(() => store.delete(keys[i]));
+      const key = keys[i];
+      await this.toPromise(() => store.delete(key));
     }
   }
 }
