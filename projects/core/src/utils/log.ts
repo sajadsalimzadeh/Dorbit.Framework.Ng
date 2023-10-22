@@ -1,5 +1,6 @@
 import {IndexedDB} from "./indexed-db";
 import {ITable} from "./database";
+import {isDevMode} from "@angular/core";
 
 export enum LogLevel {
   TRACE = 0,
@@ -41,33 +42,47 @@ export interface LogEncryptor {
   encrypt: (text: string) => string;
 }
 
+const devMode = isDevMode();
+
 export class Logger {
 
+  private logTimeMessages: { [key: string]: number } = {};
+  private name = 'root';
+
   options: Options = {};
-  name = 'root';
   enable: boolean = true;
 
   private log(message: string, level: LogLevel, options: Options) {
     try {
       if (!this.enable) return;
       if (level < loggerConfigs.level) return;
-      if (options?.console) {
+
+      //show in console for debugging
+      if (options?.console || devMode) {
         if (level == LogLevel.TRACE) console.log(message, options.data ?? []);
         else if (level == LogLevel.DEBUG) console.log(message, options.data ?? []);
         else if (level == LogLevel.INFO) console.log(message, options.data ?? []);
         else if (level == LogLevel.WARNING) console.warn(message, options.data ?? []);
         else if (level == LogLevel.ERROR) console.error(message, options.data ?? []);
       }
-      const flags = {...this.options, ...options};
+
+      //set default options on each logs
+      options = {...this.options, ...options};
+
+      //encrypt message if has encryptor
       if (options.encryptor) {
         message = options.encryptor.encrypt(message);
       }
+
       const log = {
+        timestamp: new Date().getTime(),
         name: this.name,
         level: level,
         message: message,
         data: options.data,
       } as LogRecord;
+
+      //formatter error logs
       if (log.data instanceof Error) {
         log.data = {
           name: log.data.name,
@@ -77,7 +92,16 @@ export class Logger {
         console.log('error', log)
       }
 
-      if(log.message) persistLogs?.add(log);
+      //prevent multiple same log insert
+      const logKey = log.message.slice(0, 10) + log.message.length;
+      if (this.logTimeMessages[logKey] > new Date().getTime() - 1000) return;
+      this.logTimeMessages[logKey] = new Date().getTime();
+
+      //prevent insert un cloneable object
+      if (log.data) log.data = JSON.parse(JSON.stringify(log.data));
+
+      //prevent insert empty message log
+      if (log.message) persistLogs?.add(log);
     } catch (e) {
       console.error(e)
     }
