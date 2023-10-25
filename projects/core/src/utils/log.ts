@@ -89,7 +89,7 @@ export class Logger {
           message: log.data.message,
           stack: log.data.stack,
         };
-        console.log('error', log)
+        console.error(log.data)
       }
 
       //prevent multiple same log insert
