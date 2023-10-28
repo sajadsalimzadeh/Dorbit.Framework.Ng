@@ -1,11 +1,6 @@
-import {EventEmitter, InjectionToken} from "@angular/core";
 import {Observable, Subject} from "rxjs";
 import {TimeSpan} from "../models";
 import {IndexedDB, ITable} from "../utils";
-
-export const CACHE_PREFIX = new InjectionToken<string>('');
-export const CACHE_STORAGE = new InjectionToken<Storage>('');
-export const CACHE_DEFAULT_LIFETIME = new InjectionToken<TimeSpan>('');
 
 const sameKeyEvent: { [key: string]: Subject<any> } = {}
 
