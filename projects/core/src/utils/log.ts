@@ -3,11 +3,11 @@ import {ITable} from "./database";
 import {isDevMode} from "@angular/core";
 
 export enum LogLevel {
-  TRACE = 0,
-  DEBUG = 1,
-  INFO = 2,
-  WARNING = 3,
-  ERROR = 4
+  TRACE = 1,
+  DEBUG = 2,
+  INFO = 3,
+  WARNING = 4,
+  ERROR = 5
 }
 
 export interface LogRecord {
@@ -27,12 +27,13 @@ logStore.open().then(() => {
 });
 
 export const loggerConfigs = {
-  level: LogLevel.TRACE,
   lifetime: 30 * 24 * 60 * 60 * 1000,
 }
-
+interface Settings {
+  level: LogLevel;
+  console?: boolean;
+}
 interface Options {
-  channel?: boolean;
   encryptor?: LogEncryptor;
   data?: any;
   console?: boolean;
@@ -49,25 +50,24 @@ export class Logger {
   private logTimeMessages: { [key: string]: number } = {};
   private name = 'root';
 
-  options: Options = {};
+  settings: Settings = {
+    level: LogLevel.INFO
+  }
   enable: boolean = true;
 
   private log(message: string, level: LogLevel, options: Options) {
     try {
       if (!this.enable) return;
-      if (level < loggerConfigs.level) return;
+      if(level < this.settings.level) return;
 
       //show in console for debugging
-      if (options?.console || devMode) {
+      if (options?.console || this.settings.console || devMode) {
         if (level == LogLevel.TRACE) console.log(message, options.data ?? []);
         else if (level == LogLevel.DEBUG) console.log(message, options.data ?? []);
         else if (level == LogLevel.INFO) console.log(message, options.data ?? []);
         else if (level == LogLevel.WARNING) console.warn(message, options.data ?? []);
         else if (level == LogLevel.ERROR) console.error(message, options.data ?? []);
       }
-
-      //set default options on each logs
-      options = {...this.options, ...options};
 
       //encrypt message if has encryptor
       if (options.encryptor) {
@@ -148,6 +148,7 @@ export class Logger {
 
   clone(name: string) {
     const logger = new Logger();
+    logger.settings = {...this.settings};
     logger.name = name;
     return logger;
   }
