@@ -15,3 +15,6 @@ export * from './user-agent-util';
 export * from './object';
 export * from './delay';
 export * from './random';
+export * from './google';
+export * from './mobile';
+export * from './number';
