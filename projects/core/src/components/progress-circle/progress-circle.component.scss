@@ -3,6 +3,8 @@
 
 
   ::ng-deep svg {
+    display: block;
+
     text {
       text-anchor: middle;
       dominant-baseline: middle;

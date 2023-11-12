@@ -184,11 +184,13 @@ export abstract class AbstractFormControl<T> extends BaseComponent implements Co
     if (this.formControl?.value !== value) {
       this.formControl?.setValue(value);
     }
+    this.render();
   }
 
   override render() {
     super.render();
     this.setClass('focused', this.focused);
+    this.setClass('disabled', !!this.formControl?.disabled);
   }
 
   focus() {
