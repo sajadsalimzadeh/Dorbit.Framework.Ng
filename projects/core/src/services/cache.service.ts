@@ -129,7 +129,7 @@ export class IndexDbStorage implements IStorage {
 
   async set<T>(key: string, value: T | undefined) {
     await this.db.open();
-    await this.caches.set({key: this.prefix + key, value: value});
+    await this.caches.put({key: this.prefix + key, value: value});
   }
 }
 

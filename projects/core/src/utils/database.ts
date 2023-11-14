@@ -17,9 +17,9 @@ export interface IDatabase {
 
   getAll(tableName: string): Promise<any[]>;
 
-  set(tableName: string, value: object): Promise<any>;
+  put(tableName: string, value: object): Promise<any>;
 
-  putBulk(tableName: string, values: object[]): Promise<any[]>;
+  putAll(tableName: string, values: object[]): Promise<any[]>;
 
   delete(tableName: string, id: any): Promise<void>;
 
@@ -30,24 +30,31 @@ export interface IDatabase {
   findAllKey(tableName: string, query: (key: any) => boolean, count: number): Promise<any[]>;
 }
 
+export interface ITableChangeEvent<T = any, TP = string> {
+  value?: T | T[],
+  action: 'add' | 'put' | 'put-all' | 'delete' | 'delete-all';
+}
+
 export interface ITable<T = any, TP = any> {
-  onSet: Subject<{ key: string, value: T }>;
+  onChange: Subject<ITableChangeEvent<T, TP>>;
 
   get(key: TP): Promise<T | null>;
 
   getAll(): Promise<T[]>;
 
-  set(value: T): Promise<T>;
+  put(value: T): Promise<T>;
 
   add(value: T): Promise<T>;
 
-  putBulk(values: T[]): Promise<T[]>;
+  putAll(values: T[]): Promise<T[]>;
 
   delete(key: TP): Promise<void>;
 
-  deleteAll(keys?: any[]): Promise<void>;
+  deleteAll(keys?: TP[]): Promise<void>;
 
-  findAll(query: (key: any, value: any) => boolean, count: number): Promise<T[]>;
+  findAll(query: (key: TP, value: T) => boolean | undefined, count?: number): Promise<T[]>;
+
+  count(query?: (key: TP, value: T) => boolean | undefined): Promise<number>;
 
   findAllKey(query: (key: TP) => boolean, count: number): Promise<TP[]>;
 }

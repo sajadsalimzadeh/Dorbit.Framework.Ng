@@ -1,4 +1,4 @@
-import {IDatabase, ITable, ITableConfig} from "./database";
+import {IDatabase, ITable, ITableChangeEvent, ITableConfig} from "./database";
 import {Subject} from "rxjs";
 
 export class IndexedDB implements IDatabase {
@@ -59,29 +59,48 @@ export class IndexedDB implements IDatabase {
     this.tables[name] = config;
   }
 
-  table<T = any>(name: string): ITable<T> {
+  table<T = any, TP = string>(name: string): ITable<T, TP> {
     const config = this.tables[name];
 
     const table = {
-      onSet: new Subject<{ key: string, value: T }>(),
-      get: (id: any) => this.get(name, id),
+      onChange: new Subject<ITableChangeEvent>(),
+      get: (id: TP) => this.get(name, id),
       getAll: () => this.getAll(name),
-      set: (value: any) => {
-        const key = (value as any)[config.key];
-        table.onSet.next({key, value});
-        return this.set(name, value);
-      },
-      add: (value: any) => {
+      add: async (value: T) => {
         if (config.keyGenerator) {
-          value[config.key] = config.keyGenerator();
+          (value as any)[config.key] = config.keyGenerator();
         }
-        return table.set(value);
+        const result = await table.put(value);
+        table.onChange.next({value: result, action: 'add'});
+        return result;
       },
-      delete: (id: any) => this.delete(name, id),
-      deleteAll: (keys: any[]) => this.deleteAll(name, keys),
-      putBulk: (values: any[]) => this.putBulk(name, values),
-      findAll: (query: (key: any, value: any) => boolean, count: number) => this.findAll(name, query, count),
-      findAllKey: (query: (key: any) => boolean, count: number) => this.findAllKey(name, query, count),
+      delete: async (key: TP) => {
+        await this.delete(name, key);
+        table.onChange.next({action: 'delete'});
+      },
+      deleteAll: async (keys: TP[]) => {
+        await this.deleteAll(name, keys);
+        table.onChange.next({action: 'delete-all'});
+      },
+      put: async (value: T) => {
+        const result = await this.put(name, value);
+        table.onChange.next({value: result, action: 'put'});
+        return result;
+      },
+      putAll: async (values: T[]) => {
+        const result = await this.putAll(name, values);
+        table.onChange.next({value: result, action: 'put-all'});
+        return result;
+      },
+      findAll: (query: (key: TP, value: T) => boolean, count: number = 10000000) => {
+        return this.findAll(name, query, count)
+      },
+      findAllKey: (query: (key: TP) => boolean, count: number) => {
+        return this.findAllKey(name, query, count)
+      },
+      count: async (query?: (key: TP, value: T) => boolean | undefined) => {
+        return (await table.findAll(query ?? (() => true))).length
+      },
     } as ITable;
     return table;
   }
@@ -146,13 +165,13 @@ export class IndexedDB implements IDatabase {
     });
   }
 
-  public set(tableName: string, value: any) {
+  public put(tableName: string, value: any) {
     const tx = this.db.transaction(tableName, 'readwrite');
     const store = tx.objectStore(tableName);
     return this.toPromise(() => store.put(value));
   }
 
-  public async putBulk(tableName: string, values: any[]) {
+  public async putAll(tableName: string, values: any[]) {
     const tx = this.db.transaction(tableName, 'readwrite');
     const store = tx.objectStore(tableName);
     for (const value of values) {

@@ -23,7 +23,7 @@ const logStore = new IndexedDB({name: 'log', version: 1});
 let persistLogs: ITable<LogRecord, number>;
 logStore.create('logs', {key: 'timestamp', keyGenerator: () => new Date().getTime()});
 logStore.open().then(() => {
-  persistLogs = logStore.table<LogRecord>('logs');
+  persistLogs = logStore.table<LogRecord, number>('logs');
 });
 
 export const loggerConfigs = {
