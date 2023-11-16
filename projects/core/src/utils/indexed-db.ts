@@ -63,7 +63,7 @@ export class IndexedDB implements IDatabase {
     const config = this.tables[name];
 
     const table = {
-      onChange: new Subject<ITableChangeEvent>(),
+      onChange: new Subject<ITableChangeEvent<T>>(),
       get: (id: TP) => this.get(name, id),
       getAll: () => this.getAll(name),
       add: async (value: T) => {
@@ -71,7 +71,7 @@ export class IndexedDB implements IDatabase {
           (value as any)[config.key] = config.keyGenerator();
         }
         const result = await table.put(value);
-        table.onChange.next({value: result, action: 'add'});
+        table.onChange.next({value: value, action: 'add'});
         return result;
       },
       delete: async (key: TP) => {
@@ -84,12 +84,12 @@ export class IndexedDB implements IDatabase {
       },
       put: async (value: T) => {
         const result = await this.put(name, value);
-        table.onChange.next({value: result, action: 'put'});
+        table.onChange.next({value: value, action: 'put'});
         return result;
       },
       putAll: async (values: T[]) => {
         const result = await this.putAll(name, values);
-        table.onChange.next({value: result, action: 'put-all'});
+        table.onChange.next({action: 'put-all'});
         return result;
       },
       findAll: (query: (key: TP, value: T) => boolean, count: number = 10000000) => {

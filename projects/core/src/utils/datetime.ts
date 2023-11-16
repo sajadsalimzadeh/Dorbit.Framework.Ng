@@ -464,6 +464,7 @@ export class DateTimeUtil {
       {value: 60, text: '1 min ago'},
       {value: 30, text: '30 sec ago'},
       {value: 10, text: '10 sec ago'},
+      {value: 0, text: 'a sec ago'},
     ]
 
     const now = new Date().getTime() / 1000;

@@ -7,7 +7,7 @@ export * from './dorbit.config';
 export * from './interceptors';
 export * from './components';
 export * from './pipes';
-export * from './models';
+export * from './contracts';
 export * from './services';
 export * from './utils';
 export * from './types';

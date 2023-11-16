@@ -3,7 +3,6 @@ import {TemplateDirective} from "../../template/template.directive";
 import {AbstractFormControl, createControlValueAccessor, ValidationError} from "../form-control.directive";
 import {FormControlService} from "../form-control.service";
 import {ControlGroupValidationService} from "./control-group-validation.service";
-import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'd-control-group',
@@ -15,6 +14,7 @@ export class ControlGroupComponent extends AbstractFormControl<any> {
   @Input() label: string = '';
   @Input() labelMode: 'floating' | 'fix' = 'fix';
   @Input() hint: string = '';
+  override focusable = false;
 
   errors: (ValidationError | any)[] = [];
   prependTemplate?: TemplateRef<any>;

@@ -30,13 +30,13 @@ export interface IDatabase {
   findAllKey(tableName: string, query: (key: any) => boolean, count: number): Promise<any[]>;
 }
 
-export interface ITableChangeEvent<T = any, TP = string> {
-  value?: T | T[],
-  action: 'add' | 'put' | 'put-all' | 'delete' | 'delete-all';
+export interface ITableChangeEvent<T = any> {
+  value?: T,
+  action?: 'add' | 'put' | 'put-all' | 'delete' | 'delete-all';
 }
 
 export interface ITable<T = any, TP = any> {
-  onChange: Subject<ITableChangeEvent<T, TP>>;
+  onChange: Subject<ITableChangeEvent<T>>;
 
   get(key: TP): Promise<T | null>;
 

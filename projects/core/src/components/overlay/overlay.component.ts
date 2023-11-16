@@ -53,6 +53,11 @@ export class OverlayComponent extends BaseComponent implements OnInit, OverlayOp
     }
   }
 
+  @HostListener('window:resize', ['$event'])
+  onWindowResize() {
+    this.render();
+  }
+
   @HostListener('click', ['$event'])
   onClick(e: MouseEvent) {
     e.stopPropagation();

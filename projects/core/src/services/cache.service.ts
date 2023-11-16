@@ -1,5 +1,5 @@
 import {Observable, Subject} from "rxjs";
-import {TimeSpan} from "../models";
+import {TimeSpan} from "../contracts";
 import {IndexedDB, ITable} from "../utils";
 
 const sameKeyEvent: { [key: string]: Subject<any> } = {}
