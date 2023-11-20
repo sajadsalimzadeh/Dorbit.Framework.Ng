@@ -449,3 +449,28 @@ export class JDate extends DateTime {
     return new JDate().setMoment(moment());
   }
 }
+
+export class DateTimeUtil {
+  static toHumanReadable(timestamp: number, thresholds?: {value: number, text: string}[]) {
+    if (timestamp > 9999999999) timestamp /= 1000;
+    thresholds ??= [
+      {value: 24 * 60, text: '1 day ago'},
+      {value: 12 * 60, text: '12 hour ago'},
+      {value: 6  * 60 * 60, text: '6 hour ago'},
+      {value: 60 * 60, text: '1 hour ago'},
+      {value: 30 * 60, text: '30 min ago'},
+      {value: 10 * 60, text: '10 min ago'},
+      {value: 5 * 60, text: '5 min ago'},
+      {value: 60, text: '1 min ago'},
+      {value: 30, text: '30 sec ago'},
+      {value: 10, text: '10 sec ago'},
+      {value: 0, text: 'a sec ago'},
+    ]
+
+    const now = new Date().getTime() / 1000;
+    for (let threshold of thresholds) {
+      if(now - timestamp > threshold.value) return threshold.text;
+    }
+    return null;
+  }
+}

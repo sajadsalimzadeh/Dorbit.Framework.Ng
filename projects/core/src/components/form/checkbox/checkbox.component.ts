@@ -39,6 +39,7 @@ export class CheckboxComponent extends AbstractFormControl<boolean | null> {
   }
 
   toggle() {
+    if(this.formControl.disabled) return;
     let value = this.formControl?.value;
     if (this.mode == 'ternary' && value === null || value === undefined) {
       value = false;

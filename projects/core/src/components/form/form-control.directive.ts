@@ -42,18 +42,15 @@ export interface ValidationError {
   message: string;
 }
 
-let tabIndex = 0;
-
 @Directive()
 export abstract class AbstractFormControl<T> extends BaseComponent implements ControlValueAccessor, OnInit, OnChanges, OnDestroy {
+  private _autofocus: boolean = false;
+
   @Input() name: string = '';
   @Input() placeholder: string = '';
-  @Input() @HostBinding('tabIndex') tabIndex: number | undefined = tabIndex++;
   @Input() formControl!: FormControl<any>;
   @Input() classControl?: any;
   @Input() styleControl?: any;
-
-  private _autofocus: boolean = false;
   @Input() set autofocus(value: { delay: number } | boolean | undefined) {
     this._autofocus = (typeof value === 'boolean' ? value : true);
     const delay = (typeof value === 'object' ? value.delay : 10) ?? 10;
@@ -78,6 +75,7 @@ export abstract class AbstractFormControl<T> extends BaseComponent implements Co
   @HostListener('focus', ['$event'])
   onFocus(e: FocusEvent) {
     this.focused = true;
+    this.inputEl?.nativeElement.focus();
     this.render();
   }
 
@@ -107,7 +105,9 @@ export abstract class AbstractFormControl<T> extends BaseComponent implements Co
   protected ngControl?: NgControl | null;
   protected controlContainer?: ControlContainer | null;
 
+
   focused: boolean = false;
+  focusable: boolean = true;
 
   constructor(injector: Injector) {
     super(injector);
@@ -184,11 +184,20 @@ export abstract class AbstractFormControl<T> extends BaseComponent implements Co
     if (this.formControl?.value !== value) {
       this.formControl?.setValue(value);
     }
+    this.render();
   }
 
   override render() {
     super.render();
+
+    if(this.focusable) {
+      this.elementRef.nativeElement.setAttribute('tabIndex', '0');
+    } else {
+      this.elementRef.nativeElement.removeAttribute('tabIndex');
+    }
+
     this.setClass('focused', this.focused);
+    this.setClass('disabled', !!this.formControl?.disabled);
   }
 
   focus() {

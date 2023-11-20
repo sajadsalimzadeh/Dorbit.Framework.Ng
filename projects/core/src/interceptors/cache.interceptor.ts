@@ -1,7 +1,7 @@
 import {Inject, Injectable, InjectionToken, Optional} from '@angular/core';
 import {HttpInterceptor, HttpEvent, HttpHandler, HttpRequest, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {TimeSpan} from "../models";
+import {TimeSpan} from "../contracts";
 import {internetStateService} from "../services/internet-state.service";
 import {CacheService, IndexDbStorage, IStorage} from "../services";
 import {delay} from "../utils";

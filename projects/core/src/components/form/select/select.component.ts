@@ -61,12 +61,9 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
   }
 
   overlayRef?: OverlayRef;
-
   searchFormControl = new FormControl('');
-
   hoveredIndex: number = 0;
   hoveredItem: any;
-
   renderedItems: any[] = [];
   selectedItems: any[] = [];
 

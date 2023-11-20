@@ -30,6 +30,12 @@
     opacity: 1
   }
 
+  &.disabled {
+    .check-box {
+      opacity: .5;
+    }
+  }
+
   .check-box {
     width: 0;
     height: 0;

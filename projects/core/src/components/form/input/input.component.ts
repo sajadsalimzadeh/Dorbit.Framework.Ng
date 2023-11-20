@@ -17,6 +17,7 @@ export class InputComponent extends AbstractFormControl<string> {
 
   @Input() type: 'text' | 'password' | 'email' | 'textarea' | 'number' = 'text';
   @Input() mode: '' | 'fill' = '';
+  @Input() inputMode?: 'text' | 'numeric';
   @Input() align: '' | 'left' | 'right' | 'center' | 'justify' = '';
   @Input() mask?: string | MaskItem[];
   @Input() pattern?: string;
@@ -34,6 +35,12 @@ export class InputComponent extends AbstractFormControl<string> {
 
   override render() {
     super.render();
+
+    if (this.inputEl) {
+      if (this.inputMode == 'numeric') {
+        this.inputEl.nativeElement.inputMode = this.inputMode;
+      }
+    }
 
     if (this.mask) {
       this.loadMaskedValue();

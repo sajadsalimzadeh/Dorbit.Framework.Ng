@@ -2,7 +2,6 @@ import {
   AfterViewInit,
   Directive,
   ElementRef,
-  HostBinding,
   Injector,
   Input,
   OnChanges, OnDestroy,
@@ -50,12 +49,9 @@ export abstract class BaseComponent implements OnInit, OnChanges, OnDestroy, Aft
 
   constructor(protected injector: Injector) {
     this.elementRef = injector.get(ElementRef);
-
-    Object.assign(this, DorbitConfig.getConfig(Object.getPrototypeOf(this).constructor));
   }
 
   ngOnInit() {
-    Object.assign(this, DorbitConfig.getConfig(Object.getPrototypeOf(this).constructor));
     this.render();
   }
 

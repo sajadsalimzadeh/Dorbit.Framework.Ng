@@ -23,20 +23,29 @@ const logStore = new IndexedDB({name: 'log', version: 1});
 let persistLogs: ITable<LogRecord, number>;
 logStore.create('logs', {key: 'timestamp', keyGenerator: () => new Date().getTime()});
 logStore.open().then(() => {
-  persistLogs = logStore.table<LogRecord>('logs');
+  persistLogs = logStore.table<LogRecord, number>('logs');
 });
 
 export const loggerConfigs = {
   lifetime: 30 * 24 * 60 * 60 * 1000,
 }
+
 interface Settings {
   level: LogLevel;
   console?: boolean;
+  data?: any;
 }
+
 interface Options {
   encryptor?: LogEncryptor;
   data?: any;
   console?: boolean;
+  force?: boolean;
+  padding?: {
+    with?: string,
+    count?: number,
+    dir?: 'left' | 'right' | 'left-and-right'
+  };
 }
 
 export interface LogEncryptor {
@@ -50,15 +59,27 @@ export class Logger {
   private logTimeMessages: { [key: string]: number } = {};
   private name = 'root';
 
-  settings: Settings = {
-    level: LogLevel.INFO
-  }
   enable: boolean = true;
 
-  private log(message: string, level: LogLevel, options: Options) {
+  settings: Settings = {level: LogLevel.INFO}
+  defaultOptions?: Options;
+  defaultData?: any;
+
+  private log(message: string, level: LogLevel, options?: Options) {
+    options ??= {};
     try {
       if (!this.enable) return;
-      if(level < this.settings.level) return;
+      if (this.defaultOptions) options = {...this.defaultOptions, ...options};
+      if (!options.force && level < this.settings.level) return;
+
+      if (options.padding) {
+        options.padding.with ??= '-';
+        options.padding.count ??= 10;
+        options.padding.dir ??= 'left-and-right';
+        const pad = options.padding.with.repeat(options.padding.count);
+        if (options.padding.dir.includes('left')) message = pad + message;
+        if (options.padding.dir.includes('right')) message = message + pad;
+      }
 
       //show in console for debugging
       if (options?.console || this.settings.console || devMode) {
@@ -79,7 +100,7 @@ export class Logger {
         name: this.name,
         level: level,
         message: message,
-        data: options.data,
+        data: {...this.defaultData, ...options.data},
       } as LogRecord;
 
       //formatter error logs
@@ -111,39 +132,24 @@ export class Logger {
     return persistLogs;
   }
 
-  debug(message: string, data?: any, options?: Options) {
-    this.log(message, LogLevel.DEBUG, {
-      ...options,
-      data: data,
-    });
+  debug(message: string, options?: Options) {
+    this.log(message, LogLevel.DEBUG, options);
   }
 
-  trace(message: string, data?: any, options?: Options) {
-    this.log(message, LogLevel.TRACE, {
-      ...options,
-      data: data,
-    });
+  trace(message: string, options?: Options) {
+    this.log(message, LogLevel.TRACE, options);
   }
 
-  info(message: string, data?: any, options?: Options) {
-    this.log(message, LogLevel.INFO, {
-      ...options,
-      data: data,
-    });
+  info(message: string, options?: Options) {
+    this.log(message, LogLevel.INFO, options);
   }
 
-  warn(message: string, data?: any, options?: Options) {
-    this.log(message, LogLevel.WARNING, {
-      ...options,
-      data: data,
-    });
+  warn(message: string, options?: Options) {
+    this.log(message, LogLevel.WARNING, options);
   }
 
-  error(message: string, data?: any, options?: Options) {
-    this.log(message, LogLevel.ERROR, {
-      ...options,
-      data: data,
-    });
+  error(message: string, options?: Options) {
+    this.log(message, LogLevel.ERROR, options);
   }
 
   clone(name: string) {

@@ -1,5 +1,5 @@
 import {Injectable, Injector} from "@angular/core";
-import {ODataQueryOptions, PagedListResult, QueryResult} from "../models";
+import {ODataQueryOptions, PagedListResult, QueryResult} from "../contracts";
 import {BaseApiService} from "./base-api.service";
 
 @Injectable({providedIn: 'root'})

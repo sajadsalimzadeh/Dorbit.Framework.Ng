@@ -35,6 +35,10 @@ export class ButtonComponent extends BaseComponent implements OnInit, OnChanges 
       this.activeIcon = this.icon;
     }
 
+    const el = this.elementRef.nativeElement;
+    const mode = el.getAttribute('mode') as any;
+    if(mode) this.mode = mode;
+
     this.setClass('rounded', this.rounded);
     this.setClass('outline', this.mode == 'outline');
     this.setClass('fill', this.mode == 'fill');

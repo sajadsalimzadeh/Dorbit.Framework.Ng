@@ -12,8 +12,4 @@ export class CodeComponent extends BaseComponent implements AfterViewInit {
   @ViewChild('codeContainerEl') codeContainerEl!: ElementRef<HTMLDivElement>;
 
   code?: string;
-
-  ngAfterViewInit(): void {
-    this.render();
-  }
 }

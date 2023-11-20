@@ -1,4 +1,4 @@
-import {FetchBackend, HttpClient, HttpContext, HttpEvent, HttpHandler, HttpHeaders, HttpParams, HttpRequest, HttpResponse} from "@angular/common/http";
+import {HttpClient, HttpContext, HttpEvent, HttpHandler, HttpHeaders, HttpParams, HttpRequest, HttpResponse} from "@angular/common/http";
 import {Injectable, InjectionToken, Injector} from "@angular/core";
 import {Observable, tap} from "rxjs";
 import {LoadingService} from "./loading.service";
@@ -57,18 +57,20 @@ class CustomHttpHandler extends HttpHandler {
     if (!req.url.startsWith('http')) {
 
       let url = req.url;
-      let baseUrl = this.baseUrl;
-      if (url.indexOf('~') < 0) {
-        if (this.repository) {
+      if (url.startsWith('$')) {
+        url = url.substring(1);
+      } else {
+        let baseUrl = this.baseUrl;
+        if (url.startsWith('~')) {
+          url = url.substring(1);
+        } else if (this.repository) {
           baseUrl += (baseUrl.endsWith('/') ? '' : '/') + this.repository;
         }
-      } else {
-        url = url.replace('~', '');
-      }
-      if (!baseUrl.endsWith('/')) baseUrl += '/';
-      url = baseUrl + url;
+        if (!baseUrl.endsWith('/')) baseUrl += '/';
+        url = baseUrl + url;
 
-      if (url.endsWith('/')) url = url.substring(0, url.length - 1);
+        if (url.endsWith('/')) url = url.substring(0, url.length - 1);
+      }
 
       req = req.clone({
         url: url

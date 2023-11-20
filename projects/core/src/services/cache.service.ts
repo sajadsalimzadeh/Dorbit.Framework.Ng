@@ -1,5 +1,5 @@
 import {Observable, Subject} from "rxjs";
-import {TimeSpan} from "../models";
+import {TimeSpan} from "../contracts";
 import {IndexedDB, ITable} from "../utils";
 
 const sameKeyEvent: { [key: string]: Subject<any> } = {}
@@ -129,7 +129,7 @@ export class IndexDbStorage implements IStorage {
 
   async set<T>(key: string, value: T | undefined) {
     await this.db.open();
-    await this.caches.set({key: this.prefix + key, value: value});
+    await this.caches.put({key: this.prefix + key, value: value});
   }
 }
 
