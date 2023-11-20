@@ -12,6 +12,9 @@ import {
 import {Colors, Sizes} from "../types";
 import {Subscription} from "rxjs";
 import {DorbitConfig} from "../dorbit.config";
+import {ActivatedRoute, Router} from "@angular/router";
+import {MessageService} from "./message/services/message.service";
+import {Location} from "@angular/common";
 
 
 @Directive()
@@ -22,6 +25,24 @@ export abstract class BaseComponent implements OnInit, OnChanges, OnDestroy, Aft
   @Input() colorText: Colors = 'primary';
   @Input() ngClasses?: any;
   @Input() dir: '' | 'rtl' | 'ltr' = '';
+
+  private _services: any = {};
+
+  protected get route(): ActivatedRoute {
+    return this._services['ActivatedRoute'] ??= this.injector.get(ActivatedRoute);
+  }
+
+  protected get router(): Router {
+    return this._services['Router'] ??= this.injector.get(Router);
+  }
+
+  protected get location(): Location {
+    return this._services['Location'] ??= this.injector.get(Location);
+  }
+
+  protected get messageService(): MessageService {
+    return this._services['MessageService'] ??= this.injector.get(MessageService);
+  }
 
   protected subscription = new Subscription();
 

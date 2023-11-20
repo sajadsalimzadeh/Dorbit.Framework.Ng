@@ -1,4 +1,4 @@
-@import "../../../assets/styles/mixin";
+@import "../../assets/styles/mixin";
 
 @mixin selected-row {
   @include selected-color;
@@ -14,9 +14,10 @@
   }
 }
 
-$border-color: rgba(var(--color-black-rgb), .05);
+$border-color: rgba(var(--color-black-rgb), .03);
 
 :host {
+  gap: .5rem;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -44,19 +45,19 @@ $border-color: rgba(var(--color-black-rgb), .05);
     table {
       thead, tfoot {
         th:not(:last-child) {
-          border-inline-end: 1px solid $border-color;
+          //border-inline-end: 1px solid $border-color;
         }
       }
 
       .main-tbody:nth-child(2n+1) {
         td:not(:last-child) {
-          border-inline-end: 1px solid $border-color;
+          //border-inline-end: 1px solid $border-color;
         }
       }
 
       .main-tbody:nth-child(2n) {
         td:not(:last-child) {
-          border-inline-end: 1px solid $border-color;
+          //border-inline-end: 1px solid $border-color;
         }
       }
     }
@@ -77,13 +78,6 @@ $border-color: rgba(var(--color-black-rgb), .05);
   .filter-box td {
     padding: 0 !important;
   }
-}
-
-.caption {
-  padding: .8rem 0;
-  border-style: solid;
-  border-width: 1px 1px 0;
-  border-color: var(--color-gray--4);
 }
 
 .data {
@@ -143,10 +137,23 @@ $border-color: rgba(var(--color-black-rgb), .05);
     overflow: auto;
     position: relative;
     border-radius: var(--radius-2);
-    background-color: var(--color-white);
     border: 1px solid $border-color;
+    background-color: var(--color-gray--4);
 
-    &.no-data {
+    .gradient, .no-data {
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      position: absolute;
+    }
+
+    .gradient {
+      @include glass;
+      @include shadow-slant;
+    }
+
+    .no-data {
       background-size: auto 35%;
       background-position: center;
       background-repeat: no-repeat;
@@ -173,7 +180,7 @@ $border-color: rgba(var(--color-black-rgb), .05);
         }
 
         td, th {
-          padding: .5rem .5rem;
+          padding: .5rem 1rem;
         }
 
         th {
@@ -320,9 +327,6 @@ $border-color: rgba(var(--color-black-rgb), .05);
 
 .pagination {
   display: flex;
-  border-style: solid;
-  border-width: 0 1px 1px;
-  border-color: var(--color-gray--4);
 
   .summary {
     flex: 1;
@@ -333,7 +337,6 @@ $border-color: rgba(var(--color-black-rgb), .05);
   .paginator {
     display: flex;
     align-items: center;
-    padding: 0.5rem;
 
     .current-page-report {
       text-align: end;

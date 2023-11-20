@@ -1,23 +1,36 @@
 import * as moment from "moment";
 
 export class ODataQueryOptions {
-  public filter: string = '';
-  public orderBy: string = '';
-  public skip: number = 0;
-  public top: number = 0;
+  private filter: string = '';
+  private select: string = '';
+  private orderBy: string = '';
+  private skip: number = 0;
+  private top: number = 0;
 
-  constructor(options?: { filter?: string, orderBy?: string, skip?: number, top?: number } | {}) {
+  constructor(options?: {
+    filter?: string,
+    select?: string,
+    orderBy?: string,
+    skip?: number,
+    top?: number
+  } | {}) {
     Object.assign(this as any, options);
   }
 
-  addFilter(value: string): ODataQueryOptions {
-    if (this.filter) this.filter += ' and ';
-    this.filter += value;
+  addFilter(key: string, op: string, value: string): ODataQueryOptions {
+    if (this.filter) this.filter += ` and `;
+    this.filter += `${key} ${op} ${value}`;
     return this;
   }
 
   clearFilter(): ODataQueryOptions {
     this.filter = '';
+    return this;
+  }
+
+  addSelect(...fields: string[]) {
+    if(this.select) this.select += ',';
+    this.select += fields.join(',');
     return this;
   }
 
@@ -29,6 +42,7 @@ export class ODataQueryOptions {
   toQueryString(withQuestionmark: boolean = true): string {
     let params = (withQuestionmark ? "?" : "");
     if (this.filter) params += `$filter=${this.filter}&`;
+    if (this.select) params += `$select=${this.select}&`;
     if (this.orderBy) params += `$orderby=${this.orderBy}&`;
     if (this.top) params += `$top=${this.top}&`;
     if (this.skip) params += `$skip=${this.skip}&`;

@@ -3,8 +3,8 @@
 [theme=default-light] {
 
   // Colors
-  --color-black: rgb(0, 0, 0);
-  --color-black-rgb: 0, 0, 0;
+  --color-black: #1d1d21;
+  --color-black-rgb: 29, 29, 33;
 
   --color-white: rgb(255, 255, 255);
   --color-white-rgb: 255, 255, 255;
@@ -21,15 +21,15 @@
   --color-gray--9: #c6c6c6;
   --color-gray--10: #b6b6b6;
 
-  --color-gray-10: #aaa;
-  --color-gray-9: #999;
-  --color-gray-8: #888;
-  --color-gray-7: #777;
-  --color-gray-6: #666;
-  --color-gray-5: #555;
-  --color-gray-4: #444;
-  --color-gray-3: #333;
-  --color-gray-2: #222;
-  --color-gray-1: #111;
-  --color-gray-0: #000;
+  --color-gray-10: #888;
+  --color-gray-9: #777;
+  --color-gray-8: #666;
+  --color-gray-7: #555;
+  --color-gray-6: #444;
+  --color-gray-5: #393941;
+  --color-gray-4: #34343e;
+  --color-gray-3: #313138;
+  --color-gray-2: #28282f;
+  --color-gray-1: #212128;
+  --color-gray-0: #1c1c21;
 }

@@ -1,4 +1,4 @@
-export * from './operation-result';
+export * from './command-result';
 export * from './time-span';
 export * from './dispose';
 export * from './odata-query-options';
