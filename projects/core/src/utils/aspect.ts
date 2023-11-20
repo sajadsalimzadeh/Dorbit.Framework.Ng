@@ -11,6 +11,7 @@ interface AspectOptions {
   before?: (ctx: Context) => Promise<void>;
   after?: (ctx: Context) => Promise<void>;
   exception?: (ctx: Context) => Promise<void>;
+  methods?: string[]
 }
 
 export class AspectUtil {
@@ -32,9 +33,10 @@ export class AspectUtil {
       const methodName = methods[i];
       if (methodName.startsWith('__')) continue;
       if (options.condition && !options.condition(methodName)) continue;
+      if (options.methods && !options.methods.includes(methodName)) continue;
       const originalValue = obj[methodName];
       if (typeof originalValue === 'function') {
-        obj[methodName] = async (...args: any) => {
+        obj[methodName] = async (...args: any[]) => {
           const ctx: Context = {
             instance: obj,
             method: methodName,
@@ -42,11 +44,12 @@ export class AspectUtil {
           };
           try {
             if (options.before) await options.before(ctx);
-            if (!ctx.result) ctx.result = await originalValue(...args);
+            if (!ctx.result) ctx.result = await originalValue.apply(obj, args);
             if (options.after) await options.after(ctx);
             return ctx.result;
           } catch (e) {
             ctx.error = e;
+            console.error(e)
             if (options.exception) await options.exception(ctx);
             throw e;
           }
