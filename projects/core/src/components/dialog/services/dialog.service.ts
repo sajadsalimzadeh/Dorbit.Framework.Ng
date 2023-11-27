@@ -1,8 +1,8 @@
-import {EventEmitter, Injectable} from "@angular/core";
+import {ComponentRef, EventEmitter, Injectable, Type} from "@angular/core";
 import {DomService} from "../../../services";
 import {DialogComponent, DialogOptions} from "../components/dialog/dialog.component";
 import {DialogContainerComponent} from "../dialog-container.component";
-import {Subject} from "rxjs";
+import {PromptComponent, PromptOptions} from "../components/prompt/prompt.component";
 
 export interface DialogRef {
   close: () => void;
@@ -16,18 +16,32 @@ export class DialogService {
   constructor(private domService: DomService) {
   }
 
-  open(options: DialogOptions): DialogRef {
-    const container = this.containers.find(x => x.name == options.container);
-    const parentElement = container?.elementRef.nativeElement.parentNode as HTMLElement;
-    options.maxHeight ??= `calc(${parentElement.clientHeight || document.body.clientHeight}px - 1.6rem)`;
-    const componentRef = this.domService.createByComponent(DialogComponent, container?.elementRef.nativeElement);
-    Object.assign(componentRef.instance, options);
-    componentRef.instance.componentRef = componentRef;
+  private create<T extends DialogRef>(component: Type<T>, init: (obj: ComponentRef<T>, container?: DialogContainerComponent) => void, name?: string) {
+    const container = this.containers.find(x => x.name == name);
+    const componentRef = this.domService.createByComponent(component, container?.elementRef.nativeElement);
+    init(componentRef, container);
     return {
       close: () => {
         componentRef.instance.close();
       },
       onClose: componentRef.instance.onClose
     };
+  }
+
+  open(options: DialogOptions): DialogRef {
+    return this.create(DialogComponent, (componentRef, container) => {
+      const parentElement = container?.elementRef.nativeElement.parentNode as HTMLElement;
+      options.maxHeight ??= `calc(${parentElement.clientHeight || document.body.clientHeight}px - 1.6rem)`;
+      Object.assign(componentRef.instance, options);
+      componentRef.instance.componentRef = componentRef;
+    }, options.container);
+  }
+
+  prompt(prompt: PromptOptions, dialogOptions?: DialogOptions) {
+    return this.create(PromptComponent, (componentRef) => {
+      componentRef.instance.options = dialogOptions;
+      Object.assign(componentRef.instance, prompt);
+
+    });
   }
 }

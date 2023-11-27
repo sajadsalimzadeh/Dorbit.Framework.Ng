@@ -3,6 +3,12 @@
   max-width: 100%;
   position: relative;
 
+  &.disabled {
+    .control-box {
+      opacity: .8;
+    }
+  }
+
   &.focused {
     z-index: 100;
 

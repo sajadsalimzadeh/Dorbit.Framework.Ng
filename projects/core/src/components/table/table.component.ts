@@ -73,7 +73,6 @@ export class TableComponent extends BaseComponent implements OnInit, OnChanges, 
 
   tableService: TableService;
   overlayService: OverlayService;
-  loadingService: LoadingService;
 
   renderedItems: any[] = [];
   pageNumbers: number[] = [];
@@ -91,7 +90,6 @@ export class TableComponent extends BaseComponent implements OnInit, OnChanges, 
     super(injector);
     this.tableService = injector.get(TableService);
     this.overlayService = injector.get(OverlayService);
-    this.loadingService = injector.get(LoadingService);
 
     this.tableService.dataTable = this;
   }

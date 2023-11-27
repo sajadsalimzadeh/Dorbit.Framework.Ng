@@ -6,6 +6,8 @@ export interface TreeItem {
   key: any;
   value: any;
   parentKey: any;
+  selected?: boolean;
+  expanded?: boolean;
   icon?: string;
   children?: TreeItem[];
   parent?: TreeItem;
@@ -26,13 +28,13 @@ export class TreeComponent extends BaseComponent implements OnChanges {
   @Input() items: any[] = [];
   @Input() draggable: boolean = false;
   @Input() verticalLines: boolean = true;
+  @Input() expandKeys: any[] = [];
+  @Input() selectKeys: any[] = [];
   @Input() expansion: '' | 'multiple' | 'single' = 'multiple';
   @Input() selection: '' | 'single' | 'multiple' | 'single-leaf' | 'multiple-leaf' = '';
   @Input() fields = {
     key: 'id',
     parent: 'parentId',
-    expanded: 'expanded',
-    selected: 'selected',
   };
   @Input() icons = {
     collapse: 'icons-core-angle-right',
@@ -53,7 +55,7 @@ export class TreeComponent extends BaseComponent implements OnChanges {
   appendTemplate?: TemplateRef<any>;
 
   @ContentChildren(TemplateDirective) set templates(value: QueryList<TemplateDirective>) {
-    this.itemTemplate = value.find(x => x.includesName("item"))?.template;
+    this.itemTemplate = value.find(x => x.includesName("item", true))?.template;
     this.prependTemplate = value.find(x => x.includesName("prepend"))?.template;
     this.appendTemplate = value.find(x => x.includesName("append"))?.template;
   }
@@ -95,6 +97,10 @@ export class TreeComponent extends BaseComponent implements OnChanges {
 
     this.setClass('vertical-lines', this.verticalLines);
 
+    this.optimizedItems.forEach(x => {
+      x.expanded = this.expandKeys.includes(x.key);
+      x.selected = this.selectKeys.includes(x.key);
+    })
     this.roots = this.optimizedItems.filter(x => !x.parent);
   }
 
@@ -111,30 +117,42 @@ export class TreeComponent extends BaseComponent implements OnChanges {
 
   toggleExpansion(item: TreeItem) {
     if (this.expansion) {
-      const state = !item.value[this.fields.expanded];
-      if (this.expansion.includes('single')) {
-        const items = (item.parent?.children ?? this.roots);
-        items.forEach(x => x.value[this.fields.expanded] = false);
+      const index = this.expandKeys.indexOf(item.key)
+      if(index > -1) this.expandKeys.splice(index, 1);
+      else {
+
+        if (this.expansion.includes('single')) {
+          const items = (item.parent?.children ?? this.roots);
+          items.forEach(x => {
+            const index = this.expandKeys.indexOf(x.key);
+            if(index > -1) this.expandKeys.splice(index, 1);
+            x.expanded = false
+          });
+        }
+
+        this.expandKeys.push(item.key);
       }
-      item.value[this.fields.expanded] = state;
+      this.render();
     }
   }
 
   toggleSelection(item: TreeItem) {
     if (this.selection) {
-      const state = !item.value[this.fields.selected];
+      const state = !item.selected;
       const clear = () => {
-        this.items.forEach(x => x[this.fields.selected] = false);
+        this.selectKeys.splice(0, this.selectKeys.length);
       }
+
       if (this.selection.includes('leaf')) {
         if (!item.children?.length) {
           if (this.selection.includes('single')) clear();
-          item.value[this.fields.selected] = state;
+          if(state) this.selectKeys.push(item.key);
         }
       } else {
         if (this.selection.includes('single')) clear();
-        item.value[this.fields.selected] = state;
+        if(state) this.selectKeys.push(item.key);
       }
+      this.render();
     }
   }
 

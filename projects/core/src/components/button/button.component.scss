@@ -17,9 +17,10 @@
 
   &.text, &.outline {
     color: var(--color-component);
+    background-color: rgba(var(--color-component-rgb), .1);
 
     &:hover {
-      background-color: rgba(var(--color-component-rgb), .1);
+      background-color: rgba(var(--color-component-rgb), .2);
     }
   }
 
@@ -45,6 +46,7 @@
   }
 
   .text {
+    flex: 1;
     order: 5;
 
     &:empty {
@@ -80,7 +82,7 @@
 
   .icon {
     display: flex;
-    font-size: 1em;
+    font-size: 1.2em;
     position: relative;
     align-items: center;
     justify-content: center;

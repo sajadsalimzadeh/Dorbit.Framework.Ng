@@ -1,10 +1,11 @@
 import {Component, ComponentRef, EventEmitter, HostListener, OnInit, Output, TemplateRef} from '@angular/core';
 import {BaseComponent} from "../../../base.component";
 import {Positions} from "../../../../types";
+import {DialogRef} from "../../services/dialog.service";
 
 export interface DialogOptions {
   container?: string;
-  template: TemplateRef<any>;
+  template?: TemplateRef<any>;
 
   width?: string;
   minWidth?: string;
@@ -45,7 +46,7 @@ const minimizeSpaces: DialogComponent[] = [];
   templateUrl: 'dialog.component.html',
   styleUrls: ['./dialog.component.scss']
 })
-export class DialogComponent extends BaseComponent implements OnInit, DialogOptions, DialogContext {
+export class DialogComponent extends BaseComponent implements DialogRef, DialogOptions, DialogContext {
   @Output() onClose = new EventEmitter<void>();
 
   componentRef!: ComponentRef<DialogComponent>;

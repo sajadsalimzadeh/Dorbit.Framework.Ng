@@ -31,11 +31,11 @@ $border-color: rgba(var(--color-black-rgb), .03);
   &.table-striped ::ng-deep {
     table {
       .main-tbody:nth-child(2n+1) {
-        background-color: var(--color-gray--1);
+        background-color: var(--color-gray--2);
       }
 
       .main-tbody:nth-child(2n) {
-        background-color: var(--color-white);
+        background-color: var(--color-gray--1);
       }
     }
   }
@@ -170,8 +170,10 @@ $border-color: rgba(var(--color-black-rgb), .03);
     .data-table {
 
       table {
+        z-index: 5;
         width: 100%;
         min-height: 100%;
+        position: relative;
         border-collapse: collapse;
         color: var(--color-gray-4);
 
@@ -185,6 +187,7 @@ $border-color: rgba(var(--color-black-rgb), .03);
 
         th {
           font-weight: bold;
+          white-space: nowrap;
           text-align: justify;
 
           &.sortable {
