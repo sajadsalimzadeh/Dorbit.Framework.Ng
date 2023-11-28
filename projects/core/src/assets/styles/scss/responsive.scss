@@ -7,6 +7,8 @@
 .flex-column {display: flex !important; flex-direction: column !important;}
 .flex-column-reverse {display: flex !important; flex-direction: column-reverse !important;}
 
+.flex-center {display: flex !important; align-items: center !important; justify-content: center !important;}
+
 .flex-align-start {align-items: flex-start !important;}
 .flex-align-center {align-items: center !important;}
 .flex-align-end {align-items: flex-end !important;}

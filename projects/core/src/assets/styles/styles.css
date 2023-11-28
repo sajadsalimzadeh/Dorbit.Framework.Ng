@@ -1636,6 +1636,11 @@
   flex-direction: column-reverse !important;
 }
 
+.flex-center {
+  align-items: center;
+  justify-content: center;
+}
+
 .flex-align-start {
   align-items: flex-start !important;
 }
@@ -1646,6 +1651,10 @@
 
 .flex-align-end {
   align-items: flex-end !important;
+}
+
+.flex-align-stretch {
+  align-items: stretch !important;
 }
 
 .flex-justify-start {
@@ -1666,6 +1675,10 @@
 
 .flex-justify-space-around {
   justify-content: space-around !important;
+}
+
+.flex-justify-stretch {
+  justify-content: stretch !important;
 }
 
 .flex-wrap {
@@ -2217,37 +2230,47 @@ a:link, a:visited {
   color: var(--color-link);
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #ffffff;
+  transition: background-color 5000s ease-in-out 0s;
+  box-shadow: inset 0 0 20px 20px rgba(35, 35, 35, 0.1607843137);
+}
+
 :root {
   --color-white-fix: rgb(255, 255, 255);
   --color-white-fix-rgb: 255, 255, 255;
   --color-black-fix: rgb(0, 0, 0);
   --color-black-fix-rgb: 0, 0, 0;
-  --color-primary-tint: rgb(226, 229, 255);
+  --color-primary-tint: rgb(144, 156, 255);
   --color-primary: rgb(98, 111, 225);
   --color-primary-shade: rgb(56, 75, 213);
   --color-primary-rgb: 98, 111, 225;
   --color-primary-text: var(--color-white-fix);
-  --color-secondary-tint: rgb(224, 251, 255);
+  --color-secondary-tint: rgb(131, 250, 255);
   --color-secondary: rgb(76, 183, 187);
   --color-secondary-shade: rgb(30, 154, 157);
   --color-secondary-rgb: 76, 183, 187;
   --color-secondary-text: var(--color-white-fix);
-  --color-success-tint: rgb(226, 255, 240);
+  --color-success-tint: rgb(130, 253, 195);
   --color-success: rgb(68, 189, 133);
   --color-success-shade: rgb(21, 152, 98);
   --color-success-rgb: 68, 189, 133;
   --color-success-text: var(--color-white-fix);
-  --color-warning-tint: rgb(255, 247, 228);
+  --color-warning-tint: rgb(255, 198, 118);
   --color-warning: rgb(250, 173, 65);
   --color-warning-shade: rgb(227, 136, 10);
   --color-warning-rgb: 250, 173, 65;
   --color-warning-text: var(--color-white-fix);
-  --color-danger-tint: rgb(255, 231, 231);
+  --color-danger-tint: rgb(255, 124, 124);
   --color-danger: rgb(255, 72, 72);
   --color-danger-shade: rgb(218, 44, 44);
   --color-danger-rgb: 255, 72, 72;
   --color-danger-text: var(--color-white-fix);
-  --color-link-tint: rgb(151, 197, 245);
+  --color-link-tint: rgb(139, 196, 255);
   --color-link: rgb(45, 114, 187);
   --color-link-shade: rgb(8, 68, 129);
   --color-link-rgb: 45, 114, 187;
@@ -2297,16 +2320,16 @@ a:link, a:visited {
   --font-size-9: calc(var(--font-size-base) + 1.3rem);
   --font-size-10: calc(var(--font-size-base) + 1.45rem);
   --size-0: 0rem;
-  --size-1: .2rem;
-  --size-2: .4rem;
-  --size-3: .6rem;
-  --size-4: .8rem;
-  --size-5: 1rem;
-  --size-6: 1.2rem;
-  --size-7: 1.4rem;
-  --size-8: 1.6rem;
-  --size-9: 1.8rem;
-  --size-10: 2rem;
+  --size-1: .3rem;
+  --size-2: .6rem;
+  --size-3: .9rem;
+  --size-4: 1.2rem;
+  --size-5: 1.5rem;
+  --size-6: 1.8rem;
+  --size-7: 2.1rem;
+  --size-8: 2.4rem;
+  --size-9: 2.7rem;
+  --size-10: 3rem;
   --radius-1: .1rem;
   --radius-2: .25rem;
   --radius-3: .4rem;
@@ -2328,8 +2351,8 @@ a:link, a:visited {
 }
 
 [theme=default-light] {
-  --color-black: rgb(0, 0, 0);
-  --color-black-rgb: 0, 0, 0;
+  --color-black: #1d1d21;
+  --color-black-rgb: 29, 29, 33;
   --color-white: rgb(255, 255, 255);
   --color-white-rgb: 255, 255, 255;
   --color-gray--0: #fbfbfb;
@@ -2343,17 +2366,17 @@ a:link, a:visited {
   --color-gray--8: #ccc;
   --color-gray--9: #c6c6c6;
   --color-gray--10: #b6b6b6;
-  --color-gray-10: #aaa;
-  --color-gray-9: #999;
-  --color-gray-8: #888;
-  --color-gray-7: #777;
-  --color-gray-6: #666;
-  --color-gray-5: #555;
-  --color-gray-4: #444;
-  --color-gray-3: #333;
-  --color-gray-2: #222;
-  --color-gray-1: #111;
-  --color-gray-0: #000;
+  --color-gray-10: #888;
+  --color-gray-9: #777;
+  --color-gray-8: #666;
+  --color-gray-7: #555;
+  --color-gray-6: #444;
+  --color-gray-5: #393941;
+  --color-gray-4: #34343e;
+  --color-gray-3: #313138;
+  --color-gray-2: #28282f;
+  --color-gray-1: #212128;
+  --color-gray-0: #1c1c21;
 }
 
 [theme=default-dark] {
@@ -2361,28 +2384,28 @@ a:link, a:visited {
   --color-black-rgb: 255, 255, 255;
   --color-white: rgb(30, 30, 30);
   --color-white-rgb: 51, 51, 51;
-  --color-gray--0: #1E1E1EFF;
-  --color-gray--1: #232323;
-  --color-gray--2: #272727;
-  --color-gray--3: #2c2c2c;
-  --color-gray--4: #313131;
-  --color-gray--5: #373737;
-  --color-gray--6: #3b3b3b;
-  --color-gray--7: #414141;
-  --color-gray--8: #474747;
-  --color-gray--9: #4a4a4a;
-  --color-gray--10: #505050;
-  --color-gray-10: #555;
-  --color-gray-9: #666;
-  --color-gray-8: #777;
-  --color-gray-7: #888;
-  --color-gray-6: #999;
-  --color-gray-5: #aaa;
-  --color-gray-4: #bbb;
-  --color-gray-3: #ccc;
-  --color-gray-2: #ddd;
-  --color-gray-1: #eee;
-  --color-gray-0: #fff;
+  --color-gray--0: #212226;
+  --color-gray--1: #25272d;
+  --color-gray--2: #2e3038;
+  --color-gray--3: #34363f;
+  --color-gray--4: #363a48;
+  --color-gray--5: #394149;
+  --color-gray--6: #474c59;
+  --color-gray--7: #565b69;
+  --color-gray--8: #646a77;
+  --color-gray--9: #69707c;
+  --color-gray--10: #767a88;
+  --color-gray-10: #7c828d;
+  --color-gray-9: #838891;
+  --color-gray-8: #8c919f;
+  --color-gray-7: #9fa3af;
+  --color-gray-6: #a7acb9;
+  --color-gray-5: #b3b7c2;
+  --color-gray-4: #b6b9c5;
+  --color-gray-3: #c1c5ce;
+  --color-gray-2: #c8cbda;
+  --color-gray-1: #d1d4e3;
+  --color-gray-0: #e1e2ec;
 }
 
 @font-face {

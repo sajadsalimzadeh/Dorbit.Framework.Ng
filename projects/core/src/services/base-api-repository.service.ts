@@ -21,7 +21,7 @@ export interface HttpOptions {
 }
 
 @Injectable()
-export abstract class BaseApiService {
+export abstract class BaseApiRepository {
   protected http: CustomHttpClient;
   protected baseApiUrl: string;
 

@@ -8,37 +8,37 @@
   --color-black-fix: rgb(0, 0, 0);
   --color-black-fix-rgb: 0, 0, 0;
 
-  --color-primary-tint: rgb(226, 229, 255);
+  --color-primary-tint: rgb(144, 156, 255);
   --color-primary: rgb(98, 111, 225);
   --color-primary-shade: rgb(56, 75, 213);
   --color-primary-rgb: 98, 111, 225;
   --color-primary-text: var(--color-white-fix);
 
-  --color-secondary-tint: rgb(224, 251, 255);
+  --color-secondary-tint: rgb(131, 250, 255);
   --color-secondary: rgb(76, 183, 187);
   --color-secondary-shade: rgb(30, 154, 157);
   --color-secondary-rgb: 76, 183, 187;
   --color-secondary-text: var(--color-white-fix);
 
-  --color-success-tint: rgb(226, 255, 240);
+  --color-success-tint: rgb(130, 253, 195);
   --color-success: rgb(68, 189, 133);
   --color-success-shade: rgb(21, 152, 98);
   --color-success-rgb: 68, 189, 133;
   --color-success-text: var(--color-white-fix);
 
-  --color-warning-tint: rgb(255, 247, 228);
+  --color-warning-tint: rgb(255, 198, 118);
   --color-warning: rgb(250, 173, 65);
   --color-warning-shade: rgb(227, 136, 10);
   --color-warning-rgb: 250, 173, 65;
   --color-warning-text: var(--color-white-fix);
 
-  --color-danger-tint: rgb(255, 231, 231);
+  --color-danger-tint: rgb(255, 124, 124);
   --color-danger: rgb(255, 72, 72);
   --color-danger-shade: rgb(218, 44, 44);
   --color-danger-rgb: 255, 72, 72;
   --color-danger-text: var(--color-white-fix);
 
-  --color-link-tint: rgb(151, 197, 245);
+  --color-link-tint: rgb(139, 196, 255);
   --color-link: rgb(45, 114, 187);
   --color-link-shade: rgb(8, 68, 129);
   --color-link-rgb: 45, 114, 187;
@@ -97,16 +97,16 @@
 
   //Sizing
   --size-0: 0rem;
-  --size-1: .2rem;
-  --size-2: .4rem;
-  --size-3: .6rem;
-  --size-4: .8rem;
-  --size-5: 1rem;
-  --size-6: 1.2rem;
-  --size-7: 1.4rem;
-  --size-8: 1.6rem;
-  --size-9: 1.8rem;
-  --size-10: 2rem;
+  --size-1: .3rem;
+  --size-2: .6rem;
+  --size-3: .9rem;
+  --size-4: 1.2rem;
+  --size-5: 1.5rem;
+  --size-6: 1.8rem;
+  --size-7: 2.1rem;
+  --size-8: 2.4rem;
+  --size-9: 2.7rem;
+  --size-10: 3rem;
 
   //Radius
   --radius-1: .1rem;

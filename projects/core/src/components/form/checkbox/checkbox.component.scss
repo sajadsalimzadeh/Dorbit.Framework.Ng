@@ -69,8 +69,10 @@
 
   label {
     display: flex;
-    font-size: 1.2em;
+    font-size: 1em;
     align-items: center;
+    padding-inline-end: .5em;
+    color: var(--color-gray-2);
 
     &:empty {
       display: none;

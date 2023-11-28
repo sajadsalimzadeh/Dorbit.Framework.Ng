@@ -37,7 +37,7 @@ export class MessageContainerComponent extends BaseComponent {
 
   timerEnable: boolean = true;
 
-  constructor(injector: Injector, private messageService: MessageService, private changeDetectionRef: ChangeDetectorRef) {
+  constructor(injector: Injector, private changeDetectionRef: ChangeDetectorRef) {
     super(injector);
   }
 

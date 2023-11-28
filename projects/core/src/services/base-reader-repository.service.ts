@@ -1,9 +1,9 @@
 import {Injectable, Injector} from "@angular/core";
 import {ODataQueryOptions, PagedListResult, QueryResult} from "../contracts";
-import {BaseApiService} from "./base-api.service";
+import {BaseApiRepository} from "./base-api-repository.service";
 
 @Injectable({providedIn: 'root'})
-export abstract class BaseCrudService<T = any> extends BaseApiService {
+export abstract class BaseReaderRepository<T = any> extends BaseApiRepository {
 
   constructor(injector: Injector, repository: string) {
     super(injector, repository);
@@ -20,17 +20,5 @@ export abstract class BaseCrudService<T = any> extends BaseApiService {
 
   getById(id: number) {
     return this.http.get<QueryResult<any>>(`${id}`);
-  }
-
-  add(dto: any) {
-    return this.http.post<QueryResult<T>>(``, dto);
-  }
-
-  edit(id: number, dto: any) {
-    return this.http.patch<QueryResult<T>>(`${id}`, dto);
-  }
-
-  remove(id: number) {
-    return this.http.delete<QueryResult<T>>(`${id}`);
   }
 }

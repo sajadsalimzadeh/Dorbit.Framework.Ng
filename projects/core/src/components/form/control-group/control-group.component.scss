@@ -1,10 +1,11 @@
 :host {
   cursor: text;
   outline: none;
+  padding-top: 2em;
   position: relative;
-  background-color: var(--color-gray--2);
 
   &.float-label {
+
     .control-box .control-box-container .label-box {
       top: 50%;
       transform: translateY(-50%);
@@ -20,19 +21,16 @@
       position: relative;
 
       .label-box {
-        top: 0;
+        top: -2rem;
+        padding: 0;
         z-index: 100;
-        margin: 0 .5rem;
-        height: 0.3rem;
         display: flex;
+        margin: 0 .5em;
         font-size: .9em;
-        padding: 0 0.5rem;
         position: absolute;
         align-items: center;
         transition: all .3s ease;
-        color: var(--color-gray-7);
-        background-color: var(--color-gray--2);
-        transform: translateY(calc(-50% - 0.1rem));
+        color: var(--color-gray-2);
       }
 
       &::ng-deep > *:not(.label-box) {
