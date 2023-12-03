@@ -5,8 +5,9 @@ import {IndexedDB, ITable} from "../utils";
 const sameKeyEvent: { [key: string]: Subject<any> } = {}
 
 interface CacheItem<T> {
-  expireTime: number;
   data: T;
+  expireTime: number;
+  version?: string;
 }
 
 export interface IStorage {
@@ -135,13 +136,14 @@ export class IndexDbStorage implements IStorage {
 
 
 export class CacheService {
+  version?: string;
 
-  async get<T = any>(key: string, storage: IStorage, options?: { ignoreExpiration: boolean }): Promise<T | undefined> {
+  async get<T = any>(key: string, storage: IStorage, options?: ({ ignoreExpiration: boolean, ignoreVersion: boolean })): Promise<T | undefined> {
     try {
       const obj = await storage.get<CacheItem<T>>(key);
-      if (!obj || options?.ignoreExpiration || obj.expireTime < new Date().getTime()) {
-        return undefined;
-      }
+      if (!obj) return undefined;
+      if(!options?.ignoreExpiration && obj.expireTime < new Date().getTime()) return undefined;
+      if(!options?.ignoreVersion && obj.version && obj.version != this.version) return undefined;
       return obj.data;
     } catch {
       return undefined;
@@ -181,6 +183,7 @@ export class CacheService {
     try {
       const item: CacheItem<T> = {
         expireTime: new Date().getTime() + lifetime.toSeconds() * 1000,
+        version: this.version,
         data: value,
       }
       return storage.set(key, item);

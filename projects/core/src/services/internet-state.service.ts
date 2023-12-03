@@ -2,11 +2,11 @@ import {BehaviorSubject} from "rxjs";
 
 class InternetStateService {
 
-  StatusChange = new BehaviorSubject(window.navigator.onLine);
+  $status = new BehaviorSubject(window.navigator.onLine);
 
   constructor() {
-    window.addEventListener('online', () => this.StatusChange.next(true));
-    window.addEventListener('offline', () => this.StatusChange.next(false));
+    window.addEventListener('online', () => this.$status.next(true));
+    window.addEventListener('offline', () => this.$status.next(false));
   }
 }
 

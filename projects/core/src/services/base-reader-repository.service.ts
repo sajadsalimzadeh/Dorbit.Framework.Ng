@@ -3,7 +3,7 @@ import {ODataQueryOptions, PagedListResult, QueryResult} from "../contracts";
 import {BaseApiRepository} from "./base-api-repository.service";
 
 @Injectable({providedIn: 'root'})
-export abstract class BaseReaderRepository<T = any> extends BaseApiRepository {
+export abstract class BaseReadRepository<T = any> extends BaseApiRepository {
 
   constructor(injector: Injector, repository: string) {
     super(injector, repository);

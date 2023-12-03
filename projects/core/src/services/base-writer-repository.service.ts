@@ -1,10 +1,10 @@
 import {Injectable, Injector} from "@angular/core";
 import {ODataQueryOptions, PagedListResult, QueryResult} from "../contracts";
 import {BaseApiRepository} from "./base-api-repository.service";
-import {BaseReaderRepository} from "./base-reader-repository.service";
+import {BaseReadRepository} from "./base-reader-repository.service";
 
 @Injectable({providedIn: 'root'})
-export abstract class BaseWriterRepository<T = any> extends BaseReaderRepository {
+export abstract class BaseWriteRepository<T = any> extends BaseReadRepository {
 
   constructor(injector: Injector, repository: string) {
     super(injector, repository);

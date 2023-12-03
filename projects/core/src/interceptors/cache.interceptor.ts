@@ -5,11 +5,13 @@ import {TimeSpan} from "../contracts";
 import {internetStateService} from "../services/internet-state.service";
 import {CacheService, IndexDbStorage, IStorage} from "../services";
 import {delay} from "../utils";
+import {APP_VERSION} from "../types";
 
 export interface HttpCacheBase {
   url: RegExp | string;
   methods: string[],
   ifOffline?: boolean;
+  withVersion?: boolean;
   ifBody?: (body: any) => boolean;
 }
 
@@ -33,8 +35,11 @@ export class CacheInterceptor implements HttpInterceptor {
 
   private readonly matchItems: (HttpCacheBase & { isEviction: boolean, httpCache: HttpCacheExtended })[] = [];
 
-  constructor(@Inject(HTTP_CACHE) private readonly httpCaches: HttpCacheExtended[],
-              @Inject(HTTP_CACHE_STORAGE) @Optional() storage: IStorage) {
+  constructor(
+    @Inject(APP_VERSION) @Optional() appVersion: string,
+    @Inject(HTTP_CACHE) private readonly httpCaches: HttpCacheExtended[],
+    @Inject(HTTP_CACHE_STORAGE) @Optional() storage: IStorage) {
+    this.cacheService.version = appVersion ?? '0.0.0';
     storage ??= new IndexDbStorage({prefix: 'cache-http-'});
     httpCaches.forEach(x => x.storage ??= storage)
     httpCaches.forEach(x => {
@@ -69,30 +74,33 @@ export class CacheInterceptor implements HttpInterceptor {
         setTimeout(async () => {
           const method = req.method.toLowerCase();
           const matchCaches = this.matchItems.filter(x => {
-            if(!x.methods.includes(method)) return false;
-            if(typeof x.url === 'string') return req.url.includes(x.url);
+            if (!x.methods.includes(method)) return false;
+            if (typeof x.url === 'string') return req.url.includes(x.url);
             return x.url.test(req.url);
           });
           for (const matchCache of matchCaches) {
             const httpCache = matchCache.httpCache;
+            const key = req.url;
+
             if (matchCache.isEviction) {
-              await this.cacheService.remove(req.url, httpCache.storage);
+              await this.cacheService.remove(key, httpCache.storage);
             } else {
 
-              while (this.subscriberGroups[req.url]) {
+              while (this.subscriberGroups[key]) {
                 await delay(50);
               }
-              this.subscriberGroups[req.url] = true;
+              this.subscriberGroups[key] = true;
 
-              const cache = await this.cacheService.get(req.url, httpCache.storage);
-              if (cache) {
-                const internetConstraint = (matchCache.ifOffline ? matchCache.ifOffline == !internetStateService.StatusChange.value : true);
-                if (internetConstraint) {
-                  this.subscriberGroups[req.url] = false;
-                  ob.next(new HttpResponse({body: cache, status: 200}));
-                  ob.complete();
-                  return;
-                }
+              const isOffline = !internetStateService.$status.value;
+              const cache = await this.cacheService.get(key, httpCache.storage, {
+                ignoreExpiration: isOffline,
+                ignoreVersion: isOffline,
+              });
+              if (cache && (isOffline || !matchCache.ifOffline)) {
+                this.subscriberGroups[req.url] = false;
+                ob.next(new HttpResponse({body: cache, status: 200}));
+                ob.complete();
+                return;
               }
 
               next.handle(req).subscribe({
@@ -102,10 +110,10 @@ export class CacheInterceptor implements HttpInterceptor {
                     try {
                       const bodyConstraint = (matchCache.ifBody ? matchCache.ifBody(res.body) : true);
                       if (bodyConstraint) {
-                        await this.cacheService.set(req.url, httpCache.storage, res.body, httpCache.timeout ?? TimeSpan.fromMinute(10));
+                        await this.cacheService.set(key, httpCache.storage, res.body, httpCache.timeout ?? TimeSpan.fromMinute(10));
                       }
                     } finally {
-                      this.subscriberGroups[req.url] = false;
+                      this.subscriberGroups[key] = false;
                     }
                   }
                 },
@@ -113,7 +121,7 @@ export class CacheInterceptor implements HttpInterceptor {
                   try {
                     ob.error(err);
                   } finally {
-                    this.subscriberGroups[req.url] = false;
+                    this.subscriberGroups[key] = false;
                   }
                 },
                 complete: () => ob.complete(),
