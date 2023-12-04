@@ -1,17 +1,29 @@
-class ResourceService {
+import {Injectable} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
+
+@Injectable({providedIn: 'root'})
+export class ResourceService {
   resources: any = {};
+
+
+  constructor(private http: HttpClient) {
+  }
 
   get(name: string) {
     return this.resources[name];
   }
 
   async load(name: string, url: string): Promise<any> {
-    if (this.resources[name]) {
-      return this.resources[name];
-    }
-    const res = await fetch(url);
-    this.resources[name] = await res.json();
-    return this.resources[name];
+    return new Promise<any>((resolve) => {
+
+      if (this.resources[name]) {
+        return resolve(this.resources[name]);
+      }
+      this.http.get(url).subscribe(res => {
+        this.resources[name] = res;
+        resolve(this.resources[name]);
+      })
+    })
   }
 
   merge(name: string, ...sources: string[]) {
@@ -20,5 +32,3 @@ class ResourceService {
     return this.resources[name] = resource;
   }
 }
-
-export const resourceService = new ResourceService();

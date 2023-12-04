@@ -6,7 +6,7 @@ import {DialogOptions} from "../dialog/dialog.component";
 
 export interface PromptButton {
   text: string;
-  color: Colors;
+  color?: Colors;
   loading?: boolean;
   action: (btn: PromptButton) => void
 }

@@ -1,4 +1,4 @@
-<div class="message">
+<div class="message" (touchend)="remove()">
   <ng-container *ngIf="contentTemplate; else noTemplateTpl">
     <ng-container *ngTemplateOutlet="contentTemplate; context: {$implicit: item}"></ng-container>
   </ng-container>

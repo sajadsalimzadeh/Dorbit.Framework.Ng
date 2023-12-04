@@ -28,6 +28,7 @@ export class InputComponent extends AbstractFormControl<string> {
   @Input() keyFilter?: KeyFilters;
 
   maskValue: string = '';
+  override focusable = false;
 
   constructor(injector: Injector) {
     super(injector);

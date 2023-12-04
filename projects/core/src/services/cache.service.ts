@@ -104,11 +104,11 @@ export class IndexDbStorage implements IStorage {
   private readonly prefix: string;
 
   constructor(options: { dbName?: string, prefix?: string } = {}) {
-    this.db = new IndexedDB({name: options.dbName ?? 'caches', version: 2});
+    this.db = new IndexedDB({name: options.dbName ?? 'cache', version: 3});
     this.prefix = options.prefix ?? 'cache-';
-    this.db.create('caches', {key: 'key'});
+    this.db.create('items', {key: 'key'});
     this.db.open().then(() => {
-      this.caches = this.db.table('caches')
+      this.caches = this.db.table('items')
     });
   }
 
