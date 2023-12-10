@@ -30,8 +30,6 @@ export class DialogService {
 
   open(options: DialogOptions): DialogRef {
     return this.create(DialogComponent, (componentRef, container) => {
-      const parentElement = container?.elementRef.nativeElement.parentNode as HTMLElement;
-      options.maxHeight ??= `calc(${parentElement.clientHeight || document.body.clientHeight}px - 1.6rem)`;
       Object.assign(componentRef.instance, options);
       componentRef.instance.componentRef = componentRef;
     }, options.container);
@@ -41,7 +39,6 @@ export class DialogService {
     return this.create(PromptComponent, (componentRef) => {
       componentRef.instance.options = dialogOptions;
       Object.assign(componentRef.instance, prompt);
-
     });
   }
 }

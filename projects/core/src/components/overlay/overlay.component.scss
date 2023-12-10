@@ -50,6 +50,9 @@
 
   .content-box {
     flex: 1;
+    display: inherit;
+    align-items: inherit;
+    justify-content: inherit;
 
     .text {
       text-align: justify;

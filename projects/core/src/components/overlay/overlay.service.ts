@@ -22,10 +22,11 @@ export class OverlayService {
     this.refs.filter(x => !x.autoClose).forEach(x => {
       x.destroy()
     });
-    if (!options.ref) options.ref = document.body;
 
     const componentRef = this.domService.createByComponent(OverlayComponent);
     const component = componentRef.instance;
+
+    if (!options.ref) options.ref = document.body;
     Object.assign(component, options);
     const overlayRef = {
       autoClose: !!options.autoClose,

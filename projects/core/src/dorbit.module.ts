@@ -42,6 +42,7 @@ import {
   PositionModule,
   DateModule,
   BreadcrumbModule,
+  FabModule
 } from './components';
 import {
   JDatePipeModule,
@@ -92,6 +93,7 @@ const MODULES = [
   PositionModule,
   DateModule,
   BreadcrumbModule,
+  FabModule,
 ];
 
 @NgModule({

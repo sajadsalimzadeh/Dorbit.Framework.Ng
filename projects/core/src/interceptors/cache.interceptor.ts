@@ -1,4 +1,4 @@
-import {Inject, Injectable, InjectionToken, Optional} from '@angular/core';
+import {Inject, Injectable, InjectionToken, isDevMode, Optional} from '@angular/core';
 import {HttpInterceptor, HttpEvent, HttpHandler, HttpRequest, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {TimeSpan} from "../contracts";
@@ -12,6 +12,7 @@ export interface HttpCacheBase {
   methods: string[],
   ifOffline?: boolean;
   withVersion?: boolean;
+  production?: boolean;
   ifBody?: (body: any) => boolean;
 }
 
@@ -76,6 +77,7 @@ export class CacheInterceptor implements HttpInterceptor {
           const matchCaches = this.matchItems.filter(x => {
             if (!x.methods.includes(method)) return false;
             if (typeof x.url === 'string') return req.url.includes(x.url);
+            if (x.production && isDevMode()) return false;
             return x.url.test(req.url);
           });
           for (const matchCache of matchCaches) {

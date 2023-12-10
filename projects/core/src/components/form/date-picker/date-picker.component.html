@@ -27,7 +27,7 @@
         </div>
       </div>
       <div class="today-button" (click)="selectDate(todayValue)">
-        {{(type == 'jalali' ? 'امروز' : 'Today')}}
+        {{('today' | translate)}}
       </div>
     </div>
     <div class="month-picker" [ngClass]="{show: (view == 'month')}">
