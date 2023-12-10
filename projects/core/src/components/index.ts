@@ -34,6 +34,7 @@ export * from './stepper/stepper.module';
 export * from './progress-circle/progress-circle.module';
 export * from './position/position.module';
 export * from './date/date.module';
+export * from './fab/fab.module';
 
 export * from './template/template.directive';
 export * from './key-filter/key-filter.directive';

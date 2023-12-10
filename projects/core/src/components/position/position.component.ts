@@ -10,10 +10,12 @@ import {Positions} from "../../types";
 export class PositionComponent extends BaseComponent implements OnInit, OnChanges {
 
   @Input({required: true}) position!: Positions;
+  @Input() dock: boolean = false;
 
   override render() {
     super.render();
 
+    this.setClass('dock', this.dock);
     this.setClass(this.position, true);
   }
 }

@@ -3,6 +3,7 @@
 $animation: 200ms ease;
 
 :host {
+  overflow: auto;
   transition: opacity $animation;
 
   &.middle-center .dialog,
@@ -149,6 +150,7 @@ $animation: 200ms ease;
   position: absolute;
   flex-direction: column;
   max-width: calc(100% - 1.6rem);
+  max-height: calc(100% - 1.6rem);
   border-radius: var(--radius-3);
   animation: scale-in 300ms linear;
   transition: transform $animation;

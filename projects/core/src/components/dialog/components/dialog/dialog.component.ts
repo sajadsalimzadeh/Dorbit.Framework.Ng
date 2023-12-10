@@ -2,6 +2,7 @@ import {Component, ComponentRef, EventEmitter, HostListener, OnInit, Output, Tem
 import {BaseComponent} from "../../../base.component";
 import {Positions} from "../../../../types";
 import {DialogRef} from "../../services/dialog.service";
+import {ResizeEvent} from "leaflet";
 
 export interface DialogOptions {
   container?: string;
@@ -56,10 +57,12 @@ export class DialogComponent extends BaseComponent implements DialogRef, DialogO
   width?: string;
   minWidth?: string;
   maxWidth?: string;
+  maxWidthWindow?: string;
 
   height?: string;
   minHeight?: string;
   maxHeight?: string;
+  maxHeightWindow?: string;
 
   position: Positions = 'middle-center';
   mask: boolean = true;
@@ -97,8 +100,9 @@ export class DialogComponent extends BaseComponent implements DialogRef, DialogO
     }
   }
 
-  override ngOnInit() {
-    super.ngOnInit();
+  @HostListener('window:resize', [])
+  onWindowResize() {
+    this.adjustSize();
   }
 
   override ngOnDestroy() {
@@ -113,9 +117,8 @@ export class DialogComponent extends BaseComponent implements DialogRef, DialogO
       minimizeSpaces.forEach(x => x.render());
     }
   }
+  private adjustSize() {
 
-  override render() {
-    super.render();
     this.dialogStyles = {};
 
     this.dialogStyles['width'] = this.width;
@@ -125,6 +128,20 @@ export class DialogComponent extends BaseComponent implements DialogRef, DialogO
     this.dialogStyles['height'] = this.height;
     this.dialogStyles['min-height'] = this.minHeight;
     this.dialogStyles['max-height'] = this.maxHeight;
+  }
+
+  override ngAfterViewInit() {
+    super.ngAfterViewInit();
+
+    this.maxWidthWindow = `calc(${this.elementRef.nativeElement.offsetWidth}px - 1.6rem)`;
+    this.maxHeightWindow = `calc(${this.elementRef.nativeElement.offsetHeight}px - 1.6rem)`;
+
+    this.render();
+  }
+
+  override render() {
+    super.render();
+    this.adjustSize();
 
     this.setClass('mask', this.mask);
     this.setClass('movable', this.movable);

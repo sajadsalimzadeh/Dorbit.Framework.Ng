@@ -14,14 +14,17 @@ export class ResourceService {
   }
 
   async load(name: string, url: string): Promise<any> {
-    return new Promise<any>((resolve) => {
+    return new Promise<any>((resolve, reject) => {
 
       if (this.resources[name]) {
         return resolve(this.resources[name]);
       }
-      this.http.get(url).subscribe(res => {
-        this.resources[name] = res;
-        resolve(this.resources[name]);
+      this.http.get(url).subscribe({
+        next: res => {
+          this.resources[name] = res;
+          resolve(this.resources[name]);
+        },
+        error: e => reject(e)
       })
     })
   }

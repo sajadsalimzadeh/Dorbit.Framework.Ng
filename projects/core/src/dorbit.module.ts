@@ -41,6 +41,7 @@ import {
   ProgressCircleModule,
   PositionModule,
   DateModule,
+  FabModule
 } from './components';
 import {
   JDatePipeModule,
@@ -90,6 +91,7 @@ const MODULES = [
   ProgressCircleModule,
   PositionModule,
   DateModule,
+  FabModule,
 ];
 
 @NgModule({

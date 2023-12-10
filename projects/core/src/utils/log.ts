@@ -118,8 +118,12 @@ export class Logger {
       if (this.logTimeMessages[logKey] > new Date().getTime() - 1000) return;
       this.logTimeMessages[logKey] = new Date().getTime();
 
-      //prevent insert un cloneable object
-      if (log.data) log.data = JSON.parse(JSON.stringify(log.data));
+      try {
+        //prevent insert un cloneable object
+        if (log.data) log.data = JSON.parse(JSON.stringify(log.data));
+      } catch {
+        log.data = undefined;
+      }
 
       //prevent insert empty message log
       if (log.message) persistLogs?.add(log);

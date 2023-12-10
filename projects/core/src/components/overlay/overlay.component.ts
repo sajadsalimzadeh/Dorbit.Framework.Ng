@@ -68,41 +68,46 @@ export class OverlayComponent extends BaseComponent implements OnInit, OverlayOp
     if (!this.ref) return;
 
     const rect = this.ref.getBoundingClientRect();
-    const topOfScreen = window.innerHeight + window.scrollY;
-    const horizontalOfScreen = window.innerWidth + window.scrollX;
+    const topOfScreen = window.screen.height + window.scrollY;
+    const horizontalOfScreen = window.screen.width + window.scrollX;
 
     const width = rect.width;
     const height = rect.height;
     const top = rect.top + window.scrollY;
     const left = rect.left + window.scrollX;
-    const right = window.innerWidth - rect.right + window.scrollX;
+    const right = window.screen.width - rect.right + window.scrollX;
     const dir = getComputedStyle(document.body).direction;
 
     let alignment = this.alignment ?? 'bottom-start';
 
-    if (
-      (dir == 'ltr' && horizontalOfScreen - this.horizontalThreshold < left) ||
-      (dir == 'rtl' && horizontalOfScreen - this.horizontalThreshold < right)
-    ) {
+    if ((dir == 'ltr' && horizontalOfScreen - this.horizontalThreshold < left) || (dir == 'rtl' && horizontalOfScreen - this.horizontalThreshold < right)) {
       if (alignment == 'top-start') alignment = 'top-end';
-      if (alignment == 'bottom-start') alignment = 'bottom-end';
-      if (alignment == 'end-top') alignment = 'start-top';
-      if (alignment == 'end-bottom') alignment = 'start-bottom';
-    } else if (
-      (dir == 'ltr' && this.horizontalThreshold > left) ||
-      (dir == 'rtl' && this.horizontalThreshold > right)
-    ) {
+      else if (alignment == 'bottom-start') alignment = 'bottom-end';
+      else if (alignment == 'end-top') alignment = 'start-top';
+      else if (alignment == 'end-bottom') alignment = 'start-bottom';
+    }
+
+    if ((dir == 'ltr' && this.horizontalThreshold > left) || (dir == 'rtl' && this.horizontalThreshold > right)) {
       if (alignment == 'top-end') alignment = 'top-start';
-      if (alignment == 'bottom-end') alignment = 'bottom-start';
-      if (alignment == 'start-top') alignment = 'end-top';
-      if (alignment == 'start-bottom') alignment = 'end-bottom';
+      else if (alignment == 'bottom-end') alignment = 'bottom-start';
+      else if (alignment == 'start-top') alignment = 'end-top';
+      else if (alignment == 'start-bottom') alignment = 'end-bottom';
+    }
+
+    if (this.verticalThreshold > top) {
+      if (alignment == 'top-start') alignment = 'bottom-start';
+      else if (alignment == 'top-center') alignment = 'bottom-center';
+      else if (alignment == 'top-end') alignment = 'bottom-end';
+      else if (alignment == 'start-bottom') alignment = 'start-top';
+      else if (alignment == 'end-bottom') alignment = 'end-top';
     }
 
     if (topOfScreen - this.verticalThreshold < top) {
       if (alignment == 'bottom-start') alignment = 'top-start';
-      if (alignment == 'bottom-end') alignment = 'top-end';
-      if (alignment == 'start-top') alignment = 'start-bottom';
-      if (alignment == 'end-top') alignment = 'end-bottom';
+      else if (alignment == 'bottom-center') alignment = 'top-center';
+      else if (alignment == 'bottom-end') alignment = 'top-end';
+      else if (alignment == 'start-top') alignment = 'start-bottom';
+      else if (alignment == 'end-top') alignment = 'end-bottom';
     }
 
     const styles = this.elementRef.nativeElement.style;

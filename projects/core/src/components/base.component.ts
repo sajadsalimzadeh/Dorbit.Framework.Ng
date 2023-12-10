@@ -8,7 +8,7 @@ import {
   OnInit,
   SimpleChanges
 } from "@angular/core";
-import {Colors, Sizes} from "../types";
+import {Colors, Direction, Sizes} from "../types";
 import {Subscription} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MessageService} from "./message/services/message.service";
@@ -22,7 +22,7 @@ export abstract class BaseComponent implements OnInit, OnChanges, OnDestroy, Aft
   @Input() color: Colors = 'primary';
   @Input() colorText: Colors = 'primary';
   @Input() ngClasses?: any;
-  @Input() dir: '' | 'rtl' | 'ltr' = '';
+  @Input() dir: Direction = '';
 
   protected _services: any = {};
 
