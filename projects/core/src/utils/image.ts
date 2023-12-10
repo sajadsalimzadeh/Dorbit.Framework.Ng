@@ -44,4 +44,25 @@ export class ImageUtil {
     return rgb;
 
   }
+
+  static resize(sourceCanvas: HTMLCanvasElement, width: number, height: number) {
+
+    return new Promise<HTMLCanvasElement>(resolve => {
+      const img = new Image();
+      img.width = sourceCanvas.width;
+      img.height = sourceCanvas.height;
+      img.src = sourceCanvas.toDataURL('2d');
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        const context = canvas.getContext("2d");
+
+        canvas.width = width;
+        canvas.height = height;
+
+        context?.drawImage(img, 0, 0, width, height);
+
+        resolve(canvas);
+      }
+    });
+  }
 }

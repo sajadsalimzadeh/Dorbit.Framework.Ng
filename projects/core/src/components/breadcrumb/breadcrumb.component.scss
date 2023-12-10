@@ -1,0 +1,15 @@
+:host {
+  display: flex;
+  padding: 1rem 1.5rem;
+  border-radius: 6px;
+  align-items: center;
+  color: var(--color-gray-5);
+  background-color: var(--color-gray--1);
+
+  >div {
+    &:not(:last-child)::after {
+      content: '/';
+      padding: 0 0.5rem;
+    }
+  }
+}

@@ -24,6 +24,7 @@ export * from './progress-bar/progress-bar.module';
 export * from './scroll-top/scroll-top.module';
 export * from './skeleton/shimmer.module';
 export * from './card/card.module';
+export * from './breadcrumb/breadcrumb.module';
 export * from './tag/tag.module';
 export * from './message/message.module';
 export * from './dialog/dialog.module';

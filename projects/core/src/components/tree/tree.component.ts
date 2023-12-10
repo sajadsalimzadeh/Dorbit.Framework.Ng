@@ -1,6 +1,7 @@
 import {Component, ContentChildren, EventEmitter, HostListener, Input, OnChanges, Output, QueryList, SimpleChanges, TemplateRef} from '@angular/core';
 import {BaseComponent} from "../base.component";
 import {TemplateDirective} from "../template/template.directive";
+import {Colors} from "../../types";
 
 export interface TreeItem {
   key: any;
@@ -41,6 +42,8 @@ export class TreeComponent extends BaseComponent implements OnChanges {
     expand: 'icons-core-angle-down',
     leaf: 'icons-core-file',
   }
+
+  override color: Colors = 'gray-2';
 
   @Output() onSelect = new EventEmitter<any>();
   @Output() onDrop = new EventEmitter<DropEvent>();
