@@ -19,3 +19,4 @@ export * from './random';
 export * from './google';
 export * from './mobile';
 export * from './number';
+export * from './enum';

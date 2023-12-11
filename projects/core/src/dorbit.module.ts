@@ -41,6 +41,7 @@ import {
   ProgressCircleModule,
   PositionModule,
   DateModule,
+  BreadcrumbModule,
   FabModule
 } from './components';
 import {
@@ -91,6 +92,7 @@ const MODULES = [
   ProgressCircleModule,
   PositionModule,
   DateModule,
+  BreadcrumbModule,
   FabModule,
 ];
 

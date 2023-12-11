@@ -53,13 +53,21 @@
     i {
       top: 50%;
       left: 50%;
+      height: 0;
       display: flex;
       font-size: .8rem;
       position: absolute;
       align-items: center;
       justify-content: center;
       transition: opacity 300ms ease;
-      transform: translate(-50%, calc(-50% + .05em));
+
+      &::before {
+        width: 0;
+        height: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
       &.check, &.minus {
         opacity: 0;

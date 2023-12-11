@@ -5,7 +5,6 @@ import {HttpClient} from "@angular/common/http";
 export class ResourceService {
   resources: any = {};
 
-
   constructor(private http: HttpClient) {
   }
 

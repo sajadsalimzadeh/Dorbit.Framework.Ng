@@ -34,7 +34,7 @@ export class PaginatorComponent extends BaseComponent implements OnChanges {
   override render() {
     super.render();
 
-    const lastPage = Math.floor(this.totalCount / this.pageSize);
+    const lastPage = Math.ceil(this.totalCount / this.pageSize);
     if (!this.page) this.page = 0;
     if (this.page > lastPage) this.page = lastPage - 1;
     const currentPageNumber = this.page + 1;

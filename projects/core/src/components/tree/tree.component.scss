@@ -2,6 +2,7 @@
   padding: .5rem;
   display: block;
   color: var(--color-component);
+  background-color: var(--color-gray--1);
 
   &.vertical-lines {
     ul ul::before {
@@ -37,7 +38,7 @@ ul {
     }
 
     .data-item {
-      gap: .3rem;
+      gap: .5rem;
       display: flex;
       cursor: pointer;
       padding: .4rem .6rem;
@@ -56,7 +57,6 @@ ul {
       }
 
       .icon {
-        min-width: 2rem;
         justify-content: center;
       }
 
