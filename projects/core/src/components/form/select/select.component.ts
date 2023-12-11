@@ -188,6 +188,7 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
         return false;
       })
     }
+    this.renderedItems = this.renderedItems.slice(0, 30);
   }
 
   clear() {

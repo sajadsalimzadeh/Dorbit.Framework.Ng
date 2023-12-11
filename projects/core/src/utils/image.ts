@@ -65,4 +65,19 @@ export class ImageUtil {
       }
     });
   }
+
+
+  static openInPopup(src: any) {
+    const image = new Image();
+    image.src = src;
+    image.width = 300;
+    image.height = 300;
+    const win = window.open("", '_thumbnail', 'popup=true,width=300,height=300');
+    if (win) {
+      win.document.body.style.margin = '0';
+      win.document.body.style.overflow = 'hidden';
+      win.document.body.innerHTML = '';
+      win.document.body.append(image);
+    }
+  }
 }

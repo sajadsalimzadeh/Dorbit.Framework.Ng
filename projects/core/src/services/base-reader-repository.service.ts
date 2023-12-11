@@ -9,9 +9,9 @@ export abstract class BaseReadRepository<T = any> extends BaseApiRepository {
     super(injector, repository);
   }
 
-  select(query?: ODataQueryOptions, own?: boolean) {
+  select(query?: ODataQueryOptions) {
     if (!query) query = new ODataQueryOptions();
-    return this.http.get<PagedListResult<T>>(`${own ? '/Own' : ''}${query.toQueryString()}`);
+    return this.http.get<PagedListResult<T>>(`${query.toQueryString()}`);
   }
 
   getAll() {

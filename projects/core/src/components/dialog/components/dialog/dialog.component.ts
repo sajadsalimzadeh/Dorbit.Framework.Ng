@@ -1,8 +1,7 @@
-import {Component, ComponentRef, EventEmitter, HostListener, OnInit, Output, TemplateRef} from '@angular/core';
+import {Component, ComponentRef, EventEmitter, HostListener, Output, TemplateRef} from '@angular/core';
 import {BaseComponent} from "../../../base.component";
 import {Positions} from "../../../../types";
 import {DialogRef} from "../../services/dialog.service";
-import {ResizeEvent} from "leaflet";
 
 export interface DialogOptions {
   container?: string;

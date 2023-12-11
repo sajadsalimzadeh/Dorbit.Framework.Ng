@@ -31,7 +31,7 @@ interface DateValue {
 })
 export class DatePickerComponent extends AbstractFormControl<any> {
   @Input() displayFormat = 'YYYY/MM/DD HH:mm:ss';
-  @Input() valueFormat = 'YYYY/MM/DD HH:mm:ss';
+  @Input() valueFormat = 'YYYY-MM-DDTHH:mm:ss';
   @Input() locale: 'fa' | 'en' = 'fa';
   @Input() alignment: OverlayAlignments = 'bottom-center';
   override dir: Direction = 'ltr';
@@ -90,14 +90,8 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   override ngOnInit() {
     super.ngOnInit();
 
-    this.subscription.add(this.formControl.valueChanges.subscribe(e => {
-      try {
-        let m = moment.from(e, 'en', this.valueFormat).locale(this.locale);
-        this.displayFormControl.setValue(m.format(this.displayFormat));
-      } catch {
-        this.displayFormControl.setValue('');
-      }
-    }));
+    this.subscription.add(this.formControl.valueChanges.subscribe(e => this.renderDisplayValue()));
+    this.renderDisplayValue();
   }
 
   override init() {
@@ -114,7 +108,7 @@ export class DatePickerComponent extends AbstractFormControl<any> {
     }
 
     this.months = [];
-    const monthMoment = moment().startOf('year');
+    const monthMoment = moment().locale(this.locale).startOf('year');
     for (let i = 0; i < 12; i++) {
       this.months.push(monthMoment.format('MMMM'));
       monthMoment.add(1, 'month');
@@ -127,20 +121,27 @@ export class DatePickerComponent extends AbstractFormControl<any> {
     this.render();
   }
 
-
   onInputChange(e: Event) {
     const input = (e.target as HTMLInputElement);
     if (input) {
-      this.changeValue(input.value);
+      this.changeValue(input.value, this.locale);
     }
+  }
 
+  changeValue(value: string, locale: string) {
+    if (value) {
+      this.selectedDate = moment.from(value, locale, this.displayFormat);
+      this.formControl.setValue(this.selectedDate.locale('en').format(this.valueFormat))
+    }
     this.render();
   }
 
-  changeValue(value: string) {
-    if (value) {
-      this.selectedDate = moment.from(value, 'en', this.displayFormat);
-      this.formControl.setValue(this.selectedDate.locale('en').format(this.valueFormat))
+  renderDisplayValue() {
+    try {
+      let m = moment.from(this.formControl.value, 'en', this.valueFormat).locale(this.locale);
+      this.displayFormControl.setValue(m.format(this.displayFormat));
+    } catch {
+      this.displayFormControl.setValue('');
     }
   }
 
@@ -154,8 +155,13 @@ export class DatePickerComponent extends AbstractFormControl<any> {
 
   override render() {
     if (!this.formControl) return;
-    super.render();
     if (!this.selectedDate) this.selectedDate = moment();
+    try {
+      this.selectedDate.format(this.valueFormat)
+    } catch {
+      this.selectedDate = moment();
+    }
+    super.render();
     this.selectedValue = this.getDateTime(this.selectedDate);
     this.createDays();
   }
@@ -270,7 +276,7 @@ export class DatePickerComponent extends AbstractFormControl<any> {
 
   open() {
     if (this.pickerTpl && !this.overlayRef) {
-      this.changeValue(this.formControl.value);
+      this.changeValue(this.formControl.value, 'en');
       this.overlayRef = this.overlayService.create({
         autoClose: false,
         template: this.pickerTpl,

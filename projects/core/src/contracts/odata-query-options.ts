@@ -7,6 +7,8 @@ export class ODataQueryOptions {
   private skip: number = 0;
   private top: number = 0;
 
+  queryParams: any = {};
+
   constructor(options?: {
     filter?: string,
     select?: string,
@@ -39,13 +41,14 @@ export class ODataQueryOptions {
     return this;
   }
 
-  toQueryString(withQuestionmark: boolean = true): string {
-    let params = (withQuestionmark ? "?" : "");
+  toQueryString(withQuestionMark: boolean = true): string {
+    let params = (withQuestionMark ? "?" : "");
     if (this.filter) params += `$filter=${this.filter}&`;
     if (this.select) params += `$select=${this.select}&`;
     if (this.orderBy) params += `$orderby=${this.orderBy}&`;
     if (this.top) params += `$top=${this.top}&`;
     if (this.skip) params += `$skip=${this.skip}&`;
+    params += Object.keys(this.queryParams).map(k => `${k}=${this.queryParams[k]}`).join('&')
     return params;
   }
 

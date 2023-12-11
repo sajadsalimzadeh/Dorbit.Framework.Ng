@@ -23,7 +23,7 @@ import {
   ControlValueAccessor,
   FormControl, FormControlName, FormGroup,
   NG_VALUE_ACCESSOR,
-  NgControl
+  NgControl, Validators
 } from "@angular/forms";
 import {TemplateDirective} from "../template/template.directive";
 import {FormControlService} from "./form-control.service";
@@ -94,6 +94,10 @@ export abstract class AbstractFormControl<T> extends BaseComponent implements Co
   @ViewChild('inputEl') inputEl?: ElementRef<HTMLInputElement>;
 
   validationsTemplate?: TemplateRef<any>;
+
+  get isRequired() {
+    return this.formControl.hasValidator(Validators.required);
+  }
 
   @ContentChildren(TemplateDirective)
   private set _templates(value: QueryList<TemplateDirective>) {
