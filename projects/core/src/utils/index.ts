@@ -2,6 +2,7 @@ export * from './aspect';
 export * from './array';
 export * from './color';
 export * from './clone';
+export * from './convert';
 export * from './datetime';
 export * from './image';
 export * from './tree';
