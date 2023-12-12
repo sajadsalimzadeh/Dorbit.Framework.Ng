@@ -68,14 +68,14 @@ export class OverlayComponent extends BaseComponent implements OnInit, OverlayOp
     if (!this.ref) return;
 
     const rect = this.ref.getBoundingClientRect();
-    const topOfScreen = window.screen.height + window.scrollY;
-    const horizontalOfScreen = window.screen.width + window.scrollX;
+    const topOfScreen = window.innerHeight + window.scrollY;
+    const horizontalOfScreen = window.innerWidth + window.scrollX;
 
     const width = rect.width;
     const height = rect.height;
     const top = rect.top + window.scrollY;
     const left = rect.left + window.scrollX;
-    const right = window.screen.width - rect.right + window.scrollX;
+    const right = window.innerWidth - rect.right + window.scrollX;
     const dir = getComputedStyle(document.body).direction;
 
     let alignment = this.alignment ?? 'bottom-start';
