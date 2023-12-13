@@ -33,6 +33,11 @@
         color: var(--color-gray-2);
       }
 
+      .required {
+        color: var(--color-danger);
+        padding-inline-start: .5rem;
+      }
+
       &::ng-deep > *:not(.label-box) {
         flex: 1;
 

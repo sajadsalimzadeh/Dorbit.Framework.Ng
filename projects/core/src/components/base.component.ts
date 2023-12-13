@@ -72,7 +72,7 @@ export abstract class BaseComponent implements OnInit, OnChanges, OnDestroy, Aft
   render() {
     this.resetClasses();
     if (this.ngClasses) {
-      for (let className of this.ngClasses) {
+      for (let className in this.ngClasses) {
         this.setClass(className, !!this.ngClasses[className])
       }
     }

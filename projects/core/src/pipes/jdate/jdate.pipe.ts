@@ -6,7 +6,7 @@ import {GDate} from "../../utils";
   name: 'jdate'
 })
 export class JDatePipe {
-  transform(value: string, format?: string): string {
+  transform(value: string, format: string = 'YYYY/MM/DD HH:mm:ss'): string {
     if (!value) return value;
     return GDate.parse(value).toJDate().format(format)
   }

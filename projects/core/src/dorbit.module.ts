@@ -51,6 +51,7 @@ import {
 import {
   GlobalErrorHandler
 } from './services';
+import {TranslateModule} from "@ngx-translate/core";
 
 const MODULES = [
   TableModule,
@@ -94,6 +95,7 @@ const MODULES = [
   DateModule,
   BreadcrumbModule,
   FabModule,
+  TranslateModule,
 ];
 
 @NgModule({

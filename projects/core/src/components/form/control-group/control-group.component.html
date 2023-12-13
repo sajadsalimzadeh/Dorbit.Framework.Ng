@@ -5,11 +5,12 @@
   <div class="control-box-container">
     <ng-content></ng-content>
     <label class="label-box" *ngIf="label || labelTemplate" [ngClass]="labelMode">
-      <ng-container *ngIf="labelTemplate; else elseLabelTpl">
+      <ng-container *ngIf="labelTemplate; else defaultLabelTpl">
         <ng-container *ngTemplateOutlet="labelTemplate; context: {label: label}"></ng-container>
       </ng-container>
-      <ng-template #elseLabelTpl>
+      <ng-template #defaultLabelTpl>
         {{label}}
+        <span class="required" *ngIf="isRequired">*</span>
       </ng-template>
     </label>
   </div>
