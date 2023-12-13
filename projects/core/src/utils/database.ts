@@ -8,6 +8,7 @@ export interface ITableConfig {
 
 export interface IDatabase {
   open(): Promise<boolean>;
+  close(): Promise<void>;
 
   create(name: string, creationInfo: ITableConfig): void;
 
@@ -17,9 +18,9 @@ export interface IDatabase {
 
   getAll(tableName: string): Promise<any[]>;
 
-  put(tableName: string, value: object): Promise<any>;
+  put(tableName: string, value: any): Promise<any>;
 
-  putAll(tableName: string, values: object[]): Promise<any[]>;
+  putAll(tableName: string, values: any[]): Promise<any[]>;
 
   delete(tableName: string, id: any): Promise<void>;
 

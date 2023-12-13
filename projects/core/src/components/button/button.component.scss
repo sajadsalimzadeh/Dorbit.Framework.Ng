@@ -6,8 +6,6 @@
   border-radius: var(--radius-2);
 
   &.fill {
-    @include glass;
-    @include shadow-slant;
     color: var(--color-component-text);
     background-color: var(--color-component);
   }
@@ -116,10 +114,6 @@ button {
   font-family: inherit;
   justify-content: center;
   background-color: transparent;
-}
-
-@keyframes glass {
-  0% {}
 }
 
 @keyframes loading-width {
