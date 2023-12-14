@@ -1,8 +1,8 @@
 import {ComponentRef, EventEmitter, Injectable, Type} from "@angular/core";
 import {DomService} from "../../../services";
 import {DialogComponent, DialogOptions} from "../components/dialog/dialog.component";
-import {DialogContainerComponent} from "../dialog-container.component";
-import {PromptComponent, PromptOptions} from "../components/prompt/prompt.component";
+import {ConfirmOptions, DialogContainerComponent} from "../dialog-container.component";
+import {ConfirmComponent} from "../components/confirm/confirm.component";
 
 export interface DialogRef {
   close: () => void;
@@ -35,10 +35,10 @@ export class DialogService {
     }, options.container);
   }
 
-  prompt(prompt: PromptOptions, dialogOptions?: DialogOptions) {
-    return this.create(PromptComponent, (componentRef) => {
+  confirm(options: ConfirmOptions, dialogOptions?: DialogOptions) {
+    return this.create(ConfirmComponent, (componentRef) => {
       componentRef.instance.options = dialogOptions;
-      Object.assign(componentRef.instance, prompt);
+      Object.assign(componentRef.instance, options);
     });
   }
 }

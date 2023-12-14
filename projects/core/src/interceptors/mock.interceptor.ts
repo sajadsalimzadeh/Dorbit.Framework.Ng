@@ -1,4 +1,4 @@
-import {Inject, Injectable, InjectionToken} from '@angular/core';
+import {Inject, Injectable, InjectionToken, Optional} from '@angular/core';
 import {HttpInterceptor, HttpEvent, HttpHandler, HttpRequest, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
@@ -14,19 +14,21 @@ export interface MockData {
 export class MockInterceptor implements HttpInterceptor {
 
 
-  constructor(@Inject(MOCK_DATA) private mocks: MockData[]) {
+  constructor(@Inject(MOCK_DATA) @Optional() private mocks: MockData[]) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    for (const mock of this.mocks) {
+    if(this.mocks) {
+      for (const mock of this.mocks) {
 
-      if (req.method.toLowerCase() == mock.method.toLowerCase()) {
-        const urlMatch = req.url.match(mock.url);
-        if (urlMatch && urlMatch.length > 0) {
-          return new Observable(ob => {
-            setTimeout(() => ob.next(new HttpResponse({body: mock.data, url: req.url, status: 200, statusText: 'OK'})), 100);
-          });
+        if (req.method.toLowerCase() == mock.method.toLowerCase()) {
+          const urlMatch = req.url.match(mock.url);
+          if (urlMatch && urlMatch.length > 0) {
+            return new Observable(ob => {
+              setTimeout(() => ob.next(new HttpResponse({body: mock.data, url: req.url, status: 200, statusText: 'OK'})), 100);
+            });
+          }
         }
       }
     }

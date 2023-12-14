@@ -1,27 +1,15 @@
 import {Component, EventEmitter, Injector, Output, TemplateRef, ViewChild} from '@angular/core';
 import {BaseComponent} from "../../../base.component";
-import {Colors} from "../../../../types";
 import {DialogService, DialogRef} from "../../services/dialog.service";
 import {DialogOptions} from "../dialog/dialog.component";
-
-export interface ConfirmButton {
-  text: string;
-  color?: Colors;
-  loading?: boolean;
-  action: (btn: ConfirmButton) => void
-}
-
-export interface ConfirmOptions {
-  text: string;
-  buttons: ConfirmButton[]
-}
+import {ConfirmButton, ConfirmOptions} from "@dorbit";
 
 @Component({
-  selector: 'd-prompt',
-  templateUrl: 'prompt.component.html',
-  styleUrls: ['./prompt.component.scss']
+  selector: 'd-confirm',
+  templateUrl: 'confirm.component.html',
+  styleUrls: ['./confirm.component.scss']
 })
-export class PromptComponent extends BaseComponent implements ConfirmOptions, DialogRef {
+export class ConfirmComponent extends BaseComponent implements ConfirmOptions, DialogRef {
   @Output() onClose = new EventEmitter<void>();
 
   text!: string;
@@ -31,7 +19,7 @@ export class PromptComponent extends BaseComponent implements ConfirmOptions, Di
   options?: DialogOptions;
   buttons: ConfirmButton[] = [];
 
-  @ViewChild('promptTpl') set template(value: TemplateRef<any>) {
+  @ViewChild('confirmTpl') set template(value: TemplateRef<any>) {
     if(this.dialog) return;
     this.dialog = this.diagService.open({
       width: '400px',

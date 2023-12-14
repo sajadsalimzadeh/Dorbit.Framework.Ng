@@ -1,7 +1,7 @@
 import {ErrorHandler, ModuleWithProviders, NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {
   TableModule,
@@ -51,6 +51,11 @@ import {
 import {
   GlobalErrorHandler
 } from './services';
+import {
+  CacheInterceptor,
+  MessageInterceptor,
+  MockInterceptor
+} from "./interceptors";
 import {TranslateModule} from "@ngx-translate/core";
 
 const MODULES = [
@@ -117,6 +122,9 @@ export class DorbitModule {
     return {
       ngModule: DorbitModule,
       providers: [
+        {provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true},
+        {provide: HTTP_INTERCEPTORS, useClass: MockInterceptor, multi: true},
+        {provide: HTTP_INTERCEPTORS, useClass: MessageInterceptor, multi: true},
         {provide: ErrorHandler, useClass: GlobalErrorHandler},
       ]
     }

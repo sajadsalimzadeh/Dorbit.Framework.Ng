@@ -1,14 +1,15 @@
 import {NgModule, Pipe} from "@angular/core";
 import {GDate} from "../../utils";
+import * as moment from "jalali-moment";
 
 
 @Pipe({
   name: 'jdate'
 })
 export class JDatePipe {
-  transform(value: string, format: string = 'YYYY/MM/DD HH:mm:ss'): string {
+  transform(value: string, format: string = 'YYYY/MM/DD HH:mm:ss', utc: boolean = false): string {
     if (!value) return value;
-    return GDate.parse(value).toJDate().format(format)
+    return (utc ? moment.utc(value).local() : moment(value)).locale('fa').format(format);
   }
 }
 

@@ -177,10 +177,11 @@ export abstract class AbstractFormControl<T> extends BaseComponent implements Co
   setDisabledState(isDisabled: boolean): void {
     if (this.formControl) {
       if (isDisabled) {
-        if (!this.formControl.enabled) this.formControl.disable();
+        if (this.formControl.enabled) this.formControl.disable();
       } else {
         if (this.formControl.disabled) this.formControl.enable();
       }
+      this.render();
     }
   }
 
