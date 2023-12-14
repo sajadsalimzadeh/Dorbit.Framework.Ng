@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
-import {BaseComponent} from "@dorbit";
+import {BaseComponent} from "@framework";
 
 @Component({
   selector: 'd-code',

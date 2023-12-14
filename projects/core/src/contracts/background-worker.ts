@@ -1,4 +1,4 @@
-import {IDisposable} from "@dorbit";
+import {IDisposable} from "@framework";
 import {Subscription} from "rxjs";
 
 export interface IBackgroundWorker extends IDisposable{

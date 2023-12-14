@@ -2,7 +2,7 @@ import {Component, EventEmitter, Injector, Output, TemplateRef, ViewChild} from 
 import {BaseComponent} from "../../../base.component";
 import {DialogService, DialogRef} from "../../services/dialog.service";
 import {DialogOptions} from "../dialog/dialog.component";
-import {ConfirmButton, ConfirmOptions} from "@dorbit";
+import {ConfirmButton, ConfirmOptions} from "@framework";
 
 @Component({
   selector: 'd-confirm',

@@ -1,4 +1,4 @@
-import {Colors} from "@dorbit";
+import {Colors} from "@framework";
 
 export interface ConfirmButton {
   text: string;

@@ -1,5 +1,5 @@
 import {BehaviorSubject} from "rxjs";
-import {ICacheService, IndexDbStorage, IndexedDbCacheService, TimeSpan} from "@dorbit";
+import {ICacheService, IndexDbStorage, IndexedDbCacheService, TimeSpan} from "@framework";
 
 
 interface ChangeEvent<T> {
