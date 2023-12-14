@@ -4,16 +4,16 @@ import {Colors} from "../../../../types";
 import {DialogService, DialogRef} from "../../services/dialog.service";
 import {DialogOptions} from "../dialog/dialog.component";
 
-export interface PromptButton {
+export interface ConfirmButton {
   text: string;
   color?: Colors;
   loading?: boolean;
-  action: (btn: PromptButton) => void
+  action: (btn: ConfirmButton) => void
 }
 
-export interface PromptOptions {
+export interface ConfirmOptions {
   text: string;
-  buttons: PromptButton[]
+  buttons: ConfirmButton[]
 }
 
 @Component({
@@ -21,7 +21,7 @@ export interface PromptOptions {
   templateUrl: 'prompt.component.html',
   styleUrls: ['./prompt.component.scss']
 })
-export class PromptComponent extends BaseComponent implements PromptOptions, DialogRef {
+export class PromptComponent extends BaseComponent implements ConfirmOptions, DialogRef {
   @Output() onClose = new EventEmitter<void>();
 
   text!: string;
@@ -29,7 +29,7 @@ export class PromptComponent extends BaseComponent implements PromptOptions, Dia
   container?: string;
   dialog?: DialogRef;
   options?: DialogOptions;
-  buttons: PromptButton[] = [];
+  buttons: ConfirmButton[] = [];
 
   @ViewChild('promptTpl') set template(value: TemplateRef<any>) {
     if(this.dialog) return;
