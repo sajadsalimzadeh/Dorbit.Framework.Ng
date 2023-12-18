@@ -1,4 +1,4 @@
-import {Colors, Message} from "@dorbit";
+import {Colors, Message} from "@framework";
 
 export class MessageError implements Error {
   static Name = 'MessageError';

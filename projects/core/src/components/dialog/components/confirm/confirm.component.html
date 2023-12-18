@@ -1,0 +1,8 @@
+<ng-template #confirmTpl>
+  <div class="text">{{text}}</div>
+  <div class="buttons flex-row flex-gap-3">
+    <d-button *ngFor="let button of buttons" class="px-7" [color]="button.color ?? 'primary'" [loading]="loading || loadingService.loading" (click)="button.action(button)">
+      {{button.text}}
+    </d-button>
+  </div>
+</ng-template>

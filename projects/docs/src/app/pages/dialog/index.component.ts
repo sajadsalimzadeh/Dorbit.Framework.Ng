@@ -1,5 +1,5 @@
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {DialogOptions, DialogService} from "@dorbit";
+import {DialogOptions, DialogService} from "@framework";
 
 @Component({
   selector: 'doc-dialog',

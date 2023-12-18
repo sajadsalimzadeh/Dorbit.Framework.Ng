@@ -1,6 +1,6 @@
 import {Component, HostBinding, OnInit} from "@angular/core";
 import {NavigationEnd, Router} from "@angular/router";
-import {Themes} from "@dorbit";
+import {Themes} from "@framework";
 import {FormControl} from "@angular/forms";
 
 @Component({

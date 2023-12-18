@@ -38,12 +38,13 @@ export class CacheInterceptor implements HttpInterceptor {
 
   constructor(
     @Inject(APP_VERSION) @Optional() appVersion: string,
-    @Inject(HTTP_CACHE) private readonly httpCaches: HttpCacheExtended[],
-    @Inject(HTTP_CACHE_STORAGE) @Optional() storage: IStorage) {
+    @Inject(HTTP_CACHE_STORAGE) @Optional() storage: IStorage,
+    @Inject(HTTP_CACHE) @Optional() private readonly httpCaches: HttpCacheExtended[],) {
     this.cacheService.version = appVersion ?? '0.0.0';
     storage ??= new IndexDbStorage({prefix: 'cache-http-'});
-    httpCaches.forEach(x => x.storage ??= storage)
-    httpCaches.forEach(x => {
+    this.httpCaches ??= [];
+    this.httpCaches.forEach(x => x.storage ??= storage)
+    this.httpCaches.forEach(x => {
       for (let i = 0; i < x.methods.length; i++) {
         x.methods[i] = x.methods[i].toLowerCase();
       }
@@ -61,7 +62,7 @@ export class CacheInterceptor implements HttpInterceptor {
       })
     });
 
-    this.httpCaches = httpCaches.map(x => ({
+    this.httpCaches = this.httpCaches.map(x => ({
       ...x,
       storage: x.storage ?? storage
     }));

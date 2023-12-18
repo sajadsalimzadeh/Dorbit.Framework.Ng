@@ -14,6 +14,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {MessageService} from "./message/services/message.service";
 import {Location} from "@angular/common";
 import {LoadingService} from "../services";
+import {TranslateService} from "@ngx-translate/core";
 
 @Directive()
 export abstract class BaseComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
@@ -44,6 +45,10 @@ export abstract class BaseComponent implements OnInit, OnChanges, OnDestroy, Aft
 
   protected get messageService(): MessageService {
     return this._services['MessageService'] ??= this.injector.get(MessageService);
+  }
+
+  protected get translateService(): TranslateService {
+    return this._services['TranslateService'] ??= this.injector.get(TranslateService);
   }
 
   protected subscription = new Subscription();
@@ -144,5 +149,9 @@ export abstract class BaseComponent implements OnInit, OnChanges, OnDestroy, Aft
     } else {
       element.classList.remove(className);
     }
+  }
+
+  t(key: string): string {
+    return this.translateService.instant(key);
   }
 }

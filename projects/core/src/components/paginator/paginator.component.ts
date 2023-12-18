@@ -41,7 +41,7 @@ export class PaginatorComponent extends BaseComponent implements OnChanges {
 
     if (lastPage <= 7) {
       this.pageNumbers = [];
-      for (let i = 1; i <= lastPage + 1; i++) {
+      for (let i = 1; i <= lastPage; i++) {
         this.pageNumbers.push(i);
       }
     } else {

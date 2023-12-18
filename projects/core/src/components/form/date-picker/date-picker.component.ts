@@ -30,14 +30,15 @@ interface DateValue {
   providers: [createControlValueAccessor(DatePickerComponent)]
 })
 export class DatePickerComponent extends AbstractFormControl<any> {
-  @Input() displayFormat = 'YYYY/MM/DD HH:mm:ss';
-  @Input() valueFormat = 'YYYY-MM-DDTHH:mm:ss';
-  @Input() locale: 'fa' | 'en' = 'fa';
-  @Input() alignment: OverlayAlignments = 'bottom-center';
   override dir: Direction = 'ltr';
 
+  @Input() displayFormat = 'YYYY/MM/DD HH:mm:ss';
+  @Input() valueFormat = 'YYYY-MM-DDTHH:mm:ssZ';
+  @Input() locale: 'fa' | 'en' = 'fa';
+  @Input() alignment: OverlayAlignments = 'bottom-center';
+
   @Output() onLeave = new EventEmitter<any>();
-  @Output() onChooseDate = new EventEmitter<string>();
+  @Output() onSelect = new EventEmitter<string>();
 
   @ViewChild('pickerTpl') pickerTpl?: TemplateRef<any>
   @ViewChild('yearPickerEl') yearPickerEl?: ElementRef<HTMLDivElement>;
@@ -90,16 +91,22 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   override ngOnInit() {
     super.ngOnInit();
 
-    this.subscription.add(this.formControl.valueChanges.subscribe(e => this.renderDisplayValue()));
+    this.subscription.add(this.formControl.valueChanges.subscribe(e => {
+      this.renderDisplayValue()
+    }));
     this.renderDisplayValue();
+  }
+
+  private getMoment() {
+    return moment().locale(this.locale);
   }
 
   override init() {
     super.init();
-    this.todayDate = moment().locale(this.locale);
+    this.todayDate = this.getMoment();
     this.todayValue = this.getDateTime(this.todayDate);
 
-    let firstDayOfWeek = moment().locale(this.locale).startOf('month');
+    let firstDayOfWeek = this.getMoment().startOf('month');
     while (firstDayOfWeek.get('weekday') > 0) firstDayOfWeek.add(-1, 'day');
     this.weekDays = [];
     for (let i = 0; i < 7; i++) {
@@ -108,7 +115,7 @@ export class DatePickerComponent extends AbstractFormControl<any> {
     }
 
     this.months = [];
-    const monthMoment = moment().locale(this.locale).startOf('year');
+    const monthMoment = this.getMoment().startOf('year');
     for (let i = 0; i < 12; i++) {
       this.months.push(monthMoment.format('MMMM'));
       monthMoment.add(1, 'month');
@@ -124,13 +131,7 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   onInputChange(e: Event) {
     const input = (e.target as HTMLInputElement);
     if (input) {
-      this.changeValue(input.value, this.locale);
-    }
-  }
-
-  changeValue(value: string, locale: string) {
-    if (value) {
-      this.selectedDate = moment.from(value, locale, this.displayFormat);
+      this.selectedDate = moment.from(input.value, this.locale, this.displayFormat);
       this.formControl.setValue(this.selectedDate.locale('en').format(this.valueFormat))
     }
     this.render();
@@ -227,9 +228,12 @@ export class DatePickerComponent extends AbstractFormControl<any> {
       this.selectedDate.month(date.month);
       this.selectedDate.year(date.year);
     }
-    this.formControl.setValue(this.selectedDate.locale('en').format(this.valueFormat));
+    const value = this.selectedDate.locale('en').format(this.valueFormat);
+    this.formControl.setValue(value);
     this.render();
     this.close();
+
+    this.onSelect.emit(value)
   }
 
   selectMonth(month: number) {
@@ -275,8 +279,7 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   }
 
   open() {
-    if (this.pickerTpl && !this.overlayRef) {
-      this.changeValue(this.formControl.value, 'en');
+    if (this.pickerTpl && !this.overlayRef && this.formControl.enabled) {
       this.overlayRef = this.overlayService.create({
         autoClose: false,
         template: this.pickerTpl,

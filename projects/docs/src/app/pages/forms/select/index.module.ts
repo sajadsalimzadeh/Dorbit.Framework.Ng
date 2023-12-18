@@ -2,7 +2,7 @@ import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {IndexComponent} from "./index.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {DorbitModule} from "@dorbit";
+import {DorbitModule} from "@framework";
 import {DocModule} from "../../../components/doc.module";
 
 @NgModule({
@@ -14,9 +14,12 @@ import {DocModule} from "../../../components/doc.module";
         DorbitModule,
         DocModule,
     ],
-  declarations: [
-    IndexComponent
-  ]
+    exports: [
+        IndexComponent
+    ],
+    declarations: [
+        IndexComponent
+    ]
 })
 export class Module {
 

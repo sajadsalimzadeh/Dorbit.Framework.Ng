@@ -5,7 +5,6 @@ import {FormControl} from "@angular/forms";
 import {TableService} from "./services/table.service";
 import {OverlayService} from "../overlay/overlay.service";
 import {BaseComponent} from "../base.component";
-import {LoadingService} from "../../services";
 import {OperationKey} from "./components/filter/filter.component";
 
 @Component({
@@ -96,6 +95,14 @@ export class TableComponent extends BaseComponent implements OnInit, OnChanges, 
 
   override ngOnInit(): void {
     this.pageRowCountControl.setValue(this.config.paging.size);
+
+    this.subscription.add(this.loadingService.$loading.subscribe(e => {
+      const dataEl = this.elementRef.nativeElement.querySelector('.data');
+      if(dataEl) {
+        if(e) dataEl.classList.add('loading');
+        else dataEl.classList.remove('loading');
+      }
+    }))
 
     this.subscription.add(this.config.onRowClick.subscribe(item => {
       if (this.config.selecting.enable) {

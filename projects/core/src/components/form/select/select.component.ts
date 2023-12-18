@@ -196,7 +196,7 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
   }
 
   private open() {
-    if (this.itemsTpl && this.elementRef.nativeElement && !this.overlayRef) {
+    if (this.itemsTpl && this.elementRef.nativeElement && !this.overlayRef && this.formControl.enabled) {
       this.overlayRef = this.overlayService.create({
         autoClose: false,
         template: this.itemsTpl,

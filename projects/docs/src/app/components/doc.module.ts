@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {DorbitModule} from "@dorbit";
+import {DorbitModule} from "@framework";
 import {DocCardModule} from "./card/index.module";
 import {CodeModule} from "./code/code.module";
 

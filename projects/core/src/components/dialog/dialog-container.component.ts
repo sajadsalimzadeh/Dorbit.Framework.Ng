@@ -1,6 +1,8 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit} from '@angular/core';
 import {DialogService} from "./services/dialog.service";
 
+export * from './models'
+
 @Component({
   selector: 'd-dialog-container',
   templateUrl: 'dialog-container.component.html',

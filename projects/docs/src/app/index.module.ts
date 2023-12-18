@@ -6,7 +6,7 @@ import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
 import {HIGHLIGHT_OPTIONS} from "ngx-highlightjs";
 import {IndexComponent} from "./index.component";
-import {DorbitModule} from "@dorbit";
+import {DorbitModule} from "@framework";
 
 @NgModule({
   imports: [

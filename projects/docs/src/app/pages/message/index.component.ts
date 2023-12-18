@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Message, MessageService} from "@dorbit";
+import {Message, MessageService} from "@framework";
 
 @Component({
   selector: 'doc-progress-bar',

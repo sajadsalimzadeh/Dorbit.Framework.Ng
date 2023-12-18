@@ -1,7 +1,7 @@
 <div *ngIf="captionTemplate" class="caption">
   <ng-container *ngTemplateOutlet="captionTemplate; context: {}"></ng-container>
 </div>
-<div class="data" [ngClass]="{loading: loadingService.loading}">
+<div class="data">
   <div class="data-table">
     <div class="gradient"></div>
     <div class="no-data" *ngIf="(data.totalCount == 0)"></div>
