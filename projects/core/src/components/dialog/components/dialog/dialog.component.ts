@@ -87,7 +87,7 @@ export class DialogComponent extends BaseComponent implements DialogRef, DialogO
 
   @HostListener('click', ['$event'])
   onClick(e: MouseEvent) {
-    if (this.maskClosable && e.target == this.elementRef.nativeElement) {
+    if (this.maskClosable && (e.target as HTMLElement).querySelector('.dialog')) {
       this.close();
     }
   }
