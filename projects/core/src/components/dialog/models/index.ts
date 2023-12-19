@@ -1,4 +1,4 @@
-import {Colors} from "@framework";
+import {Colors} from "../../../types";
 
 export interface ConfirmButton {
   text: string;

@@ -43,9 +43,6 @@ export * from './components/row-expander/row-expander.component';
 
     TemplateModule,
   ],
-  providers: [
-    OverlayService
-  ]
 })
 export class TableModule {
 }

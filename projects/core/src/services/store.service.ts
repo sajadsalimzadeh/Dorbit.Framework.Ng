@@ -1,5 +1,5 @@
 import {BehaviorSubject} from "rxjs";
-import {ICacheService, IndexDbStorage, IndexedDbCacheService, TimeSpan} from "@framework";
+import {ICacheService, IndexDbStorage, IndexedDbCacheService, TimeSpan} from "..";
 
 
 interface ChangeEvent<T> {

@@ -8,13 +8,13 @@ import {
   OnInit,
   SimpleChanges
 } from "@angular/core";
-import {Colors, Direction, Sizes} from "../types";
 import {Subscription} from "rxjs";
-import {ActivatedRoute, Router} from "@angular/router";
-import {MessageService} from "./message/services/message.service";
 import {Location} from "@angular/common";
-import {LoadingService} from "../services";
 import {TranslateService} from "@ngx-translate/core";
+import {ActivatedRoute, Router} from "@angular/router";
+import {Colors, Direction, Sizes} from "../types";
+import {MessageService} from "./message/services/message.service";
+import {LoadingService} from "../services/loading.service";
 
 @Directive()
 export abstract class BaseComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {

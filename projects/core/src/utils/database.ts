@@ -1,5 +1,4 @@
 import {Subject} from "rxjs";
-
 export interface ITableConfig {
   autoIncrement?: boolean;
   key: string;

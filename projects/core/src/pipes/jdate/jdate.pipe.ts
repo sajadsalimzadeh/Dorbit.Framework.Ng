@@ -1,6 +1,6 @@
 import {NgModule, Pipe} from "@angular/core";
-import {GDate} from "../../utils";
-import * as moment from "jalali-moment";
+// @ts-ignore
+import moment from "jalali-moment";
 
 
 @Pipe({

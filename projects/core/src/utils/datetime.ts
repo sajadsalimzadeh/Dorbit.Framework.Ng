@@ -1,4 +1,5 @@
-import * as moment from 'jalali-moment';
+// @ts-ignore
+import moment from 'jalali-moment';
 import {Moment} from 'jalali-moment';
 
 export class DateTime {

@@ -1,4 +1,4 @@
-import {IDisposable} from "@framework";
+import {IDisposable} from "../contracts";
 import {Subscription} from "rxjs";
 
 export interface IBackgroundWorker extends IDisposable{

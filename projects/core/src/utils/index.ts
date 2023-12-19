@@ -20,3 +20,4 @@ export * from './google';
 export * from './mobile';
 export * from './number';
 export * from './enum';
+export * from './locale';

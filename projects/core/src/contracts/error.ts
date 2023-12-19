@@ -1,4 +1,4 @@
-import {Colors, Message} from "@framework";
+import {Colors, Message} from "..";
 
 export class MessageError implements Error {
   static Name = 'MessageError';

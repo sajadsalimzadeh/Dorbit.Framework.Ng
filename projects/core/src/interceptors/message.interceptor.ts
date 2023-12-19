@@ -2,7 +2,8 @@ import {Injectable, Injector} from '@angular/core';
 import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from '@angular/common/http';
 import {catchError, Observable, tap, throwError} from 'rxjs';
 import {TranslateService} from "@ngx-translate/core";
-import {MessageService} from "@framework";
+import {MessageService} from "../components/message/services/message.service";
+import {Colors} from "../types";
 
 
 @Injectable({providedIn: 'root'})
@@ -12,10 +13,16 @@ export class MessageInterceptor implements HttpInterceptor {
   constructor(private injector: Injector, private messageService: MessageService) {
   }
 
-  private translate(text: string) {
+  private send(text: string, color: Colors) {
     const translateService = this.injector.get(TranslateService);
     const key = `${text}`;
-    return translateService.instant(key);
+    const translate = translateService.instant(key);
+    if(translate != key) {
+      this.messageService.show({
+        body: translate,
+        color: color
+      });
+    }
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -24,17 +31,19 @@ export class MessageInterceptor implements HttpInterceptor {
       if (e instanceof HttpResponse) {
         if (e.ok) {
           if (e.body.message) {
-            this.messageService.success(this.translate(`message.errors.${e.body.message}`));
+            this.send(`message.${e.body.message}`, 'success');
           }
           else if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(req.method.toUpperCase())) {
-            this.messageService.success(this.translate(`message.success`));
+            this.send(`message.success`, 'success');
           }
         }
       }
     })).pipe(catchError(e => {
       if (e instanceof HttpErrorResponse) {
         if (e.error?.message) {
-          this.messageService.error(this.translate(`message.errors.${e.error.message}`));
+          this.send(`message.${e.error.message}`, 'danger');
+        } else {
+          this.send(`message.error`, 'danger');
         }
       }
 
