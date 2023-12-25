@@ -1,3 +1,4 @@
+// @ts-ignore
 import moment from 'jalali-moment';
 import {Moment} from 'jalali-moment';
 

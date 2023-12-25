@@ -1,22 +1,14 @@
 import {
   AfterViewInit, ChangeDetectorRef,
   Directive,
-  ElementRef,
   Injector,
-  Input,
   OnChanges, OnDestroy,
-  OnInit, ProviderToken,
-  SimpleChanges
+  OnInit,
 } from "@angular/core";
-import {Colors, Direction, Sizes} from "../types";
-import {Subscription} from "rxjs";
+import {Location} from "@angular/common";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MessageService} from "./message/services/message.service";
-import {Location} from "@angular/common";
-import {LoadingService} from "../services";
-import {TranslateService} from "@ngx-translate/core";
-import {DialogService} from "./dialog/services/dialog.service";
-import {AbstractComponent} from "./abstract.component";
+import {LoadingService} from "../services/loading.service";
 
 @Directive()
 export abstract class BaseComponent extends AbstractComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {

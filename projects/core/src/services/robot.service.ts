@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {NavigationEnd, Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
-import {delay} from "../utils";
+import {delay} from "..";
 
 interface Job {
   url: string;

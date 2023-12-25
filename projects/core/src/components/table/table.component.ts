@@ -13,6 +13,7 @@ import {OperationKey} from "./components/filter/filter.component";
   styleUrls: ['./table.component.scss'],
   providers: [
     TableService,
+    OverlayService,
   ]
 })
 export class TableComponent extends BaseComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {

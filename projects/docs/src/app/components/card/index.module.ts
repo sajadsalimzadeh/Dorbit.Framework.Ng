@@ -2,7 +2,7 @@ import {NgModule} from "@angular/core";
 import {IndexComponent} from "./index.component";
 import {CommonModule} from "@angular/common";
 import {HttpClientModule} from "@angular/common/http";
-import {DorbitModule} from "@framework";
+import {DorbitModule} from "../../../../../core/src";
 import {CodeModule} from "../code/code.module";
 
 

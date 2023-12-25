@@ -4,7 +4,6 @@ import {
   ElementRef,
   EventEmitter,
   forwardRef,
-  HostBinding,
   HostListener,
   Injector,
   Input,
@@ -21,7 +20,9 @@ import {
 import {
   ControlContainer,
   ControlValueAccessor,
-  FormControl, FormControlName, FormGroup,
+  FormControl,
+  FormControlName,
+  FormGroup,
   NG_VALUE_ACCESSOR,
   NgControl, Validators
 } from "@angular/forms";

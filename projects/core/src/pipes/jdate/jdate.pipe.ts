@@ -1,4 +1,5 @@
 import {NgModule, Pipe} from "@angular/core";
+// @ts-ignore
 import moment from "jalali-moment";
 
 

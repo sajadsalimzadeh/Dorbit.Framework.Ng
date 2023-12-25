@@ -42,7 +42,7 @@ import {
   PositionModule,
   DateModule,
   BreadcrumbModule,
-  FabModule
+  FabModule, OverlayService
 } from './components';
 import {
   JDatePipeModule,
@@ -113,7 +113,7 @@ const MODULES = [
     ReactiveFormsModule,
     RouterModule,
 
-    ...MODULES
+    MODULES
   ],
 })
 export class DorbitModule {
@@ -122,9 +122,6 @@ export class DorbitModule {
     return {
       ngModule: DorbitModule,
       providers: [
-        {provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true},
-        {provide: HTTP_INTERCEPTORS, useClass: MockInterceptor, multi: true},
-        {provide: HTTP_INTERCEPTORS, useClass: MessageInterceptor, multi: true},
         {provide: ErrorHandler, useClass: GlobalErrorHandler},
       ]
     }

@@ -1,4 +1,4 @@
-import {Component, ComponentRef, ElementRef, EventEmitter, HostListener, Injector, Output, TemplateRef} from '@angular/core';
+import {Component, ComponentRef, EventEmitter, HostListener, Injector, Output, TemplateRef} from '@angular/core';
 import {Positions} from "../../../../types";
 import {DialogRef} from "../../services/dialog.service";
 import {AbstractComponent} from "../../../abstract.component";
@@ -85,9 +85,9 @@ export class DialogComponent extends AbstractComponent implements DialogRef, Dia
 
   context?: any;
 
-  onPositionClick(e: MouseEvent) {
-    const el = e.target as HTMLElement;
-    if (this.maskClosable && el.querySelector('.dialog')) {
+  @HostListener('click', ['$event'])
+  onClick(e: MouseEvent) {
+    if (this.maskClosable && (e.target as HTMLElement).querySelector('.dialog')) {
       this.close();
     }
   }

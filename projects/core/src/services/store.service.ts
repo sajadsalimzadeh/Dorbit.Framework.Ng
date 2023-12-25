@@ -1,6 +1,5 @@
 import {BehaviorSubject} from "rxjs";
-import {TimeSpan} from "../contracts";
-import {ICacheService, IndexDbStorage, IndexedDbCacheService} from '../services';
+import {ICacheService, IndexDbStorage, IndexedDbCacheService, TimeSpan} from "..";
 
 
 interface ChangeEvent<T> {

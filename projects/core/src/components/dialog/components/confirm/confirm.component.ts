@@ -2,7 +2,6 @@ import {Component, EventEmitter, Output, TemplateRef, ViewChild} from '@angular/
 import {DialogService, DialogRef} from "../../services/dialog.service";
 import {DialogOptions} from "../dialog/dialog.component";
 import {ConfirmButton, ConfirmOptions} from "../../models";
-import {LoadingService} from '../../../../services'
 
 @Component({
   selector: 'd-confirm',
