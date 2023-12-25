@@ -154,3 +154,21 @@
     transform: rotate(360deg)
   }
 }
+
+.selected-items-container {
+  position: static !important;
+
+  .selected-items.single {
+    position: static !important;
+  }
+
+  &.right .selected-items.single .item {
+    justify-content: right;
+  }
+  &.center .selected-items.single .item {
+    justify-content: center;
+  }
+  &.left .selected-items.single .item {
+    justify-content: left;
+  }
+}

@@ -1,5 +1,5 @@
 import {Component, ElementRef, EventEmitter, HostListener, Injector, Input, Output, TemplateRef, ViewChild} from "@angular/core";
-import * as moment from 'jalali-moment';
+import moment from 'jalali-moment';
 import {Moment} from 'jalali-moment';
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
 import {OverlayRef, OverlayService} from "../../overlay/overlay.service";

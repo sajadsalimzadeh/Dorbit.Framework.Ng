@@ -1,15 +1,15 @@
-import {Component, EventEmitter, Injector, Output, TemplateRef, ViewChild} from '@angular/core';
-import {BaseComponent} from "../../../base.component";
+import {Component, EventEmitter, Output, TemplateRef, ViewChild} from '@angular/core';
 import {DialogService, DialogRef} from "../../services/dialog.service";
 import {DialogOptions} from "../dialog/dialog.component";
-import {ConfirmButton, ConfirmOptions} from "@framework";
+import {ConfirmButton, ConfirmOptions} from "../../models";
+import {LoadingService} from '../../../../services'
 
 @Component({
   selector: 'd-confirm',
   templateUrl: 'confirm.component.html',
   styleUrls: ['./confirm.component.scss']
 })
-export class ConfirmComponent extends BaseComponent implements ConfirmOptions, DialogRef {
+export class ConfirmComponent implements ConfirmOptions, DialogRef {
   @Output() onClose = new EventEmitter<void>();
 
   text!: string;
@@ -28,8 +28,7 @@ export class ConfirmComponent extends BaseComponent implements ConfirmOptions, D
     })
   }
 
-  constructor(injector: Injector, private diagService: DialogService) {
-    super(injector);
+  constructor(private diagService: DialogService, protected loadingService: LoadingService) {
   }
 
   close() {

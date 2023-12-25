@@ -2,7 +2,7 @@ import {Injectable, Injector} from '@angular/core';
 import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from '@angular/common/http';
 import {catchError, Observable, tap, throwError} from 'rxjs';
 import {TranslateService} from "@ngx-translate/core";
-import {MessageService} from "@framework";
+import {MessageService} from "../components/message/services/message.service";
 
 
 @Injectable({providedIn: 'root'})

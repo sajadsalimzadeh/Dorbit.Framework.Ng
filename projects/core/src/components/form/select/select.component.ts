@@ -16,6 +16,7 @@ type Func = (item: any) => any;
 export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
   @Input() items: any[] = [];
   @Input() mode: 'single' | 'multiple' = 'single';
+  @Input() align: '' | 'left' | 'right' | 'center' = '';
   @Input() clearable: boolean = true;
   @Input() valueField: string | Func = 'value';
   @Input() textField: string | Func = 'text';

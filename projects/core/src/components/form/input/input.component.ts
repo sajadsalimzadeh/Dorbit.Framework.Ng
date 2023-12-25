@@ -1,6 +1,7 @@
 import {Component, Injector, Input,} from '@angular/core';
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
 import {KeyFilters} from "../../key-filter/key-filter.directive";
+import {FormControl} from "@angular/forms";
 
 export interface MaskItem {
   placeholder: string;
@@ -27,11 +28,34 @@ export class InputComponent extends AbstractFormControl<string> {
   @Input() cols: number | string | null = null;
   @Input() keyFilter?: KeyFilters;
 
+  protected displayFormControl = new FormControl('');
+
   maskValue: string = '';
   override focusable = false;
 
   constructor(injector: Injector) {
     super(injector);
+  }
+
+  override ngOnInit() {
+    super.ngOnInit();
+
+    if(this.type == "number") {
+      this.inputMode = 'numeric';
+      this.keyFilter ??= 'num';
+    }
+
+    this.subscription.add(this.formControl.valueChanges.subscribe(e => {
+      if(this.type === 'number') {
+        if(Number.isNaN(+e)) {
+          this.displayFormControl.setValue('');
+        } else {
+          this.displayFormControl.setValue((+e).toLocaleString());
+        }
+      } else {
+        this.displayFormControl.setValue(e);
+      }
+    }))
   }
 
   override render() {
@@ -58,6 +82,15 @@ export class InputComponent extends AbstractFormControl<string> {
     this.onKeyup.subscribe(e => {
       this.render();
     })
+  }
+
+  protected setValue(e: string) {
+    if(this.type === 'number') {
+      const valueString = e.replaceAll(',', '')
+      this.formControl.setValue(Number.isNaN(+valueString) ? 0 : +valueString);
+    } else {
+      this.formControl.setValue(e);
+    }
   }
 
   private loadMaskedValue() {

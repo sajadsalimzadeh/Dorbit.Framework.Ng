@@ -1,4 +1,5 @@
-import {Colors, Message} from "@framework";
+import {Colors} from "../types";
+import {Message} from '../components/message/models'
 
 export class MessageError implements Error {
   static Name = 'MessageError';
