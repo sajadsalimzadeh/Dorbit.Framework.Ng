@@ -9,6 +9,7 @@ import {Location} from "@angular/common";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MessageService} from "./message/services/message.service";
 import {LoadingService} from "../services/loading.service";
+import {AbstractComponent} from "./abstract.component";
 
 @Directive()
 export abstract class BaseComponent extends AbstractComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
