@@ -40,22 +40,24 @@ export class InputComponent extends AbstractFormControl<string> {
   override ngOnInit() {
     super.ngOnInit();
 
-    if(this.type == "number") {
+    if (this.type == "number") {
       this.inputMode = 'numeric';
       this.keyFilter ??= 'num';
     }
 
-    this.subscription.add(this.formControl.valueChanges.subscribe(e => {
-      if(this.type === 'number') {
-        if(Number.isNaN(+e)) {
-          this.displayFormControl.setValue('');
-        } else {
-          this.displayFormControl.setValue((+e).toLocaleString());
-        }
+    this.subscription.add(this.formControl.valueChanges.subscribe(_ => this.updateDisplayControl()))
+  }
+
+  private updateDisplayControl() {
+    if (this.type === 'number') {
+      if (Number.isNaN(+this.formControl.value)) {
+        this.displayFormControl.setValue('');
       } else {
-        this.displayFormControl.setValue(e);
+        this.displayFormControl.setValue((+this.formControl.value).toLocaleString());
       }
-    }))
+    } else {
+      this.displayFormControl.setValue(this.formControl.value);
+    }
   }
 
   override render() {
@@ -75,6 +77,8 @@ export class InputComponent extends AbstractFormControl<string> {
   override init() {
     super.init();
 
+    this.updateDisplayControl();
+
     this.onKeydown.subscribe(e => {
       if (this.mask) this.maskOnKeyDown(e)
     });
@@ -85,7 +89,7 @@ export class InputComponent extends AbstractFormControl<string> {
   }
 
   protected setValue(e: string) {
-    if(this.type === 'number') {
+    if (this.type === 'number') {
       const valueString = e.replaceAll(',', '')
       this.formControl.setValue(Number.isNaN(+valueString) ? 0 : +valueString);
     } else {

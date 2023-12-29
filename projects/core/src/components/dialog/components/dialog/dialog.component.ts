@@ -86,7 +86,7 @@ export class DialogComponent extends AbstractComponent implements DialogRef, Dia
   context?: any;
 
   @HostListener('click', ['$event'])
-  onClick(e: MouseEvent) {
+  onPositionClick(e: MouseEvent) {
     if (this.maskClosable && (e.target as HTMLElement).querySelector('.dialog')) {
       this.close();
     }

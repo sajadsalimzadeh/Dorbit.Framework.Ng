@@ -1,6 +1,6 @@
 import {HttpClient, HttpContext, HttpEvent, HttpHandler, HttpHeaders, HttpParams, HttpRequest, HttpResponse} from "@angular/common/http";
 import {Injectable, InjectionToken, Injector} from "@angular/core";
-import {Observable, tap} from "rxjs";
+import {finalize, Observable, tap} from "rxjs";
 import {LoadingService} from "./loading.service";
 
 export const BASE_API_URL = new InjectionToken<string>('BASE_API_URL');
@@ -81,19 +81,9 @@ class CustomHttpHandler extends HttpHandler {
       this.loadingService.end();
     }, 120000);
 
-    return this.handler.handle(req).pipe(tap({
-      next: e => {
-        if (e instanceof HttpResponse) {
-          this.loadingService.end();
-        }
-      },
-      error: (err) => {
-        clearTimeout(timeout);
-        this.loadingService.end();
-      },
-      complete: () => {
-        clearTimeout(timeout);
-      }
+    return this.handler.handle(req).pipe(finalize(() => {
+      clearTimeout(timeout);
+      this.loadingService.end();
     }));
   }
 
