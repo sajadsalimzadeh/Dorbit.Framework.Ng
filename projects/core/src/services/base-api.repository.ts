@@ -1,9 +1,8 @@
 import {HttpClient, HttpContext, HttpEvent, HttpHandler, HttpHeaders, HttpParams, HttpRequest, HttpResponse} from "@angular/common/http";
 import {Injectable, InjectionToken, Injector} from "@angular/core";
-import {Observable, tap} from "rxjs";
+import {finalize, Observable, tap} from "rxjs";
 import {LoadingService} from "./loading.service";
 
-export const BASE_URL = new InjectionToken<string>('BASE_URL');
 export const BASE_API_URL = new InjectionToken<string>('BASE_API_URL');
 
 export interface HttpOptions {
@@ -23,12 +22,12 @@ export interface HttpOptions {
 @Injectable()
 export abstract class BaseApiRepository {
   protected http: CustomHttpClient;
-  protected baseApiUrl: string;
+  protected baseUrl: string;
 
   protected constructor(protected injector: Injector, protected repository?: string) {
-    this.baseApiUrl = injector.get(BASE_API_URL, '', {optional: true}) ?? '';
+    this.baseUrl = injector.get(BASE_API_URL, '', {optional: true}) ?? '';
     const handler = new CustomHttpHandler(
-      this.baseApiUrl,
+      this.baseUrl,
       repository,
       injector.get(HttpHandler),
       injector.get(LoadingService),
@@ -82,19 +81,9 @@ class CustomHttpHandler extends HttpHandler {
       this.loadingService.end();
     }, 120000);
 
-    return this.handler.handle(req).pipe(tap({
-      next: e => {
-        if (e instanceof HttpResponse) {
-          this.loadingService.end();
-        }
-      },
-      error: (err) => {
-        clearTimeout(timeout);
-        this.loadingService.end();
-      },
-      complete: () => {
-        clearTimeout(timeout);
-      }
+    return this.handler.handle(req).pipe(finalize(() => {
+      clearTimeout(timeout);
+      this.loadingService.end();
     }));
   }
 

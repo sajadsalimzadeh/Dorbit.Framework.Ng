@@ -1,7 +1,7 @@
-import {Component, ComponentRef, EventEmitter, HostListener, Output, TemplateRef} from '@angular/core';
-import {BaseComponent} from "../../../base.component";
+import {Component, ComponentRef, EventEmitter, HostListener, Injector, Output, TemplateRef} from '@angular/core';
 import {Positions} from "../../../../types";
 import {DialogRef} from "../../services/dialog.service";
+import {AbstractComponent} from "../../../abstract.component";
 
 export interface DialogOptions {
   container?: string;
@@ -46,7 +46,7 @@ const minimizeSpaces: DialogComponent[] = [];
   templateUrl: 'dialog.component.html',
   styleUrls: ['./dialog.component.scss']
 })
-export class DialogComponent extends BaseComponent implements DialogRef, DialogOptions, DialogContext {
+export class DialogComponent extends AbstractComponent implements DialogRef, DialogOptions, DialogContext {
   @Output() onClose = new EventEmitter<void>();
 
   componentRef!: ComponentRef<DialogComponent>;
@@ -86,7 +86,7 @@ export class DialogComponent extends BaseComponent implements DialogRef, DialogO
   context?: any;
 
   @HostListener('click', ['$event'])
-  onClick(e: MouseEvent) {
+  onPositionClick(e: MouseEvent) {
     if (this.maskClosable && (e.target as HTMLElement).querySelector('.dialog')) {
       this.close();
     }
@@ -104,8 +104,11 @@ export class DialogComponent extends BaseComponent implements DialogRef, DialogO
     this.adjustSize();
   }
 
+  constructor(injector: Injector) {
+    super(injector)
+  }
+
   override ngOnDestroy() {
-    super.ngOnDestroy();
     this.removeMinimizeSpace();
   }
 
@@ -130,8 +133,6 @@ export class DialogComponent extends BaseComponent implements DialogRef, DialogO
   }
 
   override ngAfterViewInit() {
-    super.ngAfterViewInit();
-
     this.maxWidthWindow = `calc(${this.elementRef.nativeElement.offsetWidth}px - 1.6rem)`;
     this.maxHeightWindow = `calc(${this.elementRef.nativeElement.offsetHeight}px - 1.6rem)`;
 

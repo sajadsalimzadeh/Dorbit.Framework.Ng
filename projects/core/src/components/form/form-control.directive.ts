@@ -137,7 +137,7 @@ export abstract class AbstractFormControl<T> extends BaseComponent implements Co
       if(!this.formControl) {
         if (this.ngControl instanceof FormControlName && this.controlContainer?.control instanceof FormGroup) {
           if(this.ngControl.name) {
-            this.formControl = this.controlContainer?.control.controls[this.ngControl.name] as FormControl;
+            this.formControl = this.controlContainer.control.controls[this.ngControl.name] as FormControl;
           }
         }
       }

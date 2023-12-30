@@ -16,6 +16,7 @@ type Func = (item: any) => any;
 export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
   @Input() items: any[] = [];
   @Input() mode: 'single' | 'multiple' = 'single';
+  @Input() align: '' | 'left' | 'right' | 'center' = '';
   @Input() clearable: boolean = true;
   @Input() valueField: string | Func = 'value';
   @Input() textField: string | Func = 'text';
@@ -149,6 +150,9 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
 
   override render() {
     super.render();
+    this.items.forEach(x => x.selected = false);
+    this.selectedItems.forEach(x => x.selected = true);
+
     this.updateItemsSelectedState();
     this.search();
   }
@@ -170,10 +174,11 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
     } else {
       const selectedItems = (Array.isArray(this.formControl.value) ? this.formControl.value : []) as T[];
       const value = this.getValue(item);
-      const findIndex = selectedItems.findIndex(x => x == value);
-      if (findIndex > -1) selectedItems.splice(findIndex, 1);
+      const index = selectedItems.findIndex(x => x == value);
+      if (index > -1) selectedItems.splice(index, 1);
       else selectedItems.push(value);
       this.formControl.setValue([...selectedItems]);
+      this.updateItemsSelectedState();
     }
     this.render();
   }
