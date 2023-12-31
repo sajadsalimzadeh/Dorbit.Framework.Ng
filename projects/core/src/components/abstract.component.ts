@@ -1,21 +1,8 @@
-import {
-  AfterViewInit, ChangeDetectorRef,
-  Directive,
-  ElementRef,
-  Injector,
-  Input,
-  OnChanges, OnDestroy,
-  OnInit, ProviderToken,
-  SimpleChanges
-} from "@angular/core";
+import {AfterViewInit, Directive, ElementRef, Injector, Input, OnChanges, OnDestroy, OnInit, ProviderToken, SimpleChanges} from "@angular/core";
 import {Colors, Direction, Sizes} from "../types";
 import {Subscription} from "rxjs";
-import {ActivatedRoute, Router} from "@angular/router";
-import {MessageService} from "./message/services/message.service";
-import {Location} from "@angular/common";
-import {LoadingService} from "../services";
+import {LoadingService} from "../services/loading.service";
 import {TranslateService} from "@ngx-translate/core";
-import {DialogService} from "./dialog/services/dialog.service";
 
 @Directive()
 export abstract class AbstractComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
@@ -29,12 +16,17 @@ export abstract class AbstractComponent implements OnInit, OnChanges, OnDestroy,
   protected subscription = new Subscription();
 
   private _services: any = {};
+
   protected getInstance<T>(key: string, type: ProviderToken<T>): T {
     return this._services[key] ??= this.injector.get(type)
   }
 
   protected get translateService(): TranslateService {
     return this.getInstance('TranslateService', TranslateService);
+  }
+
+  protected get loadingService(): LoadingService {
+    return this.getInstance('LoadingService', LoadingService);
   }
 
   elementRef: ElementRef<HTMLElement>;

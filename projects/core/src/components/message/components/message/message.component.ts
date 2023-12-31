@@ -1,14 +1,14 @@
 import {ChangeDetectorRef, Component, ContentChildren, EventEmitter, Injector, Input, Output, QueryList, TemplateRef,} from '@angular/core';
 import {TemplateDirective} from "../../../template/template.directive";
-import {BaseComponent} from "../../../base.component";
 import {Message} from "../../models";
+import {AbstractComponent} from "../../../abstract.component";
 
 @Component({
   selector: 'd-message',
   templateUrl: 'message.component.html',
   styleUrls: ['./message.component.scss']
 })
-export class MessageComponent extends BaseComponent {
+export class MessageComponent extends AbstractComponent {
   @Input() item!: Message;
   @Input() items!: Message[];
   @Input() timerEnable: boolean = true;

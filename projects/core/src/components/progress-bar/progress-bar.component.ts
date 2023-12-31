@@ -1,22 +1,12 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  HostBinding,
-  Input,
-  OnChanges,
-  SimpleChanges,
-  ViewChild
-} from '@angular/core';
-import {Colors, Sizes} from "../../types";
-import {BaseComponent} from "../base.component";
+import {AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
+import {AbstractComponent} from "../abstract.component";
 
 @Component({
   selector: 'd-progress-bar',
   templateUrl: 'progress-bar.component.html',
   styleUrls: ['./progress-bar.component.scss']
 })
-export class ProgressBarComponent extends BaseComponent implements OnChanges, AfterViewInit {
+export class ProgressBarComponent extends AbstractComponent implements OnChanges, AfterViewInit {
   @Input() value = 20;
   @Input() min = 0;
   @Input() max = 100;

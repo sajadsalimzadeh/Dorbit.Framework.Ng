@@ -1,12 +1,12 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {BaseComponent} from "../base.component";
+import {AbstractComponent} from "../abstract.component";
 
 @Component({
   selector: 'd-paginator',
   templateUrl: 'paginator.component.html',
   styleUrls: ['./paginator.component.scss']
 })
-export class PaginatorComponent extends BaseComponent implements OnChanges {
+export class PaginatorComponent extends AbstractComponent implements OnChanges {
 
   @Input() page: number = 0;
   @Input() pageSize: number = 10;
