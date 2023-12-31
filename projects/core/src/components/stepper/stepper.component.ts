@@ -1,14 +1,14 @@
 import {AfterContentInit, Component, ContentChildren, Input, QueryList} from '@angular/core';
-import {BaseComponent} from "../base.component";
 import {Stepper} from "../../utils/stepper";
 import {StepDirective} from "./components/step.directive";
+import {AbstractComponent} from "../abstract.component";
 
 @Component({
   selector: 'd-stepper',
   templateUrl: './stepper.component.html',
   styleUrls: ['./stepper.component.scss']
 })
-export class StepperComponent extends BaseComponent implements AfterContentInit {
+export class StepperComponent extends AbstractComponent implements AfterContentInit {
   @Input({required: true}) stepper!: Stepper<any>;
 
   @ContentChildren(StepDirective) steps?: QueryList<StepDirective>;

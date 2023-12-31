@@ -28,7 +28,7 @@ import {
 } from "@angular/forms";
 import {TemplateDirective} from "../template/template.directive";
 import {FormControlService} from "./form-control.service";
-import {BaseComponent} from "../base.component";
+import {AbstractComponent} from "../abstract.component";
 
 export function createControlValueAccessor(type: Type<any>) {
   return {
@@ -44,7 +44,7 @@ export interface ValidationError {
 }
 
 @Directive()
-export abstract class AbstractFormControl<T> extends BaseComponent implements ControlValueAccessor, OnInit, OnChanges, OnDestroy {
+export abstract class AbstractFormControl<T> extends AbstractComponent implements ControlValueAccessor, OnInit, OnChanges, OnDestroy {
   private _autofocus: boolean = false;
 
   @Input() name: string = '';
@@ -137,7 +137,7 @@ export abstract class AbstractFormControl<T> extends BaseComponent implements Co
       if(!this.formControl) {
         if (this.ngControl instanceof FormControlName && this.controlContainer?.control instanceof FormGroup) {
           if(this.ngControl.name) {
-            this.formControl = this.controlContainer?.control.controls[this.ngControl.name] as FormControl;
+            this.formControl = this.controlContainer.control.controls[this.ngControl.name] as FormControl;
           }
         }
       }

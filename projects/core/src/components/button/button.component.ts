@@ -1,12 +1,12 @@
 import {Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild} from '@angular/core';
-import {BaseComponent} from "../base.component";
+import {AbstractComponent} from "../abstract.component";
 
 @Component({
   selector: 'd-button',
   templateUrl: 'button.component.html',
   styleUrls: ['./button.component.scss']
 })
-export class ButtonComponent extends BaseComponent implements OnInit, OnChanges {
+export class ButtonComponent extends AbstractComponent implements OnInit, OnChanges {
 
   @Input() type: 'button' | 'submit' | 'reset' = 'button';
   @Input() icon?: string;

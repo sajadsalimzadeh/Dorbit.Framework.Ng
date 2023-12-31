@@ -1,14 +1,14 @@
 import {Component, ContentChildren, Input, QueryList, TemplateRef} from "@angular/core";
 import {TemplateDirective} from "../template/template.directive";
 import {Orientation} from "../../types";
-import {BaseComponent} from "../base.component";
+import {AbstractComponent} from "../abstract.component";
 
 @Component({
   selector: 'd-timeline',
   templateUrl: './timeline.component.html',
   styleUrls: ['./timeline.component.scss']
 })
-export class TimelineComponent extends BaseComponent {
+export class TimelineComponent extends AbstractComponent {
   @Input() items: any[] = [];
   @Input() orientation: Orientation = 'horizontal';
   @Input() align: 'start' | 'end' | 'alternate' = 'alternate';

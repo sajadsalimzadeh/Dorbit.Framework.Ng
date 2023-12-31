@@ -48,7 +48,7 @@
   </div>
 </div>
 <ng-template #itemsTpl>
-  <div class="items-container" [ngClass]="size">
+  <div class="items-container" [ngClass]="[size, mode]">
     <div class="filter-box" *ngIf="searchable && items.length > 10">
       <d-input [size]="size" [formControl]="searchFormControl" [placeholder]="searchPlaceHolder"/>
     </div>

@@ -9,6 +9,7 @@ import {ButtonModule} from "../button/button.module";
 
 export * from './services/dialog.service';
 export * from './dialog-container.component';
+export * from './components/confirm/confirm.component';
 export * from './components/dialog/dialog.component';
 
 @NgModule({

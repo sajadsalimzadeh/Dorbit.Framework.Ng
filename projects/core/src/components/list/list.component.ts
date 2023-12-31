@@ -1,13 +1,13 @@
 import {Component, ContentChildren, EventEmitter, Input, OnChanges, Output, QueryList, TemplateRef} from '@angular/core';
-import {BaseComponent} from "../base.component";
 import {TemplateDirective} from "../template/template.directive";
+import {AbstractComponent} from "../abstract.component";
 
 @Component({
   selector: 'd-list',
   templateUrl: 'list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ListComponent extends BaseComponent implements OnChanges {
+export class ListComponent extends AbstractComponent implements OnChanges {
   @Input() items!: any[];
 
   @Output() onItemClick = new EventEmitter<any>();

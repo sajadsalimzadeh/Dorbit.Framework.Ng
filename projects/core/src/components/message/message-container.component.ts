@@ -1,9 +1,9 @@
 import {ChangeDetectorRef, Component, ContentChildren, HostListener, Injector, Input, QueryList, TemplateRef} from '@angular/core';
-import {BaseComponent} from "../base.component";
 import {TemplateDirective} from "../template/template.directive";
-import {MessageService} from "./services/message.service";
 import {Message} from "./models";
 import {Positions} from "../../types";
+import {AbstractComponent} from "../abstract.component";
+import {MessageService} from "./services/message.service";
 
 export * from './models';
 export * from './services/message.service';
@@ -14,7 +14,7 @@ export * from './components/message/message.component';
   templateUrl: 'message-container.component.html',
   styleUrls: ['./message-container.component.scss']
 })
-export class MessageContainerComponent extends BaseComponent {
+export class MessageContainerComponent extends AbstractComponent {
   @Input() name?: string;
   @Input() items: Message[] = [];
   @Input() position: 'static' | Positions = 'static';
@@ -37,7 +37,7 @@ export class MessageContainerComponent extends BaseComponent {
 
   timerEnable: boolean = true;
 
-  constructor(injector: Injector, private changeDetectionRef: ChangeDetectorRef) {
+  constructor(injector: Injector, private changeDetectionRef: ChangeDetectorRef, private messageService: MessageService) {
     super(injector);
   }
 
