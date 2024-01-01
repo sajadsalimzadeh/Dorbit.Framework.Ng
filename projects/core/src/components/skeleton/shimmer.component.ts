@@ -1,7 +1,5 @@
-import {
-  Component, Input
-} from '@angular/core';
-import {BaseComponent} from "../base.component";
+import {Component, Input} from '@angular/core';
+import {AbstractComponent} from "../abstract.component";
 
 const units = ['%', 'px', 'pt', 'rem', 'em', 'cm'];
 
@@ -10,7 +8,7 @@ const units = ['%', 'px', 'pt', 'rem', 'em', 'cm'];
   templateUrl: 'shimmer.component.html',
   styleUrls: ['./shimmer.component.scss']
 })
-export class ShimmerComponent extends BaseComponent {
+export class ShimmerComponent extends AbstractComponent {
   @Input() radius: string = '6px';
   @Input() ratio: string = '4:4'
 

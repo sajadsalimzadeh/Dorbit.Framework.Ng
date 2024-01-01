@@ -1,15 +1,13 @@
-import {
-  Component, HostBinding, HostListener, Input,
-} from '@angular/core';
-import {BaseComponent} from "../base.component";
+import {Component, HostBinding, HostListener, Input,} from '@angular/core';
 import {PositionsCorner} from "../../types";
+import {AbstractComponent} from "../abstract.component";
 
 @Component({
   selector: 'd-scroll-top',
   templateUrl: 'scroll-top.component.html',
   styleUrls: ['./scroll-top.component.scss']
 })
-export class ScrollTopComponent extends BaseComponent {
+export class ScrollTopComponent extends AbstractComponent {
   private _target: any = window;
   private _listener: any;
 

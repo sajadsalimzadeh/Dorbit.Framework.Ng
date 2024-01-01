@@ -1,5 +1,5 @@
 import {Component, Input, SimpleChanges} from '@angular/core';
-import {BaseComponent} from "../base.component";
+import {AbstractComponent} from "../abstract.component";
 
 @Component({
   selector: 'd-progress-circle',
@@ -7,7 +7,7 @@ import {BaseComponent} from "../base.component";
   styleUrls: ['./progress-circle.component.scss']
 })
 
-export class ProgressCircleComponent extends BaseComponent {
+export class ProgressCircleComponent extends AbstractComponent {
   @Input({required: true}) diameter!: number;
   @Input() startDegree: number = 90;
   @Input() max: number = 100;

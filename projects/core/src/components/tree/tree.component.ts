@@ -1,7 +1,7 @@
 import {Component, ContentChildren, EventEmitter, HostListener, Input, OnChanges, Output, QueryList, SimpleChanges, TemplateRef} from '@angular/core';
-import {BaseComponent} from "../base.component";
 import {TemplateDirective} from "../template/template.directive";
 import {Colors} from "../../types";
+import {AbstractComponent} from "../abstract.component";
 
 export interface TreeItem {
   key: any;
@@ -24,7 +24,7 @@ export interface DropEvent {
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.scss']
 })
-export class TreeComponent extends BaseComponent implements OnChanges {
+export class TreeComponent extends AbstractComponent implements OnChanges {
 
   @Input() items: any[] = [];
   @Input() draggable: boolean = false;

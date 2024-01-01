@@ -1,12 +1,12 @@
-import {Component, ContentChildren, Input, OnChanges, QueryList, TemplateRef} from '@angular/core';
-import {BaseComponent} from "../base.component";
+import {Component, Input} from '@angular/core';
+import {AbstractComponent} from "../abstract.component";
 
 @Component({
   selector: 'd-breadcrumb',
   templateUrl: 'breadcrumb.component.html',
   styleUrls: ['./breadcrumb.component.scss']
 })
-export class BreadcrumbComponent extends BaseComponent {
+export class BreadcrumbComponent extends AbstractComponent {
 
   @Input() items: string[] = [];
 }

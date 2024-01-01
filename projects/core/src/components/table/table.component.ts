@@ -4,8 +4,8 @@ import {FilterFunc, SortFunc, TableConfig, TableData} from "./models";
 import {FormControl} from "@angular/forms";
 import {TableService} from "./services/table.service";
 import {OverlayService} from "../overlay/overlay.service";
-import {BaseComponent} from "../base.component";
 import {OperationKey} from "./components/filter/filter.component";
+import {AbstractComponent} from "../abstract.component";
 
 @Component({
   selector: 'd-table',
@@ -16,7 +16,7 @@ import {OperationKey} from "./components/filter/filter.component";
     OverlayService,
   ]
 })
-export class TableComponent extends BaseComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
+export class TableComponent extends AbstractComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 
   @Input() data: TableData = {totalCount: 0, items: []};
   @Input() config: TableConfig = new TableConfig();

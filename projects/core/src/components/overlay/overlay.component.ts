@@ -1,7 +1,7 @@
 import {Component, HostListener, Input, OnInit, TemplateRef} from "@angular/core";
 import {OverlayRef} from "./overlay.service";
 import {Colors} from "../../types";
-import {BaseComponent} from "../base.component";
+import {AbstractComponent} from "../abstract.component";
 
 export type OverlayAlignments =
   'top-start' | 'top-center' | 'top-end' |
@@ -28,7 +28,7 @@ export interface OverlayOptions {
   templateUrl: './overlay.component.html',
   styleUrls: ['./overlay.component.scss']
 })
-export class OverlayComponent extends BaseComponent implements OnInit, OverlayOptions {
+export class OverlayComponent extends AbstractComponent implements OnInit, OverlayOptions {
   @Input() ref?: HTMLElement;
   @Input() alignment?: OverlayAlignments;
 
