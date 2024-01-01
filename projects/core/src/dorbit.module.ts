@@ -51,11 +51,6 @@ import {
 import {
   GlobalErrorHandler
 } from './services';
-import {
-  CacheInterceptor,
-  MessageInterceptor,
-  MockInterceptor
-} from "./interceptors";
 import {TranslateModule} from "@ngx-translate/core";
 
 const MODULES = [

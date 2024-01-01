@@ -186,7 +186,7 @@ $border-color: rgba(var(--color-black-rgb), .03);
         }
 
         td, th {
-          padding: .5rem 1rem;
+          padding: .5rem .7rem;
         }
 
         th {
@@ -206,28 +206,8 @@ $border-color: rgba(var(--color-black-rgb), .03);
             }
 
             .sort-icon {
+              font-size: 1em;
               padding: .4rem .5rem;
-            }
-
-            &:not(.sort-dir) {
-              .sort-icon::before {
-                font-family: "Font Awesome 6 Pro";
-                opacity: .4;
-                content: '\e099';
-                font-style: normal;
-              }
-            }
-
-            &.sort-dir.asc .sort-icon::before {
-              font-family: "Font Awesome 6 Pro";
-              content: '\f884';
-              font-style: normal;
-            }
-
-            &.sort-dir.desc .sort-icon::before {
-              font-family: "Font Awesome 6 Pro";
-              content: '\f161';
-              font-style: normal;
             }
           }
         }

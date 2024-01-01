@@ -10,15 +10,18 @@
   <div>
     <div class="overlay-box">
       <div class="operation">
-        <d-select [items]="operations" [formControl]="operationControl" valueField="key"
-                  textField="value"></d-select>
+        <select [formControl]="operationControl">
+          <option [ngValue]="operation.key" *ngFor="let operation of operations">{{ operation.value }}</option>
+        </select>
       </div>
-      <div class="value-box" *ngIf="overlay && template">
-        <ng-container *ngTemplateOutlet="template; context: {$implicit: this, control: valueControl}">
+      <div class="value-box" *ngIf="overlay">
+        <ng-container *ngIf="template; else textTpl">
+          <ng-container *ngTemplateOutlet="template; context: {$implicit: this, control: valueControl}">
+          </ng-container>
         </ng-container>
-      </div>
-      <div class="">
-
+        <ng-template #textTpl>
+          <d-input [formControl]="valueControl"></d-input>
+        </ng-template>
       </div>
     </div>
   </div>
