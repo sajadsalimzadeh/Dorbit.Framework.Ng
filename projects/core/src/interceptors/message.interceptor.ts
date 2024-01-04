@@ -17,7 +17,7 @@ export class MessageInterceptor implements HttpInterceptor {
     const translateService = this.injector.get(TranslateService);
     const key = `${text}`;
     const translate = translateService.instant(key);
-    if(translate != key) {
+    if (translate != key) {
       this.messageService.show({
         body: translate,
         color: color
@@ -32,9 +32,8 @@ export class MessageInterceptor implements HttpInterceptor {
         if (e.ok) {
           if (e.body.message) {
             this.send(`message.${e.body.message}`, 'success');
-          }
-          else if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(req.method.toUpperCase())) {
-            this.send(`message.success`, 'success');
+          } else if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(req.method.toUpperCase())) {
+            // this.send(`message.success`, 'success');
           }
         }
       }
@@ -42,6 +41,8 @@ export class MessageInterceptor implements HttpInterceptor {
       if (e instanceof HttpErrorResponse) {
         if (e.error?.message) {
           this.send(`message.${e.error.message}`, 'danger');
+        } else if (e.status == 504) {
+          this.send(`message.http.504`, 'danger');
         } else {
           this.send(`message.error`, 'danger');
         }

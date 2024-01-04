@@ -74,17 +74,15 @@ export class TableComponent extends AbstractComponent implements OnInit, OnChang
   tableService: TableService;
   overlayService: OverlayService;
 
+  filteredItems: any[] = [];
+  sortedItems: any[] = [];
+  pagedItems: any[] = [];
   renderedItems: any[] = [];
-  pageNumbers: number[] = [];
   pageRowCountControl = new FormControl(10);
   intervals: any[] = [];
   isMetaKeyDown: boolean = false;
-
+  totalCount: number = 0;
   pageReportTemplate: string = '';
-  dataScrollBarStyles: any = {};
-  dataScrollBarWidth: number = 20;
-  dataTableScrollThumbStyles: any = {};
-
 
   constructor(injector: Injector) {
     super(injector);
@@ -103,7 +101,7 @@ export class TableComponent extends AbstractComponent implements OnInit, OnChang
         if(e) dataEl.classList.add('loading');
         else dataEl.classList.remove('loading');
       }
-    }))
+    }));
 
     this.subscription.add(this.config.onRowClick.subscribe(item => {
       if (this.config.selecting.enable) {
@@ -216,17 +214,17 @@ export class TableComponent extends AbstractComponent implements OnInit, OnChang
     this.renderedItems = this.data.items.filter(() => true);
 
     if (!this.config.lazyLoading) {
-      this.renderedItems = this.filterItems(this.renderedItems);
-      this.renderedItems = this.sortItems(this.renderedItems);
-      this.renderedItems = this.pagingItems(this.renderedItems);
+      this.filteredItems = this.renderedItems = this.filterItems(this.renderedItems);
+      this.sortedItems = this.renderedItems = this.sortItems(this.renderedItems);
+      this.pagedItems = this.renderedItems = this.pagingItems(this.renderedItems);
     }
 
-    const count = this.data.totalCount;
+    this.totalCount = (this.config.lazyLoading ? this.data.totalCount : this.filteredItems.length);
     const first = this.config.paging.page * this.config.paging.size + 1;
     let last = first + this.config.paging.size - 1;
-    if (last > count) last = count;
+    if (last > this.totalCount) last = this.totalCount;
     this.pageReportTemplate = this.config.paging.pageReportTemplate
-      .replace('{totalRecords}', count.toString())
+      .replace('{totalRecords}', this.totalCount.toString())
       .replace('{first}', first.toString())
       .replace('{last}', last.toString());
   }

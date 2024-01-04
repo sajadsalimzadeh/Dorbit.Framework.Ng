@@ -10,6 +10,7 @@ import {TableRowExpanderComponent} from "./components/row-expander/row-expander.
 import {TemplateModule} from "../template/template.directive";
 import {TableSortDirective} from "./components/sort.directive";
 import {TableTemplateDirective} from "./components/table-template.directive";
+import {InputModule} from "../form/input/input.module";
 
 export * from './models';
 export * from './table.component';
@@ -18,15 +19,16 @@ export * from './components/filter/filter.component';
 export * from './components/row-expander/row-expander.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
 
-    TemplateModule,
-    SelectModule,
-    PaginatorModule,
-  ],
+        TemplateModule,
+        SelectModule,
+        PaginatorModule,
+        InputModule,
+    ],
   declarations: [
     TableComponent,
     TableTemplateDirective,

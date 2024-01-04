@@ -48,10 +48,10 @@
   </div>
   <div class="paginator">
     <div class="current-page-report page-numbers-around">
-      {{pageReportTemplate}}
+      {{ pageReportTemplate }}
     </div>
     <div class="page-numbers">
-      <d-paginator [size]="size" [page]="config.paging.page" [totalCount]="data.totalCount" [pageSize]="config.paging.size" (onChange)="onPageChange($event)"></d-paginator>
+      <d-paginator [size]="size" [page]="config.paging.page" [totalCount]="totalCount" [pageSize]="config.paging.size" (onChange)="onPageChange($event)"></d-paginator>
     </div>
     <div class="page-row-count page-numbers-around">
       <d-select [size]="size" [items]="config.paging.pageSizes"
