@@ -15,4 +15,4 @@ export type Orientation = 'vertical' | 'horizontal';
 export type Themes = 'default-light' | 'default-dark';
 export type Direction = '' | 'rtl' | 'ltr';
 
-export const APP_VERSION = new InjectionToken<string>('APP_VERSION');
+export const APP_VERSION = new InjectionToken<() => string>('APP_VERSION');
