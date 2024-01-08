@@ -50,7 +50,7 @@ export class TableSortDirective implements OnInit {
       if (e.field == this.field) {
         this.tableService.config.sorting.dir = e.dir;
         this.tableService.config.sorting.field = e.field;
-        iconEl.className = `sort-icon fad fa-${(e.dir == 'asc' ? 'sort-down' : 'sort-up')}`
+        iconEl.className = `sort-icon fad fa-${(e.dir == 'asc' ? 'sort-up' : 'sort-down')}`
         this.tableService.dataTable.render();
       } else {
         iconEl.className = `sort-icon fal fa-sort`;

@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AbstractFormControl} from "../form-control.directive";
+// @ts-ignore
 import moment from 'jalali-moment';
 
 interface Option {

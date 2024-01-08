@@ -142,8 +142,14 @@ export class CacheService {
     try {
       const obj = await storage.get<CacheItem<T>>(key);
       if (!obj) return undefined;
-      if(!options?.ignoreExpiration && obj.expireTime < new Date().getTime()) return undefined;
-      if(!options?.ignoreVersion && obj.version && obj.version != this.version) return undefined;
+      if(!options?.ignoreExpiration && obj.expireTime < new Date().getTime()) {
+        console.log('[cache] ignore for expiration,', key)
+        return undefined;
+      }
+      if(!options?.ignoreVersion && obj.version != this.version) {
+        console.log('[cache] ignore for version,', key)
+        return undefined;
+      }
       return obj.data;
     } catch {
       return undefined;

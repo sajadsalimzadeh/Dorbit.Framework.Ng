@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Subject} from "rxjs";
+import {BehaviorSubject, Subject} from "rxjs";
 import {TableComponent} from "../table.component";
 import {SortEvent} from "../components/sort.directive";
 import {TableFilterComponent} from "../components/filter/filter.component";

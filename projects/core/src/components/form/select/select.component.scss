@@ -25,6 +25,7 @@
 }
 
 .remove {
+  z-index: 1000;
   cursor: pointer;
   color: var(--color-gray--10);
 }
