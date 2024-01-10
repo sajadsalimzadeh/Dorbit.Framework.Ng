@@ -99,7 +99,7 @@ export class Logger {
         timestamp: new Date().getTime(),
         name: this.name,
         level: level,
-        message: message,
+        message: message?.toString(),
         data: {...this.defaultData, ...options.data},
       } as LogRecord;
 
@@ -114,13 +114,15 @@ export class Logger {
       }
 
       //prevent multiple same log insert
-      const logKey = log.message.slice(0, 10) + log.message.length;
-      if (this.logTimeMessages[logKey] > new Date().getTime() - 1000) return;
-      this.logTimeMessages[logKey] = new Date().getTime();
+      if(log.message) {
+        const logKey = log.message.slice(0, 10) + log.message.length;
+        if (this.logTimeMessages[logKey] > new Date().getTime() - 1000) return;
+        this.logTimeMessages[logKey] = new Date().getTime();
+      }
 
       try {
         //prevent insert un cloneable object
-        if (log.data) log.data = JSON.parse(JSON.stringify(log.data));
+        if (log) log.data = JSON.parse(JSON.stringify(log.data));
       } catch {
         log.data = undefined;
       }
