@@ -1,12 +1,12 @@
 import {Component, Input,} from '@angular/core';
-import {BaseComponent} from "../base.component";
+import {AbstractComponent} from "../abstract.component";
 
 @Component({
   selector: 'd-tag',
   templateUrl: 'tag.component.html',
   styleUrls: ['./tag.component.scss']
 })
-export class TagComponent extends BaseComponent {
+export class TagComponent extends AbstractComponent {
   @Input() icon?: string;
   @Input() rounded: boolean = false;
 
