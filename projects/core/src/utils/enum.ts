@@ -12,4 +12,14 @@ export class EnumUtil {
     }
     return result;
   }
+
+  static getNames(type: any) {
+    const keys = Object.keys(type);
+    const result: string[] = [];
+    const half = keys.length/2;
+    for (let i = 0; i < half; i++) {
+      result.push(keys[half + i]);
+    }
+    return result;
+  }
 }
