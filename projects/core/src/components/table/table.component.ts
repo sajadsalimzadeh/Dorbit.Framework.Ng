@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ContentChildren, HostBinding, HostListener, Injector, Input, OnChanges, OnDestroy, OnInit, QueryList, SimpleChanges, TemplateRef} from "@angular/core";
+import {AfterViewInit, Component, ContentChildren, forwardRef, HostBinding, HostListener, Injector, Input, OnChanges, OnDestroy, OnInit, QueryList, SimpleChanges, TemplateRef} from "@angular/core";
 import {TemplateDirective} from "../template/template.directive";
 import {FilterFunc, SortFunc, TableConfig, TableData} from "./models";
 import {FormControl} from "@angular/forms";
@@ -6,6 +6,7 @@ import {TableService} from "./services/table.service";
 import {OverlayService} from "../overlay/overlay.service";
 import {OperationKey} from "./components/filter/filter.component";
 import {AbstractComponent} from "../abstract.component";
+import {TableTemplateDirective} from "./components/table-template.directive";
 
 @Component({
   selector: 'd-table',
@@ -14,6 +15,7 @@ import {AbstractComponent} from "../abstract.component";
   providers: [
     TableService,
     OverlayService,
+    {provide: TableTemplateDirective, useExisting: forwardRef(() => TemplateDirective)}
   ]
 })
 export class TableComponent extends AbstractComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
@@ -71,6 +73,11 @@ export class TableComponent extends AbstractComponent implements OnInit, OnChang
     this.summaryTemplate = value.find(x => x.includesName('summary'))?.template;
   }
 
+  @ContentChildren(TableTemplateDirective)
+  set dTableTemplates(value: QueryList<TableTemplateDirective>) {
+    this.dTemplates = value;
+  }
+
   tableService: TableService;
   overlayService: OverlayService;
 
@@ -82,7 +89,13 @@ export class TableComponent extends AbstractComponent implements OnInit, OnChang
   intervals: any[] = [];
   isMetaKeyDown: boolean = false;
   totalCount: number = 0;
-  pageReportTemplate: string = '';
+
+  set pageReportTemplate(value: string) {
+    const el = this.elementRef.nativeElement?.querySelector('.current-page-report') as HTMLElement;
+    if (el) {
+      el.innerHTML = value;
+    }
+  }
 
   constructor(injector: Injector) {
     super(injector);
@@ -97,8 +110,8 @@ export class TableComponent extends AbstractComponent implements OnInit, OnChang
 
     this.subscription.add(this.loadingService.$loading.subscribe(e => {
       const dataEl = this.elementRef.nativeElement.querySelector('.data');
-      if(dataEl) {
-        if(e) dataEl.classList.add('loading');
+      if (dataEl) {
+        if (e) dataEl.classList.add('loading');
         else dataEl.classList.remove('loading');
       }
     }));

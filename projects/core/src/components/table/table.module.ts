@@ -2,7 +2,6 @@ import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {TableComponent} from "./table.component";
 import {SelectModule} from "../form/select/select.module";
-import {OverlayService} from "../overlay/overlay.service";
 import {PaginatorModule} from "../paginator/paginator.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {TableFilterComponent} from "./components/filter/filter.component";
