@@ -7,7 +7,7 @@
 </div>
 
 <ng-template #overlayTpl>
-  <div>
+  <div (click)="stopPropagation($event)">
     <div class="overlay-box">
       <div class="operation">
         <select [formControl]="operationControl">

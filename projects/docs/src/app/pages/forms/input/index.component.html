@@ -1,7 +1,7 @@
 <h1>Input</h1>
 <hr>
 <app-card header="Sizes" class="mt-6" component="forms/input">
-  <div class="flex-column flex-gap-5">
+  <div class="flex-column flex-gap-3">
     <d-input size="xs" [formControl]="formControl" placeholder="please enter your name ..."></d-input>
     <d-input size="sm" [formControl]="formControl" placeholder="please enter your name ..."></d-input>
     <d-input size="md" [formControl]="formControl" placeholder="please enter your name ..."></d-input>
@@ -10,17 +10,17 @@
   </div>
 </app-card>
 <app-card header="Placeholder" class="mt-6" component="forms/input">
-  <div class="flex-column flex-gap-5">
+  <div class="flex-column">
     <d-input [formControl]="formControl" placeholder="please enter your name ...."></d-input>
   </div>
 </app-card>
 <app-card header="Textarea" class="mt-6" component="forms/input">
-  <div class="flex-column flex-gap-5">
+  <div class="flex-column">
     <d-input type="textarea" rows="5" [formControl]="formControl" placeholder="please enter your text ..."></d-input>
   </div>
 </app-card>
 <app-card header="Control Group" class="mt-6" component="forms/input">
-  <div class="flex-column flex-gap-5">
+  <div class="flex-column">
     <d-control-group>
       <ng-template dTemplate="start"><i class="far fa-search"></i></ng-template>
       <d-input placeholder="please enter your name ...." [formControl]="formControl"></d-input>
@@ -51,7 +51,7 @@
   </div>
 </app-card>
 <app-card header="Labels" class="mt-6" component="forms/input">
-  <div class="flex-column flex-gap-5">
+  <div class="flex-column">
     <d-control-group [formControl]="formControl" label="Fix Label">
       <ng-template dTemplate="end"><i class="far fa-info"></i></ng-template>
       <d-input placeholder="please enter your name ...."></d-input>
@@ -63,7 +63,7 @@
   </div>
 </app-card>
 <app-card header="Other Controls" class="mt-6" component="forms/input">
-  <div class="flex-column flex-gap-5">
+  <div class="flex-column">
     <d-control-group [formControl]="formControl" label="Select Control" labelState="floating">
       <d-select [items]="items"></d-select>
       <ng-template dTemplate="end"><i class="far fa-info"></i></ng-template>
@@ -102,7 +102,7 @@
   </div>
 </app-card>
 <app-card header="Mask" class="mt-6" component="forms/input">
-  <div class="flex-column flex-gap-5">
+  <div class="flex-column">
     <d-control-group label="Cellphone Number">
       <d-input mask="99 999"></d-input>
     </d-control-group>
@@ -129,7 +129,7 @@
   </div>
 </app-card>
 <app-card header="Errors" class="mt-6" component="forms/input">
-  <div class="flex-column flex-gap-5">
+  <div class="flex-column">
     <d-control-group [formControl]="formControlWithValidationRequired">
       <d-input placeholder="Required"></d-input>
     </d-control-group>
@@ -154,7 +154,7 @@
   </div>
 </app-card>
 <app-card header="Hint Box" class="mt-6" component="forms/input">
-  <div class="flex-column flex-gap-5">
+  <div class="flex-column">
     <d-control-group hint="Enter your username">
       <d-input></d-input>
     </d-control-group>

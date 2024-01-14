@@ -29,14 +29,14 @@
         </tr>
         </tbody>
       </ng-container>
-      <tfoot *ngIf="footerTemplate">
-      <ng-container *ngTemplateOutlet="footerTemplate; context: {}"></ng-container>
-      </tfoot>
       <tbody class="flexible-table-height">
       <tr>
         <td colspan="1000"></td>
       </tr>
       </tbody>
+      <tfoot *ngIf="footerTemplate">
+      <ng-container *ngTemplateOutlet="footerTemplate; context: {}"></ng-container>
+      </tfoot>
     </table>
   </div>
 </div>

@@ -72,7 +72,7 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
     super(injector);
   }
 
-  private static getInfo(item: any, operation: string | Func) {
+  private getInfo(item: any, operation: string | Func) {
     if (!item) return '';
     if (!operation) return item;
     if (typeof operation === 'function') return operation(item);
@@ -158,11 +158,11 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
   }
 
   getValue(item: any): any {
-    return SelectComponent.getInfo(item, this.valueField);
+    return this.getInfo(item, this.valueField);
   }
 
   getText(item: any): string {
-    return SelectComponent.getInfo(item, this.textField);
+    return this.getInfo(item, this.textField);
   }
 
   select(item: any, e?: MouseEvent) {

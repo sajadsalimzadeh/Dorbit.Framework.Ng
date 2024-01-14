@@ -1,16 +1,16 @@
 :host {
   outline: none;
-  padding: .4rem .4rem;
+  padding: .4em .4em;
   align-items: center;
   display: inline-flex;
   border-radius: var(--radius-10);
 
   .switch-box {
-    font-size: .8rem;
+    font-size: .8em;
   }
 
   label {
-    font-size: .9rem;
+    font-size: .9em;
   }
 
   &, * {

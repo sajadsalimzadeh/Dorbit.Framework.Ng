@@ -59,6 +59,10 @@ export class TableFilterComponent implements OnInit {
     })
   }
 
+  stopPropagation(e: Event) {
+    e.stopPropagation()
+  }
+
   openFilterOverlay(e: Event) {
     e.stopPropagation();
     if (this.overlayRef) return;

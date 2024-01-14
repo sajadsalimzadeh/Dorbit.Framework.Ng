@@ -43,7 +43,7 @@ export class TreeComponent extends AbstractComponent implements OnChanges {
     leaf: 'icons-core-file',
   }
 
-  override color: Colors = 'gray-2';
+  override color: Colors = 'primary';
 
   @Output() onSelect = new EventEmitter<any>();
   @Output() onDrop = new EventEmitter<DropEvent>();

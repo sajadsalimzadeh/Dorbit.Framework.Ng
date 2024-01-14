@@ -14,7 +14,7 @@
   }
 }
 
-$border-color: rgba(var(--color-black-rgb), .03);
+$border-color: var(--color-gray--4);
 
 :host {
   gap: .5rem;
@@ -31,11 +31,11 @@ $border-color: rgba(var(--color-black-rgb), .03);
   &.table-striped ::ng-deep {
     table {
       .main-tbody:nth-child(2n+1) {
-        background-color: var(--color-gray--2);
+        background-color: var(--color-gray--1);
       }
 
       .main-tbody:nth-child(2n) {
-        background-color: var(--color-gray--1);
+        background-color: var(--color-white);
       }
     }
   }
@@ -142,7 +142,7 @@ $border-color: rgba(var(--color-black-rgb), .03);
     position: absolute;
     border-radius: var(--radius-2);
     border: 1px solid $border-color;
-    background-color: var(--color-gray--4);
+    background-color: var(--color-white);
 
     .gradient, .no-data {
       top: 0;
@@ -214,17 +214,25 @@ $border-color: rgba(var(--color-black-rgb), .03);
 
         thead {
           top: 0;
+
+          th {
+            border: 1px solid $border-color;
+          }
         }
 
         tfoot {
           bottom: -1px;
+
+          th {
+            border: 1px solid $border-color;
+          }
         }
 
         thead, tfoot {
           z-index: 10;
           height: 3.5rem;
           position: sticky;
-          background-color: var(--color-gray--2);
+          background-color: var(--color-white);
 
           tr {
             position: relative;
@@ -241,7 +249,7 @@ $border-color: rgba(var(--color-black-rgb), .03);
       }
 
       tbody tr {
-        border-top: 1px solid var(--color-gray--2);
+        border-top: 1px solid $border-color;
       }
 
       table > tbody:first-child {
@@ -252,6 +260,7 @@ $border-color: rgba(var(--color-black-rgb), .03);
 
       .flexible-table-height {
         height: auto;
+        background-color: var(--color-white);
       }
     }
   }

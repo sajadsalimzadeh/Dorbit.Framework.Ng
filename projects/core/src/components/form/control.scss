@@ -42,7 +42,7 @@
 
   .control-container {
     display: flex;
-    min-height: 2.8em;
+    min-height: 2.6em;
     position: relative;
     align-items: center;
   }
@@ -98,8 +98,8 @@
     border: none;
     cursor: text;
     outline: none;
+    padding: .3em 0;
     font-size: inherit;
-    padding: .3rem 0;
     position: relative;
     color: var(--color-gray-4);
     background-color: transparent;

@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 
 @Component({
-  selector: 'doc-code',
+  selector: 'doc-grid',
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.scss']
 })

@@ -1,7 +1,7 @@
 <h1>Data Table</h1>
 <hr>
 <app-card [filenames]="filenames" component="table" header="Data Table">
-  <d-table [data]="data" [config]="config" style="height: 600px">
+  <d-table [data]="data" [config]="config" style="height: 700px">
     <ng-template #filterTextTpl let-control="control">
       <input class="form-control" [formControl]="control" placeholder="Value"/>
     </ng-template>

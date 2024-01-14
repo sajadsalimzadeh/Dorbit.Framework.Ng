@@ -11,10 +11,7 @@ import {AbstractComponent} from "../abstract.component";
   selector: 'd-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
-  providers: [
-    TableService,
-    OverlayService,
-  ]
+  providers: [TableService]
 })
 export class TableComponent extends AbstractComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 
@@ -42,7 +39,6 @@ export class TableComponent extends AbstractComponent implements OnInit, OnChang
   }
 
   @HostBinding('class.has-scroll') hasScroll: boolean = false;
-
 
   @HostListener('window:keydown', ['$event']) onWindowKeydown(e: KeyboardEvent) {
     if (e.key == 'Control') this.isMetaKeyDown = true;
@@ -97,8 +93,8 @@ export class TableComponent extends AbstractComponent implements OnInit, OnChang
 
     this.subscription.add(this.loadingService.$loading.subscribe(e => {
       const dataEl = this.elementRef.nativeElement.querySelector('.data');
-      if(dataEl) {
-        if(e) dataEl.classList.add('loading');
+      if (dataEl) {
+        if (e) dataEl.classList.add('loading');
         else dataEl.classList.remove('loading');
       }
     }));

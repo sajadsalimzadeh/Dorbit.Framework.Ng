@@ -24,7 +24,8 @@ import {
   FormControlName,
   FormGroup,
   NG_VALUE_ACCESSOR,
-  NgControl, Validators
+  NgControl,
+  Validators
 } from "@angular/forms";
 import {TemplateDirective} from "../template/template.directive";
 import {FormControlService} from "./form-control.service";
@@ -73,6 +74,8 @@ export abstract class AbstractFormControl<T> extends AbstractComponent implement
   @Output() onKeydown = new EventEmitter<KeyboardEvent>();
   @Output() onKeyup = new EventEmitter<KeyboardEvent>();
 
+  @ViewChild('inputEl') inputEl?: ElementRef<HTMLInputElement>;
+
   @HostListener('focus', ['$event'])
   onFocus(e: FocusEvent) {
     this.focused = true;
@@ -81,7 +84,7 @@ export abstract class AbstractFormControl<T> extends AbstractComponent implement
   }
 
   @HostListener('blur', ['$event'])
-  onBlur(_: FocusEvent) {
+  onBlur(e: FocusEvent) {
     this.focused = false;
     this.formControl?.markAsTouched();
     this.render();
@@ -89,10 +92,9 @@ export abstract class AbstractFormControl<T> extends AbstractComponent implement
 
   @HostListener('click', ['$event'])
   onClick(e: MouseEvent) {
+    e.stopPropagation();
     this.inputEl?.nativeElement.focus();
   }
-
-  @ViewChild('inputEl') inputEl?: ElementRef<HTMLInputElement>;
 
   validationsTemplate?: TemplateRef<any>;
 

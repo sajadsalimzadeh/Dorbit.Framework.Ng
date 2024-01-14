@@ -33,7 +33,6 @@ export class IndexComponent implements OnInit {
         content: ''
       } as FileInfo;
       this.files.push(file);
-
       this.http.get(`/assets/docs/${this.component}/${filename}`, { responseType: 'text' }).subscribe(res => {
         if(filename.includes('.html')) {
           const lines = res.split('\n');

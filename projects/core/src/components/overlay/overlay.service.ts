@@ -1,7 +1,7 @@
 import {ComponentRef, Injectable} from "@angular/core";
-import {DomService} from "../../services";
-import {OverlayComponent, OverlayOptions} from "./overlay.component";
 import {Subject} from "rxjs";
+import {DomService} from "../../services/dom.service";
+import {OverlayComponent, OverlayOptions} from "./overlay.component";
 
 export interface OverlayRef {
   autoClose: boolean;
@@ -20,7 +20,7 @@ export class OverlayService {
 
   create(options = this.defaultOptions) {
     this.refs.filter(x => !x.autoClose).forEach(x => {
-      x.destroy()
+      x.destroy();
     });
 
     const componentRef = this.domService.createByComponent(OverlayComponent);
