@@ -8,8 +8,6 @@ RUN npm i && npm run build-docs
 
 FROM nginx:latest
 
-WORKDIR /usr/share/app/
-
-COPY --from=build-stage ./dist/docs/ /usr/share/nginx/html/
+COPY --from=build-stage /usr/share/app/dist/docs/ /usr/share/nginx/html/
 
 EXPOSE 80
