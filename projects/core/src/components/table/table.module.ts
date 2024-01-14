@@ -15,6 +15,7 @@ export * from './models';
 export * from './table.component';
 export * from './components/sort.directive';
 export * from './components/filter/filter.component';
+export * from './components/table-template.directive';
 export * from './components/row-expander/row-expander.component';
 
 @NgModule({

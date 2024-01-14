@@ -14,47 +14,12 @@
       <tr>
         <th style="width: 50px"></th>
         <th style="width: 50px"></th>
-        <th sort-by="id">
-          <div class="flex-row flex-align-center">
-            <span class="flex-1">Id</span>
-            <i class="sort-icon"></i>
-          </div>
-        </th>
-        <th sort-by="first_name">
-          <div class="flex-row flex-align-center">
-            <span class="flex-1">Firstname</span>
-            <i class="sort-icon"></i>
-            <d-table-filter [template]="filterTextTpl" field="first_name"></d-table-filter>
-          </div>
-        </th>
-        <th sort-by="last_name">
-          <div class="flex-row flex-align-center">
-            <span class="flex-1">Lastname</span>
-            <i class="sort-icon"></i>
-            <d-table-filter [template]="filterTextTpl" field="last_name"></d-table-filter>
-          </div>
-        </th>
-        <th sort-by="email">
-          <div class="flex-row flex-align-center">
-            <span class="flex-1">Email</span>
-            <i class="sort-icon"></i>
-            <d-table-filter [template]="filterTextTpl"></d-table-filter>
-          </div>
-        </th>
-        <th sort-by="gender">
-          <div class="flex-row flex-align-center">
-            <span class="flex-1">Gender</span>
-            <i class="sort-icon"></i>
-            <d-table-filter [template]="filterTextTpl"></d-table-filter>
-          </div>
-        </th>
-        <th sort-by="ip_address">
-          <div class="flex-row flex-align-center">
-            <span class="flex-1">IP Address</span>
-            <i class="sort-icon"></i>
-            <d-table-filter [template]="filterTextTpl"></d-table-filter>
-          </div>
-        </th>
+        <th field="id">Id</th>
+        <th field="first_name">Firstname</th>
+        <th field="last_name">Lastname</th>
+        <th field="email">Email</th>
+        <th field="gender">Gender</th>
+        <th field="ip_address">IP Address</th>
       </tr>
     </ng-template>
     <ng-template dTemplate="body" let-item>

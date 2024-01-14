@@ -10,43 +10,12 @@
 
     <ng-template dTemplate="header,footer">
       <tr>
-        <th>
-          <div class="flex-row flex-align-center">
-            <span class="flex-1">Id</span>
-            <d-table-filter [template]="filterTextTpl" field="id"></d-table-filter>
-          </div>
-        </th>
-        <th>
-          <div class="flex-row flex-align-center">
-            <span class="flex-1">Firstname</span>
-            <d-table-filter [template]="filterTextTpl" field="first_name"></d-table-filter>
-          </div>
-        </th>
-        <th>
-          <div class="flex-row flex-align-center">
-            <span class="flex-1">Lastname</span>
-            <d-table-filter [template]="filterTextTpl" field="last_name"></d-table-filter>
-          </div>
-        </th>
-        <th>
-          <div class="flex-row flex-align-center">
-            <span class="flex-1">Email</span>
-            <i class="sort-icon"></i>
-            <d-table-filter [template]="filterTextTpl"></d-table-filter>
-          </div>
-        </th>
-        <th>
-          <div class="flex-row flex-align-center">
-            <span class="flex-1">Gender</span>
-            <d-table-filter [template]="filterTextTpl"></d-table-filter>
-          </div>
-        </th>
-        <th>
-          <div class="flex-row flex-align-center">
-            <span class="flex-1">IP Address</span>
-            <d-table-filter [template]="filterTextTpl"></d-table-filter>
-          </div>
-        </th>
+        <th filter-by="id">Id</th>
+        <th filter-by="first_name">Firstname</th>
+        <th filter-by="last_name">Lastname</th>
+        <th filter-by="email">Email</th>
+        <th filter-by="gender">Gender</th>
+        <th filter-by="ip_address">IP Address</th>
       </tr>
     </ng-template>
     <ng-template dTemplate="body" let-item>

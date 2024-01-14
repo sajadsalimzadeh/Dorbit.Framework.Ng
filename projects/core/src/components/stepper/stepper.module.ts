@@ -4,6 +4,7 @@ import {StepperComponent} from './stepper.component';
 import {CommonModule} from "@angular/common";
 import {StepDirective} from "./components/step.directive";
 
+export * from './components/step.directive';
 export * from './stepper.component';
 
 @NgModule({
