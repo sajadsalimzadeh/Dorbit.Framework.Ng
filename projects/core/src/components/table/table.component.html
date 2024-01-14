@@ -47,9 +47,7 @@
     </ng-container>
   </div>
   <div class="paginator">
-    <div class="current-page-report page-numbers-around">
-      {{ pageReportTemplate }}
-    </div>
+    <div class="current-page-report page-numbers-around"></div>
     <div class="page-numbers">
       <d-paginator [size]="size" [page]="config.paging.page" [totalCount]="totalCount" [pageSize]="config.paging.size" (onChange)="onPageChange($event)"></d-paginator>
     </div>

@@ -9,10 +9,14 @@ export interface SortEvent {
 }
 
 @Directive({
-  selector: 'th[sort-by]'
+  selector: 'th[field], th[sort-by]'
 })
 export class TableSortDirective implements OnInit {
-  @Input('sort-by') field?: string | SortFunc;
+  @Input() field?: string | SortFunc;
+
+  @Input('sort-by') set sortBy(value: string | SortFunc) {
+    this.field = value;
+  }
 
   subscription = new Subscription();
 
@@ -38,9 +42,9 @@ export class TableSortDirective implements OnInit {
     let el = this.elementRef.nativeElement as HTMLElement;
     const iconEl = document.createElement('i');
     iconEl.className = 'sort-icon fal fa-sort';
-    const div = el.querySelector('div') as HTMLElement;
-    if(div) {
-      const filterEl = el.querySelector('d-table-filter') as HTMLElement;
+    const div = el.querySelector('.filter-box') as HTMLElement;
+    if (div) {
+      const filterEl = el.querySelector('.filter') as HTMLElement;
       if (filterEl) div.insertBefore(iconEl, filterEl)
       else div.appendChild(iconEl);
     } else {

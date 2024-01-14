@@ -1,4 +1,4 @@
-import {Component, ContentChildren, ElementRef, HostListener, Input, OnInit, QueryList, TemplateRef, ViewChild} from "@angular/core";
+import {Component, ContentChildren, ElementRef, HostBinding, HostListener, Input, OnInit, QueryList, TemplateRef, ViewChild} from "@angular/core";
 import {TableService} from "../../services/table.service";
 import {TemplateDirective} from "../../../template/template.directive";
 import {FormControl} from "@angular/forms";
@@ -8,18 +8,21 @@ import {OverlayRef, OverlayService} from "../../../overlay/overlay.service";
 export type OperationKey = 'eq' | 'nq' | 'gt' | 'ge' | 'lt' | 'le' | 'sw' | 'ew' | 'in' | 'ni';
 
 @Component({
-  selector: 'd-table-filter',
+  selector: 'th[field], th[filter-by]',
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.scss']
 })
 export class TableFilterComponent implements OnInit {
-  @Input('field') field!: string;
+  @Input() field!: string;
+  @Input('filter-by') set filterBy(value: string) {this.field = value;}
   @Input('comparator') comparator?: (x: any) => boolean;
   @Input() overlay: boolean = true;
   @Input() template?: TemplateRef<any>;
 
   @ViewChild('overlayTpl') overlayTpl!: TemplateRef<any>;
   @ViewChild('filterIconEl') filterIconEl!: ElementRef<HTMLElement>;
+
+  @HostBinding('class.filterable') get filterable() {return true;}
 
   @ContentChildren(TemplateDirective) set templates(value: QueryList<TemplateDirective>) {
     const valueTemplate = value.find(x => x.includesName('default', true))?.template;
