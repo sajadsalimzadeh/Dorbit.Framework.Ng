@@ -198,6 +198,7 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
 
   clear() {
     this.formControl.reset();
+    this.close();
   }
 
   private open() {

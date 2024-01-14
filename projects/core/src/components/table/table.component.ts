@@ -160,7 +160,7 @@ export class TableComponent extends AbstractComponent implements OnInit, OnChang
       setTimeout(() => {
         this.tableService.onSortChange.next({
           field: this.config.sorting.field,
-          dir: 'asc',
+          dir: this.config.sorting.dir,
         });
       }, 50);
     }
