@@ -2,12 +2,6 @@
   display: flex;
   justify-content: stretch;
 
-  &.header-fill {
-    .tab-list li {
-      flex: 1;
-    }
-  }
-
   .tab-list {
     margin: 0;
     padding: 0;
@@ -30,11 +24,14 @@
       color: var(--color-gray-7);
 
       &.active {
-        color: var(--color-primary);
+        &,i {
+          color: var(--color-primary);
+        }
       }
 
       i {
-        opacity: .7;
+        font-size: 1.2em;
+        color: var(--color-gray--10);
       }
 
       &:hover {
@@ -67,14 +64,22 @@
 
     .tab-list {
       flex-direction: column;
-    }
 
-    &.direction-ltr .tab-list li.active {
-      box-shadow: 3px 0 0 0 var(--color-component);
-    }
+      li {
+        span {
+          flex: 1;
+        }
 
-    &.direction-rtl .tab-list li.active {
-      box-shadow: -3px 0 0 0 var(--color-component);
+        &::before {
+          content: '';
+          width: 3px;
+          height: 100%;
+        }
+
+        &.active::before {
+          background-color: var(--color-component);
+        }
+      }
     }
 
     .tab-container {

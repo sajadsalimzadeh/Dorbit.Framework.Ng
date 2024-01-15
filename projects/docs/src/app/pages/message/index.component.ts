@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Message, MessageService} from "@framework";
 
 @Component({
-  selector: 'doc-progress-bar',
+  selector: 'doc-message',
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.scss']
 })

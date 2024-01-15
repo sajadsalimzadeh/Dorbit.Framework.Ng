@@ -1,0 +1,44 @@
+<ng-template #menusTpl let-menus let-parent="parent">
+  <ul *ngIf="!parent || parent.open">
+    <li *ngFor="let menu of menus" [ngClass]="{active: (menu == activeMenu), open: menu.open}">
+      <a [routerLink]="menu.link" (click)="selectMenu(menu)">
+        <i *ngIf="menu.icon" class="icon-start" [ngClass]="menu.icon"></i>
+        <span>{{ menu.text }}</span>
+        <i *ngIf="menu.children" class="icon-end far fa-angle-right"></i>
+      </a>
+      <ng-container *ngIf="menu.children">
+        <ng-container *ngTemplateOutlet="menusTpl; context: {$implicit: menu.children, parent: menu}"></ng-container>
+      </ng-container>
+    </li>
+  </ul>
+</ng-template>
+
+<header>
+  <div class="toggle-menu" (click)="toggleMenu()">
+    <i class="far fa-bars"></i>
+  </div>
+  <div class="title-box">
+    <i class="icon fab fa-angular"></i>
+    <span class="text">NGULAR Around Development Orbit (<a href="https://devor.ir" target="_blank">Dorbit.ir</a>)</span>
+  </div>
+  <div class="flex-row flex-align-center mxe-5">
+    <d-checkbox [formControl]="rtlControl">Right to Left</d-checkbox>
+  </div>
+  <div class="flex-row flex-align-center mxe-5">
+    <d-select [(ngModel)]="theme" [items]="themes" (onChange)="setTheme($event)" style="width: 200px"></d-select>
+  </div>
+</header>
+<main>
+  <aside [ngClass]="{open: isMenuOpen}">
+    <nav>
+      <div class="scroll-container">
+        <ng-container *ngTemplateOutlet="menusTpl; context: {$implicit: menus}"></ng-container>
+      </div>
+    </nav>
+  </aside>
+  <section class="content">
+    <section>
+      <router-outlet></router-outlet>
+    </section>
+  </section>
+</main>

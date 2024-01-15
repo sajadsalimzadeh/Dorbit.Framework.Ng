@@ -43,19 +43,13 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   @ViewChild('pickerTpl') pickerTpl?: TemplateRef<any>
   @ViewChild('yearPickerEl') yearPickerEl?: ElementRef<HTMLDivElement>;
 
-  @HostListener('window:click', ['$event'])
-  onWindowClick() {
-    this.close();
-  }
-
   isJalali() {
     return this.locale == 'fa';
   }
 
   override onClick(e: MouseEvent) {
-    e.stopPropagation();
+    super.onClick(e);
     this.open();
-    super.onClick(e)
   }
 
   override onFocus(e: FocusEvent) {
@@ -140,7 +134,7 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   renderDisplayValue() {
     try {
       let m = moment.from(this.formControl.value, 'en', this.valueFormat).locale(this.locale);
-      this.displayFormControl.setValue(m.format(this.displayFormat));
+      this.displayFormControl.setValue(m.isValid() ? m.format(this.displayFormat) : '');
     } catch {
       this.displayFormControl.setValue('');
     }

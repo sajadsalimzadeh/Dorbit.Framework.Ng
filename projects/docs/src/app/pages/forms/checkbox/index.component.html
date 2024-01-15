@@ -12,11 +12,12 @@
 </app-card>
 <app-card header="Sizes" class="mt-6" component="forms/checkbox">
   <div class="flex-column flex-align-start flex-gap-4 py-1">
-    <d-checkbox [formControl]="formControl" size="xs" color="primary">Programmer</d-checkbox>
-    <d-checkbox [formControl]="formControl" size="sm" color="primary">Programmer</d-checkbox>
-    <d-checkbox [formControl]="formControl" color="primary">Programmer</d-checkbox>
-    <d-checkbox [formControl]="formControl" size="lg" color="primary">Programmer</d-checkbox>
-    <d-checkbox [formControl]="formControl" size="xl" color="primary">Programmer</d-checkbox>
+    <d-checkbox [formControl]="formControl" size="xs" color="primary">Primary</d-checkbox>
+    <d-checkbox [formControl]="formControl" size="sm" color="secondary">Secondary</d-checkbox>
+    <d-checkbox [formControl]="formControl" color="warning">Warning</d-checkbox>
+    <d-checkbox [formControl]="formControl" size="lg" color="success">Success</d-checkbox>
+    <d-checkbox [formControl]="formControl" size="xl" color="danger">danger</d-checkbox>
+    <d-checkbox [formControl]="formControl" size="xxl" color="link">Link</d-checkbox>
   </div>
 </app-card>
 <app-card header="Ternary" class="mt-6" component="forms/checkbox">

@@ -1,0 +1,25 @@
+
+@mixin load($name, $weight, $base_path, $type) {
+  @font-face {
+    font-family: $name;
+    font-weight: $weight;
+    src: url('#{$base_path}/Vazir-#{$type}.eot') format('eot'),
+    url('#{$base_path}/Vazir-#{$type}.ttf') format('ttf'),
+    url('#{$base_path}/Vazir-#{$type}.woff') format('woff'),
+    url('#{$base_path}/Vazir-#{$type}.woff2') format('woff2');
+  }
+}
+
+@include load('Vazir', 100, '.', 'Thin');
+@include load('Vazir', 200, '.', 'Light');
+@include load('Vazir', 300, '.', 'Regular');
+@include load('Vazir', 500, '.', 'Medium');
+@include load('Vazir', 700, '.', 'Bold');
+@include load('Vazir', 900, '.', 'Black');
+
+@include load('Vazir-FD', 100, './Farsi-Digits', 'Thin-FD');
+@include load('Vazir-FD', 200, './Farsi-Digits', 'Light-FD');
+@include load('Vazir-FD', 300, './Farsi-Digits', 'Regular-FD');
+@include load('Vazir-FD', 500, './Farsi-Digits', 'Medium-FD');
+@include load('Vazir-FD', 700, './Farsi-Digits', 'Bold-FD');
+@include load('Vazir-FD', 900, './Farsi-Digits', 'Black-FD');

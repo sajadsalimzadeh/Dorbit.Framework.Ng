@@ -58,11 +58,6 @@ export class OverlayComponent extends AbstractComponent implements OnInit, Overl
     this.render();
   }
 
-  @HostListener('click', ['$event'])
-  onClick(e: MouseEvent) {
-    e.stopPropagation();
-  }
-
   override render() {
     super.render();
     if (!this.ref) return;
@@ -94,7 +89,7 @@ export class OverlayComponent extends AbstractComponent implements OnInit, Overl
       else if (alignment == 'start-bottom') alignment = 'end-bottom';
     }
 
-    if (this.verticalThreshold > top) {
+    if (top > this.verticalThreshold) {
       if (alignment == 'top-start') alignment = 'bottom-start';
       else if (alignment == 'top-center') alignment = 'bottom-center';
       else if (alignment == 'top-end') alignment = 'bottom-end';
@@ -130,7 +125,7 @@ export class OverlayComponent extends AbstractComponent implements OnInit, Overl
     }
 
     if (alignment.startsWith('start') || alignment.startsWith('end')) {
-      // styles.top = top + 'px';
+      styles.top = top + 'px';
       styles.height = height + 'px';
 
       if (dir == 'ltr' && alignment.startsWith('start')) {

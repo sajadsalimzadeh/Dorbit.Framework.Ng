@@ -17,7 +17,7 @@
   <ng-container *ngIf="files.length">
     <hr>
     <d-tab class="code-tabs">
-      <ng-template *ngFor="let file of files" dTemplate="tab" [header]="file.name">
+      <ng-template *ngFor="let file of files" dTab [header]="file.name">
         <d-code [data]="file.content"></d-code>
       </ng-template>
     </d-tab>

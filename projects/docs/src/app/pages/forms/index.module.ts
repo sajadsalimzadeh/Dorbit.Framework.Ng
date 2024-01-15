@@ -15,7 +15,7 @@ import {IndexComponent} from "./index.component";
         {path: 'radio', loadChildren: () => import('./radio/index.module').then(x => x.Module)},
         {path: 'rate', loadChildren: () => import('./rate/index.module').then(x => x.Module)},
         {path: 'volume', loadChildren: () => import('./volume/index.module').then(x => x.Module)},
-        {path: 'color-pallet-picker', loadChildren: () => import('./color-picker/index.module').then(x => x.Module)},
+        {path: 'color-picker', loadChildren: () => import('./color-picker/index.module').then(x => x.Module)},
         {path: 'key-filter', loadChildren: () => import('./key-filter/index.module').then(x => x.Module)},
         {path: 'password', loadChildren: () => import('./password/index.module').then(x => x.Module)},
       ]

@@ -1,5 +1,6 @@
 import {Component} from "@angular/core";
 import { FormControl } from "@angular/forms";
+import moment from "jalali-moment";
 
 
 @Component({
@@ -8,7 +9,7 @@ import { FormControl } from "@angular/forms";
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent {
-  gregorianFormControl = new FormControl('');
+  gregorianFormControl = new FormControl(moment());
   jalaliFormControl = new FormControl('');
 
 }

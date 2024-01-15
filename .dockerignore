@@ -1,8 +1,4 @@
 # Ignore everything
-.*
-dist/core
+.angular
+dist
 node_modules
-projects
-angular*
-package*
-tsconfig*

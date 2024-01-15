@@ -29,14 +29,14 @@
         </tr>
         </tbody>
       </ng-container>
-      <tfoot *ngIf="footerTemplate">
-      <ng-container *ngTemplateOutlet="footerTemplate; context: {}"></ng-container>
-      </tfoot>
       <tbody class="flexible-table-height">
       <tr>
         <td colspan="1000"></td>
       </tr>
       </tbody>
+      <tfoot *ngIf="footerTemplate">
+      <ng-container *ngTemplateOutlet="footerTemplate; context: {}"></ng-container>
+      </tfoot>
     </table>
   </div>
 </div>
@@ -47,9 +47,7 @@
     </ng-container>
   </div>
   <div class="paginator">
-    <div class="current-page-report page-numbers-around">
-      {{ pageReportTemplate }}
-    </div>
+    <div class="current-page-report page-numbers-around"></div>
     <div class="page-numbers">
       <d-paginator [size]="size" [page]="config.paging.page" [totalCount]="totalCount" [pageSize]="config.paging.size" (onChange)="onPageChange($event)"></d-paginator>
     </div>

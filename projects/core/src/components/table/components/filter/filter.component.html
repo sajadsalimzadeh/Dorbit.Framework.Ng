@@ -1,13 +1,21 @@
-<div class="icon-box" [ngClass]="{active: (!!valueControl.value)}" (click)="openFilterOverlay($event)">
-  <i class="icons-core-filter" #filterIconEl></i>
-</div>
-<div *ngIf="!overlay && template">
-  <ng-container *ngTemplateOutlet="template; context: {$implicit: this, control: valueControl}">
-  </ng-container>
+<div class="filter-box flex-row flex-align-center">
+  <div class="flex-1">
+    <ng-content></ng-content>
+  </div>
+  <div class="filter">
+    <div class="icon-box" [ngClass]="{active: (!!valueControl.value)}" (click)="openFilterOverlay($event)">
+      <i class="icons-core-filter" #filterIconEl></i>
+    </div>
+    <div *ngIf="!overlay && template">
+      <ng-container *ngTemplateOutlet="template; context: {$implicit: this, control: valueControl}">
+      </ng-container>
+    </div>
+  </div>
 </div>
 
+
 <ng-template #overlayTpl>
-  <div>
+  <div (click)="stopPropagation($event)">
     <div class="overlay-box">
       <div class="operation">
         <select [formControl]="operationControl">

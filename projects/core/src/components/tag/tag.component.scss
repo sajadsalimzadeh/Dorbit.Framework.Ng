@@ -4,8 +4,8 @@
   display: flex;
   padding: .2rem .8rem;
   align-items: center;
-  color: var(--color-white);
   border-radius: var(--radius-2);
+  color: var(--color-component-text);
   background-color: var(--color-component);
 
   &.rounded {

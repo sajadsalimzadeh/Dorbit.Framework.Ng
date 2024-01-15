@@ -38,7 +38,7 @@
 </app-card>
 <app-card [filenames]="filenames" class="mt-6" component="tree" header="Append">
   <div class="flex-column flex-gap-3">
-    <d-tree [items]="itemsAppend" color="warning" [selection]="'single'">
+    <d-tree [items]="itemsAppend" [selection]="'single'">
       <ng-template dTemplate="item" let-item>
         {{item.name}}
       </ng-template>
@@ -50,7 +50,7 @@
 </app-card>
 <app-card [filenames]="filenames" class="mt-6" component="tree" header="Colors">
   <div class="flex-column flex-gap-3">
-    <d-tree [items]="itemsColored" color="warning" selection="single">
+    <d-tree [items]="itemsColored" selection="single">
       <ng-template dTemplate="item" let-item>
         {{item.name}}
       </ng-template>

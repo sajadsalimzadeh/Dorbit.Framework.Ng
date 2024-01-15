@@ -6,8 +6,8 @@ import {
   TemplateRef,
   ViewChild
 } from '@angular/core';
-import {OverlayRef, OverlayService} from "../../components/overlay/overlay.service";
 import {CommonModule} from "@angular/common";
+import {OverlayRef, OverlayService} from "../../components/overlay/overlay.service";
 import {OverlayAlignments} from "../../components/overlay/overlay.component";
 import {Colors} from "../../types";
 

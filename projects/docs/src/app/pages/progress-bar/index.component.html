@@ -2,11 +2,13 @@
 <hr>
 <app-card header="Sizes" class="mt-6" component="progress-bar">
   <div class="flex-column flex-gap-4 py-3">
+    <d-progress-bar size="xxs" [value]="value"></d-progress-bar>
     <d-progress-bar size="xs" [value]="value"></d-progress-bar>
     <d-progress-bar size="sm" [value]="value"></d-progress-bar>
     <d-progress-bar size="md" [value]="value"></d-progress-bar>
     <d-progress-bar size="lg" [value]="value"></d-progress-bar>
     <d-progress-bar size="xl" [value]="value"></d-progress-bar>
+    <d-progress-bar size="xxl" [value]="value"></d-progress-bar>
   </div>
 </app-card>
 <app-card header="Colors" class="mt-6" component="progress-bar">
@@ -16,6 +18,7 @@
     <d-progress-bar color="success" [value]="value"></d-progress-bar>
     <d-progress-bar color="warning" [value]="value"></d-progress-bar>
     <d-progress-bar color="danger" [value]="value"></d-progress-bar>
+    <d-progress-bar color="link" [value]="value"></d-progress-bar>
   </div>
 </app-card>
 <app-card header="Show value inside" class="mt-6" component="progress-bar">
