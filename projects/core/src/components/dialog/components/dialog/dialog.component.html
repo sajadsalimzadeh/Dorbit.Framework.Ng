@@ -2,7 +2,7 @@
   <div class="dialog" [style]="dialogStyles">
     <div class="header">
       <div class="title">
-        {{title}}
+        {{ title }}
       </div>
       <div class="button minimize" *ngIf="minimizable" (click)="minimize()">
         <i class="icons-core-minus"></i>
@@ -15,7 +15,12 @@
       </div>
     </div>
     <div class="body">
-      <ng-container *ngTemplateOutlet="template; context: {$implicit: this, context: context}"></ng-container>
+      <ng-container *ngIf="template">
+        <ng-container *ngTemplateOutlet="template; context: {$implicit: this, context: context}"></ng-container>
+      </ng-container>
+      <ng-container *ngIf="component">
+        <ng-container *ngComponentOutlet="component; inputs: context"></ng-container>
+      </ng-container>
     </div>
   </div>
 </d-position>

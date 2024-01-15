@@ -7,7 +7,7 @@ interface ChangeEvent<T> {
   changes: (keyof T & string)[]
 }
 
-export abstract class StoreService<T extends object> {
+export class Store<T extends object> {
   private readonly _store: any = {};
   protected readonly cacheService: ICacheService;
 
@@ -21,7 +21,7 @@ export abstract class StoreService<T extends object> {
     return this._store;
   }
 
-  protected constructor(protected name: string, private defaults?: T) {
+  constructor(protected name: string, private defaults?: T) {
     this.cacheService = new IndexedDbCacheService(new IndexDbStorage({dbName: 'store'}));
     this.onChange = new BehaviorSubject<ChangeEvent<T>>({
       store: this._store,
