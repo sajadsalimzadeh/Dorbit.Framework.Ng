@@ -16,7 +16,9 @@ export class Store<T extends object> {
 
   get store(): T {
     for (let defaultsKey in this.defaults) {
-      if (!this._store[defaultsKey]) this._store[defaultsKey] = this.defaults[defaultsKey];
+      if (typeof this._store[defaultsKey] === 'undefined') {
+        this._store[defaultsKey] = this.defaults[defaultsKey];
+      }
     }
     return this._store;
   }
@@ -52,17 +54,17 @@ export class Store<T extends object> {
   }
 
   async setBulk(changes: { key: keyof T & string, value: any }[]) {
-    changes.forEach(x => this.store[x.key] = x.value);
+    changes.forEach(x => this._store[x.key] = x.value);
     await this.save();
     this.onChange.next({store: this.store, changes: changes.map(x => x.key)});
   }
 
   async save() {
-    await this.cacheService.set(this.name, this.store, TimeSpan.fromMonth(2));
+    await this.cacheService.set(this.name, this._store, TimeSpan.fromMonth(2));
   }
 
   async load() {
-    Object.assign(this._store, (await this.cacheService.get<T>(this.name)) ?? this.store);
+    Object.assign(this._store, (await this.cacheService.get<T>(this.name)) ?? this.defaults);
     this.onChange.next({store: this.store, changes: []});
   }
 

@@ -4,7 +4,6 @@
 <div class="data">
   <div class="data-table">
     <div class="gradient"></div>
-    <div class="no-data" *ngIf="(data.totalCount == 0)"></div>
     <table>
       <thead *ngIf="headerTemplate">
       <ng-container *ngTemplateOutlet="headerTemplate; context: {}"></ng-container>
@@ -31,7 +30,9 @@
       </ng-container>
       <tbody class="flexible-table-height">
       <tr>
-        <td colspan="1000"></td>
+        <td colspan="1000">
+          <div class="no-data" *ngIf="(data.totalCount == 0)"></div>
+        </td>
       </tr>
       </tbody>
       <tfoot *ngIf="footerTemplate">
