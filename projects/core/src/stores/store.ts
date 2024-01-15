@@ -14,8 +14,15 @@ export abstract class StoreService<T extends object> {
   protected onChangeByKeys: { [key: string]: BehaviorSubject<T> } = {}
   onChange: BehaviorSubject<ChangeEvent<T>>;
 
-  protected constructor(protected name: string) {
-    this.cacheService = new IndexedDbCacheService(new IndexDbStorage({dbName: 'store'}))
+  get store(): T {
+    for (let defaultsKey in this.defaults) {
+      if (!this._store[defaultsKey]) this._store[defaultsKey] = this.defaults[defaultsKey];
+    }
+    return this._store;
+  }
+
+  protected constructor(protected name: string, private defaults?: T) {
+    this.cacheService = new IndexedDbCacheService(new IndexDbStorage({dbName: 'store'}));
     this.onChange = new BehaviorSubject<ChangeEvent<T>>({
       store: this._store,
       changes: []
@@ -31,10 +38,6 @@ export abstract class StoreService<T extends object> {
       }
       this.onChangeByKeys['all']?.next(e.store);
     })
-  }
-
-  get store(): T {
-    return this._store;
   }
 
   on(key: keyof T & string | 'all') {
