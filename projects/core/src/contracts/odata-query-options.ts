@@ -25,6 +25,11 @@ export class ODataQueryOptions {
     return this;
   }
 
+  setOrder(order: string) {
+    this.orderBy = order;
+    return this;
+  }
+
   clearFilter(): ODataQueryOptions {
     this.filter = '';
     return this;
