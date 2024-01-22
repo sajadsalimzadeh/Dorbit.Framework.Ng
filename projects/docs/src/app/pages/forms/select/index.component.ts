@@ -3,7 +3,7 @@ import {FormControl} from "@angular/forms";
 
 
 @Component({
-  selector: 'd-select',
+  selector: 'doc-select',
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.scss']
 })

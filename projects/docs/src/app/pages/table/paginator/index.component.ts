@@ -8,12 +8,12 @@ import {getTableData} from "../index.component";
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent implements OnInit {
-  data = getTableData();
+  data = getTableData(0, 1000);
   config = new TableConfig();
   filenames = ['index.component.html', 'index.component.ts'];
 
   ngOnInit(): void {
     this.config.paging.enable = true;
-    this.config.paging.size = 10;
+    this.config.paging.size = 15;
   }
 }

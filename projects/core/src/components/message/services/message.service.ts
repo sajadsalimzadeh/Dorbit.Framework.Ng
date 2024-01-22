@@ -40,7 +40,7 @@ export class MessageService {
     return this.show({...this.getMessage(message), color: 'success'})
   }
 
-  error(message: Message | string) {
+  danger(message: Message | string) {
     return this.show({...this.getMessage(message), color: 'danger'})
   }
 

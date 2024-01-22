@@ -43,7 +43,7 @@ export class TreeComponent extends AbstractComponent implements OnChanges {
     leaf: 'icons-core-file',
   }
 
-  override color: Colors = 'gray-2';
+  override color: Colors = 'primary';
 
   @Output() onSelect = new EventEmitter<any>();
   @Output() onDrop = new EventEmitter<DropEvent>();
@@ -76,11 +76,7 @@ export class TreeComponent extends AbstractComponent implements OnChanges {
 
   optimizeItems() {
     this.optimizedItems = [];
-    const items = (this.items ?? []).sort((x1, x2) => {
-      const key1 = x1[this.fields.key];
-      const key2 = x2[this.fields.key];
-      return (key2 < key1 ? 1 : (key2 > key1 ? -1 : 0));
-    });
+    const items = (this.items ?? []);
     items.forEach(item => {
       this.optimizedItems.push({
         key: item[this.fields.key],

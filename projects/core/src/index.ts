@@ -9,5 +9,6 @@ export * from './interceptors';
 export * from './pipes';
 export * from './contracts';
 export * from './services';
+export * from './stores';
 export * from './utils';
 export * from './types';

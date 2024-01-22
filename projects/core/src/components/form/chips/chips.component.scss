@@ -8,6 +8,7 @@
   .control-container {
     overflow: auto;
     flex-wrap: wrap;
+    padding: 0 .4em;
   }
 
   .control {
@@ -17,7 +18,7 @@
   .item {
     gap: .5rem;
     display: flex;
-    margin: .2rem .2rem;
+    margin: .2em .2em;
     padding: .2rem .6rem;
     align-items: center;
     color: var(--color-primary);

@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
+import {CommonModule} from "@angular/common";
 
 import {RateComponent} from './rate.component';
-import {CommonModule} from "@angular/common";
 
 export * from './rate.component';
 

@@ -8,7 +8,7 @@
   </div>
 </div>
 <ng-template #pickerTpl>
-  <div class="picker" [ngClass]="pickerClasses">
+  <div class="picker" (click)="onClick($event)" [ngClass]="pickerClasses">
     <div class="day-picker">
       <div class="year-month">
         <div class="year" (mousedown)="showYears()">{{selectedValue.year}}</div>

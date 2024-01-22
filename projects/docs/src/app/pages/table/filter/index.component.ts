@@ -3,7 +3,7 @@ import {TableConfig} from "projects/core/src/components/table/models";
 import {getTableData} from "../index.component";
 
 @Component({
-  selector: 'doc-data-table',
+  selector: 'doc-data-table-filter',
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.scss']
 })

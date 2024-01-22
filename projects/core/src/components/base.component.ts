@@ -36,4 +36,16 @@ export abstract class BaseComponent extends AbstractComponent implements OnInit,
     super(injector);
   }
 
+  success(message: string) {
+    this.messageService.success(this.t(message));
+  }
+  info(message: string) {
+    this.messageService.info(this.t(message));
+  }
+  warn(message: string) {
+    this.messageService.warn(this.t(message));
+  }
+  danger(message: string) {
+    this.messageService.danger(this.t(message));
+  }
 }

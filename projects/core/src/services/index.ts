@@ -7,5 +7,4 @@ export * from './base-read.repository';
 export * from './base-write.repository';
 export * from './resource.service';
 export * from './loading.service';
-export * from './store.service';
 export * from './robot.service';

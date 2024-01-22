@@ -57,7 +57,7 @@ export class PagingConfig {
 
   page = 0;
   size = 10;
-  pageSizes = [10, 15, 25, 50, 100, 200, 500];
+  pageSizes = [10, 15, 25, 50, 100];
   pageReportTemplate = 'Showing {first} to {last} of {totalRecords} entries';
 }
 

@@ -1,4 +1,4 @@
-import {Component, ComponentRef, EventEmitter, HostListener, Injector, Output, TemplateRef} from '@angular/core';
+import {Component, ComponentRef, EventEmitter, HostListener, Injector, Output, TemplateRef, Type} from '@angular/core';
 import {Positions} from "../../../../types";
 import {DialogRef} from "../../services/dialog.service";
 import {AbstractComponent} from "../../../abstract.component";
@@ -6,6 +6,7 @@ import {AbstractComponent} from "../../../abstract.component";
 export interface DialogOptions {
   container?: string;
   template?: TemplateRef<any>;
+  component?: Type<any>;
 
   width?: string;
   minWidth?: string;
@@ -51,7 +52,8 @@ export class DialogComponent extends AbstractComponent implements DialogRef, Dia
 
   componentRef!: ComponentRef<DialogComponent>;
 
-  template!: TemplateRef<any>;
+  template?: TemplateRef<any>;
+  component?: Type<any>;
 
   width?: string;
   minWidth?: string;
