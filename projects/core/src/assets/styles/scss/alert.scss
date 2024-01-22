@@ -9,9 +9,9 @@
 
   @each $color in $main-colors {
     &.alert-#{$color} {
-      color: var(--color-#{$color});
-      background-color: var(--color-#{$color}-tint);
-      border-color: rgba(var(--color-#{$color}-rgb), .2);
+      color: var(--color-#{$color}-shade);
+      border-color: rgba(var(--color-#{$color}-rgb), .3);
+      background-color: rgba(var(--color-#{$color}-rgb), .2);
     }
   }
 }
