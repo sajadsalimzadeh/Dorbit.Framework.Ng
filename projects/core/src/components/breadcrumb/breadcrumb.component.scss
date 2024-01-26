@@ -1,12 +1,21 @@
 :host {
   display: flex;
-  padding: 1rem 1.5rem;
-  border-radius: 6px;
+  padding: 0 1.5rem;
   align-items: center;
   color: var(--color-gray-5);
+  justify-content: space-between;
   background-color: var(--color-gray--2);
+}
 
-  >div {
+ul {
+  margin: 0;
+  display: flex;
+  padding: 1rem 0;
+  list-style: none;
+  border-radius: 6px;
+  align-items: center;
+
+  >li {
     &:not(:last-child)::after {
       content: '/';
       padding: 0 0.5rem;

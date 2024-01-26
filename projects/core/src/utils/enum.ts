@@ -22,4 +22,8 @@ export class EnumUtil {
     }
     return result;
   }
+
+  static getName(type: any, value: any) {
+    return this.getOptions(type).find(x => x.value == value)?.text;
+  }
 }

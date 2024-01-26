@@ -10,6 +10,7 @@ import {TemplateModule} from "../template/template.directive";
 import {TableSortDirective} from "./components/sort.directive";
 import {TableTemplateDirective} from "./components/table-template.directive";
 import {InputModule} from "../form/input/input.module";
+import {ResponsiveDirectiveModule} from "../responsive/responsive.directive";
 
 export * from './models';
 export * from './table.component';
@@ -28,6 +29,7 @@ export * from './components/row-expander/row-expander.component';
         SelectModule,
         PaginatorModule,
         InputModule,
+      ResponsiveDirectiveModule
     ],
   declarations: [
     TableComponent,
