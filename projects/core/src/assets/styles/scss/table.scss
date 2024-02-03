@@ -28,19 +28,15 @@
           text-align: justify;
           padding: .2rem !important;
 
+          &:empty {
+            display: none;
+          }
+
           &[title]::before {
             white-space: nowrap;
             content: attr(title) ' : ';
             padding-inline-end: .4rem;
             color: var(--color-gray-9);
-          }
-
-          &.operation-cell {
-            flex: 100%;
-
-            d-button {
-              flex: 1;
-            }
           }
         }
       }

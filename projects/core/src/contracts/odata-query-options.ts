@@ -1,68 +1,70 @@
 import moment from "moment";
 
+interface Filter {
+  key: string;
+  op: 'eq' | 'like';
+  value: any;
+}
+
 export class ODataQueryOptions {
-  private filter: string = '';
-  private select: string = '';
-  private orderBy: string = '';
-  private skip: number = 0;
-  private top: number = 0;
+  private _filter: string = '';
+  private _select: string = '';
+  private _orderBy: string = '';
+  private _skip: number = 0;
+  private _top: number = 0;
 
   queryParams: any = {};
 
-  constructor(options?: {
-    filter?: string,
-    select?: string,
-    orderBy?: string,
-    skip?: number,
-    top?: number
-  } | {}) {
-    Object.assign(this as any, options);
-  }
-
-  addFilter(key: string, op: string, value: string): ODataQueryOptions {
-    if (this.filter) this.filter += ` and `;
-    this.filter += `${key} ${op} ${value}`;
+  filterBy(op: 'or' | 'and', filters: Filter[]): ODataQueryOptions {
+    const filterGroup = filters.filter(x => x.value !== undefined && x.value !== null && x.value.toString().trim()).map(filter => {
+      if (typeof filter.value === 'string') return `${filter.key} ${filter.op} "${filter.value}"`;
+      return `${filter.key} ${filter.op} ${filter.value}`;
+    });
+    if (filterGroup.length > 0) {
+      if (this._filter) this._filter += ` and `;
+      this._filter += `${filterGroup.length > 1 ? '(' : ''}${filterGroup.join(` ${op} `)}${filterGroup.length > 1 ? ')' : ''}`;
+    }
     return this;
   }
 
-  setOrder(order: string) {
-    this.orderBy = order;
+  orderBy(order: string, dir: 'asc' | 'desc' = 'asc') {
+    this._orderBy = order + ' ' + dir;
     return this;
   }
 
   clearFilter(): ODataQueryOptions {
-    this.filter = '';
+    this._filter = '';
     return this;
   }
 
-  addSelect(...fields: string[]) {
-    if(this.select) this.select += ',';
-    this.select += fields.join(',');
+  selectBy(...fields: string[]) {
+    if (this._select) this._select += ',';
+    this._select += fields.join(',');
     return this;
   }
 
   clearOrderBy(): ODataQueryOptions {
-    this.orderBy = '';
+    this._orderBy = '';
     return this;
   }
 
   toQueryString(withQuestionMark: boolean = true): string {
     let params = (withQuestionMark ? "?" : "");
-    if (this.filter) params += `$filter=${this.filter}&`;
-    if (this.select) params += `$select=${this.select}&`;
-    if (this.orderBy) params += `$orderby=${this.orderBy}&`;
-    if (this.top) params += `$top=${this.top}&`;
-    if (this.skip) params += `$skip=${this.skip}&`;
+    if (this._filter) params += `$filter=${this._filter}&`;
+    if (this._select) params += `$select=${this._select}&`;
+    if (this._orderBy) params += `$orderby=${this._orderBy}&`;
+    if (this._top) params += `$top=${this._top}&`;
+    if (this._skip) params += `$skip=${this._skip}&`;
     params += Object.keys(this.queryParams).map(k => `${k}=${this.queryParams[k]}`).join('&')
     return params;
   }
 
   toObject(): any {
     return {
-      top: this.top,
-      skip: this.skip,
-      orderby: this.orderBy,
-      filter: this.filter
+      top: this._top,
+      skip: this._skip,
+      orderby: this._orderBy,
+      filter: this._filter
     };
   }
 
@@ -80,10 +82,10 @@ export class ODataQueryOptions {
 
   loadObject(obj: any): ODataQueryOptions {
     if (obj) {
-      if (obj.top) this.top = +obj.top;
-      if (obj.skip) this.skip = +obj.skip;
-      if (obj.orderby) this.orderBy = obj.orderby;
-      if (obj.filter) this.filter = obj.filter;
+      if (obj._top) this._top = +obj._top;
+      if (obj._skip) this._skip = +obj._skip;
+      if (obj.orderby) this._orderBy = obj.orderby;
+      if (obj._filter) this._filter = obj._filter;
     }
     return this;
   }
@@ -100,10 +102,10 @@ export class ODataQueryOptions {
     const orderby = params.get('orderby');
     const filter = params.get('filter');
 
-    if (top) this.top = +top;
-    if (skip) this.skip = +skip;
-    if (orderby) this.orderBy = orderby;
-    if (filter) this.filter = filter;
+    if (top) this._top = +top;
+    if (skip) this._skip = +skip;
+    if (orderby) this._orderBy = orderby;
+    if (filter) this._filter = filter;
 
     return this;
   }
@@ -115,14 +117,14 @@ export class ODataQueryOptions {
 
   saveToQueryString(): ODataQueryOptions {
     const params = new URLSearchParams(window.location.search);
-    if (this.top) params.set('top', this.top.toString());
-    if (this.skip) params.set('skip', this.skip.toString());
-    if (typeof this.orderBy === 'string') {
-      if (this.orderBy) params.set('orderby', this.orderBy);
+    if (this._top) params.set('top', this._top.toString());
+    if (this._skip) params.set('skip', this._skip.toString());
+    if (typeof this._orderBy === 'string') {
+      if (this._orderBy) params.set('orderby', this._orderBy);
       else if (params.has('orderby')) params.delete('orderby');
     }
-    if (typeof this.filter === 'string') {
-      if (this.filter) params.set('filter', this.filter);
+    if (typeof this._filter === 'string') {
+      if (this._filter) params.set('filter', this._filter);
       else if (params.has('filter')) params.delete('filter');
     }
 
@@ -138,7 +140,7 @@ export class ODataQueryOptions {
 
   getFilters(): any {
     const result: any = {};
-    const filterSplit = this.filter.split(/(and|or)/);
+    const filterSplit = this._filter.split(/(and|or)/);
 
     for (const key in filterSplit) {
       const item = filterSplit[key];

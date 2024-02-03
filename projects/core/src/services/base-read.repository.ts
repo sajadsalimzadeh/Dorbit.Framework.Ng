@@ -19,6 +19,6 @@ export abstract class BaseReadRepository<T = any> extends BaseApiRepository {
   }
 
   getById(id: number) {
-    return this.http.get<QueryResult<any>>(`${id}`);
+    return this.http.get<QueryResult>(`${id}`);
   }
 }
