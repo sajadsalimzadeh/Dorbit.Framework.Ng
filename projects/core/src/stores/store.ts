@@ -1,5 +1,5 @@
 import {BehaviorSubject} from "rxjs";
-import {ICacheService, IndexDbStorage, IndexedDbCacheService, TimeSpan} from "..";
+import {ICacheService, CacheStorageIndexDb, IndexedDbCacheService, TimeSpan} from "..";
 
 
 interface ChangeEvent<T> {
@@ -24,7 +24,7 @@ export class Store<T extends object> {
   }
 
   constructor(protected name: string, private defaults?: T) {
-    this.cacheService = new IndexedDbCacheService(new IndexDbStorage({dbName: 'store'}));
+    this.cacheService = new IndexedDbCacheService(new CacheStorageIndexDb({dbName: 'store'}));
     this.onChange = new BehaviorSubject<ChangeEvent<T>>({
       store: this._store,
       changes: []

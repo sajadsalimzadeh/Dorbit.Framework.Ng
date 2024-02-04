@@ -3,7 +3,7 @@ import {HttpInterceptor, HttpEvent, HttpHandler, HttpRequest, HttpResponse} from
 import {Observable} from 'rxjs';
 import {TimeSpan} from "../contracts";
 import {internetStateService} from "../services/internet-state.service";
-import {CacheService, IndexDbStorage, IStorage} from "../services";
+import {CacheService, CacheStorageIndexDb, ICacheStorage} from "../services";
 import {delay} from "../utils";
 import {APP_VERSION} from "../types";
 
@@ -19,17 +19,16 @@ export interface HttpCacheBase {
 }
 
 export interface HttpCache extends HttpCacheBase {
-  storage?: IStorage;
+  storage?: ICacheStorage;
   timeout?: TimeSpan;
   evictions?: HttpCacheBase[]
 }
 
 interface HttpCacheExtended extends HttpCache {
-  storage: IStorage;
+  storage: ICacheStorage;
 }
 
 export const HTTP_CACHE = new InjectionToken<HttpCache[]>('Http Cache');
-export const HTTP_CACHE_STORAGE = new InjectionToken<IStorage>('Http Cache Storage');
 
 
 @Injectable({providedIn: 'root'})
@@ -40,9 +39,8 @@ export class CacheInterceptor implements HttpInterceptor {
 
   constructor(
     private injector: Injector,
-    @Inject(HTTP_CACHE_STORAGE) @Optional() storage: IStorage,
     @Inject(HTTP_CACHE) @Optional() private readonly httpCaches: HttpCacheExtended[],) {
-    storage ??= new IndexDbStorage({prefix: 'cache-http-'});
+    const storage = new CacheStorageIndexDb({prefix: 'cache-http-'});
     this.httpCaches ??= [];
     this.httpCaches.forEach(x => x.storage ??= storage)
     this.httpCaches.forEach(x => {

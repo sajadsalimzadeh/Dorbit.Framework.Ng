@@ -172,7 +172,7 @@ class Table<T, TP> implements ITable<T, TP> {
   }
 
   getAll() {
-    return this.database.getAll(this.name)
+    return this.database.getAll(this.name);
   }
 
   async add(value: T) {

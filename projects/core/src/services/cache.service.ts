@@ -10,7 +10,7 @@ interface CacheItem<T> {
   version?: string;
 }
 
-export interface IStorage {
+export interface ICacheStorage {
   get<T>(key: string): Promise<T | undefined>;
 
   set<T>(key: string, value: T | undefined): Promise<void>;
@@ -20,7 +20,7 @@ export interface IStorage {
   removeAll(): Promise<void>;
 }
 
-export class MemoryStorage implements IStorage {
+export class CacheStorageMemory implements ICacheStorage {
   cache: any = {};
   private readonly prefix: string;
 
@@ -46,7 +46,7 @@ export class MemoryStorage implements IStorage {
 }
 
 
-class JsonStorage implements IStorage {
+class CacheStorageJson implements ICacheStorage {
   protected readonly prefix: string;
 
   constructor(protected storage: Storage, prefix?: string) {
@@ -79,14 +79,14 @@ class JsonStorage implements IStorage {
   }
 }
 
-export class LocalStorage extends JsonStorage {
+export class CacheStorageLocal extends CacheStorageJson {
 
   constructor(prefix: string = 'cache-') {
     super(localStorage, prefix);
   }
 }
 
-export class SessionStorage extends JsonStorage {
+export class CacheStorageSession extends CacheStorageJson {
 
   constructor(prefix?: string) {
     super(sessionStorage, prefix);
@@ -98,7 +98,7 @@ interface IndexDbCacheRecord {
   value: any;
 }
 
-export class IndexDbStorage implements IStorage {
+export class CacheStorageIndexDb implements ICacheStorage {
   caches!: ITable<IndexDbCacheRecord>;
   private readonly db: IndexedDB;
   private readonly prefix: string;
@@ -134,11 +134,10 @@ export class IndexDbStorage implements IStorage {
   }
 }
 
-
 export class CacheService {
   version?: string;
 
-  async get<T = any>(key: string, storage: IStorage, options?: ({ ignoreExpiration: boolean, ignoreVersion: boolean })): Promise<T | undefined> {
+  async get<T = any>(key: string, storage: ICacheStorage, options?: ({ ignoreExpiration: boolean, ignoreVersion: boolean })): Promise<T | undefined> {
     try {
       const obj = await storage.get<CacheItem<T>>(key);
       if (!obj) return undefined;
@@ -156,7 +155,7 @@ export class CacheService {
     }
   }
 
-  getObservable<T = any>(key: string, storage: IStorage, action: Observable<T>, lifetime: TimeSpan): Observable<T> {
+  getObservable<T = any>(key: string, storage: ICacheStorage, action: Observable<T>, lifetime: TimeSpan): Observable<T> {
     return new Observable(ob => {
       this.get<T>(key, storage).then(result => {
         if (result) {
@@ -185,7 +184,7 @@ export class CacheService {
     })
   }
 
-  set<T = any>(key: string, storage: IStorage, value: T, lifetime: TimeSpan) {
+  set<T = any>(key: string, storage: ICacheStorage, value: T, lifetime: TimeSpan) {
     try {
       const item: CacheItem<T> = {
         expireTime: new Date().getTime() + lifetime.toSeconds() * 1000,
@@ -199,15 +198,15 @@ export class CacheService {
     return Promise.resolve();
   }
 
-  remove(key: string, storage: IStorage) {
+  remove(key: string, storage: ICacheStorage) {
     return storage.remove(key);
   }
 
-  removeAll(storage: IStorage) {
+  removeAll(storage: ICacheStorage) {
     return storage.removeAll();
   }
 
-  exists(key: string, storage: IStorage): boolean {
+  exists(key: string, storage: ICacheStorage): boolean {
     return typeof storage.get(key) != 'undefined';
   }
 }
@@ -230,7 +229,7 @@ export interface ICacheService {
 export class BaseCacheStorageService implements ICacheService {
   private cacheService: CacheService = new CacheService();
 
-  constructor(private storage: IStorage) {
+  constructor(private storage: ICacheStorage) {
   }
 
   get<T = any>(key: string) {
@@ -261,36 +260,34 @@ export class BaseCacheStorageService implements ICacheService {
 
 export class MemoryCacheService extends BaseCacheStorageService {
 
-  constructor(storage = new MemoryStorage()) {
+  constructor(storage = new CacheStorageMemory()) {
+    super(storage);
+  }
+}
+
+
+export class SessionCacheService extends BaseCacheStorageService {
+
+  constructor(storage = new CacheStorageSession()) {
+    super(storage);
+  }
+}
+
+export class LocalCacheService extends BaseCacheStorageService {
+
+  constructor(storage = new CacheStorageLocal()) {
+    super(storage);
+  }
+}
+
+export class IndexedDbCacheService extends BaseCacheStorageService {
+
+  constructor(storage = new CacheStorageIndexDb()) {
     super(storage);
   }
 }
 
 export const memoryCacheService = new MemoryCacheService();
-
-export class SessionCacheService extends BaseCacheStorageService {
-
-  constructor(storage = new SessionStorage()) {
-    super(storage);
-  }
-}
-
 export const sessionCacheService = new SessionCacheService();
-
-export class LocalCacheService extends BaseCacheStorageService {
-
-  constructor(storage = new LocalStorage()) {
-    super(storage);
-  }
-}
-
 export const localCacheService = new LocalCacheService();
-
-export class IndexedDbCacheService extends BaseCacheStorageService {
-
-  constructor(storage = new IndexDbStorage()) {
-    super(storage);
-  }
-}
-
 export const indexedDbCacheService = new IndexedDbCacheService();
