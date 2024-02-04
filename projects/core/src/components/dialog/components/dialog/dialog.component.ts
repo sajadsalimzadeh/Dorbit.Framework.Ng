@@ -111,7 +111,6 @@ export class DialogComponent extends AbstractComponent implements DialogRef, Dia
   }
 
   override ngOnInit() {
-    super.ngOnInit();
 
     this.context = {...this.context, dialog: this};
   }
@@ -127,6 +126,7 @@ export class DialogComponent extends AbstractComponent implements DialogRef, Dia
       minimizeSpaces.forEach(x => x.render());
     }
   }
+
   private adjustSize() {
 
     this.dialogStyles = {};
@@ -135,9 +135,19 @@ export class DialogComponent extends AbstractComponent implements DialogRef, Dia
     this.dialogStyles['min-width'] = this.minWidth;
     this.dialogStyles['max-width'] = this.maxWidth;
 
-    this.dialogStyles['height'] = this.height;
-    this.dialogStyles['min-height'] = this.minHeight;
-    this.dialogStyles['max-height'] = this.maxHeight;
+    if(this.elementRef.nativeElement.parentNode) {
+      const parentHeight = (this.elementRef.nativeElement.parentNode?.parentNode as HTMLElement).clientHeight;
+      const getMaxHeight = (value?: string) => {
+        if (value && value.includes('%')) {
+          return (+value.replace('%', '') * parentHeight / 100) + 'px';
+        }
+        return value;
+      }
+
+      this.dialogStyles['height'] = getMaxHeight(this.height);
+      this.dialogStyles['min-height'] = getMaxHeight(this.minHeight);
+      this.dialogStyles['max-height'] = `calc(${getMaxHeight(this.maxHeight ?? '100%')} - 1.6rem)`;
+    }
   }
 
   override ngAfterViewInit() {
