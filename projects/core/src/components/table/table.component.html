@@ -1,66 +1,68 @@
-<div *ngIf="captionTemplate" class="caption">
-  <ng-container *ngTemplateOutlet="captionTemplate; context: {}"></ng-container>
-</div>
-<div class="data">
-  <div class="data-table">
-    <div class="gradient"></div>
-    <table>
-      <thead *ngIf="headerTemplate">
-      <ng-container *ngTemplateOutlet="headerTemplate; context: {}"></ng-container>
-      </thead>
-      <tbody *ngIf="filterTemplate" class="main-tbody filter-box">
-      <ng-container *ngTemplateOutlet="filterTemplate; context: {}"></ng-container>
-      </tbody>
-      <ng-container *ngFor="let item of renderedItems; let index = index">
-        <tbody *ngIf="bodyTemplate" class="main-tbody"
-               [ngClass]="{selected: item[config.selecting.key]}"
-               (click)="config.onRowClick.next(item)">
-        <ng-container *ngTemplateOutlet="bodyTemplate; context: {
+<div class="table-container" responsive>
+  <div *ngIf="captionTemplate" class="caption">
+    <ng-container *ngTemplateOutlet="captionTemplate; context: {}"></ng-container>
+  </div>
+  <div class="data">
+    <div class="data-table">
+      <div class="gradient"></div>
+      <table>
+        <thead *ngIf="headerTemplate">
+        <ng-container *ngTemplateOutlet="headerTemplate; context: {}"></ng-container>
+        </thead>
+        <tbody *ngIf="filterTemplate" class="main-tbody filter-box">
+        <ng-container *ngTemplateOutlet="filterTemplate; context: {}"></ng-container>
+        </tbody>
+        <ng-container *ngFor="let item of renderedItems; let index = index">
+          <tbody *ngIf="bodyTemplate" class="main-tbody"
+                 [ngClass]="{selected: item[config.selecting.key]}"
+                 (click)="config.onRowClick.next(item)">
+          <ng-container *ngTemplateOutlet="bodyTemplate; context: {
           $implicit: item,
           index: ((config.paging.size * config.paging.page) + index + 1)
         }"></ng-container>
-        </tbody>
-        <tbody *ngIf="detailTemplate && item['rowExpanded']" class="item-detail-box">
+          </tbody>
+          <tbody *ngIf="detailTemplate && item['rowExpanded']" class="item-detail-box">
+          <tr>
+            <td colspan="1000">
+              <ng-container *ngTemplateOutlet="detailTemplate; context: {$implicit: item}"></ng-container>
+            </td>
+          </tr>
+          </tbody>
+        </ng-container>
+        <tbody class="flexible-table-height">
         <tr>
           <td colspan="1000">
-            <ng-container *ngTemplateOutlet="detailTemplate; context: {$implicit: item}"></ng-container>
+            <div class="no-data" *ngIf="(data.totalCount == 0)"></div>
           </td>
         </tr>
         </tbody>
-      </ng-container>
-      <tbody class="flexible-table-height">
-      <tr>
-        <td colspan="1000">
-          <div class="no-data" *ngIf="(data.totalCount == 0)"></div>
-        </td>
-      </tr>
-      </tbody>
-      <tfoot *ngIf="footerTemplate">
-      <ng-container *ngTemplateOutlet="footerTemplate; context: {}"></ng-container>
-      </tfoot>
-    </table>
-  </div>
-</div>
-<div class="pagination" *ngIf="config.paging?.enable">
-  <div class="summary">
-    <ng-container *ngIf="summaryTemplate">
-      <ng-container *ngTemplateOutlet="summaryTemplate; context: {}"></ng-container>
-    </ng-container>
-  </div>
-  <div class="paginator">
-    <div class="current-page-report page-numbers-around"></div>
-    <div class="page-numbers">
-      <d-paginator [size]="size" [page]="config.paging.page" [totalCount]="totalCount" [pageSize]="config.paging.size" (onChange)="onPageChange($event)"></d-paginator>
+        <tfoot *ngIf="footerTemplate">
+        <ng-container *ngTemplateOutlet="footerTemplate; context: {}"></ng-container>
+        </tfoot>
+      </table>
     </div>
-    <div class="page-row-count page-numbers-around">
-      <d-select [size]="size" [items]="config.paging.pageSizes"
-                [(ngModel)]="config.paging.size"
-                [searchable]="false"
-                [clearable]="false"
-                (ngModelChange)="onPageSizeChange()"
-                class="limit-select"
-                name="pageRowCountControl">
-      </d-select>
+  </div>
+  <div class="pagination" *ngIf="config.paging?.enable">
+    <div class="summary">
+      <ng-container *ngIf="summaryTemplate">
+        <ng-container *ngTemplateOutlet="summaryTemplate; context: {}"></ng-container>
+      </ng-container>
+    </div>
+    <div class="paginator">
+      <div class="current-page-report page-numbers-around"></div>
+      <div class="page-numbers">
+        <d-paginator [size]="size" [page]="config.paging.page" [totalCount]="totalCount" [pageSize]="config.paging.size" (onChange)="onPageChange($event)"></d-paginator>
+      </div>
+      <div class="page-row-count page-numbers-around">
+        <d-select [size]="size" [items]="config.paging.pageSizes"
+                  [(ngModel)]="config.paging.size"
+                  [searchable]="false"
+                  [clearable]="false"
+                  (ngModelChange)="onPageSizeChange()"
+                  class="limit-select"
+                  name="pageRowCountControl">
+        </d-select>
+      </div>
     </div>
   </div>
 </div>

@@ -4,13 +4,14 @@ import {DialogComponent, DialogOptions} from "../components/dialog/dialog.compon
 import {ConfirmOptions, DialogContainerComponent} from "../dialog-container.component";
 import {ConfirmComponent} from "../components/confirm/confirm.component";
 
-export interface DialogRef {
+export interface DialogRef<T = any> {
   close: () => void;
   onClose: EventEmitter<void>;
 }
 
 @Injectable({providedIn: 'root'})
 export class DialogService {
+  private _refs: DialogRef[] = [];
   containers: DialogContainerComponent[] = [];
 
   constructor(private domService: DomService) {
@@ -20,12 +21,16 @@ export class DialogService {
     const container = this.containers.find(x => x.name == name);
     const componentRef = this.domService.createByComponent(component, container?.elementRef.nativeElement);
     init(componentRef, container);
-    return {
+    const ref = {
       close: () => {
+        const index = this._refs.indexOf(ref);
+        this._refs.splice(index, 1);
         componentRef.instance.close();
       },
       onClose: componentRef.instance.onClose
-    };
+    } as DialogRef<T>;
+    this._refs.push(ref);
+    return ref;
   }
 
   open(options: DialogOptions): DialogRef {
@@ -40,5 +45,9 @@ export class DialogService {
       componentRef.instance.options = dialogOptions;
       Object.assign(componentRef.instance, options);
     });
+  }
+
+  closeAll() {
+    [...this._refs].forEach(x => x.close())
   }
 }

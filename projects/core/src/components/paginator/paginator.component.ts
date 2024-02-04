@@ -59,5 +59,7 @@ export class PaginatorComponent extends AbstractComponent implements OnChanges {
       }
       this.pageNumbers[this.pageNumbers.length - 1] = lastPage;
     }
+
+    if(this.pageNumbers.length == 0) this.pageNumbers.push(1);
   }
 }

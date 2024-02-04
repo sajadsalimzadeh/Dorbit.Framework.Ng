@@ -3,7 +3,10 @@ export {};
 declare global {
   interface Array<T> {
     distinct(): T[];
+
+    toggle(value: any): T[];
   }
+
 }
 
 Array.prototype.distinct = function () {
@@ -13,4 +16,10 @@ Array.prototype.distinct = function () {
     items.push(x);
   }
   return items;
+}
+Array.prototype.toggle = function (value: any) {
+  const index = this.indexOf(value);
+  if (index > -1) this.splice(index, 1);
+  else this.push(value)
+  return this;
 }

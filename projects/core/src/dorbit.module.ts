@@ -42,7 +42,8 @@ import {
   PositionModule,
   DateModule,
   BreadcrumbModule,
-  FabModule, OverlayService
+  FabModule,
+  ResponsiveDirectiveModule,
 } from './components';
 import {
   JDatePipeModule,
@@ -96,6 +97,7 @@ const MODULES = [
   BreadcrumbModule,
   FabModule,
   TranslateModule,
+  ResponsiveDirectiveModule,
 ];
 
 @NgModule({

@@ -110,6 +110,12 @@ export class DialogComponent extends AbstractComponent implements DialogRef, Dia
     super(injector)
   }
 
+  override ngOnInit() {
+    super.ngOnInit();
+
+    this.context = {...this.context, dialog: this};
+  }
+
   override ngOnDestroy() {
     this.removeMinimizeSpace();
   }

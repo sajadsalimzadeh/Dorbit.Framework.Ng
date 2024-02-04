@@ -1,0 +1,45 @@
+.media-xs, .media-sm {
+
+  table {
+    gap: .5rem;
+    display: flex;
+    flex-direction: column;
+
+    thead, tfoot {
+      display: none;
+    }
+
+    tbody {
+      border: none;
+      display: flex;
+      padding: 0.4rem;
+      border-radius: 6px;
+      height: auto !important;
+      background-color: var(--color-white);
+
+      tr {
+        display: flex;
+        flex-wrap: wrap;
+        border: none !important;
+
+        td {
+          flex: 50%;
+          display: flex;
+          text-align: justify;
+          padding: .2rem !important;
+
+          &:empty {
+            display: none;
+          }
+
+          &[title]::before {
+            white-space: nowrap;
+            content: attr(title) ' : ';
+            padding-inline-end: .4rem;
+            color: var(--color-gray-9);
+          }
+        }
+      }
+    }
+  }
+}

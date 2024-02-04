@@ -17,8 +17,13 @@
 $border-color: rgba(var(--color-black-rgb), .08);
 
 :host {
+  display: block;
+}
+
+.table-container {
   gap: .5rem;
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
 
@@ -352,6 +357,69 @@ $border-color: rgba(var(--color-black-rgb), .08);
 
     .page-row-count {
       width: 100px;
+    }
+  }
+}
+
+
+// Sm View
+.table-container {
+
+  &:not(.media-sm) {
+
+    .data-table::ng-deep {
+      border: none;
+      background-color: transparent;
+
+      .gradient {
+        display: none;
+      }
+
+      .flexible-table-height {
+        flex: 1;
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
+        background-color: transparent;
+
+        tr, td {
+          padding: 0;
+          width: 100%;
+          display: flex;
+          align-items: stretch;
+          justify-content: center;
+        }
+      }
+    }
+
+    .pagination {
+      flex-direction: column;
+    }
+
+    .paginator {
+      gap: .4rem;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      .page-numbers {
+        order: 1;
+        width: 100%;
+        display: flex;
+        padding: .5rem 0;
+        border-radius: 6px;
+        justify-content: center;
+        background-color: var(--color-white);
+      }
+
+      .current-page-report, .page-row-count {
+        justify-content: space-between;
+      }
+      .current-page-report {
+        order: 11;
+      }
+      .page-row-count {
+        order: 10;
+      }
     }
   }
 }
