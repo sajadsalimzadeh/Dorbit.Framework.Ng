@@ -22,13 +22,13 @@ export class DialogService {
     const componentRef = this.domService.createByComponent(component, container?.elementRef.nativeElement);
     init(componentRef, container);
     const ref = {
-      close: () => {
-        const index = this._refs.indexOf(ref);
-        this._refs.splice(index, 1);
-        componentRef.instance.close();
-      },
+      close: () => componentRef.instance.close(),
       onClose: componentRef.instance.onClose
     } as DialogRef<T>;
+    ref.onClose.subscribe(e => {
+      const index = this._refs.indexOf(ref);
+      this._refs.splice(index, 1);
+    })
     this._refs.push(ref);
     return ref;
   }
