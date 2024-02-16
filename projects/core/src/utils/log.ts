@@ -52,8 +52,6 @@ export interface LogEncryptor {
   encrypt: (text: string) => string;
 }
 
-const devMode = isDevMode();
-
 export class Logger {
 
   private logTimeMessages: { [key: string]: number } = {};
@@ -82,7 +80,7 @@ export class Logger {
       }
 
       //show in console for debugging
-      if (options?.console || this.settings.console || devMode) {
+      if (options?.console || this.settings.console) {
         if (level == LogLevel.TRACE) console.log(message, options.data ?? []);
         else if (level == LogLevel.DEBUG) console.log(message, options.data ?? []);
         else if (level == LogLevel.INFO) console.log(message, options.data ?? []);
