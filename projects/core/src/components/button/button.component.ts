@@ -17,8 +17,6 @@ export class ButtonComponent extends AbstractComponent implements OnInit, OnChan
   @Input() loading?: boolean = false;
   @Input() loadingIcon?: string = 'icons-core-loading';
 
-  @Output() onClick = new EventEmitter();
-
   @ViewChild('textEl') set textRef(value: ElementRef<HTMLElement>) {
     this.emptyContent = !value.nativeElement?.innerText && !value.nativeElement?.innerHTML;
     this.render();

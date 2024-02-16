@@ -1,12 +1,13 @@
 import {ChangeDetectorRef, Component, ComponentRef, EventEmitter, HostListener, Injector, Output, TemplateRef, Type} from '@angular/core';
 import {Positions} from "../../../../types";
-import {DialogRef} from "../../services/dialog.service";
 import {AbstractComponent} from "../../../abstract.component";
+import {DialogRef} from "../../services/dialog.service";
 
 export interface DialogOptions {
   container?: string;
   template?: TemplateRef<any>;
   component?: Type<any>;
+  html?: string;
 
   width?: string;
   minWidth?: string;
@@ -54,6 +55,7 @@ export class DialogComponent extends AbstractComponent implements DialogRef, Dia
 
   template?: TemplateRef<any>;
   component?: Type<any>;
+  html?: string;
 
   width?: string;
   minWidth?: string;
@@ -135,7 +137,7 @@ export class DialogComponent extends AbstractComponent implements DialogRef, Dia
     this.dialogStyles['min-width'] = this.minWidth;
     this.dialogStyles['max-width'] = this.maxWidth;
 
-    if(this.elementRef.nativeElement.parentNode) {
+    if (this.elementRef.nativeElement.parentNode) {
       const parentHeight = (this.elementRef.nativeElement.parentNode?.parentNode as HTMLElement).clientHeight;
       const getMaxHeight = (value?: string) => {
         if (value && value.includes('%')) {

@@ -4,6 +4,7 @@ export * from './base64';
 export * from './color';
 export * from './clone';
 export * from './convert';
+export * from './crypto';
 export * from './datetime';
 export * from './image';
 export * from './tree';

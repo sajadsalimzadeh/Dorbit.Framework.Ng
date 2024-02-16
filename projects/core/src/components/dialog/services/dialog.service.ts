@@ -1,10 +1,11 @@
 import {ComponentRef, EventEmitter, Injectable, Type} from "@angular/core";
 import {DomService} from "../../../services";
 import {DialogComponent, DialogOptions} from "../components/dialog/dialog.component";
-import {ConfirmOptions, DialogContainerComponent} from "../dialog-container.component";
+import {ConfirmOptions, DialogContainerComponent, PromptOptions} from "../dialog-container.component";
 import {ConfirmComponent} from "../components/confirm/confirm.component";
+import {PromptComponent} from "../components/prompt/prompt.component";
 
-export interface DialogRef<T = any> {
+export interface DialogRef {
   close: () => void;
   onClose: EventEmitter<void>;
 }
@@ -21,19 +22,15 @@ export class DialogService {
     const container = this.containers.find(x => x.name == name);
     const componentRef = this.domService.createByComponent(component, container?.elementRef.nativeElement);
     init(componentRef, container);
-    const ref = {
-      close: () => componentRef.instance.close(),
-      onClose: componentRef.instance.onClose
-    } as DialogRef<T>;
-    ref.onClose.subscribe(e => {
-      const index = this._refs.indexOf(ref);
+    componentRef.instance.onClose.subscribe(e => {
+      const index = this._refs.indexOf(componentRef.instance);
       this._refs.splice(index, 1);
     })
-    this._refs.push(ref);
-    return ref;
+    this._refs.push(componentRef.instance);
+    return componentRef.instance;
   }
 
-  open(options: DialogOptions): DialogRef {
+  open(options: DialogOptions) {
     return this.create(DialogComponent, (componentRef, container) => {
       Object.assign(componentRef.instance, options);
       componentRef.instance.componentRef = componentRef;
@@ -44,6 +41,23 @@ export class DialogService {
     return this.create(ConfirmComponent, (componentRef) => {
       componentRef.instance.options = dialogOptions;
       Object.assign(componentRef.instance, options);
+    });
+  }
+
+  prompt(options: PromptOptions, dialogOptions?: DialogOptions) {
+    return new Promise<{ result: boolean, value: string, dialog: PromptComponent }>((resolve) => {
+      const dialog = this.create(PromptComponent, (componentRef) => {
+        componentRef.instance.options = dialogOptions;
+        Object.assign(componentRef.instance, options);
+      });
+
+      dialog.onResult.subscribe((e) => {
+        resolve({
+          result: e,
+          value: dialog.control.value,
+          dialog: dialog
+        });
+      });
     });
   }
 

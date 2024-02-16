@@ -11,3 +11,8 @@ export interface ConfirmOptions {
   text: string;
   buttons: ConfirmButton[]
 }
+
+export interface PromptOptions {
+  message: string;
+  value?: string;
+}
