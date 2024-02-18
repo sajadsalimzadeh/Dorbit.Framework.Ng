@@ -46,6 +46,7 @@ export class ButtonComponent extends AbstractComponent implements OnInit, OnChan
     this.setClass('empty-content', this.emptyContent);
     this.setClass('has-content', !this.emptyContent);
     this.setClass('loading', this.loading);
-    this.setClass('disabled', this.disabled || this.loading);
+
+    if(this.disabled || this.loading) this.setClass('disabled', true);
   }
 }

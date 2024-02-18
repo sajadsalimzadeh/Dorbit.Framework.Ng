@@ -113,6 +113,7 @@ export class DialogComponent extends AbstractComponent implements DialogRef, Dia
   }
 
   override ngOnInit() {
+    if(this.context) this.context['dialog'] = this;
   }
 
   override ngOnDestroy() {

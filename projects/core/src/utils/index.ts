@@ -1,5 +1,6 @@
 export * from './aspect';
 export * from './array';
+export * from './binary';
 export * from './base64';
 export * from './color';
 export * from './clone';
