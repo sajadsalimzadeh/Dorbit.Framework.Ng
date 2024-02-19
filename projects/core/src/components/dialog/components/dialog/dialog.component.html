@@ -21,6 +21,9 @@
       <ng-container *ngIf="component">
         <ng-container *ngComponentOutlet="component; inputs: context"></ng-container>
       </ng-container>
+      <ng-container *ngIf="html">
+        <div [innerHTML]="html"></div>
+      </ng-container>
     </div>
   </div>
 </d-position>

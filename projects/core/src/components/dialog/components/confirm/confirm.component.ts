@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output, TemplateRef, ViewChild} from '@angular/core';
+import {Component, EventEmitter, TemplateRef, ViewChild} from '@angular/core';
 import {DialogService, DialogRef} from "../../services/dialog.service";
 import {DialogOptions} from "../dialog/dialog.component";
 import {ConfirmButton, ConfirmOptions} from "../../models";
@@ -10,12 +10,11 @@ import {LoadingService} from "../../../../services";
   styleUrls: ['./confirm.component.scss']
 })
 export class ConfirmComponent implements ConfirmOptions, DialogRef {
-  @Output() onClose = new EventEmitter<void>();
+  onClose = new EventEmitter<void>();
 
   text!: string;
-  loading?:boolean;
-  container?: string;
   dialog?: DialogRef;
+  loading?: boolean;
   options?: DialogOptions;
   buttons: ConfirmButton[] = [];
 

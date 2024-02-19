@@ -2,7 +2,7 @@ import moment from "moment";
 
 interface Filter {
   key: string;
-  op: 'eq' | 'like';
+  op: 'eq' | 'gt' | 'lt' | 'ge' | 'le' | 'like';
   value: any;
 }
 
@@ -16,7 +16,7 @@ export class ODataQueryOptions {
   queryParams: any = {};
 
   filterBy(op: 'or' | 'and', filters: Filter[]): ODataQueryOptions {
-    const filterGroup = filters.filter(x => x.value !== undefined && x.value !== null && x.value.toString().trim()).map(filter => {
+    const filterGroup = filters.filter(x => x.value !== undefined && x.value !== null && x.value.toString()).map(filter => {
       if (typeof filter.value === 'string') return `${filter.key} ${filter.op} "${filter.value}"`;
       return `${filter.key} ${filter.op} ${filter.value}`;
     });

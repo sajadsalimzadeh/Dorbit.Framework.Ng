@@ -9,16 +9,23 @@ export abstract class BaseReadRepository<T = any> extends BaseApiRepository {
     super(injector, repository);
   }
 
-  select(query?: ODataQueryOptions) {
+  select(query?: ODataQueryOptions | any) {
     if (!query) query = new ODataQueryOptions();
-    return this.http.get<PagedListResult<T>>(`${query.toQueryString()}`);
+    let url = '';
+    let params = {};
+    if (query instanceof ODataQueryOptions) {
+      url += query.toQueryString();
+    } else {
+      params = query;
+    }
+    return this.http.get<PagedListResult<T>>(url, {params: params, headers: {'Content-Type': 'application/json'}});
   }
 
   getAll() {
     return this.select(new ODataQueryOptions());
   }
 
-  getById(id: number) {
+  getById(id: any) {
     return this.http.get<QueryResult>(`${id}`);
   }
 }
