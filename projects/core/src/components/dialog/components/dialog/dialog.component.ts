@@ -87,6 +87,8 @@ export class DialogComponent extends AbstractComponent implements DialogRef, Dia
 
   context?: any;
 
+  popStateListener: any;
+
   @HostListener('click', ['$event'])
   onPositionClick(e: MouseEvent) {
     if (this.maskClosable && (e.target as HTMLElement).querySelector('.dialog')) {
@@ -111,10 +113,13 @@ export class DialogComponent extends AbstractComponent implements DialogRef, Dia
   }
 
   override ngOnInit() {
+    history.pushState({}, 'dialog');
+    window.addEventListener('popstate', this.popStateListener = (e: PopStateEvent) => this.close());
   }
 
   override ngOnDestroy() {
     this.removeMinimizeSpace();
+    window.removeEventListener('popstate', this.popStateListener);
   }
 
   private removeMinimizeSpace() {
