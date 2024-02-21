@@ -154,7 +154,6 @@ export class DialogComponent extends AbstractComponent implements DialogRef, Dia
       this.dialogStyles['min-height'] = getMaxHeight(this.minHeight);
       this.dialogStyles['max-height'] = `calc(${getMaxHeight(this.maxHeight ?? '100%')} - 1.6rem)`;
     }
-
     this.changeDetectorRef.detectChanges();
   }
 
