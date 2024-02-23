@@ -89,6 +89,8 @@ export class DialogComponent extends AbstractComponent implements DialogRef, Dia
 
   context?: any;
 
+  popStateListener: any;
+
   @HostListener('click', ['$event'])
   onPositionClick(e: MouseEvent) {
     if (this.maskClosable && (e.target as HTMLElement).querySelector('.dialog')) {
@@ -113,11 +115,14 @@ export class DialogComponent extends AbstractComponent implements DialogRef, Dia
   }
 
   override ngOnInit() {
+    history.pushState({}, 'dialog');
+    window.addEventListener('popstate', this.popStateListener = (e: PopStateEvent) => this.close());
     if(this.context) this.context['dialog'] = this;
   }
 
   override ngOnDestroy() {
     this.removeMinimizeSpace();
+    window.removeEventListener('popstate', this.popStateListener);
   }
 
   private removeMinimizeSpace() {
@@ -149,7 +154,6 @@ export class DialogComponent extends AbstractComponent implements DialogRef, Dia
       this.dialogStyles['min-height'] = getMaxHeight(this.minHeight);
       this.dialogStyles['max-height'] = `calc(${getMaxHeight(this.maxHeight ?? '100%')} - 1.6rem)`;
     }
-
     this.changeDetectorRef.detectChanges();
   }
 
