@@ -375,6 +375,10 @@ $border-color: rgba(var(--color-black-rgb), .08);
         display: none;
       }
 
+      .main-tbody tr {
+        width: 100%;
+      }
+
       .flexible-table-height {
         flex: 1;
         display: flex;
