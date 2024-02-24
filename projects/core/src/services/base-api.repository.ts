@@ -38,6 +38,10 @@ export abstract class BaseApiRepository {
   setLoadingService(service: LoadingService) {
     this.http.customHandler.loadingService = service;
   }
+
+  getUrl(url: string) {
+    return `${this.baseUrl}${(this.baseUrl.endsWith('/') ? '' : '/')}${this.repository}/${url}`;
+  }
 }
 
 class CustomHttpHandler extends HttpHandler {
