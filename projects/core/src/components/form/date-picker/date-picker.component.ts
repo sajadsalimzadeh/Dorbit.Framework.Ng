@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, HostListener, Injector, Input, Output, TemplateRef, ViewChild} from "@angular/core";
+import {Component, ElementRef, EventEmitter, Injector, Input, Output, TemplateRef, ViewChild} from "@angular/core";
 import moment from 'jalali-moment';
 import {Moment} from 'jalali-moment';
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
@@ -48,6 +48,7 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   }
 
   override onClick(e: MouseEvent) {
+    e.stopPropagation();
     super.onClick(e);
     this.open();
   }

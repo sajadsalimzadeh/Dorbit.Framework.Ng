@@ -33,6 +33,7 @@ export class DevKeyFilterDirective {
     const target = e.target;
     if (!(target instanceof HTMLInputElement)) return;
     if (e.key.length != 1) return;
+    const isSelectAll = (target.selectionStart == 0 && target.selectionEnd == target.value.length);
 
     switch (this.dKeyFilter) {
       case 'p-int':
@@ -43,7 +44,7 @@ export class DevKeyFilterDirective {
         }
         break;
       case 'int':
-        if (target.value.length == 0 && /^[+-]$/.test(e.key)) {
+        if (target.value.length == 0 && /^[+\-]$/.test(e.key)) {
           return;
         } else if (!intRegex.test(e.key)) {
           e.preventDefault();
@@ -70,7 +71,7 @@ export class DevKeyFilterDirective {
         }
         break;
       case 'num':
-        if (target.value.length == 0 && /^[+-]$/.test(e.key)) {
+        if ((target.value.length == 0 || isSelectAll) && /^[+\-]$/.test(e.key)) {
           return;
         } else if (target.value.includes('.')) {
           if (!intRegex.test(e.key)) {

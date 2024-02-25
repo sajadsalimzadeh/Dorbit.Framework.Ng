@@ -92,7 +92,6 @@ export abstract class AbstractFormControl<T> extends AbstractComponent implement
 
   @HostListener('click', ['$event'])
   onClick(e: MouseEvent) {
-    // e.stopPropagation();
     this.inputEl?.nativeElement.focus();
   }
 

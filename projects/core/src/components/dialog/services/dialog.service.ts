@@ -24,7 +24,7 @@ export class DialogService {
     init(componentRef, container);
     componentRef.instance.onClose.subscribe(e => {
       const index = this._refs.indexOf(componentRef.instance);
-      this._refs.splice(index, 1);
+      if(index > -1) this._refs.splice(index, 1);
     })
     this._refs.push(componentRef.instance);
     return componentRef.instance;

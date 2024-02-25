@@ -115,7 +115,11 @@ export class DialogComponent extends AbstractComponent implements DialogRef, Dia
   }
 
   override ngOnInit() {
-    history.pushState({dialog: true}, 'dialog');
+    if(history.state.dialog) {
+      history.replaceState({dialog: true}, 'dialog');
+    } else {
+      history.pushState({dialog: true}, 'dialog');
+    }
     window.addEventListener('popstate', this.popStateListener = (e: PopStateEvent) => this.close());
     if(this.context) this.context['dialog'] = this;
   }
