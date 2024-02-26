@@ -29,6 +29,10 @@ export class MessageContainerComponent extends AbstractComponent {
     this.timerEnable = true;
   }
 
+  @HostListener('window:click') onWindowClick() {
+    this.timerEnable = true;
+  }
+
   contentTemplate?: TemplateRef<any>;
 
   @ContentChildren(TemplateDirective) set templates(value: QueryList<TemplateDirective>) {
