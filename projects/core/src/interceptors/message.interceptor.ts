@@ -14,11 +14,16 @@ export class MessageInterceptor implements HttpInterceptor {
   constructor(private injector: Injector, private messageService: MessageService) {
   }
 
-  private send(text: string, color: Colors, message?: Message) {
+  private send(text: string, color: Colors, message?: Message, data?: any) {
     const translateService = this.injector.get(TranslateService);
     const key = `${text}`;
-    const translate = translateService.instant(key);
+    let translate = translateService.instant(key);
     if (translate != key) {
+      if(data) {
+        for (const dataKey in data) {
+          translate = translate.replace(`{${dataKey}}`, data[dataKey]);
+        }
+      }
       this.messageService.show({
         ...message,
         body: translate,
@@ -42,7 +47,7 @@ export class MessageInterceptor implements HttpInterceptor {
     })).pipe(catchError(e => {
       if (e instanceof HttpErrorResponse) {
         if (e.error?.message) {
-          this.send(`message.${e.error.message}`, 'danger');
+          this.send(`message.${e.error.message}`, 'danger', undefined, e.error.data);
         } else if (e.status == 504 || e.status == 0) {
           this.send(`message.http.504`, 'danger', {duration: 10000});
         } else {

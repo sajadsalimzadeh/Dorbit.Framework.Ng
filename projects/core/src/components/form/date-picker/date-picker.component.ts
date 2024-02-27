@@ -36,6 +36,7 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   @Input() valueFormat = 'YYYY-MM-DDTHH:mm:ssZ';
   @Input() locale: 'fa' | 'en' = 'fa';
   @Input() alignment: OverlayAlignments = 'bottom-center';
+  @Input() openMode: 'auto' | 'type' | 'select' = 'auto';
 
   @Output() onLeave = new EventEmitter<any>();
   @Output() onSelect = new EventEmitter<string>();
@@ -282,6 +283,12 @@ export class DatePickerComponent extends AbstractFormControl<any> {
         ref: this.elementRef.nativeElement
       });
       this.overlayRef.onDestroy.subscribe(() => this.overlayRef = undefined);
+
+      if (this.openMode == 'select') {
+        setTimeout(() => {
+          this.inputEl?.nativeElement?.blur();
+        }, 200);
+      }
     }
     this.render();
   }
