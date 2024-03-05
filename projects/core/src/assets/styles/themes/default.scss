@@ -9,41 +9,52 @@
   --color-black-fix-rgb: 0, 0, 0;
 
   --color-primary-tint: rgb(144, 156, 255);
+  --color-primary-tint-rgb: 144, 156, 255;
   --color-primary: rgb(98, 111, 225);
-  --color-primary-shade: rgb(56, 75, 213);
   --color-primary-rgb: 98, 111, 225;
+  --color-primary-shade: rgb(56, 75, 213);
+  --color-primary-shade-rgb: 56, 75, 213;
   --color-primary-text: var(--color-white-fix);
 
   --color-secondary-tint: rgb(131, 250, 255);
+  --color-secondary-tint-rgb: 131, 250, 255;
   --color-secondary: rgb(76, 183, 187);
-  --color-secondary-shade: rgb(30, 154, 157);
   --color-secondary-rgb: 76, 183, 187;
+  --color-secondary-shade: rgb(30, 154, 157);
+  --color-secondary-shade-rgb: 30, 154, 157;
   --color-secondary-text: var(--color-white-fix);
 
   --color-success-tint: rgb(130, 253, 195);
+  --color-success-tint-rgb: 130, 253, 195;
   --color-success: rgb(68, 189, 133);
-  --color-success-shade: rgb(21, 152, 98);
   --color-success-rgb: 68, 189, 133;
+  --color-success-shade: rgb(21, 152, 98);
+  --color-success-shade-rgb: 21, 152, 98;
   --color-success-text: var(--color-white-fix);
 
   --color-warning-tint: rgb(255, 198, 118);
+  --color-warning-tint-rgb: 255, 198, 118;
   --color-warning: rgb(250, 173, 65);
-  --color-warning-shade: rgb(227, 136, 10);
   --color-warning-rgb: 250, 173, 65;
+  --color-warning-shade: rgb(227, 136, 10);
+  --color-warning-shade-rgb: 227, 136, 10;
   --color-warning-text: var(--color-white-fix);
 
   --color-danger-tint: rgb(255, 124, 124);
+  --color-danger-tint-rgb: 255, 124, 124;
   --color-danger: rgb(255, 72, 72);
-  --color-danger-shade: rgb(218, 44, 44);
   --color-danger-rgb: 255, 72, 72;
+  --color-danger-shade: rgb(218, 44, 44);
+  --color-danger-shade-rgb: 218, 44, 44;
   --color-danger-text: var(--color-white-fix);
 
   --color-link-tint: rgb(139, 196, 255);
+  --color-link-tint-rgb: 139, 196, 255;
   --color-link: rgb(66, 147, 250);
-  --color-link-shade: rgb(22, 115, 206);
   --color-link-rgb: 66, 147, 250;
+  --color-link-shade: rgb(22, 115, 206);
+  --color-link-shade-rgb: 22, 115, 206;
   --color-link-text: var(--color-white-fix);
-
 
   --color-white-text: var(--color-gray-5);
   --color-black-text: var(--color-white);

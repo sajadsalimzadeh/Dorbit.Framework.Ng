@@ -42,6 +42,11 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
     this.handleHoveredIndex(e);
   }
 
+  @HostListener('window:click')
+  onWindowClick() {
+    this.close();
+  }
+
   optionTemplate?: TemplateRef<any>;
 
   @ContentChildren(TemplateDirective) set templates(value: QueryList<TemplateDirective>) {
