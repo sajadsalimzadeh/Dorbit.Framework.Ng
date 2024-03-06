@@ -91,6 +91,7 @@ export class InputComponent extends AbstractFormControl<string> {
   protected setValue(e: string) {
     if (this.type === 'number') {
       const valueString = e.replaceAll(',', '')
+      if(valueString == '-') return;
       this.formControl.setValue(Number.isNaN(+valueString) ? 0 : +valueString);
     } else {
       this.formControl.setValue(e);

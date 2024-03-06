@@ -14,15 +14,13 @@
         </tbody>
         <ng-container *ngFor="let item of renderedItems; let index = index">
           <tbody *ngIf="bodyTemplate" class="main-tbody"
-                 [ngClass]="{selected: item[config.selecting.key]}"
+                 [ngClass]="{selected: item[config.selecting.key], expanded: !!item['rowExpanded']}"
                  (click)="config.onRowClick.next(item)">
           <ng-container *ngTemplateOutlet="bodyTemplate; context: {
           $implicit: item,
           index: ((config.paging.size * config.paging.page) + index + 1)
         }"></ng-container>
-          </tbody>
-          <tbody *ngIf="detailTemplate && item['rowExpanded']" class="item-detail-box">
-          <tr>
+          <tr *ngIf="detailTemplate && item['rowExpanded']" class="item-detail-box">
             <td colspan="1000">
               <ng-container *ngTemplateOutlet="detailTemplate; context: {$implicit: item}"></ng-container>
             </td>
