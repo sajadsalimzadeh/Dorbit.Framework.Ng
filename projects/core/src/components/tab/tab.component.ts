@@ -12,7 +12,6 @@ import {AbstractFormControl, createControlValueAccessor} from "../form";
 export class TabComponent extends AbstractFormControl<any> {
   @Input() orientation: Orientation = 'horizontal';
   @HostBinding('class.header-fill') @Input() headerFill: boolean = true;
-  @Output() onTabChange = new EventEmitter<string>();
 
   activeTab?: TabTemplateDirective;
   tabsTemplates: TabTemplateDirective[] = [];
@@ -41,7 +40,7 @@ export class TabComponent extends AbstractFormControl<any> {
 
   setTab(tab: TabTemplateDirective) {
     if (this.activeTab == tab) return;
-    this.onTabChange.emit(tab.key);
+    this.onChange.emit(tab.key);
     this.activeTab = tab;
     this.formControl?.setValue(tab.key)
   }
