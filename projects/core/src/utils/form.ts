@@ -15,4 +15,8 @@ export class FormUtil {
     }
     return errors;
   }
+
+  static isValid(form?: FormGroup) {
+    return Object.keys(this.getErrors(form)).length == 0;
+  }
 }
