@@ -112,8 +112,13 @@ button {
   padding: .6em 1em;
   align-items: center;
   font-family: inherit;
+  border-radius: inherit;
   justify-content: center;
   background-color: transparent;
+
+  &:focus {
+    box-shadow: 0 0 0 0.3em rgba(var(--color-component-rgb), .4);
+  }
 }
 
 @keyframes loading-width {

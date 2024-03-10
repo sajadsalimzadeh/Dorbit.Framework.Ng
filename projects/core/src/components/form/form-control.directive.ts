@@ -57,12 +57,18 @@ export abstract class AbstractFormControl<T> extends AbstractComponent implement
     this._autofocus = (typeof value === 'boolean' ? value : true);
     const delay = (typeof value === 'object' ? value.delay : 10) ?? 10;
     setTimeout(() => {
-      this.inputEl?.nativeElement.setAttribute('autofocus', 'autofocus');
-      this.inputEl?.nativeElement.focus();
+      if(this.inputEl) {
+        this.inputEl.nativeElement.setAttribute('autofocus', 'autofocus');
+        this.inputEl.nativeElement.focus();
 
-      setTimeout(() => {
-        this.inputEl?.nativeElement.removeAttribute('autofocus');
-      })
+        setTimeout(() => {
+          this.inputEl?.nativeElement.removeAttribute('autofocus');
+        });
+      } else {
+        this.elementRef.nativeElement.focus();
+        this.focus();
+      }
+
     }, delay);
   }
 

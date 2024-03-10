@@ -365,9 +365,9 @@ $border-color: rgba(var(--color-black-rgb), .08);
 // Sm View
 .table-container {
 
-  &:not(.media-sm) {
+  &:not(.media-sm) ::ng-deep {
 
-    .data-table::ng-deep {
+    .data-table {
       border: none;
       background-color: transparent;
 
@@ -424,6 +424,55 @@ $border-color: rgba(var(--color-black-rgb), .08);
       .page-row-count {
         order: 10;
       }
+    }
+
+    table {
+      gap: .5rem;
+      display: flex;
+      flex-direction: column;
+
+      thead, tfoot {
+        display: none;
+      }
+
+      tbody {
+        border: none;
+        display: flex;
+        padding: 0.4rem;
+        border-radius: 6px;
+        height: auto !important;
+        background-color: var(--color-white);
+
+        tr {
+          display: flex;
+          flex-wrap: wrap;
+          border: none !important;
+
+          td {
+            flex: 50%;
+            display: flex;
+            text-align: justify;
+            padding: .2rem !important;
+
+            &:empty {
+              display: none;
+            }
+
+            &[title]::before {
+              white-space: nowrap;
+              content: attr(title) ' : ';
+              padding-inline-end: .4rem;
+              color: var(--color-gray-9);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.md-detail table tbody:not(.expanded) {
+    .sm-detail {
+
     }
   }
 }
