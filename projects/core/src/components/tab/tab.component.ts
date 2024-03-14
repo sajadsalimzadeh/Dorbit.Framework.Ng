@@ -39,9 +39,9 @@ export class TabComponent extends AbstractFormControl<any> {
   }
 
   setTab(tab: TabTemplateDirective) {
-    if (this.activeTab == tab) return;
-    this.onChange.emit(tab.key);
+    if (this.activeTab?.key == tab?.key) return;
     this.activeTab = tab;
+    this.onChange.emit(tab.key);
     this.formControl?.setValue(tab.key)
   }
 }
