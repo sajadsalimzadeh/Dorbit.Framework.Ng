@@ -22,7 +22,7 @@ export abstract class BaseReadRepository<T = any> extends BaseApiRepository {
   }
 
   getAll() {
-    return this.select(new ODataQueryOptions());
+    return this.select(new ODataQueryOptions().take(10000));
   }
 
   getById(id: any) {

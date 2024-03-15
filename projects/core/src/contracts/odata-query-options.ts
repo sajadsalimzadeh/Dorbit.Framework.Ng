@@ -43,6 +43,16 @@ export class ODataQueryOptions {
     return this;
   }
 
+  skip(value: number) {
+    this._skip = value;
+    return this;
+  }
+
+  take(value: number) {
+    this._top = value;
+    return this;
+  }
+
   clearOrderBy(): ODataQueryOptions {
     this._orderBy = '';
     return this;

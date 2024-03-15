@@ -83,3 +83,10 @@ ul {
     transform: scaleX(-1);
   }
 }
+
+:host-context([dir=ltr]) {
+  .icons-core-angle-right {
+    transform: scaleX(1);
+  }
+}
+
