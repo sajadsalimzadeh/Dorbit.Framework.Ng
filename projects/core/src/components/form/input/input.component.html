@@ -1,10 +1,11 @@
 <div class="control-box" [ngClass]="mode" [ngSwitch]="type">
   <div class="control-container flex-1">
+    <i *ngIf="icon" [ngClass]="icon + ' ' + (iconPos)"></i>
     <ng-container *ngSwitchCase="'textarea'">
-    <textarea #inputEl class="control" [name]="name" [ngClass]="classControl" [ngModel]="displayFormControl.value" [placeholder]="placeholder" [style]="styleControl"
-              [minLength]="minLength" [maxLength]="maxLength" [rows]="rows" [cols]="cols" [dir]="dir" [style.text-align]="align" [autofocus]="!!autofocus"
-              (ngModelChange)="setValue($event)" (focus)="focus()" (blur)="blur()" [disabled]="formControl.disabled"
-              (keyup)="onKeyup.emit($event)" (keydown)="onKeydown.emit($event)"></textarea>
+      <textarea #inputEl class="control" [name]="name" [ngClass]="classControl" [ngModel]="displayFormControl.value" [placeholder]="placeholder" [style]="styleControl"
+                [minLength]="minLength" [maxLength]="maxLength" [rows]="rows" [cols]="cols" [dir]="dir" [style.text-align]="align" [autofocus]="!!autofocus"
+                (ngModelChange)="setValue($event)" (focus)="focus()" (blur)="blur()" [disabled]="formControl.disabled"
+                (keyup)="onKeyup.emit($event)" (keydown)="onKeydown.emit($event)"></textarea>
     </ng-container>
     <ng-container *ngSwitchDefault>
       <input #inputEl class="control" [name]="name" [ngClass]="classControl" [type]="(type == 'number' ? 'text' : type)"

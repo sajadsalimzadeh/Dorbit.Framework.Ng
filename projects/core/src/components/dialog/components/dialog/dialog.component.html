@@ -1,6 +1,6 @@
 <d-position [position]="position" (click)="onPositionClick($event)">
-  <div class="dialog" [style]="dialogStyles">
-    <div class="header">
+  <div class="dialog" [style]="dialogStyles" [ngClass]="ngClass">
+    <div class="header" *ngIf="title || closable || minimizable || maximizable">
       <div class="title">
         {{ title }}
       </div>

@@ -1,7 +1,7 @@
 import {Directive, ElementRef, HostListener, Input, NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 
-const intRegex = /^[0-9]$/;
+const intRegex = /^[0-9۰-۹٠-٩]$/;
 const arabicNumbers = ["١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩", "٠"];
 const persianNumbers = ["۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹", "۰"];
 

@@ -35,6 +35,8 @@ export interface DialogOptions {
   isMinimize?: boolean;
 
   context?: any;
+
+  ngClass?: any;
 }
 
 export interface DialogContext {

@@ -1,4 +1,4 @@
-import {Component, Injector, Input,} from '@angular/core';
+import {Component, HostListener, Injector, Input,} from '@angular/core';
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
 import {KeyFilters} from "../../key-filter/key-filter.directive";
 import {FormControl} from "@angular/forms";
@@ -18,7 +18,7 @@ export class InputComponent extends AbstractFormControl<string> {
 
   @Input() type: 'text' | 'password' | 'email' | 'textarea' | 'number' = 'text';
   @Input() mode: '' | 'fill' = '';
-  @Input() inputMode?: 'text' | 'numeric';
+  @Input() inputMode?: 'text' | 'numeric' | 'decimal' | 'tel' | 'email' | 'url' | 'search';
   @Input() align: '' | 'left' | 'right' | 'center' | 'justify' = '';
   @Input() mask?: string | MaskItem[];
   @Input() pattern?: string;
@@ -27,6 +27,15 @@ export class InputComponent extends AbstractFormControl<string> {
   @Input() rows: number | string | null = null;
   @Input() cols: number | string | null = null;
   @Input() keyFilter?: KeyFilters;
+  @Input() icon?: string;
+  @Input() iconPos: 'start' | 'end' = 'start';
+
+  @HostListener('dblclick')
+  onDoubleClick() {
+    if (this.type != 'textarea') {
+      this.inputEl?.nativeElement.select();
+    }
+  }
 
   protected displayFormControl = new FormControl('');
 
@@ -41,22 +50,36 @@ export class InputComponent extends AbstractFormControl<string> {
     super.ngOnInit();
 
     if (this.type == "number") {
-      this.inputMode = 'numeric';
+      this.inputMode = 'decimal';
       this.keyFilter ??= 'num';
+      if (!this.dir) this.dir = 'ltr';
+
+      this.subscription.add(this.onKeydown.subscribe(e => {
+        if(this.inputEl && e.key == ',') {
+          const el = this.inputEl.nativeElement;
+          if(el.selectionStart != null && el.selectionEnd != null) {
+            el.value = el.value.substring(0, el.selectionStart) + '-' + el.value.substring(el.selectionEnd);
+          }
+        }
+      }))
     }
 
     this.subscription.add(this.formControl.valueChanges.subscribe(_ => this.updateDisplayControl()))
   }
 
   private updateDisplayControl() {
-    if (this.type === 'number') {
-      if (Number.isNaN(+this.formControl.value)) {
-        this.displayFormControl.setValue('');
-      } else {
-        this.displayFormControl.setValue((+this.formControl.value).toLocaleString());
-      }
-    } else {
+    if (this.formControl.value == null) {
       this.displayFormControl.setValue(this.formControl.value);
+    } else {
+      if (this.type === 'number') {
+        if (Number.isNaN(+this.formControl.value)) {
+          this.displayFormControl.setValue('');
+        } else {
+          this.displayFormControl.setValue((+this.formControl.value).toLocaleString());
+        }
+      } else {
+        this.displayFormControl.setValue(this.formControl.value);
+      }
     }
   }
 
@@ -64,7 +87,7 @@ export class InputComponent extends AbstractFormControl<string> {
     super.render();
 
     if (this.inputEl) {
-      if (this.inputMode == 'numeric') {
+      if (this.inputMode) {
         this.inputEl.nativeElement.inputMode = this.inputMode;
       }
     }
@@ -91,8 +114,8 @@ export class InputComponent extends AbstractFormControl<string> {
   protected setValue(e: string) {
     if (this.type === 'number') {
       const valueString = e.replaceAll(',', '')
-      if(valueString == '-') return;
-      this.formControl.setValue(Number.isNaN(+valueString) ? 0 : +valueString);
+      if (valueString == '-') return;
+      this.formControl.setValue(Number.isNaN(+valueString) ? null : +valueString);
     } else {
       this.formControl.setValue(e);
     }
