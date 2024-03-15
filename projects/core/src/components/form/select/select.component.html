@@ -4,7 +4,7 @@
       <ng-container *ngTemplateOutlet="optionTemplate; context: {$implicit: item}"></ng-container>
     </ng-container>
     <ng-template #elseTextTemplate>
-      <span class="text">{{getText(item)}}</span>
+      <span class="text">{{ getText(item) }}</span>
       <ng-container *ngIf="mode == 'multiple' && type == 'value'">
         <i class="remove icons-core-close-circle" (click)="select(item, $event)"></i>
       </ng-container>
@@ -16,7 +16,7 @@
   <div class="control-container selected-items-container flex-1" [ngClass]="align">
     <ng-container *ngIf="selectedItems.length == 0; else hasSelectedItemTpl">
       <div class="full-absolute placeholder px-4" *ngIf="placeholder">
-        {{placeholder}}
+        {{ placeholder }}
       </div>
     </ng-container>
     <ng-template #hasSelectedItemTpl>
@@ -49,8 +49,9 @@
 </div>
 <ng-template #itemsTpl>
   <div class="items-container" [ngClass]="[size, mode]">
-    <div class="filter-box" *ngIf="searchable && items.length > 10">
-      <d-input [size]="size" [formControl]="searchFormControl" [placeholder]="searchPlaceHolder"/>
+    <div class="filter-box" *ngIf="searchable || (searchable == undefined && items.length > 10)">
+      <d-input [size]="size" [formControl]="searchFormControl" [placeholder]="searchPlaceHolder" [autofocus]="{delay: 200}"
+               (focus)="focused = true" (blur)="focused = false"/>
     </div>
     <div class="scroll-container" #itemsContainerEl>
       <ul class="items">

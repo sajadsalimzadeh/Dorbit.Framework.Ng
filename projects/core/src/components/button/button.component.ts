@@ -16,6 +16,7 @@ export class ButtonComponent extends AbstractComponent implements OnInit, OnChan
   @Input() mode: 'fill' | 'outline' | 'text' = 'fill';
   @Input() loading?: boolean = false;
   @Input() loadingIcon?: string = 'icons-core-loading';
+  @Input() classButton?: any;
 
   @ViewChild('textEl') set textRef(value: ElementRef<HTMLElement>) {
     this.emptyContent = !value.nativeElement?.innerText && !value.nativeElement?.innerHTML;
