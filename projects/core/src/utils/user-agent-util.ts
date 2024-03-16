@@ -1,13 +1,32 @@
+import './platform.js';
+
+declare const platform: {
+  description: string;
+  layout: string;
+  name: string;
+  os: {
+    architecture: number;
+    family: string;
+    version: string;
+  };
+  ua: string;
+  version: string;
+  major: number;
+  minor: number;
+  patch: number;
+  build: number;
+};
+
 export class UserAgentUtil {
-  static getBrowser() {
+  static getBrowserName() {
     let userAgent = navigator.userAgent;
 
     if (userAgent.indexOf("OPR") > -1) {
       return "Opera";
     } else if (userAgent.indexOf("Edg") > -1) {
-      return "Microsoft Edge";
+      return "Edge";
     } else if (userAgent.indexOf("MSIE") > -1) {
-      return "Microsoft Internet Explorer";
+      return "IE";
     } else if (userAgent.indexOf("Chrome") > -1) {
       return "Chrome";
     } else if (userAgent.indexOf("Safari") > -1) {
@@ -17,6 +36,15 @@ export class UserAgentUtil {
     }
 
     return 'unknown';
+  }
+
+  static getBrowser() {
+    const versions = platform.version?.split('.') ?? [];
+    if(versions.length > 0) platform.major = +versions[0];
+    if(versions.length > 1) platform.minor = +versions[1];
+    if(versions.length > 2) platform.patch = +versions[2];
+    if(versions.length > 3) platform.build = +versions[3];
+    return platform;
   }
 
   static isMobile() {

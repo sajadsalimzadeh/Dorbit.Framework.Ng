@@ -53,12 +53,6 @@ export class Store<T extends object> {
     this.onChange.next({store: this.store, changes: [name]});
   }
 
-  async setBulk(changes: { key: keyof T & string, value: any }[]) {
-    changes.forEach(x => this._store[x.key] = x.value);
-    await this.save();
-    this.onChange.next({store: this.store, changes: changes.map(x => x.key)});
-  }
-
   async save() {
     await this.cacheService.set(this.name, this._store, TimeSpan.fromMonth(2));
   }
