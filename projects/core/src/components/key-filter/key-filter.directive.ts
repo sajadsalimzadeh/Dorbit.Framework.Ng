@@ -1,23 +1,7 @@
 import {Directive, ElementRef, HostListener, Input, NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 
-const intRegex = /^[0-9۰-۹٠-٩]$/;
-const arabicNumbers = ["١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩", "٠"];
-const persianNumbers = ["۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹", "۰"];
-
-function fixPersianNumbers(str: string) {
-  for (let i = 0; i < 10; i++) {
-    str = str.replace(persianNumbers[i], i.toString());
-  }
-  return str;
-}
-
-function fixArabicNumbers(str: string) {
-  for (let i = 0; i < 10; i++) {
-    str = str.replace(arabicNumbers[i], i.toString());
-  }
-  return str;
-}
+const intRegex = /^[0-9]$/;
 
 export type KeyFilters = 'p-int' | 'int' | 'n-int' | 'p-num' | 'num' | 'n-num' | 'hex' | 'email' | 'alpha' | 'alphnum' | 'persian' | string;
 
@@ -77,7 +61,7 @@ export class DevKeyFilterDirective {
           if (!intRegex.test(e.key)) {
             e.preventDefault();
           }
-        } else if (!/^\.$/.test(e.key) && !intRegex.test(e.key)) {
+        } else if (e.key == '.' && !intRegex.test(e.key)) {
           e.preventDefault();
         }
         break;
@@ -120,22 +104,6 @@ export class DevKeyFilterDirective {
           e.preventDefault();
         }
         break;
-    }
-  }
-
-
-  @HostListener('keyup', ['$event'])
-  onKeyUp(e: KeyboardEvent) {
-    const input = e.target as HTMLInputElement;
-    if (input) {
-      if (this.dKeyFilter && ['num', 'int'].includes(this.dKeyFilter)) {
-        if (/[۰-۹]/.test(input.value)) {
-          input.value = fixPersianNumbers(input.value);
-        }
-        if (/[٠-٩]/.test(input.value)) {
-          input.value = fixArabicNumbers(input.value);
-        }
-      }
     }
   }
 }

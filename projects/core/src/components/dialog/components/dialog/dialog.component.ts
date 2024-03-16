@@ -91,6 +91,13 @@ export class DialogComponent extends AbstractComponent implements DialogRef, Dia
 
   context?: any;
 
+  get inputs() {
+    return {
+      ...this.context,
+      dialog: this
+    }
+  }
+
   @HostListener('click', ['$event'])
   onPositionClick(e: MouseEvent) {
     if (this.maskClosable && (e.target as HTMLElement).querySelector('.dialog')) {
@@ -112,10 +119,6 @@ export class DialogComponent extends AbstractComponent implements DialogRef, Dia
 
   constructor(injector: Injector, private changeDetectorRef: ChangeDetectorRef) {
     super(injector)
-  }
-
-  override ngOnInit() {
-    if(this.context) this.context['dialog'] = this;
   }
 
   override ngOnDestroy() {
