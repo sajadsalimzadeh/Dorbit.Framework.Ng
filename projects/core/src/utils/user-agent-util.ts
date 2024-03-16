@@ -39,7 +39,7 @@ export class UserAgentUtil {
   }
 
   static getBrowser() {
-    const versions = platform.version.split('.')
+    const versions = platform.version?.split('.') ?? [];
     if(versions.length > 0) platform.major = +versions[0];
     if(versions.length > 1) platform.minor = +versions[1];
     if(versions.length > 2) platform.patch = +versions[2];
