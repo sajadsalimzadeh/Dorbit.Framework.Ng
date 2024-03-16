@@ -20,13 +20,14 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
   @Input() clearable: boolean = true;
   @Input() valueField: string | Func = 'value';
   @Input() textField: string | Func = 'text';
-  @Input() searchable: boolean = true;
   @Input() searchPlaceHolder: string = 'Search ....';
   @Input() isLazySearch: boolean = false;
   @Input() loading: boolean = false;
+  @Input() searchable?: boolean;
   @Input() comparator = (item: any, value: any) => this.getValue(item) == value;
 
   @Output() onSearch = new EventEmitter<string | null>();
+  @Output() onAdd = new EventEmitter<any>;
 
   @ViewChild('itemsTpl') itemsTpl?: TemplateRef<any>;
   @ViewChild(InputComponent) inputComponent?: InputComponent;
@@ -66,9 +67,19 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
     this.open();
   }
 
+  override onBlur(e: FocusEvent) {
+    super.onBlur(e);
+
+    setTimeout(() => {
+      if (!this.focused) {
+        this.close();
+      }
+    }, 1000)
+  }
+
   overlayRef?: OverlayRef;
   searchFormControl = new FormControl('');
-  hoveredIndex: number = 0;
+  hoveredIndex: number = -1;
   hoveredItem: any;
   renderedItems: any[] = [];
   selectedItems: any[] = [];
@@ -111,16 +122,14 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
     super.ngOnChanges(changes);
   }
 
-  private handleHoveredIndex(e: KeyboardEvent, bySearchInput = false) {
-    if (!this.overlayRef && !bySearchInput) return;
+  private handleHoveredIndex(e: KeyboardEvent) {
+    if (!this.focused) return;
     e.stopPropagation();
 
-    if (e.key == 'Escape') {
-      this.close();
-      return;
-    }
+    if (e.key == 'Escape') return this.close();
 
     if (['ArrowUp', 'ArrowDown'].includes(e.key)) {
+      if (!this.overlayRef) this.open();
 
       if (e.key == 'ArrowUp') this.hoveredIndex--;
       if (e.key == 'ArrowDown') this.hoveredIndex++;
@@ -133,13 +142,25 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
         this.hoveredItem = this.renderedItems[this.hoveredIndex];
       } else this.hoveredItem = this.items.find(x => x.selected);
 
-      if (bySearchInput && !this.overlayRef && this.hoveredItem) {
+      if (!this.overlayRef && this.hoveredItem) {
         this.select(this.hoveredItem);
       }
-    } else if (e.key == 'Enter' && this.hoveredItem) {
-      this.select(this.hoveredItem);
-    } else {
-      this.open();
+    } else if (e.key == 'Enter') {
+      if (this.overlayRef) {
+        if (this.hoveredItem) this.select(this.hoveredItem);
+        else if (this.renderedItems.length == 1) this.select(this.renderedItems[0]);
+        else this.onAdd.emit();
+      } else {
+        let el = this.elementRef.nativeElement;
+        while (el?.tagName) {
+          if (el.tagName.toLowerCase() == 'form') {
+            const btn = el.querySelector('button[type="submit"]') as HTMLButtonElement;
+            btn?.click();
+            break;
+          }
+          el = el.parentNode as HTMLElement;
+        }
+      }
     }
   }
 
@@ -175,6 +196,7 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
 
     if (this.mode == 'single') {
       this.formControl.setValue(this.getValue(item));
+      this.elementRef.nativeElement.focus();
       this.close();
     } else {
       const selectedItems = (Array.isArray(this.formControl.value) ? this.formControl.value : []) as T[];
@@ -233,6 +255,8 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
   }
 
   private close() {
-    this.overlayRef?.destroy();
+    if (this.overlayRef) {
+      this.overlayRef.destroy();
+    }
   }
 }

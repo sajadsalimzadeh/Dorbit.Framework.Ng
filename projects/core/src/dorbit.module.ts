@@ -44,6 +44,7 @@ import {
   BreadcrumbModule,
   FabModule,
   ResponsiveDirectiveModule,
+  HotKeyModule,
 } from './components';
 import {
   JDatePipeModule,
@@ -98,6 +99,7 @@ const MODULES = [
   FabModule,
   TranslateModule,
   ResponsiveDirectiveModule,
+  HotKeyModule,
 ];
 
 @NgModule({

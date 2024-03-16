@@ -122,7 +122,7 @@
     align-items: center;
 
     &:hover, &.hovered {
-      background-color: rgba(var(--color-black-rgb), 0.03);
+      background-color: rgba(var(--color-black-rgb), 0.07);
     }
 
     &.selected {
@@ -143,6 +143,18 @@
       display: flex;
       font-size: 1em;
       align-items: center;
+    }
+
+    &.add-new-item {
+      justify-content: center;
+
+      i {
+        color: var(--color-success);
+      }
+
+      span {
+        color: var(--color-gray-4);
+      }
     }
   }
 }

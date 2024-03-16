@@ -49,3 +49,7 @@ input:-webkit-autofill:active{
   height: 3px;
   background-color: rgba(var(--color-black-rgb), .05);
 }
+
+::-webkit-scrollbar-thumb  {
+  background-color: rgba(var(--color-black-rgb), .1);
+}

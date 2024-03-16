@@ -10,7 +10,7 @@ export abstract class AbstractComponent implements OnInit, OnChanges, OnDestroy,
   @Input() size: Sizes = 'md';
   @Input() color: Colors = 'primary';
   @Input() colorText: Colors = 'primary';
-  @Input() ngClasses?: any;
+  @Input() ngClass?: any;
   @Input() dir: Direction = '';
 
   protected subscription = new Subscription();
@@ -52,9 +52,9 @@ export abstract class AbstractComponent implements OnInit, OnChanges, OnDestroy,
 
   render() {
     this.resetClasses();
-    if (this.ngClasses) {
-      for (let className in this.ngClasses) {
-        this.setClass(className, !!this.ngClasses[className])
+    if (this.ngClass) {
+      for (let className in this.ngClass) {
+        this.setClass(className, !!this.ngClass[className])
       }
     }
     this.setClass(this.size, true);

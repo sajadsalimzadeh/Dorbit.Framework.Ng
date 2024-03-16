@@ -16,6 +16,12 @@ export class DialogService {
   containers: DialogContainerComponent[] = [];
 
   constructor(private domService: DomService) {
+
+    window.addEventListener('popstate', (e: PopStateEvent) => {
+      if(this._refs.length > 0) {
+        this._refs[this._refs.length - 1].close();
+      }
+    });
   }
 
   private create<T extends DialogRef>(component: Type<T>, init: (obj: ComponentRef<T>, container?: DialogContainerComponent) => void, name?: string) {
@@ -25,8 +31,9 @@ export class DialogService {
     componentRef.instance.onClose.subscribe(e => {
       const index = this._refs.indexOf(componentRef.instance);
       if(index > -1) this._refs.splice(index, 1);
-    })
+    });
     this._refs.push(componentRef.instance);
+    history.pushState({dialog: true}, 'dialog');
     return componentRef.instance;
   }
 

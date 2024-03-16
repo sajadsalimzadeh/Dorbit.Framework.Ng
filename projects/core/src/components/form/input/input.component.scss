@@ -17,10 +17,31 @@
 }
 
 .control {
+  order: 5;
   width: 100%;
   background-color: transparent;
 
   &::placeholder {
     color: var(--color-gray-10);
+  }
+}
+
+.control-container {
+  > i {
+    width: 1em;
+    margin: 0 1em;
+    display: flex;
+    font-size: 1.2em;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-gray-6);
+
+    &.start {
+      order: 1;
+    }
+
+    &.end {
+      order: 10;
+    }
   }
 }
