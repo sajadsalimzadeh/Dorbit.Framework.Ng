@@ -59,6 +59,7 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
   override onClick(e: MouseEvent) {
     e.stopPropagation();
     super.onClick(e);
+    if(this.focused) this.open();
   }
 
   override onFocus(e: FocusEvent) {

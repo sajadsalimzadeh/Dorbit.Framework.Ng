@@ -8,6 +8,23 @@ export interface MaskItem {
   pattern?: RegExp;
 }
 
+const arabicNumbers = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
+const persianNumbers = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+
+function fixPersianNumbers(str: string) {
+  for (let i = 0; i < 10; i++) {
+    str = str.replace(persianNumbers[i], i.toString());
+  }
+  return str;
+}
+
+function fixArabicNumbers(str: string) {
+  for (let i = 0; i < 10; i++) {
+    str = str.replace(arabicNumbers[i], i.toString());
+  }
+  return str;
+}
+
 @Component({
   selector: 'd-input',
   templateUrl: 'input.component.html',
@@ -55,12 +72,28 @@ export class InputComponent extends AbstractFormControl<string> {
       if (!this.dir) this.dir = 'ltr';
 
       this.subscription.add(this.onKeydown.subscribe(e => {
-        if(this.inputEl && e.key == ',') {
-          const el = this.inputEl.nativeElement;
-          if(el.selectionStart != null && el.selectionEnd != null) {
-            el.value = el.value.substring(0, el.selectionStart) + '-' + el.value.substring(el.selectionEnd);
-          }
+
+        const el = this.inputEl?.nativeElement;
+        if (!el) return;
+
+        if (this.type != 'number') return;
+
+        const overwriteChar = (ch: string) => {
+          e.preventDefault();
+          const selectionStart = el.selectionStart ?? 0;
+          const selectionEnd = el.selectionEnd ?? 0;
+          el.value = el.value.substring(0, selectionStart) + ch + el.value.substring(selectionEnd);
+
+          setTimeout(() => this.setValue(el.value), 100)
         }
+
+        if (['٫', ','].includes(e.key)) return overwriteChar('-');
+
+        const arabicIndex = arabicNumbers.indexOf(e.key);
+        if (arabicIndex > -1) return overwriteChar(arabicNumbers[arabicIndex]);
+
+        const persianIndex = persianNumbers.indexOf(e.key);
+        if (persianIndex > -1) return overwriteChar(persianNumbers[persianIndex]);
       }))
     }
 
@@ -73,7 +106,7 @@ export class InputComponent extends AbstractFormControl<string> {
     } else {
       if (this.type === 'number') {
         if (Number.isNaN(+this.formControl.value)) {
-          this.displayFormControl.setValue('');
+          this.displayFormControl.setValue(this.formControl.value);
         } else {
           this.displayFormControl.setValue((+this.formControl.value).toLocaleString());
         }
@@ -113,8 +146,12 @@ export class InputComponent extends AbstractFormControl<string> {
 
   protected setValue(e: string) {
     if (this.type === 'number') {
-      const valueString = e.replaceAll(',', '')
+      let valueString = e.replaceAll(',', '')
       if (valueString == '-') return;
+      if (Number.isNaN(+valueString)) {
+        valueString = fixPersianNumbers(valueString);
+        valueString = fixArabicNumbers(valueString);
+      }
       this.formControl.setValue(Number.isNaN(+valueString) ? null : +valueString);
     } else {
       this.formControl.setValue(e);
