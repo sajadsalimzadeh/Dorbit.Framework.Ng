@@ -15,7 +15,7 @@ export interface OverlayOptions {
   template?: TemplateRef<any>;
   text?: string;
   html?: string;
-  ngClasses?: any;
+  ngClass?: any;
   color?: Colors;
   styles?: any;
   alignment?: OverlayAlignments;

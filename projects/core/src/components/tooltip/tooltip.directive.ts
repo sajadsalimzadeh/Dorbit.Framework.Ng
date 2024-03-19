@@ -1,11 +1,4 @@
-import {
-  Directive, ElementRef,
-  HostListener,
-  Input,
-  NgModule,
-  TemplateRef,
-  ViewChild
-} from '@angular/core';
+import {Directive, ElementRef, HostListener, Input, NgModule, TemplateRef, ViewChild} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {OverlayRef, OverlayService} from "../../components/overlay/overlay.service";
 import {OverlayAlignments} from "../../components/overlay/overlay.component";
@@ -47,7 +40,7 @@ export class TooltipDirective {
 
     this.overlayRef = this.overrideService.create({
       text: this.text,
-      ngClasses: classes,
+      ngClass: classes,
       styles: this.styles,
       color: this.color,
       alignment: this.alignment,
