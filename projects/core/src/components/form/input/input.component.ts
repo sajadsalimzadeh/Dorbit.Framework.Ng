@@ -87,7 +87,7 @@ export class InputComponent extends AbstractFormControl<string> {
           setTimeout(() => this.setValue(el.value), 100)
         }
 
-        if (['٫', ','].includes(e.key)) return overwriteChar('-');
+        if (['٫', ','].includes(e.key)) return overwriteChar(el.value.length > 0 ? '.' : '-');
 
         const arabicIndex = arabicNumbers.indexOf(e.key);
         if (arabicIndex > -1) return overwriteChar(arabicNumbers[arabicIndex]);

@@ -57,11 +57,13 @@ export class DevKeyFilterDirective {
       case 'num':
         if ((target.value.length == 0 || isSelectAll) && /^[+\-]$/.test(e.key)) {
           return;
-        } else if (target.value.includes('.')) {
-          if (!intRegex.test(e.key)) {
+        } else if (e.key == '.') {
+          if(target.value.includes('.')) {
             e.preventDefault();
           }
-        } else if (e.key == '.' && !intRegex.test(e.key)) {
+          return;
+        }
+        if (!intRegex.test(e.key)) {
           e.preventDefault();
         }
         break;
