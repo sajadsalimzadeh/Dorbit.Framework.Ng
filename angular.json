@@ -69,7 +69,7 @@
             ],
             "styles": [
               "projects/core/src/assets/styles/styles.scss",
-              "projects/docs/src/assets/fonts/vazir/style.scss",
+              "projects/docs/src/assets/fonts/vazir/style.css",
               "projects/docs/src/assets/fonts/FontAwesome/css/all.css",
               "projects/docs/src/styles.scss"
             ],
