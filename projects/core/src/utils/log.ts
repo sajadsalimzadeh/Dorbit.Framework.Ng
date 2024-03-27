@@ -1,6 +1,5 @@
-import {IndexedDB} from "./indexed-db";
-import {ITable} from "./database";
-import {isDevMode} from "@angular/core";
+import {StoreDb} from "../stores";
+import {md5} from "./md5";
 
 export enum LogLevel {
   TRACE = 1,
@@ -19,11 +18,8 @@ export interface LogRecord {
   data: any;
 }
 
-const logStore = new IndexedDB({name: 'log', version: 1});
-let persistLogs: ITable<LogRecord, number>;
-logStore.create('logs', {key: 'timestamp', keyGenerator: () => new Date().getTime()});
-logStore.open().then(() => {
-  persistLogs = logStore.table<LogRecord, number>('logs');
+const logStore = new StoreDb('log', 4, {
+  logs: {key: 'timestamp', keyGenerator: () => new Date().getTime()},
 });
 
 export const loggerConfigs = {
@@ -63,7 +59,7 @@ export class Logger {
   defaultOptions?: Options;
   defaultData?: any;
 
-  private log(message: string, level: LogLevel, options?: Options) {
+  private async log(message: string, level: LogLevel, options?: Options) {
     options ??= {};
     try {
       if (!this.enable) return;
@@ -94,7 +90,6 @@ export class Logger {
       }
 
       const log = {
-        timestamp: new Date().getTime(),
         name: this.name,
         level: level,
         message: message?.toString(),
@@ -112,40 +107,33 @@ export class Logger {
       }
 
       //prevent multiple same log insert
-      if(log.message) {
-        const logKey = log.message.slice(0, 10) + log.message.length;
-        if (this.logTimeMessages[logKey] > new Date().getTime() - 1000) return;
+      if (log.message) {
+        const logKey = md5(log.message);
+        if (this.logTimeMessages[logKey] > new Date().getTime() - 200) return;
         this.logTimeMessages[logKey] = new Date().getTime();
       }
 
-      try {
-        //prevent insert un cloneable object
-        if (log) log.data = JSON.parse(JSON.stringify(log.data));
-      } catch {
-        log.data = undefined;
-      }
-
       //prevent insert empty message log
-      if (log.message) persistLogs?.add(log);
+      if (log.message) await logStore.getTable('logs').add(log);
     } catch (e) {
       console.error(e)
     }
   }
 
   getTable() {
-    return persistLogs;
+    return logStore.getTable('logs');
   }
 
   debug(message: string, options?: Options) {
-    this.log(message, LogLevel.DEBUG, options);
+    return this.log(message, LogLevel.DEBUG, options);
   }
 
   trace(message: string, options?: Options) {
-    this.log(message, LogLevel.TRACE, options);
+    return this.log(message, LogLevel.TRACE, options);
   }
 
   info(message: string, options?: Options) {
-    this.log(message, LogLevel.INFO, options);
+    return this.log(message, LogLevel.INFO, options);
   }
 
   warn(message: string, options?: Options) {
@@ -153,7 +141,7 @@ export class Logger {
   }
 
   error(message: string, options?: Options) {
-    this.log(message, LogLevel.ERROR, options);
+    return this.log(message, LogLevel.ERROR, options);
   }
 
   clone(name: string) {
@@ -168,6 +156,6 @@ export const logger = new Logger();
 
 setInterval(async () => {
   const lifetime = new Date().getTime() - loggerConfigs.lifetime;
-  const keys = await persistLogs.findAllKey(t => t < lifetime, 1000);
-  keys.forEach(x => persistLogs.delete(x));
+  const keys = await logStore.getTable('logs').findAllKey(t => t < lifetime, 1000);
+  keys.forEach(x => logStore.getTable('logs').delete(x));
 }, 10000);

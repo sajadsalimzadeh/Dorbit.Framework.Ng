@@ -20,6 +20,7 @@ export * from './delay';
 export * from './string';
 export * from './google';
 export * from './mobile';
+export * from './md5';
 export * from './number';
 export * from './enum';
 export * from './locale';
