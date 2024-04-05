@@ -1,4 +1,4 @@
-import {IDatabase, IndexedDB, ITable, ITableConfig} from "@framework";
+import {IDatabase, IndexedDB, ITable, ITableConfig} from "../utils";
 
 type StoreTableConfig = { [key: string]: ITableConfig };
 
