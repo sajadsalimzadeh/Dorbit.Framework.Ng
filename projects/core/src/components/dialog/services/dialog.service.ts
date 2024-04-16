@@ -33,7 +33,8 @@ export class DialogService {
       if(index > -1) this._refs.splice(index, 1);
     });
     this._refs.push(componentRef.instance);
-    history.pushState({dialog: true}, 'dialog');
+    if(!history.state.dialog) history.pushState({dialog: true}, 'dialog');
+    else history.replaceState({dialog: true}, 'dialog');
     return componentRef.instance;
   }
 
