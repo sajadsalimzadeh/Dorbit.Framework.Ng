@@ -18,6 +18,7 @@ export interface OverlayOptions {
   ngClass?: any;
   color?: Colors;
   styles?: any;
+  context?: any;
   alignment?: OverlayAlignments;
   verticalThreshold?: number;
   horizontalThreshold?: number;
@@ -38,6 +39,7 @@ export class OverlayComponent extends AbstractComponent implements OnInit, Overl
   text?: string;
   html?: string;
   styles?: any;
+  context?: any;
 
   verticalThreshold = 300;
   horizontalThreshold = 300;

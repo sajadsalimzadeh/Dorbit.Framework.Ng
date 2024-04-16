@@ -10,7 +10,8 @@ export enum LogLevel {
 }
 
 export interface LogRecord {
-  timestamp?: number;
+  id: number;
+  timestamp: number;
   name: string;
   flags: any;
   level: LogLevel;
@@ -18,8 +19,8 @@ export interface LogRecord {
   data: any;
 }
 
-const logStore = new StoreDb('log', 4, {
-  logs: {key: 'timestamp', keyGenerator: () => new Date().getTime()},
+const logStore = new StoreDb('log-v1', 1, {
+  logs: {key: 'id', autoIncrement: true},
 });
 
 export const loggerConfigs = {
@@ -52,6 +53,7 @@ export class Logger {
 
   private logTimeMessages: { [key: string]: number } = {};
   private name = 'root';
+  private logs: LogRecord[] = [];
 
   enable: boolean = true;
 
@@ -59,7 +61,15 @@ export class Logger {
   defaultOptions?: Options;
   defaultData?: any;
 
-  private async log(message: string, level: LogLevel, options?: Options) {
+  constructor() {
+    setInterval(async () => {
+      const logs = this.logs;
+      this.logs = [];
+      await logStore.getTable('logs').addAll(logs);
+    }, 1000);
+  }
+
+  private log(message: string, level: LogLevel, options?: Options) {
     options ??= {};
     try {
       if (!this.enable) return;
@@ -114,7 +124,9 @@ export class Logger {
       }
 
       //prevent insert empty message log
-      if (log.message) await logStore.getTable('logs').add(log);
+      if (log.message) {
+        this.logs.push(log);
+      }
     } catch (e) {
       console.error(e)
     }
@@ -156,6 +168,6 @@ export const logger = new Logger();
 
 setInterval(async () => {
   const lifetime = new Date().getTime() - loggerConfigs.lifetime;
-  const keys = await logStore.getTable('logs').findAllKey(t => t < lifetime, 1000);
-  keys.forEach(x => logStore.getTable('logs').delete(x));
+  const items = await logStore.getTable<LogRecord>('logs').findAll(x => x.timestamp < lifetime, 1000);
+  await logStore.getTable<LogRecord>('logs').deleteAll(items.map(x => x.id));
 }, 10000);

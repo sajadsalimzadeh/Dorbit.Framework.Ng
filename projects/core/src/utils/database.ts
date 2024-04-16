@@ -17,6 +17,10 @@ export interface IDatabase {
 
   getAll(tableName: string): Promise<any[]>;
 
+  add(tableName: string, value: any): Promise<any>;
+
+  addAll(tableName: string, values: any[]): Promise<any[]>;
+
   put(tableName: string, value: any): Promise<any>;
 
   putAll(tableName: string, values: any[]): Promise<any[]>;
@@ -32,7 +36,7 @@ export interface IDatabase {
 
 export interface ITableChangeEvent<T = any> {
   value?: T,
-  action?: 'add' | 'put' | 'put-all' | 'delete' | 'delete-all';
+  action?: 'add' | 'add-all' | 'put' | 'put-all' | 'delete' | 'delete-all';
 }
 
 export interface ITable<T = any, TP = any> {
@@ -45,6 +49,8 @@ export interface ITable<T = any, TP = any> {
   put(value: T): Promise<T>;
 
   add(value: T): Promise<T>;
+
+  addAll(value: T[]): Promise<T[]>;
 
   putAll(values: T[]): Promise<T[]>;
 

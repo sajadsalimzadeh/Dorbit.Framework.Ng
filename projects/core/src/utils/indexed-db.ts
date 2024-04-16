@@ -33,18 +33,6 @@ export class IndexedDB implements IDatabase {
         resolve(true);
       };
     })
-
-    // request.onupgradeneeded = (event) => {
-    //   this.db = request.result;
-    //   switch (event.oldVersion) { // existing db version
-    //     case 0:
-    //     // version 0 means that the client had no database
-    //     // perform initialization
-    //     case 1:
-    //     // client had version 1
-    //     // callback
-    //   }
-    // };
   }
 
   async close() {
@@ -127,6 +115,21 @@ export class IndexedDB implements IDatabase {
     });
   }
 
+  public add(tableName: string, value: any) {
+    const tx = this.db.transaction(tableName, 'readwrite');
+    const store = tx.objectStore(tableName);
+    return this.toPromise(() => store.add(value));
+  }
+
+  public async addAll(tableName: string, values: any[]) {
+    const tx = this.db.transaction(tableName, 'readwrite');
+    const store = tx.objectStore(tableName);
+    for (const value of values) {
+      await this.toPromise(() => store.add(value));
+    }
+    return await this.getAll(tableName);
+  }
+
   public put(tableName: string, value: any) {
     const tx = this.db.transaction(tableName, 'readwrite');
     const store = tx.objectStore(tableName);
@@ -179,19 +182,20 @@ class Table<T, TP> implements ITable<T, TP> {
     if (this.config.keyGenerator) {
       (value as any)[this.config.key] = this.config.keyGenerator();
     }
-    const result = await this.put(value);
+    const result = await this.database.add(this.name, value);
     this.onChange.next({value: value, action: 'add'});
     return result;
   }
 
-  async delete(key: TP) {
-    await this.database.delete(this.name, key);
-    this.onChange.next({action: 'delete'});
-  }
-
-  async deleteAll(keys: TP[]) {
-    await this.database.deleteAll(this.name, keys);
-    this.onChange.next({action: 'delete-all'});
+  async addAll(values: T[]) {
+    if (this.config.keyGenerator) {
+      for (const value of values) {
+        (value as any)[this.config.key] = this.config.keyGenerator();
+      }
+    }
+    const result = await this.database.addAll(this.name, values);
+    this.onChange.next({action: 'add-all'});
+    return result;
   }
 
   async put(value: T) {
@@ -216,5 +220,15 @@ class Table<T, TP> implements ITable<T, TP> {
 
   async count(query?: (key: TP, value: T) => boolean) {
     return (await this.findAll(query ?? (() => true))).length
+  }
+
+  async delete(key: TP) {
+    await this.database.delete(this.name, key);
+    this.onChange.next({action: 'delete'});
+  }
+
+  async deleteAll(keys: TP[]) {
+    await this.database.deleteAll(this.name, keys);
+    this.onChange.next({action: 'delete-all'});
   }
 }

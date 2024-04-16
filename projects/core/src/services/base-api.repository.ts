@@ -21,22 +21,19 @@ export interface HttpOptions {
 
 @Injectable()
 export abstract class BaseApiRepository {
+
   protected http: CustomHttpClient;
-  protected baseUrl: string;
 
-  protected constructor(protected injector: Injector, protected repository?: string) {
-    this.baseUrl = injector.get(BASE_API_URL, '', {optional: true}) ?? '';
-    const handler = new CustomHttpHandler(
-      this.baseUrl,
-      repository,
-      injector.get(HttpHandler),
-      injector.get(LoadingService),
-    );
+  public readonly baseUrl: string;
+  public readonly repository: string;
+  public loadingService: LoadingService;
+
+  protected constructor(protected injector: Injector, repository?: string, baseUrl?: string) {
+    this.baseUrl = baseUrl ?? injector.get(BASE_API_URL, '', {optional: true}) ?? '';
+    this.repository = repository ?? '';
+    this.loadingService = injector.get(LoadingService);
+    const handler = new CustomHttpHandler(this, injector.get(HttpHandler));
     this.http = new CustomHttpClient(handler);
-  }
-
-  setLoadingService(service: LoadingService) {
-    this.http.customHandler.loadingService = service;
   }
 
   getUrl(url: string) {
@@ -46,12 +43,7 @@ export abstract class BaseApiRepository {
 
 class CustomHttpHandler extends HttpHandler {
 
-  constructor(
-    private baseUrl: string,
-    private repository: string | undefined,
-    private handler: HttpHandler,
-    public loadingService: LoadingService,
-  ) {
+  constructor(private api: BaseApiRepository, private handler: HttpHandler) {
     super();
   }
 
@@ -63,11 +55,11 @@ class CustomHttpHandler extends HttpHandler {
       if (url.startsWith('$')) {
         url = url.substring(1);
       } else {
-        let baseUrl = this.baseUrl;
+        let baseUrl = this.api.baseUrl;
         if (url.startsWith('~')) {
           url = url.substring(1);
-        } else if (this.repository) {
-          baseUrl += (baseUrl.endsWith('/') ? '' : '/') + this.repository;
+        } else if (this.api.repository) {
+          baseUrl += (baseUrl.endsWith('/') ? '' : '/') + this.api.repository;
         }
         if (!baseUrl.endsWith('/')) baseUrl += '/';
         url = baseUrl + url;
@@ -80,21 +72,21 @@ class CustomHttpHandler extends HttpHandler {
       });
     }
 
-    this.loadingService.start();
+    this.api.loadingService.start();
     const timeout = setTimeout(() => {
-      this.loadingService.end();
+      this.api.loadingService.end();
     }, 120000);
 
     return this.handler.handle(req).pipe(finalize(() => {
       clearTimeout(timeout);
-      this.loadingService.end();
+      this.api.loadingService.end();
     }));
   }
 
 }
 
 class CustomHttpClient extends HttpClient {
-  public customHandler: CustomHttpHandler;
+  private customHandler: CustomHttpHandler;
 
   constructor(handler: CustomHttpHandler) {
     super(handler);

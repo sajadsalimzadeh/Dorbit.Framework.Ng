@@ -19,7 +19,7 @@ export class OverlayService {
   }
 
   create(options = this.defaultOptions) {
-    this.refs.filter(x => !x.autoClose).forEach(x => {
+    this.refs.filter(x => x.autoClose).forEach(x => {
       x.destroy();
     });
 
