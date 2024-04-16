@@ -1,4 +1,13 @@
-export class ObjectUtility {
+export class ObjectUtil {
+
+  static assignNotNull(destination: any, source: any) {
+    for (const sourceKey in source) {
+      const value = source[sourceKey];
+      if(value != null) {
+        destination[sourceKey] = value;
+      }
+    }
+  }
 
   static deleteUndefinedProperty(obj: any): any {
     const result: any = {};
