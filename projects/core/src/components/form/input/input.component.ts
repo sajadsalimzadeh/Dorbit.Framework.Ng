@@ -1,7 +1,6 @@
 import {Component, HostListener, Injector, Input,} from '@angular/core';
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
 import {KeyFilters} from "../../key-filter/key-filter.directive";
-import {FormControl} from "@angular/forms";
 
 export interface MaskItem {
   placeholder: string;
@@ -39,7 +38,9 @@ export class InputComponent extends AbstractFormControl<string> {
   @Input() align: '' | 'left' | 'right' | 'center' | 'justify' = '';
   @Input() mask?: string | MaskItem[];
   @Input() pattern?: string;
+  @Input() max: number = 100000000000;
   @Input() minLength: number = 0;
+  @Input() digit: number = 5;
   @Input() maxLength: number = 100000000;
   @Input() rows: number | string | null = null;
   @Input() cols: number | string | null = null;
@@ -53,8 +54,6 @@ export class InputComponent extends AbstractFormControl<string> {
       this.inputEl?.nativeElement.select();
     }
   }
-
-  protected displayFormControl = new FormControl('');
 
   maskValue: string = '';
   override focusable = false;
@@ -84,7 +83,7 @@ export class InputComponent extends AbstractFormControl<string> {
           const selectionEnd = el.selectionEnd ?? 0;
           el.value = el.value.substring(0, selectionStart) + ch + el.value.substring(selectionEnd);
 
-          setTimeout(() => this.setValue(el.value), 100)
+          setTimeout(() => this.updateValue(), 100)
         }
 
         if (['٫', ','].includes(e.key)) return overwriteChar(el.value.length > 0 ? '.' : '-');
@@ -94,25 +93,60 @@ export class InputComponent extends AbstractFormControl<string> {
 
         const persianIndex = persianNumbers.indexOf(e.key);
         if (persianIndex > -1) return overwriteChar(persianNumbers[persianIndex]);
-      }))
+      }));
     }
 
-    this.subscription.add(this.formControl.valueChanges.subscribe(_ => this.updateDisplayControl()))
+    this.subscription.add(this.formControl.valueChanges.subscribe(e => this.updateDisplayValue()));
   }
 
-  private updateDisplayControl() {
-    if (this.formControl.value == null) {
-      this.displayFormControl.setValue(this.formControl.value);
-    } else {
-      if (this.type === 'number') {
-        if (Number.isNaN(+this.formControl.value)) {
-          this.displayFormControl.setValue(this.formControl.value);
-        } else {
-          this.displayFormControl.setValue((+this.formControl.value).toLocaleString());
-        }
-      } else {
-        this.displayFormControl.setValue(this.formControl.value);
+  override ngAfterViewInit() {
+    super.ngAfterViewInit();
+
+    this.updateDisplayValue();
+  }
+
+  protected updateValue() {
+    const value = this.inputEl?.nativeElement.value ?? '';
+    if (this.type === 'number') {
+      let valueString = value.replaceAll(',', '') ?? '';
+      if (valueString == '-') return;
+
+      if (Number.isNaN(+valueString)) {
+        valueString = fixPersianNumbers(valueString);
+        valueString = fixArabicNumbers(valueString);
       }
+
+      let numValue = +valueString;
+      if (this.digit == 0) {
+        this.formControl.setValue(Math.floor(numValue));
+      } else if (/\.$/.test(valueString)) {
+
+      } else if (/\.\d/.test(valueString)) {
+        const match = valueString.match(`\\d+\\.\\d{0,${this.digit}}`);
+        if(match) this.formControl.setValue(+match[0]);
+      } else {
+        this.formControl.setValue(numValue);
+      }
+    } else {
+      this.formControl.setValue(value);
+    }
+  }
+
+  updateDisplayValue() {
+    const el = this.inputEl?.nativeElement;
+    if (!el) return;
+    if (this.type === 'number') {
+      if (typeof this.formControl.value === 'number') {
+        el.value = Math.min(this.max, this.formControl.value).toLocaleString();
+      } else {
+        if (!this.formControl.value || Number.isNaN(+this.formControl.value)) {
+          el.value = '';
+        } else {
+          el.value = Math.min(this.max, +this.formControl.value).toLocaleString();
+        }
+      }
+    } else {
+      el.value = this.formControl.value ?? '';
     }
   }
 
@@ -133,8 +167,6 @@ export class InputComponent extends AbstractFormControl<string> {
   override init() {
     super.init();
 
-    this.updateDisplayControl();
-
     this.onKeydown.subscribe(e => {
       if (this.mask) this.maskOnKeyDown(e)
     });
@@ -142,20 +174,6 @@ export class InputComponent extends AbstractFormControl<string> {
     this.onKeyup.subscribe(e => {
       this.render();
     })
-  }
-
-  protected setValue(e: string) {
-    if (this.type === 'number') {
-      let valueString = e.replaceAll(',', '')
-      if (valueString == '-') return;
-      if (Number.isNaN(+valueString)) {
-        valueString = fixPersianNumbers(valueString);
-        valueString = fixArabicNumbers(valueString);
-      }
-      this.formControl.setValue(Number.isNaN(+valueString) ? null : +valueString);
-    } else {
-      this.formControl.setValue(e);
-    }
   }
 
   private loadMaskedValue() {
