@@ -1,10 +1,10 @@
 export class ObjectUtil {
 
   static assignNotNull(destination: any, source: any) {
-    for (const sourceKey in source) {
-      const value = source[sourceKey];
+    for (const destinationKey in destination) {
+      const value = source[destinationKey];
       if(value != null) {
-        destination[sourceKey] = value;
+        destination[destinationKey] = value;
       }
     }
   }

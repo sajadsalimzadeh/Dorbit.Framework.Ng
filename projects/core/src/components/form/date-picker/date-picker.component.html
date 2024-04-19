@@ -1,9 +1,10 @@
 <div class="control-box">
   <div class="control-container flex-1">
-    <input class="control" #inputEl [ngModel]="displayFormControl.value" [placeholder]="placeholder" [ngClass]="classControl"
+    <input class="control" #inputEl [ngModel]="displayFormControl.value"
+           [placeholder]="placeholder" [ngClass]="classControl" [style.text-align]="textAlign"
            (change)="onInputChange($event)" (focus)="focus()" (blur)="blur()" [dir]="dir"/>
   </div>
-  <div class="control-container">
+  <div class="control-container" *ngIf="clearable">
     <i class="clear icons-core-close" *ngIf="displayFormControl.value" (click)="clear()"></i>
   </div>
 </div>

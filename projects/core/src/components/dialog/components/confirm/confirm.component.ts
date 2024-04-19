@@ -12,7 +12,7 @@ import {LoadingService} from "../../../../services";
 export class ConfirmComponent implements ConfirmOptions, DialogRef {
   onClose = new EventEmitter<void>();
 
-  text!: string;
+  message!: string;
   dialog?: DialogRef;
   loading?: boolean;
   options?: DialogOptions;

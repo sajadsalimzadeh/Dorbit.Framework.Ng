@@ -35,8 +35,10 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   @Input() displayFormat = 'YYYY/MM/DD HH:mm:ss';
   @Input() valueFormat = 'YYYY-MM-DDTHH:mm:ssZ';
   @Input() locale: 'fa' | 'en' = 'fa';
+  @Input() textAlign: '' | 'left' | 'center' | 'right' = '';
   @Input() alignment: OverlayAlignments = 'bottom-center';
   @Input() openMode: 'auto' | 'type' | 'select' = 'auto';
+  @Input() clearable = true;
 
   @Output() onLeave = new EventEmitter<any>();
   @Output() onSelect = new EventEmitter<string>();

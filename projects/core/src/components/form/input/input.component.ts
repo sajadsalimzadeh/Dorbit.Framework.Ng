@@ -116,6 +116,8 @@ export class InputComponent extends AbstractFormControl<string> {
         valueString = fixArabicNumbers(valueString);
       }
 
+      if(!valueString) return;
+
       let numValue = +valueString;
       if (this.digit == 0) {
         this.formControl.setValue(Math.floor(numValue));
