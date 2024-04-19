@@ -4,6 +4,7 @@ import {DialogComponent, DialogOptions} from "../components/dialog/dialog.compon
 import {ConfirmOptions, DialogContainerComponent, PromptOptions} from "../dialog-container.component";
 import {ConfirmComponent} from "../components/confirm/confirm.component";
 import {PromptComponent} from "../components/prompt/prompt.component";
+import {NavigationStart, Router} from "@angular/router";
 
 export interface DialogRef {
   close: () => void;
@@ -15,13 +16,15 @@ export class DialogService {
   private _refs: DialogRef[] = [];
   containers: DialogContainerComponent[] = [];
 
-  constructor(private domService: DomService) {
+  constructor(private domService: DomService, router: Router) {
 
-    window.addEventListener('popstate', (e: PopStateEvent) => {
-      if(this._refs.length > 0) {
-        this._refs[this._refs.length - 1].close();
+    router.events.subscribe(e => {
+      if(e instanceof NavigationStart) {
+        if(this._refs.length > 0) {
+          this._refs[this._refs.length - 1].close();
+        }
       }
-    });
+    })
   }
 
   private create<T extends DialogRef>(component: Type<T>, init: (obj: ComponentRef<T>, container?: DialogContainerComponent) => void, name?: string) {
@@ -33,8 +36,6 @@ export class DialogService {
       if(index > -1) this._refs.splice(index, 1);
     });
     this._refs.push(componentRef.instance);
-    if(!history.state.dialog) history.pushState({dialog: true}, 'dialog');
-    else history.replaceState({dialog: true}, 'dialog');
     return componentRef.instance;
   }
 
