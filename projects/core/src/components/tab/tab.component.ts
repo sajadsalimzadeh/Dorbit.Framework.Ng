@@ -1,4 +1,4 @@
-import {Component, ContentChildren, EventEmitter, HostBinding, Input, Output, QueryList,} from '@angular/core';
+import {Component, ContentChildren, HostBinding, Input, QueryList,} from '@angular/core';
 import {Orientation} from "../../types";
 import {TabTemplateDirective} from "./components/tab-template.directive";
 import {AbstractFormControl, createControlValueAccessor} from "../form";
