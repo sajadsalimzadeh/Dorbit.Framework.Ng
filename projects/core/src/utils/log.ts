@@ -58,8 +58,8 @@ export class Logger {
   enable: boolean = true;
 
   settings: Settings = {level: LogLevel.INFO}
-  defaultOptions?: Options;
-  defaultData?: any;
+  defaultOptions: Options = {};
+  defaultData: any = {};
 
   constructor() {
     setInterval(async () => {
@@ -84,6 +84,12 @@ export class Logger {
         if (options.padding.dir.includes('left')) message = pad + message;
         if (options.padding.dir.includes('right')) message = message + pad;
       }
+
+      let logStackObj = {stack: ''};
+      (Error as any).captureStackTrace(logStackObj, this.log);
+
+      options.data ??= {};
+      options.data.stack = logStackObj?.stack?.split('\n').slice(2, 4);
 
       //show in console for debugging
       if (options?.console || this.settings.console) {
@@ -159,6 +165,8 @@ export class Logger {
   clone(name: string) {
     const logger = new Logger();
     logger.settings = {...this.settings};
+    logger.defaultOptions = {...this.defaultOptions};
+    logger.defaultData = {...this.defaultData};
     logger.name = name;
     return logger;
   }
