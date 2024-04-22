@@ -4,10 +4,8 @@
   overflow: hidden;
   max-height: 300px;
   position: relative;
+  border-radius: 3px;
   justify-content: flex-end;
-  border-radius: var(--radius-2);
-  border-end-start-radius: 0;
-  border-start-start-radius: 0;
   transition: max-height 200ms ease;
   background-color: var(--color-white);
 
@@ -25,7 +23,7 @@
   display: flex;
   padding: .7em 1.1em;
   color: var(--color-component);
-  border-inline-start: .5em solid var(--color-component);
+  border: 1px solid rgba(var(--color-component-rgb), .2);
   background-color: rgba(var(--color-component-rgb), .1);
 
   > div {
