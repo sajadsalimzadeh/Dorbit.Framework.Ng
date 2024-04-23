@@ -1,5 +1,16 @@
 export class ObjectUtil {
 
+  static equals(obj1: any, obj2: any) {
+
+    for (const key in obj1) {
+      const value1 = obj1[key];
+      const value2 = obj2[key];
+      if(value1 != value2) return false;
+    }
+
+    return true;
+  }
+
   static assignNotNull(destination: any, source: any) {
     for (const destinationKey in destination) {
       const value = source[destinationKey];
