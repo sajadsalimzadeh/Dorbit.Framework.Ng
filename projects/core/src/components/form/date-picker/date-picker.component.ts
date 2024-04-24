@@ -38,6 +38,8 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   @Input() textAlign: '' | 'left' | 'center' | 'right' = '';
   @Input() alignment: OverlayAlignments = 'bottom-center';
   @Input() openMode: 'auto' | 'type' | 'select' = 'auto';
+  @Input() icon?: string;
+  @Input() iconPos: 'start' | 'end' = 'start';
   @Input() clearable = true;
 
   @Output() onLeave = new EventEmitter<any>();

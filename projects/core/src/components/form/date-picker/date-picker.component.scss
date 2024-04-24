@@ -1,5 +1,17 @@
 @import "../../../assets/styles/mixin";
 
+.control-container {
+  display: flex;
+
+  i.icon {
+    font-size: 1.3em;
+  }
+
+  input {
+
+  }
+}
+
 .control-box {
 
   .icon {

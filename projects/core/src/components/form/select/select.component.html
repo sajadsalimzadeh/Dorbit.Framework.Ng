@@ -14,8 +14,9 @@
 
 <div class="control-box">
   <div class="control-container selected-items-container flex-1" [ngClass]="align">
+    <i *ngIf="icon" class="icon" [ngClass]="icon"></i>
     <ng-container *ngIf="selectedItems.length == 0; else hasSelectedItemTpl">
-      <div class="full-absolute placeholder px-4" *ngIf="placeholder">
+      <div class="placeholder" *ngIf="placeholder">
         {{ placeholder }}
       </div>
     </ng-container>
