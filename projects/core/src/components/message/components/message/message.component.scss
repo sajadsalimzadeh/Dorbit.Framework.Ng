@@ -77,10 +77,10 @@
 
 .progress {
   bottom: 0;
-  height: .3em;
+  height: .2em;
   position: absolute;
   transition: width 50ms linear;
-  background-color: var(--color-component);
+  background-color: rgba(var(--color-component-rgb), .3);
 }
 
 @keyframes fade-in {
