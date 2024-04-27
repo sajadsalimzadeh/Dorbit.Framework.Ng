@@ -41,6 +41,7 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   @Input() icon?: string;
   @Input() iconPos: 'start' | 'end' = 'start';
   @Input() clearable = true;
+  @Input() future = true;
 
   @Output() onLeave = new EventEmitter<any>();
   @Output() onSelect = new EventEmitter<string>();
@@ -264,16 +265,19 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   showYears() {
     this.view = 'year';
 
-    let year = this.selectedDate.get('year');
+    let year = moment().locale(this.locale).get('year');
     this.years = [year];
     for (let i = 1; i < 100; i++) {
       this.years.unshift(year - i)
-      this.years.push(year + i)
+      if (this.future) this.years.push(year + i)
     }
     const yearsEl = this.yearPickerEl?.nativeElement;
     if (yearsEl) {
       setTimeout(() => {
-        yearsEl.scrollTop = (yearsEl.scrollHeight / 2) - (yearsEl.offsetHeight / 2);
+        const activeEl = yearsEl.querySelector('.active') as HTMLElement;
+        if (activeEl) {
+          yearsEl.scrollTo({top: activeEl.offsetTop, behavior: 'smooth'});
+        }
       }, 100);
     }
   }
