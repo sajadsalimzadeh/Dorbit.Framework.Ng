@@ -45,7 +45,9 @@
   }
 
   .control-container {
+    gap: 1em;
     display: flex;
+    padding: 0 1rem;
     min-height: 3em;
     position: relative;
     align-items: center;
