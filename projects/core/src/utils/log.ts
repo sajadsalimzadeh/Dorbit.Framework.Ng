@@ -88,7 +88,11 @@ export class Logger {
       let logStackObj = {stack: ''};
       (Error as any).captureStackTrace(logStackObj, this.log);
 
-      options.data ??= {};
+      if(typeof options.data !== 'object') {
+        options.data = {
+          inner: options.data,
+        };
+      }
       options.data.stack = logStackObj?.stack?.split('\n').slice(2, 4);
 
       //show in console for debugging
@@ -164,7 +168,7 @@ export class Logger {
 
   clone(name: string) {
     const logger = new Logger();
-    logger.settings = {...this.settings};
+    logger.settings = this.settings;
     logger.defaultOptions = {...this.defaultOptions};
     logger.defaultData = {...this.defaultData};
     logger.name = name;
