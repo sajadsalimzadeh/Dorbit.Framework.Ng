@@ -24,6 +24,7 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
   @Input() isLazySearch: boolean = false;
   @Input() loading: boolean = false;
   @Input() searchable?: boolean;
+  @Input() icon?: string;
   @Input() comparator = (item: any, value: any) => this.getValue(item) == value;
 
   @Output() onSearch = new EventEmitter<string | null>();

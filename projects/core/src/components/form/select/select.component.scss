@@ -6,7 +6,6 @@
   }
 
   .text {
-    padding: 0 1em;
     font-size: 1em;
     color: var(--color-gray-5);
   }
@@ -39,23 +38,6 @@
   display: flex;
   flex-wrap: wrap;
   position: relative;
-
-  &.single {
-    height: 100%;
-
-    .item {
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      display: flex;
-      padding: 0 .5em;
-      overflow: hidden;
-      position: absolute;
-      align-items: center;
-      white-space: nowrap;
-    }
-  }
 
   &.multiple {
     padding: 0 !important;
@@ -156,6 +138,14 @@
         color: var(--color-gray-4);
       }
     }
+  }
+}
+
+.control-container {
+  .icon {
+    margin: 0 .5em;
+    font-size: 1.3em;
+    color: var(--color-gray-7);
   }
 }
 
