@@ -77,22 +77,26 @@ export class InputComponent extends AbstractFormControl<string> {
 
         if (this.type != 'number') return;
 
-        const overwriteChar = (ch: string) => {
+        const overwriteChar = (ch: any) => {
           e.preventDefault();
           const selectionStart = el.selectionStart ?? 0;
           const selectionEnd = el.selectionEnd ?? 0;
           el.value = el.value.substring(0, selectionStart) + ch + el.value.substring(selectionEnd);
+          console.log(el.value)
 
-          setTimeout(() => this.updateValue(), 100)
+          setTimeout(() => {
+            this.updateValue();
+            this.onKeyup.emit();
+          }, 100)
         }
 
         if (['٫', ','].includes(e.key)) return overwriteChar(el.value.length > 0 ? '.' : '-');
 
         const arabicIndex = arabicNumbers.indexOf(e.key);
-        if (arabicIndex > -1) return overwriteChar(arabicNumbers[arabicIndex]);
+        if (arabicIndex > -1) return overwriteChar(arabicIndex);
 
         const persianIndex = persianNumbers.indexOf(e.key);
-        if (persianIndex > -1) return overwriteChar(persianNumbers[persianIndex]);
+        if (persianIndex > -1) return overwriteChar(persianIndex);
       }));
     }
 
