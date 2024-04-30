@@ -113,20 +113,26 @@ export class InputComponent extends AbstractFormControl<string> {
     const value = this.inputEl?.nativeElement.value ?? '';
     if (this.type === 'number') {
       let valueString = value.replaceAll(',', '') ?? '';
-      if (valueString == '-') return;
+      if (valueString == '-') {
+        this.formControl.setValue(null);
+        return;
+      }
 
       if (Number.isNaN(+valueString)) {
         valueString = fixPersianNumbers(valueString);
         valueString = fixArabicNumbers(valueString);
       }
 
-      if(!valueString) return;
+      if(!valueString) {
+        this.formControl.setValue(null);
+        return;
+      }
 
       let numValue = +valueString;
       if (this.digit == 0) {
         this.formControl.setValue(Math.floor(numValue));
       } else if (/\.$/.test(valueString)) {
-
+        this.formControl.setValue(numValue);
       } else if (/\.\d/.test(valueString)) {
         const match = valueString.match(`\\d+\\.\\d{0,${this.digit}}`);
         if(match) this.formControl.setValue(+match[0]);
