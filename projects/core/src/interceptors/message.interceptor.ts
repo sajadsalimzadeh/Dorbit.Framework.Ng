@@ -18,18 +18,16 @@ export class MessageInterceptor implements HttpInterceptor {
     const translateService = this.injector.get(TranslateService);
     const key = `${text}`;
     let translate = translateService.instant(key);
-    if (translate != key) {
-      if (data) {
-        for (const dataKey in data) {
-          translate = translate.replace(`{${dataKey}}`, data[dataKey]);
-        }
+    if (data) {
+      for (const dataKey in data) {
+        translate = translate.replace(`{${dataKey}}`, data[dataKey]);
       }
-      this.messageService.show({
-        ...message,
-        body: translate,
-        color: color
-      });
     }
+    this.messageService.show({
+      ...message,
+      body: translate,
+      color: color
+    });
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -47,6 +45,7 @@ export class MessageInterceptor implements HttpInterceptor {
         }
       })).pipe(catchError(e => {
         if (e instanceof HttpErrorResponse) {
+          console.log(e)
           if (e.error?.message) {
             this.send(`message.${e.error.message}`, 'danger', undefined, e.error.data);
           } else if (e.status == 504 || e.status == 0) {
