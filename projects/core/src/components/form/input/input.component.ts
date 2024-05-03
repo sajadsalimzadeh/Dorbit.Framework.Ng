@@ -110,32 +110,31 @@ export class InputComponent extends AbstractFormControl<string> {
   }
 
   protected updateValue() {
-    const value = this.inputEl?.nativeElement.value ?? '';
+    let value = this.inputEl?.nativeElement.value ?? '';
+
+    value = fixPersianNumbers(value);
+    value = fixArabicNumbers(value);
+
     if (this.type === 'number') {
-      let valueString = value.replaceAll(',', '') ?? '';
-      if (valueString == '-') {
+      value = value.replaceAll(',', '') ?? '';
+      if (value == '-') {
         this.formControl.setValue(null);
         return;
       }
 
-      if (Number.isNaN(+valueString)) {
-        valueString = fixPersianNumbers(valueString);
-        valueString = fixArabicNumbers(valueString);
-      }
-
-      if(!valueString) {
+      if (!value) {
         this.formControl.setValue(null);
         return;
       }
 
-      let numValue = +valueString;
+      let numValue = +value;
       if (this.digit == 0) {
         this.formControl.setValue(Math.floor(numValue));
-      } else if (/\.$/.test(valueString)) {
+      } else if (/\.$/.test(value)) {
         this.formControl.setValue(numValue);
-      } else if (/\.\d/.test(valueString)) {
-        const match = valueString.match(`\\d+\\.\\d{0,${this.digit}}`);
-        if(match) this.formControl.setValue(+match[0]);
+      } else if (/\.\d/.test(value)) {
+        const match = value.match(`\\d+\\.\\d{0,${this.digit}}`);
+        if (match) this.formControl.setValue(+match[0]);
       } else {
         this.formControl.setValue(numValue);
       }
