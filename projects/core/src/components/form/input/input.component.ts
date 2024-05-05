@@ -77,22 +77,26 @@ export class InputComponent extends AbstractFormControl<string> {
 
         if (this.type != 'number') return;
 
-        const overwriteChar = (ch: string) => {
+        const overwriteChar = (ch: any) => {
           e.preventDefault();
           const selectionStart = el.selectionStart ?? 0;
           const selectionEnd = el.selectionEnd ?? 0;
           el.value = el.value.substring(0, selectionStart) + ch + el.value.substring(selectionEnd);
+          console.log(el.value)
 
-          setTimeout(() => this.updateValue(), 100)
+          setTimeout(() => {
+            this.updateValue();
+            this.onKeyup.emit();
+          }, 100)
         }
 
         if (['٫', ','].includes(e.key)) return overwriteChar(el.value.length > 0 ? '.' : '-');
 
         const arabicIndex = arabicNumbers.indexOf(e.key);
-        if (arabicIndex > -1) return overwriteChar(arabicNumbers[arabicIndex]);
+        if (arabicIndex > -1) return overwriteChar(arabicIndex);
 
         const persianIndex = persianNumbers.indexOf(e.key);
-        if (persianIndex > -1) return overwriteChar(persianNumbers[persianIndex]);
+        if (persianIndex > -1) return overwriteChar(persianIndex);
       }));
     }
 
@@ -106,26 +110,31 @@ export class InputComponent extends AbstractFormControl<string> {
   }
 
   protected updateValue() {
-    const value = this.inputEl?.nativeElement.value ?? '';
-    if (this.type === 'number') {
-      let valueString = value.replaceAll(',', '') ?? '';
-      if (valueString == '-') return;
+    let value = this.inputEl?.nativeElement.value ?? '';
 
-      if (Number.isNaN(+valueString)) {
-        valueString = fixPersianNumbers(valueString);
-        valueString = fixArabicNumbers(valueString);
+    value = fixPersianNumbers(value);
+    value = fixArabicNumbers(value);
+
+    if (this.type === 'number') {
+      value = value.replaceAll(',', '') ?? '';
+      if (value == '-') {
+        this.formControl.setValue(null);
+        return;
       }
 
-      if(!valueString) return;
+      if (!value) {
+        this.formControl.setValue(null);
+        return;
+      }
 
-      let numValue = +valueString;
+      let numValue = +value;
       if (this.digit == 0) {
         this.formControl.setValue(Math.floor(numValue));
-      } else if (/\.$/.test(valueString)) {
-
-      } else if (/\.\d/.test(valueString)) {
-        const match = valueString.match(`\\d+\\.\\d{0,${this.digit}}`);
-        if(match) this.formControl.setValue(+match[0]);
+      } else if (/\.$/.test(value)) {
+        this.formControl.setValue(numValue);
+      } else if (/\.\d/.test(value)) {
+        const match = value.match(`\\d+\\.\\d{0,${this.digit}}`);
+        if (match) this.formControl.setValue(+match[0]);
       } else {
         this.formControl.setValue(numValue);
       }
