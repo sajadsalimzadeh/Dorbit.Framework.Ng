@@ -251,7 +251,7 @@ export class InputComponent extends AbstractFormControl<string> {
   }
 
   maskOnKeyDown(e: KeyboardEvent) {
-    if (e.key.length == 1) {
+    if (e.key?.length == 1) {
       this.maskValue += e.key;
     } else {
       if (e.key == 'Backspace') {

@@ -5,8 +5,9 @@ declare global {
     distinct(): T[];
 
     toggle(value: any): T[];
-  }
 
+    groupBy(func: (x: T) => string): {[key: string]: T[]};
+  }
 }
 
 Array.prototype.distinct = function () {
@@ -17,9 +18,20 @@ Array.prototype.distinct = function () {
   }
   return items;
 }
+
 Array.prototype.toggle = function (value: any) {
   const index = this.indexOf(value);
   if (index > -1) this.splice(index, 1);
   else this.push(value)
   return this;
+}
+
+Array.prototype.groupBy = function (func: (x: any) => string) {
+  const groups: {[key: string]: any[]} = {};
+  this.forEach(item => {
+    const key = func(item);
+    if(!groups[key]) groups[key] = [];
+    groups[key].push(item);
+  });
+  return groups;
 }

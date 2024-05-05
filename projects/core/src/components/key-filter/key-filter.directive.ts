@@ -16,7 +16,7 @@ export class DevKeyFilterDirective {
     if (!this.dKeyFilter) return;
     const target = e.target;
     if (!(target instanceof HTMLInputElement)) return;
-    if (e.key.length != 1) return;
+    if (e.key?.length != 1) return;
     const isSelectAll = (target.selectionStart == 0 && target.selectionEnd == target.value.length);
 
     switch (this.dKeyFilter) {

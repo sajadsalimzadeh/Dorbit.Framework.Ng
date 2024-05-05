@@ -24,7 +24,7 @@ const logStore = new StoreDb('log-v1', 1, {
 });
 
 export const loggerConfigs = {
-  lifetime: 30 * 24 * 60 * 60 * 1000,
+  lifetime: 60 * 60 * 1000,
 }
 
 interface Settings {
@@ -135,6 +135,7 @@ export class Logger {
 
       //prevent insert empty message log
       if (log.message) {
+        log.timestamp = new Date().getTime();
         this.logs.push(log);
       }
     } catch (e) {
@@ -180,6 +181,6 @@ export const logger = new Logger();
 
 setInterval(async () => {
   const lifetime = new Date().getTime() - loggerConfigs.lifetime;
-  const items = await logStore.getTable<LogRecord>('logs').findAll(x => x.timestamp < lifetime, 1000);
+  const items = await logStore.getTable<LogRecord>('logs').findAll((key, value) => !value.timestamp || value.timestamp < lifetime, 1000);
   await logStore.getTable<LogRecord>('logs').deleteAll(items.map(x => x.id));
 }, 10000);

@@ -24,3 +24,4 @@ export * from './md5';
 export * from './number';
 export * from './enum';
 export * from './locale';
+export * from './validators';
