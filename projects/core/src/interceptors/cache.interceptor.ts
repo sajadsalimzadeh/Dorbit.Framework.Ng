@@ -53,7 +53,7 @@ export class CacheInterceptor implements HttpInterceptor {
         httpCache: x,
       });
       x.evictions?.forEach(e => {
-        this.matchItems.push({
+        this.matchItems.unshift({
           ...e,
           isEviction: true,
           httpCache: x,
@@ -90,7 +90,21 @@ export class CacheInterceptor implements HttpInterceptor {
             const key = req.url;
 
             if (matchCache.isEviction) {
-              await this.cacheService.remove(key, httpCache.storage);
+              const keys = await httpCache.storage.getAllKeys();
+              console.log(keys, matchCache.httpCache.url)
+              keys.filter(async key => {
+                if(typeof matchCache.httpCache.url == 'string') {
+                  if(key.includes(matchCache.httpCache.url)) {
+                    console.log(key)
+                    await this.cacheService.remove(key, httpCache.storage);
+                  }
+                } else {
+                  if(matchCache.httpCache.url.test(key)) {
+                    await this.cacheService.remove(key, httpCache.storage);
+                  }
+                }
+              })
+
             } else {
 
               while (this.subscriberGroups[key]) {

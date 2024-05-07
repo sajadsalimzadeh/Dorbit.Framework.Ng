@@ -13,6 +13,8 @@ interface CacheItem<T> {
 export interface ICacheStorage {
   get<T>(key: string): Promise<T | undefined>;
 
+  getAllKeys(): Promise<string[]>;
+
   set<T>(key: string, value: T | undefined): Promise<void>;
 
   remove(key: string): Promise<void>;
@@ -32,6 +34,14 @@ export class CacheStorageMemory implements ICacheStorage {
     return this.cache[this.prefix + key];
   }
 
+  async getAllKeys(): Promise<string[]> {
+    const keys = Object.keys(this.cache);
+    for (let i = 0; i < keys.length; i++) {
+      keys[i] = keys[i].substring(this.prefix.length);
+    }
+    return keys;
+  }
+
   async set<T>(key: string, value: T | undefined) {
     this.cache[this.prefix + key] = value;
   }
@@ -44,7 +54,6 @@ export class CacheStorageMemory implements ICacheStorage {
     this.cache = {};
   }
 }
-
 
 class CacheStorageJson implements ICacheStorage {
   protected readonly prefix: string;
@@ -59,6 +68,15 @@ class CacheStorageJson implements ICacheStorage {
     const jsonObject = JSON.parse(jsonString);
     if (!jsonObject) return undefined;
     return jsonObject as T;
+  }
+
+  async getAllKeys(): Promise<string[]> {
+    const keys: string[] = [];
+    for (let i = 0; i < this.storage.length; i++) {
+      const key = this.storage.key(i);
+      if (key) keys.push(key.substring(this.prefix.length));
+    }
+    return keys;
   }
 
   async set<T>(key: string, value: T | undefined) {
@@ -118,6 +136,14 @@ export class CacheStorageIndexDb implements ICacheStorage {
     return record?.value;
   }
 
+  async getAllKeys(): Promise<string[]> {
+    const keys = await this.caches.findAllKey(x => true, 10000);
+    for (let i = 0; i < keys.length; i++) {
+      keys[i] = keys[i].substring(this.prefix.length);
+    }
+    return keys;
+  }
+
   async remove(key: string) {
     await this.db.open();
     return this.caches.delete(this.prefix + key);
@@ -141,11 +167,11 @@ export class CacheService {
     try {
       const obj = await storage.get<CacheItem<T>>(key);
       if (!obj) return undefined;
-      if(!options?.ignoreExpiration && obj.expireTime < new Date().getTime()) {
+      if (!options?.ignoreExpiration && obj.expireTime < new Date().getTime()) {
         console.log('[cache] ignore for expiration,', key)
         return undefined;
       }
-      if(!options?.ignoreVersion && obj.version != this.version) {
+      if (!options?.ignoreVersion && obj.version != this.version) {
         console.log('[cache] ignore for version,', key)
         return undefined;
       }
