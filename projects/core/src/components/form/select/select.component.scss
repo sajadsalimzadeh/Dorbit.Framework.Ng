@@ -23,6 +23,10 @@
   animation: spin 200ms linear infinite;
 }
 
+.placeholder {
+  padding-inline-start: 1em;
+}
+
 .remove {
   z-index: 1000;
   cursor: pointer;
@@ -147,8 +151,8 @@
 
 .control-container {
   .icon {
-    margin: 0 .5em;
     font-size: 1.3em;
+    margin-inline-start: 1em;
     color: var(--color-gray-7);
   }
 }
