@@ -38,7 +38,8 @@ export class InputComponent extends AbstractFormControl<string> {
   @Input() align: '' | 'left' | 'right' | 'center' | 'justify' = '';
   @Input() mask?: string | MaskItem[];
   @Input() pattern?: string;
-  @Input() max: number = 100000000000;
+  @Input() min?: number;
+  @Input() max?: number;
   @Input() minLength: number = 0;
   @Input() digit: number = 5;
   @Input() maxLength: number = 100000000;
@@ -67,7 +68,6 @@ export class InputComponent extends AbstractFormControl<string> {
 
     if (this.type == "number") {
       this.inputMode = 'decimal';
-      this.keyFilter ??= 'num';
       if (!this.dir) this.dir = 'ltr';
     }
 
@@ -89,13 +89,19 @@ export class InputComponent extends AbstractFormControl<string> {
     value = fixArabicNumbers(value);
 
     if (this.type === 'number') {
+      if (!value) {
+        this.formControl.setValue(null);
+        return;
+      }
+
       // Android and Iphone number keyboard not have minus symbol
       if (value.startsWith('٫')) el.value = value = value.replace('٫', '-');
       else if (value.startsWith(',')) el.value = value = value.replace(',', '-');
       else if (value.startsWith('.')) el.value = value = value.replace('.', '-');
-
-      //prevent input minus if key filter positive
-      if(this.keyFilter?.startsWith('p-') && value.startsWith('-'))  el.value = value = value.replace('-', '');
+      
+      // string to number format
+      value = value.replaceAll(',', '') ?? '';
+      value = value.replaceAll('٫', '.') ?? '';
 
       // zero digit precision prevent point symbol
       if (value.endsWith('.')) {
@@ -103,16 +109,11 @@ export class InputComponent extends AbstractFormControl<string> {
         else el.value = value = value.replace('.', '');
       }
 
-      // string to number format
-      value = value.replaceAll(',', '') ?? '';
-
-      if (!value) {
-        this.formControl.setValue(null);
-        return;
-      }
-
       let numValue = +value;
       if (isNaN(numValue)) return;
+
+      if(this.min !== undefined) numValue = Math.max(numValue, this.min);
+      if(this.max !== undefined) numValue = Math.min(numValue, this.max);
 
       if (this.digit == 0) {
         this.formControl.setValue(Math.floor(numValue));
@@ -134,12 +135,12 @@ export class InputComponent extends AbstractFormControl<string> {
     if (!el) return;
     if (this.type === 'number') {
       if (typeof this.formControl.value === 'number') {
-        el.value = Math.min(this.max, this.formControl.value).toLocaleString();
+        el.value = this.formControl.value.toLocaleString();
       } else {
         if (!this.formControl.value || Number.isNaN(+this.formControl.value)) {
           el.value = '';
         } else {
-          el.value = Math.min(this.max, +this.formControl.value).toLocaleString();
+          el.value = (+this.formControl.value).toLocaleString();
         }
       }
     } else {
