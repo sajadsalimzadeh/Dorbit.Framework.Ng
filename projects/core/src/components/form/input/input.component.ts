@@ -98,7 +98,7 @@ export class InputComponent extends AbstractFormControl<string> {
       if (value.startsWith('٫')) el.value = value = value.replace('٫', '-');
       else if (value.startsWith(',')) el.value = value = value.replace(',', '-');
       else if (value.startsWith('.')) el.value = value = value.replace('.', '-');
-      
+
       // string to number format
       value = value.replaceAll(',', '') ?? '';
       value = value.replaceAll('٫', '.') ?? '';

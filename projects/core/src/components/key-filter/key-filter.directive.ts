@@ -1,7 +1,7 @@
 import {Directive, ElementRef, HostListener, Input, NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 
-const intRegex = /^[0-9\u06F0-\u06F9\u0660-\u0669]$/;
+const intRegex = /^[0-9]$/;
 
 export type KeyFilters = 'p-int' | 'int' | 'n-int' | 'p-num' | 'num' | 'n-num' | 'hex' | 'email' | 'alpha' | 'alphnum' | 'persian' | string;
 
