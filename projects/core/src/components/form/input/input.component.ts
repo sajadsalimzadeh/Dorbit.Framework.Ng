@@ -128,6 +128,7 @@ export class InputComponent extends AbstractFormControl<string> {
     } else {
       this.formControl.setValue(value);
     }
+    this.onKeyup.emit();
   }
 
   updateDisplayValue() {
