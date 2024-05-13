@@ -49,13 +49,13 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
     this.close();
   }
 
-  optionTemplate?: TemplateRef<any>;
-
   @ContentChildren(TemplateDirective) set templates(value: QueryList<TemplateDirective>) {
     if (value) {
       this.optionTemplate = value.find(x => x.includesName('option', true))?.template;
     }
   }
+
+  optionTemplate?: TemplateRef<any>;
 
   override onClick(e: MouseEvent) {
     e.stopPropagation();
@@ -260,5 +260,9 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
     if (this.overlayRef) {
       this.overlayRef.destroy();
     }
+  }
+
+  onItemsClick(e: Event) {
+    e.stopPropagation();
   }
 }

@@ -16,15 +16,25 @@ export class OverlayService {
   defaultOptions: OverlayOptions = {}
 
   constructor(private domService: DomService) {
+    window.addEventListener('touchend', e => {
+      this.refs.forEach(x => x.destroy());
+    });
+    window.addEventListener('click', e => {
+      this.refs.forEach(x => x.destroy());
+    });
   }
 
   create(options = this.defaultOptions) {
-    this.refs.filter(x => x.autoClose).forEach(x => {
-      x.destroy();
-    });
+    this.refs.filter(x => x.autoClose).forEach(x => x.destroy());
 
     const componentRef = this.domService.createByComponent(OverlayComponent);
     const component = componentRef.instance;
+    component.elementRef.nativeElement.addEventListener('click', e => {
+      e.stopPropagation();
+    });
+    component.elementRef.nativeElement.addEventListener('touchend', e => {
+      e.stopPropagation();
+    });
 
     if (!options.ref) options.ref = document.body;
     Object.assign(component, options);

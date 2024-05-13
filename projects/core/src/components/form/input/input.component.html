@@ -3,14 +3,14 @@
     <i *ngIf="icon" [ngClass]="icon + ' ' + (iconPos)"></i>
     <ng-container *ngSwitchCase="'textarea'">
       <textarea #inputEl class="control" [name]="name" [ngClass]="classControl" [placeholder]="placeholder" [style]="styleControl"
-                [minLength]="minLength" [maxLength]="maxLength" [rows]="rows" [cols]="cols" [dir]="dir" [style.text-align]="align" [autofocus]="!!autofocus"
+                [minLength]="minLength" [maxLength]="maxLength" [rows]="rows" [cols]="cols" [dir]="dir" [style.text-align]="align"
                 (input)="updateValue()" (focus)="focus()" (blur)="blur()" [disabled]="formControl.disabled"
                 (keyup)="onKeyup.emit($event)" (keydown)="onKeydown.emit($event)"></textarea>
     </ng-container>
     <ng-container *ngSwitchDefault>
       <input #inputEl class="control" [name]="name" [ngClass]="classControl" [type]="(type == 'number' ? 'text' : type)"
              [placeholder]="placeholder" [minLength]="minLength" [maxLength]="maxLength"
-             [dir]="dir" [style.text-align]="align" [style]="styleControl" [autofocus]="!!autofocus"
+             [dir]="dir" [style.text-align]="align" [style]="styleControl"
              (input)="updateValue()" (focus)="focus()" (blur)="blur()" [disabled]="formControl.disabled"
              (keyup)="onKeyup.emit($event)" (keydown)="onKeydown.emit($event)" [dKeyFilter]="keyFilter"/>
     </ng-container>
