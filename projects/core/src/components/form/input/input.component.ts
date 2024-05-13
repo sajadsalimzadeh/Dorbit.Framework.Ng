@@ -112,19 +112,28 @@ export class InputComponent extends AbstractFormControl<string> {
       let numValue = +value;
       if (isNaN(numValue)) return;
 
+      const splitValue = value.split('.');
+      if(splitValue.length > 1 && splitValue[1]) {
+        numValue = +(splitValue[0] + '.' + splitValue[1].substring(0, this.digit));
+      }
+
       if(this.min !== undefined) numValue = Math.max(numValue, this.min);
       if(this.max !== undefined) numValue = Math.min(numValue, this.max);
 
-      if (this.digit == 0) {
-        this.formControl.setValue(Math.floor(numValue));
-      } else if (/\.$/.test(value)) {
-        this.formControl.setValue(numValue);
-      } else if (/\.\d/.test(value)) {
-        const match = value.match(`-*\\d+\\.\\d{0,${this.digit}}`);
-        if (match) this.formControl.setValue(+match[0]);
-      } else {
-        this.formControl.setValue(numValue);
-      }
+      this.formControl.setValue(numValue);
+      //
+      // if (this.digit == 0) {
+      //   this.formControl.setValue(Math.floor(numValue));
+      // } else if (/\.$/.test(value)) {
+      //   this.formControl.setValue(numValue);
+      // } else if (/\.\d/.test(value)) {
+      //   const match = value.match(`-*\\d+\\.\\d{0,${this.digit}}`);
+      //   if (match) this.formControl.setValue(+match[0]);
+      // } else {
+      //
+      //
+      //   this.formControl.setValue(numValue);
+      // }
     } else {
       this.formControl.setValue(value);
     }
