@@ -12,14 +12,14 @@ const persianNumbers = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "�
 
 function fixPersianNumbers(str: string) {
   for (let i = 0; i < 10; i++) {
-    str = str.replace(persianNumbers[i], i.toString());
+    str = str.replaceAll(persianNumbers[i], i.toString());
   }
   return str;
 }
 
 function fixArabicNumbers(str: string) {
   for (let i = 0; i < 10; i++) {
-    str = str.replace(arabicNumbers[i], i.toString());
+    str = str.replaceAll(arabicNumbers[i], i.toString());
   }
   return str;
 }
@@ -85,6 +85,7 @@ export class InputComponent extends AbstractFormControl<string> {
     const el = this.inputEl.nativeElement;
     let value = el.value ?? '';
 
+    console.log(value)
     value = fixPersianNumbers(value);
     value = fixArabicNumbers(value);
 
@@ -101,13 +102,16 @@ export class InputComponent extends AbstractFormControl<string> {
 
       // string to number format
       value = value.replaceAll(',', '') ?? '';
-      value = value.replaceAll('٫', '.') ?? '';
+      value = value.replaceAll('٫', '') ?? '';
+      value = value.replaceAll('٬', '') ?? '';
+      console.log(value)
 
       // zero digit precision prevent point symbol
       if (value.endsWith('.')) {
         if (this.digit > 0) return;
         else el.value = value = value.replace('.', '');
       }
+
 
       let numValue = +value;
       if (isNaN(numValue)) return;
