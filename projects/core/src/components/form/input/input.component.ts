@@ -149,12 +149,12 @@ export class InputComponent extends AbstractFormControl<string> {
     if (!el) return;
     if (this.type === 'number') {
       if (typeof this.formControl.value === 'number') {
-        el.value = this.formControl.value.toLocaleString();
+        el.value = this.formControl.value.toLocaleString('en-US');
       } else {
         if (!this.formControl.value || Number.isNaN(+this.formControl.value)) {
           el.value = '';
         } else {
-          el.value = (+this.formControl.value).toLocaleString();
+          el.value = (+this.formControl.value).toLocaleString('en-US');
         }
       }
     } else {

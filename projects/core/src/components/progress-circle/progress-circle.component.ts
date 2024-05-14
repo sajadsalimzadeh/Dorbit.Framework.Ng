@@ -88,7 +88,7 @@ export class ProgressCircleComponent extends AbstractComponent {
     text.setAttribute("x", '50%');
     text.setAttribute("y", '50%');
     text.setAttribute("font-size", fontSize + '');
-    text.innerHTML = this.value.toLocaleString();
+    text.innerHTML = this.value.toLocaleString('en-US');
     this.svg.appendChild(text);
     this.text = text;
   }

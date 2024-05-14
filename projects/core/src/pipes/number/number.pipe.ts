@@ -6,7 +6,7 @@ import {NgModule, Pipe} from "@angular/core";
 export class NumberPipe {
   transform(value: number): string {
     if (!value || Number.isNaN(+value)) return '';
-    return (+value).toLocaleString();
+    return (+value).toLocaleString('en-US');
   }
 }
 
