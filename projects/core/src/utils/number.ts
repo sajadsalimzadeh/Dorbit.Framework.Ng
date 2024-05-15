@@ -1,11 +1,16 @@
 export class NumberUtil {
-  static round(n: number, decimal: number = 0) {
-    const coefficient = Math.pow(10, decimal);
-    return Math.round(n * coefficient) / coefficient;
+  static round(n: number, precision: number = 0) {
+    const coefficient = Math.pow(10, precision);
+    return Math.floor(n * coefficient) / coefficient;
+  }
+
+  static format(n: number | undefined | null, precision: number = 0) {
+    if (typeof n === 'number') return this.round(n, precision).toLocaleString('en-US');
+    return '';
   }
 
   static toTime(totalSec: number, format: 'sec' | 'min' | 'hour' = 'min', pad = 5) {
-    if(totalSec < 0) totalSec = 0;
+    if (totalSec < 0) totalSec = 0;
     if (format == 'sec') return totalSec.toString().padStart(pad, '0');
 
     const min = Math.floor(totalSec / 60);

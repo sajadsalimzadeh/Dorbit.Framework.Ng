@@ -1,5 +1,6 @@
 import {Component, Input, SimpleChanges} from '@angular/core';
 import {AbstractComponent} from "../abstract.component";
+import {NumberUtil} from "../../utils";
 
 @Component({
   selector: 'd-progress-circle',
@@ -88,7 +89,7 @@ export class ProgressCircleComponent extends AbstractComponent {
     text.setAttribute("x", '50%');
     text.setAttribute("y", '50%');
     text.setAttribute("font-size", fontSize + '');
-    text.innerHTML = this.value.toLocaleString('en-US');
+    text.innerHTML = NumberUtil.format(this.value, 2);
     this.svg.appendChild(text);
     this.text = text;
   }

@@ -1,12 +1,13 @@
 import {NgModule, Pipe} from "@angular/core";
+import {NumberUtil} from "@framework";
 
 @Pipe({
   name: 'dNumber'
 })
 export class NumberPipe {
-  transform(value: number): string {
+  transform(value: number, precision: number = 0): string {
     if (!value || Number.isNaN(+value)) return '';
-    return (+value).toLocaleString('en-US');
+    return NumberUtil.format(+value, precision);
   }
 }
 

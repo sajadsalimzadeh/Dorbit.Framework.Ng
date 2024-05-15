@@ -1,28 +1,31 @@
 import {Component, HostListener, Injector, Input,} from '@angular/core';
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
 import {KeyFilters} from "../../key-filter/key-filter.directive";
+import {NumberUtil} from "../../../utils";
 
 export interface MaskItem {
   placeholder: string;
   pattern?: RegExp;
 }
 
-const arabicNumbers = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
-const persianNumbers = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+const p2e = (s: string) => s.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d).toString())
+const a2e = (s: string) => s.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d).toString())
+// const arabicNumbers = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
+// const persianNumbers = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
 
-function fixPersianNumbers(str: string) {
-  for (let i = 0; i < 10; i++) {
-    str = str.replaceAll(persianNumbers[i], i.toString());
-  }
-  return str;
-}
-
-function fixArabicNumbers(str: string) {
-  for (let i = 0; i < 10; i++) {
-    str = str.replaceAll(arabicNumbers[i], i.toString());
-  }
-  return str;
-}
+// function fixPersianNumbers(str: string) {
+//   for (let i = 0; i < 10; i++) {
+//     str = str.replaceAll(persianNumbers[i], i.toString());
+//   }
+//   return str;
+// }
+//
+// function fixArabicNumbers(str: string) {
+//   for (let i = 0; i < 10; i++) {
+//     str = str.replaceAll(arabicNumbers[i], i.toString());
+//   }
+//   return str;
+// }
 
 @Component({
   selector: 'd-input',
@@ -41,7 +44,7 @@ export class InputComponent extends AbstractFormControl<string> {
   @Input() min?: number;
   @Input() max?: number;
   @Input() minLength: number = 0;
-  @Input() digit: number = 5;
+  @Input() precision: number = 5;
   @Input() maxLength: number = 100000000;
   @Input() rows: number | string | null = null;
   @Input() cols: number | string | null = null;
@@ -85,9 +88,8 @@ export class InputComponent extends AbstractFormControl<string> {
     const el = this.inputEl.nativeElement;
     let value = el.value ?? '';
 
-    console.log(value)
-    value = fixPersianNumbers(value);
-    value = fixArabicNumbers(value);
+    value = p2e(value);
+    value = a2e(value);
 
     if (this.type === 'number') {
       if (!value) {
@@ -108,7 +110,7 @@ export class InputComponent extends AbstractFormControl<string> {
 
       // zero digit precision prevent point symbol
       if (value.endsWith('.')) {
-        if (this.digit > 0) return;
+        if (this.precision > 0) return;
         else el.value = value = value.replace('.', '');
       }
 
@@ -117,12 +119,12 @@ export class InputComponent extends AbstractFormControl<string> {
       if (isNaN(numValue)) return;
 
       const splitValue = value.split('.');
-      if(splitValue.length > 1 && splitValue[1]) {
-        numValue = +(splitValue[0] + '.' + splitValue[1].substring(0, this.digit));
+      if (splitValue.length > 1 && splitValue[1]) {
+        numValue = +(splitValue[0] + '.' + splitValue[1].substring(0, this.precision));
       }
 
-      if(this.min !== undefined) numValue = Math.max(numValue, this.min);
-      if(this.max !== undefined) numValue = Math.min(numValue, this.max);
+      if (this.min !== undefined) numValue = Math.max(numValue, this.min);
+      if (this.max !== undefined) numValue = Math.min(numValue, this.max);
 
       this.formControl.setValue(numValue);
       //
@@ -149,12 +151,12 @@ export class InputComponent extends AbstractFormControl<string> {
     if (!el) return;
     if (this.type === 'number') {
       if (typeof this.formControl.value === 'number') {
-        el.value = this.formControl.value.toLocaleString('en-US');
+        el.value = NumberUtil.format(this.formControl.value, this.precision);
       } else {
         if (!this.formControl.value || Number.isNaN(+this.formControl.value)) {
           el.value = '';
         } else {
-          el.value = (+this.formControl.value).toLocaleString('en-US');
+          el.value = NumberUtil.format(+this.formControl.value, this.precision);
         }
       }
     } else {
