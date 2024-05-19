@@ -195,7 +195,6 @@ export abstract class AbstractFormControl<T> extends AbstractComponent implement
 
   writeValue(value: T): void {
     if (this.formControl?.getRawValue() !== value) {
-      console.log(this.formControl?.getRawValue(),value)
       this.formControl?.setValue(value);
     }
     this.render();

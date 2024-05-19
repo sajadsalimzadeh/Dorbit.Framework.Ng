@@ -60,23 +60,13 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
   override onClick(e: MouseEvent) {
     e.stopPropagation();
     super.onClick(e);
-    if(this.focused) this.open();
+    if (this.focused) this.open();
   }
 
   override onFocus(e: FocusEvent) {
     e.stopPropagation();
     super.onFocus(e);
     this.open();
-  }
-
-  override onBlur(e: FocusEvent) {
-    super.onBlur(e);
-
-    setTimeout(() => {
-      if (!this.focused) {
-        this.close();
-      }
-    }, 1000)
   }
 
   overlayRef?: OverlayRef;
