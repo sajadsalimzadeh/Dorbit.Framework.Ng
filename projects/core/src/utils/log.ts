@@ -64,9 +64,13 @@ export class Logger {
   constructor() {
     setInterval(async () => {
       const logs = this.logs;
-      this.logs = [];
-      await logStore.getTable('logs').addAll(logs);
-    }, 1000);
+      try {
+        this.logs = [];
+        await logStore.getTable('logs').addAll(logs);
+      } catch (e) {
+        console.log('error on save log', logs)
+      }
+    }, 2000);
   }
 
   private log(message: string, level: LogLevel, options?: Options) {
@@ -88,7 +92,7 @@ export class Logger {
       let logStackObj = {stack: ''};
       (Error as any).captureStackTrace(logStackObj, this.log);
 
-      if(typeof options.data !== 'object') {
+      if (typeof options.data !== 'object') {
         options.data = {
           inner: options.data,
         };
