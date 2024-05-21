@@ -68,7 +68,7 @@ export class Logger {
         this.logs = [];
         await logStore.getTable('logs').addAll(logs);
       } catch (e) {
-        console.log('error on save log', logs)
+        console.log('error on save log', logs, e)
       }
     }, 2000);
   }
