@@ -126,8 +126,8 @@ export class InputComponent extends AbstractFormControl<string> {
 
         const splitValue = value.split('.');
         if (splitValue.length > 1 && splitValue[1]) {
-          const correct = +splitValue[0];
-          const decimal = +splitValue[1].substring(0, this.precision);
+          const correct = splitValue[0];
+          const decimal = splitValue[1].substring(0, this.precision);
           if (+decimal == 0) return;
           numValue = +(correct + '.' + decimal);
         }
