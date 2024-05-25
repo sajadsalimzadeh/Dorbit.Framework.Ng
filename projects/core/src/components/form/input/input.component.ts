@@ -106,7 +106,6 @@ export class InputComponent extends AbstractFormControl<string> {
       value = value.replaceAll(',', '') ?? '';
       value = value.replaceAll('٫', '') ?? '';
       value = value.replaceAll('٬', '') ?? '';
-      console.log(value)
 
       // zero digit precision prevent point symbol
       if (value.endsWith('.')) {
@@ -120,7 +119,10 @@ export class InputComponent extends AbstractFormControl<string> {
 
       const splitValue = value.split('.');
       if (splitValue.length > 1 && splitValue[1]) {
-        numValue = +(splitValue[0] + '.' + splitValue[1].substring(0, this.precision));
+        const correct = splitValue[0];
+        const decimal = splitValue[1].substring(0, this.precision);
+        if(+decimal == 0) return;
+        numValue = +(correct + '.' + decimal);
       }
 
       if (this.min !== undefined) numValue = Math.max(numValue, this.min);
