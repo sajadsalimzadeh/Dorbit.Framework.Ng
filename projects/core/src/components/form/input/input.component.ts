@@ -91,61 +91,57 @@ export class InputComponent extends AbstractFormControl<string> {
     value = p2e(value);
     value = a2e(value);
 
-    if (this.type === 'number') {
-      if (!value) {
-        this.formControl.setValue(null);
-        return;
+    try {
+      if (this.type === 'number') {
+        if (!value) {
+          this.formControl.setValue(null);
+          return;
+        }
+
+        // Android and Iphone number keyboard not have minus symbol
+        if (value.startsWith('٫')) el.value = value = value.replace('٫', '-');
+        else if (value.startsWith(',')) el.value = value = value.replace(',', '-');
+        else if (value.startsWith('.')) el.value = value = value.replace('.', '-');
+
+        if (value.endsWith('٫')) el.value = value = value.substring(0, value.length - 1) + '.';
+        else if (value.endsWith(',')) el.value = value = value.substring(0, value.length - 1) + '.';
+        else if (value.endsWith('.')) el.value = value = value.substring(0, value.length - 1) + '.';
+
+        // string to number format
+        value = value.replaceAll(',', '') ?? '';
+
+        let numValue = +value;
+        if (isNaN(numValue)) return;
+
+        // zero digit precision prevent point symbol
+        if (value.endsWith('.')) {
+          if (this.precision > 0) {
+            if(this.formControl.value != numValue) {
+              this.formControl.setValue(numValue);
+            }
+            return;
+          }
+          else el.value = value = value.replace('.', '');
+        }
+
+        const splitValue = value.split('.');
+        if (splitValue.length > 1 && splitValue[1]) {
+          const correct = +splitValue[0];
+          const decimal = +splitValue[1].substring(0, this.precision);
+          if (+decimal == 0) return;
+          numValue = +(correct + '.' + decimal);
+        }
+
+        if (this.min !== undefined) numValue = Math.max(numValue, this.min);
+        if (this.max !== undefined) numValue = Math.min(numValue, this.max);
+
+        this.formControl.setValue(numValue);
+      } else {
+        this.formControl.setValue(value);
       }
-
-      // Android and Iphone number keyboard not have minus symbol
-      if (value.startsWith('٫')) el.value = value = value.replace('٫', '-');
-      else if (value.startsWith(',')) el.value = value = value.replace(',', '-');
-      else if (value.startsWith('.')) el.value = value = value.replace('.', '-');
-
-      // string to number format
-      value = value.replaceAll(',', '') ?? '';
-      value = value.replaceAll('٫', '') ?? '';
-      value = value.replaceAll('٬', '') ?? '';
-
-      // zero digit precision prevent point symbol
-      if (value.endsWith('.')) {
-        if (this.precision > 0) return;
-        else el.value = value = value.replace('.', '');
-      }
-
-
-      let numValue = +value;
-      if (isNaN(numValue)) return;
-
-      const splitValue = value.split('.');
-      if (splitValue.length > 1 && splitValue[1]) {
-        const correct = splitValue[0];
-        const decimal = splitValue[1].substring(0, this.precision);
-        if(+decimal == 0) return;
-        numValue = +(correct + '.' + decimal);
-      }
-
-      if (this.min !== undefined) numValue = Math.max(numValue, this.min);
-      if (this.max !== undefined) numValue = Math.min(numValue, this.max);
-
-      this.formControl.setValue(numValue);
-      //
-      // if (this.digit == 0) {
-      //   this.formControl.setValue(Math.floor(numValue));
-      // } else if (/\.$/.test(value)) {
-      //   this.formControl.setValue(numValue);
-      // } else if (/\.\d/.test(value)) {
-      //   const match = value.match(`-*\\d+\\.\\d{0,${this.digit}}`);
-      //   if (match) this.formControl.setValue(+match[0]);
-      // } else {
-      //
-      //
-      //   this.formControl.setValue(numValue);
-      // }
-    } else {
-      this.formControl.setValue(value);
+    } finally {
+      this.onKeyup.emit();
     }
-    this.onKeyup.emit();
   }
 
   updateDisplayValue() {
