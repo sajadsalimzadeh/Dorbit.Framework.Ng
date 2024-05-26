@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, ElementRef, HostListener, Input, ViewChild} from '@angular/core';
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
 import {Orientation} from "../../../types";
+import {NumberUtil} from "../../../utils";
 
 export interface VolumeRange {
   start: number;
@@ -18,9 +19,13 @@ export class VolumeComponent extends AbstractFormControl<number | VolumeRange> i
   @Input() min = 0;
   @Input() max = 100;
   @Input() step = 1;
+  @Input() showRange: boolean = true;
+  @Input() showValue: boolean = true;
   @Input() orientation: Orientation = 'horizontal';
   @Input() mode: 'single' | 'multiple' = 'single';
+  @Input() formatter: (value: number) => string = (value: number) => NumberUtil.format(value);
 
+  @ViewChild('volumeBoxEl') volumeBoxEl?: ElementRef<HTMLDivElement>;
   @ViewChild('valueBarEl') valueBarEl?: ElementRef<HTMLDivElement>;
 
   @HostListener('window:mouseup', ['$event'])
@@ -30,14 +35,22 @@ export class VolumeComponent extends AbstractFormControl<number | VolumeRange> i
     }
   }
 
+  @HostListener('window:touchend', ['$event'])
+  onWindowTouchEnd() {
+    if (this.onTouchMove) {
+      window.removeEventListener('touchend', this.onTouchMove)
+    }
+  }
+
   private onMouseMove?: (e: MouseEvent) => void;
+  private onTouchMove?: (e: TouchEvent) => void;
 
   private getRange(): VolumeRange {
-    if (typeof this.formControl?.value === 'object') {
+    if (this.formControl?.value && typeof this.formControl?.value === 'object') {
       return this.formControl.value;
     }
     return {
-      start: this.min,
+      start: this.min ?? 0,
       end: this.formControl?.value
     }
   }
@@ -58,7 +71,7 @@ export class VolumeComponent extends AbstractFormControl<number | VolumeRange> i
   }
 
   processStyles() {
-    const containerBarEl = this.elementRef?.nativeElement;
+    const containerBarEl = this.volumeBoxEl?.nativeElement;
     const valueBarEl = this.valueBarEl?.nativeElement;
     if (!containerBarEl || !valueBarEl) return;
 
@@ -88,8 +101,8 @@ export class VolumeComponent extends AbstractFormControl<number | VolumeRange> i
     }
   }
 
-  onDragStart(e: MouseEvent, type: 'start' | 'end') {
-    const containerBarEl = this.elementRef?.nativeElement;
+  onDragStart(e: MouseEvent | TouchEvent, type: 'start' | 'end') {
+    const containerBarEl = this.volumeBoxEl?.nativeElement;
     if (!containerBarEl) return;
 
     const totalSize = (this.orientation == 'horizontal' ? containerBarEl.offsetWidth : containerBarEl.offsetHeight);
@@ -117,14 +130,31 @@ export class VolumeComponent extends AbstractFormControl<number | VolumeRange> i
     }
     const firstValue = getValue();
 
-    this.onWindowMouseUp();
-    window.addEventListener('mousemove', this.onMouseMove = (we) => {
-      const diff = (this.orientation == 'horizontal' ? (we.pageX - e.pageX) : (we.pageY - e.pageY));
-      let value = firstValue + (diff / stepSize);
-      value = Math.round(value / this.step) * this.step;
-      if (getValue() != value) {
-        setValue(value);
-      }
-    })
+    if (e instanceof TouchEvent) {
+      this.onWindowTouchEnd();
+      window.addEventListener('touchmove', this.onTouchMove = (we) => {
+        console.log(e)
+        const diff = (this.orientation == 'horizontal' ? (we.touches[0].pageX - e.touches[0].pageX) : (we.touches[0].pageY - e.touches[0].pageY));
+        let value = firstValue + (diff / stepSize);
+        value = Math.round(value / this.step) * this.step;
+        if (getValue() != value) {
+          setValue(value);
+        }
+      });
+    }
+
+    if (e instanceof MouseEvent) {
+      this.onWindowMouseUp();
+      window.addEventListener('mousemove', this.onMouseMove = (we) => {
+        const diff = (this.orientation == 'horizontal' ? (we.pageX - e.pageX) : (we.pageY - e.pageY));
+        let value = firstValue + (diff / stepSize);
+        value = Math.round(value / this.step) * this.step;
+        if (getValue() != value) {
+          setValue(value);
+        }
+      });
+    }
+
+
   }
 }

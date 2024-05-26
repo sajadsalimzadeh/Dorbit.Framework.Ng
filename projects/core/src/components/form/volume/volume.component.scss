@@ -1,18 +1,14 @@
 :host {
+  gap: .5em;
   user-select: none;
   position: relative;
-  display: block !important;
-  background-color: var(--color-gray--5);
+  align-items: center;
+  display: flex !important;
+  direction: ltr !important;
 
   &.horizontal {
     width: 100%;
-    height: .5rem;
-    margin: .5rem 0;
-
-    .value-bar {
-      top: 0;
-      bottom: 0;
-    }
+    padding: .5rem 0;
 
     &.ltr {
       .bullet {
@@ -38,6 +34,15 @@
       }
     }
 
+    .volume-box {
+      height: .5rem;
+    }
+
+    .value-bar {
+      top: 0;
+      bottom: 0;
+    }
+
     .bullet {
       &.start {
         margin-inline-start: -.75rem;
@@ -47,12 +52,26 @@
         margin-inline-end: -.75rem;
       }
     }
+
+    .value {
+      top: 100%;
+      left: 50%;
+      height: 8px;
+      display: flex;
+      font-weight: bold;
+      position: absolute;
+      transform: translateX(-50%);
+      align-items: center;
+    }
   }
 
   &.vertical {
-    width: .5rem;
     height: 100%;
-    margin: 0 .5rem;
+    padding: 0 .5rem;
+
+    .volume-box {
+      width: .5rem;
+    }
 
     .value-bar {
       left: 0;
@@ -73,9 +92,18 @@
     }
   }
 
+  .volume-box {
+    flex: 1;
+    height: 100%;
+    border-radius: 4px;
+    position: relative;
+    background-color: var(--color-gray--5);
+  }
+
   .value-bar {
     display: flex;
     position: absolute;
+    border-radius: 4px;
     align-items: center;
     background-color: var(--color-component);
 
