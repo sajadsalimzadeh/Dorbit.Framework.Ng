@@ -38,7 +38,7 @@ export class VolumeComponent extends AbstractFormControl<number | VolumeRange> i
   @HostListener('window:touchend', ['$event'])
   onWindowTouchEnd() {
     if (this.onTouchMove) {
-      window.removeEventListener('touchend', this.onTouchMove)
+      window.removeEventListener('touchmove', this.onTouchMove)
     }
   }
 
@@ -102,6 +102,7 @@ export class VolumeComponent extends AbstractFormControl<number | VolumeRange> i
   }
 
   onDragStart(e: MouseEvent | TouchEvent, type: 'start' | 'end') {
+    if(this.formControl.disabled) return;
     const containerBarEl = this.volumeBoxEl?.nativeElement;
     if (!containerBarEl) return;
 

@@ -6,6 +6,10 @@
   display: flex !important;
   direction: ltr !important;
 
+  &.disabled {
+    opacity: .4;
+  }
+
   &.horizontal {
     width: 100%;
     padding: .5rem 0;
@@ -53,14 +57,14 @@
       }
     }
 
+    .min, .max {
+      font-size: .9em;
+    }
+
     .value {
-      top: 100%;
-      left: 50%;
-      height: 8px;
       display: flex;
+      font-size: 1.1em;
       font-weight: bold;
-      position: absolute;
-      transform: translateX(-50%);
       align-items: center;
     }
   }
@@ -111,10 +115,10 @@
       width: 0;
       height: 0;
       cursor: grab;
-      padding: .5rem;
+      display: flex;
+      padding: .6em;
       position: absolute;
-      border-radius: 50%;
-      display: inline-block;
+      border-radius: 4px;
       background-color: var(--color-white);
       border: 2px solid var(--color-component);
     }
