@@ -1,5 +1,18 @@
-<div class="value-bar" #valueBarEl>
-  <span class="bullet start" *ngIf="mode == 'multiple'" (mousedown)="onDragStart($event, 'start')"></span>
-  <span class="gap"></span>
-  <span class="bullet end" (mousedown)="onDragStart($event, 'end')"></span>
+<span *ngIf="showValue && orientation == 'horizontal'" class="value">{{ formatter(formControl.value) }}</span>
+<label *ngIf="showRange" class="min">{{ formatter(min) }}</label>
+<div class="volume-box" #volumeBoxEl>
+  <div class="value-bar" #valueBarEl>
+    <a class="bullet start" *ngIf="mode == 'multiple'" (mousedown)="onDragStart($event, 'start')" (touchstart)="onDragStart($event, 'start')">
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+    <span class="gap"></span>
+    <a class="bullet end" (mousedown)="onDragStart($event, 'end')" (touchstart)="onDragStart($event, 'end')">
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
 </div>
+<label *ngIf="showRange" class="max">{{ formatter(max) }}</label>

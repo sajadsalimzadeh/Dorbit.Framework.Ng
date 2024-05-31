@@ -1,7 +1,7 @@
 export class NumberUtil {
   static round(n: number, precision: number = 0) {
     const coefficient = Math.pow(10, precision);
-    return Math.floor(n * coefficient) / coefficient;
+    return Math.round(n * coefficient) / coefficient;
   }
 
   static format(n: number | undefined | null, precision: number = 0) {
