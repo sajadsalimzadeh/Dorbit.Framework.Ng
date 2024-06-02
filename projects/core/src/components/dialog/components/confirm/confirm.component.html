@@ -1,8 +1,8 @@
 <ng-template #confirmTpl>
-  <div class="text">{{message}}</div>
+  <div class="text" *ngIf="message">{{ message }}</div>
   <div class="buttons flex-row flex-gap-3">
-    <d-button *ngFor="let button of buttons" class="px-7" [color]="button.color ?? 'primary'" [loading]="loading || loadingService.loading" (click)="button.action(button)">
-      {{button.text}}
+    <d-button *ngFor="let button of buttons" [color]="button.color ?? 'primary'" [loading]="loading || loadingService.loading" (click)="button.action(button)">
+      <span class="px-7">{{ button.text }}</span>
     </d-button>
   </div>
 </ng-template>

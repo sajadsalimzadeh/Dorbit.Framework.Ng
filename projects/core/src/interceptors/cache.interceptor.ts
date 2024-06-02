@@ -10,6 +10,7 @@ import {APP_VERSION} from "../types";
 export interface HttpCacheBase {
   url: RegExp | string;
   methods: string[],
+  lazy?: boolean;
   constraints?: {
     offline?: boolean;
     version?: boolean;
@@ -91,15 +92,13 @@ export class CacheInterceptor implements HttpInterceptor {
 
             if (matchCache.isEviction) {
               const keys = await httpCache.storage.getAllKeys();
-              console.log(keys, matchCache.httpCache.url)
               keys.filter(async key => {
-                if(typeof matchCache.httpCache.url == 'string') {
-                  if(key.includes(matchCache.httpCache.url)) {
-                    console.log(key)
+                if (typeof matchCache.httpCache.url == 'string') {
+                  if (key.includes(matchCache.httpCache.url)) {
                     await this.cacheService.remove(key, httpCache.storage);
                   }
                 } else {
-                  if(matchCache.httpCache.url.test(key)) {
+                  if (matchCache.httpCache.url.test(key)) {
                     await this.cacheService.remove(key, httpCache.storage);
                   }
                 }
@@ -114,21 +113,22 @@ export class CacheInterceptor implements HttpInterceptor {
 
               const isOffline = !internetStateService.$status.value;
               if (isOffline) {
-
-                const cache = await this.cacheService.get(key, httpCache.storage, {ignoreExpiration: true, ignoreVersion: true});
-                if (cache) {
+                const cache = await this.cacheService.getItem(key, httpCache.storage);
+                if (cache.data) {
                   this.subscriberGroups[req.url] = false;
-                  ob.next(new HttpResponse({body: cache, status: 200}));
+                  ob.next(new HttpResponse({body: cache.data, status: 200}));
                   ob.complete();
                   return;
                 }
               } else {
-                const cache = await this.cacheService.get(key, httpCache.storage);
-                if (cache && !matchCache.constraints?.offline) {
-                  this.subscriberGroups[req.url] = false;
-                  ob.next(new HttpResponse({body: cache, status: 200}));
-                  ob.complete();
-                  return;
+                const cacheItem = await this.cacheService.getItem(key, httpCache.storage);
+                if (cacheItem.data && !matchCache.constraints?.offline) {
+                  if (matchCache.lazy || (!cacheItem.expired && !cacheItem.invalidVersion)) {
+                    this.subscriberGroups[req.url] = false;
+                    ob.next(new HttpResponse({body: cacheItem.data, status: 200}));
+                    ob.complete();
+                    if (!matchCache.lazy || !cacheItem.expired || !cacheItem.invalidVersion) return;
+                  }
                 }
               }
 

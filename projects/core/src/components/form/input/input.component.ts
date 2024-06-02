@@ -10,22 +10,6 @@ export interface MaskItem {
 
 const p2e = (s: string) => s.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d).toString())
 const a2e = (s: string) => s.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d).toString())
-// const arabicNumbers = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
-// const persianNumbers = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
-
-// function fixPersianNumbers(str: string) {
-//   for (let i = 0; i < 10; i++) {
-//     str = str.replaceAll(persianNumbers[i], i.toString());
-//   }
-//   return str;
-// }
-//
-// function fixArabicNumbers(str: string) {
-//   for (let i = 0; i < 10; i++) {
-//     str = str.replaceAll(arabicNumbers[i], i.toString());
-//   }
-//   return str;
-// }
 
 @Component({
   selector: 'd-input',

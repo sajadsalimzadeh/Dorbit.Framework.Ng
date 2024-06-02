@@ -2,9 +2,8 @@ import {Injectable, Injector} from '@angular/core';
 import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from '@angular/common/http';
 import {catchError, Observable, tap, throwError} from 'rxjs';
 import {TranslateService} from "@ngx-translate/core";
-import {MessageService} from "../components/message/services/message.service";
+import {Message, MessageService} from "../components";
 import {Colors} from "../types";
-import {Message} from "../components";
 
 
 @Injectable({providedIn: 'root'})
@@ -45,7 +44,6 @@ export class MessageInterceptor implements HttpInterceptor {
         }
       })).pipe(catchError(e => {
         if (e instanceof HttpErrorResponse) {
-          console.log(e)
           if (e.error?.message) {
             this.send(`message.${e.error.message}`, 'danger', undefined, e.error.data);
           } else if (e.status == 504 || e.status == 0) {

@@ -1,9 +1,7 @@
 <ng-template #promptTpl>
-  <d-control-group [label]="message">
-    <d-input type="textarea" class="w-100" [formControl]="control" [rows]="4" [autofocus]="true"></d-input>
-  </d-control-group>
+  <textarea class="w-100" [(ngModel)]="value" [rows]="4" [placeholder]="message" autofocus></textarea>
   <div class="flex-row flex-gap-3 mt-3">
-    <d-button class="flex-1" color="success" (click)="ok()">{{'ok' | translate}}</d-button>
-    <d-button class="flex-1" color="danger" (click)="cancel()">{{'cancel' | translate}}</d-button>
+    <d-button class="flex-1" color="success" (click)="ok()">{{ 'ok' | translate }}</d-button>
+    <d-button class="flex-1" color="danger" (click)="cancel()">{{ 'cancel' | translate }}</d-button>
   </div>
 </ng-template>

@@ -160,25 +160,48 @@ export class CacheStorageIndexDb implements ICacheStorage {
   }
 }
 
+class CacheResult<T> {
+  data: T;
+  expired: boolean = false;
+  invalidVersion: boolean = false;
+
+  constructor(data: T) {
+    this.data = data;
+  }
+}
+
+interface CacheGetOptions {
+  validateExpiration: boolean;
+  validateVersion: boolean;
+}
+
 export class CacheService {
   version?: string;
 
-  async get<T = any>(key: string, storage: ICacheStorage, options?: ({ ignoreExpiration: boolean, ignoreVersion: boolean })): Promise<T | undefined> {
+  async getItem<T = any>(key: string, storage: ICacheStorage): Promise<CacheResult<T | undefined>> {
+    const result = new CacheResult<T | undefined>(undefined);
     try {
       const obj = await storage.get<CacheItem<T>>(key);
-      if (!obj) return undefined;
-      if (!options?.ignoreExpiration && obj.expireTime < new Date().getTime()) {
-        console.log('[cache] ignore for expiration,', key)
-        return undefined;
+      if (!obj) return result;
+      result.data = obj.data;
+      if (obj.expireTime < new Date().getTime()) {
+        // console.log('[cache] ignore for expiration,', key)
+        result.expired = true;
       }
-      if (!options?.ignoreVersion && obj.version != this.version) {
-        console.log('[cache] ignore for version,', key)
-        return undefined;
+      if (obj.version != this.version) {
+        // console.log('[cache] ignore for version,', key)
+        result.invalidVersion = true;
       }
-      return obj.data;
     } catch {
-      return undefined;
     }
+    return result;
+  }
+
+  async get<T = any>(key: string, storage: ICacheStorage, options?: CacheGetOptions): Promise<T | undefined> {
+    const item = await this.getItem(key, storage);
+    if (options?.validateExpiration && item.expired) return undefined;
+    if (options?.validateVersion && item.invalidVersion) return undefined;
+    return item.data
   }
 
   getObservable<T = any>(key: string, storage: ICacheStorage, action: Observable<T>, lifetime: TimeSpan): Observable<T> {

@@ -1,19 +1,18 @@
-import {Component, EventEmitter, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, TemplateRef, ViewChild} from '@angular/core';
 import {DialogService, DialogRef} from "../../services/dialog.service";
 import {DialogOptions} from "../dialog/dialog.component";
 import {PromptOptions} from "../../models";
 import {LoadingService} from "../../../../services";
-import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'd-prompt',
   templateUrl: 'prompt.component.html',
   styleUrls: ['./prompt.component.scss']
 })
-export class PromptComponent implements OnInit, PromptOptions, DialogRef {
+export class PromptComponent implements PromptOptions, DialogRef {
   onClose = new EventEmitter<void>();
   onResult = new EventEmitter<boolean>();
-  control = new FormControl();
+  title: string = '';
   message: string = '';
   dialog?: DialogRef;
   options?: DialogOptions;
@@ -23,18 +22,21 @@ export class PromptComponent implements OnInit, PromptOptions, DialogRef {
     if (this.dialog) return;
     this.dialog = this.diagService.open({
       width: '400px',
+      title: this.title,
       ...this.options,
       template: value,
-    })
+    });
+
+    setTimeout(() => {
+      const textareaEl = this.elementRef.nativeElement.querySelector('textarea');
+      textareaEl?.focus();
+    }, 1000)
   }
 
   constructor(
+    private elementRef: ElementRef,
     private diagService: DialogService,
     protected loadingService: LoadingService) {
-  }
-
-  ngOnInit(): void {
-    if (this.value) this.control.setValue(this.value)
   }
 
   ok() {

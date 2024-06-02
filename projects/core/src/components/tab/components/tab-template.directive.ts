@@ -8,7 +8,8 @@ export class TabTemplateDirective extends TemplateDirective {
   @Input('dTab') key?: any;
   @Input() header?: string;
   @Input() icon?: string;
-  @Input() class?: any;
+  @Input() classes?: any;
+  @Input() noContent?: boolean;
 
   constructor(template: TemplateRef<any>) {
     super(template);

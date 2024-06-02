@@ -9,7 +9,7 @@ const units = ['%', 'px', 'pt', 'rem', 'em', 'cm'];
   styleUrls: ['./shimmer.component.scss']
 })
 export class ShimmerComponent extends AbstractComponent {
-  @Input() radius: string = '6px';
+  @Input() radius: string = '4px';
   @Input() ratio: string = '4:4'
 
   override render() {

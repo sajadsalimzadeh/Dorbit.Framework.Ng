@@ -1,10 +1,11 @@
 import {ComponentRef, EventEmitter, Injectable, Type} from "@angular/core";
+import {NavigationStart, Router} from "@angular/router";
+import {TranslateService} from "@ngx-translate/core";
 import {DomService} from "../../../services";
 import {DialogComponent, DialogOptions} from "../components/dialog/dialog.component";
 import {ConfirmOptions, DialogContainerComponent, PromptOptions} from "../dialog-container.component";
 import {ConfirmComponent} from "../components/confirm/confirm.component";
 import {PromptComponent} from "../components/prompt/prompt.component";
-import {NavigationStart, Router} from "@angular/router";
 
 export interface DialogRef {
   close: () => void;
@@ -16,11 +17,11 @@ export class DialogService {
   private _refs: DialogRef[] = [];
   containers: DialogContainerComponent[] = [];
 
-  constructor(private domService: DomService, router: Router) {
+  constructor(private domService: DomService, private translateService: TranslateService, router: Router) {
 
     router.events.subscribe(e => {
-      if(e instanceof NavigationStart) {
-        if(this._refs.length > 0) {
+      if (e instanceof NavigationStart) {
+        if (this._refs.length > 0) {
           this._refs[this._refs.length - 1].close();
         }
       }
@@ -33,7 +34,7 @@ export class DialogService {
     init(componentRef, container);
     componentRef.instance.onClose.subscribe(e => {
       const index = this._refs.indexOf(componentRef.instance);
-      if(index > -1) this._refs.splice(index, 1);
+      if (index > -1) this._refs.splice(index, 1);
     });
     this._refs.push(componentRef.instance);
     return componentRef.instance;
@@ -53,17 +54,42 @@ export class DialogService {
     });
   }
 
+  confirmYesNo(yes: (dialog: DialogRef) => void, no?: (dialog: DialogRef) => void) {
+    const dialog = this.confirm({
+      buttons: [
+        {
+          text: this.translateService.instant('yes'),
+          color: 'success',
+          action: () => yes(dialog)
+        },
+        {
+          text: this.translateService.instant('no'),
+          color: 'danger',
+          action: () => {
+            dialog.close();
+            if (no) no(dialog);
+          }
+        }
+      ]
+    }, {
+      closable: false,
+      title: this.translateService.instant('message.are-you-sure')
+    });
+    return dialog;
+  }
+
   prompt(options: PromptOptions, dialogOptions?: DialogOptions) {
-    return new Promise<{ result: boolean, value: string, dialog: PromptComponent }>((resolve) => {
+    return new Promise<{ result: boolean, value?: string, dialog: PromptComponent }>((resolve) => {
       const dialog = this.create(PromptComponent, (componentRef) => {
         componentRef.instance.options = dialogOptions;
         Object.assign(componentRef.instance, options);
       });
 
       dialog.onResult.subscribe((e) => {
+        dialog.close();
         resolve({
           result: e,
-          value: dialog.control.value,
+          value: dialog.value,
           dialog: dialog
         });
       });

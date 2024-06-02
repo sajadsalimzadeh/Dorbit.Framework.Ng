@@ -20,7 +20,6 @@ export class VolumeComponent extends AbstractFormControl<number | VolumeRange> i
   @Input() max = 100;
   @Input() step = 1;
   @Input() showRange: boolean = true;
-  @Input() showValue: boolean = true;
   @Input() orientation: Orientation = 'horizontal';
   @Input() mode: 'single' | 'multiple' = 'single';
   @Input() formatter: (value: number) => string = (value: number) => NumberUtil.format(value);
