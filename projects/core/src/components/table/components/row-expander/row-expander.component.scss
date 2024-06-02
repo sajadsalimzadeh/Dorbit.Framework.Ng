@@ -20,14 +20,11 @@
 
   &.expanded {
     i {
-      transform: rotate(90deg);
+      transform: rotate(-90deg);
     }
   }
 }
 
-:host-context([dir=rtl]) {
-
-  i {
-    transform: rotate(180deg);
-  }
+:host-context([dir=rtl]) :host {
+    transform: scale(-1);
 }

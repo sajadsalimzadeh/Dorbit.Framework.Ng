@@ -8,7 +8,7 @@ import {Colors} from "../../types";
   selector: '[dTooltip]'
 })
 export class TooltipDirective {
-  @Input('dTooltip') text!: string;
+  @Input('dTooltip') text?: string;
   @Input('dTooltipAlignment') alignment: OverlayAlignments = 'bottom-center';
   @Input('dTooltipColor') color: Colors = 'gray-4';
   @Input('dTooltipStyle') styles: any;
