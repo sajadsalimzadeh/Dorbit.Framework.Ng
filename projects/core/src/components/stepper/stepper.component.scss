@@ -1,5 +1,10 @@
 @use "sass:math";
 
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
 .steps {
   margin: 0 0 .5rem;
   display: flex;
@@ -35,7 +40,7 @@
       }
     }
 
-    .content {
+    .step-content {
       z-index: 10;
       display: flex;
       position: relative;
@@ -60,20 +65,29 @@
         }
       }
 
-      .circle {
-        width: 1.3rem;
-        height: 1.3rem;
-        border-radius: 50%;
-        background-color: var(--color-white);
-        border: 2px solid var(--color-gray--7);
+      .icon {
+        font-size: 1.5em;
+        color: var(--color-gray-3);
       }
 
-      .title {
-        position: absolute;
-        text-align: center;
-        top: calc(100% + .5rem);
-        color: var(--color-gray-5);
+      .circle {
+        display: flex;
+        padding: .6rem;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--color-white);
+        border: 2px solid var(--color-primary);
       }
+    }
+
+    .title {
+      left: 0;
+      right: 0;
+      position: absolute;
+      text-align: center;
+      top: calc(100% + .5rem);
+      color: var(--color-gray-5);
     }
 
     &.done {
@@ -81,19 +95,9 @@
         background-color: var(--color-success);
       }
 
-      .content {
-        .image {
-          border-color: var(--color-success);
-        }
-
-        .icon {
-          color: var(--color-success-text);
-          background-color: var(--color-success);
-        }
-
+      .step-content {
         .circle {
-          border-color: var(--color-white);
-          background-color: var(--color-success);
+          border-color: var(--color-success);
         }
       }
     }
@@ -103,21 +107,10 @@
       .lines::before {
         background-color: var(--color-primary);
       }
-
-      .content {
-        .image {
-          border-color: var(--color-primary);
-        }
-
-        i {
-          color: var(--color-primary);
-        }
-
-        .circle {
-          border-color: var(--color-white);
-          background-color: var(--color-primary);
-        }
-      }
     }
   }
+}
+
+.content {
+  flex: 1;
 }
