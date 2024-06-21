@@ -49,7 +49,6 @@ export class AspectUtil {
             return ctx.result;
           } catch (e) {
             ctx.error = e;
-            console.error(e)
             if (options.exception) await options.exception(ctx);
             throw e;
           }

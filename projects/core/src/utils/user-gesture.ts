@@ -10,7 +10,7 @@ export class UserGestureUtil {
           resolve();
         } catch (e) {
           reject(e);
-          console.error(e)
+          console.error()
         }
       };
       window.addEventListener('click', func);

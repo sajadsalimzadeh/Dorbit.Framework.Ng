@@ -37,4 +37,13 @@ export class ObjectUtil {
     }
     return result;
   }
+
+  static getObjectWithFalseResultProperty(obj: any) {
+    const result: any = {};
+    for (const key in obj) {
+      const value = obj[key];
+      if (value) result[key] = value;
+    }
+    return result;
+  }
 }
