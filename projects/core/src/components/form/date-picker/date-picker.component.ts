@@ -6,6 +6,7 @@ import {OverlayRef, OverlayService} from "../../overlay/overlay.service";
 import {OverlayAlignments} from "../../overlay/overlay.component";
 import {FormControl} from "@angular/forms";
 import {Direction} from "../../../types";
+import {DialogRef, DialogService} from "../../dialog/services/dialog.service";
 
 type ViewMode = 'calendar' | 'month' | 'year';
 
@@ -46,8 +47,10 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   @Output() onLeave = new EventEmitter<any>();
   @Output() onSelect = new EventEmitter<string>();
 
-  @ViewChild('pickerTpl') pickerTpl?: TemplateRef<any>
+  @ViewChild('desktopTpl') desktopTpl!: TemplateRef<any>
+  @ViewChild('mobileTpl') mobileTpl!: TemplateRef<any>
   @ViewChild('yearPickerEl') yearPickerEl?: ElementRef<HTMLDivElement>;
+  @ViewChild('mobileViewDateEl') mobileViewDateEl?: ElementRef<HTMLDivElement>;
 
   isJalali() {
     return this.locale == 'fa';
@@ -78,12 +81,14 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   weekDays: string[] = [];
   years: number[] = [];
   months: string[] = [];
+  days: number[] = [];
   dates: DateValue[] = [];
 
   displayFormControl = new FormControl('');
 
   constructor(
     injector: Injector,
+    private dialogService: DialogService,
     private overlayService: OverlayService,
   ) {
     super(injector)
@@ -165,10 +170,10 @@ export class DatePickerComponent extends AbstractFormControl<any> {
     }
     super.render();
     this.selectedValue = this.getDateTime(this.selectedDate);
-    this.createDays();
+    this.createDates();
   }
 
-  createDays() {
+  createDates() {
     if (!this.overlayRef) return;
     this.selectedDate = this.selectedDate.locale(this.locale);
     let date = this.selectedDate.clone();
@@ -218,6 +223,13 @@ export class DatePickerComponent extends AbstractFormControl<any> {
     this.dates.forEach((x, i) => x.isHoliday = (i % 7 == 6))
   }
 
+  createDays() {
+    this.days = [];
+    for (let i = 1; i <= 31; i++) {
+      this.days.push(i);
+    }
+  }
+
   selectDate(date: DateValue) {
     this.selectedDate = moment();
     if (this.isJalali()) {
@@ -262,15 +274,19 @@ export class DatePickerComponent extends AbstractFormControl<any> {
     this.view = 'month';
   }
 
-  showYears() {
-    this.view = 'year';
-
+  createYears() {
     let year = moment().locale(this.locale).get('year');
     this.years = [year];
     for (let i = 1; i < 100; i++) {
       this.years.unshift(year - i)
       if (this.future) this.years.push(year + i)
     }
+  }
+
+  showYears() {
+    this.view = 'year';
+
+    this.createYears();
     const yearsEl = this.yearPickerEl?.nativeElement;
     if (yearsEl) {
       setTimeout(() => {
@@ -283,14 +299,38 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   }
 
   open() {
-    if (this.pickerTpl && !this.overlayRef && this.formControl.enabled) {
-      this.overlayRef = this.overlayService.create({
-        autoClose: false,
-        template: this.pickerTpl,
-        alignment: this.alignment,
-        ref: this.elementRef.nativeElement
-      });
-      this.overlayRef.onDestroy.subscribe(() => this.overlayRef = undefined);
+    if (!this.overlayRef && this.formControl.enabled) {
+      if (window.innerWidth < 600) {
+        this.dialogService.open({
+          width: '100%',
+          closable: false,
+          position: 'bottom-center',
+          template: this.mobileTpl,
+          ngClass: 'date-picker-dialog'
+        });
+        this.createDays();
+        this.createYears();
+
+        setTimeout(() => {
+          if (this.selectedDate) {
+            const m = this.selectedDate.locale(this.locale);
+            this.setMobileItem({
+              year: m.year(),
+              month: m.month(),
+              day: m.date(),
+            });
+          }
+        }, 200)
+      } else {
+        this.overlayRef = this.overlayService.create({
+          autoClose: false,
+          template: this.desktopTpl,
+          alignment: this.alignment,
+          ref: this.elementRef.nativeElement
+        });
+      }
+
+      this.overlayRef?.onDestroy.subscribe(() => this.overlayRef = undefined);
 
       if (this.openMode == 'select') {
         setTimeout(() => {
@@ -303,5 +343,61 @@ export class DatePickerComponent extends AbstractFormControl<any> {
 
   close() {
     this.overlayRef?.destroy();
+  }
+
+  processMobileItems() {
+    if (!this.mobileViewDateEl) return {day: 0, month: 0, year: 0};
+    const el = this.mobileViewDateEl.nativeElement;
+    const daysScrollBoxEl = el.querySelector('.days .scroll-box') as HTMLDivElement;
+    const monthsScrollBoxEl = el.querySelector('.months .scroll-box') as HTMLDivElement;
+    const yearsScrollBoxEl = el.querySelector('.years .scroll-box') as HTMLDivElement;
+
+    const dayIndex = Math.round(daysScrollBoxEl.scrollTop / 50);
+    const monthIndex = Math.round(monthsScrollBoxEl.scrollTop / 50);
+    const yearIndex = Math.round(yearsScrollBoxEl.scrollTop / 50);
+
+    daysScrollBoxEl.scrollTo({top: dayIndex * 50, behavior: 'smooth'});
+    monthsScrollBoxEl.scrollTo({top: monthIndex * 50, behavior: 'smooth'});
+    yearsScrollBoxEl.scrollTo({top: yearIndex * 50, behavior: 'smooth'});
+
+    return {day: this.days[dayIndex], month: monthIndex, year: this.years[yearIndex]}
+  }
+
+  setMobileItem(date?: { day?: number, month?: number, year?: number }) {
+    if (!date || !this.mobileViewDateEl) return;
+    const el = this.mobileViewDateEl.nativeElement;
+    const daysScrollBoxEl = el.querySelector('.days .scroll-box') as HTMLDivElement;
+    const monthsScrollBoxEl = el.querySelector('.months .scroll-box') as HTMLDivElement;
+    const yearsScrollBoxEl = el.querySelector('.years .scroll-box') as HTMLDivElement;
+
+    if(typeof date.day === 'number') {
+      const index = date.day - 1;
+      daysScrollBoxEl.scrollTop = index * 50;
+    }
+
+    if(typeof date.month === 'number') {
+      const index = date.month;
+      monthsScrollBoxEl.scrollTop = index * 50;
+    }
+
+    if(typeof date.year === 'number') {
+      const index = this.years.indexOf(date.year);
+      yearsScrollBoxEl.scrollTop = index * 50;
+    }
+  }
+
+  selectMobileItem(dialog: DialogRef) {
+    const selectedDate = this.processMobileItems();
+    this.selectDate(selectedDate)
+    dialog.close();
+  }
+
+  selectMobileItemToday() {
+    const m = moment().locale(this.locale);
+    this.setMobileItem({
+      year: m.year(),
+      month: m.month(),
+      day: m.date(),
+    });
   }
 }

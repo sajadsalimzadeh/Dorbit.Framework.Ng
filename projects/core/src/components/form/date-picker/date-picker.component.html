@@ -10,40 +10,81 @@
     <i class="clear icons-core-close" *ngIf="displayFormControl.value" (click)="clear()"></i>
   </div>
 </div>
-<ng-template #pickerTpl>
+<ng-template #desktopTpl>
   <div class="picker" (click)="onClick($event)" [ngClass]="pickerClasses">
     <div class="day-picker">
       <div class="year-month">
-        <div class="year" (mousedown)="showYears()">{{selectedValue.year}}</div>
-        <div class="month" (mousedown)="showMonths()">{{selectedDate.format('MMMM')}}</div>
+        <div class="year" (mousedown)="showYears()">{{ selectedValue.year }}</div>
+        <div class="month" (mousedown)="showMonths()">{{ selectedDate.format('MMMM') }}</div>
       </div>
       <div class="calendar">
         <div class="week-days">
-          <div class="week-day" *ngFor="let weekDay of weekDays">{{weekDay}}</div>
+          <div class="week-day" *ngFor="let weekDay of weekDays">{{ weekDay }}</div>
         </div>
         <div class="days">
           <div class="day" *ngFor="let date of dates; let index = index"
                [ngClass]="{active: date.isSelected,today: date.isToday,holiday: date.isHoliday,'this-month': date.isCurrentMonth}"
                (mousedown)="selectDate(date)">
-            <span>{{date.day}}</span>
+            <span>{{ date.day }}</span>
           </div>
         </div>
       </div>
       <div class="today-button" (click)="selectDate(todayValue)">
-        {{('today' | translate)}}
+        {{ ('today' | translate) }}
       </div>
     </div>
     <div class="month-picker" [ngClass]="{show: (view == 'month')}">
       <div class="month" *ngFor="let month of months;let index = index"
            [ngClass]="{active: (selectedValue.month == index)}" (click)="selectMonth(index)">
-        {{month}}
+        {{ month }}
       </div>
     </div>
     <div #yearPickerEl class="year-picker" [ngClass]="{show: (view == 'year')}">
       <div class="year" *ngFor="let year of years" (click)="selectYear(year)"
            [ngClass]="{active: (selectedValue.year == year)}">
-        {{year}}
+        {{ year }}
       </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #mobileTpl let-dialog>
+  <div class="mobile-view">
+    <div class="date" #mobileViewDateEl>
+      <div class="days">
+        <div class="scroll-box" (scrollend)="processMobileItems()">
+          <ul>
+            <li *ngFor="let day of days" (click)="setMobileItem({day: day})">{{ day }}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="months">
+        <div class="scroll-box" (scrollend)="processMobileItems()">
+          <ul>
+            <li *ngFor="let month of months; let index = index" (click)="setMobileItem({month: index})">{{ month }}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="years">
+        <div class="scroll-box" (scrollend)="processMobileItems()" >
+          <ul>
+            <li *ngFor="let year of years" (click)="setMobileItem({year: year})">{{ year }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="buttons">
+      <a class="set color-primary flex-1" (click)="selectMobileItem(dialog)">
+        {{'select' | translate}}
+      </a>
+      <span></span>
+      <a class="cancel color-gray-8 flex-1" (click)="selectMobileItemToday()">
+        {{'today' | translate}}
+      </a>
+      <span></span>
+      <a class="cancel color-gray-8 flex-1" (click)="dialog.close()">
+        {{'cancel' | translate}}
+      </a>
     </div>
   </div>
 </ng-template>

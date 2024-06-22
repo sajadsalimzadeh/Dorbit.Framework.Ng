@@ -208,3 +208,86 @@
     border-bottom: 1px solid var(--color-gray--2);
   }
 }
+
+.mobile-view {
+  .date {
+    display: flex;
+    position: relative;
+
+    > div {
+      flex: 1;
+      height: 180px;
+      overflow: hidden;
+      position: relative;
+
+      &::before, &::after {
+        left: 0;
+        right: 0;
+        content: '';
+        height: 20px;
+        z-index: 100;
+        position: absolute;
+        background-color: var(--color-white);
+        box-shadow: 0px 0px 70px 55px var(--color-white);
+      }
+
+      &::before {
+        top: 0;
+        //background: linear-gradient(0deg, rgba(var(--color-white-rgb), 0) 0%, rgba(var(--color-white-rgb), .8) 40%, rgba(var(--color-white-rgb), 1) 100%);
+      }
+
+      &::after {
+        bottom: 0;
+        //background: linear-gradient(180deg, rgba(var(--color-white-rgb), 0) 0%, rgba(var(--color-white-rgb), .8) 40%, rgba(var(--color-white-rgb), 1) 100%);
+      }
+
+      > div {
+        height: 100%;
+        overflow: auto;
+      }
+    }
+
+    ul {
+      margin: 0;
+      display: flex;
+      padding: 65px 0;
+      flex-direction: column;
+
+      li {
+        height: 50px;
+        display: flex;
+        font-size: 1.2em;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+  .buttons {
+    display: flex;
+    align-items: stretch;
+    border-top: 1px solid var(--color-gray--2);
+
+    a {
+      flex: 1;
+      display: flex;
+      padding: 1.3rem 0;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        background-color: var(--color-gray--1);
+      }
+    }
+
+    span {
+      border-inline-start: 1px solid var(--color-gray--2);
+    }
+  }
+}
+
+::ng-deep .date-picker-dialog {
+  .body {
+    padding: 0 !important;
+  }
+}
