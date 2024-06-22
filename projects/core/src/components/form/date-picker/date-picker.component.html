@@ -52,21 +52,21 @@
   <div class="mobile-view">
     <div class="date" #mobileViewDateEl>
       <div class="days">
-        <div class="scroll-box" (scrollend)="processMobileItems()">
+        <div class="scroll-box" (scrollend)="processMobileItems()" (touchend)="processMobileItems()">
           <ul>
             <li *ngFor="let day of days" (click)="setMobileItem({day: day})">{{ day }}</li>
           </ul>
         </div>
       </div>
       <div class="months">
-        <div class="scroll-box" (scrollend)="processMobileItems()">
+        <div class="scroll-box" (scrollend)="processMobileItems()" (touchend)="processMobileItems()">
           <ul>
             <li *ngFor="let month of months; let index = index" (click)="setMobileItem({month: index})">{{ month }}</li>
           </ul>
         </div>
       </div>
       <div class="years">
-        <div class="scroll-box" (scrollend)="processMobileItems()" >
+        <div class="scroll-box" (scrollend)="processMobileItems()" (touchend)="processMobileItems()">
           <ul>
             <li *ngFor="let year of years" (click)="setMobileItem({year: year})">{{ year }}</li>
           </ul>
