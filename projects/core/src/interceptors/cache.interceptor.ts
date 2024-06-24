@@ -161,7 +161,7 @@ export class CacheInterceptor implements HttpInterceptor {
 
           next.handle(req).subscribe({
             next: res => ob.next(res),
-            error: e => ob.error(),
+            error: e => ob.error(e),
             complete: () => ob.complete(),
           });
         });
