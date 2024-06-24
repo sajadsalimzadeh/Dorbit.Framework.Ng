@@ -50,25 +50,33 @@
 
 <ng-template #mobileTpl let-dialog>
   <div class="mobile-view">
+    <div class="preview">
+      <span class="year">{{selectedValue.year}}</span>
+      <span class="month">{{months[selectedValue.month]}}</span>
+      <span class="day">{{selectedValue.day}}</span>
+    </div>
     <div class="date" #mobileViewDateEl>
       <div class="days">
-        <div class="scroll-box" (scrollend)="processMobileItems()" (touchend)="processMobileItems()">
+        <div class="scroll-box" (scroll)="processMobileItems()">
           <ul>
-            <li *ngFor="let day of days" (click)="setMobileItem({day: day})">{{ day }}</li>
+            <li *ngFor="let day of days" [ngClass]="{active: (day == selectedValue.day)}"
+                (click)="setMobileItem({day: day})">{{ day }}</li>
           </ul>
         </div>
       </div>
       <div class="months">
-        <div class="scroll-box" (scrollend)="processMobileItems()" (touchend)="processMobileItems()">
+        <div class="scroll-box" (scroll)="processMobileItems()">
           <ul>
-            <li *ngFor="let month of months; let index = index" (click)="setMobileItem({month: index})">{{ month }}</li>
+            <li *ngFor="let month of months; let index = index" [ngClass]="{active: (index == selectedValue.month)}"
+                (click)="setMobileItem({month: index})">{{ month }}</li>
           </ul>
         </div>
       </div>
       <div class="years">
-        <div class="scroll-box" (scrollend)="processMobileItems()" (touchend)="processMobileItems()">
+        <div class="scroll-box" (scroll)="processMobileItems()">
           <ul>
-            <li *ngFor="let year of years" (click)="setMobileItem({year: year})">{{ year }}</li>
+            <li *ngFor="let year of years" [ngClass]="{active: (year == selectedValue.year)}"
+                (click)="setMobileItem({year: year})">{{ year }}</li>
           </ul>
         </div>
       </div>

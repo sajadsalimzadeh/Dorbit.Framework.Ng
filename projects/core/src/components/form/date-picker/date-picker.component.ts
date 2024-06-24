@@ -56,6 +56,10 @@ export class DatePickerComponent extends AbstractFormControl<any> {
     return this.locale == 'fa';
   }
 
+  isMobileView() {
+    return window.innerWidth < 600;
+  }
+
   override onClick(e: MouseEvent) {
     e.stopPropagation();
     super.onClick(e);
@@ -64,6 +68,7 @@ export class DatePickerComponent extends AbstractFormControl<any> {
 
   override onFocus(e: FocusEvent) {
     super.onFocus(e);
+    e.preventDefault();
     this.open();
   }
 
@@ -101,6 +106,14 @@ export class DatePickerComponent extends AbstractFormControl<any> {
       this.renderDisplayValue()
     }));
     this.renderDisplayValue();
+  }
+
+  override ngAfterViewInit() {
+    super.ngAfterViewInit();
+
+    if(this.isMobileView() && this.inputEl) {
+      this.inputEl.nativeElement.readOnly = true;
+    }
   }
 
   private getMoment() {
@@ -231,7 +244,7 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   }
 
   selectDate(date: DateValue) {
-    this.selectedDate = moment();
+    this.selectedDate = this.getMoment();
     if (this.isJalali()) {
       this.selectedDate.jDate(date.day);
       this.selectedDate.jMonth(date.month);
@@ -243,6 +256,7 @@ export class DatePickerComponent extends AbstractFormControl<any> {
     }
     const value = this.selectedDate.locale('en').format(this.valueFormat);
     this.formControl.setValue(value);
+    this.selectedValue = date;
     this.render();
     this.close();
 
@@ -300,7 +314,7 @@ export class DatePickerComponent extends AbstractFormControl<any> {
 
   open() {
     if (!this.overlayRef && this.formControl.enabled) {
-      if (window.innerWidth < 600) {
+      if (this.isMobileView()) {
         this.dialogService.open({
           width: '100%',
           closable: false,
@@ -345,6 +359,7 @@ export class DatePickerComponent extends AbstractFormControl<any> {
     this.overlayRef?.destroy();
   }
 
+  processMobileItemsTimeout: any;
   processMobileItems() {
     if (!this.mobileViewDateEl) return {day: 0, month: 0, year: 0};
     const el = this.mobileViewDateEl.nativeElement;
@@ -352,15 +367,18 @@ export class DatePickerComponent extends AbstractFormControl<any> {
     const monthsScrollBoxEl = el.querySelector('.months .scroll-box') as HTMLDivElement;
     const yearsScrollBoxEl = el.querySelector('.years .scroll-box') as HTMLDivElement;
 
-    const dayIndex = Math.round(daysScrollBoxEl.scrollTop / 50);
-    const monthIndex = Math.round(monthsScrollBoxEl.scrollTop / 50);
-    const yearIndex = Math.round(yearsScrollBoxEl.scrollTop / 50);
+    const dayIndex = Math.max(Math.min(Math.round(daysScrollBoxEl.scrollTop / 50), this.days.length - 1), 0);
+    const monthIndex = Math.max(Math.min(Math.round(monthsScrollBoxEl.scrollTop / 50), this.months.length - 1), 0);
+    const yearIndex = Math.max(Math.min(Math.round(yearsScrollBoxEl.scrollTop / 50), this.years.length - 1), 0);
 
-    daysScrollBoxEl.scrollTo({top: dayIndex * 50, behavior: 'smooth'});
-    monthsScrollBoxEl.scrollTo({top: monthIndex * 50, behavior: 'smooth'});
-    yearsScrollBoxEl.scrollTo({top: yearIndex * 50, behavior: 'smooth'});
+    clearTimeout(this.processMobileItemsTimeout);
+    this.processMobileItemsTimeout = setTimeout(() => {
+      daysScrollBoxEl.scrollTo({top: dayIndex * 50, behavior: 'smooth'});
+      monthsScrollBoxEl.scrollTo({top: monthIndex * 50, behavior: 'smooth'});
+      yearsScrollBoxEl.scrollTo({top: yearIndex * 50, behavior: 'smooth'});
+    }, 200)
 
-    return {day: this.days[dayIndex], month: monthIndex, year: this.years[yearIndex]}
+    return this.selectedValue = {day: this.days[dayIndex], month: monthIndex, year: this.years[yearIndex]};
   }
 
   setMobileItem(date?: { day?: number, month?: number, year?: number }) {
