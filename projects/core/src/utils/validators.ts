@@ -1,10 +1,10 @@
 import {AbstractControl, ValidatorFn} from "@angular/forms";
 
 
-export function NationalValidator(): ValidatorFn {
+export function NationalCodeValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
     let nt = control.value;
-    if (nt == null || nt == undefined || nt == '') {
+    if (nt == null || nt == '') {
       return {'national-code': {value: control.value}};
     }
     if (nt.length !== 10) {

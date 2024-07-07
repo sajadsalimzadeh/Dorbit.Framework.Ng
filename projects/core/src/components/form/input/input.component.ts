@@ -100,12 +100,11 @@ export class InputComponent extends AbstractFormControl<string> {
         // zero digit precision prevent point symbol
         if (value.endsWith('.')) {
           if (this.precision > 0) {
-            if(this.formControl.value != numValue) {
+            if (this.formControl.value != numValue) {
               this.formControl.setValue(numValue);
             }
             return;
-          }
-          else el.value = value = value.replace('.', '');
+          } else el.value = value = value.replace('.', '');
         }
 
         const splitValue = value.split('.');
@@ -173,25 +172,27 @@ export class InputComponent extends AbstractFormControl<string> {
   }
 
   private loadMaskedValue() {
+    if (!this.formControl) return;
+    this.maskValue ??= this.formControl.value ?? '';
     const masks = this.getMaskItems();
     let newValue = '';
     let tempMaskedValue = '';
-    if (this.maskValue || this.focused) {
-      for (let i = 0, j = 0; i < masks.length; i++) {
-        const mask = masks[i];
-        let tempChar = mask.placeholder;
-        if (mask.pattern) {
-          const ch = (this.maskValue.length > j ? this.maskValue[j] : '');
-          if (ch && mask.pattern.test(ch)) {
-            tempChar = ch;
-            tempMaskedValue += ch;
-          }
-          j++;
+    if (!this.maskValue && !this.focused) return;
+    for (let i = 0, j = 0; i < masks.length; i++) {
+      const mask = masks[i];
+      let tempChar = mask.placeholder;
+      if (mask.pattern) {
+        const ch = (this.maskValue.length > j ? this.maskValue[j] : '');
+        if (ch && mask.pattern.test(ch)) {
+          tempChar = ch;
+          tempMaskedValue += ch;
         }
-        newValue += tempChar;
+        j++;
       }
-      this.maskValue = tempMaskedValue;
+      newValue += tempChar;
     }
+    console.log(newValue)
+    this.maskValue = tempMaskedValue;
     this.formControl?.setValue(newValue);
     const element = this.inputEl?.nativeElement;
     if (element) element.value = newValue;
