@@ -213,7 +213,7 @@ export class CacheService {
         } else if (sameKeyEvent[key]) {
           sameKeyEvent[key].subscribe({
             next: res => ob.next(res),
-            error: e => ob.error(e),
+            error: e => ob.error(),
             complete: () => ob.complete(),
           });
         } else {
@@ -225,7 +225,7 @@ export class CacheService {
               this.set(key, storage, res, lifetime);
               ob.next(res);
             },
-            error: e => ob.error(e),
+            error: e => ob.error(),
             complete: () => ob.complete()
           });
         }
@@ -242,7 +242,7 @@ export class CacheService {
       }
       return storage.set(key, item);
     } catch (e) {
-      console.error(e);
+      console.error();
     }
     return Promise.resolve();
   }

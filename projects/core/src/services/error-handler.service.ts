@@ -7,6 +7,6 @@ export class GlobalErrorHandler implements ErrorHandler {
   }
 
   handleError(error: Error | HttpErrorResponse) {
-    console.error(error)
+    console.error()
   }
 }

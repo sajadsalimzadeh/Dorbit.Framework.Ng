@@ -105,7 +105,7 @@ export class Logger {
         else if (level == LogLevel.DEBUG) console.log(message, options.data ?? []);
         else if (level == LogLevel.INFO) console.log(message, options.data ?? []);
         else if (level == LogLevel.WARNING) console.warn(message, options.data ?? []);
-        else if (level == LogLevel.ERROR) console.error(message, options.data ?? []);
+        else if (level == LogLevel.ERROR) console.error(options.data ?? []);
       }
 
       //encrypt message if has encryptor
@@ -127,7 +127,7 @@ export class Logger {
           message: log.data.message,
           stack: log.data.stack,
         };
-        console.error(log.data)
+        console.error()
       }
 
       //prevent multiple same log insert
@@ -143,7 +143,7 @@ export class Logger {
         this.logs.push(log);
       }
     } catch (e) {
-      console.error(e)
+      console.error()
     }
   }
 
