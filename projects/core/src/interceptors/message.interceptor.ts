@@ -8,15 +8,16 @@ import {Colors} from "../types";
 
 @Injectable({providedIn: 'root'})
 export class MessageInterceptor implements HttpInterceptor {
-
+  translateService?: TranslateService
 
   constructor(private injector: Injector, private messageService: MessageService) {
   }
 
   private send(text: string, color: Colors, message?: Message, data?: any) {
-    const translateService = this.injector.get(TranslateService);
+    this.translateService ??= this.injector.get(TranslateService);
     const key = `${text}`;
-    let translate = translateService.instant(key);
+    let translate = this.translateService.instant(key);
+    if(translate == key) return;
     if (data) {
       for (const dataKey in data) {
         translate = translate.replace(`{${dataKey}}`, data[dataKey]);

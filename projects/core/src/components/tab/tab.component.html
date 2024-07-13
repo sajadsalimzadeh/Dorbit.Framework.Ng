@@ -6,7 +6,7 @@
 </ul>
 <div class="tab-container">
   <ng-container *ngIf="activeTab">
-    <div class="p-3" *ngIf="!activeTab.noContent">
+    <div *ngIf="!activeTab.noContent">
       <ng-container *ngTemplateOutlet="activeTab.template; context: {$implicit: activeTab}"></ng-container>
     </div>
   </ng-container>
