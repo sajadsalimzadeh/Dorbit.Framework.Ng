@@ -76,6 +76,7 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   pickerClasses: any = {};
 
   overlayRef?: OverlayRef;
+  mobileDialog?: DialogRef;
 
   todayDate!: Moment;
   selectedDate!: Moment;
@@ -111,7 +112,7 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   override ngAfterViewInit() {
     super.ngAfterViewInit();
 
-    if(this.isMobileView() && this.inputEl) {
+    if (this.isMobileView() && this.inputEl) {
       this.inputEl.nativeElement.readOnly = true;
     }
   }
@@ -315,13 +316,15 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   open() {
     if (!this.overlayRef && this.formControl.enabled) {
       if (this.isMobileView()) {
-        this.dialogService.open({
+        if(this.mobileDialog) return;
+        this.mobileDialog = this.dialogService.open({
           width: '100%',
           closable: false,
           position: 'bottom-center',
           template: this.mobileTpl,
           ngClass: 'date-picker-dialog'
         });
+        this.mobileDialog.onClose.subscribe(res => this.mobileDialog = undefined)
         this.createDays();
         this.createYears();
 
@@ -360,6 +363,7 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   }
 
   processMobileItemsTimeout: any;
+
   processMobileItems() {
     if (!this.mobileViewDateEl) return {day: 0, month: 0, year: 0};
     const el = this.mobileViewDateEl.nativeElement;
@@ -388,17 +392,17 @@ export class DatePickerComponent extends AbstractFormControl<any> {
     const monthsScrollBoxEl = el.querySelector('.months .scroll-box') as HTMLDivElement;
     const yearsScrollBoxEl = el.querySelector('.years .scroll-box') as HTMLDivElement;
 
-    if(typeof date.day === 'number') {
+    if (typeof date.day === 'number') {
       const index = date.day - 1;
       daysScrollBoxEl.scrollTop = index * 50;
     }
 
-    if(typeof date.month === 'number') {
+    if (typeof date.month === 'number') {
       const index = date.month;
       monthsScrollBoxEl.scrollTop = index * 50;
     }
 
-    if(typeof date.year === 'number') {
+    if (typeof date.year === 'number') {
       const index = this.years.indexOf(date.year);
       yearsScrollBoxEl.scrollTop = index * 50;
     }
