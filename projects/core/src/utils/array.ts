@@ -6,7 +6,7 @@ declare global {
 
     toggle(value: any): T[];
 
-    groupBy(func: (x: T) => string): {[key: string]: T[]};
+    groupBy(func: (x: T) => string): { key: string, value: T[] }[];
   }
 }
 
@@ -27,11 +27,15 @@ Array.prototype.toggle = function (value: any) {
 }
 
 Array.prototype.groupBy = function (func: (x: any) => string) {
-  const groups: {[key: string]: any[]} = {};
+  const groups: { key: string, value: any[] }[] = [];
   this.forEach(item => {
     const key = func(item);
-    if(!groups[key]) groups[key] = [];
-    groups[key].push(item);
+    let group = groups.find(x => x.key == key);
+    if (!group) {
+      groups.push({key: key, value: []});
+      group = groups[groups.length - 1];
+    }
+    group.value.push(item);
   });
   return groups;
 }

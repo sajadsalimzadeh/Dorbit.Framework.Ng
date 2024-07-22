@@ -54,8 +54,9 @@ export class DialogService {
     });
   }
 
-  confirmYesNo(yes: (dialog: DialogRef) => void, no?: (dialog: DialogRef) => void) {
+  confirmYesNo(yes: (dialog: DialogRef) => void, no?: (dialog: DialogRef) => void, confirmOptions?: {message: string}, dialogOptions?: DialogOptions) {
     const dialog = this.confirm({
+      ...confirmOptions,
       buttons: [
         {
           text: this.translateService.instant('yes'),
@@ -73,7 +74,8 @@ export class DialogService {
       ]
     }, {
       closable: false,
-      title: this.translateService.instant('message.are-you-sure')
+      title: this.translateService.instant('message.are-you-sure'),
+      ...dialogOptions
     });
     return dialog;
   }

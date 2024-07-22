@@ -89,23 +89,25 @@ export class Logger {
         if (options.padding.dir.includes('right')) message = message + pad;
       }
 
-      let logStackObj = {stack: ''};
-      (Error as any).captureStackTrace(logStackObj, this.log);
+      if(level >= LogLevel.WARNING) {
+        let logStackObj = {stack: ''};
+        (Error as any).captureStackTrace(logStackObj, this.log);
 
-      if (typeof options.data !== 'object') {
-        options.data = {
-          inner: options.data,
-        };
+        if (typeof options.data !== 'object') {
+          options.data = {
+            inner: options.data,
+          };
+        }
+        options.data.stack = logStackObj?.stack?.split('\n');
       }
-      options.data.stack = logStackObj?.stack?.split('\n').slice(2, 4);
 
       //show in console for debugging
       if (options?.console || this.settings.console) {
-        if (level == LogLevel.TRACE) console.log(message, options.data ?? []);
-        else if (level == LogLevel.DEBUG) console.log(message, options.data ?? []);
-        else if (level == LogLevel.INFO) console.log(message, options.data ?? []);
-        else if (level == LogLevel.WARNING) console.warn(message, options.data ?? []);
-        else if (level == LogLevel.ERROR) console.error(options.data ?? []);
+        if (level == LogLevel.TRACE) console.log(message, options.data);
+        else if (level == LogLevel.DEBUG) console.log(message, options.data);
+        else if (level == LogLevel.INFO) console.log(message, options.data);
+        else if (level == LogLevel.WARNING) console.warn(message, options.data);
+        else if (level == LogLevel.ERROR) console.error(options.data);
       }
 
       //encrypt message if has encryptor
