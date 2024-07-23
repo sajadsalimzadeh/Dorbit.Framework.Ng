@@ -111,9 +111,9 @@ export class CacheInterceptor implements HttpInterceptor {
               }
               this.subscriberGroups[key] = true;
 
+              const cache = await this.cacheService.getItem(key, httpCache.storage);
               const isOffline = !internetStateService.$status.value;
               if (isOffline) {
-                const cache = await this.cacheService.getItem(key, httpCache.storage);
                 if (cache.data) {
                   this.subscriberGroups[req.url] = false;
                   ob.next(new HttpResponse({body: cache.data, status: 200}));
@@ -121,13 +121,20 @@ export class CacheInterceptor implements HttpInterceptor {
                   return;
                 }
               } else {
-                const cacheItem = await this.cacheService.getItem(key, httpCache.storage);
-                if (cacheItem.data && !matchCache.constraints?.offline) {
-                  if (matchCache.lazy || (!cacheItem.expired && !cacheItem.invalidVersion)) {
+                if (cache.data && !matchCache.constraints?.offline) {
+
+                  if (matchCache.lazy) {
                     this.subscriberGroups[req.url] = false;
-                    ob.next(new HttpResponse({body: cacheItem.data, status: 200}));
+                    ob.next(new HttpResponse({body: cache.data, status: 200}));
                     ob.complete();
-                    if (!matchCache.lazy || !cacheItem.expired || !cacheItem.invalidVersion) return;
+                    if (!cache.expired && !cache.invalidVersion) return;
+                  } else {
+                    if (!cache.expired && !cache.invalidVersion) {
+                      this.subscriberGroups[req.url] = false;
+                      ob.next(new HttpResponse({body: cache.data, status: 200}));
+                      ob.complete();
+                      return;
+                    }
                   }
                 }
               }
@@ -148,7 +155,8 @@ export class CacheInterceptor implements HttpInterceptor {
                 },
                 error: err => {
                   try {
-                    ob.error(err);
+                    if (cache) ob.next(cache.data)
+                    else ob.error(err);
                   } finally {
                     this.subscriberGroups[key] = false;
                   }

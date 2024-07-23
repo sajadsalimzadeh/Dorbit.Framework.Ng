@@ -1,4 +1,4 @@
-import {Subject} from "rxjs";
+import {Subject, Subscription} from "rxjs";
 
 interface ChangeEvent<T> {
   leaveStep?: T;
@@ -16,6 +16,7 @@ export class Stepper<T> {
   _validators: Validator<T>[] = [];
 
   onChange = new Subject<ChangeEvent<T>>();
+  subscription = new Subscription();
 
   get step() {
     return this._step;
@@ -59,16 +60,16 @@ export class Stepper<T> {
   }
 
   onEnter(step: T, callback: () => void) {
-    this.onChange.subscribe(e => {
+    this.subscription.add(this.onChange.subscribe(e => {
       if (e.enterStep == step) callback();
-    });
+    }));
     return this;
   }
 
   onLeave(step: T, callback: () => void) {
-    this.onChange.subscribe(e => {
+    this.subscription.add(this.onChange.subscribe(e => {
       if (e.enterStep == step) callback();
-    });
+    }));
     return this;
   }
 }

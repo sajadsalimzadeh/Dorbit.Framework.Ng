@@ -49,12 +49,12 @@ export class DialogService {
 
   confirm(options: ConfirmOptions, dialogOptions?: DialogOptions) {
     return this.create(ConfirmComponent, (componentRef) => {
-      componentRef.instance.options = dialogOptions;
+      componentRef.instance.options = {...options, ...dialogOptions};
       Object.assign(componentRef.instance, options);
     });
   }
 
-  confirmYesNo(yes: (dialog: DialogRef) => void, no?: (dialog: DialogRef) => void, confirmOptions?: {message: string}, dialogOptions?: DialogOptions) {
+  confirmYesNo(yes: (dialog: DialogRef) => void, no?: (dialog: DialogRef) => void, confirmOptions?: { message: string }, dialogOptions?: DialogOptions) {
     const dialog = this.confirm({
       ...confirmOptions,
       buttons: [

@@ -8,6 +8,7 @@ export interface ConfirmButton {
 }
 
 export interface ConfirmOptions {
+  title?: string;
   message?: string;
   buttons: ConfirmButton[]
 }
