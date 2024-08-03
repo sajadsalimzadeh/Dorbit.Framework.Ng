@@ -1,7 +1,7 @@
-import {HttpClient, HttpContext, HttpEvent, HttpHandler, HttpHeaders, HttpParams, HttpRequest, HttpResponse} from "@angular/common/http";
+import {HttpClient, HttpContext, HttpEvent, HttpHandler, HttpHeaders, HttpParams, HttpRequest} from "@angular/common/http";
 import {Injectable, InjectionToken, Injector} from "@angular/core";
-import {finalize, Observable, tap} from "rxjs";
-import {LoadingService} from "./loading.service";
+import {finalize, Observable} from "rxjs";
+import {LoadingService} from "../services/loading.service";
 
 export const BASE_API_URL = new InjectionToken<string>('BASE_API_URL');
 
@@ -19,7 +19,6 @@ export interface HttpOptions {
   withCredentials?: boolean;
 }
 
-@Injectable()
 export abstract class BaseApiRepository {
 
   protected http: CustomHttpClient;
