@@ -1,9 +1,14 @@
-import {HttpClient, HttpContext, HttpEvent, HttpHandler, HttpHeaders, HttpParams, HttpRequest, HttpResponse} from "@angular/common/http";
+import {HttpClient, HttpContext, HttpErrorResponse, HttpEvent, HttpHandler, HttpHeaders, HttpParams, HttpRequest, HttpResponse} from "@angular/common/http";
 import {Injectable, InjectionToken, Injector} from "@angular/core";
-import {finalize, Observable, tap} from "rxjs";
+import {catchError, finalize, Observable, tap, throwError} from "rxjs";
 import {LoadingService} from "./loading.service";
+import {Colors} from "../types";
+import {Message, MessageService} from "../components";
+import {TranslateService} from "@ngx-translate/core";
 
 export const BASE_API_URL = new InjectionToken<string>('BASE_API_URL');
+
+const messageTimes: { [key: string]: number } = {};
 
 export interface HttpOptions {
   headers?: HttpHeaders | {
@@ -27,12 +32,13 @@ export abstract class BaseApiRepository {
   public readonly baseUrl: string;
   public readonly repository: string;
   public loadingService: LoadingService;
+  public messagingEnabled: boolean = true;
 
   protected constructor(protected injector: Injector, repository?: string, baseUrl?: string) {
     this.baseUrl = baseUrl ?? injector.get(BASE_API_URL, '', {optional: true}) ?? '';
     this.repository = repository ?? '';
     this.loadingService = injector.get(LoadingService);
-    const handler = new CustomHttpHandler(this, injector.get(HttpHandler));
+    const handler = new CustomHttpHandler(injector, this);
     this.http = new CustomHttpClient(handler);
   }
 
@@ -42,9 +48,17 @@ export abstract class BaseApiRepository {
 }
 
 class CustomHttpHandler extends HttpHandler {
+  private readonly handler: HttpHandler;
+  private readonly translateService: TranslateService;
+  private readonly messageService: MessageService;
 
-  constructor(private api: BaseApiRepository, private handler: HttpHandler) {
+  constructor(
+    private injector: Injector,
+    private api: BaseApiRepository) {
     super();
+    this.handler = injector.get(HttpHandler)
+    this.translateService = injector.get(TranslateService)
+    this.messageService = injector.get(MessageService)
   }
 
   override handle(req: HttpRequest<any>): Observable<HttpEvent<any>> {
@@ -80,9 +94,50 @@ class CustomHttpHandler extends HttpHandler {
     return this.handler.handle(req).pipe(finalize(() => {
       clearTimeout(timeout);
       this.api.loadingService.end();
+    })).pipe(tap(e => {
+      if (e instanceof HttpResponse) {
+        if (e.ok) {
+          if (e.body.message) {
+            this.send(`message.${e.body.message}`, 'success');
+          } else if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(req.method.toUpperCase())) {
+            // this.send(`message.success`, 'success');
+          }
+        }
+      }
+    })).pipe(catchError(e => {
+      if (e instanceof HttpErrorResponse) {
+        if (e.error?.message) {
+          this.send(`message.${e.error.message}`, 'danger', undefined, e.error.data);
+        } else if (e.status == 504 || e.status == 0) {
+          this.send(`message.http.504`, 'danger', {duration: 10000});
+        } else {
+          this.send(`message.error`, 'danger');
+        }
+      }
+
+      return throwError(() => e)
     }));
   }
 
+  private send(text: string, color: Colors, message?: Message, data?: any) {
+    if (this.api.messagingEnabled) {
+      const key = `${text}`;
+      if (Date.now() - messageTimes[key] < 1000) return;
+      let translate = this.translateService.instant(key);
+      if (translate == key) return;
+      if (data) {
+        for (const dataKey in data) {
+          translate = translate.replace(`{${dataKey}}`, data[dataKey]);
+        }
+      }
+      this.messageService.show({
+        ...message,
+        body: translate,
+        color: color
+      });
+      messageTimes[key] = Date.now();
+    }
+  }
 }
 
 class CustomHttpClient extends HttpClient {
