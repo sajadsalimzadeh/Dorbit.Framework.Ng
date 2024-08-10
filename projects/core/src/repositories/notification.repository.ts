@@ -1,5 +1,5 @@
 import {Injectable, Injector} from '@angular/core';
-import {BaseApiRepository} from "../services";
+import {BaseApiRepository} from "./base-api.repository";
 import {CommandResult, QueryResult} from "../contracts";
 import {NotificationRecord} from "../stores";
 

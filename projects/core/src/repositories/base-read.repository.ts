@@ -1,15 +1,15 @@
-import {Injectable, Injector} from "@angular/core";
+import {Injector} from "@angular/core";
 import {ODataQueryOptions, PagedListResult, QueryResult} from "../contracts";
 import {BaseApiRepository} from "./base-api.repository";
+import {Observable} from "rxjs";
 
-@Injectable({providedIn: 'root'})
 export abstract class BaseReadRepository<T = any> extends BaseApiRepository {
 
   constructor(injector: Injector, repository: string) {
     super(injector, repository);
   }
 
-  select(query?: ODataQueryOptions | any) {
+  select(query?: ODataQueryOptions | any): Observable<PagedListResult<T>> {
     if (!query) query = new ODataQueryOptions();
     let url = '';
     let params = {};
@@ -21,8 +21,8 @@ export abstract class BaseReadRepository<T = any> extends BaseApiRepository {
     return this.http.get<PagedListResult<T>>(url, {params: params, headers: {'Content-Type': 'application/json'}});
   }
 
-  getAll() {
-    return this.select(new ODataQueryOptions().take(10000));
+  getAll(): Observable<QueryResult<T[]>> {
+    return this.select(new ODataQueryOptions().take(10000)) as Observable<QueryResult<T[]>>;
   }
 
   getById(id: any) {

@@ -16,8 +16,7 @@ export interface ISaveRepository {
 }
 
 
-@Injectable({providedIn: 'root'})
-export abstract class BaseWriteRepository<T = any> extends BaseReadRepository implements ISaveRepository, IEditRepository, IAddRepository {
+export abstract class BaseWriteRepository<T = any> extends BaseReadRepository<T> implements ISaveRepository, IEditRepository, IAddRepository {
 
   constructor(injector: Injector, repository: string) {
     super(injector, repository);

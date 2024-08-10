@@ -14,7 +14,6 @@ export class ResourceService {
 
   async load(name: string, url: string): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-
       if (this.resources[name]) {
         return resolve(this.resources[name]);
       }
@@ -23,7 +22,10 @@ export class ResourceService {
           this.resources[name] = res;
           resolve(this.resources[name]);
         },
-        error: e => reject(e)
+        error: e => {
+          console.error(e);
+          reject(e);
+        }
       })
     })
   }

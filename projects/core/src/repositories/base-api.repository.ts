@@ -24,7 +24,6 @@ export interface HttpOptions {
   withCredentials?: boolean;
 }
 
-@Injectable()
 export abstract class BaseApiRepository {
 
   protected http: CustomHttpClient;
