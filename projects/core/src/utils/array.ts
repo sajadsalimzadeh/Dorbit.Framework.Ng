@@ -7,6 +7,8 @@ declare global {
     toggle(value: any): T[];
 
     groupBy(func: (x: T) => string): { key: string, value: T[] }[];
+
+    any(func: (x: T) => boolean): boolean;
   }
 }
 
@@ -38,4 +40,9 @@ Array.prototype.groupBy = function (func: (x: any) => string) {
     group.value.push(item);
   });
   return groups;
+}
+
+
+Array.prototype.any = function (func: (x: any) => boolean) {
+  return this.findIndex(func) > -1;
 }

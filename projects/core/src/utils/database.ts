@@ -40,7 +40,7 @@ export interface ITableChangeEvent<T = any> {
 }
 
 export interface ITable<T = any, TP = any> {
-  onChange: Subject<ITableChangeEvent<T>>;
+  $change: Subject<ITableChangeEvent<T>>;
 
   get(key: TP): Promise<T | null>;
 
@@ -48,7 +48,7 @@ export interface ITable<T = any, TP = any> {
 
   put(value: T): Promise<T>;
 
-  add(value: T): Promise<T>;
+  add(value: T | {}): Promise<T>;
 
   addAll(value: T[]): Promise<T[]>;
 

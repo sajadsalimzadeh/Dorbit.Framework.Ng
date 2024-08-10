@@ -1,7 +1,7 @@
 import {HttpClient, HttpContext, HttpErrorResponse, HttpEvent, HttpHandler, HttpHeaders, HttpParams, HttpRequest, HttpResponse} from "@angular/common/http";
-import {Injectable, InjectionToken, Injector} from "@angular/core";
+import {InjectionToken, Injector} from "@angular/core";
 import {catchError, finalize, Observable, tap, throwError} from "rxjs";
-import {LoadingService} from "./loading.service";
+import {LoadingService} from "../services/loading.service";
 import {Colors} from "../types";
 import {Message, MessageService} from "../components";
 import {TranslateService} from "@ngx-translate/core";
