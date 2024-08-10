@@ -1,4 +1,4 @@
-<ul class="steps">
+<ul class="steps" *ngIf="showNavigation">
   <li class="step" *ngFor="let step of steps; let index = index" [ngClass]="{done: index < activeStepIndex, active: index == activeStepIndex}"
       (click)="goto(step, index)">
     <div class="lines"></div>
