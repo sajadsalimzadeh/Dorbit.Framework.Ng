@@ -101,4 +101,30 @@ export class DialogService {
   closeAll() {
     [...this._refs].forEach(x => x.close())
   }
+
+  hint(message: string) {
+    if (localStorage.getItem(message) || sessionStorage.getItem(message)) return;
+    const dialog = this.confirm({
+      title: this.translateService.instant('hint.title'),
+      message: this.translateService.instant(message),
+      buttons: [
+        {
+          color: 'success',
+          text: this.translateService.instant('hint.close-and-not-show-again'),
+          action: () => {
+            dialog.close();
+            localStorage.setItem(message, 'true');
+          }
+        },
+        {
+          color: 'gray--3',
+          text: this.translateService.instant('hint.close'),
+          action: () => {
+            dialog.close();
+            sessionStorage.setItem(message, 'true');
+          },
+        }
+      ]
+    })
+  }
 }
