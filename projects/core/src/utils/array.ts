@@ -9,6 +9,10 @@ declare global {
     groupBy(func: (x: T) => string): { key: string, value: T[] }[];
 
     any(func: (x: T) => boolean): boolean;
+
+    sum(func: (x: T) => number): number;
+
+    average(func: (x: T) => number): number;
   }
 }
 
@@ -42,7 +46,19 @@ Array.prototype.groupBy = function (func: (x: any) => string) {
   return groups;
 }
 
-
 Array.prototype.any = function (func: (x: any) => boolean) {
   return this.findIndex(func) > -1;
+}
+
+Array.prototype.sum = function (func: (x: any) => number) {
+  let sum = 0;
+  for (let i = 0; i < this.length; i++) {
+    sum += func(this[i]);
+  }
+  return sum;
+}
+
+
+Array.prototype.average = function (func: (x: any) => number) {
+  return this.sum(func) / this.length;
 }
