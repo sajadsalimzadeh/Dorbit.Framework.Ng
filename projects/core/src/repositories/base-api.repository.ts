@@ -1,12 +1,11 @@
 import {HttpClient, HttpContext, HttpErrorResponse, HttpEvent, HttpHandler, HttpHeaders, HttpParams, HttpRequest, HttpResponse} from "@angular/common/http";
-import {InjectionToken, Injector} from "@angular/core";
+import {TranslateService} from "@ngx-translate/core";
+import {Injector} from "@angular/core";
 import {catchError, finalize, Observable, tap, throwError} from "rxjs";
-import {LoadingService} from "../services/loading.service";
+import {LoadingService} from "../services";
 import {Colors} from "../types";
 import {Message, MessageService} from "../components";
-import {TranslateService} from "@ngx-translate/core";
-
-export const BASE_API_URL = new InjectionToken<string>('BASE_API_URL');
+import {BASE_API_URL} from "../contracts";
 
 const messageTimes: { [key: string]: number } = {};
 

@@ -5,5 +5,7 @@ import {TemplateDirective as BaseTemplateDirective} from "../../template/templat
   selector: '[dTableTemplate]'
 })
 export class TableTemplateDirective extends BaseTemplateDirective {
-  @Input('dTableTemplate') override name!: 'caption' | 'header' | 'filter' | 'body' | 'detail' | 'footer' | 'summary' | string;
+  @Input('dTableTemplate') set templateName(value: 'caption' | 'header' | 'filter' | 'body' | 'detail' | 'footer' | 'summary' | string) {
+    this.name = value;
+  }
 }
