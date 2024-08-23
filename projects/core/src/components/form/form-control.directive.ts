@@ -112,7 +112,7 @@ export abstract class AbstractFormControl<T> extends AbstractComponent implement
     this.validationsTemplate = value.find(x => x.includesName('validation'))?.template;
   }
 
-  protected _touch: any;
+  protected _onTouch: any;
   protected _onChange: any;
   protected ngControl?: NgControl | null;
   protected controlContainer?: ControlContainer | null;
@@ -171,6 +171,8 @@ export abstract class AbstractFormControl<T> extends AbstractComponent implement
       this.render();
       this.onChange.emit(e);
       this.formControl?.markAsDirty();
+      if(this._onChange) this._onChange(e);
+      if(this._onTouch) this._onTouch(e);
     }));
   }
 
@@ -179,7 +181,7 @@ export abstract class AbstractFormControl<T> extends AbstractComponent implement
   }
 
   registerOnTouched(fn: any): void {
-    this._touch = fn;
+    this._onTouch = fn;
   }
 
   setDisabledState(isDisabled: boolean): void {

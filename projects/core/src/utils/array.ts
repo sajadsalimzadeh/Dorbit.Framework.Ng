@@ -7,6 +7,8 @@ declare global {
     toggle(value: any): T[];
 
     groupBy(func: (x: T) => string): { key: string, value: T[] }[];
+
+    remove(x: T): boolean;
   }
 }
 
@@ -38,4 +40,10 @@ Array.prototype.groupBy = function (func: (x: any) => string) {
     group.value.push(item);
   });
   return groups;
+}
+
+Array.prototype.remove = function (x: any) {
+  const index = this.indexOf(x);
+  if (index > -1) this.splice(index, 1);
+  return index > -1;
 }
