@@ -155,8 +155,10 @@ export class CacheInterceptor implements HttpInterceptor {
                 },
                 error: err => {
                   try {
-                    if (cache) ob.next(cache.data)
+                    if (cache?.data) ob.next(cache.data)
                     else ob.error(err);
+                  } catch (e) {
+                    ob.error(err);
                   } finally {
                     this.subscriberGroups[key] = false;
                   }

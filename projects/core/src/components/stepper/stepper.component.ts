@@ -10,6 +10,7 @@ import {AbstractComponent} from "../abstract.component";
 })
 export class StepperComponent extends AbstractComponent implements AfterContentInit {
   @Input({required: true}) stepper!: Stepper<any>;
+  @Input() showNavigation: boolean = true;
 
   @ContentChildren(StepDirective) steps?: QueryList<StepDirective>;
 

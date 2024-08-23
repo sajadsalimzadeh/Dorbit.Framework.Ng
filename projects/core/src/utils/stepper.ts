@@ -12,8 +12,9 @@ interface Validator<T> {
 }
 
 export class Stepper<T> {
-  _step: T;
-  _validators: Validator<T>[] = [];
+  private _step: T;
+  private _steps: T[];
+  private _validators: Validator<T>[] = [];
 
   onChange = new Subject<ChangeEvent<T>>();
   subscription = new Subscription();
@@ -22,8 +23,9 @@ export class Stepper<T> {
     return this._step;
   }
 
-  constructor(step: T) {
+  constructor(step: T, steps: T[]) {
     this._step = step;
+    this._steps = steps;
   }
 
   go(step: T) {
@@ -42,6 +44,28 @@ export class Stepper<T> {
         this.onChange.next(e);
       }
     });
+  }
+
+  goNext() {
+    const index = this._steps.indexOf(this.step);
+    if (index < this._steps.length - 1) {
+      this.go(this._steps[index + 1]);
+    }
+  }
+
+  goPrev() {
+    const index = this._steps.indexOf(this.step);
+    if (index > 0) {
+      this.go(this._steps[index - 1]);
+    }
+  }
+
+  isFirst() {
+    return this._steps.indexOf(this.step) == 0;
+  }
+
+  isLast() {
+    return this._steps.indexOf(this.step) == this._steps.length - 1;
   }
 
   addValidator(validator: () => boolean, leaveStep?: T, enterStep?: T) {

@@ -164,7 +164,7 @@ export class IndexedDB implements IDatabase {
 }
 
 class Table<T, TP> implements ITable<T, TP> {
-  onChange = new Subject<ITableChangeEvent<T>>();
+  $change = new Subject<ITableChangeEvent<T>>();
 
 
   constructor(private name: string, private config: ITableConfig, private database: IDatabase) {
@@ -183,7 +183,7 @@ class Table<T, TP> implements ITable<T, TP> {
       (value as any)[this.config.key] = this.config.keyGenerator();
     }
     const result = await this.database.add(this.name, value);
-    this.onChange.next({value: value, action: 'add'});
+    this.$change.next({value: value, action: 'add'});
     return result;
   }
 
@@ -194,19 +194,19 @@ class Table<T, TP> implements ITable<T, TP> {
       }
     }
     const result = await this.database.addAll(this.name, values);
-    this.onChange.next({action: 'add-all'});
+    this.$change.next({action: 'add-all'});
     return result;
   }
 
   async put(value: T) {
     const result = await this.database.put(this.name, value);
-    this.onChange.next({value: value, action: 'put'});
+    this.$change.next({value: value, action: 'put'});
     return result;
   }
 
   async putAll(values: T[]) {
     const result = await this.database.putAll(this.name, values);
-    this.onChange.next({action: 'put-all'});
+    this.$change.next({action: 'put-all'});
     return result;
   }
 
@@ -224,11 +224,11 @@ class Table<T, TP> implements ITable<T, TP> {
 
   async delete(key: TP) {
     await this.database.delete(this.name, key);
-    this.onChange.next({action: 'delete'});
+    this.$change.next({action: 'delete'});
   }
 
   async deleteAll(keys: TP[]) {
     await this.database.deleteAll(this.name, keys);
-    this.onChange.next({action: 'delete-all'});
+    this.$change.next({action: 'delete-all'});
   }
 }

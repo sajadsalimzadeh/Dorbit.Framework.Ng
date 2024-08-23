@@ -21,4 +21,9 @@ export class NumberUtil {
     const hour = Math.floor(totalSec / 3600);
     return `${hour.toString().padStart(2, '0')}:${Math.floor(min % 60).toString().padStart(2, '0')}:${Math.floor(totalSec % 60).toString().padStart(2, '0')}`;
   }
+
+  static parseHex(hex: string | undefined) {
+    if(!hex) return '';
+    return parseInt(hex, 16);
+  }
 }
