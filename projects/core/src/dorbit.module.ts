@@ -48,7 +48,7 @@ import {
 } from './components';
 import {
   JDatePipeModule,
-  RDatePipeModule,
+  RDatePipeModule, TruncateModule,
 } from './pipes';
 import {
   GlobalErrorHandler
@@ -100,6 +100,7 @@ const MODULES = [
   TranslateModule,
   ResponsiveDirectiveModule,
   HotKeyModule,
+  TruncateModule,
 ];
 
 @NgModule({

@@ -50,57 +50,26 @@ const minimizeSpaces: DialogComponent[] = [];
   templateUrl: 'dialog.component.html',
   styleUrls: ['./dialog.component.scss']
 })
-export class DialogComponent extends AbstractComponent implements DialogRef, DialogOptions, DialogContext {
+export class DialogComponent extends AbstractComponent implements DialogRef, DialogContext {
   @Output() onClose = new EventEmitter<void>();
+  options!: DialogOptions;
 
   componentRef!: ComponentRef<DialogComponent>;
-
-  template?: TemplateRef<any>;
-  component?: Type<any>;
-  html?: string;
-
-  width?: string;
-  minWidth?: string;
-  maxWidth?: string;
-  maxWidthWindow?: string;
-
-  height?: string;
-  minHeight?: string;
-  maxHeight?: string;
-  maxHeightWindow?: string;
-
-  position: Positions = 'middle-center';
-  mask: boolean = true;
-  maskClosable: boolean = false;
-  movable: boolean = false;
-
-  openDuration: number = 300;
-  closeDuration: number = 300;
-
-  closable: boolean = true;
-  maximizable: boolean = false;
-  minimizable: boolean = false;
-
-  title: string = '';
-
-  isMaximize: boolean = false;
-  isMinimize: boolean = false;
-  isClosing: boolean = false;
-
   dialogStyles: any = {};
-
-  context?: any;
+  isClosing: boolean = false;
+  maxWidthWindow?: string;
+  maxHeightWindow?: string;
 
   get inputs() {
     return {
-      ...this.context,
+      ...this.options.context,
       dialog: this
     }
   }
 
   @HostListener('click', ['$event'])
   onPositionClick(e: MouseEvent) {
-    if (this.maskClosable && (e.target as HTMLElement).querySelector('.dialog')) {
+    if (this.options.maskClosable && (e.target as HTMLElement).querySelector('.dialog')) {
       this.close();
     }
   }
@@ -121,6 +90,28 @@ export class DialogComponent extends AbstractComponent implements DialogRef, Dia
     super(injector)
   }
 
+  override ngOnInit() {
+    super.ngOnInit();
+
+
+    this.options.position ??= 'middle-center';
+    this.options.mask ??= true;
+    this.options.maskClosable ??= false;
+    this.options.movable ??= false;
+
+    this.options.openDuration ??= 300;
+    this.options.closeDuration ??= 300;
+
+    this.options.closable ??= true;
+    this.options.maximizable ??= false;
+    this.options.minimizable ??= false;
+
+    this.options.title ??= '';
+
+    this.options.isMaximize ??= false;
+    this.options.isMinimize ??= false;
+  }
+
   override ngOnDestroy() {
     this.removeMinimizeSpace();
   }
@@ -137,9 +128,9 @@ export class DialogComponent extends AbstractComponent implements DialogRef, Dia
 
     this.dialogStyles = {};
 
-    this.dialogStyles['width'] = this.width;
-    this.dialogStyles['min-width'] = this.minWidth;
-    this.dialogStyles['max-width'] = this.maxWidth;
+    this.dialogStyles['width'] = this.options.width;
+    this.dialogStyles['min-width'] = this.options.minWidth;
+    this.dialogStyles['max-width'] = this.options.maxWidth;
 
     if (this.elementRef.nativeElement.parentNode) {
       const parentHeight = (this.elementRef.nativeElement.parentNode?.parentNode as HTMLElement).clientHeight;
@@ -150,9 +141,9 @@ export class DialogComponent extends AbstractComponent implements DialogRef, Dia
         return value;
       }
 
-      this.dialogStyles['height'] = getMaxHeight(this.height);
-      this.dialogStyles['min-height'] = getMaxHeight(this.minHeight);
-      this.dialogStyles['max-height'] = `calc(${getMaxHeight(this.maxHeight ?? '100%')} - 1.6rem)`;
+      this.dialogStyles['height'] = getMaxHeight(this.options.height);
+      this.dialogStyles['min-height'] = getMaxHeight(this.options.minHeight);
+      this.dialogStyles['max-height'] = `calc(${getMaxHeight(this.options.maxHeight ?? '100%')} - 1.6rem)`;
     }
     this.changeDetectorRef.detectChanges();
   }
@@ -168,11 +159,11 @@ export class DialogComponent extends AbstractComponent implements DialogRef, Dia
     super.render();
     this.adjustSize();
 
-    this.setClass('mask', this.mask);
-    this.setClass('movable', this.movable);
-    this.setClass('minimize', this.isMinimize);
+    this.setClass('mask', this.options.mask);
+    this.setClass('movable', this.options.movable);
+    this.setClass('minimize', this.options.isMinimize);
     this.setClass('closing', this.isClosing);
-    if (this.isMinimize) {
+    if (this.options.isMinimize) {
       const minimizeIndex = minimizeSpaces.indexOf(this);
       if (minimizeIndex > -1) {
         if (this.dir == 'ltr') {
@@ -183,17 +174,17 @@ export class DialogComponent extends AbstractComponent implements DialogRef, Dia
         this.dialogStyles['transform'] = `translateY(${Math.floor(minimizeIndex / 5) * -100}%)`;
       }
     } else {
-      this.setClass('maximize', this.isMaximize);
+      this.setClass('maximize', this.options.isMaximize);
     }
 
-    this.setClass(this.position, true);
+    this.setClass(this.options.position ?? 'middle-center', true);
 
-    this.dialogStyles['animation-duration'] = (this.openDuration + 50) + 'ms';
-    this.dialogStyles['transition-duration'] = (this.closeDuration + 50) + 'ms';
+    this.dialogStyles['animation-duration'] = ((this.options.openDuration ?? 300) + 50) + 'ms';
+    this.dialogStyles['transition-duration'] = ((this.options.closeDuration ?? 300) + 50) + 'ms';
   }
 
   close() {
-    if (this.isMinimize) {
+    if (this.options.isMinimize) {
       this.componentRef.destroy();
       this.onClose.emit();
     } else {
@@ -201,19 +192,19 @@ export class DialogComponent extends AbstractComponent implements DialogRef, Dia
       setTimeout(() => {
         this.componentRef.destroy();
         this.onClose.emit();
-      }, this.closeDuration);
+      }, this.options.closeDuration);
       this.render();
     }
   }
 
   maximize() {
-    this.isMaximize = !this.isMaximize;
+    this.options.isMaximize = !this.options.isMaximize;
     this.render();
   }
 
   minimize() {
-    this.isMinimize = !this.isMinimize;
-    if (this.isMinimize) {
+    this.options.isMinimize = !this.options.isMinimize;
+    if (this.options.isMinimize) {
       minimizeSpaces.push(this);
     } else {
       this.removeMinimizeSpace();

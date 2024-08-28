@@ -14,8 +14,8 @@ export class PromptComponent implements PromptOptions, DialogRef {
   onResult = new EventEmitter<boolean>();
   title: string = '';
   message: string = '';
+  options!: DialogOptions;
   dialog?: DialogRef;
-  options?: DialogOptions;
   value?: string;
 
   @ViewChild('promptTpl') set template(value: TemplateRef<any>) {

@@ -9,6 +9,7 @@ import {PromptComponent} from "../components/prompt/prompt.component";
 
 export interface DialogRef {
   close: () => void;
+  options: DialogOptions;
   onClose: EventEmitter<void>;
 }
 
@@ -42,7 +43,7 @@ export class DialogService {
 
   open(options: DialogOptions) {
     return this.create(DialogComponent, (componentRef, container) => {
-      Object.assign(componentRef.instance, options);
+      componentRef.instance.options = options;
       componentRef.instance.componentRef = componentRef;
     }, options.container);
   }
@@ -83,7 +84,7 @@ export class DialogService {
   prompt(options: PromptOptions, dialogOptions?: DialogOptions) {
     return new Promise<{ result: boolean, value?: string, dialog: PromptComponent }>((resolve) => {
       const dialog = this.create(PromptComponent, (componentRef) => {
-        componentRef.instance.options = dialogOptions;
+        componentRef.instance.options = {...dialogOptions};
         Object.assign(componentRef.instance, options);
       });
 

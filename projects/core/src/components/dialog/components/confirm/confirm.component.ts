@@ -13,9 +13,10 @@ export class ConfirmComponent implements ConfirmOptions, DialogRef {
   onClose = new EventEmitter<void>();
 
   message!: string;
+  options!: DialogOptions;
+
   dialog?: DialogRef;
   loading?: boolean;
-  options?: DialogOptions;
   buttons: ConfirmButton[] = [];
 
   @ViewChild('confirmTpl') set template(value: TemplateRef<any>) {

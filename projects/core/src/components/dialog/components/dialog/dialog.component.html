@@ -1,28 +1,28 @@
-<d-position [position]="position" (click)="onPositionClick($event)">
+<d-position [position]="options.position ?? 'middle-center'" (click)="onPositionClick($event)">
   <div class="dialog" [style]="dialogStyles" [ngClass]="ngClass">
-    <div class="header" *ngIf="title || closable || minimizable || maximizable">
+    <div class="header" *ngIf="options.title || options.closable || options.minimizable || options.maximizable">
       <div class="title">
-        {{ title }}
+        {{ options.title }}
       </div>
-      <div class="button minimize" *ngIf="minimizable" (click)="minimize()">
+      <div class="button minimize" *ngIf="options.minimizable" (click)="minimize()">
         <i class="icons-core-minus"></i>
       </div>
-      <div class="button maximize" *ngIf="!isMinimize && maximizable" (click)="maximize()">
-        <i [ngClass]="(isMaximize ? 'icons-core-minimize' : 'icons-core-maximize')"></i>
+      <div class="button maximize" *ngIf="!options.isMinimize && options.maximizable" (click)="maximize()">
+        <i [ngClass]="(options.isMaximize ? 'icons-core-minimize' : 'icons-core-maximize')"></i>
       </div>
-      <div class="button close" *ngIf="closable" (click)="close()">
+      <div class="button close" *ngIf="options.closable" (click)="close()">
         <i class="icons-core-close"></i>
       </div>
     </div>
     <div class="body">
-      <ng-container *ngIf="template">
-        <ng-container *ngTemplateOutlet="template; context: {$implicit: this, context: context}"></ng-container>
+      <ng-container *ngIf="options.template">
+        <ng-container *ngTemplateOutlet="options.template; context: {$implicit: this, context: options.context}"></ng-container>
       </ng-container>
-      <ng-container *ngIf="component">
-        <ng-container *ngComponentOutlet="component; inputs: inputs"></ng-container>
+      <ng-container *ngIf="options.component">
+        <ng-container *ngComponentOutlet="options.component; inputs: inputs"></ng-container>
       </ng-container>
-      <ng-container *ngIf="html">
-        <div [innerHTML]="html"></div>
+      <ng-container *ngIf="options.html">
+        <div [innerHTML]="options.html"></div>
       </ng-container>
     </div>
   </div>
