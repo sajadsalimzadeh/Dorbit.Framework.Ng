@@ -12,7 +12,7 @@ export interface IEditRepository {
 }
 
 export interface ISaveRepository {
-  save(request: any): Observable<QueryResult>;
+  save(id: any, request: any): Observable<QueryResult>;
 }
 
 
@@ -30,12 +30,11 @@ export abstract class BaseWriteRepository<T = any> extends BaseReadRepository<T>
     return this.http.patch<QueryResult<T>>(`${id}`, req);
   }
 
-  save(req: any) {
-    if (!req.id) {
-      delete req.id;
+  save(id: any, req: any) {
+    if (!id) {
       return this.add(req);
     } else {
-      return this.edit(req.id, {...req});
+      return this.edit(id, {...req});
     }
   }
 
