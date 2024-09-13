@@ -1,6 +1,6 @@
 import {ErrorHandler, ModuleWithProviders, NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {RouterModule} from "@angular/router";
+import {RouterModule, Routes} from "@angular/router";
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {
@@ -125,6 +125,12 @@ export class DorbitModule {
         {provide: ErrorHandler, useClass: GlobalErrorHandler},
       ]
     }
+  }
+
+  static getRoutes() {
+    return [
+      {path: 'jobs', loadChildren: () => import('./pages/jobs/index.module').then(x => x.IndexModule) }
+    ] as Routes;
   }
 }
 

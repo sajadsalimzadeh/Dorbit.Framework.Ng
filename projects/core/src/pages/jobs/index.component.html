@@ -1,0 +1,65 @@
+<d-breadcrumb></d-breadcrumb>
+<d-table [data]="data">
+  <ng-template dTableTemplate="header,footer">
+    <tr>
+      <th>Name</th>
+      <th class="text-align-center">Start Time</th>
+      <th class="text-align-center">End Time</th>
+      <th class="text-align-center">Cancel Time</th>
+      <th>Status</th>
+      <th>Progress</th>
+      <th style="width: 10px"></th>
+    </tr>
+  </ng-template>
+  <ng-template dTableTemplate="body" let-item>
+    <tr>
+      <td>{{ item.name }}</td>
+      <td class="ltr text-align-center">{{ item.startTime | jdate }}</td>
+      <td class="ltr text-align-center">{{ item.endTime | jdate }}</td>
+      <td class="ltr text-align-center">{{ item.cancelTime | jdate }}</td>
+      <td>
+        <div [class]="'status ' + EnumUtil.getName(JobStatus, item.status)">
+          <ng-container [ngSwitch]="item.status">
+            <i *ngSwitchCase="JobStatus.Draft" class="far fa-compass-drafting"></i>
+            <i *ngSwitchCase="JobStatus.Running" class="far fa-spinner"></i>
+            <i *ngSwitchCase="JobStatus.Pause" class="far fa-pause"></i>
+            <i *ngSwitchCase="JobStatus.Finish" class="far fa-check"></i>
+          </ng-container>
+          <b>{{ 'job.status.' + EnumUtil.getName(JobStatus, item.status) | translate }}</b>
+        </div>
+      </td>
+      <td>
+        <b [ngClass]="(item.progress < 100 && item.status == JobStatus.Finish ? 'color-danger' : '')">{{ item.progress?.toFixed(2) }}%</b>
+      </td>
+      <td class="operation-cell">
+        <div class="flex-row flex-gap-2">
+          <d-button size="sm" mode="text" color="secondary" icon="far fa-envelope-open-text"
+                    (click)="showDialog(logTpl, {width: '950px', height: '100%', context: item})" dTooltip="Logs"></d-button>
+          <d-button size="sm" mode="text" color="primary" icon="far fa-calendar-circle-user" [disabled]="!item.auditLogs?.length"
+                    (click)="showDialog(auditLogTpl, {context: item})" dTooltip="Audit Logs"></d-button>
+          <d-button size="sm" mode="text" color="danger" icon="far fa-stop" [disabled]="item.status != JobStatus.Running" (click)="cancel(item)"></d-button>
+          <ng-container *ngIf="item.pausable">
+            <d-button *ngIf="item.status == JobStatus.Running" size="sm" mode="text" color="danger" icon="far fa-circle-pause" (click)="pause(item)"></d-button>
+            <d-button *ngIf="item.status == JobStatus.Pause" size="sm" mode="text" color="success" icon="far fa-circle-play" (click)="resume(item)"></d-button>
+          </ng-container>
+          <d-button *ngIf="item.downloadable" size="sm" mode="text" color="success" icon="far fa-download" [disabled]="item.status != JobStatus.Finish" (click)="download(item)"></d-button>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</d-table>
+
+<ng-template #auditLogTpl let-item="context">
+  <ul class="audit-logs">
+    <li *ngFor="let log of item.auditLogs" class="flex-row flex-align-center">
+      <span>{{ 'job.audit-log-type.' + EnumUtil.getName(JobAuditLogType, log.type) | translate }}</span>
+      <span class="ltr">{{ log.time | jdate }}</span>
+      <span>{{ log.userId }}</span>
+      <span>{{ log.userName }}</span>
+    </li>
+  </ul>
+</ng-template>
+
+<ng-template #logTpl let-item="context">
+  <app-logs [job]="item"></app-logs>
+</ng-template>

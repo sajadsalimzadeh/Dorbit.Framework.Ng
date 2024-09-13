@@ -1,0 +1,18 @@
+.audit-logs {
+  li {
+    gap: 1rem;
+    display: flex;
+    align-items: center;
+  }
+}
+
+td div.status {
+  gap: .5rem;
+  display: flex;
+  align-items: center;
+
+  &.Draft {color: var(--color-gray-8);}
+  &.Pause {color: var(--color-warning);}
+  &.Running {color: var(--color-primary);}
+  &.Finish {color: var(--color-success);}
+}

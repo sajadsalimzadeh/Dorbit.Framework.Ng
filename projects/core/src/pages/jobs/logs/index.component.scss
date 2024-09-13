@@ -1,0 +1,42 @@
+:host {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.logs {
+  flex: 1;
+  direction: ltr;
+  position: relative;
+
+  .log-container {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 1rem;
+    overflow: auto;
+    position: absolute;
+  }
+
+  .log {
+    display: flex;
+    flex-direction: column;
+
+    .head {
+      gap: 1rem;
+      display: flex;
+    }
+  }
+
+  textarea {
+    width: 100%;
+  }
+}
+
+.paginator {
+  gap: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

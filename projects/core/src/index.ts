@@ -1,7 +1,3 @@
-/*
- * Public API Surface of core
- */
-
 export * from './components';
 export * from './dorbit.module';
 export * from './dorbit.config';
