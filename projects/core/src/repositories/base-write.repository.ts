@@ -1,4 +1,4 @@
-import {Injectable, Injector} from "@angular/core";
+import {Injector} from "@angular/core";
 import {QueryResult} from "../contracts";
 import {BaseReadRepository} from "./base-read.repository";
 import {Observable} from "rxjs";

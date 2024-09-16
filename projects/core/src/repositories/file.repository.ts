@@ -1,5 +1,5 @@
 import {Injectable, Injector} from '@angular/core';
-import {BaseApiRepository} from "../repositories";
+import {BaseApiRepository} from "./base-api.repository";
 import {QueryResult} from "../contracts";
 
 @Injectable({providedIn: 'root'})

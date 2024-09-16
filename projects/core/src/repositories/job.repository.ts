@@ -1,8 +1,7 @@
 import {Injectable, Injector} from '@angular/core';
-import {CancellationToken, QueryResult} from "../contracts";
-import {BaseApiRepository} from "../repositories";
-import {JobDto, JobLogDto} from "../contracts";
 import {Observable} from "rxjs";
+import {CancellationToken, QueryResult, JobDto, JobLogDto} from "../contracts";
+import {BaseApiRepository} from "./base-api.repository";
 import { delay } from '../utils';
 
 @Injectable({providedIn: 'root'})

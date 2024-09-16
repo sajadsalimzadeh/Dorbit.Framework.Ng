@@ -104,7 +104,7 @@ const MODULES = [
 ];
 
 @NgModule({
-  imports: [],
+  imports: [CommonModule],
   declarations: [],
   exports: [
     FormsModule,
@@ -113,7 +113,7 @@ const MODULES = [
     ReactiveFormsModule,
     RouterModule,
 
-    MODULES
+    ...MODULES
   ],
 })
 export class DorbitModule {
@@ -125,12 +125,6 @@ export class DorbitModule {
         {provide: ErrorHandler, useClass: GlobalErrorHandler},
       ]
     }
-  }
-
-  static getRoutes() {
-    return [
-      {path: 'jobs', loadChildren: () => import('./pages/jobs/index.module').then(x => x.IndexModule) }
-    ] as Routes;
   }
 }
 

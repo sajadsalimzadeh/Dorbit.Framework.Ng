@@ -18,6 +18,7 @@ export * from './user-agent-util';
 export * from './object';
 export * from './delay';
 export * from './string';
+export * from './form';
 export * from './google';
 export * from './mobile';
 export * from './md5';
