@@ -1,7 +1,8 @@
 import {Component, Injector, Input} from '@angular/core';
 import {JobRepository} from "../../../repositories";
 import {JobDto, JobLogDto, JobLogLevel} from "../../../contracts";
-import {BaseComponent, LoadingService} from "@framework";
+import {BaseComponent} from "../../../components";
+import {LoadingService} from "../../../services";
 
 @Component({
   selector: 'app-logs',

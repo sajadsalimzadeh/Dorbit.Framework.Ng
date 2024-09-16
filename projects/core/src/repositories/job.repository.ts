@@ -1,7 +1,9 @@
 import {Injectable, Injector} from '@angular/core';
-import {BaseApiRepository, CancellationToken, delay, QueryResult} from "@framework";
+import {CancellationToken, QueryResult} from "../contracts";
+import {BaseApiRepository} from "../repositories";
 import {JobDto, JobLogDto} from "../contracts";
 import {Observable} from "rxjs";
+import { delay } from '../utils';
 
 @Injectable({providedIn: 'root'})
 export class JobRepository extends BaseApiRepository {

@@ -1,5 +1,7 @@
 import {Component, Injector, TemplateRef} from '@angular/core';
-import {BaseComponent, CancellationToken, DialogOptions, EnumUtil, TableData} from "@framework";
+import {CancellationToken} from "../../contracts";
+import {BaseComponent, DialogOptions, TableData} from "../../components";
+import {EnumUtil} from "../../utils";
 import {JobRepository} from "../../repositories";
 import {JobAuditLogType, JobDto, JobStatus} from "../../contracts";
 import {saveAs} from 'file-saver';

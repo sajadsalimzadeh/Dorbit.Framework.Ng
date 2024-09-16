@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
+import {RouterModule} from "@angular/router";
 
 import {IndexComponent} from './index.component';
-import {RouterModule} from "@angular/router";
 import {LogComponent} from "./logs/index.component";
 import {DorbitModule} from "../../dorbit.module";
 
