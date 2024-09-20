@@ -110,10 +110,16 @@ export class DialogComponent extends AbstractComponent implements DialogRef, Dia
 
     this.options.isMaximize ??= false;
     this.options.isMinimize ??= false;
+
+    document.body.classList.add('dialog-opened');
   }
 
   override ngOnDestroy() {
     this.removeMinimizeSpace();
+
+    if (document.getElementsByName('d-dialog').length == 0) {
+      document.body.classList.remove('dialog-opened');
+    }
   }
 
   private removeMinimizeSpace() {
