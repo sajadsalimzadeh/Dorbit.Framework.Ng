@@ -7,8 +7,8 @@
   },
   "dependencies": {
     "jalali-moment": "^3.3.11",
-    "moment": "^2.29.4",
     "jsencrypt": "^3.3.2",
+    "moment": "^2.29.4",
     "tslib": "^2.3.0"
   }
 }
