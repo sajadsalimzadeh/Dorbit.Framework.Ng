@@ -23,6 +23,7 @@ export * from './google';
 export * from './mobile';
 export * from './md5';
 export * from './number';
+export * from './promise';
 export * from './enum';
 export * from './locale';
 export * from './validators';
