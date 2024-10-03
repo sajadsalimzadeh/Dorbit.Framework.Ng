@@ -23,6 +23,7 @@ export class StringUtil {
 
     return result;
   }
+
   static parseVersion(version: string, sectionValue = 100) {
     let value = 1;
     let result = 0;

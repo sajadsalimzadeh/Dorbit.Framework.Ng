@@ -4,6 +4,8 @@ declare global {
   interface Array<T> {
     distinct(): T[];
 
+    distinctBy(func: (x: T) => any): T[];
+
     toggle(value: any): T[];
 
     groupBy(func: (x: T) => string): { key: string, value: T[] }[];
@@ -27,6 +29,17 @@ Array.prototype.distinct = function () {
   for (const x of this) {
     if (items.includes(x)) continue;
     items.push(x);
+  }
+  return items;
+}
+
+Array.prototype.distinctBy = function (func: (x: any) => any) {
+  const items: any[] = [];
+  for (const item of this) {
+    const value = func(item);
+    if(!items.find(x => func(x) == value)) {
+      items.push(item);
+    }
   }
   return items;
 }
