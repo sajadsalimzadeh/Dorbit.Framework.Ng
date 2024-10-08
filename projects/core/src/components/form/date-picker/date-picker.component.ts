@@ -22,6 +22,8 @@ interface DateValue {
   isHoliday?: boolean;
   isSelected?: boolean;
   isCurrentMonth?: boolean;
+
+  dayOfWeakName?: string;
 }
 
 @Component({
@@ -115,6 +117,12 @@ export class DatePickerComponent extends AbstractFormControl<any> {
     if (this.isMobileView() && this.inputEl) {
       this.inputEl.nativeElement.readOnly = true;
     }
+  }
+
+  protected getDayName(date: DateValue) {
+    const dateStr = `${date.year}/${(date.month > 8 ? '' : '0') + (date.month + 1)}/${(date.day > 9 ? '' : '0') + date.day}`;
+    console.log(dateStr)
+    return moment.from(dateStr, this.locale).locale('fa').format('dddd');
   }
 
   private getMoment() {
@@ -382,7 +390,9 @@ export class DatePickerComponent extends AbstractFormControl<any> {
       yearsScrollBoxEl.scrollTo({top: yearIndex * 50, behavior: 'smooth'});
     }, 200)
 
-    return this.selectedValue = {day: this.days[dayIndex], month: monthIndex, year: this.years[yearIndex]};
+    this.selectedValue = {day: this.days[dayIndex], month: monthIndex, year: this.years[yearIndex]};
+    this.selectedValue.dayOfWeakName = this.getDayName(this.selectedValue);
+    return this.selectedValue;
   }
 
   setMobileItem(date?: { day?: number, month?: number, year?: number }) {
