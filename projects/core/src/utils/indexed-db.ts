@@ -39,11 +39,19 @@ export class IndexedDB implements IDatabase {
     this.db.close();
   }
 
-  private toPromise<T = any>(action: () => IDBRequest) {
+  private toPromise<T = any>(action: () => IDBRequest, ...args: any[]) {
     return new Promise<T>((resolve, reject) => {
-      const request = action();
-      request.onsuccess = () => resolve(request.result);
-      request.onerror = () => reject(request.error);
+      try {
+        const request = action();
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => {
+          reject(request.error);
+          if (args.length > 0) console.error(...args);
+        }
+      } catch (ex) {
+        reject(ex);
+        if (args.length > 0) console.error(...args);
+      }
     });
   }
 
@@ -118,14 +126,14 @@ export class IndexedDB implements IDatabase {
   public add(tableName: string, value: any) {
     const tx = this.db.transaction(tableName, 'readwrite');
     const store = tx.objectStore(tableName);
-    return this.toPromise(() => store.add(value));
+    return this.toPromise(() => store.add(value), value);
   }
 
   public async addAll(tableName: string, values: any[]) {
     const tx = this.db.transaction(tableName, 'readwrite');
     const store = tx.objectStore(tableName);
     for (const value of values) {
-      await this.toPromise(() => store.add(value));
+      await this.toPromise(() => store.add(value), values);
     }
     return await this.getAll(tableName);
   }
@@ -133,14 +141,14 @@ export class IndexedDB implements IDatabase {
   public put(tableName: string, value: any) {
     const tx = this.db.transaction(tableName, 'readwrite');
     const store = tx.objectStore(tableName);
-    return this.toPromise(() => store.put(value));
+    return this.toPromise(() => store.put(value), value);
   }
 
   public async putAll(tableName: string, values: any[]) {
     const tx = this.db.transaction(tableName, 'readwrite');
     const store = tx.objectStore(tableName);
     for (const value of values) {
-      await this.toPromise(() => store.put(value));
+      await this.toPromise(() => store.put(value), value);
     }
     return await this.getAll(tableName);
   }
@@ -148,7 +156,7 @@ export class IndexedDB implements IDatabase {
   public delete(tableName: string, id: any) {
     const tx = this.db.transaction(tableName, 'readwrite');
     const store = tx.objectStore(tableName);
-    return this.toPromise(() => store.delete(id));
+    return this.toPromise(() => store.delete(id), id);
   }
 
   public async deleteAll(tableName: string, keys?: any[]) {
@@ -158,7 +166,7 @@ export class IndexedDB implements IDatabase {
 
     for (let i = 0; i < keys.length; i++) {
       const key = keys[i];
-      await this.toPromise(() => store.delete(key));
+      await this.toPromise(() => store.delete(key), key);
     }
   }
 }

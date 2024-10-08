@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {NavigationEnd, Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
-import {delay} from "..";
+import {delay} from "../utils";
 
 interface Job {
   url: string;
@@ -12,9 +12,10 @@ interface Job {
 
 interface Step {
   selector: string;
-  trigger: 'click';
+  trigger: 'click' | string;
   delay: number;
   retry?: number;
+  value?: string;
 }
 
 interface WaitUntil {
@@ -26,8 +27,13 @@ interface WaitUntil {
 export class RobotService {
 
   jobs: Job[] = [];
+  private _handlers: {[trigger: string]: (step: Step) => Promise<void>} = {};
 
   constructor(private http: HttpClient, private router: Router) {
+  }
+
+  addHandler(trigger: string, action: (step: Step) => Promise<void>): void {
+    this._handlers[trigger] = action;
   }
 
   load(url: string) {
@@ -63,16 +69,26 @@ export class RobotService {
       const step = job.steps[i];
       await delay(step.delay ?? 100);
       let timer = step.retry ?? 3000;
+
       do {
-        const target = el.querySelector(step.selector) as HTMLElement;
-        if (target) {
-          target[step.trigger]();
-          break;
-        }
-        await delay(100);
-        timer -= 100;
-        if (timer < 0) {
-          return;
+        try {
+          if (this._handlers[step.trigger]) {
+            await this._handlers[step.trigger](step);
+            break;
+          } else {
+            const target = el.querySelector(step.selector) as HTMLElement;
+            if (target) {
+              (target as any)[step.trigger]();
+              break;
+            }
+          }
+          await delay(100);
+          timer -= 100;
+          if (timer < 0) {
+            return;
+          }
+        } catch (ex) {
+          console.error(ex)
         }
       } while (true)
     }
