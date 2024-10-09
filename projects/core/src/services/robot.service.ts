@@ -76,7 +76,7 @@ export class RobotService {
             await this._handlers[step.trigger](step);
             break;
           } else {
-            const target = el.querySelector(step.selector) as HTMLElement;
+            const target = document.querySelector(step.selector) as HTMLElement;
             if (target) {
               (target as any)[step.trigger]();
               break;

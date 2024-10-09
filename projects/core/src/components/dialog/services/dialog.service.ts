@@ -24,7 +24,20 @@ export class DialogService {
       if (e instanceof NavigationStart) {
         this._refs.forEach(x => x.close());
       }
-    })
+    });
+
+    window.addEventListener('popstate', e => {
+      if(this._refs.length > 0) {
+        e.stopPropagation();
+        this._refs.forEach(x => x.close());
+      }
+    });
+  }
+
+  private clearHistoryState() {
+    if(history.state.dialog) {
+      history.back();
+    }
   }
 
   private create<T extends DialogRef>(component: Type<T>, init: (obj: ComponentRef<T>, container?: DialogContainerComponent) => void, name?: string) {
@@ -34,8 +47,10 @@ export class DialogService {
     componentRef.instance.onClose.subscribe(e => {
       const index = this._refs.indexOf(componentRef.instance);
       if (index > -1) this._refs.splice(index, 1);
+      this.clearHistoryState();
     });
     this._refs.push(componentRef.instance);
+    history.pushState({dialog: true}, '/')
     return componentRef.instance;
   }
 
