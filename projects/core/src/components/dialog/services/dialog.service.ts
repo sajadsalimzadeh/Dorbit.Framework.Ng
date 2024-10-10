@@ -28,15 +28,15 @@ export class DialogService {
 
     window.addEventListener('popstate', e => {
       if(this._refs.length > 0) {
-        e.stopPropagation();
-        this._refs.forEach(x => x.close());
+        // e.stopPropagation();
+        // this._refs.forEach(x => x.close()); // Very places failed
       }
     });
   }
 
   private clearHistoryState() {
     if(history.state.dialog) {
-      history.back();
+      // history.back();
     }
   }
 
