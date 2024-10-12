@@ -452,12 +452,12 @@ export class JDate extends DateTime {
 }
 
 export class DateTimeUtil {
-  static toHumanReadable(timestamp: number, thresholds?: {value: number, text: string}[]) {
+  static toHumanReadable(timestamp: number, thresholds?: { value: number, text: string }[]) {
     if (timestamp > 9999999999) timestamp /= 1000;
     thresholds ??= [
       {value: 24 * 60, text: '1 day ago'},
       {value: 12 * 60, text: '12 hour ago'},
-      {value: 6  * 60 * 60, text: '6 hour ago'},
+      {value: 6 * 60 * 60, text: '6 hour ago'},
       {value: 60 * 60, text: '1 hour ago'},
       {value: 30 * 60, text: '30 min ago'},
       {value: 10 * 60, text: '10 min ago'},
@@ -470,8 +470,31 @@ export class DateTimeUtil {
 
     const now = new Date().getTime() / 1000;
     for (let threshold of thresholds) {
-      if(now - timestamp > threshold.value) return threshold.text;
+      if (now - timestamp > threshold.value) return threshold.text;
     }
     return null;
+  }
+
+  static extract(diff: number) {
+    const result = {
+      sec: 0,
+      min: 0,
+      hour: 0,
+      day: 0,
+      toString(threshold: 'sec' | 'min' | 'hour' | 'day' = 'sec') {
+        const arr: string[] = [];
+        const thresholdValue = {'sec': 0, 'min': 1, 'hour': 2, 'day': 3}[threshold];
+        if (result.day && thresholdValue <= 3) arr.push(result.day + ' روز');
+        if (result.hour && thresholdValue <= 2) arr.push(result.hour + ' ساعت');
+        if (result.min && thresholdValue <= 1) arr.push(result.min + ' دقیقه');
+        if (result.sec && thresholdValue <= 0) arr.push(result.sec + ' ثانیه');
+        return (arr.length > 0 ? arr.join(' و ') + ' قبل' : '');
+      }
+    };
+    result.sec = Math.floor(diff % 60);
+    result.min = Math.floor((diff / 60) % 60);
+    result.hour = Math.floor((diff / 3600) % 24);
+    result.day = Math.floor(diff / 86400);
+    return result;
   }
 }
