@@ -50,7 +50,7 @@ export class DialogService {
       this.clearHistoryState();
     });
     this._refs.push(componentRef.instance);
-    history.pushState({dialog: true}, '/')
+    // history.pushState({dialog: true}, '/')
     return componentRef.instance;
   }
 

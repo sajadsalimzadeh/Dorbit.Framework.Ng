@@ -121,7 +121,6 @@ export class DatePickerComponent extends AbstractFormControl<any> {
 
   protected getDayName(date: DateValue) {
     const dateStr = `${date.year}/${(date.month > 8 ? '' : '0') + (date.month + 1)}/${(date.day > 9 ? '' : '0') + date.day}`;
-    console.log(dateStr)
     return moment.from(dateStr, this.locale).locale('fa').format('dddd');
   }
 
