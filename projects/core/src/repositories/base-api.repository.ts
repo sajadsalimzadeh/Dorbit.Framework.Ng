@@ -51,7 +51,7 @@ class CustomHttpHandler extends HttpHandler {
   private readonly messageService: MessageService;
 
   constructor(
-    private injector: Injector,
+    injector: Injector,
     private api: BaseApiRepository) {
     super();
     this.handler = injector.get(HttpHandler)

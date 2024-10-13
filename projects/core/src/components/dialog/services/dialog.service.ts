@@ -22,11 +22,22 @@ export class DialogService {
 
     router.events.subscribe(e => {
       if (e instanceof NavigationStart) {
-        if (this._refs.length > 0) {
-          this._refs[this._refs.length - 1].close();
-        }
+        this._refs.forEach(x => x.close());
       }
-    })
+    });
+
+    window.addEventListener('popstate', e => {
+      if(this._refs.length > 0) {
+        // e.stopPropagation();
+        // this._refs.forEach(x => x.close()); // Very places failed
+      }
+    });
+  }
+
+  private clearHistoryState() {
+    if(history.state.dialog) {
+      // history.back();
+    }
   }
 
   private create<T extends DialogRef>(component: Type<T>, init: (obj: ComponentRef<T>, container?: DialogContainerComponent) => void, name?: string) {
@@ -36,8 +47,10 @@ export class DialogService {
     componentRef.instance.onClose.subscribe(e => {
       const index = this._refs.indexOf(componentRef.instance);
       if (index > -1) this._refs.splice(index, 1);
+      this.clearHistoryState();
     });
     this._refs.push(componentRef.instance);
+    // history.pushState({dialog: true}, '/')
     return componentRef.instance;
   }
 

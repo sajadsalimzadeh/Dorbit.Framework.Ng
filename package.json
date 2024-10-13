@@ -21,6 +21,8 @@
     "@angular/router": "^17.0.9",
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
+    "@types/file-saver": "^2.0.7",
+    "file-saver": "^2.0.5",
     "jalali-moment": "^3.3.11",
     "jsencrypt": "^3.3.2",
     "ngx-highlightjs": "^10.0.0",

@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, ElementRef, HostListener, Input, OnDestroy, OnInit} from '@angular/core';
 import {DialogService} from "./services/dialog.service";
 
 export * from './models'

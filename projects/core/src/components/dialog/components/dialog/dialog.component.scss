@@ -144,12 +144,12 @@ $animation: 200ms ease;
 }
 
 .dialog {
-  margin: .8rem;
+  margin: .5rem;
   display: flex;
   overflow: auto;
   position: absolute;
   flex-direction: column;
-  max-width: calc(100% - 1.6rem);
+  max-width: calc(100% - 1rem);
   border-radius: var(--radius-3);
   animation: scale-in 300ms linear;
   transition: transform $animation;
@@ -175,7 +175,7 @@ $animation: 200ms ease;
       overflow: hidden;
       font-weight: bold;
       align-items: center;
-      white-space: nowrap;
+      //white-space: nowrap;
       text-overflow: ellipsis;
       color: var(--color-gray-4);
     }

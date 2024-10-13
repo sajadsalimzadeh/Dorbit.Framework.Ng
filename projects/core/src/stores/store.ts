@@ -9,10 +9,10 @@ interface ChangeEvent<T> {
 
 export class Store<T extends object> {
   private readonly _store: any = {};
-  protected readonly cacheService: ICacheService;
+  protected readonly cacheService!: ICacheService;
 
   protected onChangeByKeys: { [key: string]: BehaviorSubject<T> } = {}
-  onChange: BehaviorSubject<ChangeEvent<T>>;
+  onChange!: BehaviorSubject<ChangeEvent<T>>;
 
   get store(): T {
     for (let defaultsKey in this.defaults) {
@@ -24,22 +24,26 @@ export class Store<T extends object> {
   }
 
   constructor(protected name: string, private defaults?: T) {
-    this.cacheService = new IndexedDbCacheService(new CacheStorageIndexDb({dbName: 'store'}));
-    this.onChange = new BehaviorSubject<ChangeEvent<T>>({
-      store: this._store,
-      changes: []
-    });
-    this.onChange.subscribe(e => {
-      e.changes.forEach(key => {
-        this.onChangeByKeys[key]?.next(e.store);
+    try {
+      this.cacheService = new IndexedDbCacheService(new CacheStorageIndexDb({dbName: 'store'}));
+      this.onChange = new BehaviorSubject<ChangeEvent<T>>({
+        store: this._store,
+        changes: []
       });
-      if (e.changes.length == 0) {
-        Object.values(this.onChangeByKeys).forEach(x => {
-          x.next(e.store)
+      this.onChange.subscribe(e => {
+        e.changes.forEach(key => {
+          this.onChangeByKeys[key]?.next(e.store);
         });
-      }
-      this.onChangeByKeys['all']?.next(e.store);
-    })
+        if (e.changes.length == 0) {
+          Object.values(this.onChangeByKeys).forEach(x => {
+            x.next(e.store)
+          });
+        }
+        this.onChangeByKeys['all']?.next(e.store);
+      })
+    } catch (e) {
+      alert('Store: ' + name + ' construct failed - ' + e)
+    }
   }
 
   on(key: keyof T & string | 'all') {

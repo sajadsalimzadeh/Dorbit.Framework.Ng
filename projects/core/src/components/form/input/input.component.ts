@@ -191,7 +191,6 @@ export class InputComponent extends AbstractFormControl<string> {
       }
       newValue += tempChar;
     }
-    console.log(newValue)
     this.maskValue = tempMaskedValue;
     this.formControl?.setValue(newValue);
     const element = this.inputEl?.nativeElement;

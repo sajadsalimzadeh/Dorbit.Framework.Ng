@@ -1,5 +1,5 @@
 import {NgModule, Pipe} from "@angular/core";
-import {NumberUtil} from "@framework";
+import {NumberUtil} from "../../utils";
 
 @Pipe({
   name: 'dNumber'

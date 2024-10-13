@@ -133,7 +133,6 @@ export class VolumeComponent extends AbstractFormControl<number | VolumeRange> i
     if (e instanceof TouchEvent) {
       this.onWindowTouchEnd();
       window.addEventListener('touchmove', this.onTouchMove = (we) => {
-        console.log(e)
         const diff = (this.orientation == 'horizontal' ? (we.touches[0].pageX - e.touches[0].pageX) : (we.touches[0].pageY - e.touches[0].pageY));
         let value = firstValue + (diff / stepSize);
         value = Math.round(value / this.step) * this.step;
