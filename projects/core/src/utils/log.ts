@@ -104,8 +104,8 @@ export class Logger {
       //show in console for debugging
       if (options?.console || this.settings.console) {
         if (level == LogLevel.TRACE) console.log(message, options.data);
-        else if (level == LogLevel.DEBUG) console.log(message, options.data);
-        else if (level == LogLevel.INFO) console.log(message, options.data);
+        else if (level == LogLevel.DEBUG) console.debug(message, options.data);
+        else if (level == LogLevel.INFO) console.info(message, options.data);
         else if (level == LogLevel.WARNING) console.warn(message, options.data);
         else if (level == LogLevel.ERROR) console.error(options.data);
       }
