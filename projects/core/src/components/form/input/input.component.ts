@@ -92,7 +92,7 @@ export class InputComponent extends AbstractFormControl<string> {
         else if (value.endsWith('.')) el.value = value = value.substring(0, value.length - 1) + '.';
 
         // string to number format
-        value = value.replaceAll(',', '') ?? '';
+        value = value.replace(/,/g, '') ?? '';
 
         let numValue = +value;
         if (isNaN(numValue)) return;
