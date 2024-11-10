@@ -53,11 +53,12 @@ export abstract class AbstractFormControl<T> extends AbstractComponent implement
   @Input() formControl!: FormControl<any>;
   @Input() classControl?: any;
   @Input() styleControl?: any;
+
   @Input() set autofocus(value: { delay: number } | boolean | undefined) {
     this._autofocus = (typeof value === 'boolean' ? value : true);
     const delay = (typeof value === 'object' ? value.delay : 10) ?? 10;
     setTimeout(() => {
-      if(this.inputEl) {
+      if (this.inputEl) {
         this.inputEl.nativeElement.setAttribute('autofocus', 'autofocus');
         this.inputEl.nativeElement.focus();
 
@@ -140,17 +141,16 @@ export abstract class AbstractFormControl<T> extends AbstractComponent implement
   }
 
   init() {
-    if(this.ngControl) {
-      if(!this.formControl) {
+    if (this.ngControl) {
+      if (!this.formControl) {
         if (this.ngControl instanceof FormControlName && this.controlContainer?.control instanceof FormGroup) {
-          if(this.ngControl.name) {
+          if (this.ngControl.name) {
             this.formControl = this.controlContainer.control.controls[this.ngControl.name] as FormControl;
           }
         }
       }
       if (!this.formControl) {
-        if (this.ngControl.control instanceof FormControl)
-        {
+        if (this.ngControl.control instanceof FormControl) {
           this.formControl = this.ngControl.control;
         }
       }
@@ -171,8 +171,8 @@ export abstract class AbstractFormControl<T> extends AbstractComponent implement
       this.render();
       this.onChange.emit(e);
       this.formControl?.markAsDirty();
-      if(this._onChange) this._onChange(e);
-      if(this._onTouch) this._onTouch(e);
+      if (this._onChange) this._onChange(e);
+      if (this._onTouch) this._onTouch(e);
     }));
   }
 
@@ -205,7 +205,7 @@ export abstract class AbstractFormControl<T> extends AbstractComponent implement
   override render() {
     super.render();
 
-    if(this.focusable) {
+    if (this.focusable) {
       this.elementRef.nativeElement.setAttribute('tabIndex', '0');
     } else {
       this.elementRef.nativeElement.removeAttribute('tabIndex');

@@ -1,6 +1,5 @@
 import {Directive, HostListener, Injector, Input, OnInit} from '@angular/core';
-import {OverlayRef, OverlayService} from "./overlay.service";
-import {OverlayOptions} from './overlay.component'
+import {OverlayOptions, OverlayRef, OverlayService} from './overlay.component'
 import {AbstractComponent} from "../abstract.component";
 
 @Directive({

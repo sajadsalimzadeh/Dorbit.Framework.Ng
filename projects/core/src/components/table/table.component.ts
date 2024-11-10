@@ -3,7 +3,7 @@ import {TemplateDirective} from "../template/template.directive";
 import {FilterFunc, SortFunc, TableConfig, TableData} from "./models";
 import {FormControl} from "@angular/forms";
 import {TableService} from "./services/table.service";
-import {OverlayService} from "../overlay/overlay.service";
+import {OverlayService} from "../overlay/overlay.component";
 import {OperationKey} from "./components/filter/filter.component";
 import {AbstractComponent} from "../abstract.component";
 import {TableTemplateDirective} from "./components/table-template.directive";
