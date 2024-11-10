@@ -30,7 +30,7 @@ export class JobRepository extends BaseApiRepository {
                 if (data.value) {
                   const value = new TextDecoder().decode(data.value);
                   const json = value.substring(value.indexOf('{'), value.lastIndexOf('}') + 1);
-                  json.replaceAll('},{','}},{{').split('},{').forEach(x => {
+                  json.replace(/[}],[{]/g,'}},{{').split('},{').forEach(x => {
                     try {
                       ob.next(JSON.parse(x));
                     } catch {
