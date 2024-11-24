@@ -1,7 +1,6 @@
 import {Directive, ElementRef, HostListener, Input, NgModule, TemplateRef, ViewChild} from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {OverlayRef, OverlayService} from "../../components/overlay/overlay.service";
-import {OverlayAlignments} from "../../components/overlay/overlay.component";
+import {OverlayAlignments, OverlayRef, OverlayService} from "../../components/overlay/overlay.component";
 import {Colors} from "../../types";
 
 @Directive({

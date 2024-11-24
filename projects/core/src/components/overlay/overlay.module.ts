@@ -5,7 +5,6 @@ import {OverlayDirective} from "./overlay.directive";
 
 export * from './overlay.component';
 export * from './overlay.directive';
-export * from './overlay.service';
 
 @NgModule({
   imports: [
@@ -14,4 +13,5 @@ export * from './overlay.service';
   declarations: [OverlayComponent, OverlayDirective],
   exports: [OverlayComponent, OverlayDirective]
 })
-export class OverlayModule {}
+export class OverlayModule {
+}

@@ -51,8 +51,8 @@
 <ng-template #itemsTpl>
   <div class="items-container" [ngClass]="[size, mode]" (click)="onItemsClick($event)">
     <div class="filter-box" *ngIf="searchable || (searchable == undefined && items.length > 10)">
-      <d-input [size]="size" [formControl]="searchFormControl" [placeholder]="searchPlaceHolder" [autofocus]="{delay: 200}"
-               (focus)="focused = true" (blur)="focused = false"/>
+      <input #searchEl class="form-control" [formControl]="searchFormControl" [placeholder]="searchPlaceHolder | translate" autofocus
+             (focus)="focused = true" (blur)="focused = false"/>
     </div>
     <div class="scroll-container" #itemsContainerEl>
       <ul class="items">

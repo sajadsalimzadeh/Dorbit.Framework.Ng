@@ -3,7 +3,7 @@ import {TableService} from "../../services/table.service";
 import {TemplateDirective} from "../../../template/template.directive";
 import {FormControl} from "@angular/forms";
 import {KeyValue} from "@angular/common";
-import {OverlayRef, OverlayService} from "../../../overlay/overlay.service";
+import {OverlayRef, OverlayService} from "../../../overlay/overlay.component";
 
 export type OperationKey = 'eq' | 'nq' | 'gt' | 'ge' | 'lt' | 'le' | 'sw' | 'ew' | 'in' | 'ni';
 
