@@ -12,6 +12,8 @@ declare global {
 
     remove(x: T): boolean;
 
+    last(func: (x: T) => boolean): T;
+
     any(func: (x: T) => boolean): boolean;
 
     sum(func: (x: T) => number): number;
@@ -69,6 +71,11 @@ Array.prototype.remove = function (x: any) {
   const index = this.indexOf(x);
   if (index > -1) this.splice(index, 1);
   return index > -1;
+}
+
+Array.prototype.last = function (func: (x: any) => boolean) {
+  const items = this.filter(func);
+  return items.length > 0 ? items[items.length - 1] : null;
 }
 
 Array.prototype.any = function (func: (x: any) => boolean) {
