@@ -1,7 +1,7 @@
 @import "../../assets/styles/mixin";
 
 :host {
-  height: 3em;
+  height: 3.3em;
   display: inline-block;
   border-radius: var(--radius-2);
 
@@ -75,13 +75,14 @@
     }
 
     &.has-content {
-      border-radius: var(--radius-10);
+      border-radius: 3em;
+      padding: .3em 1.3em;
     }
   }
 
   .icon {
     display: flex;
-    font-size: 1.1em;
+    font-size: 1.4em;
     position: relative;
     align-items: center;
     justify-content: center;
@@ -108,8 +109,8 @@ button {
   display: flex;
   color: inherit;
   cursor: pointer;
-  font-size: 1em;
-  padding: .6em 1em;
+  font-size: 1.2em;
+  padding: .3em 1em;
   align-items: center;
   font-family: inherit;
   border-radius: inherit;

@@ -3,15 +3,29 @@
   border-collapse: collapse;
   background-color: var(--color-gray--0);
 
+  thead {
+    th {
+      padding: .5em 1em;
+    }
+  }
+
+  tbody {
+    td {
+      padding: .5em 1em;
+    }
+  }
+
   &.table-striped {
     tbody {
-
+      tr:nth-child(2n) {
+        background-color: var(--color-gray--2);
+      }
     }
   }
 
   &.table-bordered {
     th, td {
-      border: 1px solid var(--color-gray--2);
+      border: 1px solid var(--color-gray--4);
     }
   }
 

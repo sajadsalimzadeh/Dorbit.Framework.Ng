@@ -1,10 +1,11 @@
 import {Colors} from "../../../types";
+import {DialogRef} from "../services/dialog.service";
 
 export interface ConfirmButton {
   text: string;
   color?: Colors;
   loading?: boolean;
-  action: (btn: ConfirmButton) => void
+  action: (btn: ConfirmButton, dialog: DialogRef) => void
 }
 
 export interface ConfirmOptions {
