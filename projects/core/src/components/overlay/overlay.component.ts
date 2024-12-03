@@ -1,7 +1,8 @@
-import {Component, HostListener, Input, OnInit, TemplateRef} from "@angular/core";
-import {OverlayRef} from "./overlay.service";
+import {Component, ComponentRef, HostListener, Injectable, Input, OnInit, TemplateRef} from "@angular/core";
 import {Colors} from "../../types";
 import {AbstractComponent} from "../abstract.component";
+import {Subject} from "rxjs";
+import {DomService} from "../../services";
 
 export type OverlayAlignments =
   'top-start' | 'top-center' | 'top-end' |
@@ -22,6 +23,13 @@ export interface OverlayOptions {
   alignment?: OverlayAlignments;
   verticalThreshold?: number;
   horizontalThreshold?: number;
+}
+
+export interface OverlayRef {
+  autoClose: boolean;
+  componentRef: ComponentRef<OverlayComponent>;
+  destroy: () => void;
+  onDestroy: Subject<void>;
 }
 
 @Component({
@@ -145,5 +153,54 @@ export class OverlayComponent extends AbstractComponent implements OnInit, Overl
     this.overlayClasses[alignment.split('-')[0]] = true;
     this.overlayClasses['direction-' + dir] = true;
     this.overlayClasses[this.animation] = !!this.animation;
+  }
+}
+
+@Injectable({providedIn: 'root'})
+export class OverlayService {
+  refs: OverlayRef[] = [];
+  defaultOptions: OverlayOptions = {}
+
+  constructor(private domService: DomService) {
+    window.addEventListener('touchend', e => {
+      this.refs.forEach(x => x.destroy());
+    });
+    window.addEventListener('click', e => {
+      this.refs.forEach(x => x.destroy());
+    });
+  }
+
+  create(options = this.defaultOptions) {
+    this.refs.filter(x => x.autoClose).forEach(x => x.destroy());
+
+    const componentRef = this.domService.createByComponent(OverlayComponent);
+    const component = componentRef.instance;
+    component.elementRef.nativeElement.addEventListener('click', e => {
+      e.stopPropagation();
+    });
+    component.elementRef.nativeElement.addEventListener('touchend', e => {
+      e.stopPropagation();
+    });
+
+    if (!options.ref) options.ref = document.body;
+    Object.assign(component, options);
+    const overlayRef = {
+      autoClose: !!options.autoClose,
+      componentRef: componentRef,
+      destroy: () => {
+        componentRef.destroy();
+        overlayRef.onDestroy.next();
+        this.refs.splice(this.refs.indexOf(overlayRef), 1);
+      },
+      onDestroy: new Subject<void>()
+    } as OverlayRef;
+    componentRef.onDestroy = () => {
+      overlayRef.destroy();
+    };
+    this.refs.push(overlayRef);
+    setTimeout(() => {
+      component.overlayRef = overlayRef;
+    }, 500)
+    return overlayRef;
   }
 }

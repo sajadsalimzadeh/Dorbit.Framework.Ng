@@ -25,7 +25,12 @@ export interface HttpOptions {
 
 export abstract class BaseApiRepository {
 
+  get isLoading() {
+    return this.handler.isLoading;
+  }
+
   protected http: CustomHttpClient;
+  protected handler: CustomHttpHandler;
 
   public readonly baseUrl: string;
   public readonly repository: string;
@@ -36,8 +41,8 @@ export abstract class BaseApiRepository {
     this.baseUrl = baseUrl ?? injector.get(BASE_API_URL, '', {optional: true}) ?? '';
     this.repository = repository ?? '';
     this.loadingService = injector.get(LoadingService);
-    const handler = new CustomHttpHandler(injector, this);
-    this.http = new CustomHttpClient(handler);
+    this.handler = new CustomHttpHandler(injector, this);
+    this.http = new CustomHttpClient(this.handler);
   }
 
   getUrl(url: string) {
@@ -46,6 +51,12 @@ export abstract class BaseApiRepository {
 }
 
 class CustomHttpHandler extends HttpHandler {
+  private progressCount = 0;
+
+  get isLoading() {
+    return this.progressCount > 0;
+  }
+
   private readonly handler: HttpHandler;
   private readonly translateService: TranslateService;
   private readonly messageService: MessageService;
@@ -88,8 +99,9 @@ class CustomHttpHandler extends HttpHandler {
     const timeout = setTimeout(() => {
       this.api.loadingService.end();
     }, 120000);
-
+    this.progressCount++;
     return this.handler.handle(req).pipe(finalize(() => {
+      this.progressCount--;
       clearTimeout(timeout);
       this.api.loadingService.end();
     })).pipe(tap(e => {

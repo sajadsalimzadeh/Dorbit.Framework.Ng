@@ -2,8 +2,7 @@ import {Component, ElementRef, EventEmitter, Injector, Input, Output, TemplateRe
 import moment from 'jalali-moment';
 import {Moment} from 'jalali-moment';
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
-import {OverlayRef, OverlayService} from "../../overlay/overlay.service";
-import {OverlayAlignments} from "../../overlay/overlay.component";
+import {OverlayAlignments, OverlayRef, OverlayService} from "../../overlay/overlay.component";
 import {FormControl} from "@angular/forms";
 import {Direction} from "../../../types";
 import {DialogRef, DialogService} from "../../dialog/services/dialog.service";

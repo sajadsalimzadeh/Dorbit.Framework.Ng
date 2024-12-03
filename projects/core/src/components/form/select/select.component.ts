@@ -1,9 +1,8 @@
 import {Component, ContentChildren, ElementRef, EventEmitter, HostBinding, HostListener, Injector, Input, Output, QueryList, SimpleChanges, TemplateRef, ViewChild} from "@angular/core";
+import {FormControl} from "@angular/forms";
 import {TemplateDirective} from "../../template/template.directive";
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
-import {OverlayRef, OverlayService} from "../../overlay/overlay.service";
-import {InputComponent} from "../input/input.component";
-import {FormControl} from "@angular/forms";
+import {OverlayRef, OverlayService} from "../../overlay/overlay.component";
 
 type Func = (item: any) => any;
 
@@ -21,7 +20,7 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
   @Input() maxItemShowCount: number = 100;
   @Input() valueField: string | Func = 'value';
   @Input() textField: string | Func = 'text';
-  @Input() searchPlaceHolder: string = 'Search ....';
+  @Input() searchPlaceHolder: string = 'search';
   @Input() isLazySearch: boolean = false;
   @Input() loading: boolean = false;
   @Input() searchable?: boolean;
@@ -33,7 +32,7 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
   @Output() onAdd = new EventEmitter<any>;
 
   @ViewChild('itemsTpl') itemsTpl?: TemplateRef<any>;
-  @ViewChild(InputComponent) inputComponent?: InputComponent;
+  @ViewChild('searchEl') inputComponentRef?: ElementRef<HTMLInputElement>;
 
   @ViewChild('itemsContainerEl') itemsContainerEl?: ElementRef<HTMLUListElement>;
 
@@ -51,13 +50,13 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
     this.close();
   }
 
+  optionTemplate?: TemplateRef<any>;
+
   @ContentChildren(TemplateDirective) set templates(value: QueryList<TemplateDirective>) {
     if (value) {
       this.optionTemplate = value.find(x => x.includesName('option', true))?.template;
     }
   }
-
-  optionTemplate?: TemplateRef<any>;
 
   override onClick(e: MouseEvent) {
     e.stopPropagation();
@@ -234,7 +233,7 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
       this.overlayRef.onDestroy.subscribe(() => this.overlayRef = undefined);
       setTimeout(() => {
         if (this.renderedItems.length > 10) {
-          this.inputComponent?.inputEl?.nativeElement.focus();
+          this.inputComponentRef?.nativeElement?.focus();
         }
       }, 10);
 
