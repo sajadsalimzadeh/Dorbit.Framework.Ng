@@ -16,7 +16,7 @@ interface AspectOptions {
 
 export class AspectUtil {
   private static getAllMethods(obj: any) {
-    const props = [];
+    const props: string[] = [];
     let tmp = obj;
     do {
       props.push(...Object.getOwnPropertyNames(tmp));

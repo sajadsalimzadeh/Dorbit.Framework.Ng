@@ -38,10 +38,12 @@
 
     &.start {
       order: 1;
+      margin-inline-end: .5rem;
     }
 
     &.end {
       order: 10;
+      margin-inline-start: .5rem;
     }
   }
 }

@@ -6,7 +6,7 @@ export class Compressor {
       c,
       wc,
       w = "",
-      result = [],
+      result = [] as any[],
       ASCII = '',
       dictSize = 256;
     for (i = 0; i < 256; i += 1) {
@@ -39,10 +39,10 @@ export class Compressor {
   }
 
   static decompress(str: string) {
-    let i, tmp = [],
-      dictionary = [],
+    let i, tmp = [] as any[],
+      dictionary = [] as any[],
+      compressArray = [] as any[],
       compressed = str,
-      compressArray = [],
       w,
       result,
       k,
