@@ -18,7 +18,7 @@ export class FileRepository extends BaseApiRepository {
   uploadBase64(value: string, name: string) {
     value = value.replace(/.*base64,/, '');
     const byteCharacters = atob(value);
-    const byteArrays = [];
+    const byteArrays: Uint8Array[] = [];
 
     for (let offset = 0; offset < byteCharacters.length; offset += 512) {
       const slice = byteCharacters.slice(offset, offset + 512);
