@@ -5,4 +5,3 @@ export * from './base-write.repository';
 export * from './notification.repository';
 export * from './file.repository';
 export * from './job.repository';
-export * from './wrap.repository';
