@@ -26,5 +26,6 @@ export * from './number';
 export * from './promise';
 export * from './enum';
 export * from './locale';
+export * from './location';
 export * from './validators';
 export * from './user-gesture';

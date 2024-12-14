@@ -44,6 +44,8 @@ export interface ITable<T = any, TP = any> {
 
   get(key: TP): Promise<T | null>;
 
+  getWithCache(key: TP): Promise<T | null>;
+
   getAll(): Promise<T[]>;
 
   put(value: T): Promise<T>;

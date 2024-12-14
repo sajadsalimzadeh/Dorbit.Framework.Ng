@@ -47,14 +47,14 @@ export class Store<T extends object> {
   }
 
   on(key: keyof T & string | 'all') {
-    return this.onChangeByKeys[key] ??= new BehaviorSubject<any>(this.store);
+    return this.onChangeByKeys[key] ??= new BehaviorSubject<any>(this._store);
   }
 
   async set(name: keyof T & string, value: any) {
     if (value === undefined || value === null) delete this._store[name]
     else this._store[name] = value;
     await this.save();
-    this.onChange.next({store: this.store, changes: [name]});
+    this.onChange.next({store: this._store, changes: [name]});
   }
 
   async save() {
@@ -63,7 +63,7 @@ export class Store<T extends object> {
 
   async load() {
     Object.assign(this._store, (await this.cacheService.get<T>(this.name)) ?? this.defaults);
-    this.onChange.next({store: this.store, changes: []});
+    this.onChange.next({store: this._store, changes: []});
   }
 
   async delete() {

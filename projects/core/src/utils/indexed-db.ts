@@ -1,5 +1,6 @@
 import {IDatabase, ITable, ITableChangeEvent, ITableConfig} from "./database";
 import {Subject} from "rxjs";
+import {TranslationRecord} from "../../../../../../app/stores";
 
 export class IndexedDB implements IDatabase {
   private db!: IDBDatabase;
@@ -172,14 +173,24 @@ export class IndexedDB implements IDatabase {
 }
 
 class Table<T, TP> implements ITable<T, TP> {
-  $change = new Subject<ITableChangeEvent<T>>();
+  private cache: any = {}
 
+  $change = new Subject<ITableChangeEvent<T>>();
 
   constructor(private name: string, private config: ITableConfig, private database: IDatabase) {
   }
 
   get(id: TP) {
     return this.database.get(this.name, id);
+  }
+
+  getWithCache(id: TP) {
+    let item = this.cache[id];
+    if(!item) {
+      item = this.get(id);
+      this.cache[id] = item;
+    }
+    return item;
   }
 
   getAll() {
