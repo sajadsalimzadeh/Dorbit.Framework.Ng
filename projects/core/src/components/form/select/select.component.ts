@@ -17,6 +17,7 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
   @Input() mode: 'single' | 'multiple' = 'single';
   @Input() align: '' | 'left' | 'right' | 'center' = '';
   @Input() clearable: boolean = true;
+  @Input() maxItemShowCount: number = 100;
   @Input() valueField: string | Func = 'value';
   @Input() textField: string | Func = 'text';
   @Input() searchPlaceHolder: string = 'search';
@@ -212,7 +213,9 @@ export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
         return false;
       })
     }
-    this.renderedItems = this.renderedItems.slice(0, 30);
+    if(this.maxItemShowCount) {
+      this.renderedItems = this.renderedItems.slice(0, this.maxItemShowCount);
+    }
   }
 
   clear() {
