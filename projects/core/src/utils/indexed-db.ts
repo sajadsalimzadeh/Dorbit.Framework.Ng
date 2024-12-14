@@ -1,6 +1,5 @@
 import {IDatabase, ITable, ITableChangeEvent, ITableConfig} from "./database";
 import {Subject} from "rxjs";
-import {TranslationRecord} from "../../../../../../app/stores";
 
 export class IndexedDB implements IDatabase {
   private db!: IDBDatabase;
