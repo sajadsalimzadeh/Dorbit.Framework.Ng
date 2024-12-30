@@ -12,7 +12,7 @@ export class ResourceService {
     return this.resources[name];
   }
 
-  async load(name: string, url: string): Promise<any> {
+  async load<T = any>(name: string, url: string): Promise<T> {
     return new Promise<any>((resolve, reject) => {
       if (this.resources[name]) {
         return resolve(this.resources[name]);
