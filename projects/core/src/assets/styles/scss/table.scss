@@ -5,13 +5,13 @@
 
   thead {
     th {
-      padding: .5em 1em;
+      padding: .5em .5em;
     }
   }
 
   tbody {
     td {
-      padding: .5em 1em;
+      padding: .5em .5em;
     }
   }
 
@@ -25,7 +25,7 @@
 
   &.table-bordered {
     th, td {
-      border: 1px solid var(--color-gray--4);
+      border: 1px solid var(--color-gray--3);
     }
   }
 

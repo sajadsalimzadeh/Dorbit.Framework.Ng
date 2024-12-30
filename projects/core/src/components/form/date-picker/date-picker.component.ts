@@ -326,6 +326,7 @@ export class DatePickerComponent extends AbstractFormControl<any> {
         this.mobileDialog = this.dialogService.open({
           width: '100%',
           closable: false,
+          maskClosable: true,
           position: 'bottom-center',
           template: this.mobileTpl,
           ngClass: 'date-picker-dialog'
