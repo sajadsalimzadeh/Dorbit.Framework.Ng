@@ -126,8 +126,8 @@ export class CacheInterceptor implements HttpInterceptor {
                   if (matchCache.lazy) {
                     this.subscriberGroups[req.url] = false;
                     ob.next(new HttpResponse({body: cache.data, status: 200}));
-                    ob.complete();
-                    if (!cache.expired && !cache.invalidVersion) return;
+                    // ob.complete();
+                    // if (!cache.expired && !cache.invalidVersion) return;
                   } else {
                     if (!cache.expired && !cache.invalidVersion) {
                       this.subscriberGroups[req.url] = false;

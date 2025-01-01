@@ -2,11 +2,11 @@ import {IDatabase, IndexedDB, ITable, ITableConfig} from "../utils";
 
 type StoreTableConfig = { [key: string]: ITableConfig };
 
-export class StoreDb<T extends StoreTableConfig> {
+export class StoreDb<TConfig extends StoreTableConfig> {
   private db!: IDatabase;
   private tables: { [key: string]: ITable } = {};
 
-  constructor(name: string, version: number, private configs: T) {
+  constructor(name: string, version: number, private configs: TConfig) {
     try {
       this.db = new IndexedDB({name: name, version: version});
       for (const configsKey in this.configs) {
@@ -21,8 +21,8 @@ export class StoreDb<T extends StoreTableConfig> {
     }
   }
 
-  getTable<TR = any, TK = any>(name: keyof T) {
-    return this.tables[name as string] as ITable<TR, TK>;
+  getTable<TEntity = any, TK = any>(name: keyof TConfig) {
+    return this.tables[name as string] as ITable<TEntity, TK>;
   }
 
   async close() {
