@@ -39,30 +39,30 @@ export interface ITableChangeEvent<T = any> {
   action?: 'add' | 'add-all' | 'put' | 'put-all' | 'delete' | 'delete-all';
 }
 
-export interface ITable<T = any, TP = any> {
-  $change: Subject<ITableChangeEvent<T>>;
+export interface ITable<TEntity = any, TKey = any> {
+  $change: Subject<ITableChangeEvent<TEntity>>;
 
-  get(key: TP): Promise<T | null>;
+  get(key: TKey): Promise<TEntity | null>;
 
-  getWithCache(key: TP): Promise<T | null>;
+  getWithCache(key: TKey): Promise<TEntity | null>;
 
-  getAll(): Promise<T[]>;
+  getAll(): Promise<TEntity[]>;
 
-  put(value: T): Promise<T>;
+  put(value: TEntity): Promise<TKey>;
 
-  add(value: T | {}): Promise<T>;
+  add(value: TEntity | {}): Promise<TKey>;
 
-  addAll(value: T[]): Promise<T[]>;
+  addAll(value: TEntity[]): Promise<TKey[]>;
 
-  putAll(values: T[]): Promise<T[]>;
+  putAll(values: TEntity[]): Promise<TKey[]>;
 
-  delete(key: TP): Promise<void>;
+  delete(key: TKey): Promise<void>;
 
-  deleteAll(keys?: TP[]): Promise<void>;
+  deleteAll(keys?: TKey[]): Promise<void>;
 
-  findAll(query: (key: TP, value: T) => boolean | undefined, count?: number): Promise<T[]>;
+  findAll(query: (key: TKey, value: TEntity) => boolean | undefined, count?: number): Promise<TEntity[]>;
 
-  count(query?: (key: TP, value: T) => boolean | undefined): Promise<number>;
+  count(query?: (key: TKey, value: TEntity) => boolean | undefined): Promise<number>;
 
-  findAllKey(query: (key: TP) => boolean, count: number): Promise<TP[]>;
+  findAllKey(query: (key: TKey) => boolean, count: number): Promise<TKey[]>;
 }
