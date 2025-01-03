@@ -32,7 +32,9 @@ export abstract class BaseWriteRepository<T = any> extends BaseReadRepository<T>
 
   save(id: any, req: any) {
     if (!id) {
-      delete req.id;
+      if(!req.id) {
+        delete req.id;
+      }
       return this.add(req);
     } else {
       return this.edit(id, {...req});

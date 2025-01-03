@@ -20,7 +20,7 @@ export class ObjectUtil {
     }
   }
 
-  static getObjectWithNotUndefinedProperty(obj: any): any {
+  static getObjectWithoutUndefinedProperty(obj: any): any {
     const result: any = {};
     for (const key in obj) {
       const value = obj[key];
@@ -29,7 +29,7 @@ export class ObjectUtil {
     return result;
   }
 
-  static getObjectWithNotNullProperty(obj: any): any {
+  static getObjectWithoutNullProperty(obj: any): any {
     const result: any = {};
     for (const key in obj) {
       const value = obj[key];
