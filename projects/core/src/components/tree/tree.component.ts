@@ -81,6 +81,7 @@ export class TreeComponent extends AbstractComponent implements OnChanges {
       this.optimizedItems.push({
         key: item[this.fields.key],
         value: item,
+        icon: item.icon,
         parentKey: item[this.fields.parent],
       });
     });

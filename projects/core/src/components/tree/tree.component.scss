@@ -71,10 +71,6 @@ ul {
         background-color: rgba(var(--color-component-rgb), 0.07);
       }
     }
-
-    &:not(.expanded) > ul {
-      max-height: 0 !important;
-    }
   }
 }
 
