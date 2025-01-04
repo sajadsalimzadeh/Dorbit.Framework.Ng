@@ -2,7 +2,7 @@ import {Inject, Injectable, InjectionToken, Injector, isDevMode, Optional} from 
 import {HttpInterceptor, HttpEvent, HttpHandler, HttpRequest, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {TimeSpan} from "../contracts";
-import {internetStateService} from "../services/internet-state.service";
+import {internetStateService} from "../services";
 import {CacheService, CacheStorageIndexDb, ICacheStorage} from "../services";
 import {delay} from "../utils";
 import {APP_VERSION} from "../types";
@@ -126,7 +126,10 @@ export class CacheInterceptor implements HttpInterceptor {
                   if (matchCache.lazy) {
                     this.subscriberGroups[req.url] = false;
                     ob.next(new HttpResponse({body: cache.data, status: 200}));
-                    if (matchCache.httpCache.timeout && !cache.expired && !cache.invalidVersion) return;
+                    if (matchCache.httpCache.timeout && !cache.expired && !cache.invalidVersion) {
+                      ob.complete();
+                      return;
+                    }
                   } else {
                     if (!cache.expired && !cache.invalidVersion) {
                       this.subscriberGroups[req.url] = false;
