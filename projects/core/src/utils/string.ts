@@ -34,4 +34,12 @@ export class StringUtil {
     })
     return result;
   }
+
+  static toUint8Array(str: string) {
+    const array = new Uint8Array(str.length);
+    for (let i = 0; i < str.length; i++) {
+      array[i] = str.charCodeAt(i);
+    }
+    return array;
+  }
 }
