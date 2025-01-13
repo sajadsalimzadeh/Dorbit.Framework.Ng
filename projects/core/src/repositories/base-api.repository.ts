@@ -134,16 +134,17 @@ class CustomHttpHandler extends HttpHandler {
       const key = `${text}`;
       if (Date.now() - messageTimes[key] < 1000) return;
       let translate = this.translateService.instant(key);
-      if (translate == key) return;
+      // if (translate == key) return;
       if (data) {
         for (const dataKey in data) {
           translate = translate.replace(`{${dataKey}}`, data[dataKey]);
         }
       }
       this.messageService.show({
+        duration: 7000,
         ...message,
         body: translate,
-        color: color
+        color: color,
       });
       messageTimes[key] = Date.now();
     }
