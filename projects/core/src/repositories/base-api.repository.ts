@@ -134,7 +134,10 @@ class CustomHttpHandler extends HttpHandler {
       const key = `${text}`;
       if (Date.now() - messageTimes[key] < 1000) return;
       let translate = this.translateService.instant(key);
-      // if (translate == key) return;
+      if (translate == key) {
+        console.warn(`translate '${translate}' not exists`)
+        return;
+      }
       if (data) {
         for (const dataKey in data) {
           translate = translate.replace(`{${dataKey}}`, data[dataKey]);
