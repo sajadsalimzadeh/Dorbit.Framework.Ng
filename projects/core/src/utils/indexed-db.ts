@@ -130,6 +130,8 @@ export class IndexedDB implements IDatabase {
   }
 
   public async addAll(tableName: string, values: any[]) {
+    if (!this.db) //elham
+      throw new Error("Database is not initialized. Call open() first.");
     const tx = this.db.transaction(tableName, 'readwrite');
     const store = tx.objectStore(tableName);
     for (const value of values) {
