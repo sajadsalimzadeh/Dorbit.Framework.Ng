@@ -1,8 +1,6 @@
 import {Directive, Injector, TemplateRef} from '@angular/core';
-import {BaseComponent, ConfirmOptions, DialogComponent, DialogOptions, DialogRef, DialogService} from "@framework";
+import {BaseComponent, ConfirmOptions, DialogComponent, DialogOptions, FormUtil} from "@framework";
 import {FormGroup} from "@angular/forms";
-import {log} from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
-import {FormUtil} from "../../../framework/projects/core/src/utils/form";
 
 @Directive()
 export abstract class BasePanelComponent extends BaseComponent {

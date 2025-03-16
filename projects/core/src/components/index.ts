@@ -1,4 +1,3 @@
-export * from './base.component';
 export * from './overlay/overlay.module';
 export * from './table/table.module';
 export * from './button/button.module';
@@ -28,3 +27,9 @@ export * from './key-filter/key-filter.directive';
 export * from './hot-key/hot-key.directive';
 export * from './tooltip/tooltip.directive';
 export * from './responsive/responsive.directive';
+
+export * from './base.component';
+export * from './base-form.component';
+export * from './base-data.component';
+export * from './base-data-view.component';
+export * from './base-panel.component';

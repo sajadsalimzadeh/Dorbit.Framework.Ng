@@ -1,3 +1,4 @@
+export * from './base-layout.service';
 export * from './internet-state.service';
 export * from './dom.service';
 export * from './error-handler.service';
