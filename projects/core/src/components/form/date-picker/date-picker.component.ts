@@ -13,9 +13,9 @@ interface DateValue {
   year: number,
   month: number,
   day: number,
-  hour?: number;
-  minute?: number;
-  second?: number;
+  hour: number;
+  minute: number;
+  second: number;
 
   isToday?: boolean;
   isHoliday?: boolean;
@@ -24,6 +24,8 @@ interface DateValue {
 
   dayOfWeakName?: string;
 }
+
+const mobileScrollItemHeight = 40;
 
 @Component({
   selector: 'd-date-picker',
@@ -89,6 +91,9 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   years: number[] = [];
   months: string[] = [];
   days: number[] = [];
+  hours: number[] = [];
+  minutes: number[] = [];
+  seconds: number[] = [];
   dates: DateValue[] = [];
 
   displayFormControl = new FormControl('');
@@ -104,10 +109,14 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   override ngOnInit() {
     super.ngOnInit();
 
+    for (let i = 0; i < 60; i++) this.seconds.push(i);
+    for (let i = 0; i < 60; i++) this.minutes.push(i);
+    for (let i = 0; i < 24; i++) this.hours.push(i);
+
     this.subscription.add(this.formControl.valueChanges.subscribe(e => {
-      this.renderDisplayValue()
+      this.renderDisplayControl()
     }));
-    this.renderDisplayValue();
+    this.renderDisplayControl();
   }
 
   override ngAfterViewInit() {
@@ -154,16 +163,20 @@ export class DatePickerComponent extends AbstractFormControl<any> {
     this.render();
   }
 
-  onInputChange(e: Event) {
-    const input = (e.target as HTMLInputElement);
-    if (input) {
-      this.selectedDate = moment.from(input.value, this.locale, this.displayFormat);
-      this.formControl.setValue(this.selectedDate.locale('en').format(this.valueFormat))
-    }
+  renderValueControl() {
+    this.renderSelectedDate();
+    this.formControl.setValue(this.selectedDate.locale('en').format(this.valueFormat))
     this.render();
   }
 
-  renderDisplayValue() {
+  renderSelectedDate() {
+    const value = this.inputEl?.nativeElement.value ?? '';
+    if (value) {
+      this.selectedDate = moment.from(value, this.locale, this.displayFormat);
+    }
+  }
+
+  renderDisplayControl() {
     try {
       let m = moment.from(this.formControl.value, 'en', this.valueFormat).locale(this.locale);
       this.displayFormControl.setValue(m.isValid() ? m.format(this.displayFormat) : '');
@@ -174,9 +187,12 @@ export class DatePickerComponent extends AbstractFormControl<any> {
 
   getDateTime(date: Moment): DateValue {
     return {
-      day: date.get('date'),
-      month: date.get('month'),
-      year: date.get('year'),
+      second: date.second(),
+      minute: date.minute(),
+      hour: date.hour(),
+      day: date.date(),
+      month: date.month(),
+      year: date.year(),
     }
   }
 
@@ -190,6 +206,7 @@ export class DatePickerComponent extends AbstractFormControl<any> {
     }
     super.render();
     this.selectedValue = this.getDateTime(this.selectedDate);
+    this.selectedValue.dayOfWeakName = this.getDayName(this.selectedValue);
     this.createDates();
   }
 
@@ -197,6 +214,10 @@ export class DatePickerComponent extends AbstractFormControl<any> {
     if (!this.overlayRef) return;
     this.selectedDate = this.selectedDate.locale(this.locale);
     let date = this.selectedDate.clone();
+    const second = date.second();
+    const minute = date.minute();
+    const hour = date.hour();
+
     const curtMonthDayCount = date.daysInMonth();
     const curtMonthWeekDay = date.clone().startOf('month').get('weekday');
     const prevMonthDate = date.clone().add(-1, 'month');
@@ -209,9 +230,12 @@ export class DatePickerComponent extends AbstractFormControl<any> {
     const prevMonthMonth = prevMonthDate.get('month');
     for (let i = 0; i < curtMonthWeekDay; i++) {
       this.dates.unshift({
-        year: prevMonthYear,
-        month: prevMonthMonth,
+        second: second,
+        minute: minute,
+        hour: hour,
         day: prevMonthDayCount - i,
+        month: prevMonthMonth,
+        year: prevMonthYear,
         isCurrentMonth: false,
       });
     }
@@ -221,9 +245,12 @@ export class DatePickerComponent extends AbstractFormControl<any> {
     const curtMonthMonth = date.get('month');
     for (let i = 1; i <= curtMonthDayCount; i++) {
       this.dates.push({
-        year: curtMonthYear,
-        month: curtMonthMonth,
+        second: second,
+        minute: minute,
+        hour: hour,
         day: i,
+        month: curtMonthMonth,
+        year: curtMonthYear,
         isCurrentMonth: true,
         isSelected: i == this.selectedValue.day,
         isToday: (i == this.todayValue.day && this.todayValue.month == curtMonthMonth && this.todayValue.year == curtMonthYear),
@@ -234,9 +261,12 @@ export class DatePickerComponent extends AbstractFormControl<any> {
     const nextMonthMonth = nextMonthDate.get('month');
     for (let i = 1; (this.dates.length % 7) != 0; i++) {
       this.dates.push({
-        year: nextMonthYear,
-        month: nextMonthMonth,
+        second: second,
+        minute: minute,
+        hour: hour,
         day: i,
+        month: nextMonthMonth,
+        year: nextMonthYear,
         isCurrentMonth: false,
       });
     }
@@ -252,6 +282,10 @@ export class DatePickerComponent extends AbstractFormControl<any> {
 
   selectDate(date: DateValue) {
     this.selectedDate = this.getMoment();
+    this.selectedDate.second(date.second);
+    this.selectedDate.minute(date.minute);
+    this.selectedDate.hour(date.hour);
+
     if (this.isJalali()) {
       this.selectedDate.jDate(date.day);
       this.selectedDate.jMonth(date.month);
@@ -261,9 +295,11 @@ export class DatePickerComponent extends AbstractFormControl<any> {
       this.selectedDate.month(date.month);
       this.selectedDate.year(date.year);
     }
+
     const value = this.selectedDate.locale('en').format(this.valueFormat);
     this.formControl.setValue(value);
     this.selectedValue = date;
+    this.selectedValue.dayOfWeakName = this.getDayName(this.selectedValue);
     this.render();
     this.close();
 
@@ -322,7 +358,8 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   open() {
     if (!this.overlayRef && this.formControl.enabled) {
       if (this.isMobileView()) {
-        if(this.mobileDialog) return;
+        this.renderSelectedDate();
+        if (this.mobileDialog) return;
         this.mobileDialog = this.dialogService.open({
           width: '100%',
           closable: false,
@@ -339,6 +376,9 @@ export class DatePickerComponent extends AbstractFormControl<any> {
           if (this.selectedDate) {
             const m = this.selectedDate.locale(this.locale);
             this.setMobileItem({
+              second: m.second(),
+              minute: m.minute(),
+              hour: m.hour(),
               year: m.year(),
               month: m.month(),
               day: m.date(),
@@ -372,48 +412,82 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   processMobileItemsTimeout: any;
 
   processMobileItems() {
-    if (!this.mobileViewDateEl) return {day: 0, month: 0, year: 0};
+    if (!this.mobileViewDateEl) return {second: 0, minute: 0, hour: 0, day: 0, month: 0, year: 0};
     const el = this.mobileViewDateEl.nativeElement;
+    const secondsScrollBoxEl = el.querySelector('.seconds .scroll-box') as HTMLDivElement;
+    const minutesScrollBoxEl = el.querySelector('.minutes .scroll-box') as HTMLDivElement;
+    const hoursScrollBoxEl = el.querySelector('.hours .scroll-box') as HTMLDivElement;
     const daysScrollBoxEl = el.querySelector('.days .scroll-box') as HTMLDivElement;
     const monthsScrollBoxEl = el.querySelector('.months .scroll-box') as HTMLDivElement;
     const yearsScrollBoxEl = el.querySelector('.years .scroll-box') as HTMLDivElement;
 
-    const dayIndex = Math.max(Math.min(Math.round(daysScrollBoxEl.scrollTop / 50), this.days.length - 1), 0);
-    const monthIndex = Math.max(Math.min(Math.round(monthsScrollBoxEl.scrollTop / 50), this.months.length - 1), 0);
-    const yearIndex = Math.max(Math.min(Math.round(yearsScrollBoxEl.scrollTop / 50), this.years.length - 1), 0);
+    const secondIndex = Math.max(Math.min(Math.round(secondsScrollBoxEl.scrollTop / mobileScrollItemHeight), this.seconds.length - 1), 0);
+    const minuteIndex = Math.max(Math.min(Math.round(minutesScrollBoxEl.scrollTop / mobileScrollItemHeight), this.minutes.length - 1), 0);
+    const hourIndex = Math.max(Math.min(Math.round(hoursScrollBoxEl.scrollTop / mobileScrollItemHeight), this.hours.length - 1), 0);
+    const dayIndex = Math.max(Math.min(Math.round(daysScrollBoxEl.scrollTop / mobileScrollItemHeight), this.days.length - 1), 0);
+    const monthIndex = Math.max(Math.min(Math.round(monthsScrollBoxEl.scrollTop / mobileScrollItemHeight), this.months.length - 1), 0);
+    const yearIndex = Math.max(Math.min(Math.round(yearsScrollBoxEl.scrollTop / mobileScrollItemHeight), this.years.length - 1), 0);
 
     clearTimeout(this.processMobileItemsTimeout);
     this.processMobileItemsTimeout = setTimeout(() => {
-      daysScrollBoxEl.scrollTo({top: dayIndex * 50, behavior: 'smooth'});
-      monthsScrollBoxEl.scrollTo({top: monthIndex * 50, behavior: 'smooth'});
-      yearsScrollBoxEl.scrollTo({top: yearIndex * 50, behavior: 'smooth'});
-    }, 200)
+      secondsScrollBoxEl.scrollTo({top: secondIndex * mobileScrollItemHeight, behavior: 'smooth'});
+      minutesScrollBoxEl.scrollTo({top: minuteIndex * mobileScrollItemHeight, behavior: 'smooth'});
+      hoursScrollBoxEl.scrollTo({top: hourIndex * mobileScrollItemHeight, behavior: 'smooth'});
+      daysScrollBoxEl.scrollTo({top: dayIndex * mobileScrollItemHeight, behavior: 'smooth'});
+      monthsScrollBoxEl.scrollTo({top: monthIndex * mobileScrollItemHeight, behavior: 'smooth'});
+      yearsScrollBoxEl.scrollTo({top: yearIndex * mobileScrollItemHeight, behavior: 'smooth'});
+    }, 200);
 
-    this.selectedValue = {day: this.days[dayIndex], month: monthIndex, year: this.years[yearIndex]};
+    this.selectedValue = {
+      second: this.seconds[secondIndex],
+      minute: this.minutes[minuteIndex],
+      hour: this.hours[hourIndex],
+      day: this.days[dayIndex],
+      month: monthIndex,
+      year: this.years[yearIndex]
+    };
     this.selectedValue.dayOfWeakName = this.getDayName(this.selectedValue);
     return this.selectedValue;
   }
 
-  setMobileItem(date?: { day?: number, month?: number, year?: number }) {
+  setMobileItem(date?: { second?: number, minute?: number, hour?: number, day?: number, month?: number, year?: number }) {
     if (!date || !this.mobileViewDateEl) return;
     const el = this.mobileViewDateEl.nativeElement;
-    const daysScrollBoxEl = el.querySelector('.days .scroll-box') as HTMLDivElement;
-    const monthsScrollBoxEl = el.querySelector('.months .scroll-box') as HTMLDivElement;
-    const yearsScrollBoxEl = el.querySelector('.years .scroll-box') as HTMLDivElement;
+
+    if (typeof date.second === 'number') {
+      const index = date.second;
+      const secondsScrollBoxEl = el.querySelector('.seconds .scroll-box') as HTMLDivElement;
+      secondsScrollBoxEl.scrollTop = index * mobileScrollItemHeight;
+    }
+
+    if (typeof date.minute === 'number') {
+      const index = date.minute;
+      const minutesScrollBoxEl = el.querySelector('.minutes .scroll-box') as HTMLDivElement;
+      minutesScrollBoxEl.scrollTop = index * mobileScrollItemHeight;
+    }
+
+    if (typeof date.hour === 'number') {
+      const index = date.hour;
+      const hoursScrollBoxEl = el.querySelector('.hours .scroll-box') as HTMLDivElement;
+      hoursScrollBoxEl.scrollTop = index * mobileScrollItemHeight;
+    }
 
     if (typeof date.day === 'number') {
       const index = date.day - 1;
-      daysScrollBoxEl.scrollTop = index * 50;
+      const daysScrollBoxEl = el.querySelector('.days .scroll-box') as HTMLDivElement;
+      daysScrollBoxEl.scrollTop = index * mobileScrollItemHeight;
     }
 
     if (typeof date.month === 'number') {
       const index = date.month;
-      monthsScrollBoxEl.scrollTop = index * 50;
+      const monthsScrollBoxEl = el.querySelector('.months .scroll-box') as HTMLDivElement;
+      monthsScrollBoxEl.scrollTop = index * mobileScrollItemHeight;
     }
 
     if (typeof date.year === 'number') {
       const index = this.years.indexOf(date.year);
-      yearsScrollBoxEl.scrollTop = index * 50;
+      const yearsScrollBoxEl = el.querySelector('.years .scroll-box') as HTMLDivElement;
+      yearsScrollBoxEl.scrollTop = index * mobileScrollItemHeight;
     }
   }
 
@@ -426,6 +500,9 @@ export class DatePickerComponent extends AbstractFormControl<any> {
   selectMobileItemToday() {
     const m = moment().locale(this.locale);
     this.setMobileItem({
+      second: m.second(),
+      minute: m.minute(),
+      hour: m.hour(),
       year: m.year(),
       month: m.month(),
       day: m.date(),

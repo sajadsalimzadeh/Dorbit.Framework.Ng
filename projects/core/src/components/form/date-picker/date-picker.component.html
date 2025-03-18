@@ -3,7 +3,7 @@
     <i *ngIf="icon && iconPos == 'start'" class="icon" [ngClass]="icon"></i>
     <input class="control" #inputEl [ngModel]="displayFormControl.value"
            [placeholder]="placeholder" [ngClass]="classControl" [style.text-align]="textAlign"
-           (change)="onInputChange($event)" (focus)="focus()" (blur)="blur()" [dir]="dir"/>
+           (change)="renderValueControl()" (focus)="focus()" (blur)="blur()" [dir]="dir"/>
     <i *ngIf="icon && iconPos == 'end'" class="icon" [ngClass]="icon"></i>
   </div>
   <div class="control-container" *ngIf="clearable">
@@ -78,6 +78,30 @@
           <ul>
             <li *ngFor="let year of years" [ngClass]="{active: (year == selectedValue.year)}"
                 (click)="setMobileItem({year: year})">{{ year }}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="seconds">
+        <div class="scroll-box" (scroll)="processMobileItems()">
+          <ul>
+            <li *ngFor="let second of seconds" [ngClass]="{active: (second == selectedValue.second)}"
+                (click)="setMobileItem({second: second})">{{ second.toString().padStart(2, '0') }}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="minutes">
+        <div class="scroll-box" (scroll)="processMobileItems()">
+          <ul>
+            <li *ngFor="let minute of minutes" [ngClass]="{active: (minute == selectedValue.minute)}"
+                (click)="setMobileItem({minute: minute})">{{ minute.toString().padStart(2, '0') }}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="hours">
+        <div class="scroll-box" (scroll)="processMobileItems()">
+          <ul>
+            <li *ngFor="let hour of hours" [ngClass]="{active: (hour == selectedValue.hour)}"
+                (click)="setMobileItem({hour: hour})">{{ hour.toString().padStart(2, '0') }}</li>
           </ul>
         </div>
       </div>
