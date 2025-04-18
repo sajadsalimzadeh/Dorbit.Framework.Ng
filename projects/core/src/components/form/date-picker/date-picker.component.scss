@@ -215,22 +215,49 @@
     gap: .5rem;
     display: flex;
     direction: ltr;
+    padding: 1rem 0;
     font-size: 1.5em;
-    padding-top: 1.5rem;
     align-items: center;
     justify-content: center;
     color: var(--color-gray-7);
+    border-bottom: 1px solid var(--color-gray--2);
   }
 
   .date {
     display: flex;
+    flex-wrap: wrap;
     position: relative;
 
     > div {
-      flex: 1;
+      flex: 33%;
       height: 180px;
       overflow: hidden;
+      margin-top: 10px;
       position: relative;
+
+      &.years::before {
+        content: 'سال';
+      }
+
+      &.months::before {
+        content: 'ماه';
+      }
+
+      &.days::before {
+        content: 'روز';
+      }
+
+      &.hours::before {
+        content: 'ساعت';
+      }
+
+      &.minutes::before {
+        content: 'دقیقه';
+      }
+
+      &.seconds::before {
+        content: 'ثانیه';
+      }
 
       &::before, &::after {
         left: 0;
@@ -239,6 +266,8 @@
         height: 20px;
         z-index: 100;
         position: absolute;
+        text-align: center;
+        color: var(--color-gray-8);
         background-color: var(--color-white);
         box-shadow: 0 0 70px 55px var(--color-white);
       }
@@ -249,6 +278,7 @@
 
       &::after {
         bottom: 0;
+        height: 0;
       }
 
       > div {
@@ -260,11 +290,11 @@
     ul {
       margin: 0;
       display: flex;
-      padding: 65px 5px;
+      padding: 70px 5px;
       flex-direction: column;
 
       li {
-        height: 50px;
+        height: 40px;
         display: flex;
         font-size: 1.2em;
         text-align: center;
