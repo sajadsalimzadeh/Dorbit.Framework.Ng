@@ -2,6 +2,7 @@ import {Routes} from "@angular/router";
 
 export * from './components';
 export * from './interceptors';
+export * from './directives';
 export * from './pipes';
 export * from './contracts';
 export * from './repositories';

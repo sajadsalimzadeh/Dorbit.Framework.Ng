@@ -1,12 +1,21 @@
 import {Component, Input,} from "@angular/core";
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
-import {Chips} from "./models";
+import {CommonModule} from "@angular/common";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+
+export type Chips = any;
 
 @Component({
-  selector: 'd-chips',
-  templateUrl: './chips.component.html',
-  styleUrls: ['../control.scss', './chips.component.scss'],
-  providers: [createControlValueAccessor(ChipsComponent)]
+    standalone: true,
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+    ],
+    selector: 'd-chips',
+    templateUrl: './chips.component.html',
+    styleUrls: ['../control.scss', './chips.component.scss'],
+    providers: [createControlValueAccessor(ChipsComponent)],
 })
 export class ChipsComponent extends AbstractFormControl<Chips> {
   @Input() value: string = '';

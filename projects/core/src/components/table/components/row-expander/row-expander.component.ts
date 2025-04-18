@@ -3,9 +3,10 @@ import {TableService} from "../../services/table.service";
 
 
 @Component({
-  selector: 'd-table-row-expander',
-  templateUrl: './row-expander.component.html',
-  styleUrls: ['./row-expander.component.scss']
+    selector: 'd-table-row-expander',
+    templateUrl: './row-expander.component.html',
+    styleUrls: ['./row-expander.component.scss'],
+    standalone: false
 })
 export class TableRowExpanderComponent {
   @Input() item: any;

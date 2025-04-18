@@ -1,12 +1,13 @@
-import {Component, ElementRef, HostListener, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnDestroy, OnInit} from '@angular/core';
 import {DialogService} from "./services/dialog.service";
 
 export * from './models'
 
 @Component({
-  selector: 'd-dialog-container',
-  templateUrl: 'dialog-container.component.html',
-  styleUrls: ['./dialog-container.component.scss']
+    standalone: false,
+    selector: 'd-dialog-container',
+    templateUrl: 'dialog-container.component.html',
+    styleUrls: ['./dialog-container.component.scss'],
 })
 export class DialogContainerComponent implements OnInit, OnDestroy {
   @Input() name?: string;

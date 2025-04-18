@@ -27,7 +27,7 @@ import {
   NgControl,
   Validators
 } from "@angular/forms";
-import {TemplateDirective} from "../template/template.directive";
+import {TemplateDirective} from "../../directives/template/template.directive";
 import {FormControlService} from "./form-control.service";
 import {AbstractComponent} from "../abstract.component";
 

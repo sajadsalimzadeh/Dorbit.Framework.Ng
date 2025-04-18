@@ -1,12 +1,13 @@
 import {ChangeDetectorRef, Component, ContentChildren, EventEmitter, Injector, Input, Output, QueryList, TemplateRef,} from '@angular/core';
-import {TemplateDirective} from "../../../template/template.directive";
+import {TemplateDirective} from "../../../../directives/template/template.directive";
 import {Message} from "../../models";
 import {AbstractComponent} from "../../../abstract.component";
 
 @Component({
-  selector: 'd-message',
-  templateUrl: 'message.component.html',
-  styleUrls: ['./message.component.scss']
+    selector: 'd-message',
+    templateUrl: 'message.component.html',
+    styleUrls: ['./message.component.scss'],
+    standalone: false
 })
 export class MessageComponent extends AbstractComponent {
   @Input() item!: Message;

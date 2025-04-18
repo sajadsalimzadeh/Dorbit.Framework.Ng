@@ -9,7 +9,8 @@ export interface SortEvent {
 }
 
 @Directive({
-  selector: 'th[field], th[sort-by]'
+    selector: 'th[field], th[sort-by]',
+    standalone: false
 })
 export class TableSortDirective implements OnInit {
   @Input() field?: string | SortFunc;

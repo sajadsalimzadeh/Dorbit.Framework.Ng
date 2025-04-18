@@ -1,8 +1,9 @@
 import {Directive, Input} from "@angular/core";
-import {TemplateDirective as BaseTemplateDirective} from "../../template/template.directive";
+import {TemplateDirective as BaseTemplateDirective} from "../../../directives/template/template.directive";
 
 @Directive({
-  selector: '[dTableTemplate]'
+    selector: '[dTableTemplate]',
+    standalone: false
 })
 export class TableTemplateDirective extends BaseTemplateDirective {
   @Input('dTableTemplate') set templateName(value: 'caption' | 'header' | 'filter' | 'body' | 'detail' | 'footer' | 'summary' | string) {

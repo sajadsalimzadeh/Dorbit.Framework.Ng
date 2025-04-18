@@ -1,10 +1,13 @@
-import {Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
 import {AbstractComponent} from "../abstract.component";
+import {CommonModule} from "@angular/common";
 
 @Component({
-  selector: 'd-button',
-  templateUrl: 'button.component.html',
-  styleUrls: ['./button.component.scss']
+    standalone: true,
+    imports: [CommonModule],
+    selector: 'd-button',
+    templateUrl: 'button.component.html',
+    styleUrls: ['./button.component.scss'],
 })
 export class ButtonComponent extends AbstractComponent implements OnInit, OnChanges {
 

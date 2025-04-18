@@ -10,7 +10,7 @@ export class IndexComponent {
   code = `
  <div class="control-box">
   <div class="control-container flex-1" [style.max-height]="maxHeight">
-    <div class="item" *ngFor="let item of formControl.value; let index = index">
+    <div class="box" *ngFor="let item of formControl.value; let index = index">
       <span class="text">{{item}}</span>
       <i class="remove far fa-times-circle" (click)="remove(index)"></i>
     </div>

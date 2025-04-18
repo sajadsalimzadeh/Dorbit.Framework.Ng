@@ -1,4 +1,4 @@
-@import "../../../assets/styles/mixin";
+@use "../../../../public/styles/mixin";
 
 .control-box {
   input {
@@ -47,7 +47,7 @@
   &.multiple {
     padding: 0 !important;
 
-    .item {
+    .box {
       gap: .5rem;
       display: flex;
       margin: .2em .2em;
@@ -119,7 +119,8 @@
     }
 
     &.selected {
-      @include selected-color;
+      color: var(--color-primary);
+      background-color: rgba(var(--color-primary-rgb), .1);
     }
 
     &:not(:last-child) {
@@ -176,15 +177,15 @@
     position: static !important;
   }
 
-  &.right .selected-items.single .item {
+  &.right .selected-items.single .box {
     justify-content: right;
   }
 
-  &.center .selected-items.single .item {
+  &.center .selected-items.single .box {
     justify-content: center;
   }
 
-  &.left .selected-items.single .item {
+  &.left .selected-items.single .box {
     justify-content: left;
   }
 }

@@ -1,20 +1,25 @@
 import {AfterContentInit, Component, ContentChildren, Input, QueryList} from '@angular/core';
 import {Stepper} from "../../utils/stepper";
-import {StepDirective} from "./components/step.directive";
+import {StepperStepDirective} from "./directives/step.directive";
 import {AbstractComponent} from "../abstract.component";
+import {CommonModule} from "@angular/common";
+
+export * from './directives/step.directive'
 
 @Component({
-  selector: 'd-stepper',
-  templateUrl: './stepper.component.html',
-  styleUrls: ['./stepper.component.scss']
+    standalone: true,
+    imports: [CommonModule],
+    selector: 'd-stepper',
+    templateUrl: './stepper.component.html',
+    styleUrls: ['./stepper.component.scss'],
 })
 export class StepperComponent extends AbstractComponent implements AfterContentInit {
   @Input({required: true}) stepper!: Stepper<any>;
   @Input() showNavigation: boolean = true;
 
-  @ContentChildren(StepDirective) steps?: QueryList<StepDirective>;
+  @ContentChildren(StepperStepDirective) steps?: QueryList<StepperStepDirective>;
 
-  activeStep?: StepDirective;
+  activeStep?: StepperStepDirective;
   activeStepIndex: number = -1;
 
   override ngOnInit() {
@@ -35,7 +40,7 @@ export class StepperComponent extends AbstractComponent implements AfterContentI
     this.activeStepIndex = (this.activeStep ? steps.indexOf(this.activeStep) : -1);
   }
 
-  goto(step: StepDirective, index: number) {
+  goto(step: StepperStepDirective, index: number) {
     if(index < this.activeStepIndex) {
       this.stepper.go(step.key);
     }

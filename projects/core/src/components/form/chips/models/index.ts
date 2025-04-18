@@ -1,1 +1,1 @@
-export type Chips = any;
+

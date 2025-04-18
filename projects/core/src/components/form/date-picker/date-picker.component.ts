@@ -3,9 +3,11 @@ import moment from 'jalali-moment';
 import {Moment} from 'jalali-moment';
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
 import {OverlayAlignments, OverlayRef, OverlayService} from "../../overlay/overlay.component";
-import {FormControl} from "@angular/forms";
+import {FormControl, FormsModule} from "@angular/forms";
 import {Direction} from "../../../types";
 import {DialogRef, DialogService} from "../../dialog/services/dialog.service";
+import {CommonModule} from "@angular/common";
+import {TranslateModule} from "@ngx-translate/core";
 
 type ViewMode = 'calendar' | 'month' | 'year';
 
@@ -26,10 +28,16 @@ interface DateValue {
 }
 
 @Component({
-  selector: 'd-date-picker',
-  templateUrl: './date-picker.component.html',
-  styleUrls: ['../control.scss', './date-picker.component.scss'],
-  providers: [createControlValueAccessor(DatePickerComponent)]
+    standalone: true,
+    imports: [
+        CommonModule,
+        FormsModule,
+        TranslateModule,
+    ],
+    selector: 'd-date-picker',
+    templateUrl: './date-picker.component.html',
+    styleUrls: ['../control.scss', './date-picker.component.scss'],
+    providers: [createControlValueAccessor(DatePickerComponent)],
 })
 export class DatePickerComponent extends AbstractFormControl<any> {
   override dir: Direction = 'ltr';

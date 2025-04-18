@@ -1,16 +1,27 @@
 import {Component, ContentChildren, ElementRef, EventEmitter, HostBinding, HostListener, Injector, Input, Output, QueryList, SimpleChanges, TemplateRef, ViewChild} from "@angular/core";
-import {FormControl} from "@angular/forms";
-import {TemplateDirective} from "../../template/template.directive";
+import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {TemplateDirective} from "../../../directives/template/template.directive";
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
 import {OverlayRef, OverlayService} from "../../overlay/overlay.component";
+import {CommonModule} from "@angular/common";
+import {TranslateModule} from "@ngx-translate/core";
+import {CheckboxComponent} from "../checkbox/checkbox.component";
 
 type Func = (item: any) => any;
 
 @Component({
-  selector: 'd-select',
-  templateUrl: './select.component.html',
-  styleUrls: ['../control.scss', './select.component.scss'],
-  providers: [createControlValueAccessor(SelectComponent)]
+    standalone: true,
+    imports: [
+        CommonModule,
+        FormsModule,
+        TranslateModule,
+        ReactiveFormsModule,
+        CheckboxComponent,
+    ],
+    selector: 'd-select',
+    templateUrl: './select.component.html',
+    styleUrls: ['../control.scss', './select.component.scss'],
+    providers: [createControlValueAccessor(SelectComponent)],
 })
 export class SelectComponent<T> extends AbstractFormControl<T | T[]> {
   @Input() items: any[] = [];

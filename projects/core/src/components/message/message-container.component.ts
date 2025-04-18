@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, ContentChildren, HostListener, Injector, Input, QueryList, TemplateRef} from '@angular/core';
-import {TemplateDirective} from "../template/template.directive";
+import {TemplateDirective} from "../../directives/template/template.directive";
 import {Message} from "./models";
 import {Positions} from "../../types";
 import {AbstractComponent} from "../abstract.component";
@@ -10,9 +10,10 @@ export * from './services/message.service';
 export * from './components/message/message.component';
 
 @Component({
-  selector: 'd-message-container',
-  templateUrl: 'message-container.component.html',
-  styleUrls: ['./message-container.component.scss']
+    selector: 'd-message-container',
+    templateUrl: 'message-container.component.html',
+    styleUrls: ['./message-container.component.scss'],
+    standalone: false
 })
 export class MessageContainerComponent extends AbstractComponent {
   @Input() name?: string;

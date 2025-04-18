@@ -1,13 +1,19 @@
 import {Component, ElementRef, EventEmitter, TemplateRef, ViewChild} from '@angular/core';
+import {CommonModule} from "@angular/common";
 import {DialogService, DialogRef} from "../../services/dialog.service";
 import {DialogOptions} from "../dialog/dialog.component";
 import {PromptOptions} from "../../models";
 import {LoadingService} from "../../../../services";
+import {ButtonComponent} from "../../../button/button.component";
+import {TranslateModule} from "@ngx-translate/core";
+import {FormsModule} from "@angular/forms";
 
 @Component({
-  selector: 'd-prompt',
-  templateUrl: 'prompt.component.html',
-  styleUrls: ['./prompt.component.scss']
+    standalone: true,
+    imports: [CommonModule, FormsModule, ButtonComponent, TranslateModule],
+    selector: 'd-prompt',
+    templateUrl: 'prompt.component.html',
+    styleUrls: ['./prompt.component.scss'],
 })
 export class PromptComponent implements PromptOptions, DialogRef {
   onClose = new EventEmitter<void>();

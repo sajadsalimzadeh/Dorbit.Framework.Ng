@@ -1,130 +1,149 @@
 import {ErrorHandler, ModuleWithProviders, NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {RouterModule, Routes} from "@angular/router";
+import {RouterModule} from "@angular/router";
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {
-  TableModule,
-  SelectModule,
-  DatePickerModule,
-  OverlayModule,
-  TimelineModule,
-  ButtonModule,
-  CheckboxModule,
-  InputModule,
-  ControlGroupModule,
-  ButtonGroupModule,
-  ChipsModule,
-  SwitchModule,
-  RadioModule,
-  RateModule,
-  VolumeModule,
-  PaginatorModule,
-  ColorPickerModule,
-  PasswordModule,
-  ProgressBarModule,
-  ScrollTopModule,
-  ShimmerModule,
-  CardModule,
-  TagModule,
-  MessageModule,
-  DialogModule,
-  TabModule,
-  TreeModule,
-  DatePickerInlineModule,
-  ListModule,
-  TemplateModule,
-  KeyFilterModule,
-  TooltipModule,
-  InputSplitModule,
-  StepperModule,
-  ProgressCircleModule,
-  PositionModule,
-  DateModule,
-  BreadcrumbModule,
-  FabModule,
-  ResponsiveDirectiveModule,
-  HotKeyModule,
+    TableModule,
+    SelectComponent,
+    DatePickerComponent,
+    OverlayModule,
+    TimelineComponent,
+    ButtonComponent,
+    CheckboxComponent,
+    InputComponent,
+    ControlGroupComponent,
+    ButtonGroupComponent,
+    ChipsComponent,
+    SwitchComponent,
+    RadioComponent,
+    RateComponent,
+    VolumeComponent,
+    PaginatorComponent,
+    ColorPickerComponent,
+    PasswordComponent,
+    ProgressBarComponent,
+    ScrollTopComponent,
+    ShimmerComponent,
+    CardComponent,
+    TagComponent,
+    TabComponent,
+    TreeComponent,
+    DatePickerInlineComponent,
+    ListComponent,
+    StepperComponent,
+    ProgressCircleComponent,
+    PositionComponent,
+    BreadcrumbComponent,
+    FabComponent,
+    InputSplitComponent,
+    MessageModule,
+    DialogModule,
+    StepperStepDirective,
+    TabTemplateDirective,
 } from './components';
 import {
-  JDatePipeModule,
-  RDatePipeModule, TruncateModule,
+    TemplateDirective,
+    KeyFilterDirective,
+    TooltipDirective,
+    ResponsiveDirective,
+    HotKeyDirective,
+} from './directives';
+import {
+    DatePipe,
+    JDatePipe,
+    RDatePipe,
+    TruncatePipe,
 } from './pipes';
 import {
-  GlobalErrorHandler
+    GlobalErrorHandler
 } from './services';
 import {TranslateModule} from "@ngx-translate/core";
 
-const MODULES = [
-  TableModule,
-  SelectModule,
-  DatePickerModule,
-  TemplateModule,
-  OverlayModule,
-  TimelineModule,
-  ButtonModule,
-  CheckboxModule,
-  InputModule,
-  ControlGroupModule,
-  ButtonGroupModule,
-  ChipsModule,
-  SwitchModule,
-  RadioModule,
-  RateModule,
-  VolumeModule,
-  PaginatorModule,
-  ColorPickerModule,
-  KeyFilterModule,
-  PasswordModule,
-  ProgressBarModule,
-  ScrollTopModule,
-  ShimmerModule,
-  CardModule,
-  TagModule,
-  MessageModule,
-  DialogModule,
-  TooltipModule,
-  TabModule,
-  TreeModule,
-  JDatePipeModule,
-  RDatePipeModule,
-  DatePickerInlineModule,
-  ListModule,
-  InputSplitModule,
-  StepperModule,
-  ProgressCircleModule,
-  PositionModule,
-  DateModule,
-  BreadcrumbModule,
-  FabModule,
-  TranslateModule,
-  ResponsiveDirectiveModule,
-  HotKeyModule,
-  TruncateModule,
+export const ALL_COMPONENTS = [
+    TableModule,
+    OverlayModule,
+    SelectComponent,
+    DatePickerComponent,
+    TimelineComponent,
+    ButtonComponent,
+    CheckboxComponent,
+    InputComponent,
+    ControlGroupComponent,
+    ButtonGroupComponent,
+    ChipsComponent,
+    SwitchComponent,
+    RadioComponent,
+    RateComponent,
+    VolumeComponent,
+    PaginatorComponent,
+    ColorPickerComponent,
+    PasswordComponent,
+    ProgressBarComponent,
+    ScrollTopComponent,
+    ShimmerComponent,
+    CardComponent,
+    TagComponent,
+    TabComponent,
+    TreeComponent,
+    DatePickerInlineComponent,
+    ListComponent,
+    StepperComponent,
+    ProgressCircleComponent,
+    PositionComponent,
+    BreadcrumbComponent,
+    FabComponent,
+    InputSplitComponent,
+    MessageModule,
+    DialogModule,
 ];
 
-@NgModule({
-  imports: [CommonModule],
-  declarations: [],
-  exports: [
-    FormsModule,
-    CommonModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    RouterModule,
+export const ALL_DIRECTIVES = [
+    TemplateDirective,
+    KeyFilterDirective,
+    TooltipDirective,
+    ResponsiveDirective,
+    HotKeyDirective,
+    StepperStepDirective,
+    TabTemplateDirective,
+];
 
-    ...MODULES
-  ],
+export const ALL_PIPES = [
+    DatePipe,
+    JDatePipe,
+    RDatePipe,
+    TruncatePipe,
+];
+
+export const ALL_DORBIT_MODULES = [
+    ...ALL_COMPONENTS,
+    ...ALL_DIRECTIVES,
+    ...ALL_PIPES
+]
+
+@NgModule({
+    imports: [CommonModule, ...ALL_DORBIT_MODULES],
+    declarations: [],
+    exports: [
+        FormsModule,
+        CommonModule,
+        RouterModule,
+        TranslateModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        
+        ...ALL_DORBIT_MODULES
+    ],
 })
 export class DorbitModule {
-  static forRoot(): ModuleWithProviders<DorbitModule> {
+    static forRoot(): ModuleWithProviders<DorbitModule> {
 
-    return {
-      ngModule: DorbitModule,
-      providers: [
-        {provide: ErrorHandler, useClass: GlobalErrorHandler},
-      ]
+        return {
+            ngModule: DorbitModule,
+            providers: [
+                {provide: ErrorHandler, useClass: GlobalErrorHandler},
+            ]
+        }
     }
-  }
 }
 
