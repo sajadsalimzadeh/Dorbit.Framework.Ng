@@ -33,9 +33,10 @@ export interface OverlayRef {
 }
 
 @Component({
-  selector: 'd-overlay',
-  templateUrl: './overlay.component.html',
-  styleUrls: ['./overlay.component.scss']
+    selector: 'd-overlay',
+    templateUrl: './overlay.component.html',
+    styleUrls: ['./overlay.component.scss'],
+    standalone: false
 })
 export class OverlayComponent extends AbstractComponent implements OnInit, OverlayOptions {
   @Input() ref?: HTMLElement;

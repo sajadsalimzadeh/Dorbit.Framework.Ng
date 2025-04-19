@@ -1,11 +1,14 @@
 import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
+import {CommonModule} from "@angular/common";
 
 @Component({
-  selector: 'd-color-picker',
-  templateUrl: 'color-picker.component.html',
-  styleUrls: ['../control.scss', './color-picker.component.scss'],
-  providers: [createControlValueAccessor(ColorPickerComponent)]
+    standalone: true,
+    imports: [CommonModule],
+    selector: 'd-color-picker',
+    templateUrl: 'color-picker.component.html',
+    styleUrls: ['../control.scss', './color-picker.component.scss'],
+    providers: [createControlValueAccessor(ColorPickerComponent)],
 })
 export class ColorPickerComponent extends AbstractFormControl<string> implements AfterViewInit {
 

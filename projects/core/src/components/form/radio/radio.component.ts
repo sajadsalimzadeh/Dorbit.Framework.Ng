@@ -1,11 +1,14 @@
 import {Component, HostListener, Input} from '@angular/core';
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
+import {CommonModule} from "@angular/common";
 
 @Component({
-  selector: 'd-radio',
-  templateUrl: 'radio.component.html',
-  styleUrls: ['../control.scss', './radio.component.scss'],
-  providers: [createControlValueAccessor(RadioComponent)]
+    standalone: true,
+    imports: [CommonModule],
+    selector: 'd-radio',
+    templateUrl: 'radio.component.html',
+    styleUrls: ['../control.scss', './radio.component.scss'],
+    providers: [createControlValueAccessor(RadioComponent)],
 })
 export class RadioComponent extends AbstractFormControl<any> {
 

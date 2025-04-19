@@ -1,4 +1,4 @@
-@import "../../../assets/styles/mixin";
+@use "../../../../public/styles/mixin";
 
 .control-container {
   display: flex;
@@ -138,7 +138,8 @@
 
         &.active span {
           font-weight: bold;
-          @include selected-color;
+          color: var(--color-primary);
+          background-color: rgba(var(--color-primary-rgb), .1);
 
           & + .day.active {
             border-radius: 0 !important;

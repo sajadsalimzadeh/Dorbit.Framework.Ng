@@ -1,10 +1,13 @@
 import {AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import {AbstractComponent} from "../abstract.component";
+import {CommonModule} from "@angular/common";
 
 @Component({
-  selector: 'd-progress-bar',
-  templateUrl: 'progress-bar.component.html',
-  styleUrls: ['./progress-bar.component.scss']
+    standalone: true,
+    imports: [CommonModule],
+    selector: 'd-progress-bar',
+    templateUrl: 'progress-bar.component.html',
+    styleUrls: ['./progress-bar.component.scss'],
 })
 export class ProgressBarComponent extends AbstractComponent implements OnChanges, AfterViewInit {
   @Input() value = 20;

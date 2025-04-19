@@ -1,12 +1,15 @@
 import {Component, Input} from '@angular/core';
 import {AbstractComponent} from "../abstract.component";
+import {CommonModule} from "@angular/common";
 
 const units = ['%', 'px', 'pt', 'rem', 'em', 'cm'];
 
 @Component({
-  selector: 'd-shimmer',
-  templateUrl: 'shimmer.component.html',
-  styleUrls: ['./shimmer.component.scss']
+    standalone: true,
+    imports: [CommonModule],
+    selector: 'd-shimmer',
+    templateUrl: 'shimmer.component.html',
+    styleUrls: ['./shimmer.component.scss'],
 })
 export class ShimmerComponent extends AbstractComponent {
   @Input() radius: string = '4px';

@@ -1,7 +1,7 @@
-@import "../../assets/styles/mixin";
+@use "../../../public/styles/mixin";
 
 @mixin selected-row {
-  @include selected-color;
+  @include mixin.selected-color;
 
   td {
     border-inline-end: 1px solid rgba(var(--color-primary-rgb), 0.15) !important;
@@ -158,8 +158,8 @@ $border-color: rgba(var(--color-black-rgb), .08);
     }
 
     .gradient {
-      @include glass;
-      @include shadow-slant;
+      @include mixin.glass;
+      @include mixin.shadow-slant;
     }
 
     .no-data {

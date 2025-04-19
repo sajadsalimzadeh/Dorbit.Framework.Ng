@@ -1,11 +1,14 @@
 import {Component, ContentChildren, EventEmitter, Input, OnChanges, Output, QueryList, TemplateRef} from '@angular/core';
-import {TemplateDirective} from "../template/template.directive";
+import {TemplateDirective} from "../../directives/template/template.directive";
 import {AbstractComponent} from "../abstract.component";
+import {CommonModule} from "@angular/common";
 
 @Component({
-  selector: 'd-list',
-  templateUrl: 'list.component.html',
-  styleUrls: ['./list.component.scss']
+    standalone: true,
+    imports: [CommonModule],
+    selector: 'd-list',
+    templateUrl: 'list.component.html',
+    styleUrls: ['./list.component.scss'],
 })
 export class ListComponent extends AbstractComponent implements OnChanges {
   @Input() items!: any[];

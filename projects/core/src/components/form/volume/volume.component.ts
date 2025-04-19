@@ -2,6 +2,7 @@ import {AfterViewInit, Component, ElementRef, HostListener, Input, ViewChild} fr
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
 import {Orientation} from "../../../types";
 import {NumberUtil} from "../../../utils";
+import {CommonModule} from "@angular/common";
 
 export interface VolumeRange {
   start: number;
@@ -9,10 +10,12 @@ export interface VolumeRange {
 }
 
 @Component({
-  selector: 'd-volume',
-  templateUrl: 'volume.component.html',
-  styleUrls: ['../control.scss', './volume.component.scss'],
-  providers: [createControlValueAccessor(VolumeComponent)]
+    standalone: true,
+    imports: [CommonModule],
+    selector: 'd-volume',
+    templateUrl: 'volume.component.html',
+    styleUrls: ['../control.scss', './volume.component.scss'],
+    providers: [createControlValueAccessor(VolumeComponent)],
 })
 export class VolumeComponent extends AbstractFormControl<number | VolumeRange> implements AfterViewInit {
 

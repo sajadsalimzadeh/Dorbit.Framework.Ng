@@ -4,7 +4,7 @@
   display: flex;
   list-style: none;
 
-  .item {
+  .box {
     flex: 1;
     display: flex;
     box-sizing: border-box;
@@ -32,7 +32,7 @@
 
   &.dir-vertical {
     flex-direction: column;
-    .item {
+    .box {
       min-width: 200px;
       min-height: 50px;
       flex-direction: row;
@@ -61,7 +61,7 @@
   &.dir-horizontal {
     flex-direction: row;
 
-    .item {
+    .box {
       min-width: 50px;
       min-height: 50px;
       flex-direction: column;

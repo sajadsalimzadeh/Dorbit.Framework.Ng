@@ -1,11 +1,14 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {Positions} from "../../types";
 import {AbstractComponent} from "../abstract.component";
+import {CommonModule} from "@angular/common";
 
 @Component({
-  selector: 'd-position',
-  templateUrl: 'position.component.html',
-  styleUrls: ['./position.component.scss']
+    standalone: true,
+    imports: [CommonModule],
+    selector: 'd-position',
+    templateUrl: 'position.component.html',
+    styleUrls: ['./position.component.scss'],
 })
 export class PositionComponent extends AbstractComponent implements OnInit, OnChanges {
 

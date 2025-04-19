@@ -1,11 +1,14 @@
 import {Component, ContentChildren, OnChanges, QueryList, TemplateRef} from '@angular/core';
-import {TemplateDirective} from "../template/template.directive";
+import {TemplateDirective} from "../../directives/template/template.directive";
 import {AbstractComponent} from "../abstract.component";
+import {CommonModule} from "@angular/common";
 
 @Component({
-  selector: 'd-card',
-  templateUrl: 'card.component.html',
-  styleUrls: ['./card.component.scss']
+    standalone: true,
+    imports: [CommonModule],
+    selector: 'd-card',
+    templateUrl: 'card.component.html',
+    styleUrls: ['./card.component.scss'],
 })
 export class CardComponent extends AbstractComponent implements OnChanges {
 

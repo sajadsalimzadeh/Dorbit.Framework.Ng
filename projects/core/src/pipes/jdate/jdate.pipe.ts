@@ -4,7 +4,8 @@ import moment from "jalali-moment";
 
 
 @Pipe({
-  name: 'jdate'
+    name: 'jdate',
+    standalone: true
 })
 export class JDatePipe {
   transform(value: string, format: string = 'YYYY/MM/DD HH:mm:ss', utc: boolean = false): string {
@@ -15,12 +16,4 @@ export class JDatePipe {
       return '';
     }
   }
-}
-
-@NgModule({
-  declarations: [JDatePipe],
-  exports: [JDatePipe],
-})
-export class JDatePipeModule {
-
 }

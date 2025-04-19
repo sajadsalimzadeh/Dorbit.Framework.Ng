@@ -1,7 +1,8 @@
 import {Component, ContentChildren, EventEmitter, HostListener, Input, OnChanges, Output, QueryList, SimpleChanges, TemplateRef} from '@angular/core';
-import {TemplateDirective} from "../template/template.directive";
+import {TemplateDirective} from "../../directives/template/template.directive";
 import {Colors} from "../../types";
 import {AbstractComponent} from "../abstract.component";
+import {CommonModule} from "@angular/common";
 
 export interface TreeItem {
   key: any;
@@ -20,9 +21,11 @@ export interface DropEvent {
 }
 
 @Component({
-  selector: 'd-tree',
-  templateUrl: './tree.component.html',
-  styleUrls: ['./tree.component.scss']
+    standalone: true,
+    imports: [CommonModule],
+    selector: 'd-tree',
+    templateUrl: './tree.component.html',
+    styleUrls: ['./tree.component.scss'],
 })
 export class TreeComponent extends AbstractComponent implements OnChanges {
 

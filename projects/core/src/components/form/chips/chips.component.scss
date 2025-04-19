@@ -1,4 +1,4 @@
-@import "../../../assets/styles/mixin";
+@use "../../../../public/styles/mixin";
 
 :host {
   width: 100%;
@@ -15,7 +15,7 @@
     min-width: 100px;
   }
 
-  .item {
+  .box {
     gap: .5rem;
     display: flex;
     margin: .2em .2em;

@@ -1,11 +1,14 @@
 import {Component, HostListener, Input} from '@angular/core';
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
+import {CommonModule} from "@angular/common";
 
 @Component({
-  selector: 'd-checkbox',
-  templateUrl: 'checkbox.component.html',
-  styleUrls: ['../control.scss', './checkbox.component.scss'],
-  providers: [createControlValueAccessor(CheckboxComponent)]
+    standalone: true,
+    imports: [CommonModule],
+    selector: 'd-checkbox',
+    templateUrl: 'checkbox.component.html',
+    styleUrls: ['../control.scss', './checkbox.component.scss'],
+    providers: [createControlValueAccessor(CheckboxComponent)],
 })
 export class CheckboxComponent extends AbstractFormControl<boolean | null> {
   @Input() mode: 'binary' | 'ternary' = 'binary';

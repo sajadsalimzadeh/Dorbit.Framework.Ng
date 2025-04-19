@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ContentChildren, forwardRef, HostBinding, HostListener, Injector, Input, OnChanges, OnDestroy, OnInit, QueryList, SimpleChanges, TemplateRef} from "@angular/core";
-import {TemplateDirective} from "../template/template.directive";
+import {TemplateDirective} from "../../directives/template/template.directive";
 import {FilterFunc, SortFunc, TableConfig, TableData} from "./models";
 import {FormControl} from "@angular/forms";
 import {TableService} from "./services/table.service";
@@ -9,13 +9,14 @@ import {AbstractComponent} from "../abstract.component";
 import {TableTemplateDirective} from "./components/table-template.directive";
 
 @Component({
-  selector: 'd-table',
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss'],
-  providers: [
-    TableService,
-    {provide: TableTemplateDirective, useExisting: forwardRef(() => TemplateDirective)}
-  ]
+    selector: 'd-table',
+    templateUrl: './table.component.html',
+    styleUrls: ['./table.component.scss'],
+    providers: [
+        TableService,
+        { provide: TableTemplateDirective, useExisting: forwardRef(() => TemplateDirective) }
+    ],
+    standalone: false
 })
 export class TableComponent extends AbstractComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 

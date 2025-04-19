@@ -1,14 +1,27 @@
 import {Component, ContentChildren, HostListener, Injector, Input, QueryList, TemplateRef,} from '@angular/core';
-import {TemplateDirective} from "../../template/template.directive";
+import {TemplateDirective} from "../../../directives/template/template.directive";
 import {AbstractFormControl, createControlValueAccessor, ValidationError} from "../form-control.directive";
 import {FormControlService} from "../form-control.service";
 import {ControlGroupValidationService} from "./control-group-validation.service";
+import {CommonModule} from "@angular/common";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {OverlayModule} from "../../overlay/overlay.module";
+
+export * from './control-group-validation.service';
 
 @Component({
-  selector: 'd-control-group',
-  templateUrl: 'control-group.component.html',
-  styleUrls: ['../control.scss', './control-group.component.scss'],
-  providers: [createControlValueAccessor(ControlGroupComponent), FormControlService]
+    standalone: true,
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+
+        OverlayModule,
+    ],
+    selector: 'd-control-group',
+    templateUrl: 'control-group.component.html',
+    styleUrls: ['../control.scss', './control-group.component.scss'],
+    providers: [createControlValueAccessor(ControlGroupComponent), FormControlService],
 })
 export class ControlGroupComponent extends AbstractFormControl<any> {
   @Input() label: string = '';

@@ -1,12 +1,20 @@
 import {Component, Injector, Input, TemplateRef, ViewChild,} from '@angular/core';
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
 import {OverlayRef, OverlayService} from "../../overlay/overlay.component";
+import {CommonModule} from "@angular/common";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @Component({
-  selector: 'd-password',
-  templateUrl: 'password.component.html',
-  styleUrls: ['../control.scss', './password.component.scss'],
-  providers: [createControlValueAccessor(PasswordComponent)]
+    standalone: true,
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule
+    ],
+    selector: 'd-password',
+    templateUrl: 'password.component.html',
+    styleUrls: ['../control.scss', './password.component.scss'],
+    providers: [createControlValueAccessor(PasswordComponent)],
 })
 export class PasswordComponent extends AbstractFormControl<string> {
 

@@ -1,13 +1,18 @@
 import {Component, ContentChildren, HostBinding, Input, QueryList,} from '@angular/core';
 import {Orientation} from "../../types";
-import {TabTemplateDirective} from "./components/tab-template.directive";
+import {TabTemplateDirective} from "./directives/tab-template.directive";
 import {AbstractFormControl, createControlValueAccessor} from "../form";
+import {CommonModule} from "@angular/common";
+
+export * from './directives/tab-template.directive';
 
 @Component({
-  selector: 'd-tab',
-  templateUrl: 'tab.component.html',
-  styleUrls: ['./tab.component.scss'],
-  providers: [createControlValueAccessor(TabComponent)]
+    standalone: true,
+    imports: [CommonModule],
+    selector: 'd-tab',
+    templateUrl: 'tab.component.html',
+    styleUrls: ['./tab.component.scss'],
+    providers: [createControlValueAccessor(TabComponent)],
 })
 export class TabComponent extends AbstractFormControl<any> {
   @Input() orientation: Orientation = 'horizontal';

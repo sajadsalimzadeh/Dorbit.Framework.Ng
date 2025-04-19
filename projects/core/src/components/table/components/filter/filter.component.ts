@@ -1,6 +1,6 @@
 import {Component, ContentChildren, ElementRef, HostBinding, HostListener, Input, OnInit, QueryList, TemplateRef, ViewChild} from "@angular/core";
 import {TableService} from "../../services/table.service";
-import {TemplateDirective} from "../../../template/template.directive";
+import {TemplateDirective} from "../../../../directives/template/template.directive";
 import {FormControl} from "@angular/forms";
 import {KeyValue} from "@angular/common";
 import {OverlayRef, OverlayService} from "../../../overlay/overlay.component";
@@ -8,9 +8,10 @@ import {OverlayRef, OverlayService} from "../../../overlay/overlay.component";
 export type OperationKey = 'eq' | 'nq' | 'gt' | 'ge' | 'lt' | 'le' | 'sw' | 'ew' | 'in' | 'ni';
 
 @Component({
-  selector: 'th[field], th[filter-by]',
-  templateUrl: './filter.component.html',
-  styleUrls: ['./filter.component.scss']
+    selector: 'th[field], th[filter-by]',
+    templateUrl: './filter.component.html',
+    styleUrls: ['./filter.component.scss'],
+    standalone: false
 })
 export class TableFilterComponent implements OnInit {
   @Input() field!: string;

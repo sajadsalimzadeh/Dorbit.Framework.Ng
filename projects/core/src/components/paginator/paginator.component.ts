@@ -1,10 +1,13 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {AbstractComponent} from "../abstract.component";
+import {CommonModule} from "@angular/common";
 
 @Component({
-  selector: 'd-paginator',
-  templateUrl: 'paginator.component.html',
-  styleUrls: ['./paginator.component.scss']
+    standalone: true,
+    imports: [CommonModule],
+    selector: 'd-paginator',
+    templateUrl: 'paginator.component.html',
+    styleUrls: ['./paginator.component.scss'],
 })
 export class PaginatorComponent extends AbstractComponent implements OnChanges {
 

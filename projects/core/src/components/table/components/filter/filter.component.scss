@@ -1,4 +1,4 @@
-@import "../../../../assets/styles/mixin";
+@use "../../../../../public/styles/mixin";
 
 div.filter {
   display: inline-flex;
@@ -42,7 +42,7 @@ div.filter {
   border-radius: 2px;
   background-color: var(--color-white);
   animation: overlay-open 300ms ease;
-  @include shadow;
+  @include mixin.shadow;
 
   .operation {
     padding: 8px;

@@ -1,7 +1,9 @@
 import {ChangeDetectorRef, Component, ComponentRef, EventEmitter, HostListener, Injector, Output, TemplateRef, Type} from '@angular/core';
+import {CommonModule} from "@angular/common";
 import {Positions} from "../../../../types";
 import {AbstractComponent} from "../../../abstract.component";
 import {DialogRef} from "../../services/dialog.service";
+import {PositionComponent} from "../../../position/position.component";
 
 export interface DialogOptions {
   container?: string;
@@ -46,9 +48,11 @@ export interface DialogContext {
 const minimizeSpaces: DialogComponent[] = [];
 
 @Component({
-  selector: 'd-dialog',
-  templateUrl: 'dialog.component.html',
-  styleUrls: ['./dialog.component.scss']
+    standalone: true,
+    imports: [CommonModule, PositionComponent],
+    selector: 'd-dialog',
+    templateUrl: 'dialog.component.html',
+    styleUrls: ['./dialog.component.scss'],
 })
 export class DialogComponent extends AbstractComponent implements DialogRef, DialogContext {
   @Output() onClose = new EventEmitter<void>();

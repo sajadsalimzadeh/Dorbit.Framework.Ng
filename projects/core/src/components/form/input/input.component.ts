@@ -1,7 +1,9 @@
 import {Component, HostListener, Injector, Input,} from '@angular/core';
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
-import {KeyFilters} from "../../key-filter/key-filter.directive";
 import {NumberUtil} from "../../../utils";
+import {CommonModule} from "@angular/common";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {KeyFilterDirective, KeyFilters} from "../../../directives";
 
 export interface MaskItem {
   placeholder: string;
@@ -12,10 +14,17 @@ const p2e = (s: string) => s.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.ind
 const a2e = (s: string) => s.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d).toString())
 
 @Component({
-  selector: 'd-input',
-  templateUrl: 'input.component.html',
-  styleUrls: ['../control.scss', './input.component.scss'],
-  providers: [createControlValueAccessor(InputComponent)]
+    standalone: true,
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        KeyFilterDirective
+    ],
+    selector: 'd-input',
+    templateUrl: 'input.component.html',
+    styleUrls: ['../control.scss', './input.component.scss'],
+    providers: [createControlValueAccessor(InputComponent)],
 })
 export class InputComponent extends AbstractFormControl<string> {
 

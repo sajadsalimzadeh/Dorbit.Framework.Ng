@@ -1,13 +1,23 @@
 import {Component, Input, SimpleChanges} from '@angular/core';
 import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
-import {FormControl, Validators} from "@angular/forms";
+import {FormControl, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Subscription} from "rxjs";
+import {CommonModule} from "@angular/common";
+import {InputComponent} from "../input/input.component";
+import {SelectComponent} from "../select/select.component";
 
 @Component({
-  selector: 'd-input-split',
-  templateUrl: './input-split.component.html',
-  styleUrls: ['./input-split.component.scss'],
-  providers: [createControlValueAccessor(InputSplitComponent)]
+    standalone: true,
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        InputComponent,
+    ],
+    selector: 'd-input-split',
+    templateUrl: './input-split.component.html',
+    styleUrls: ['./input-split.component.scss'],
+    providers: [createControlValueAccessor(InputSplitComponent)],
 })
 export class InputSplitComponent extends AbstractFormControl<string> {
   @Input({required: true}) length!: number;

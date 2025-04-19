@@ -1,0 +1,24 @@
+import {Directive, Input, NgModule, TemplateRef} from "@angular/core";
+import {CommonModule} from "@angular/common";
+
+
+@Directive({
+    standalone: true,
+    selector: '[dTemplate]',
+})
+export class TemplateDirective {
+
+  @Input('dTemplate') name?: string = 'default';
+
+  constructor(public template: TemplateRef<any>) {
+  }
+
+  includesName(value: string, isDefault = false) {
+    if(isDefault && !this.name) return true;
+    if(this.name?.includes(',')) {
+      const splits = this.name.split(',');
+      return splits.includes(value);
+    }
+    return value == this.name;
+  }
+}

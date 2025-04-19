@@ -1,7 +1,9 @@
 import {Component, Input} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AbstractFormControl} from "../form-control.directive";
-// @ts-ignore
+import {CommonModule} from "@angular/common";
+import {ControlGroupComponent} from "../control-group/control-group.component";
+import {SelectComponent} from "../select/select.component";
 import moment from 'jalali-moment';
 
 interface Option {
@@ -10,9 +12,17 @@ interface Option {
 }
 
 @Component({
-  selector: 'd-date-picker-inline',
-  templateUrl: './date-picker-inline.component.html',
-  styleUrls: ['./date-picker-inline.component.scss']
+    standalone: true,
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        SelectComponent,
+        ControlGroupComponent,
+    ],
+    selector: 'd-date-picker-inline',
+    templateUrl: './date-picker-inline.component.html',
+    styleUrls: ['./date-picker-inline.component.scss'],
 })
 export class DatePickerInlineComponent extends AbstractFormControl<string> {
   @Input() previousYearCount: number = 100;

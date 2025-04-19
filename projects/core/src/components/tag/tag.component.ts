@@ -1,10 +1,13 @@
 import {Component, Input,} from '@angular/core';
 import {AbstractComponent} from "../abstract.component";
+import {CommonModule} from "@angular/common";
 
 @Component({
-  selector: 'd-tag',
-  templateUrl: 'tag.component.html',
-  styleUrls: ['./tag.component.scss']
+    standalone: true,
+    imports: [CommonModule],
+    selector: 'd-tag',
+    templateUrl: 'tag.component.html',
+    styleUrls: ['./tag.component.scss'],
 })
 export class TagComponent extends AbstractComponent {
   @Input() icon?: string;
