@@ -15,7 +15,7 @@ export interface IDatabase {
 
   get(tableName: string, id: any): Promise<any>;
 
-  getAll(tableName: string): Promise<any[]>;
+  getAll(tableName: string, query?: IDBValidKey | IDBKeyRange | null | undefined, count?: number | undefined): Promise<any[]>;
 
   add(tableName: string, value: any): Promise<any>;
 
@@ -46,7 +46,7 @@ export interface ITable<TEntity = any, TKey = any> {
 
   getWithCache(key: TKey): Promise<TEntity | null>;
 
-  getAll(): Promise<TEntity[]>;
+  getAll(query?: IDBValidKey | IDBKeyRange | null | undefined, count?: number | undefined): Promise<TEntity[]>;
 
   put(value: TEntity): Promise<TKey>;
 

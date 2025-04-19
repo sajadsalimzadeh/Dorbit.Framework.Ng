@@ -13,9 +13,8 @@ export abstract class AbstractComponent implements OnInit, OnChanges, OnDestroy,
   @Input() ngClass?: any;
   @Input() dir: Direction = '';
 
-  protected subscription = new Subscription();
-
   private _services: any = {};
+  private _subscription?: Subscription;
 
   protected getInstance<T>(key: string, type: ProviderToken<T>): T {
     return this._services[key] ??= this.injector.get(type)
@@ -28,6 +27,12 @@ export abstract class AbstractComponent implements OnInit, OnChanges, OnDestroy,
   protected get loadingService(): LoadingService {
     return this.getInstance('LoadingService', LoadingService);
   }
+
+  protected get subscription(){
+    return this._subscription ??= new Subscription();
+  }
+
+  protected classNames: string[] = [];
 
   elementRef: ElementRef<HTMLElement>;
 
@@ -47,7 +52,7 @@ export abstract class AbstractComponent implements OnInit, OnChanges, OnDestroy,
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this._subscription?.unsubscribe();
   }
 
   render() {
@@ -109,8 +114,6 @@ export abstract class AbstractComponent implements OnInit, OnChanges, OnDestroy,
     }
     return '';
   }
-
-  classNames: string[] = [];
 
   resetClasses(element: Element = this.elementRef.nativeElement) {
     this.classNames.forEach(x => element.classList.remove(x));

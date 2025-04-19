@@ -69,10 +69,10 @@ export class IndexedDB implements IDatabase {
     return this.toPromise(() => store.get(id));
   }
 
-  public getAll(tableName: string) {
+  public getAll(tableName: string, query?: IDBValidKey | IDBKeyRange | null | undefined, count?: number | undefined) {
     const tx = this.db.transaction(tableName, 'readonly');
     const store = tx.objectStore(tableName);
-    return this.toPromise(() => store.getAll());
+    return this.toPromise(() => store.getAll(query, count));
   }
 
   public findAll(tableName: string, query: (key: any, value: any) => boolean, count: number) {
@@ -194,8 +194,8 @@ class Table<T, TP> implements ITable<T, TP> {
     return item;
   }
 
-  getAll() {
-    return this.database.getAll(this.name);
+  getAll(query?: IDBValidKey | IDBKeyRange | null | undefined, count?: number | undefined) {
+    return this.database.getAll(this.name, query, count);
   }
 
   async add(value: T) {
