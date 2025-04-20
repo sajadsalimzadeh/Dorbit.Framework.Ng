@@ -1,5 +1,5 @@
 import {Inject, Injectable, InjectionToken, Injector, isDevMode, Optional} from '@angular/core';
-import {HttpInterceptor, HttpEvent, HttpHandler, HttpRequest, HttpResponse} from '@angular/common/http';
+import { HttpInterceptor, HttpEvent, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {TimeSpan} from "../contracts";
 import {internetStateService} from "../services";

@@ -1,4 +1,4 @@
-import {HttpClient, HttpContext, HttpErrorResponse, HttpEvent, HttpHandler, HttpHeaders, HttpParams, HttpRequest, HttpResponse} from "@angular/common/http";
+import { HttpClient, HttpContext, HttpErrorResponse, HttpEvent, HttpHandler, HttpHeaders, HttpParams, HttpRequest, HttpResponse } from "@angular/common/http";
 import {TranslateService} from "@ngx-translate/core";
 import {Injector} from "@angular/core";
 import {catchError, finalize, Observable, tap, throwError} from "rxjs";
