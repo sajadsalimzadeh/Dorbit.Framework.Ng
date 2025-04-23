@@ -1,22 +1,22 @@
 <h1>Radio</h1>
 <hr>
-<app-card header="Colors" class="mt-6" component="forms/radio">
-  <div class="flex-row flex-align-center flex-gap-4 py-1">
-    <d-radio [formControl]="formControl" value="1" color="primary">Primary</d-radio>
-    <d-radio [formControl]="formControl" value="2" color="secondary">Secondary</d-radio>
-    <d-radio [formControl]="formControl" value="3" color="warning">Warning</d-radio>
-    <d-radio [formControl]="formControl" value="4" color="success">Success</d-radio>
-    <d-radio [formControl]="formControl" value="5" color="danger">Danger</d-radio>
-    <d-radio [formControl]="formControl" value="6" color="link">Link</d-radio>
-  </div>
+<app-card class="mt-6" component="forms/radio" header="Colors">
+    <div class="flex-row flex-align-center flex-gap-4 py-1">
+        <d-radio [formControl]="formControl" color="primary" value="1">Primary</d-radio>
+        <d-radio [formControl]="formControl" color="secondary" value="2">Secondary</d-radio>
+        <d-radio [formControl]="formControl" color="warning" value="3">Warning</d-radio>
+        <d-radio [formControl]="formControl" color="success" value="4">Success</d-radio>
+        <d-radio [formControl]="formControl" color="danger" value="5">Danger</d-radio>
+        <d-radio [formControl]="formControl" color="link" value="6">Link</d-radio>
+    </div>
 </app-card>
-<app-card header="Sizes" class="mt-6" component="forms/radio">
-  <div class="flex-column flex-align-start flex-gap-4 py-1">
-    <d-radio [formControl]="formControl" size="xs" value="1" color="primary">Primary</d-radio>
-    <d-radio [formControl]="formControl" size="sm" value="2" color="secondary">Secondary</d-radio>
-    <d-radio [formControl]="formControl" size="md" value="3" color="warning">Warning</d-radio>
-    <d-radio [formControl]="formControl" size="lg" value="4" color="success">Success</d-radio>
-    <d-radio [formControl]="formControl" size="xl" value="5" color="danger">Danger</d-radio>
-    <d-radio [formControl]="formControl" size="xl" value="6" color="link">Link</d-radio>
-  </div>
+<app-card class="mt-6" component="forms/radio" header="Sizes">
+    <div class="flex-column flex-align-start flex-gap-4 py-1">
+        <d-radio [formControl]="formControl" color="primary" size="xs" value="1">Primary</d-radio>
+        <d-radio [formControl]="formControl" color="secondary" size="sm" value="2">Secondary</d-radio>
+        <d-radio [formControl]="formControl" color="warning" size="md" value="3">Warning</d-radio>
+        <d-radio [formControl]="formControl" color="success" size="lg" value="4">Success</d-radio>
+        <d-radio [formControl]="formControl" color="danger" size="xl" value="5">Danger</d-radio>
+        <d-radio [formControl]="formControl" color="link" size="xl" value="6">Link</d-radio>
+    </div>
 </app-card>

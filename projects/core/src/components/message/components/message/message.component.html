@@ -1,25 +1,25 @@
-<div class="message" (touchend)="remove()">
-  <ng-container *ngIf="contentTemplate; else noTemplateTpl">
-    <ng-container *ngTemplateOutlet="contentTemplate; context: {$implicit: item}"></ng-container>
-  </ng-container>
-  <ng-template #noTemplateTpl>
-    <div *ngIf="item.icon" class="icon-box">
-      <i [ngClass]="item.icon"></i>
-    </div>
-    <div class="content">
-      <div *ngIf="item.title" class="title">
-        {{item.title}}
-      </div>
-      <div *ngIf="item.body" class="body">
-        {{item.body}}
-      </div>
-    </div>
-    <div class="timer-box" *ngIf="item.showTimeString && timer">
-      {{(timer / 1000).toFixed(2)}}s
-    </div>
-    <div class="remove-box" *ngIf="item.removable" (click)="remove()">
-      <i class="icons-core-close"></i>
-    </div>
-  </ng-template>
+<div (touchend)="remove()" class="message">
+    <ng-container *ngIf="contentTemplate; else noTemplateTpl">
+        <ng-container *ngTemplateOutlet="contentTemplate; context: {$implicit: item}"></ng-container>
+    </ng-container>
+    <ng-template #noTemplateTpl>
+        <div *ngIf="item.icon" class="icon-box">
+            <i [ngClass]="item.icon"></i>
+        </div>
+        <div class="content">
+            <div *ngIf="item.title" class="title">
+                {{ item.title }}
+            </div>
+            <div *ngIf="item.body" class="body">
+                {{ item.body }}
+            </div>
+        </div>
+        <div *ngIf="item.showTimeString && timer" class="timer-box">
+            {{ (timer / 1000).toFixed(2) }}s
+        </div>
+        <div (click)="remove()" *ngIf="item.removable" class="remove-box">
+            <i class="icons-core-close"></i>
+        </div>
+    </ng-template>
 </div>
 <div class="progress"></div>

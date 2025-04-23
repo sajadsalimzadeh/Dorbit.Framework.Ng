@@ -6,17 +6,17 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {DocModule} from "../../components/doc.module";
 
 @NgModule({
-  imports: [
-    FormsModule,
-    CommonModule,
-    ReactiveFormsModule,
-    RouterModule.forChild([{path: '', component: IndexComponent}]),
+    imports: [
+        FormsModule,
+        CommonModule,
+        ReactiveFormsModule,
+        RouterModule.forChild([{path: '', component: IndexComponent}]),
 
-    DocModule,
-  ],
-  declarations: [
-    IndexComponent
-  ]
+        DocModule,
+    ],
+    declarations: [
+        IndexComponent
+    ]
 })
 export class Module {
 

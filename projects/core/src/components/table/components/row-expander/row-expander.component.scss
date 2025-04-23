@@ -1,28 +1,28 @@
 :host {
-  display: flex;
-  cursor: pointer;
-  justify-content: center;
-
-  i {
-    width: 2.5rem;
-    height: 2.5rem;
     display: flex;
-    align-items: center;
-    border-radius: 50%;
+    cursor: pointer;
     justify-content: center;
-    border: 1px solid transparent;
-    transition: transform 300ms ease;
-  }
 
-  &:hover i {
-    border-color: var(--color-gray--8);
-  }
-
-  &.expanded {
     i {
-      transform: rotate(-90deg);
+        width: 2.5rem;
+        height: 2.5rem;
+        display: flex;
+        align-items: center;
+        border-radius: 50%;
+        justify-content: center;
+        border: 1px solid transparent;
+        transition: transform 300ms ease;
     }
-  }
+
+    &:hover i {
+        border-color: var(--color-gray--8);
+    }
+
+    &.expanded {
+        i {
+            transform: rotate(-90deg);
+        }
+    }
 }
 
 :host-context([dir=rtl]) :host {

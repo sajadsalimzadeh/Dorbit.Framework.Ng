@@ -1,24 +1,24 @@
 <ul>
-  <li *ngIf="showArrows && showFirstArrow && pageNumbers.length > 0" (click)="select(1)">
-    <i class="icons-core-angle-double-left"></i>
-  </li>
-  <li *ngIf="showArrows && showPrevArrow && pageNumbers.length > 0" (click)="select(page)">
-    <i class="icons-core-angle-left"></i>
-  </li>
-  <li *ngFor="let item of pageNumbers" [ngClass]="{active: (page == item - 1)}"
-      (click)="select(item)">
-    <ng-container *ngIf="item; else extraPagesTpl">
-      {{item}}
-    </ng-container>
-    <ng-template #extraPagesTpl>
-      ...
-    </ng-template>
-  </li>
-  <li *ngIf="showArrows && showNextArrow && pageNumbers.length > 0" (click)="select(page + 2)">
-    <i class="icons-core-angle-right"></i>
-  </li>
-  <li *ngIf="showArrows && showLastArrow && pageNumbers.length > 0"
-      (click)="select(pageNumbers[pageNumbers.length - 1])">
-    <i class="icons-core-angle-double-right"></i>
-  </li>
+    <li (click)="select(1)" *ngIf="showArrows && showFirstArrow && pageNumbers.length > 0">
+        <i class="icons-core-angle-double-left"></i>
+    </li>
+    <li (click)="select(page)" *ngIf="showArrows && showPrevArrow && pageNumbers.length > 0">
+        <i class="icons-core-angle-left"></i>
+    </li>
+    <li (click)="select(item)" *ngFor="let item of pageNumbers"
+        [ngClass]="{active: (page == item - 1)}">
+        <ng-container *ngIf="item; else extraPagesTpl">
+            {{ item }}
+        </ng-container>
+        <ng-template #extraPagesTpl>
+            ...
+        </ng-template>
+    </li>
+    <li (click)="select(page + 2)" *ngIf="showArrows && showNextArrow && pageNumbers.length > 0">
+        <i class="icons-core-angle-right"></i>
+    </li>
+    <li (click)="select(pageNumbers[pageNumbers.length - 1])"
+        *ngIf="showArrows && showLastArrow && pageNumbers.length > 0">
+        <i class="icons-core-angle-double-right"></i>
+    </li>
 </ul>

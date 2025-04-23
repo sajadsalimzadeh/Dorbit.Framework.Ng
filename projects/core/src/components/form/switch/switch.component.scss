@@ -1,63 +1,63 @@
 :host {
-  outline: none;
-  align-items: center;
-  display: inline-flex;
-  border-radius: var(--radius-10);
-
-  .switch-box {
-    font-size: .8em;
-  }
-
-  label {
-    font-size: .9em;
-  }
-
-  &, * {
-    cursor: pointer;
-  }
-
-  &:hover, &:focus {
-    background-color: rgba(var(--color-component-rgb), .1);
-  }
-
-  &.checked .switch-box {
-    background-color: var(--color-component);
-    border-color: var(--color-component);
-  }
-
-  $base-size: 1.5em;
-  $border-size: 3px;
-
-  &.checked .switch-box::after {
-    margin-inline-start: $base-size;
-  }
-
-  .switch-box {
-    width: calc(($base-size * 2) + ($border-size * 2));
+    outline: none;
     align-items: center;
     display: inline-flex;
-    border-radius: inherit;
-    transition: all 200ms ease;
-    justify-content: flex-start;
-    border: $border-size solid transparent;
-    background-color: var(--color-gray--8);
-    outline: none;
+    border-radius: var(--radius-10);
 
-    &::after {
-      content: '';
-      min-width: $base-size;
-      min-height: $base-size;
-      border-radius: 50%;
-      transition: all 200ms ease;
-      background-color: var(--color-white);
+    .switch-box {
+        font-size: .8em;
     }
-  }
 
-  label {
-    margin-inline: var(--size-3);
-
-    &:empty {
-      display: none;
+    label {
+        font-size: .9em;
     }
-  }
+
+    &, * {
+        cursor: pointer;
+    }
+
+    &:hover, &:focus {
+        background-color: rgba(var(--color-component-rgb), .1);
+    }
+
+    &.checked .switch-box {
+        background-color: var(--color-component);
+        border-color: var(--color-component);
+    }
+
+    $base-size: 1.5em;
+    $border-size: 3px;
+
+    &.checked .switch-box::after {
+        margin-inline-start: $base-size;
+    }
+
+    .switch-box {
+        width: calc(($base-size * 2) + ($border-size * 2));
+        align-items: center;
+        display: inline-flex;
+        border-radius: inherit;
+        transition: all 200ms ease;
+        justify-content: flex-start;
+        border: $border-size solid transparent;
+        background-color: var(--color-gray--8);
+        outline: none;
+
+        &::after {
+            content: '';
+            min-width: $base-size;
+            min-height: $base-size;
+            border-radius: 50%;
+            transition: all 200ms ease;
+            background-color: var(--color-white);
+        }
+    }
+
+    label {
+        margin-inline: var(--size-3);
+
+        &:empty {
+            display: none;
+        }
+    }
 }

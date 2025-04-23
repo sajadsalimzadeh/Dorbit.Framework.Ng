@@ -3,36 +3,36 @@ import {OverlayOptions, OverlayRef, OverlayService} from './overlay.component'
 import {AbstractComponent} from "../abstract.component";
 
 @Directive({
-    selector: '[dOverlay]',
-    standalone: false
+    standalone: false,
+    selector: '[dOverlay]'
 })
 export class OverlayDirective extends AbstractComponent implements OnInit {
-  @Input('dOverlay') options!: OverlayOptions;
+    @Input('dOverlay') options!: OverlayOptions;
+    overlayRef?: OverlayRef;
 
-  @HostListener('focus', ['$event']) onFocus(e: Event) {
-    e.stopPropagation();
-    this.create();
-  }
-  @HostListener('click', ['$event']) onClick(e: Event) {
-    e.stopPropagation();
-    this.create();
-  }
+    constructor(injector: Injector, private overlayService: OverlayService) {
+        super(injector);
+    }
 
-  overlayRef?: OverlayRef;
+    @HostListener('focus', ['$event']) onFocus(e: Event) {
+        e.stopPropagation();
+        this.create();
+    }
 
-  constructor(injector: Injector, private overlayService: OverlayService) {
-    super(injector);
-  }
+    @HostListener('click', ['$event']) onClick(e: Event) {
+        e.stopPropagation();
+        this.create();
+    }
 
-  create() {
-    if(this.overlayRef) return;
-    this.overlayRef = this.overlayService.create({
-      autoClose: true,
-      ...this.options,
-      ref: this.elementRef.nativeElement,
-    });
-    this.overlayRef.onDestroy.subscribe(() => {
-      this.overlayRef = undefined;
-    });
-  }
+    create() {
+        if (this.overlayRef) return;
+        this.overlayRef = this.overlayService.create({
+            autoClose: true,
+            ...this.options,
+            ref: this.elementRef.nativeElement,
+        });
+        this.overlayRef.onDestroy.subscribe(() => {
+            this.overlayRef = undefined;
+        });
+    }
 }

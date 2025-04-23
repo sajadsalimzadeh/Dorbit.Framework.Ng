@@ -2,26 +2,26 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl} from "@angular/forms";
 
 @Component({
-  selector: 'doc-color-picker',
-  templateUrl: './index.component.html',
-  styleUrls: ['./index.component.scss']
+    selector: 'doc-color-picker',
+    templateUrl: './index.component.html',
+    styleUrls: ['./index.component.scss']
 })
 export class IndexComponent implements OnInit {
 
-  loadings: any = {};
-  formControl = new FormControl('#f00');
+    loadings: any = {};
+    formControl = new FormControl('#f00');
 
-  constructor() {
-  }
+    constructor() {
+    }
 
-  ngOnInit(): void {
+    ngOnInit(): void {
 
-  }
+    }
 
-  startLoading(name: string) {
-    this.loadings[name] = true;
-    setTimeout(() => {
-      // this.loadings[name] = false;
-    }, 1000)
-  }
+    startLoading(name: string) {
+        this.loadings[name] = true;
+        setTimeout(() => {
+            // this.loadings[name] = false;
+        }, 1000)
+    }
 }

@@ -1,5 +1,5 @@
 import {Component, HostListener} from '@angular/core';
-import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
+import {AbstractControl, createControlValueAccessor} from "../abstract-control.directive";
 import {CommonModule} from "@angular/common";
 
 @Component({
@@ -8,26 +8,26 @@ import {CommonModule} from "@angular/common";
     selector: 'd-switch',
     templateUrl: 'switch.component.html',
     styleUrls: ['../control.scss', './switch.component.scss'],
-    providers: [createControlValueAccessor(SwitchComponent)],
+    providers: [createControlValueAccessor(SwitchComponent)]
 })
-export class SwitchComponent extends AbstractFormControl<boolean | null> {
+export class SwitchComponent extends AbstractControl<boolean | null> {
 
-  @HostListener('keydown.space')
-  onKeyDownSpace() {
-    this.toggle();
-  }
+    @HostListener('keydown.space')
+    onKeyDownSpace() {
+        this.toggle();
+    }
 
-  override onClick(e: MouseEvent) {
-    this.toggle();
-    super.onClick(e);
-  }
+    override onClick(e: MouseEvent) {
+        this.toggle();
+        super.onClick(e);
+    }
 
-  override render() {
-    super.render();
-    this.setClass('checked', !!this.formControl?.value);
-  }
+    override render() {
+        super.render();
+        this.setClass('checked', !!this.formControl?.value);
+    }
 
-  toggle() {
-    this.writeValue(!this.formControl?.value);
-  }
+    toggle() {
+        this.writeValue(!this.formControl?.value);
+    }
 }

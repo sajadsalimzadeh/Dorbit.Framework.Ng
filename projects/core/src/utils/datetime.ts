@@ -1,19 +1,10 @@
 // @ts-ignore
-import moment from 'jalali-moment';
-import {Moment} from 'jalali-moment';
+import moment, {Moment} from 'jalali-moment';
 
 export class DateTime {
     protected moment: Moment;
     protected weekLetters = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
     protected weekNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-    get invalid(): boolean {
-        return this.getYear() === -1 || this.getMonth() === -1 || this.getDay() === -1 || this.getHour() === -1 || this.getMinute() === -1 || this.getSecond() === -1;
-    }
-
-    get value(): string {
-        return `${this.getYear() * 10000 + this.getMonth() * 100 + this.getDay()}${this.getHour() < 10 ? '0' : ''}${this.getHour() * 10000 + this.getMinute() * 100 + this.getSecond()}`;
-    }
 
     public constructor(year?: number, month?: number, day?: number, hour?: number, minute?: number, second?: number) {
         this.moment = moment();
@@ -24,6 +15,111 @@ export class DateTime {
         if (hour !== undefined) this.setHour(hour);
         if (minute !== undefined) this.setMinute(minute);
         if (second !== undefined) this.setSecond(second);
+    }
+
+    public static get now(): DateTime {
+        return new DateTime();
+    }
+
+    get invalid(): boolean {
+        return this.getYear() === -1 || this.getMonth() === -1 || this.getDay() === -1 || this.getHour() === -1 || this.getMinute() === -1 || this.getSecond() === -1;
+    }
+
+    get value(): string {
+        return `${this.getYear() * 10000 + this.getMonth() * 100 + this.getDay()}${this.getHour() < 10 ? '0' : ''}${this.getHour() * 10000 + this.getMinute() * 100 + this.getSecond()}`;
+    }
+
+    public static parse(value: string, format: string = 'YYYY/MM/DD HH:mm:ss'): DateTime {
+        if (value && typeof value === 'string') {
+            return new DateTime(
+                DateTime.parseOnce(value, format, 'YYYY'),
+                DateTime.parseOnce(value, format, 'MM'),
+                DateTime.parseOnce(value, format, 'DD'),
+                DateTime.parseOnce(value, format, 'HH'),
+                DateTime.parseOnce(value, format, 'mm'),
+                DateTime.parseOnce(value, format, 'ss'),
+            );
+        }
+        return new DateTime();
+    }
+
+    public static format(t: Date | DateTime | JDate, format: string = 'YYYY/MM/DD HH:mm:ss'): string {
+        if (t instanceof Date) return DateTime.toGDate(t).format(format);
+        let year = t.getYear();
+        let month = t.getMonth();
+        let day = t.getDay();
+        let hour = t.getHour();
+        let minute = t.getMinute();
+        let second = t.getSecond();
+        format = format.replace(/YYYY/g, year.toString());
+        format = format.replace(/MM/g, (month < 10 ? '0' + month : month).toString());
+        format = format.replace(/DD/g, (day < 10 ? '0' + day : day).toString());
+        format = format.replace(/hh/g, (hour < 10 ? '0' + hour : hour).toString());
+        format = format.replace(/mm/g, (minute < 10 ? '0' + minute : minute).toString());
+        format = format.replace(/ss/g, (second < 10 ? '0' + second : second).toString());
+        return format;
+    }
+
+    public static parseDate(value: string, format: string = 'YYYY-MM-DD HH:mm:ss'): Date {
+        let date = this.parse(value, format);
+        return new Date(date.getYear(), date.getMonth(), date.getDay(), date.getHour(), date.getMinute(), date.getSecond());
+    }
+
+    public static parseJDate(value: string, format: string = 'YYYY-MM-DD HH:mm:ss'): JDate {
+        return JDate.parse(value, format);
+    }
+
+    public static parseGDate(value: string, format: string = 'YYYY-MM-DD HH:mm:ss'): GDate {
+        return GDate.parse(value, format);
+    }
+
+    public static toJDate(t: DateTime | GDate | Date | Moment): JDate {
+        if (t instanceof DateTime) return t.toJDate();
+        if (t instanceof Date) return this.toJDate(this.getMoment(t));
+        return new JDate(t.jYear(), t.jMonth() + 1, t.jDate(), t.hour(), t.minute(), t.second());
+    }
+
+    public static toGDate(t: DateTime | JDate | Date | Moment): GDate {
+        if (t instanceof DateTime) return t.toGDate();
+        if (t instanceof Date) return this.toGDate(this.getMoment(t));
+        return new GDate(t.year(), t.month() + 1, t.date(), t.hour(), t.minute(), t.second());
+    }
+
+    public static toDate(t: DateTime | GDate | JDate | Moment): Date {
+        if (t instanceof DateTime) return t.toDate();
+        return new Date(t.year(), t.month() + 1, t.date(), t.hour(), t.minute(), t.second());
+    }
+
+    public static toDateTime(t: Date | Moment): DateTime {
+        if (t instanceof Date) return new DateTime(t.getFullYear(), t.getMonth() + 1, t.getDate(), t.getHours(), t.getMinutes(), t.getSeconds());
+        return new DateTime(t.year(), t.month() + 1, t.date(), t.hour(), t.minute(), t.second());
+    }
+
+    public static getMoment(t: DateTime | GDate | JDate | Date): Moment {
+        if (t instanceof Date) {
+            const m = moment();
+            m.second(t.getSeconds());
+            m.minute(t.getMinutes());
+            m.hour(t.getHours());
+            m.date(t.getDate());
+            m.month(t.getMonth() - 1);
+            m.year(t.getFullYear());
+            return m;
+        }
+        return t.getMoment();
+    }
+
+    protected static parseOnce(value: string, format: string, find: string): number | undefined {
+        let index = format.indexOf(find);
+        if (index > -1) {
+            let sub = value.substring(index, index + find.length);
+            if (sub) {
+                let result = parseInt(sub);
+                if (result + '' !== 'NaN') return result;
+                return -1;
+            }
+        }
+        return undefined;
     }
 
     public setYear(value: number): DateTime {
@@ -207,109 +303,22 @@ export class DateTime {
         t.setYear(this.getYear());
         return t;
     }
-
-    public static get now(): DateTime {
-        return new DateTime();
-    }
-
-    protected static parseOnce(value: string, format: string, find: string): number | undefined {
-        let index = format.indexOf(find);
-        if (index > -1) {
-            let sub = value.substring(index, index + find.length);
-            if (sub) {
-                let result = parseInt(sub);
-                if (result + '' !== 'NaN') return result;
-                return -1;
-            }
-        }
-        return undefined;
-    }
-
-    public static parse(value: string, format: string = 'YYYY/MM/DD HH:mm:ss'): DateTime {
-        if (value && typeof value === 'string') {
-            return new DateTime(
-                DateTime.parseOnce(value, format, 'YYYY'),
-                DateTime.parseOnce(value, format, 'MM'),
-                DateTime.parseOnce(value, format, 'DD'),
-                DateTime.parseOnce(value, format, 'HH'),
-                DateTime.parseOnce(value, format, 'mm'),
-                DateTime.parseOnce(value, format, 'ss'),
-            );
-        }
-        return new DateTime();
-    }
-
-    public static format(t: Date | DateTime | JDate, format: string = 'YYYY/MM/DD HH:mm:ss'): string {
-        if (t instanceof Date) return DateTime.toGDate(t).format(format);
-        let year = t.getYear();
-        let month = t.getMonth();
-        let day = t.getDay();
-        let hour = t.getHour();
-        let minute = t.getMinute();
-        let second = t.getSecond();
-        format = format.replace(/YYYY/g, year.toString());
-        format = format.replace(/MM/g, (month < 10 ? '0' + month : month).toString());
-        format = format.replace(/DD/g, (day < 10 ? '0' + day : day).toString());
-        format = format.replace(/hh/g, (hour < 10 ? '0' + hour : hour).toString());
-        format = format.replace(/mm/g, (minute < 10 ? '0' + minute : minute).toString());
-        format = format.replace(/ss/g, (second < 10 ? '0' + second : second).toString());
-        return format;
-    }
-
-    public static parseDate(value: string, format: string = 'YYYY-MM-DD HH:mm:ss'): Date {
-        let date = this.parse(value, format);
-        return new Date(date.getYear(), date.getMonth(), date.getDay(), date.getHour(), date.getMinute(), date.getSecond());
-    }
-
-    public static parseJDate(value: string, format: string = 'YYYY-MM-DD HH:mm:ss'): JDate {
-        return JDate.parse(value, format);
-    }
-
-    public static parseGDate(value: string, format: string = 'YYYY-MM-DD HH:mm:ss'): GDate {
-        return GDate.parse(value, format);
-    }
-
-    public static toJDate(t: DateTime | GDate | Date | Moment): JDate {
-        if (t instanceof DateTime) return t.toJDate();
-        if (t instanceof Date) return this.toJDate(this.getMoment(t));
-        return new JDate(t.jYear(), t.jMonth() + 1, t.jDate(), t.hour(), t.minute(), t.second());
-    }
-
-    public static toGDate(t: DateTime | JDate | Date | Moment): GDate {
-        if (t instanceof DateTime) return t.toGDate();
-        if (t instanceof Date) return this.toGDate(this.getMoment(t));
-        return new GDate(t.year(), t.month() + 1, t.date(), t.hour(), t.minute(), t.second());
-    }
-
-    public static toDate(t: DateTime | GDate | JDate | Moment): Date {
-        if (t instanceof DateTime) return t.toDate();
-        return new Date(t.year(), t.month() + 1, t.date(), t.hour(), t.minute(), t.second());
-    }
-
-    public static toDateTime(t: Date | Moment): DateTime {
-        if (t instanceof Date) return new DateTime(t.getFullYear(), t.getMonth() + 1, t.getDate(), t.getHours(), t.getMinutes(), t.getSeconds());
-        return new DateTime(t.year(), t.month() + 1, t.date(), t.hour(), t.minute(), t.second());
-    }
-
-    public static getMoment(t: DateTime | GDate | JDate | Date): Moment {
-        if (t instanceof Date) {
-            const m = moment();
-            m.second(t.getSeconds());
-            m.minute(t.getMinutes());
-            m.hour(t.getHours());
-            m.date(t.getDate());
-            m.month(t.getMonth() - 1);
-            m.year(t.getFullYear());
-            return m;
-        }
-        return t.getMoment();
-    }
 }
 
 export class GDate extends DateTime {
 
     public constructor(year?: number, month?: number, day?: number, hour?: number, minute?: number, second?: number) {
         super(year, month, day, hour, minute, second);
+    }
+
+    public static override get now(): GDate {
+        return new GDate().setMoment(moment());
+    }
+
+    public static override parse(value: string, format: string = 'YYYY-MM-DD HH:mm:ss'): GDate {
+        moment.locale('en');
+        const t = DateTime.parse(value, format);
+        return new GDate(t.getYear(), t.getMonth(), t.getDay(), t.getHour(), t.getMinute(), t.getSecond());
     }
 
     public override setMoment(value: Moment) {
@@ -344,16 +353,6 @@ export class GDate extends DateTime {
     public override clone(): GDate {
         return new GDate(this.getYear(), this.getMonth(), this.getDay(), this.getHour(), this.getMinute(), this.getSecond());
     }
-
-    public static override parse(value: string, format: string = 'YYYY-MM-DD HH:mm:ss'): GDate {
-        moment.locale('en');
-        const t = DateTime.parse(value, format);
-        return new GDate(t.getYear(), t.getMonth(), t.getDay(), t.getHour(), t.getMinute(), t.getSecond());
-    }
-
-    public static override get now(): GDate {
-        return new GDate().setMoment(moment());
-    }
 }
 
 export class JDate extends DateTime {
@@ -363,6 +362,16 @@ export class JDate extends DateTime {
 
     public constructor(year?: number, month?: number, day?: number, hour?: number, minute?: number, second?: number) {
         super(year, month, day, hour, minute, second);
+    }
+
+    public static override get now(): JDate {
+        return new JDate().setMoment(moment());
+    }
+
+    public static override parse(value: string, format: string = 'YYYY-MM-DD HH:mm:ss'): JDate {
+        moment.locale('fa');
+        const t = DateTime.parse(value, format);
+        return new JDate(t.getYear(), t.getMonth(), t.getDay(), t.getHour(), t.getMinute(), t.getSecond());
     }
 
     public override getStartDayOfMonth(): number {
@@ -438,16 +447,6 @@ export class JDate extends DateTime {
 
     public override clone(): JDate {
         return new JDate(this.getYear(), this.getMonth(), this.getDay(), this.getHour(), this.getMinute(), this.getSecond());
-    }
-
-    public static override parse(value: string, format: string = 'YYYY-MM-DD HH:mm:ss'): JDate {
-        moment.locale('fa');
-        const t = DateTime.parse(value, format);
-        return new JDate(t.getYear(), t.getMonth(), t.getDay(), t.getHour(), t.getMinute(), t.getSecond());
-    }
-
-    public static override get now(): JDate {
-        return new JDate().setMoment(moment());
     }
 }
 

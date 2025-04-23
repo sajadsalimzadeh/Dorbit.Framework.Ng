@@ -1,33 +1,33 @@
 @use "../../../../public/styles/mixin";
 
 :host {
-  width: 100%;
-  min-width: 80px;
-  position: relative;
+    width: 100%;
+    min-width: 80px;
+    position: relative;
 
-  .control-container {
-    overflow: auto;
-    flex-wrap: wrap;
-    padding: 0 .4em;
-  }
+    .control-container {
+        overflow: auto;
+        flex-wrap: wrap;
+        padding: 0 .4em;
+    }
 
-  .control {
-    min-width: 100px;
-  }
+    .control {
+        min-width: 100px;
+    }
 
-  .box {
-    gap: .5rem;
-    display: flex;
-    margin: .2em .2em;
-    padding: .2rem .6rem;
-    align-items: center;
-    color: var(--color-primary);
-    border-radius: var(--radius-3);
-    margin-inline-start: 0 !important;
-    background-color: rgba(var(--color-primary-rgb), .1);
-  }
+    .box {
+        gap: .5rem;
+        display: flex;
+        margin: .2em .2em;
+        padding: .2rem .6rem;
+        align-items: center;
+        color: var(--color-primary);
+        border-radius: var(--radius-3);
+        margin-inline-start: 0 !important;
+        background-color: rgba(var(--color-primary-rgb), .1);
+    }
 
-  .remove {
-    cursor: pointer;
-  }
+    .remove {
+        cursor: pointer;
+    }
 }

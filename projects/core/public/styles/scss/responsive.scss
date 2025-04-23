@@ -1,109 +1,197 @@
 @use "sass:math";
+@use "sass:list";
 @use "../variables";
 
-.flex-row {display: flex !important; flex-direction: row !important;}
-.flex-row-reverse {display: flex; flex-direction: row-reverse !important;}
-
-.flex-column {display: flex !important; flex-direction: column !important;}
-.flex-column-reverse {display: flex !important; flex-direction: column-reverse !important;}
-
-.flex-center {display: flex !important; align-items: center !important; justify-content: center !important;}
-
-.flex-align-start {align-items: flex-start !important;}
-.flex-align-center {align-items: center !important;}
-.flex-align-end {align-items: flex-end !important;}
-.flex-align-stretch {align-items: stretch !important;}
-
-.flex-justify-start {justify-content: flex-start !important;}
-.flex-justify-center {justify-content: center !important;}
-.flex-justify-end {justify-content: flex-end !important;}
-.flex-justify-space-between {justify-content: space-between !important;}
-.flex-justify-space-around {justify-content: space-around !important;}
-.flex-justify-stretch {justify-content: stretch !important;}
-
-.flex-wrap {flex-wrap: wrap !important;}
-.flex-stretch {justify-content: stretch !important;}
-
-.text-align-center {text-align: center !important;}
-.text-align-left {text-align: left !important;}
-.text-align-right {text-align: right !important;}
-.text-align-end {text-align: end !important;}
-.text-align-start {text-align: start !important;}
-.text-align-justify {text-align: justify !important;}
-
-@each $count in $counters {
-  .flex-gap-#{$count} {gap: var(--size-#{$count}) !important;}
+.flex-row {
+    display: flex !important;
+    flex-direction: row !important;
 }
 
-@each $counter in $counters {
-  .flex-#{$counter} {flex: $counter !important;}
+.flex-row-reverse {
+    display: flex;
+    flex-direction: row-reverse !important;
 }
 
-.flex-25 {flex: 25% !important;}
-.flex-33 {flex: 33.33% !important;}
-.flex-50 {flex: 50% !important;}
-.flex-100 {flex: 100% !important;}
+.flex-column {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.flex-column-reverse {
+    display: flex !important;
+    flex-direction: column-reverse !important;
+}
+
+.flex-center {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.flex-align-start {
+    align-items: flex-start !important;
+}
+
+.flex-align-center {
+    align-items: center !important;
+}
+
+.flex-align-end {
+    align-items: flex-end !important;
+}
+
+.flex-align-stretch {
+    align-items: stretch !important;
+}
+
+.flex-justify-start {
+    justify-content: flex-start !important;
+}
+
+.flex-justify-center {
+    justify-content: center !important;
+}
+
+.flex-justify-end {
+    justify-content: flex-end !important;
+}
+
+.flex-justify-space-between {
+    justify-content: space-between !important;
+}
+
+.flex-justify-space-around {
+    justify-content: space-around !important;
+}
+
+.flex-justify-stretch {
+    justify-content: stretch !important;
+}
+
+.flex-wrap {
+    flex-wrap: wrap !important;
+}
+
+.flex-stretch {
+    justify-content: stretch !important;
+}
+
+.text-align-center {
+    text-align: center !important;
+}
+
+.text-align-left {
+    text-align: left !important;
+}
+
+.text-align-right {
+    text-align: right !important;
+}
+
+.text-align-end {
+    text-align: end !important;
+}
+
+.text-align-start {
+    text-align: start !important;
+}
+
+.text-align-justify {
+    text-align: justify !important;
+}
+
+@each $count in variables.$counters {
+    .flex-gap-#{$count} {
+        gap: var(--size-#{$count}) !important;
+    }
+}
+
+@each $counter in variables.$counters {
+    .flex-#{$counter} {
+        flex: $counter !important;
+    }
+}
+
+.flex-25 {
+    flex: 25% !important;
+}
+
+.flex-33 {
+    flex: 33.33% !important;
+}
+
+.flex-50 {
+    flex: 50% !important;
+}
+
+.flex-100 {
+    flex: 100% !important;
+}
 
 $i: 1;
 @while $i <= 12 {
-  .col-#{$i} {width: #{math.div($i*100,12) + 0%} !important;}
-  $i: $i + 1;
+    .col-#{$i} {
+        width: #{math.div($i*100,12) + 0%} !important;
+    }
+    $i: $i + 1;
 }
 
-@each $screen in $screens {
-  $name: nth($screen, 1);
-  $resolution: nth($screen, 2);
-  @media (min-width: $resolution) {
-    $i: 1;
-    @while $i <= 12 {
-      .col-#{$name}-#{$i} {width: #{math.div($i*100,12) + 0%} !important;}
-      $i: $i + 1;
+@each $screen in variables.$screens {
+    $name: list.nth($screen, 1);
+    $resolution: list.nth($screen, 2);
+    @media (min-width: $resolution) {
+        $i: 1;
+        @while $i <= 12 {
+            .col-#{$name}-#{$i} {
+                width: #{math.div($i*100,12) + 0%} !important;
+            }
+            $i: $i + 1;
+        }
     }
-  }
 }
 
 .container {
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 90%;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 90%;
 
-  @each $screen in $screens {
-    $name: nth($screen, 1);
-    $resolution: nth($screen, 2);
-    $width: nth($screen, 3);
-    @media (min-width: $resolution) {
-      width: $width;
+    @each $screen in variables.$screens {
+        $name: list.nth($screen, 1);
+        $resolution: list.nth($screen, 2);
+        $width: list.nth($screen, 3);
+        @media (min-width: $resolution) {
+            width: $width;
+        }
     }
-  }
 }
 
-@each $screen in $screens {
-  $name: nth($screen, 1);
-  $resolution: nth($screen, 2);
-  $width: nth($screen, 3);
-  .hidden-lt-#{$name} {
-    @media (max-width: $resolution) {
-      display: none !important;
+@each $screen in variables.$screens {
+    $name: list.nth($screen, 1);
+    $resolution: list.nth($screen, 2);
+    $width: list.nth($screen, 3);
+    .hidden-lt-#{$name} {
+        @media (max-width: $resolution) {
+            display: none !important;
+        }
     }
-  }
-  .hidden-gt-#{$name} {
-    @media (min-width: $resolution) {
-      display: none !important;
+    .hidden-gt-#{$name} {
+        @media (min-width: $resolution) {
+            display: none !important;
+        }
     }
-  }
 }
 
 .dock {
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
 
-  &.dock-scroll {
-    display: flex;
-    overflow: auto;
-    flex-direction: column;
-  }
+    &.dock-scroll {
+        display: flex;
+        overflow: auto;
+        flex-direction: column;
+    }
 }

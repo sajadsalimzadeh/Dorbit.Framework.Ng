@@ -2,14 +2,14 @@ import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/c
 import {BaseComponent} from "@framework";
 
 @Component({
-  selector: 'd-code',
-  templateUrl: 'code.component.html',
-  styleUrls: ['./code.component.scss'],
+    selector: 'd-code',
+    templateUrl: 'code.component.html',
+    styleUrls: ['./code.component.scss'],
 })
 export class CodeComponent extends BaseComponent implements AfterViewInit {
-  @Input() data!: string;
+    @Input() data!: string;
 
-  @ViewChild('codeContainerEl') codeContainerEl!: ElementRef<HTMLDivElement>;
+    @ViewChild('codeContainerEl') codeContainerEl!: ElementRef<HTMLDivElement>;
 
-  code?: string;
+    code?: string;
 }

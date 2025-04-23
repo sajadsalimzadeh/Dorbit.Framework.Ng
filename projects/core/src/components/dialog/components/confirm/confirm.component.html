@@ -1,11 +1,11 @@
 <ng-template #confirmTpl let-dialog>
-  <div class="text" *ngIf="message" [innerHTML]="message"></div>
-  <div class="buttons flex-row flex-gap-3">
-    <d-button *ngFor="let button of buttons"
-              [color]="button.color ?? 'primary'"
-              [loading]="loading || button.loading"
-              (click)="button.action(button, dialog)">
-      <span class="px-7">{{ button.text }}</span>
-    </d-button>
-  </div>
+    <div *ngIf="message" [innerHTML]="message" class="text"></div>
+    <div class="buttons flex-row flex-gap-3">
+        <d-button (click)="button.action(button, dialog)"
+                  *ngFor="let button of buttons"
+                  [color]="button.color ?? 'primary'"
+                  [loading]="loading || button.loading">
+            <span class="px-7">{{ button.text }}</span>
+        </d-button>
+    </div>
 </ng-template>

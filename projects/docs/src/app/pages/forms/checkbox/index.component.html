@@ -1,29 +1,29 @@
 <h1>Checkbox</h1>
 <hr>
-<app-card header="Colors" class="mt-6" component="forms/checkbox">
-  <div class="flex-row flex-align-center flex-gap-4 py-1">
-    <d-checkbox [formControl]="formControl" color="primary">Primary</d-checkbox>
-    <d-checkbox [formControl]="formControl" color="secondary">Secondary</d-checkbox>
-    <d-checkbox [formControl]="formControl" color="warning">Warning</d-checkbox>
-    <d-checkbox [formControl]="formControl" color="success">Success</d-checkbox>
-    <d-checkbox [formControl]="formControl" color="danger">Danger</d-checkbox>
-    <d-checkbox [formControl]="formControl" color="link">Link</d-checkbox>
-  </div>
+<app-card class="mt-6" component="forms/checkbox" header="Colors">
+    <div class="flex-row flex-align-center flex-gap-4 py-1">
+        <d-checkbox [formControl]="formControl" color="primary">Primary</d-checkbox>
+        <d-checkbox [formControl]="formControl" color="secondary">Secondary</d-checkbox>
+        <d-checkbox [formControl]="formControl" color="warning">Warning</d-checkbox>
+        <d-checkbox [formControl]="formControl" color="success">Success</d-checkbox>
+        <d-checkbox [formControl]="formControl" color="danger">Danger</d-checkbox>
+        <d-checkbox [formControl]="formControl" color="link">Link</d-checkbox>
+    </div>
 </app-card>
-<app-card header="Sizes" class="mt-6" component="forms/checkbox">
-  <div class="flex-column flex-align-start flex-gap-4 py-1">
-    <d-checkbox [formControl]="formControl" size="xs" color="primary">Primary</d-checkbox>
-    <d-checkbox [formControl]="formControl" size="sm" color="secondary">Secondary</d-checkbox>
-    <d-checkbox [formControl]="formControl" color="warning">Warning</d-checkbox>
-    <d-checkbox [formControl]="formControl" size="lg" color="success">Success</d-checkbox>
-    <d-checkbox [formControl]="formControl" size="xl" color="danger">danger</d-checkbox>
-    <d-checkbox [formControl]="formControl" size="xxl" color="link">Link</d-checkbox>
-  </div>
+<app-card class="mt-6" component="forms/checkbox" header="Sizes">
+    <div class="flex-column flex-align-start flex-gap-4 py-1">
+        <d-checkbox [formControl]="formControl" color="primary" size="xs">Primary</d-checkbox>
+        <d-checkbox [formControl]="formControl" color="secondary" size="sm">Secondary</d-checkbox>
+        <d-checkbox [formControl]="formControl" color="warning">Warning</d-checkbox>
+        <d-checkbox [formControl]="formControl" color="success" size="lg">Success</d-checkbox>
+        <d-checkbox [formControl]="formControl" color="danger" size="xl">danger</d-checkbox>
+        <d-checkbox [formControl]="formControl" color="link" size="xxl">Link</d-checkbox>
+    </div>
 </app-card>
-<app-card header="Ternary" class="mt-6" component="forms/checkbox">
-  <div class="flex-row flex-align-center flex-gap-4 py-1">
-    <d-checkbox [formControl]="formControlWithNull1" mode="ternary">{{formControlWithNull1.value ?? 'null'}}</d-checkbox>
-    <d-checkbox [formControl]="formControlWithNull2" mode="ternary">{{formControlWithNull2.value ?? 'null'}}</d-checkbox>
-    <d-checkbox [formControl]="formControlWithNull3" mode="ternary">{{formControlWithNull3.value ?? 'null'}}</d-checkbox>
-  </div>
+<app-card class="mt-6" component="forms/checkbox" header="Ternary">
+    <div class="flex-row flex-align-center flex-gap-4 py-1">
+        <d-checkbox [formControl]="formControlWithNull1" mode="ternary">{{ formControlWithNull1.value ?? 'null' }}</d-checkbox>
+        <d-checkbox [formControl]="formControlWithNull2" mode="ternary">{{ formControlWithNull2.value ?? 'null' }}</d-checkbox>
+        <d-checkbox [formControl]="formControlWithNull3" mode="ternary">{{ formControlWithNull3.value ?? 'null' }}</d-checkbox>
+    </div>
 </app-card>

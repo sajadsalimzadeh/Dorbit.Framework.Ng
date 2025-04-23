@@ -7,15 +7,15 @@ import {CommonModule} from "@angular/common";
     imports: [CommonModule],
     selector: 'd-tag',
     templateUrl: 'tag.component.html',
-    styleUrls: ['./tag.component.scss'],
+    styleUrls: ['./tag.component.scss']
 })
 export class TagComponent extends AbstractComponent {
-  @Input() icon?: string;
-  @Input() rounded: boolean = false;
+    @Input() icon?: string;
+    @Input() rounded: boolean = false;
 
-  override render() {
-    super.render();
+    override render() {
+        super.render();
 
-    this.setClass('rounded', this.rounded);
-  }
+        this.setClass('rounded', this.rounded);
+    }
 }

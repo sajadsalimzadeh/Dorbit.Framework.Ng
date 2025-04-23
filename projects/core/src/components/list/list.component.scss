@@ -1,20 +1,20 @@
 ul {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  list-style: none;
-  flex-direction: column;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    list-style: none;
+    flex-direction: column;
 
-  li {
-    padding: 5px;
-    cursor: pointer;
+    li {
+        padding: 5px;
+        cursor: pointer;
 
-    &:hover {
-      background-color: var(--color-gray--1);
+        &:hover {
+            background-color: var(--color-gray--1);
+        }
+
+        &:not(:last-child) {
+            border-bottom: 1px solid var(--color-gray--3);
+        }
     }
-
-    &:not(:last-child) {
-      border-bottom: 1px solid var(--color-gray--3);
-    }
-  }
 }

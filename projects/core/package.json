@@ -1,15 +1,15 @@
 {
-  "name": "dorbit-ng",
-  "version": "0.0.8",
-  "peerDependencies": {
-    "@angular/common": "^15.0.0",
-    "@angular/core": "^15.0.0"
-  },
-  "dependencies": {
-    "jalali-moment": "^3.3.11",
-    "@ngx-translate/core": "15.0.0",
-    "jsencrypt": "^3.3.2",
-    "moment": "^2.29.4",
-    "tslib": "^2.3.0"
-  }
+    "name": "dorbit-ng",
+    "version": "0.0.8",
+    "peerDependencies": {
+        "@angular/common": "^15.0.0",
+        "@angular/core": "^15.0.0"
+    },
+    "dependencies": {
+        "jalali-moment": "^3.3.11",
+        "@ngx-translate/core": "15.0.0",
+        "jsencrypt": "^3.3.2",
+        "moment": "^2.29.4",
+        "tslib": "^2.3.0"
+    }
 }

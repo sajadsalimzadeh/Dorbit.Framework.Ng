@@ -1,17 +1,17 @@
 <h1>Select</h1>
 <hr>
-<app-card header="Sizes" class="mt-6" component="forms/select">
-  <div class="flex-column flex-gap-5">
-    <d-select size="xs" placeholder="Choose one ..." [items]="items" [formControl]="formControl"></d-select>
-    <d-select size="sm" placeholder="Choose one ..." [items]="items" [formControl]="formControl"></d-select>
-    <d-select size="md" placeholder="Choose one ..." [items]="items" [formControl]="formControl"></d-select>
-    <d-select size="lg" placeholder="Choose one ..." [items]="items" [formControl]="formControl"></d-select>
-    <d-select size="xl" placeholder="Choose one ..." [items]="items" [formControl]="formControl"></d-select>
-  </div>
+<app-card class="mt-6" component="forms/select" header="Sizes">
+    <div class="flex-column flex-gap-5">
+        <d-select [formControl]="formControl" [items]="items" placeholder="Choose one ..." size="xs"></d-select>
+        <d-select [formControl]="formControl" [items]="items" placeholder="Choose one ..." size="sm"></d-select>
+        <d-select [formControl]="formControl" [items]="items" placeholder="Choose one ..." size="md"></d-select>
+        <d-select [formControl]="formControl" [items]="items" placeholder="Choose one ..." size="lg"></d-select>
+        <d-select [formControl]="formControl" [items]="items" placeholder="Choose one ..." size="xl"></d-select>
+    </div>
 </app-card>
-<app-card header="Multiple" class="mt-6" component="forms/select">
-  <div class="flex-column flex-gap-5">
-    <d-select placeholder="Choose one ..." [items]="items2" [formControl]="formControlMultiple"
-              mode="multiple"></d-select>
-  </div>
+<app-card class="mt-6" component="forms/select" header="Multiple">
+    <div class="flex-column flex-gap-5">
+        <d-select [formControl]="formControlMultiple" [items]="items2" mode="multiple"
+                  placeholder="Choose one ..."></d-select>
+    </div>
 </app-card>

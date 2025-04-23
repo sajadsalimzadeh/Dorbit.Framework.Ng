@@ -1,74 +1,81 @@
 :host {
-  left: 0;
-  right: 0;
-  height: 0;
-  display: flex;
-  position: fixed;
+    left: 0;
+    right: 0;
+    height: 0;
+    display: flex;
+    position: fixed;
 
-  &.show {
-    .button {
-      opacity: .6;
-      margin: 1rem 2rem !important;
+    &.show {
+        .button {
+            opacity: .6;
+            margin: 1rem 2rem !important;
+        }
     }
-  }
 
-  &.top-start {
-    top: 0;
-    align-items: flex-start;
-    justify-content: flex-start;
-    .button {
-      margin-inline-start: -5rem;
-      margin-block-start: -5rem;
+    &.top-start {
+        top: 0;
+        align-items: flex-start;
+        justify-content: flex-start;
+
+        .button {
+            margin-inline-start: -5rem;
+            margin-block-start: -5rem;
+        }
     }
-  }
-  &.top-end {
-    top: 0;
-    align-items: flex-start;
-    justify-content: flex-end;
-    .button {
-      margin-inline-end: -5rem;
-      margin-block-start: -5rem;
+
+    &.top-end {
+        top: 0;
+        align-items: flex-start;
+        justify-content: flex-end;
+
+        .button {
+            margin-inline-end: -5rem;
+            margin-block-start: -5rem;
+        }
     }
-  }
-  &.bottom-start {
-    bottom: 0;
-    align-items: flex-end;
-    justify-content: flex-start;
-    .button {
-      margin-inline-start: -5rem;
-      margin-block-end: -5rem;
+
+    &.bottom-start {
+        bottom: 0;
+        align-items: flex-end;
+        justify-content: flex-start;
+
+        .button {
+            margin-inline-start: -5rem;
+            margin-block-end: -5rem;
+        }
     }
-  }
-  &.bottom-end {
-    bottom: 0;
-    align-items: flex-end;
-    justify-content: flex-end;
-    .button {
-      margin-inline-end: -5rem;
-      margin-block-end: -5rem;
+
+    &.bottom-end {
+        bottom: 0;
+        align-items: flex-end;
+        justify-content: flex-end;
+
+        .button {
+            margin-inline-end: -5rem;
+            margin-block-end: -5rem;
+        }
     }
-  }
 }
 
 .button {
-  width: 3rem;
-  height: 3rem;
-  opacity: 0;
-  display: flex;
-  margin: 1rem 2rem;
-  cursor: pointer;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-white);
-  transition: all 300ms ease;
-  border-radius: var(--radius-2);
-  background-color: var(--color-component);
+    width: 3rem;
+    height: 3rem;
+    opacity: 0;
+    display: flex;
+    margin: 1rem 2rem;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-white);
+    transition: all 300ms ease;
+    border-radius: var(--radius-2);
+    background-color: var(--color-component);
 
-  &:hover {
-    opacity: 1 !important;
-  }
+    &:hover {
+        opacity: 1 !important;
+    }
 
-  i {
-    font-size: 1.5rem;
-  }
+    i {
+        font-size: 1.5rem;
+    }
 }

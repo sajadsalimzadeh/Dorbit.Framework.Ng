@@ -7,18 +7,18 @@ import {DorbitModule} from "@framework";
 import {DocModule} from "../../components/doc.module";
 
 @NgModule({
-  imports: [
-    FormsModule,
-    CommonModule,
-    ReactiveFormsModule,
-    RouterModule.forChild([{path: '', component: IndexComponent}]),
+    imports: [
+        FormsModule,
+        CommonModule,
+        ReactiveFormsModule,
+        RouterModule.forChild([{path: '', component: IndexComponent}]),
 
-    DorbitModule,
-    DocModule,
-  ],
-  declarations: [
-    IndexComponent
-  ]
+        DorbitModule,
+        DocModule,
+    ],
+    declarations: [
+        IndexComponent
+    ]
 })
 export class Module {
 

@@ -10,16 +10,16 @@ export * from './models'
     styleUrls: ['./dialog-container.component.scss'],
 })
 export class DialogContainerComponent implements OnInit, OnDestroy {
-  @Input() name?: string;
+    @Input() name?: string;
 
-  constructor(public elementRef: ElementRef, private dialogService: DialogService) {
-  }
+    constructor(public elementRef: ElementRef, private dialogService: DialogService) {
+    }
 
-  ngOnInit(): void {
-    this.dialogService.containers.push(this);
-  }
+    ngOnInit(): void {
+        this.dialogService.containers.push(this);
+    }
 
-  ngOnDestroy() {
-    this.dialogService.containers.splice(this.dialogService.containers.indexOf(this), 1);
-  }
+    ngOnDestroy() {
+        this.dialogService.containers.splice(this.dialogService.containers.indexOf(this), 1);
+    }
 }

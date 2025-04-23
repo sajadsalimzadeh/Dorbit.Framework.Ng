@@ -1,22 +1,22 @@
-import {IDisposable} from "../contracts";
+import {IDisposable} from "./dispose";
 import {Subscription} from "rxjs";
 
-export interface IBackgroundWorker extends IDisposable{
-  start(): Promise<void>;
+export interface IBackgroundWorker extends IDisposable {
+    start(): Promise<void>;
 }
 
 export abstract class BackgroundWorker implements IBackgroundWorker {
 
-  subscription = new Subscription();
+    subscription = new Subscription();
 
-  async start() {
-    this.subscription = new Subscription();
-    await this.startAsync();
-  }
+    async start() {
+        this.subscription = new Subscription();
+        await this.startAsync();
+    }
 
-  abstract startAsync(): Promise<void>;
+    abstract startAsync(): Promise<void>;
 
-  dispose(): Promise<void> {
-    return Promise.resolve(undefined);
-  }
+    dispose(): Promise<void> {
+        return Promise.resolve(undefined);
+    }
 }

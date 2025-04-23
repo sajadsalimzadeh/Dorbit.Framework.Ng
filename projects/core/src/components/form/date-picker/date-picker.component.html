@@ -1,123 +1,129 @@
 <div class="control-box">
-  <div class="control-container flex-1">
-    <i *ngIf="icon && iconPos == 'start'" class="icon" [ngClass]="icon"></i>
-    <input class="control" #inputEl [ngModel]="displayFormControl.value"
-           [placeholder]="placeholder" [ngClass]="classControl" [style.text-align]="textAlign"
-           (change)="renderValueControl()" (focus)="focus()" (blur)="blur()" [dir]="dir"/>
-    <i *ngIf="icon && iconPos == 'end'" class="icon" [ngClass]="icon"></i>
-  </div>
-  <div class="control-container" *ngIf="clearable">
-    <i class="clear icons-core-close" *ngIf="displayFormControl.value" (click)="clear()"></i>
-  </div>
+    <div class="control-container flex-1">
+        <i *ngIf="icon && iconPos == 'start'" [ngClass]="icon" class="icon"></i>
+        <input #inputEl (blur)="blur()" (change)="renderValueControl()"
+               (focus)="focus()" [dir]="dir" [ngClass]="classControl"
+               [ngModel]="displayFormControl.value" [placeholder]="placeholder" [style.text-align]="textAlign" class="control"/>
+        <i *ngIf="icon && iconPos == 'end'" [ngClass]="icon" class="icon"></i>
+    </div>
+    <div *ngIf="clearable" class="control-container">
+        <i (click)="clear()" *ngIf="displayFormControl.value" class="clear icons-core-close"></i>
+    </div>
 </div>
 <ng-template #desktopTpl>
-  <div class="picker" (click)="onClick($event)" [ngClass]="pickerClasses">
-    <div class="day-picker">
-      <div class="year-month">
-        <div class="year" (mousedown)="showYears()">{{ selectedValue.year }}</div>
-        <div class="month" (mousedown)="showMonths()">{{ selectedDate.format('MMMM') }}</div>
-      </div>
-      <div class="calendar">
-        <div class="week-days">
-          <div class="week-day" *ngFor="let weekDay of weekDays">{{ weekDay }}</div>
+    <div (click)="onClick($event)" [ngClass]="pickerClasses" class="picker">
+        <div class="day-picker">
+            <div class="year-month">
+                <div (mousedown)="showYears()" class="year">{{ selectedValue.year }}</div>
+                <div (mousedown)="showMonths()" class="month">{{ selectedDate.format('MMMM') }}</div>
+            </div>
+            <div class="calendar">
+                <div class="week-days">
+                    <div *ngFor="let weekDay of weekDays" class="week-day">{{ weekDay }}</div>
+                </div>
+                <div class="days">
+                    <div (mousedown)="selectDate(date)" *ngFor="let date of dates; let index = index"
+                         [ngClass]="{active: date.isSelected,today: date.isToday,holiday: date.isHoliday,'this-month': date.isCurrentMonth}"
+                         class="day">
+                        <span>{{ date.day }}</span>
+                    </div>
+                </div>
+            </div>
+            <div (click)="selectDate(todayValue)" class="today-button">
+                {{ ('today' | translate) }}
+            </div>
         </div>
-        <div class="days">
-          <div class="day" *ngFor="let date of dates; let index = index"
-               [ngClass]="{active: date.isSelected,today: date.isToday,holiday: date.isHoliday,'this-month': date.isCurrentMonth}"
-               (mousedown)="selectDate(date)">
-            <span>{{ date.day }}</span>
-          </div>
+        <div [ngClass]="{show: (view == 'month')}" class="month-picker">
+            <div (click)="selectMonth(index)" *ngFor="let month of months;let index = index"
+                 [ngClass]="{active: (selectedValue.month == index)}" class="month">
+                {{ month }}
+            </div>
         </div>
-      </div>
-      <div class="today-button" (click)="selectDate(todayValue)">
-        {{ ('today' | translate) }}
-      </div>
+        <div #yearPickerEl [ngClass]="{show: (view == 'year')}" class="year-picker">
+            <div (click)="selectYear(year)" *ngFor="let year of years" [ngClass]="{active: (selectedValue.year == year)}"
+                 class="year">
+                {{ year }}
+            </div>
+        </div>
     </div>
-    <div class="month-picker" [ngClass]="{show: (view == 'month')}">
-      <div class="month" *ngFor="let month of months;let index = index"
-           [ngClass]="{active: (selectedValue.month == index)}" (click)="selectMonth(index)">
-        {{ month }}
-      </div>
-    </div>
-    <div #yearPickerEl class="year-picker" [ngClass]="{show: (view == 'year')}">
-      <div class="year" *ngFor="let year of years" (click)="selectYear(year)"
-           [ngClass]="{active: (selectedValue.year == year)}">
-        {{ year }}
-      </div>
-    </div>
-  </div>
 </ng-template>
 
 <ng-template #mobileTpl let-dialog>
-  <div class="mobile-view">
-    <div class="preview">
-      <span class="year">{{selectedValue.year}}</span>
-      <span class="month">{{months[selectedValue.month]}}</span>
-      <span class="day">{{selectedValue.day}}</span>
-      <span class="day">{{selectedValue.dayOfWeakName}}</span>
+    <div class="mobile-view">
+        <div class="preview">
+            <span class="year">{{ selectedValue.year }}</span>
+            <span class="month">{{ months[selectedValue.month] }}</span>
+            <span class="day">{{ selectedValue.day }}</span>
+            <span class="day">{{ selectedValue.dayOfWeakName }}</span>
+        </div>
+        <div #mobileViewDateEl class="date">
+            <div class="days">
+                <div (scroll)="processMobileItems()" class="scroll-box">
+                    <ul>
+                        <li (click)="setMobileItem({day: day})" *ngFor="let day of days"
+                            [ngClass]="{active: (day == selectedValue.day)}">{{ day }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="months">
+                <div (scroll)="processMobileItems()" class="scroll-box">
+                    <ul>
+                        <li (click)="setMobileItem({month: index})" *ngFor="let month of months; let index = index"
+                            [ngClass]="{active: (index == selectedValue.month)}">{{ month }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="years">
+                <div (scroll)="processMobileItems()" class="scroll-box">
+                    <ul>
+                        <li (click)="setMobileItem({year: year})" *ngFor="let year of years"
+                            [ngClass]="{active: (year == selectedValue.year)}">{{ year }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="seconds">
+                <div (scroll)="processMobileItems()" class="scroll-box">
+                    <ul>
+                        <li (click)="setMobileItem({second: second})" *ngFor="let second of seconds"
+                            [ngClass]="{active: (second == selectedValue.second)}">{{ second.toString().padStart(2, '0') }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="minutes">
+                <div (scroll)="processMobileItems()" class="scroll-box">
+                    <ul>
+                        <li (click)="setMobileItem({minute: minute})" *ngFor="let minute of minutes"
+                            [ngClass]="{active: (minute == selectedValue.minute)}">{{ minute.toString().padStart(2, '0') }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="hours">
+                <div (scroll)="processMobileItems()" class="scroll-box">
+                    <ul>
+                        <li (click)="setMobileItem({hour: hour})" *ngFor="let hour of hours"
+                            [ngClass]="{active: (hour == selectedValue.hour)}">{{ hour.toString().padStart(2, '0') }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="buttons">
+            <a (click)="selectMobileItem(dialog)" class="set color-primary flex-1">
+                {{ 'select' | translate }}
+            </a>
+            <span></span>
+            <a (click)="selectMobileItemToday()" class="cancel color-gray-8 flex-1">
+                {{ 'today' | translate }}
+            </a>
+            <span></span>
+            <a (click)="dialog.close()" class="cancel color-gray-8 flex-1">
+                {{ 'cancel' | translate }}
+            </a>
+        </div>
     </div>
-    <div class="date" #mobileViewDateEl>
-      <div class="days">
-        <div class="scroll-box" (scroll)="processMobileItems()">
-          <ul>
-            <li *ngFor="let day of days" [ngClass]="{active: (day == selectedValue.day)}"
-                (click)="setMobileItem({day: day})">{{ day }}</li>
-          </ul>
-        </div>
-      </div>
-      <div class="months">
-        <div class="scroll-box" (scroll)="processMobileItems()">
-          <ul>
-            <li *ngFor="let month of months; let index = index" [ngClass]="{active: (index == selectedValue.month)}"
-                (click)="setMobileItem({month: index})">{{ month }}</li>
-          </ul>
-        </div>
-      </div>
-      <div class="years">
-        <div class="scroll-box" (scroll)="processMobileItems()">
-          <ul>
-            <li *ngFor="let year of years" [ngClass]="{active: (year == selectedValue.year)}"
-                (click)="setMobileItem({year: year})">{{ year }}</li>
-          </ul>
-        </div>
-      </div>
-      <div class="seconds">
-        <div class="scroll-box" (scroll)="processMobileItems()">
-          <ul>
-            <li *ngFor="let second of seconds" [ngClass]="{active: (second == selectedValue.second)}"
-                (click)="setMobileItem({second: second})">{{ second.toString().padStart(2, '0') }}</li>
-          </ul>
-        </div>
-      </div>
-      <div class="minutes">
-        <div class="scroll-box" (scroll)="processMobileItems()">
-          <ul>
-            <li *ngFor="let minute of minutes" [ngClass]="{active: (minute == selectedValue.minute)}"
-                (click)="setMobileItem({minute: minute})">{{ minute.toString().padStart(2, '0') }}</li>
-          </ul>
-        </div>
-      </div>
-      <div class="hours">
-        <div class="scroll-box" (scroll)="processMobileItems()">
-          <ul>
-            <li *ngFor="let hour of hours" [ngClass]="{active: (hour == selectedValue.hour)}"
-                (click)="setMobileItem({hour: hour})">{{ hour.toString().padStart(2, '0') }}</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="buttons">
-      <a class="set color-primary flex-1" (click)="selectMobileItem(dialog)">
-        {{'select' | translate}}
-      </a>
-      <span></span>
-      <a class="cancel color-gray-8 flex-1" (click)="selectMobileItemToday()">
-        {{'today' | translate}}
-      </a>
-      <span></span>
-      <a class="cancel color-gray-8 flex-1" (click)="dialog.close()">
-        {{'cancel' | translate}}
-      </a>
-    </div>
-  </div>
 </ng-template>

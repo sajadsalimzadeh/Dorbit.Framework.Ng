@@ -1,19 +1,19 @@
 :host {
-  display: grid;
-  grid-template-columns: 40% 30% 30%;
+    display: grid;
+    grid-template-columns: 40% 30% 30%;
 }
 
 ::ng-deep {
-  d-date-picker-inline {
-    d-control-group:not(:last-child) .control-box {
-      border-end-end-radius: 0 !important;
-      border-start-end-radius: 0 !important;
-    }
+    d-date-picker-inline {
+        d-control-group:not(:last-child) .control-box {
+            border-end-end-radius: 0 !important;
+            border-start-end-radius: 0 !important;
+        }
 
-    d-control-group:not(:first-child) .control-box {
-      border-inline-start: none;
-      border-end-start-radius: 0 !important;
-      border-start-start-radius: 0 !important;
+        d-control-group:not(:first-child) .control-box {
+            border-inline-start: none;
+            border-end-start-radius: 0 !important;
+            border-start-start-radius: 0 !important;
+        }
     }
-  }
 }

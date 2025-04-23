@@ -8,9 +8,9 @@ import {HighlightPlusModule} from "ngx-highlightjs/plus";
 export * from './code.component';
 
 @NgModule({
-  imports: [CommonModule,HighlightModule, HighlightPlusModule],
-  declarations: [CodeComponent],
-  exports: [CodeComponent],
+    imports: [CommonModule, HighlightModule, HighlightPlusModule],
+    declarations: [CodeComponent],
+    exports: [CodeComponent],
 })
 export class CodeModule {
 }

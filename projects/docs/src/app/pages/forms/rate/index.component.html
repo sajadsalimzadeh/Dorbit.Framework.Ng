@@ -1,28 +1,28 @@
 <h1>Rate</h1>
 <hr>
-<app-card header="Colors" class="mt-6" component="forms/rate">
-  <div class="flex-column flex-gap-4 py-1">
-    <d-rate [formControl]="formControl" color="primary"></d-rate>
-    <d-rate [formControl]="formControl" color="secondary"></d-rate>
-    <d-rate [formControl]="formControl" color="warning"></d-rate>
-    <d-rate [formControl]="formControl" color="success"></d-rate>
-    <d-rate [formControl]="formControl" color="danger"></d-rate>
-    <d-rate [formControl]="formControl" color="link"></d-rate>
-  </div>
+<app-card class="mt-6" component="forms/rate" header="Colors">
+    <div class="flex-column flex-gap-4 py-1">
+        <d-rate [formControl]="formControl" color="primary"></d-rate>
+        <d-rate [formControl]="formControl" color="secondary"></d-rate>
+        <d-rate [formControl]="formControl" color="warning"></d-rate>
+        <d-rate [formControl]="formControl" color="success"></d-rate>
+        <d-rate [formControl]="formControl" color="danger"></d-rate>
+        <d-rate [formControl]="formControl" color="link"></d-rate>
+    </div>
 </app-card>
-<app-card header="Sizes" class="mt-6" component="forms/rate">
-  <div class="flex-column flex-align-start flex-gap-4 py-3">
-    <d-rate [formControl]="formControl" size="xs" color="primary"></d-rate>
-    <d-rate [formControl]="formControl" size="sm" color="primary"></d-rate>
-    <d-rate [formControl]="formControl" size="md" color="primary"></d-rate>
-    <d-rate [formControl]="formControl" size="lg" color="primary"></d-rate>
-    <d-rate [formControl]="formControl" size="xl" color="primary"></d-rate>
-  </div>
+<app-card class="mt-6" component="forms/rate" header="Sizes">
+    <div class="flex-column flex-align-start flex-gap-4 py-3">
+        <d-rate [formControl]="formControl" color="primary" size="xs"></d-rate>
+        <d-rate [formControl]="formControl" color="primary" size="sm"></d-rate>
+        <d-rate [formControl]="formControl" color="primary" size="md"></d-rate>
+        <d-rate [formControl]="formControl" color="primary" size="lg"></d-rate>
+        <d-rate [formControl]="formControl" color="primary" size="xl"></d-rate>
+    </div>
 </app-card>
-<app-card header="Custom" class="mt-6" component="forms/rate">
-  <div class="flex-column flex-gap-4 py-1">
-    <d-rate [formControl]="formControl" icon="far fa-times-circle" iconActive="fas fa-check-circle"
-              color="primary"></d-rate>
-    <d-rate [formControl]="formControl" icon="far fa-heart" iconActive="fas fa-heart" color="primary"></d-rate>
-  </div>
+<app-card class="mt-6" component="forms/rate" header="Custom">
+    <div class="flex-column flex-gap-4 py-1">
+        <d-rate [formControl]="formControl" color="primary" icon="far fa-times-circle"
+                iconActive="fas fa-check-circle"></d-rate>
+        <d-rate [formControl]="formControl" color="primary" icon="far fa-heart" iconActive="fas fa-heart"></d-rate>
+    </div>
 </app-card>

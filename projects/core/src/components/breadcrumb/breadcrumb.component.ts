@@ -8,9 +8,9 @@ import {TranslateModule} from "@ngx-translate/core";
     imports: [CommonModule, TranslateModule],
     selector: 'd-breadcrumb',
     templateUrl: 'breadcrumb.component.html',
-    styleUrls: ['./breadcrumb.component.scss'],
+    styleUrls: ['./breadcrumb.component.scss']
 })
 export class BreadcrumbComponent extends AbstractComponent {
 
-  @Input() items: string[] = [];
+    @Input() items: string[] = [];
 }

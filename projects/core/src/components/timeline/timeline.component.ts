@@ -1,5 +1,5 @@
 import {Component, ContentChildren, Input, QueryList, TemplateRef} from "@angular/core";
-import {TemplateDirective} from "../../directives/template/template.directive";
+import {TemplateDirective} from "../../directives/template.directive";
 import {Orientation} from "../../types";
 import {AbstractComponent} from "../abstract.component";
 import {CommonModule} from "@angular/common";
@@ -9,22 +9,22 @@ import {CommonModule} from "@angular/common";
     imports: [CommonModule],
     selector: 'd-timeline',
     templateUrl: './timeline.component.html',
-    styleUrls: ['./timeline.component.scss'],
+    styleUrls: ['./timeline.component.scss']
 })
 export class TimelineComponent extends AbstractComponent {
-  @Input() items: any[] = [];
-  @Input() orientation: Orientation = 'horizontal';
-  @Input() align: 'start' | 'end' | 'alternate' = 'alternate';
+    @Input() items: any[] = [];
+    @Input() orientation: Orientation = 'horizontal';
+    @Input() align: 'start' | 'end' | 'alternate' = 'alternate';
 
-  style: any = {};
+    style: any = {};
 
-  pointTemplate?: TemplateRef<any>;
-  contentTemplate?: TemplateRef<any>;
-  oppositeTemplate?: TemplateRef<any>;
+    pointTemplate?: TemplateRef<any>;
+    contentTemplate?: TemplateRef<any>;
+    oppositeTemplate?: TemplateRef<any>;
 
-  @ContentChildren(TemplateDirective) set templates(value: QueryList<TemplateDirective>) {
-    this.pointTemplate = value.find(x => x.includesName('point'))?.template;
-    this.oppositeTemplate = value.find(x => x.includesName('opposite'))?.template;
-    this.contentTemplate = value.find(x => x.includesName('default', true))?.template;
-  }
+    @ContentChildren(TemplateDirective) set templates(value: QueryList<TemplateDirective>) {
+        this.pointTemplate = value.find(x => x.includesName('point'))?.template;
+        this.oppositeTemplate = value.find(x => x.includesName('opposite'))?.template;
+        this.contentTemplate = value.find(x => x.includesName('default', true))?.template;
+    }
 }

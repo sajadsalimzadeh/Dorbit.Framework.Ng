@@ -11,38 +11,38 @@ export * from './directives/step.directive'
     imports: [CommonModule],
     selector: 'd-stepper',
     templateUrl: './stepper.component.html',
-    styleUrls: ['./stepper.component.scss'],
+    styleUrls: ['./stepper.component.scss']
 })
 export class StepperComponent extends AbstractComponent implements AfterContentInit {
-  @Input({required: true}) stepper!: Stepper<any>;
-  @Input() showNavigation: boolean = true;
+    @Input({required: true}) stepper!: Stepper<any>;
+    @Input() showNavigation: boolean = true;
 
-  @ContentChildren(StepperStepDirective) steps?: QueryList<StepperStepDirective>;
+    @ContentChildren(StepperStepDirective) steps?: QueryList<StepperStepDirective>;
 
-  activeStep?: StepperStepDirective;
-  activeStepIndex: number = -1;
+    activeStep?: StepperStepDirective;
+    activeStepIndex: number = -1;
 
-  override ngOnInit() {
-    super.ngOnInit();
+    override ngOnInit() {
+        super.ngOnInit();
 
-    this.subscription.add(this.stepper.onChange.subscribe(e => {
-      this.processActiveStep();
-    }));
-  }
-
-  ngAfterContentInit(): void {
-    this.processActiveStep();
-  }
-
-  processActiveStep() {
-    const steps = this.steps ? [...this.steps] : [];
-    this.activeStep = steps.find(x => x.key == this.stepper.step);
-    this.activeStepIndex = (this.activeStep ? steps.indexOf(this.activeStep) : -1);
-  }
-
-  goto(step: StepperStepDirective, index: number) {
-    if(index < this.activeStepIndex) {
-      this.stepper.go(step.key);
+        this.subscription.add(this.stepper.onChange.subscribe(e => {
+            this.processActiveStep();
+        }));
     }
-  }
+
+    ngAfterContentInit(): void {
+        this.processActiveStep();
+    }
+
+    processActiveStep() {
+        const steps = this.steps ? [...this.steps] : [];
+        this.activeStep = steps.find(x => x.key == this.stepper.step);
+        this.activeStepIndex = (this.activeStep ? steps.indexOf(this.activeStep) : -1);
+    }
+
+    goto(step: StepperStepDirective, index: number) {
+        if (index < this.activeStepIndex) {
+            this.stepper.go(step.key);
+        }
+    }
 }

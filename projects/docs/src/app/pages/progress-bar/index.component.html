@@ -1,33 +1,33 @@
 <h1>Progress Bar</h1>
 <hr>
-<app-card header="Sizes" class="mt-6" component="progress-bar">
-  <div class="flex-column flex-gap-4 py-3">
-    <d-progress-bar size="xxs" [value]="value"></d-progress-bar>
-    <d-progress-bar size="xs" [value]="value"></d-progress-bar>
-    <d-progress-bar size="sm" [value]="value"></d-progress-bar>
-    <d-progress-bar size="md" [value]="value"></d-progress-bar>
-    <d-progress-bar size="lg" [value]="value"></d-progress-bar>
-    <d-progress-bar size="xl" [value]="value"></d-progress-bar>
-    <d-progress-bar size="xxl" [value]="value"></d-progress-bar>
-  </div>
+<app-card class="mt-6" component="progress-bar" header="Sizes">
+    <div class="flex-column flex-gap-4 py-3">
+        <d-progress-bar [value]="value" size="xxs"></d-progress-bar>
+        <d-progress-bar [value]="value" size="xs"></d-progress-bar>
+        <d-progress-bar [value]="value" size="sm"></d-progress-bar>
+        <d-progress-bar [value]="value" size="md"></d-progress-bar>
+        <d-progress-bar [value]="value" size="lg"></d-progress-bar>
+        <d-progress-bar [value]="value" size="xl"></d-progress-bar>
+        <d-progress-bar [value]="value" size="xxl"></d-progress-bar>
+    </div>
 </app-card>
-<app-card header="Colors" class="mt-6" component="progress-bar">
-  <div class="flex-column flex-gap-4 py-3">
-    <d-progress-bar color="primary" [value]="value"></d-progress-bar>
-    <d-progress-bar color="secondary" [value]="value"></d-progress-bar>
-    <d-progress-bar color="success" [value]="value"></d-progress-bar>
-    <d-progress-bar color="warning" [value]="value"></d-progress-bar>
-    <d-progress-bar color="danger" [value]="value"></d-progress-bar>
-    <d-progress-bar color="link" [value]="value"></d-progress-bar>
-  </div>
+<app-card class="mt-6" component="progress-bar" header="Colors">
+    <div class="flex-column flex-gap-4 py-3">
+        <d-progress-bar [value]="value" color="primary"></d-progress-bar>
+        <d-progress-bar [value]="value" color="secondary"></d-progress-bar>
+        <d-progress-bar [value]="value" color="success"></d-progress-bar>
+        <d-progress-bar [value]="value" color="warning"></d-progress-bar>
+        <d-progress-bar [value]="value" color="danger"></d-progress-bar>
+        <d-progress-bar [value]="value" color="link"></d-progress-bar>
+    </div>
 </app-card>
-<app-card header="Show value inside" class="mt-6" component="progress-bar">
-  <div class="flex-column flex-gap-4 py-3">
-    <d-progress-bar color="primary" [value]="value">{{value.toFixed(2)}}%</d-progress-bar>
-  </div>
+<app-card class="mt-6" component="progress-bar" header="Show value inside">
+    <div class="flex-column flex-gap-4 py-3">
+        <d-progress-bar [value]="value" color="primary">{{ value.toFixed(2) }}%</d-progress-bar>
+    </div>
 </app-card>
-<app-card header="Indeterminate" class="mt-6" component="progress-bar">
-  <div class="flex-column flex-gap-4 py-3">
-    <d-progress-bar size="xs" color="primary" [value]="value" mode="indeterminate"></d-progress-bar>
-  </div>
+<app-card class="mt-6" component="progress-bar" header="Indeterminate">
+    <div class="flex-column flex-gap-4 py-3">
+        <d-progress-bar [value]="value" color="primary" mode="indeterminate" size="xs"></d-progress-bar>
+    </div>
 </app-card>

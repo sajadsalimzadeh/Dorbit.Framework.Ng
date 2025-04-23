@@ -1,13 +1,12 @@
-
 @mixin load($name, $weight, $base_path, $type) {
-  @font-face {
-    font-family: $name;
-    font-weight: $weight;
-    src: url('#{$base_path}/Vazir-#{$type}.eot') format('eot'),
-    url('#{$base_path}/Vazir-#{$type}.ttf') format('ttf'),
-    url('#{$base_path}/Vazir-#{$type}.woff') format('woff'),
-    url('#{$base_path}/Vazir-#{$type}.woff2') format('woff2');
-  }
+    @font-face {
+        font-family: $name;
+        font-weight: $weight;
+        src: url('#{$base_path}/Vazir-#{$type}.eot') format('eot'),
+        url('#{$base_path}/Vazir-#{$type}.ttf') format('ttf'),
+        url('#{$base_path}/Vazir-#{$type}.woff') format('woff'),
+        url('#{$base_path}/Vazir-#{$type}.woff2') format('woff2');
+    }
 }
 
 @include load('Vazir', 100, '.', 'Thin');

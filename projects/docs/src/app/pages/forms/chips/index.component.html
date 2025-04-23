@@ -1,11 +1,11 @@
 <h1>Chips</h1>
 <hr>
-<app-card header="Sizes" class="mt-6" component="forms/chips">
-  <div class="flex-column flex-gap-3">
-    <d-chips placeholder="Enter any text ..." size="xs" [formControl]="formControl"></d-chips>
-    <d-chips placeholder="Enter any text ..." size="sm" [formControl]="formControl"></d-chips>
-    <d-chips placeholder="Enter any text ..." size="md" [formControl]="formControl"></d-chips>
-    <d-chips placeholder="Enter any text ..." size="lg" [formControl]="formControl"></d-chips>
-    <d-chips placeholder="Enter any text ..." size="xl" [formControl]="formControl"></d-chips>
-  </div>
+<app-card class="mt-6" component="forms/chips" header="Sizes">
+    <div class="flex-column flex-gap-3">
+        <d-chips [formControl]="formControl" placeholder="Enter any text ..." size="xs"></d-chips>
+        <d-chips [formControl]="formControl" placeholder="Enter any text ..." size="sm"></d-chips>
+        <d-chips [formControl]="formControl" placeholder="Enter any text ..." size="md"></d-chips>
+        <d-chips [formControl]="formControl" placeholder="Enter any text ..." size="lg"></d-chips>
+        <d-chips [formControl]="formControl" placeholder="Enter any text ..." size="xl"></d-chips>
+    </div>
 </app-card>

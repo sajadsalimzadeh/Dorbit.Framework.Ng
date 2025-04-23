@@ -7,7 +7,7 @@ import {CommonModule} from "@angular/common";
     imports: [CommonModule],
     selector: 'd-button-group',
     templateUrl: 'button-group.component.html',
-    styleUrls: ['./button-group.component.scss'],
+    styleUrls: ['./button-group.component.scss']
 })
 export class ButtonGroupComponent extends AbstractComponent {
 

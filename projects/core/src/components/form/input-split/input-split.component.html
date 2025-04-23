@@ -1,4 +1,4 @@
-<div class="control-box" *ngFor="let value of values; let index = index">
-  <d-input type="number" [size]="size" [color]="color" [formControl]="value" [style]="styleControl"
-           (onKeyup)="onKeyUp(index, $event)" [maxLength]="1" [name]="name"></d-input>
+<div *ngFor="let value of values; let index = index" class="control-box">
+    <d-input (onKeyup)="onKeyUp(index, $event)" [color]="color" [formControl]="value" [maxLength]="1" [name]="name"
+             [size]="size" [style]="styleControl" type="number"></d-input>
 </div>

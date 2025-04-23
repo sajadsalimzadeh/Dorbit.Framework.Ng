@@ -1,5 +1,5 @@
 import {Component, HostListener, Input} from '@angular/core';
-import {AbstractFormControl, createControlValueAccessor} from "../form-control.directive";
+import {AbstractControl, createControlValueAccessor} from "../abstract-control.directive";
 import {CommonModule} from "@angular/common";
 
 @Component({
@@ -8,28 +8,28 @@ import {CommonModule} from "@angular/common";
     selector: 'd-radio',
     templateUrl: 'radio.component.html',
     styleUrls: ['../control.scss', './radio.component.scss'],
-    providers: [createControlValueAccessor(RadioComponent)],
+    providers: [createControlValueAccessor(RadioComponent)]
 })
-export class RadioComponent extends AbstractFormControl<any> {
+export class RadioComponent extends AbstractControl<any> {
 
-  @Input() value: any;
+    @Input() value: any;
 
-  @HostListener('keydown.space')
-  onKeyDownSpace() {
-    this.toggle();
-  }
+    @HostListener('keydown.space')
+    onKeyDownSpace() {
+        this.toggle();
+    }
 
-  override onClick(e: MouseEvent) {
-    this.toggle();
-    super.onClick(e);
-  }
+    override onClick(e: MouseEvent) {
+        this.toggle();
+        super.onClick(e);
+    }
 
-  override render() {
-    super.render();
-    this.setClass('checked', this.formControl?.value == this.value);
-  }
+    override render() {
+        super.render();
+        this.setClass('checked', this.formControl?.value == this.value);
+    }
 
-  toggle() {
-    this.formControl.setValue(this.value);
-  }
+    toggle() {
+        this.formControl.setValue(this.value);
+    }
 }

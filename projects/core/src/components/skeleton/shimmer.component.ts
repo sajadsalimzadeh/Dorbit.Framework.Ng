@@ -9,31 +9,31 @@ const units = ['%', 'px', 'pt', 'rem', 'em', 'cm'];
     imports: [CommonModule],
     selector: 'd-shimmer',
     templateUrl: 'shimmer.component.html',
-    styleUrls: ['./shimmer.component.scss'],
+    styleUrls: ['./shimmer.component.scss']
 })
 export class ShimmerComponent extends AbstractComponent {
-  @Input() radius: string = '4px';
-  @Input() ratio: string = '4:4'
+    @Input() radius: string = '4px';
+    @Input() ratio: string = '4:4'
 
-  override render() {
-    super.render();
+    override render() {
+        super.render();
 
-    const ratioSplit = this.ratio.split(':');
-    if(ratioSplit.length < 1 || ratioSplit.find(x => Number.isNaN(parseFloat(x)))) return;
-    let width_string = ratioSplit[0];
-    let height_string = (ratioSplit.length > 1 ? ratioSplit[1] : width_string);
+        const ratioSplit = this.ratio.split(':');
+        if (ratioSplit.length < 1 || ratioSplit.find(x => Number.isNaN(parseFloat(x)))) return;
+        let width_string = ratioSplit[0];
+        let height_string = (ratioSplit.length > 1 ? ratioSplit[1] : width_string);
 
-    const width_unit = units.find(x => width_string.includes(x)) ?? 'em';
-    const height_unit = units.find(x => height_string.includes(x)) ?? 'em';
-    width_string = width_string.replace(width_unit, '');
-    height_string = height_string.replace(height_unit, '');
+        const width_unit = units.find(x => width_string.includes(x)) ?? 'em';
+        const height_unit = units.find(x => height_string.includes(x)) ?? 'em';
+        width_string = width_string.replace(width_unit, '');
+        height_string = height_string.replace(height_unit, '');
 
-    const width = parseFloat(width_string)
-    const height = parseFloat(height_string);
+        const width = parseFloat(width_string)
+        const height = parseFloat(height_string);
 
-    const el = this.elementRef.nativeElement;
-    el.style.width = width + width_unit;
-    el.style.height = height + height_unit;
-    el.style.setProperty('--radius-component', this.radius);
-  }
+        const el = this.elementRef.nativeElement;
+        el.style.width = width + width_unit;
+        el.style.height = height + height_unit;
+        el.style.setProperty('--radius-component', this.radius);
+    }
 }

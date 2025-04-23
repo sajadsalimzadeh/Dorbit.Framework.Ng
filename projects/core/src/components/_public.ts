@@ -19,7 +19,7 @@ export * from './table/table.module';
 export * from './message/message.module';
 export * from './dialog/dialog.module';
 export * from './overlay/overlay.module';
-export * from './form';
+export * from './form/_public';
 
 export * from './base.component';
 export * from './base-form.component';

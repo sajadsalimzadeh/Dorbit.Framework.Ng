@@ -1,25 +1,25 @@
 :host {
-  display: flex;
-  padding: 0 .8rem;
-  border-radius: 4px;
-  align-items: center;
-  color: var(--color-gray-5);
-  justify-content: space-between;
-  background-color: var(--color-gray--2);
+    display: flex;
+    padding: 0 .8rem;
+    border-radius: 4px;
+    align-items: center;
+    color: var(--color-gray-5);
+    justify-content: space-between;
+    background-color: var(--color-gray--2);
 }
 
 ul {
-  margin: 0;
-  display: flex;
-  padding: 1rem 0;
-  list-style: none;
-  border-radius: 6px;
-  align-items: center;
+    margin: 0;
+    display: flex;
+    padding: 1rem 0;
+    list-style: none;
+    border-radius: 6px;
+    align-items: center;
 
-  >li {
-    &:not(:last-child)::after {
-      content: '/';
-      padding: 0 0.5rem;
+    > li {
+        &:not(:last-child)::after {
+            content: '/';
+            padding: 0 0.5rem;
+        }
     }
-  }
 }

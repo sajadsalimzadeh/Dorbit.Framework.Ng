@@ -2,73 +2,117 @@
 @use "../variables";
 
 $helpers: (
-    ("m", "margin"),
-    ("mx", "margin-inline-start", "margin-inline-end"),
-    ("mxs", "margin-inline-start"),
-    ("mxe", "margin-inline-end"),
-    ("my", "margin-block-start", "margin-block-end"),
-    ("mys", "margin-block-start"),
-    ("mye", "margin-block-end"),
-    ("ml", "margin-left"),
-    ("mr", "margin-right"),
-    ("mt", "margin-top"),
-    ("mb", "margin-bottom"),
-    ("p", "padding"),
-    ("px", "padding-inline-start", "padding-inline-end"),
-    ("pxs", "padding-inline-start"),
-    ("pxe", "padding-inline-end"),
-    ("py", "padding-block-start", "padding-block-end"),
-    ("pys", "padding-block-start"),
-    ("pye", "padding-block-end"),
-    ("pl", "padding-left"),
-    ("pr", "padding-right"),
-    ("pt", "padding-top"),
-    ("pb", "padding-bottom"),
+        ("m", "margin"),
+        ("mx", "margin-inline-start", "margin-inline-end"),
+        ("mxs", "margin-inline-start"),
+        ("mxe", "margin-inline-end"),
+        ("my", "margin-block-start", "margin-block-end"),
+        ("mys", "margin-block-start"),
+        ("mye", "margin-block-end"),
+        ("ml", "margin-left"),
+        ("mr", "margin-right"),
+        ("mt", "margin-top"),
+        ("mb", "margin-bottom"),
+        ("p", "padding"),
+        ("px", "padding-inline-start", "padding-inline-end"),
+        ("pxs", "padding-inline-start"),
+        ("pxe", "padding-inline-end"),
+        ("py", "padding-block-start", "padding-block-end"),
+        ("pys", "padding-block-start"),
+        ("pye", "padding-block-end"),
+        ("pl", "padding-left"),
+        ("pr", "padding-right"),
+        ("pt", "padding-top"),
+        ("pb", "padding-bottom"),
 );
 
 @each $helper in $helpers {
-  $name: list.nth($helper, 1);
-  $i: 0;
-  @while ($i <= 10) {
-    .#{$name}-#{$i} {
-      $j: 2;
-      @while ($j <= list.length($helper)) {
-        $propName: list.nth($helper, $j);
-        #{$propName}: var(--size-#{$i}) !important;
-        $j: $j + 1;
-      }
+    $name: list.nth($helper, 1);
+    $i: 0;
+    @while ($i <= 10) {
+        .#{$name}-#{$i} {
+            $j: 2;
+            @while ($j <= list.length($helper)) {
+                $propName: list.nth($helper, $j);
+                #{$propName}: var(--size-#{$i}) !important;
+                $j: $j + 1;
+            }
+        }
+        $i: $i + 1;
     }
-    $i: $i + 1;
-  }
 }
 
-.xxs {font-size: var(--font-size-xxs);}
-.xs {font-size: var(--font-size-xs);}
-.sm {font-size: var(--font-size-sm);}
-.md {font-size: var(--font-size-md);}
-.lg {font-size: var(--font-size-lg);}
-.xl {font-size: var(--font-size-xl);}
-.xxl {font-size: var(--font-size-xxl);}
-
-@each $color in $colors {
-  .bg-#{$color} {background-color: var(--color-#{$color}) !important;}
+.xxs {
+    font-size: var(--font-size-xxs);
 }
 
-@each $color in $colors {
-  .color-#{$color} {color: var(--color-#{$color}) !important;}
+.xs {
+    font-size: var(--font-size-xs);
+}
+
+.sm {
+    font-size: var(--font-size-sm);
+}
+
+.md {
+    font-size: var(--font-size-md);
+}
+
+.lg {
+    font-size: var(--font-size-lg);
+}
+
+.xl {
+    font-size: var(--font-size-xl);
+}
+
+.xxl {
+    font-size: var(--font-size-xxl);
+}
+
+@each $color in variables.$colors {
+    .bg-#{$color} {
+        background-color: var(--color-#{$color}) !important;
+    }
+}
+
+@each $color in variables.$colors {
+    .color-#{$color} {
+        color: var(--color-#{$color}) !important;
+    }
 }
 
 $sizes: (10, 20, 25, 30, 40, 50, 60, 70, 75, 80, 90, 100);
 @each $size in $sizes {
-  .w-#{$size} {width: $size + 0%;}
-  .h-#{$size} {height: $size + 0%;}
+    .w-#{$size} {
+        width: $size + 0%;
+    }
+    .h-#{$size} {
+        height: $size + 0%;
+    }
 }
-.w-33 {width: 33.333%;}
-.w-66 {width: 66.666%;}
 
-.h-33 {height: 33.333%;}
-.h-66 {height: 66.666%;}
+.w-33 {
+    width: 33.333%;
+}
+
+.w-66 {
+    width: 66.666%;
+}
+
+.h-33 {
+    height: 33.333%;
+}
+
+.h-66 {
+    height: 66.666%;
+}
 
 
-.rtl {direction: rtl;}
-.ltr {direction: ltr;}
+.rtl {
+    direction: rtl;
+}
+
+.ltr {
+    direction: ltr;
+}

@@ -1,29 +1,29 @@
-<d-position [position]="options.position ?? 'middle-center'" (click)="onPositionClick($event)">
-  <div class="dialog" [style]="dialogStyles" [ngClass]="ngClass">
-    <div class="header" *ngIf="options.title || options.closable || options.minimizable || options.maximizable">
-      <div class="title">
-        {{ options.title }}
-      </div>
-      <div class="button minimize" *ngIf="options.minimizable" (click)="minimize()">
-        <i class="icons-core-minus"></i>
-      </div>
-      <div class="button maximize" *ngIf="!options.isMinimize && options.maximizable" (click)="maximize()">
-        <i [ngClass]="(options.isMaximize ? 'icons-core-minimize' : 'icons-core-maximize')"></i>
-      </div>
-      <div class="button close" *ngIf="options.closable" (click)="close()">
-        <i class="icons-core-close"></i>
-      </div>
+<d-position (click)="onPositionClick($event)" [position]="options.position ?? 'middle-center'">
+    <div [ngClass]="ngClass" [style]="dialogStyles" class="dialog">
+        <div *ngIf="options.title || options.closable || options.minimizable || options.maximizable" class="header">
+            <div class="title">
+                {{ options.title }}
+            </div>
+            <div (click)="minimize()" *ngIf="options.minimizable" class="button minimize">
+                <i class="icons-core-minus"></i>
+            </div>
+            <div (click)="maximize()" *ngIf="!options.isMinimize && options.maximizable" class="button maximize">
+                <i [ngClass]="(options.isMaximize ? 'icons-core-minimize' : 'icons-core-maximize')"></i>
+            </div>
+            <div (click)="close()" *ngIf="options.closable" class="button close">
+                <i class="icons-core-close"></i>
+            </div>
+        </div>
+        <div class="body">
+            <ng-container *ngIf="options.template">
+                <ng-container *ngTemplateOutlet="options.template; context: {$implicit: this, context: options.context}"></ng-container>
+            </ng-container>
+            <ng-container *ngIf="options.component">
+                <ng-container *ngComponentOutlet="options.component; inputs: inputs"></ng-container>
+            </ng-container>
+            <ng-container *ngIf="options.html">
+                <div [innerHTML]="options.html"></div>
+            </ng-container>
+        </div>
     </div>
-    <div class="body">
-      <ng-container *ngIf="options.template">
-        <ng-container *ngTemplateOutlet="options.template; context: {$implicit: this, context: options.context}"></ng-container>
-      </ng-container>
-      <ng-container *ngIf="options.component">
-        <ng-container *ngComponentOutlet="options.component; inputs: inputs"></ng-container>
-      </ng-container>
-      <ng-container *ngIf="options.html">
-        <div [innerHTML]="options.html"></div>
-      </ng-container>
-    </div>
-  </div>
 </d-position>

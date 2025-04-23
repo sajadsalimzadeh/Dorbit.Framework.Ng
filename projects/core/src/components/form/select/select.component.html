@@ -1,69 +1,69 @@
 <ng-template #itemTpl let-item let-type="type">
-  <div class="item" [ngClass]="'type-' + type">
-    <ng-container *ngIf="optionTemplate; else elseTextTemplate">
-      <ng-container *ngTemplateOutlet="optionTemplate; context: {$implicit: item}"></ng-container>
-    </ng-container>
-    <ng-template #elseTextTemplate>
-      <span class="text">{{ getText(item) }}</span>
-      <ng-container *ngIf="mode == 'multiple' && type == 'value'">
-        <i class="remove icons-core-close-circle" (click)="select(item, $event)"></i>
-      </ng-container>
-    </ng-template>
-  </div>
+    <div [ngClass]="'type-' + type" class="item">
+        <ng-container *ngIf="optionTemplate; else elseTextTemplate">
+            <ng-container *ngTemplateOutlet="optionTemplate; context: {$implicit: item}"></ng-container>
+        </ng-container>
+        <ng-template #elseTextTemplate>
+            <span class="text">{{ getText(item) }}</span>
+            <ng-container *ngIf="mode == 'multiple' && type == 'value'">
+                <i (click)="select(item, $event)" class="remove icons-core-close-circle"></i>
+            </ng-container>
+        </ng-template>
+    </div>
 </ng-template>
 
 <div class="control-box">
-  <div class="control-container selected-items-container flex-1" [ngClass]="align">
-    <i *ngIf="icon" class="icon" [ngClass]="icon"></i>
-    <ng-container *ngIf="selectedItems.length == 0; else hasSelectedItemTpl">
-      <div class="placeholder" *ngIf="placeholder">
-        {{ placeholder }}
-      </div>
-    </ng-container>
-    <ng-template #hasSelectedItemTpl>
-      <div class="selected-items" [ngClass]="mode">
-        <ng-container *ngIf="mode === 'single'">
-          <ng-container
-            *ngTemplateOutlet="itemTpl; context: {$implicit:selectedItems[0], type: 'value'}"></ng-container>
+    <div [ngClass]="align" class="control-container selected-items-container flex-1">
+        <i *ngIf="icon" [ngClass]="icon" class="icon"></i>
+        <ng-container *ngIf="selectedItems.length == 0; else hasSelectedItemTpl">
+            <div *ngIf="placeholder" class="placeholder">
+                {{ placeholder }}
+            </div>
         </ng-container>
-        <ng-container *ngIf="mode === 'multiple'">
-          <ng-container *ngFor="let item of selectedItems">
-            <ng-container *ngTemplateOutlet="itemTpl; context: {$implicit:item, type: 'value'}"></ng-container>
-          </ng-container>
+        <ng-template #hasSelectedItemTpl>
+            <div [ngClass]="mode" class="selected-items">
+                <ng-container *ngIf="mode === 'single'">
+                    <ng-container
+                        *ngTemplateOutlet="itemTpl; context: {$implicit:selectedItems[0], type: 'value'}"></ng-container>
+                </ng-container>
+                <ng-container *ngIf="mode === 'multiple'">
+                    <ng-container *ngFor="let item of selectedItems">
+                        <ng-container *ngTemplateOutlet="itemTpl; context: {$implicit:item, type: 'value'}"></ng-container>
+                    </ng-container>
+                </ng-container>
+            </div>
+            <ng-container *ngIf="clearable && mode == 'single'">
+                <i (click)="clear()" class="remove icons-core-close"></i>
+            </ng-container>
+        </ng-template>
+    </div>
+    <div class="control-container icon-container">
+        <ng-container *ngIf="loading; else arrowTpl">
+            <div class="loading">
+                <i class="icons-core-loader"></i>
+            </div>
         </ng-container>
-      </div>
-      <ng-container *ngIf="clearable && mode == 'single'">
-        <i class="remove icons-core-close" (click)="clear()"></i>
-      </ng-container>
-    </ng-template>
-  </div>
-  <div class="control-container icon-container">
-    <ng-container *ngIf="loading; else arrowTpl">
-      <div class="loading">
-        <i class="icons-core-loader"></i>
-      </div>
-    </ng-container>
-    <ng-template #arrowTpl>
-      <div class="arrow" *ngIf="showArrow"></div>
-    </ng-template>
-  </div>
+        <ng-template #arrowTpl>
+            <div *ngIf="showArrow" class="arrow"></div>
+        </ng-template>
+    </div>
 </div>
 <ng-template #itemsTpl>
-  <div class="items-container" [ngClass]="[size, mode]" (click)="onItemsClick($event)">
-    <div class="filter-box" *ngIf="searchable || (searchable == undefined && items.length > 10)">
-      <input #searchEl class="form-control" [formControl]="searchFormControl" [placeholder]="searchPlaceHolder | translate" autofocus
-             (focus)="focused = true" (blur)="focused = false"/>
+    <div (click)="onItemsClick($event)" [ngClass]="[size, mode]" class="items-container">
+        <div *ngIf="searchable || (searchable == undefined && items.length > 10)" class="filter-box">
+            <input #searchEl (blur)="focused = false" (focus)="focused = true" [formControl]="searchFormControl" [placeholder]="searchPlaceHolder | translate"
+                   autofocus class="form-control"/>
+        </div>
+        <div #itemsContainerEl class="scroll-container">
+            <ul class="items">
+                <li (click)="select(item, $event)" *ngFor="let item of renderedItems" [ngClass]="{selected: item.selected, hovered: (hoveredItem == item)}"
+                    class="item">
+                    <ng-container *ngIf="mode == 'multiple'">
+                        <d-checkbox [ngModel]="item.selected" [size]="size"></d-checkbox>
+                    </ng-container>
+                    <ng-container *ngTemplateOutlet="itemTpl; context: {$implicit:item, type: 'option'}"></ng-container>
+                </li>
+            </ul>
+        </div>
     </div>
-    <div class="scroll-container" #itemsContainerEl>
-      <ul class="items">
-        <li *ngFor="let item of renderedItems" class="item" (click)="select(item, $event)"
-            [ngClass]="{selected: item.selected, hovered: (hoveredItem == item)}">
-          <ng-container *ngIf="mode == 'multiple'">
-            <d-checkbox [size]="size" [ngModel]="item.selected"></d-checkbox>
-          </ng-container>
-          <ng-container *ngTemplateOutlet="itemTpl; context: {$implicit:item, type: 'option'}"></ng-container>
-        </li>
-      </ul>
-    </div>
-  </div>
 </ng-template>

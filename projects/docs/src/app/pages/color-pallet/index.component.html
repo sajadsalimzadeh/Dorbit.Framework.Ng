@@ -2,17 +2,17 @@
 <hr>
 <app-card [filenames]="['index.component.html', 'index.component.ts']" class="mt-6" component="color-pallet"
           header="Primary Colors">
-  <div class="grid">
-    <div *ngFor="let color of primaryColors" [ngClass]="('bg-' + color.bg) + ' ' + ('text-' + color.text)">
-      {{color.bg}}
+    <div class="grid">
+        <div *ngFor="let color of primaryColors" [ngClass]="('bg-' + color.bg) + ' ' + ('text-' + color.text)">
+            {{ color.bg }}
+        </div>
     </div>
-  </div>
 </app-card>
-<app-card class="mt-6" component="color-pallet" [filenames]="['index.component.html', 'index.component.ts']"
+<app-card [filenames]="['index.component.html', 'index.component.ts']" class="mt-6" component="color-pallet"
           header="Gray Colors">
-  <div class="grid">
-    <div *ngFor="let color of grayColors" [ngClass]="('bg-' + color.bg) + ' ' + ('text-' + color.text)">
-      {{color.bg}}
+    <div class="grid">
+        <div *ngFor="let color of grayColors" [ngClass]="('bg-' + color.bg) + ' ' + ('text-' + color.text)">
+            {{ color.bg }}
+        </div>
     </div>
-  </div>
 </app-card>

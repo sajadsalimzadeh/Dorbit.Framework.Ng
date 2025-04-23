@@ -1,38 +1,38 @@
 import {Injectable} from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({providedIn: 'root'})
 export class ResourceService {
-  resources: any = {};
+    resources: any = {};
 
-  constructor(private http: HttpClient) {
-  }
+    constructor(private http: HttpClient) {
+    }
 
-  get(name: string) {
-    return this.resources[name];
-  }
+    get(name: string) {
+        return this.resources[name];
+    }
 
-  async load<T = any>(name: string, url: string): Promise<T> {
-    return new Promise<any>((resolve, reject) => {
-      if (this.resources[name]) {
-        return resolve(this.resources[name]);
-      }
-      this.http.get(url).subscribe({
-        next: res => {
-          this.resources[name] = res;
-          resolve(this.resources[name]);
-        },
-        error: e => {
-          console.error(e);
-          reject(e);
-        }
-      })
-    })
-  }
+    async load<T = any>(name: string, url: string): Promise<T> {
+        return new Promise<any>((resolve, reject) => {
+            if (this.resources[name]) {
+                return resolve(this.resources[name]);
+            }
+            this.http.get(url).subscribe({
+                next: res => {
+                    this.resources[name] = res;
+                    resolve(this.resources[name]);
+                },
+                error: e => {
+                    console.error(e);
+                    reject(e);
+                }
+            })
+        })
+    }
 
-  merge(name: string, ...sources: string[]) {
-    const resource: any = {};
-    sources.forEach(x => Object.assign(resource, this.resources[x]));
-    return this.resources[name] = resource;
-  }
+    merge(name: string, ...sources: string[]) {
+        const resource: any = {};
+        sources.forEach(x => Object.assign(resource, this.resources[x]));
+        return this.resources[name] = resource;
+    }
 }

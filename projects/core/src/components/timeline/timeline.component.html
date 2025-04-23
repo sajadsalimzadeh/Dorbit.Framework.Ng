@@ -1,41 +1,41 @@
 <ng-template #contentTpl let-item let-template="template">
-  <ng-container *ngIf="template; else elseContentTpl">
-    <ng-container *ngTemplateOutlet="template; context: {$implicit: item}"></ng-container>
-  </ng-container>
-  <ng-template #elseContentTpl>{{item}}</ng-template>
+    <ng-container *ngIf="template; else elseContentTpl">
+        <ng-container *ngTemplateOutlet="template; context: {$implicit: item}"></ng-container>
+    </ng-container>
+    <ng-template #elseContentTpl>{{ item }}</ng-template>
 </ng-template>
 
-<ul class="items" [ngClass]="'dir-' + orientation">
-  <li class="item" *ngFor="let item of items; let index = index" [style]="style">
-    <div class="start">
-      <ng-container *ngIf="align == 'start' || (align == 'alternate' && index%2 == 0)">
-        <ng-container
-          *ngTemplateOutlet="contentTpl; context: {$implicit: item, template: contentTemplate}"></ng-container>
-      </ng-container>
-      <ng-container *ngIf="oppositeTemplate">
-        <ng-container *ngIf="align == 'end' || (align == 'alternate' && index%2 == 1)">
-          <ng-container *ngTemplateOutlet="oppositeTemplate; context: {$implicit: item}"></ng-container>
-        </ng-container>
-      </ng-container>
-    </div>
-    <div class="splitter">
-      <ng-container *ngIf="pointTemplate; else elsePointTpl">
-        <ng-container *ngTemplateOutlet="pointTemplate; context: {$implicit: item}"></ng-container>
-      </ng-container>
-      <ng-template #elsePointTpl>
-        <span class="default-point"></span>
-      </ng-template>
-    </div>
-    <div class="end">
-      <ng-container *ngIf="align == 'end' || (align == 'alternate' && index%2 == 1)">
-        <ng-container
-          *ngTemplateOutlet="contentTpl; context: {$implicit: item, template: contentTemplate}"></ng-container>
-      </ng-container>
-      <ng-container *ngIf="oppositeTemplate">
-        <ng-container *ngIf="align == 'start' || (align == 'alternate' && index%2 == 0)">
-          <ng-container *ngTemplateOutlet="oppositeTemplate; context: {$implicit: item}"></ng-container>
-        </ng-container>
-      </ng-container>
-    </div>
-  </li>
+<ul [ngClass]="'dir-' + orientation" class="items">
+    <li *ngFor="let item of items; let index = index" [style]="style" class="item">
+        <div class="start">
+            <ng-container *ngIf="align == 'start' || (align == 'alternate' && index%2 == 0)">
+                <ng-container
+                    *ngTemplateOutlet="contentTpl; context: {$implicit: item, template: contentTemplate}"></ng-container>
+            </ng-container>
+            <ng-container *ngIf="oppositeTemplate">
+                <ng-container *ngIf="align == 'end' || (align == 'alternate' && index%2 == 1)">
+                    <ng-container *ngTemplateOutlet="oppositeTemplate; context: {$implicit: item}"></ng-container>
+                </ng-container>
+            </ng-container>
+        </div>
+        <div class="splitter">
+            <ng-container *ngIf="pointTemplate; else elsePointTpl">
+                <ng-container *ngTemplateOutlet="pointTemplate; context: {$implicit: item}"></ng-container>
+            </ng-container>
+            <ng-template #elsePointTpl>
+                <span class="default-point"></span>
+            </ng-template>
+        </div>
+        <div class="end">
+            <ng-container *ngIf="align == 'end' || (align == 'alternate' && index%2 == 1)">
+                <ng-container
+                    *ngTemplateOutlet="contentTpl; context: {$implicit: item, template: contentTemplate}"></ng-container>
+            </ng-container>
+            <ng-container *ngIf="oppositeTemplate">
+                <ng-container *ngIf="align == 'start' || (align == 'alternate' && index%2 == 0)">
+                    <ng-container *ngTemplateOutlet="oppositeTemplate; context: {$implicit: item}"></ng-container>
+                </ng-container>
+            </ng-container>
+        </div>
+    </li>
 </ul>

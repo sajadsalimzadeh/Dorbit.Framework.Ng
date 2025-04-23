@@ -9,30 +9,30 @@ import {TableService} from "../../services/table.service";
     standalone: false
 })
 export class TableRowExpanderComponent {
-  @Input() item: any;
-  @Input() mode: 'single' | 'multiple' = 'single';
+    @Input() item: any;
+    @Input() mode: 'single' | 'multiple' = 'single';
 
-  @HostBinding('class.expanded')
-  get expanded() {
-    return !!this.item['rowExpanded'];
-  }
+    constructor(private tableService: TableService) {
 
-  @HostListener('click', ['$event'])
-  onClick(e: Event) {
-    e.stopPropagation();
-    this.toggle();
-  }
-
-  constructor(private tableService: TableService) {
-
-  }
-
-  toggle() {
-    if (this.mode == 'single') {
-      this.tableService.dataTable.data.items
-        .filter(x => x['rowExpanded'] && x != this.item)
-        .forEach(x => x['rowExpanded'] = false);
     }
-    this.item['rowExpanded'] = !this.item['rowExpanded'];
-  }
+
+    @HostBinding('class.expanded')
+    get expanded() {
+        return !!this.item['rowExpanded'];
+    }
+
+    @HostListener('click', ['$event'])
+    onClick(e: Event) {
+        e.stopPropagation();
+        this.toggle();
+    }
+
+    toggle() {
+        if (this.mode == 'single') {
+            this.tableService.dataTable.data.items
+                .filter(x => x['rowExpanded'] && x != this.item)
+                .forEach(x => x['rowExpanded'] = false);
+        }
+        this.item['rowExpanded'] = !this.item['rowExpanded'];
+    }
 }

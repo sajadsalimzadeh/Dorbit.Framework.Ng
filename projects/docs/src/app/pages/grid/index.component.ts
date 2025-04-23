@@ -1,13 +1,13 @@
 import {Component} from '@angular/core';
 
 @Component({
-  selector: 'doc-grid',
-  templateUrl: './index.component.html',
-  styleUrls: ['./index.component.scss']
+    selector: 'doc-grid',
+    templateUrl: './index.component.html',
+    styleUrls: ['./index.component.scss']
 })
 export class IndexComponent {
 
-  code = `
+    code = `
  <div class="control-box">
   <div class="control-container flex-1" [style.max-height]="maxHeight">
     <div class="box" *ngFor="let item of formControl.value; let index = index">
@@ -20,7 +20,7 @@ export class IndexComponent {
 </div>
 `;
 
-  constructor() {
-  }
+    constructor() {
+    }
 
 }

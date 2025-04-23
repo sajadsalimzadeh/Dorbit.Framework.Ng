@@ -1,44 +1,44 @@
 :host {
-  &.direction-rtl {
-    i {
-      transform: scaleX(-1);
+    &.direction-rtl {
+        i {
+            transform: scaleX(-1);
+        }
     }
-  }
 }
 
 ul {
-  gap: 10px;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  list-style: none;
-  user-select: none;
-  align-items: center;
-
-  li {
-    width: 2.7rem;
-    height: 2.7rem;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
     display: flex;
-    cursor: pointer;
-    overflow: hidden;
+    list-style: none;
+    user-select: none;
     align-items: center;
-    border-radius: 6px;
-    justify-content: center;
-    text-overflow: ellipsis;
-    color: var(--color-gray-6);
 
-    &:hover {
-      background-color: var(--color-gray--1);
-    }
+    li {
+        width: 2.7rem;
+        height: 2.7rem;
+        display: flex;
+        cursor: pointer;
+        overflow: hidden;
+        align-items: center;
+        border-radius: 6px;
+        justify-content: center;
+        text-overflow: ellipsis;
+        color: var(--color-gray-6);
 
-    &.active {
-      font-weight: bold;
-      color: var(--color-component);
-      background-color: rgba(var(--color-component-rgb), .1);
-    }
+        &:hover {
+            background-color: var(--color-gray--1);
+        }
 
-    &:not(.active) {
-      opacity: .9;
+        &.active {
+            font-weight: bold;
+            color: var(--color-component);
+            background-color: rgba(var(--color-component-rgb), .1);
+        }
+
+        &:not(.active) {
+            opacity: .9;
+        }
     }
-  }
 }

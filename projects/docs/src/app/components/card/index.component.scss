@@ -1,51 +1,51 @@
 :host {
-  margin: .5em 0;
-  display: flex;
-  flex-direction: column;
+    margin: .5em 0;
+    display: flex;
+    flex-direction: column;
 
-  d-card {
-    flex: 1;
-  }
+    d-card {
+        flex: 1;
+    }
 }
 
 ::ng-deep {
-  .code-tabs .tab-container {
-    padding: 0 !important;
-  }
+    .code-tabs .tab-container {
+        padding: 0 !important;
+    }
 }
 
 .header {
-  display: flex;
-  align-items: center;
-
-  .title {
-    flex: 1;
-    padding: 0;
-
-    h3 {
-      margin: 0;
-    }
-  }
-
-  .toolbar {
-    padding: 0;
     display: flex;
     align-items: center;
 
-    a {
-      height: 2.5em;
-      display: flex;
-      min-width: 2.5em;
-      cursor: pointer;
-      border-radius: 50%;
-      align-items: center;
-      justify-content: center;
-      color: var(--color-gray-5);
+    .title {
+        flex: 1;
+        padding: 0;
 
-      &:hover {
-        color: var(--color-gray-7);
-        background-color: var(--color-gray--3);
-      }
+        h3 {
+            margin: 0;
+        }
     }
-  }
+
+    .toolbar {
+        padding: 0;
+        display: flex;
+        align-items: center;
+
+        a {
+            height: 2.5em;
+            display: flex;
+            min-width: 2.5em;
+            cursor: pointer;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-gray-5);
+
+            &:hover {
+                color: var(--color-gray-7);
+                background-color: var(--color-gray--3);
+            }
+        }
+    }
 }

@@ -1,28 +1,28 @@
 :host {
-  display: inline-flex;
+    display: inline-flex;
 
-  ul {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    list-style: none;
+    ul {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        list-style: none;
 
-    &:hover li.active {
-      color: rgba(var(--color-component-rgb), .8);
+        &:hover li.active {
+            color: rgba(var(--color-component-rgb), .8);
+        }
+
+        li {
+            width: 1.7em;
+            display: flex;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-component);
+
+            i {
+                font-size: 1.2em;
+            }
+        }
     }
-
-    li {
-      width: 1.7em;
-      display: flex;
-      cursor: pointer;
-      align-items: center;
-      justify-content: center;
-      color: var(--color-component);
-
-      i {
-        font-size: 1.2em;
-      }
-    }
-  }
 
 }

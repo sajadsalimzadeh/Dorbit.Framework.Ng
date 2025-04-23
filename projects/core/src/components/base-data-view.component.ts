@@ -1,60 +1,63 @@
 import {Directive, Injector, TemplateRef, Type} from '@angular/core';
 import {BasePanelComponent} from "./base-panel.component";
-import {DialogOptions, DialogRef, ODataQueryOptions, PagedListResult, TableConfig, TableData} from "@framework";
+import {ODataQueryOptions} from "../contracts/odata-query-options";
+import {TableConfig, TableData} from './table/models';
+import {DialogOptions} from './dialog/components/dialog/dialog.component';
 import {Observable, Subscription} from "rxjs";
+import {PagedListResult} from "../contracts/command-result";
 
 @Directive()
 export abstract class BaseDataViewComponent<T = any> extends BasePanelComponent {
-  data: TableData<T> = {items: [], totalCount: 0};
-  config = new TableConfig();
+    data: TableData<T> = {items: [], totalCount: 0};
+    config = new TableConfig();
 
-  loadSubscription = new Subscription();
+    loadSubscription = new Subscription();
 
-  constructor(injector: Injector) {
-    super(injector);
-  }
+    constructor(injector: Injector) {
+        super(injector);
+    }
 
-  override ngOnInit() {
-    super.ngOnInit();
+    override ngOnInit() {
+        super.ngOnInit();
 
-    this.load();
-  }
+        this.load();
+    }
 
-  override ngOnDestroy() {
-    super.ngOnDestroy();
+    override ngOnDestroy() {
+        super.ngOnDestroy();
 
-    this.loadSubscription.unsubscribe();
-  }
+        this.loadSubscription.unsubscribe();
+    }
 
-  protected abstract loader(query?: ODataQueryOptions): Observable<PagedListResult>;
+    override showDialog(template: TemplateRef<any>, options?: DialogOptions) {
+        if (this.dialog) return this.dialog;
+        options ??= {};
+        options.title ??= (options.context ? this.t('edit') : this.t('add'));
+        this.dialog = super.showDialog(template, options);
+        this.dialog?.onClose.subscribe(() => {
+            this.dialog = undefined;
+            this.load();
+        });
+        return this.dialog;
+    }
 
-  protected load() {
-    this.loadSubscription.unsubscribe();
-    this.loadSubscription = this.loader(new ODataQueryOptions()).subscribe(res => {
-      this.data = {
-        items: res.data ?? [],
-        totalCount: res.totalCount ?? res.data?.length ?? 0,
-      }
-    })
-  }
+    showDialogByComponent(component: Type<any>, context: any, options?: DialogOptions) {
+        return this.dialogService.open({
+            ...options,
+            context: context,
+            component: component
+        })
+    }
 
-  override showDialog(template: TemplateRef<any>, options?: DialogOptions) {
-    if (this.dialog) return this.dialog;
-    options ??= {};
-    options.title ??= (options.context ? this.t('edit') : this.t('add'));
-    this.dialog = super.showDialog(template, options);
-    this.dialog?.onClose.subscribe(() => {
-      this.dialog = undefined;
-      this.load();
-    });
-    return this.dialog;
-  }
+    protected abstract loader(query?: ODataQueryOptions): Observable<PagedListResult>;
 
-  showDialogByComponent(component: Type<any>, context: any, options?: DialogOptions) {
-    return this.dialogService.open({
-      ...options,
-      context: context,
-      component: component
-    })
-  }
+    protected load() {
+        this.loadSubscription.unsubscribe();
+        this.loadSubscription = this.loader(new ODataQueryOptions()).subscribe(res => {
+            this.data = {
+                items: res.data ?? [],
+                totalCount: res.totalCount ?? res.data?.length ?? 0,
+            }
+        })
+    }
 }

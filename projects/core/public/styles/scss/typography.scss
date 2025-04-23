@@ -1,59 +1,84 @@
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 html {
-  color: var(--color-black);
-  font-size: var(--font-size-base);
+    color: var(--color-black);
+    font-size: var(--font-size-base);
 }
 
 body {
-  line-height: 1.75em;
-  font-family: var(--font-family);
-  background-color: var(--color-white);
+    line-height: 1.75em;
+    font-family: var(--font-family);
+    background-color: var(--color-white);
 
-  * {
-    font-family: inherit;
-  }
+    * {
+        font-family: inherit;
+    }
 }
 
-h1 {font-size: 2em;}
-h2 {font-size: 1.6em;}
-h3 {font-size: 1.3em;}
-h4 {font-size: 1.1em;}
-h5 {font-size: .9em;}
-h6 {font-size: 0.8em;}
+h1 {
+    font-size: 2em;
+}
 
-h1, h2, h3, h4, h5, h6 {margin: .5em 0; color: var(--color-gray-4);}
+h2 {
+    font-size: 1.6em;
+}
+
+h3 {
+    font-size: 1.3em;
+}
+
+h4 {
+    font-size: 1.1em;
+}
+
+h5 {
+    font-size: .9em;
+}
+
+h6 {
+    font-size: 0.8em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: .5em 0;
+    color: var(--color-gray-4);
+}
 
 hr {
-  border-style: solid;
-  border-color: var(--color-gray--3);
+    border-style: solid;
+    border-color: var(--color-gray--3);
 }
 
-a {cursor: pointer;}
-a:link, a:visited {color: var(--color-link);}
+a {
+    cursor: pointer;
+}
+
+a:link, a:visited {
+    color: var(--color-link);
+}
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
-input:-webkit-autofill:active{
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: #ffffff;
-  transition: background-color 5000s ease-in-out 0s;
-  box-shadow: inset 0 0 20px 20px #23232329;
+input:-webkit-autofill:active {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: #ffffff;
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: inset 0 0 20px 20px #23232329;
 }
 
 time {
-  unicode-bidi: plaintext;
+    unicode-bidi: plaintext;
 }
 
 ::-webkit-scrollbar {
-  width: 3px;
-  height: 3px;
-  background-color: rgba(var(--color-black-rgb), .05);
+    width: 3px;
+    height: 3px;
+    background-color: rgba(var(--color-black-rgb), .05);
 }
 
-::-webkit-scrollbar-thumb  {
-  background-color: rgba(var(--color-black-rgb), .1);
+::-webkit-scrollbar-thumb {
+    background-color: rgba(var(--color-black-rgb), .1);
 }

@@ -1,113 +1,113 @@
 :host {
-  display: flex;
-  max-width: 100%;
-  position: relative;
+    display: flex;
+    max-width: 100%;
+    position: relative;
 
-  &.disabled {
-    .control-box {
-      opacity: .8;
+    &.disabled {
+        .control-box {
+            opacity: .8;
+        }
     }
-  }
 
-  &.focused {
-    z-index: 100;
+    &.focused {
+        z-index: 100;
 
-    .control-box {
-      border-color: transparent;
-      box-shadow: 0 0 0 .13em rgba(var(--color-primary-rgb), 1);
+        .control-box {
+            border-color: transparent;
+            box-shadow: 0 0 0 .13em rgba(var(--color-primary-rgb), 1);
+        }
     }
-  }
 
-  &.xxs, &.xs {
-    .control-box {
-      border-radius: var(--radius-3);
+    &.xxs, &.xs {
+        .control-box {
+            border-radius: var(--radius-3);
+        }
     }
-  }
 }
 
 .control-box {
-  cursor: text;
-  display: flex;
-  font-size: 1em;
-  min-width: 100%;
-  position: relative;
-  border-radius: 6px;
-  align-items: stretch;
-  border: 1px solid var(--color-gray--3);
-  background-color: var(--color-gray--0);
-
-  ::ng-deep .control-box {
-    border: none !important;
-  }
-
-  .control-container {
-    display: flex;
-    min-height: 3em;
-    position: relative;
-    align-items: center;
-  }
-
-  .full-absolute {
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    padding: inherit;
-    position: absolute;
-    align-items: center;
-
-    &.start {
-      justify-content: flex-start;
-    }
-
-    &.end {
-      justify-content: flex-end;
-    }
-
-    > * {
-      position: absolute;
-    }
-  }
-
-  .arrow {
-    display: flex;
-    position: relative;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-gray-9);
-    background-color: inherit;
-
-    &::before {
-      content: '▼';
-      font-size: .8rem;
-    }
-  }
-
-  .end {
-    justify-content: flex-end;
-  }
-
-  .placeholder {
-    color: var(--color-gray-7);
-  }
-
-  .control {
-    flex: 1;
-    width: 100%;
-    height: 100%;
-    border: none;
     cursor: text;
-    outline: none;
-    font-size: 1.1em;
+    display: flex;
+    font-size: 1em;
+    min-width: 100%;
     position: relative;
-    padding: 0.3em .5em;
-    color: var(--color-gray-4);
-    background-color: transparent;
-    transition: background-color 99999s ease-in-out 0s;
-  }
+    border-radius: 6px;
+    align-items: stretch;
+    border: 1px solid var(--color-gray--3);
+    background-color: var(--color-gray--0);
+
+    ::ng-deep .control-box {
+        border: none !important;
+    }
+
+    .control-container {
+        display: flex;
+        min-height: 3em;
+        position: relative;
+        align-items: center;
+    }
+
+    .full-absolute {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        padding: inherit;
+        position: absolute;
+        align-items: center;
+
+        &.start {
+            justify-content: flex-start;
+        }
+
+        &.end {
+            justify-content: flex-end;
+        }
+
+        > * {
+            position: absolute;
+        }
+    }
+
+    .arrow {
+        display: flex;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-gray-9);
+        background-color: inherit;
+
+        &::before {
+            content: '▼';
+            font-size: .8rem;
+        }
+    }
+
+    .end {
+        justify-content: flex-end;
+    }
+
+    .placeholder {
+        color: var(--color-gray-7);
+    }
+
+    .control {
+        flex: 1;
+        width: 100%;
+        height: 100%;
+        border: none;
+        cursor: text;
+        outline: none;
+        font-size: 1.1em;
+        position: relative;
+        padding: 0.3em .5em;
+        color: var(--color-gray-4);
+        background-color: transparent;
+        transition: background-color 99999s ease-in-out 0s;
+    }
 }
 
 .icon-container {
-  padding-inline-end: .7em;
+    padding-inline-end: .7em;
 }

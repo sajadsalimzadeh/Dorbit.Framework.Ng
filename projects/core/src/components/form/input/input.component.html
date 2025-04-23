@@ -1,18 +1,18 @@
-<div class="control-box" [ngClass]="mode" [ngSwitch]="type">
-  <div class="control-container flex-1">
-    <i *ngIf="icon" [ngClass]="icon + ' ' + (iconPos)"></i>
-    <ng-container *ngSwitchCase="'textarea'">
-      <textarea #inputEl class="control" [name]="name" [ngClass]="classControl" [placeholder]="placeholder" [style]="styleControl"
-                [minLength]="minLength" [maxLength]="maxLength" [rows]="rows" [cols]="cols" [dir]="dir" [style.text-align]="align"
-                (input)="updateValue()" (focus)="focus()" (blur)="blur()" [disabled]="formControl.disabled"
-                (keyup)="onKeyup.emit($event)" (keydown)="onKeydown.emit($event)"></textarea>
-    </ng-container>
-    <ng-container *ngSwitchDefault>
-      <input #inputEl class="control" [name]="name" [ngClass]="classControl" [type]="(type == 'number' ? 'text' : type)"
-             [placeholder]="placeholder" [minLength]="minLength" [maxLength]="maxLength"
-             [dir]="dir" [style.text-align]="align" [style]="styleControl"
-             (input)="updateValue()" (focus)="focus()" (blur)="blur()" [disabled]="formControl.disabled"
-             (keyup)="onKeyup.emit($event)" (keydown)="onKeydown.emit($event)" [dKeyFilter]="keyFilter"/>
-    </ng-container>
-  </div>
+<div [ngClass]="mode" [ngSwitch]="type" class="control-box">
+    <div class="control-container flex-1">
+        <i *ngIf="icon" [ngClass]="icon + ' ' + (iconPos)"></i>
+        <ng-container *ngSwitchCase="'textarea'">
+      <textarea #inputEl (blur)="blur()" (focus)="focus()" (input)="updateValue()" (keydown)="onKeydown.emit($event)" (keyup)="onKeyup.emit($event)"
+                [cols]="cols" [dir]="dir" [disabled]="formControl.disabled" [maxLength]="maxLength" [minLength]="minLength" [name]="name"
+                [ngClass]="classControl" [placeholder]="placeholder" [rows]="rows" [style.text-align]="align"
+                [style]="styleControl" class="control"></textarea>
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+            <input #inputEl (blur)="blur()" (focus)="focus()" (input)="updateValue()" (keydown)="onKeydown.emit($event)"
+                   (keyup)="onKeyup.emit($event)" [dKeyFilter]="keyFilter" [dir]="dir"
+                   [disabled]="formControl.disabled" [maxLength]="maxLength" [minLength]="minLength"
+                   [name]="name" [ngClass]="classControl" [placeholder]="placeholder" [style.text-align]="align"
+                   [style]="styleControl" [type]="(type == 'number' ? 'text' : type)" class="control"/>
+        </ng-container>
+    </div>
 </div>

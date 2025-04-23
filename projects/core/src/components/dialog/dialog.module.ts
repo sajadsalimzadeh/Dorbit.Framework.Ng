@@ -17,10 +17,10 @@ const COMPONENTS = [
 ]
 
 @NgModule({
-  imports: [...COMPONENTS],
-  declarations: [DialogContainerComponent],
-  exports: [DialogContainerComponent, ...COMPONENTS],
-  providers: [],
+    imports: [...COMPONENTS],
+    declarations: [DialogContainerComponent],
+    exports: [DialogContainerComponent, ...COMPONENTS],
+    providers: [],
 })
 export class DialogModule {
 }

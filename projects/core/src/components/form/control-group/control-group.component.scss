@@ -1,141 +1,141 @@
 :host {
-  cursor: text;
-  outline: none;
-  padding-top: 2em;
-  position: relative;
+    cursor: text;
+    outline: none;
+    padding-top: 2em;
+    position: relative;
 
-  &.float-label {
+    &.float-label {
 
-    .control-box .control-box-container .label-box {
-      top: 50%;
-      transform: translateY(-50%);
+        .control-box .control-box-container .label-box {
+            top: 50%;
+            transform: translateY(-50%);
+        }
     }
-  }
 
-  .control-box {
-    flex: 1;
-
-    .control-box-container {
-      flex: 1;
-      display: flex;
-      position: relative;
-
-      .label-box {
-        top: -2rem;
-        padding: 0;
-        z-index: 100;
-        display: flex;
-        margin: 0 .5em;
-        font-size: .9em;
-        position: absolute;
-        align-items: center;
-        transition: all .3s ease;
-        color: var(--color-gray-2);
-      }
-
-      .required {
-        color: var(--color-danger);
-        padding-inline-start: .5rem;
-      }
-
-      &::ng-deep > *:not(.label-box) {
+    .control-box {
         flex: 1;
 
+        .control-box-container {
+            flex: 1;
+            display: flex;
+            position: relative;
+
+            .label-box {
+                top: -2rem;
+                padding: 0;
+                z-index: 100;
+                display: flex;
+                margin: 0 .5em;
+                font-size: .9em;
+                position: absolute;
+                align-items: center;
+                transition: all .3s ease;
+                color: var(--color-gray-2);
+            }
+
+            .required {
+                color: var(--color-danger);
+                padding-inline-start: .5rem;
+            }
+
+            &::ng-deep > *:not(.label-box) {
+                flex: 1;
+
+                .control-box {
+                    flex: 1;
+                    z-index: 5;
+                    display: flex;
+                    position: relative;
+                    padding: 0 !important;
+                }
+            }
+        }
+
+        .side-box {
+            display: flex;
+            overflow: hidden;
+            align-items: stretch;
+            border-radius: inherit;
+
+            &::ng-deep {
+                > i {
+                    padding: 0 .8em;
+                }
+
+                > * {
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                }
+            }
+        }
+
+        //.start-box {padding-inline-end: 0 !important;}
+        //.end-box {padding-inline-start: 0 !important;}
+
+        .control {
+            width: 100%;
+            border: none;
+            outline: none;
+            background-color: transparent;
+
+            &::placeholder {
+                color: var(--color-gray-10);
+            }
+        }
+    }
+
+    &.ng-invalid.ng-touched {
         .control-box {
-          flex: 1;
-          z-index: 5;
-          display: flex;
-          position: relative;
-          padding: 0 !important;
-        }
-      }
-    }
-
-    .side-box {
-      display: flex;
-      overflow: hidden;
-      align-items: stretch;
-      border-radius: inherit;
-
-      &::ng-deep {
-        > i {
-          padding: 0 .8em;
+            border-color: rgba(var(--color-danger-rgb), .6) !important;
         }
 
-        > * {
-          height: 100%;
-          display: flex;
-          align-items: center;
+        &.focused .control-box {
+            box-shadow: 0 0 0 .1em rgba(var(--color-danger-rgb), .1);
         }
-      }
     }
-
-    //.start-box {padding-inline-end: 0 !important;}
-    //.end-box {padding-inline-start: 0 !important;}
-
-    .control {
-      width: 100%;
-      border: none;
-      outline: none;
-      background-color: transparent;
-
-      &::placeholder {
-        color: var(--color-gray-10);
-      }
-    }
-  }
-
-  &.ng-invalid.ng-touched {
-    .control-box {
-      border-color: rgba(var(--color-danger-rgb), .6) !important;
-    }
-
-    &.focused .control-box {
-      box-shadow: 0 0 0 .1em rgba(var(--color-danger-rgb), .1);
-    }
-  }
 }
 
 ::ng-deep {
 
 
-  .control-group-below-box {
-    z-index: 5;
-    position: absolute;
-    transform-origin: top;
-    top: calc(100% + .5rem);
-    animation: below-box-animation 200ms ease;
+    .control-group-below-box {
+        z-index: 5;
+        position: absolute;
+        transform-origin: top;
+        top: calc(100% + .5rem);
+        animation: below-box-animation 200ms ease;
 
-    @keyframes below-box-animation {
-      0% {
-        opacity: 0;
-        transform: scaleY(.1);
-      }
-      100% {
-        opacity: 1;
-        transform: scaleY(1);
-      }
-    }
+        @keyframes below-box-animation {
+            0% {
+                opacity: 0;
+                transform: scaleY(.1);
+            }
+            100% {
+                opacity: 1;
+                transform: scaleY(1);
+            }
+        }
 
-    > * {
-      padding: .3rem 1rem;
-      border-radius: var(--radius-2);
-    }
+        > * {
+            padding: .3rem 1rem;
+            border-radius: var(--radius-2);
+        }
 
-    .hint-box {
-      color: var(--color-gray-7);
-      background-color: var(--color-gray--4);
-    }
+        .hint-box {
+            color: var(--color-gray-7);
+            background-color: var(--color-gray--4);
+        }
 
-    .validation-box {
-      gap: .2rem;
-      margin: 0;
-      display: flex;
-      padding: .3rem 1rem;
-      flex-direction: column;
-      padding-inline-start: 2rem;
-      color: var(--color-white-fix);
-      background-color: var(--color-danger-shade);
+        .validation-box {
+            gap: .2rem;
+            margin: 0;
+            display: flex;
+            padding: .3rem 1rem;
+            flex-direction: column;
+            padding-inline-start: 2rem;
+            color: var(--color-white-fix);
+            background-color: var(--color-danger-shade);
+        }
     }
-  }
 }

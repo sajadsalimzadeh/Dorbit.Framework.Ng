@@ -1,36 +1,36 @@
 <div class="filter-box flex-row flex-align-center">
-  <div class="flex-1">
-    <ng-content></ng-content>
-  </div>
-  <div class="filter">
-    <div class="icon-box" [ngClass]="{active: (!!valueControl.value)}" (click)="openFilterOverlay($event)">
-      <i class="icons-core-filter" #filterIconEl></i>
+    <div class="flex-1">
+        <ng-content></ng-content>
     </div>
-    <div *ngIf="!overlay && template">
-      <ng-container *ngTemplateOutlet="template; context: {$implicit: this, control: valueControl}">
-      </ng-container>
+    <div class="filter">
+        <div (click)="openFilterOverlay($event)" [ngClass]="{active: (!!valueControl.value)}" class="icon-box">
+            <i #filterIconEl class="icons-core-filter"></i>
+        </div>
+        <div *ngIf="!overlay && template">
+            <ng-container *ngTemplateOutlet="template; context: {$implicit: this, control: valueControl}">
+            </ng-container>
+        </div>
     </div>
-  </div>
 </div>
 
 
 <ng-template #overlayTpl>
-  <div (click)="stopPropagation($event)">
-    <div class="overlay-box">
-      <div class="operation">
-        <select [formControl]="operationControl">
-          <option [ngValue]="operation.key" *ngFor="let operation of operations">{{ operation.value }}</option>
-        </select>
-      </div>
-      <div class="value-box" *ngIf="overlay">
-        <ng-container *ngIf="template; else textTpl">
-          <ng-container *ngTemplateOutlet="template; context: {$implicit: this, control: valueControl}">
-          </ng-container>
-        </ng-container>
-        <ng-template #textTpl>
-          <d-input [formControl]="valueControl"></d-input>
-        </ng-template>
-      </div>
+    <div (click)="stopPropagation($event)">
+        <div class="overlay-box">
+            <div class="operation">
+                <select [formControl]="operationControl">
+                    <option *ngFor="let operation of operations" [ngValue]="operation.key">{{ operation.value }}</option>
+                </select>
+            </div>
+            <div *ngIf="overlay" class="value-box">
+                <ng-container *ngIf="template; else textTpl">
+                    <ng-container *ngTemplateOutlet="template; context: {$implicit: this, control: valueControl}">
+                    </ng-container>
+                </ng-container>
+                <ng-template #textTpl>
+                    <d-input [formControl]="valueControl"></d-input>
+                </ng-template>
+            </div>
+        </div>
     </div>
-  </div>
 </ng-template>

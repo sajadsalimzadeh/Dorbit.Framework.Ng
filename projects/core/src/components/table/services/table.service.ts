@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {BehaviorSubject, Subject} from "rxjs";
+import {Subject} from "rxjs";
 import {TableComponent} from "../table.component";
 import {SortEvent} from "../components/sort.directive";
 import {TableFilterComponent} from "../components/filter/filter.component";
@@ -7,13 +7,13 @@ import {TableConfig} from "../models";
 
 @Injectable()
 export class TableService {
-  dataTable!: TableComponent;
-  filters: TableFilterComponent[] = [];
+    dataTable!: TableComponent;
+    filters: TableFilterComponent[] = [];
 
-  onFilterChange = new Subject();
-  onSortChange = new Subject<SortEvent>();
+    onFilterChange = new Subject();
+    onSortChange = new Subject<SortEvent>();
 
-  get config(): TableConfig {
-    return this.dataTable.config;
-  }
+    get config(): TableConfig {
+        return this.dataTable.config;
+    }
 }

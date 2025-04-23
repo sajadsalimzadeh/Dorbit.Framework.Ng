@@ -1,89 +1,89 @@
 :host {
-  gap: .7em;
-  padding: 0;
-  outline: none;
-  align-items: center;
-  display: inline-flex;
-  border-radius: var(--radius-2);
-
-  &, * {
-    cursor: pointer;
-  }
-
-  &.fill .check-box {
-    color: var(--color-white);
-  }
-
-  &:hover, &:focus {
-    background-color: rgba(var(--color-component-rgb), .1);
-  }
-
-  &.fill .check-box {
-    background-color: var(--color-component);
-  }
-
-  &.value-true .check-box i.check {
-    opacity: 1
-  }
-
-  &.value-null .check-box i.minus {
-    opacity: 1
-  }
-
-  &.disabled {
-    .check-box {
-      opacity: .5;
-    }
-  }
-
-  .check-box {
-    width: 0;
-    height: 0;
-    padding: .7em;
-    position: relative;
-    border-width: .2rem;
+    gap: .7em;
+    padding: 0;
+    outline: none;
     align-items: center;
-    border-style: solid;
     display: inline-flex;
-    border-radius: inherit;
-    justify-content: center;
-    box-sizing: content-box;
-    border-color: var(--color-component);
+    border-radius: var(--radius-2);
 
-    i {
-      top: 50%;
-      left: 50%;
-      height: 0;
-      display: flex;
-      font-size: .8rem;
-      position: absolute;
-      align-items: center;
-      justify-content: center;
-      transition: opacity 300ms ease;
+    &, * {
+        cursor: pointer;
+    }
 
-      &::before {
+    &.fill .check-box {
+        color: var(--color-white);
+    }
+
+    &:hover, &:focus {
+        background-color: rgba(var(--color-component-rgb), .1);
+    }
+
+    &.fill .check-box {
+        background-color: var(--color-component);
+    }
+
+    &.value-true .check-box i.check {
+        opacity: 1
+    }
+
+    &.value-null .check-box i.minus {
+        opacity: 1
+    }
+
+    &.disabled {
+        .check-box {
+            opacity: .5;
+        }
+    }
+
+    .check-box {
         width: 0;
         height: 0;
-        display: flex;
+        padding: .7em;
+        position: relative;
+        border-width: .2rem;
         align-items: center;
+        border-style: solid;
+        display: inline-flex;
+        border-radius: inherit;
         justify-content: center;
-      }
+        box-sizing: content-box;
+        border-color: var(--color-component);
 
-      &.check, &.minus {
-        opacity: 0;
-      }
+        i {
+            top: 50%;
+            left: 50%;
+            height: 0;
+            display: flex;
+            font-size: .8rem;
+            position: absolute;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 300ms ease;
+
+            &::before {
+                width: 0;
+                height: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            &.check, &.minus {
+                opacity: 0;
+            }
+        }
     }
-  }
 
-  label {
-    display: flex;
-    font-size: 1em;
-    align-items: center;
-    padding-inline-end: .5em;
-    color: var(--color-gray-2);
+    label {
+        display: flex;
+        font-size: 1em;
+        align-items: center;
+        padding-inline-end: .5em;
+        color: var(--color-gray-2);
 
-    &:empty {
-      display: none;
+        &:empty {
+            display: none;
+        }
     }
-  }
 }

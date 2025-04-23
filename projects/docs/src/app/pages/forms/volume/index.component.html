@@ -1,38 +1,38 @@
 <h1>Volume</h1>
 <hr>
-<app-card header="Colors" class="mt-6" component="forms/volume">
-  <div class="flex-column flex-gap-5 py-1" style="width: 250px">
-    <d-volume [formControl]="formControlSingle" color="primary"></d-volume>
-    <d-volume [formControl]="formControlSingle" color="secondary"></d-volume>
-    <d-volume [formControl]="formControlSingle" color="warning"></d-volume>
-    <d-volume [formControl]="formControlSingle" color="success"></d-volume>
-    <d-volume [formControl]="formControlSingle" color="danger"></d-volume>
-    <d-volume [formControl]="formControlSingle" color="link"></d-volume>
-  </div>
-  <div class="mt-5">
-    <d-input [formControl]="formControlSingle" color="primary"></d-input>
-  </div>
+<app-card class="mt-6" component="forms/volume" header="Colors">
+    <div class="flex-column flex-gap-5 py-1" style="width: 250px">
+        <d-volume [formControl]="formControlSingle" color="primary"></d-volume>
+        <d-volume [formControl]="formControlSingle" color="secondary"></d-volume>
+        <d-volume [formControl]="formControlSingle" color="warning"></d-volume>
+        <d-volume [formControl]="formControlSingle" color="success"></d-volume>
+        <d-volume [formControl]="formControlSingle" color="danger"></d-volume>
+        <d-volume [formControl]="formControlSingle" color="link"></d-volume>
+    </div>
+    <div class="mt-5">
+        <d-input [formControl]="formControlSingle" color="primary"></d-input>
+    </div>
 </app-card>
-<app-card header="Step = 20" class="mt-6" component="forms/volume">
-  <div class="flex-column flex-gap-5 py-1" style="width: 250px">
-    <d-volume [formControl]="formControlSingle" color="primary" [step]="20"></d-volume>
-  </div>
+<app-card class="mt-6" component="forms/volume" header="Step = 20">
+    <div class="flex-column flex-gap-5 py-1" style="width: 250px">
+        <d-volume [formControl]="formControlSingle" [step]="20" color="primary"></d-volume>
+    </div>
 </app-card>
-<app-card header="Range" class="mt-6" component="forms/volume">
-  <label>Start: {{formControlMultiple.value?.start}} , End: {{formControlMultiple.value?.end}}</label>
-  <div class="flex-column flex-gap-5 py-1" style="width: 250px">
-    <d-volume [formControl]="formControlMultiple" color="primary" mode="multiple"></d-volume>
-  </div>
-  <div class="flex-row flex-gap-5 py-1" style="height: 150px">
-    <d-volume [formControl]="formControlSingle" color="primary" orientation="vertical"></d-volume>
-    <d-volume [formControl]="formControlMultiple" color="primary" orientation="vertical" mode="multiple"></d-volume>
-  </div>
+<app-card class="mt-6" component="forms/volume" header="Range">
+    <label>Start: {{ formControlMultiple.value?.start }} , End: {{ formControlMultiple.value?.end }}</label>
+    <div class="flex-column flex-gap-5 py-1" style="width: 250px">
+        <d-volume [formControl]="formControlMultiple" color="primary" mode="multiple"></d-volume>
+    </div>
+    <div class="flex-row flex-gap-5 py-1" style="height: 150px">
+        <d-volume [formControl]="formControlSingle" color="primary" orientation="vertical"></d-volume>
+        <d-volume [formControl]="formControlMultiple" color="primary" mode="multiple" orientation="vertical"></d-volume>
+    </div>
 </app-card>
-<app-card header="Customize Min Max" class="mt-6" component="forms/volume">
-  <label>Start: {{formControlMultiple2.value?.start}} , End: {{formControlMultiple2.value?.end}}</label>
-  <div class="flex-row flex-gap-5 py-1" style="width: 250px">
-    <d-volume [formControl]="formControlMultiple2"
-                color="primary" [min]="100" [max]="10000" [step]="100" mode="multiple"></d-volume>
-  </div>
+<app-card class="mt-6" component="forms/volume" header="Customize Min Max">
+    <label>Start: {{ formControlMultiple2.value?.start }} , End: {{ formControlMultiple2.value?.end }}</label>
+    <div class="flex-row flex-gap-5 py-1" style="width: 250px">
+        <d-volume [formControl]="formControlMultiple2"
+                  [max]="10000" [min]="100" [step]="100" color="primary" mode="multiple"></d-volume>
+    </div>
 </app-card>
 

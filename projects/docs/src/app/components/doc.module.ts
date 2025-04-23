@@ -5,15 +5,15 @@ import {DocCardModule} from "./card/index.module";
 import {CodeModule} from "./code/code.module";
 
 const MODULES: any[] = [
-  CommonModule,
-  DocCardModule,
-  DorbitModule,
-  CodeModule,
+    CommonModule,
+    DocCardModule,
+    DorbitModule,
+    CodeModule,
 ]
 
 @NgModule({
-  imports: MODULES,
-  exports: MODULES,
+    imports: MODULES,
+    exports: MODULES,
 })
 export class DocModule {
 }

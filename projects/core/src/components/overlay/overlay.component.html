@@ -1,14 +1,14 @@
 <ng-container>
-  <div class="overlay-container" [ngClass]="overlayClasses">
-    <div class="content-box">
-      <ng-container *ngIf="template; else elseTpl">
-        <ng-container *ngTemplateOutlet="template; context: {$implicit: this, context: context}"></ng-container>
-      </ng-container>
-      <ng-template #elseTpl>
-        <div class="text" *ngIf="text" [ngStyle]="styles">{{text}}</div>
-        <div class="html" *ngIf="html" [innerHTML]="html" [ngStyle]="styles"></div>
-        <ng-content></ng-content>
-      </ng-template>
+    <div [ngClass]="overlayClasses" class="overlay-container">
+        <div class="content-box">
+            <ng-container *ngIf="template; else elseTpl">
+                <ng-container *ngTemplateOutlet="template; context: {$implicit: this, context: context}"></ng-container>
+            </ng-container>
+            <ng-template #elseTpl>
+                <div *ngIf="text" [ngStyle]="styles" class="text">{{ text }}</div>
+                <div *ngIf="html" [innerHTML]="html" [ngStyle]="styles" class="html"></div>
+                <ng-content></ng-content>
+            </ng-template>
+        </div>
     </div>
-  </div>
 </ng-container>

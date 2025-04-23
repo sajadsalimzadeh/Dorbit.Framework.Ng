@@ -14,9 +14,9 @@ import {DocModule} from "../../../components/doc.module";
         DorbitModule,
         DocModule,
     ],
-  declarations: [
-    IndexComponent
-  ]
+    declarations: [
+        IndexComponent
+    ]
 })
 export class Module {
 

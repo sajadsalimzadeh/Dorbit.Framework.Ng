@@ -1,90 +1,91 @@
 .items {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  list-style: none;
-
-  .box {
-    flex: 1;
+    margin: 0;
+    padding: 0;
     display: flex;
-    box-sizing: border-box;
-
-    .splitter {
-      display: flex;
-      position: relative;
-      background-color: var(--color-gray--5);
-
-      .default-point {
-        display: block;
-        width: 0;
-        height: 0;
-        padding: 6px;
-        border-radius: 50%;
-        background-color: var(--color-white);
-        border: 2px solid var(--color-primary);
-      }
-    }
-
-    .start, .end {
-      display: flex;
-    }
-  }
-
-  &.dir-vertical {
-    flex-direction: column;
-    .box {
-      min-width: 200px;
-      min-height: 50px;
-      flex-direction: row;
-
-      .splitter {
-        width: 2px;
-        justify-content: center;
-      }
-
-      .start, .end {
-        width: 50%;
-      }
-
-      .start {
-        padding-inline-end: 2rem;
-        justify-content: flex-end;
-      }
-
-      .end {
-        padding-inline-start: 2rem;
-        justify-content: flex-start;
-      }
-    }
-  }
-
-  &.dir-horizontal {
-    flex-direction: row;
+    list-style: none;
 
     .box {
-      min-width: 50px;
-      min-height: 50px;
-      flex-direction: column;
+        flex: 1;
+        display: flex;
+        box-sizing: border-box;
 
-      .splitter {
-        height: 2px;
-        align-items: center;
-      }
+        .splitter {
+            display: flex;
+            position: relative;
+            background-color: var(--color-gray--5);
 
-      .start, .end {
-        height: 50%;
-        padding: 20px 0;
-      }
+            .default-point {
+                display: block;
+                width: 0;
+                height: 0;
+                padding: 6px;
+                border-radius: 50%;
+                background-color: var(--color-white);
+                border: 2px solid var(--color-primary);
+            }
+        }
 
-      .start {
-        padding-block-end: 2rem;
-        align-items: flex-end;
-      }
-
-      .end {
-        padding-block-start: 2rem;
-        align-items: flex-start;
-      }
+        .start, .end {
+            display: flex;
+        }
     }
-  }
+
+    &.dir-vertical {
+        flex-direction: column;
+
+        .box {
+            min-width: 200px;
+            min-height: 50px;
+            flex-direction: row;
+
+            .splitter {
+                width: 2px;
+                justify-content: center;
+            }
+
+            .start, .end {
+                width: 50%;
+            }
+
+            .start {
+                padding-inline-end: 2rem;
+                justify-content: flex-end;
+            }
+
+            .end {
+                padding-inline-start: 2rem;
+                justify-content: flex-start;
+            }
+        }
+    }
+
+    &.dir-horizontal {
+        flex-direction: row;
+
+        .box {
+            min-width: 50px;
+            min-height: 50px;
+            flex-direction: column;
+
+            .splitter {
+                height: 2px;
+                align-items: center;
+            }
+
+            .start, .end {
+                height: 50%;
+                padding: 20px 0;
+            }
+
+            .start {
+                padding-block-end: 2rem;
+                align-items: flex-end;
+            }
+
+            .end {
+                padding-block-start: 2rem;
+                align-items: flex-start;
+            }
+        }
+    }
 }

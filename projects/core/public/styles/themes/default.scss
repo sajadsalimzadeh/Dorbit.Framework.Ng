@@ -1,144 +1,143 @@
 
-
 :root {
 
-  --color-white-fix: rgb(255, 255, 255);
-  --color-white-fix-rgb: 255, 255, 255;
+    --color-white-fix: rgb(255, 255, 255);
+    --color-white-fix-rgb: 255, 255, 255;
 
-  --color-black-fix: rgb(0, 0, 0);
-  --color-black-fix-rgb: 0, 0, 0;
+    --color-black-fix: rgb(0, 0, 0);
+    --color-black-fix-rgb: 0, 0, 0;
 
-  --color-primary-tint: rgb(144, 156, 255);
-  --color-primary-tint-rgb: 144, 156, 255;
-  --color-primary: rgb(98, 111, 225);
-  --color-primary-rgb: 98, 111, 225;
-  --color-primary-shade: rgb(56, 75, 213);
-  --color-primary-shade-rgb: 56, 75, 213;
-  --color-primary-text: var(--color-white-fix);
+    --color-primary-tint: rgb(144, 156, 255);
+    --color-primary-tint-rgb: 144, 156, 255;
+    --color-primary: rgb(98, 111, 225);
+    --color-primary-rgb: 98, 111, 225;
+    --color-primary-shade: rgb(56, 75, 213);
+    --color-primary-shade-rgb: 56, 75, 213;
+    --color-primary-text: var(--color-white-fix);
 
-  --color-secondary-tint: rgb(139, 173, 228);
-  --color-secondary-tint-rgb: 139, 173, 228;
-  --color-secondary: rgb(81, 121, 186);
-  --color-secondary-rgb: 81, 121, 186;
-  --color-secondary-shade: rgb(56, 97, 165);
-  --color-secondary-shade-rgb: 56, 97, 165;
-  --color-secondary-text: var(--color-white-fix);
+    --color-secondary-tint: rgb(139, 173, 228);
+    --color-secondary-tint-rgb: 139, 173, 228;
+    --color-secondary: rgb(81, 121, 186);
+    --color-secondary-rgb: 81, 121, 186;
+    --color-secondary-shade: rgb(56, 97, 165);
+    --color-secondary-shade-rgb: 56, 97, 165;
+    --color-secondary-text: var(--color-white-fix);
 
-  --color-success-tint: rgb(118, 227, 167);
-  --color-success-tint-rgb: 118, 227, 167;
-  --color-success: rgb(75, 187, 125);
-  --color-success-rgb: 75, 187, 125;
-  --color-success-shade: rgb(47, 156, 96);
-  --color-success-shade-rgb: 47, 156, 96;
-  --color-success-text: var(--color-white-fix);
+    --color-success-tint: rgb(118, 227, 167);
+    --color-success-tint-rgb: 118, 227, 167;
+    --color-success: rgb(75, 187, 125);
+    --color-success-rgb: 75, 187, 125;
+    --color-success-shade: rgb(47, 156, 96);
+    --color-success-shade-rgb: 47, 156, 96;
+    --color-success-text: var(--color-white-fix);
 
-  --color-warning-tint: rgb(255, 198, 118);
-  --color-warning-tint-rgb: 255, 198, 118;
-  --color-warning: rgb(250, 173, 65);
-  --color-warning-rgb: 250, 173, 65;
-  --color-warning-shade: rgb(227, 136, 10);
-  --color-warning-shade-rgb: 227, 136, 10;
-  --color-warning-text: var(--color-white-fix);
+    --color-warning-tint: rgb(255, 198, 118);
+    --color-warning-tint-rgb: 255, 198, 118;
+    --color-warning: rgb(250, 173, 65);
+    --color-warning-rgb: 250, 173, 65;
+    --color-warning-shade: rgb(227, 136, 10);
+    --color-warning-shade-rgb: 227, 136, 10;
+    --color-warning-text: var(--color-white-fix);
 
-  --color-danger-tint: rgb(255, 124, 124);
-  --color-danger-tint-rgb: 255, 124, 124;
-  --color-danger: rgb(255, 72, 72);
-  --color-danger-rgb: 255, 72, 72;
-  --color-danger-shade: rgb(218, 44, 44);
-  --color-danger-shade-rgb: 218, 44, 44;
-  --color-danger-text: var(--color-white-fix);
+    --color-danger-tint: rgb(255, 124, 124);
+    --color-danger-tint-rgb: 255, 124, 124;
+    --color-danger: rgb(255, 72, 72);
+    --color-danger-rgb: 255, 72, 72;
+    --color-danger-shade: rgb(218, 44, 44);
+    --color-danger-shade-rgb: 218, 44, 44;
+    --color-danger-text: var(--color-white-fix);
 
-  --color-link-tint: rgb(143, 194, 250);
-  --color-link-tint-rgb: 143, 194, 250;
-  --color-link: rgb(91, 163, 241);
-  --color-link-rgb: 91, 163, 241;
-  --color-link-shade: rgb(58, 130, 216);
-  --color-link-shade-rgb: 58, 130, 216;
-  --color-link-text: var(--color-white-fix);
+    --color-link-tint: rgb(143, 194, 250);
+    --color-link-tint-rgb: 143, 194, 250;
+    --color-link: rgb(91, 163, 241);
+    --color-link-rgb: 91, 163, 241;
+    --color-link-shade: rgb(58, 130, 216);
+    --color-link-shade-rgb: 58, 130, 216;
+    --color-link-text: var(--color-white-fix);
 
-  --color-white-text: var(--color-gray-5);
-  --color-black-text: var(--color-white);
+    --color-white-text: var(--color-gray-5);
+    --color-black-text: var(--color-white);
 
-  --color-gray--0-text: var(--color-gray-10);
-  --color-gray--1-text: var(--color-gray-10);
-  --color-gray--2-text: var(--color-gray-9);
-  --color-gray--3-text: var(--color-gray-9);
-  --color-gray--4-text: var(--color-gray-8);
-  --color-gray--5-text: var(--color-gray-8);
-  --color-gray--6-text: var(--color-gray-7);
-  --color-gray--7-text: var(--color-gray-7);
-  --color-gray--8-text: var(--color-gray-6);
-  --color-gray--9-text: var(--color-gray-6);
-  --color-gray--10-text: var(--color-gray-5);
+    --color-gray--0-text: var(--color-gray-10);
+    --color-gray--1-text: var(--color-gray-10);
+    --color-gray--2-text: var(--color-gray-9);
+    --color-gray--3-text: var(--color-gray-9);
+    --color-gray--4-text: var(--color-gray-8);
+    --color-gray--5-text: var(--color-gray-8);
+    --color-gray--6-text: var(--color-gray-7);
+    --color-gray--7-text: var(--color-gray-7);
+    --color-gray--8-text: var(--color-gray-6);
+    --color-gray--9-text: var(--color-gray-6);
+    --color-gray--10-text: var(--color-gray-5);
 
-  --color-gray-10-text: var(--color-gray--5);
-  --color-gray-9-text: var(--color-gray--6);
-  --color-gray-8-text: var(--color-gray--6);
-  --color-gray-7-text: var(--color-gray--7);
-  --color-gray-6-text: var(--color-gray--7);
-  --color-gray-5-text: var(--color-gray--8);
-  --color-gray-4-text: var(--color-gray--8);
-  --color-gray-3-text: var(--color-gray--9);
-  --color-gray-2-text: var(--color-gray--9);
-  --color-gray-1-text: var(--color-gray--10);
-  --color-gray-0-text: var(--color-gray--10);
+    --color-gray-10-text: var(--color-gray--5);
+    --color-gray-9-text: var(--color-gray--6);
+    --color-gray-8-text: var(--color-gray--6);
+    --color-gray-7-text: var(--color-gray--7);
+    --color-gray-6-text: var(--color-gray--7);
+    --color-gray-5-text: var(--color-gray--8);
+    --color-gray-4-text: var(--color-gray--8);
+    --color-gray-3-text: var(--color-gray--9);
+    --color-gray-2-text: var(--color-gray--9);
+    --color-gray-1-text: var(--color-gray--10);
+    --color-gray-0-text: var(--color-gray--10);
 
-  // Fonts
-  --font-family: sans-serif;
+    // Fonts
+    --font-family: sans-serif;
 
-  --font-size-base: 12px;
-  --font-size--7: calc(var(--font-size-base) - 1rem);
-  --font-size--6: calc(var(--font-size-base) - .85rem);
-  --font-size--5: calc(var(--font-size-base) - .7rem);
-  --font-size--4: calc(var(--font-size-base) - .55rem);
-  --font-size--3: calc(var(--font-size-base) - .4rem);
-  --font-size--2: calc(var(--font-size-base) - .25rem);
-  --font-size--1: calc(var(--font-size-base) - .1rem);
-  --font-size-0: calc(var(--font-size-base));
-  --font-size-1: calc(var(--font-size-base) + .1rem);
-  --font-size-2: calc(var(--font-size-base) + .25rem);
-  --font-size-3: calc(var(--font-size-base) + .4rem);
-  --font-size-4: calc(var(--font-size-base) + .55rem);
-  --font-size-5: calc(var(--font-size-base) + .7rem);
-  --font-size-6: calc(var(--font-size-base) + .85rem);
-  --font-size-7: calc(var(--font-size-base) + 1rem);
-  --font-size-8: calc(var(--font-size-base) + 1.15rem);
-  --font-size-9: calc(var(--font-size-base) + 1.3rem);
-  --font-size-10: calc(var(--font-size-base) + 1.45rem);
+    --font-size-base: 12px;
+    --font-size--7: calc(var(--font-size-base) - 1rem);
+    --font-size--6: calc(var(--font-size-base) - .85rem);
+    --font-size--5: calc(var(--font-size-base) - .7rem);
+    --font-size--4: calc(var(--font-size-base) - .55rem);
+    --font-size--3: calc(var(--font-size-base) - .4rem);
+    --font-size--2: calc(var(--font-size-base) - .25rem);
+    --font-size--1: calc(var(--font-size-base) - .1rem);
+    --font-size-0: calc(var(--font-size-base));
+    --font-size-1: calc(var(--font-size-base) + .1rem);
+    --font-size-2: calc(var(--font-size-base) + .25rem);
+    --font-size-3: calc(var(--font-size-base) + .4rem);
+    --font-size-4: calc(var(--font-size-base) + .55rem);
+    --font-size-5: calc(var(--font-size-base) + .7rem);
+    --font-size-6: calc(var(--font-size-base) + .85rem);
+    --font-size-7: calc(var(--font-size-base) + 1rem);
+    --font-size-8: calc(var(--font-size-base) + 1.15rem);
+    --font-size-9: calc(var(--font-size-base) + 1.3rem);
+    --font-size-10: calc(var(--font-size-base) + 1.45rem);
 
-  //Sizing
-  --size-0: 0rem;
-  --size-1: .3rem;
-  --size-2: .6rem;
-  --size-3: .9rem;
-  --size-4: 1.2rem;
-  --size-5: 1.5rem;
-  --size-6: 1.8rem;
-  --size-7: 2.1rem;
-  --size-8: 2.4rem;
-  --size-9: 2.7rem;
-  --size-10: 3rem;
+    //Sizing
+    --size-0: 0rem;
+    --size-1: .3rem;
+    --size-2: .6rem;
+    --size-3: .9rem;
+    --size-4: 1.2rem;
+    --size-5: 1.5rem;
+    --size-6: 1.8rem;
+    --size-7: 2.1rem;
+    --size-8: 2.4rem;
+    --size-9: 2.7rem;
+    --size-10: 3rem;
 
-  //Radius
-  --radius-1: .1rem;
-  --radius-2: .25rem;
-  --radius-3: .4rem;
-  --radius-4: .55rem;
-  --radius-5: .7rem;
-  --radius-6: .85rem;
-  --radius-7: 1rem;
-  --radius-8: 1.15rem;
-  --radius-9: 1.3rem;
-  --radius-10: 1.45rem;
+    //Radius
+    --radius-1: .1rem;
+    --radius-2: .25rem;
+    --radius-3: .4rem;
+    --radius-4: .55rem;
+    --radius-5: .7rem;
+    --radius-6: .85rem;
+    --radius-7: 1rem;
+    --radius-8: 1.15rem;
+    --radius-9: 1.3rem;
+    --radius-10: 1.45rem;
 
-  --font-size-xxs: .7rem;
-  --font-size-xs: .8rem;
-  --font-size-sm: .9rem;
-  --font-size-md: 1rem;
-  --font-size-lg: 1.15rem;
-  --font-size-xl: 1.3rem;
-  --font-size-xxl: 1.45rem;
+    --font-size-xxs: .7rem;
+    --font-size-xs: .8rem;
+    --font-size-sm: .9rem;
+    --font-size-md: 1rem;
+    --font-size-lg: 1.15rem;
+    --font-size-xl: 1.3rem;
+    --font-size-xxl: 1.45rem;
 
-  // Components
-  --date-picker-size: 25rem;
+    // Components
+    --date-picker-size: 25rem;
 }

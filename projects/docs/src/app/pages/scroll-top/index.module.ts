@@ -6,17 +6,17 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {DorbitModule} from "@framework";
 
 @NgModule({
-  imports: [
-    FormsModule,
-    CommonModule,
-    ReactiveFormsModule,
-    RouterModule.forChild([{path: '', component: IndexComponent}]),
+    imports: [
+        FormsModule,
+        CommonModule,
+        ReactiveFormsModule,
+        RouterModule.forChild([{path: '', component: IndexComponent}]),
 
-    DorbitModule,
-  ],
-  declarations: [
-    IndexComponent
-  ]
+        DorbitModule,
+    ],
+    declarations: [
+        IndexComponent
+    ]
 })
 export class Module {
 

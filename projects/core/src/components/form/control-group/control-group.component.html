@@ -1,40 +1,40 @@
-<div class="control-box" [dOverlay]="{template: validationBoxTpl, verticalThreshold: 10, autoClose: true}">
-  <div class="side-box start-box" *ngIf="prependTemplate">
-    <ng-container *ngTemplateOutlet="prependTemplate"></ng-container>
-  </div>
-  <div class="control-box-container">
-    <ng-content></ng-content>
-    <label class="label-box" *ngIf="label || labelTemplate" [ngClass]="labelMode">
-      <ng-container *ngIf="labelTemplate; else defaultLabelTpl">
-        <ng-container *ngTemplateOutlet="labelTemplate; context: {label: label}"></ng-container>
-      </ng-container>
-      <ng-template #defaultLabelTpl>
-        {{label}}
-        <span class="required" *ngIf="isRequired">*</span>
-      </ng-template>
-    </label>
-  </div>
-  <div class="side-box end-box" *ngIf="appendTemplate">
-    <ng-container *ngTemplateOutlet="appendTemplate"></ng-container>
-  </div>
+<div [dOverlay]="{template: validationBoxTpl, verticalThreshold: 10, autoClose: true}" class="control-box">
+    <div *ngIf="prependTemplate" class="side-box start-box">
+        <ng-container *ngTemplateOutlet="prependTemplate"></ng-container>
+    </div>
+    <div class="control-box-container">
+        <ng-content></ng-content>
+        <label *ngIf="label || labelTemplate" [ngClass]="labelMode" class="label-box">
+            <ng-container *ngIf="labelTemplate; else defaultLabelTpl">
+                <ng-container *ngTemplateOutlet="labelTemplate; context: {label: label}"></ng-container>
+            </ng-container>
+            <ng-template #defaultLabelTpl>
+                {{ label }}
+                <span *ngIf="isRequired" class="required">*</span>
+            </ng-template>
+        </label>
+    </div>
+    <div *ngIf="appendTemplate" class="side-box end-box">
+        <ng-container *ngTemplateOutlet="appendTemplate"></ng-container>
+    </div>
 </div>
 <ng-template #validationBoxTpl>
-  <ng-container *ngIf="focused && formControl?.dirty">
-    <div class="control-group-below-box">
-      <ul class="validation-box" *ngIf="errors?.length; else noErrorTpl">
-        <li *ngFor="let error of errors">
-          <span>{{error.message}}</span>
-          <ng-container *ngIf="!focused && errors.length > 1">
-            <span>{{errors.length - 1}}</span>
-            <span>more errors</span>
-          </ng-container>
-        </li>
-      </ul>
-      <ng-template #noErrorTpl>
-        <div class="hint-box" *ngIf="hint">
-          {{hint}}
+    <ng-container *ngIf="focused && formControl?.dirty">
+        <div class="control-group-below-box">
+            <ul *ngIf="errors?.length; else noErrorTpl" class="validation-box">
+                <li *ngFor="let error of errors">
+                    <span>{{ error.message }}</span>
+                    <ng-container *ngIf="!focused && errors.length > 1">
+                        <span>{{ errors.length - 1 }}</span>
+                        <span>more errors</span>
+                    </ng-container>
+                </li>
+            </ul>
+            <ng-template #noErrorTpl>
+                <div *ngIf="hint" class="hint-box">
+                    {{ hint }}
+                </div>
+            </ng-template>
         </div>
-      </ng-template>
-    </div>
-  </ng-container>
+    </ng-container>
 </ng-template>

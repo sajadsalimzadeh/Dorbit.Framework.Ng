@@ -1,57 +1,57 @@
 <h1>Data Table</h1>
 <hr>
 <app-card [filenames]="filenames" component="table" header="Data Table">
-  <d-table [data]="data" [config]="config" style="height: 700px">
-    <ng-template #filterTextTpl let-control="control">
-      <input class="form-control" [formControl]="control" placeholder="Value"/>
-    </ng-template>
+    <d-table [config]="config" [data]="data" style="height: 700px">
+        <ng-template #filterTextTpl let-control="control">
+            <input [formControl]="control" class="form-control" placeholder="Value"/>
+        </ng-template>
 
-    <ng-template dTemplate="caption">
-      <d-button icon="far fa-plus">Add New Record</d-button>
-    </ng-template>
+        <ng-template dTemplate="caption">
+            <d-button icon="far fa-plus">Add New Record</d-button>
+        </ng-template>
 
-    <ng-template dTemplate="header">
-      <tr>
-        <th style="width: 50px"></th>
-        <th style="width: 50px"></th>
-        <th field="id">Id</th>
-        <th field="first_name">Firstname</th>
-        <th field="last_name">Lastname</th>
-        <th field="email">Email</th>
-        <th field="gender">Gender</th>
-        <th field="ip_address">IP Address</th>
-      </tr>
-    </ng-template>
-    <ng-template dTemplate="body" let-item>
-      <tr>
-        <td>
-          <d-table-row-expander [item]="item"></d-table-row-expander>
-        </td>
-        <td>
-          <d-checkbox [(ngModel)]="item['selected']"></d-checkbox>
-        </td>
-        <td>{{item.id}}</td>
-        <td>{{item.first_name}}</td>
-        <td>{{item.last_name}}</td>
-        <td>{{item.email}}</td>
-        <td>{{item.gender}}</td>
-        <td>{{item.ip_address}}</td>
-      </tr>
-    </ng-template>
-    <ng-template dTemplate="detail" let-item>
-      {{item.email}}
-    </ng-template>
-    <ng-template dTemplate="footer">
-      <tr>
-        <th></th>
-        <th></th>
-        <th>#</th>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
-        <th>Gender</th>
-        <th>IP Address</th>
-      </tr>
-    </ng-template>
-  </d-table>
+        <ng-template dTemplate="header">
+            <tr>
+                <th style="width: 50px"></th>
+                <th style="width: 50px"></th>
+                <th field="id">Id</th>
+                <th field="first_name">Firstname</th>
+                <th field="last_name">Lastname</th>
+                <th field="email">Email</th>
+                <th field="gender">Gender</th>
+                <th field="ip_address">IP Address</th>
+            </tr>
+        </ng-template>
+        <ng-template dTemplate="body" let-item>
+            <tr>
+                <td>
+                    <d-table-row-expander [item]="item"></d-table-row-expander>
+                </td>
+                <td>
+                    <d-checkbox [(ngModel)]="item['selected']"></d-checkbox>
+                </td>
+                <td>{{ item.id }}</td>
+                <td>{{ item.first_name }}</td>
+                <td>{{ item.last_name }}</td>
+                <td>{{ item.email }}</td>
+                <td>{{ item.gender }}</td>
+                <td>{{ item.ip_address }}</td>
+            </tr>
+        </ng-template>
+        <ng-template dTemplate="detail" let-item>
+            {{ item.email }}
+        </ng-template>
+        <ng-template dTemplate="footer">
+            <tr>
+                <th></th>
+                <th></th>
+                <th>#</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+                <th>Gender</th>
+                <th>IP Address</th>
+            </tr>
+        </ng-template>
+    </d-table>
 </app-card>

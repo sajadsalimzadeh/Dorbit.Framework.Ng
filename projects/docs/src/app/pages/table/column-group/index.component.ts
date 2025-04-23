@@ -2,11 +2,11 @@ import {Component} from '@angular/core';
 import {getTableData} from "../index.component";
 
 @Component({
-  selector: 'doc-data-table-column-group',
-  templateUrl: './index.component.html',
-  styleUrls: ['./index.component.scss']
+    selector: 'doc-data-table-column-group',
+    templateUrl: './index.component.html',
+    styleUrls: ['./index.component.scss']
 })
 export class IndexComponent {
-  data = getTableData();
-  filenames = ['index.component.html', 'index.component.ts'];
+    data = getTableData();
+    filenames = ['index.component.html', 'index.component.ts'];
 }

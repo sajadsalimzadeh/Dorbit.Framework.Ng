@@ -6,9 +6,11 @@ import {TableFilterComponent} from "./components/filter/filter.component";
 import {TableRowExpanderComponent} from "./components/row-expander/row-expander.component";
 import {TableSortDirective} from "./components/sort.directive";
 import {TableTemplateDirective} from "./components/table-template.directive";
-import {ResponsiveDirective, TemplateDirective} from "../../directives";
-import {InputComponent, SelectComponent} from "../form";
+import {ResponsiveDirective} from "../../directives/responsive.directive";
+import {InputComponent} from "../form/input/input.component";
 import {PaginatorComponent} from "../paginator/paginator.component";
+import {TemplateDirective} from "../../directives/template.directive";
+import {SelectComponent} from "../form/select/select.component";
 
 export * from './models';
 export * from './table.component';

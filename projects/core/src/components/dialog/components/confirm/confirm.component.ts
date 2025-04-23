@@ -1,9 +1,9 @@
 import {Component, EventEmitter, TemplateRef, ViewChild} from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {DialogService, DialogRef} from "../../services/dialog.service";
+import {DialogRef, DialogService} from "../../services/dialog.service";
 import {DialogOptions} from "../dialog/dialog.component";
 import {ConfirmButton, ConfirmOptions} from "../../models";
-import {LoadingService} from "../../../../services";
+import {LoadingService} from "../../../../services/loading.service";
 import {ButtonComponent} from "../../../button/button.component";
 
 @Component({
@@ -11,31 +11,31 @@ import {ButtonComponent} from "../../../button/button.component";
     imports: [CommonModule, ButtonComponent],
     selector: 'd-confirm',
     templateUrl: 'confirm.component.html',
-    styleUrls: ['./confirm.component.scss'],
+    styleUrls: ['./confirm.component.scss']
 })
 export class ConfirmComponent implements ConfirmOptions, DialogRef {
-  onClose = new EventEmitter<void>();
+    onClose = new EventEmitter<void>();
 
-  message!: string;
-  options!: DialogOptions;
+    message!: string;
+    options!: DialogOptions;
 
-  dialog?: DialogRef;
-  loading?: boolean;
-  buttons: ConfirmButton[] = [];
+    dialog?: DialogRef;
+    loading?: boolean;
+    buttons: ConfirmButton[] = [];
 
-  @ViewChild('confirmTpl') set template(value: TemplateRef<any>) {
-    if(this.dialog) return;
-    this.dialog = this.diagService.open({
-      width: '400px',
-      ...this.options,
-      template: value,
-    })
-  }
+    constructor(private diagService: DialogService, protected loadingService: LoadingService) {
+    }
 
-  constructor(private diagService: DialogService, protected loadingService: LoadingService) {
-  }
+    @ViewChild('confirmTpl') set template(value: TemplateRef<any>) {
+        if (this.dialog) return;
+        this.dialog = this.diagService.open({
+            width: '400px',
+            ...this.options,
+            template: value,
+        })
+    }
 
-  close() {
-    this.dialog?.close();
-  }
+    close() {
+        this.dialog?.close();
+    }
 }
