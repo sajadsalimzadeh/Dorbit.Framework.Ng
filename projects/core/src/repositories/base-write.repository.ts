@@ -41,7 +41,7 @@ export abstract class BaseWriteRepository<T = any> extends BaseReadRepository<T>
         }
     }
 
-    remove(id: any) {
+    delete(id: any) {
         return this.http.delete<QueryResult<T>>(`${id}`);
     }
 }
