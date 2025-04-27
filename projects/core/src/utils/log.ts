@@ -34,6 +34,7 @@ interface Settings {
 }
 
 interface Options {
+    scope?: string;
     encryptor?: LogEncryptor;
     data?: any;
     console?: boolean;
@@ -55,6 +56,7 @@ export class Logger {
     settings: Settings = {level: LogLevel.INFO}
     defaultOptions: Options = {};
     defaultData: any = {};
+
     private logTimeMessages: { [key: string]: number } = {};
     private name = 'root';
     private logs: LogRecord[] = [];
@@ -106,6 +108,7 @@ export class Logger {
 
     private log(message: string, level: LogLevel, options?: Options) {
         options ??= {};
+        if(options.scope) message = `[${options.scope.toUpperCase()}]: ${message}`;
         try {
             if (!this.enable) return;
             if (this.defaultOptions) options = {...this.defaultOptions, ...options};
