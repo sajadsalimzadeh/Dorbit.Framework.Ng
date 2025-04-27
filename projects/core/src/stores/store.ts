@@ -68,5 +68,8 @@ export class Store<T extends object> {
 
     async delete() {
         await this.cacheService.remove(this.name);
+        for (const storeKey in this._store) {
+            delete this._store[storeKey];
+        }
     }
 }

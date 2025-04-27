@@ -15,7 +15,7 @@ export abstract class BaseDataComponent extends BaseDataViewComponent {
     remove(item: any, title?: string, body?: string) {
         const dialog = this.dialogService.confirmYesNo(() => {
             dialog.loading = true;
-            this.repository.remove(item.id).subscribe({
+            this.repository.delete(item.id).subscribe({
                 next: () => {
                     dialog.loading = false;
                     this.load();
