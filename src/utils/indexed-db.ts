@@ -133,10 +133,12 @@ export class IndexedDB implements IDatabase {
     public async putAll(tableName: string, values: any[]) {
         const tx = this.db.transaction(tableName, 'readwrite');
         const store = tx.objectStore(tableName);
+        const promises = [] as Promise<void>[];
         for (const value of values) {
-            await this.toPromise(() => store.put(value), value);
+          promises.push(this.toPromise(() => store.put(value), value));
         }
-        return await this.getAll(tableName);
+        await Promise.all(promises);
+        return true;
     }
 
     public delete(tableName: string, id: any) {

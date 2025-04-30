@@ -122,8 +122,8 @@ export class CacheStorageIndexDb implements ICacheStorage {
     private readonly db: IndexedDB;
     private readonly prefix: string;
 
-    constructor(options: { dbName?: string, prefix?: string } = {}) {
-        this.db = new IndexedDB({name: options.dbName ?? 'cache', version: 3});
+    constructor(options: { dbName?: string, version?: number, prefix?: string } = {}) {
+        this.db = new IndexedDB({name: options.dbName ?? 'cache', version: options.version ?? 3});
         this.prefix = options.prefix ?? 'cache-';
         this.db.create('items', {key: 'key'});
         this.db.open().then(() => {

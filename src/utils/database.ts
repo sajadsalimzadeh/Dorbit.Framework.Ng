@@ -21,11 +21,11 @@ export interface IDatabase {
 
     add(tableName: string, value: any): Promise<any>;
 
-    addAll(tableName: string, values: any[]): Promise<any[]>;
+    addAll(tableName: string, values: any[]): Promise<boolean>;
 
     put(tableName: string, value: any): Promise<any>;
 
-    putAll(tableName: string, values: any[]): Promise<any[]>;
+    putAll(tableName: string, values: any[]): Promise<boolean>;
 
     delete(tableName: string, id: any): Promise<void>;
 
@@ -44,19 +44,19 @@ export interface ITableChangeEvent<T = any> {
 export interface ITable<TEntity = any, TKey = any> {
     $change: Subject<ITableChangeEvent<TEntity>>;
 
-    get(key: TKey): Promise<TEntity | null>;
+    get(key: TKey): Promise<TEntity | undefined>;
 
-    getWithCache(key: TKey): Promise<TEntity | null>;
+    getWithCache(key: TKey): Promise<TEntity | undefined>;
 
-    getAll(query?: IDBValidKey | IDBKeyRange | null | undefined, count?: number | undefined): Promise<TEntity[]>;
+    getAll(query?: IDBValidKey | IDBKeyRange | undefined, count?: number | undefined): Promise<TEntity[]>;
 
     put(value: TEntity): Promise<TKey>;
 
     add(value: TEntity | {}): Promise<TKey>;
 
-    addAll(value: TEntity[]): Promise<TKey[]>;
+    addAll(value: TEntity[]): Promise<boolean>;
 
-    putAll(values: TEntity[]): Promise<TKey[]>;
+    putAll(values: TEntity[]): Promise<boolean>;
 
     delete(key: TKey): Promise<void>;
 

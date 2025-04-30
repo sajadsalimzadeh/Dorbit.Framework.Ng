@@ -1,17 +1,18 @@
-import {Injectable, Injector} from '@angular/core';
+import {Inject, Injectable, Injector} from '@angular/core';
 import {Observable} from "rxjs";
 import {CancellationToken} from "../contracts/cancelation-token";
 import {BaseApiRepository} from "./base-api.repository";
 import {delay} from '../utils/delay';
 import {JobDto, JobLogDto} from "../contracts/job";
 import {QueryResult} from "../contracts/command-result";
+import {BASE_FRAMEWORK_URL} from '../contracts/tokens';
 
 @Injectable({providedIn: 'root'})
 export class JobRepository extends BaseApiRepository {
 
 
-    constructor(injector: Injector) {
-        super(injector, 'Jobs');
+    constructor(injector: Injector, @Inject(BASE_FRAMEWORK_URL) baseUrl: string) {
+        super(injector, baseUrl, 'Jobs');
     }
 
     getAll() {

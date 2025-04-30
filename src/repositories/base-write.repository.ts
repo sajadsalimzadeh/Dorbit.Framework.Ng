@@ -18,8 +18,8 @@ export interface ISaveRepository {
 
 export abstract class BaseWriteRepository<T = any> extends BaseReadRepository<T> implements ISaveRepository, IEditRepository, IAddRepository {
 
-    constructor(injector: Injector, repository: string) {
-        super(injector, repository);
+    constructor(injector: Injector, baseUrl: string, repository: string) {
+        super(injector, baseUrl, repository);
     }
 
     add(request: any) {
