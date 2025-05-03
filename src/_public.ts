@@ -11,7 +11,8 @@ export * from './stores';
 export * from './utils/_public';
 export * from './types';
 
-export * from './dorbit.module';
+export * from './module';
+export * from './framework';
 
 export function dorbitRoutes() {
     return [] as Routes;

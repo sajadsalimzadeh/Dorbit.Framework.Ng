@@ -1,7 +1,7 @@
 import {Inject, Injectable, Injector} from '@angular/core';
 import {BaseApiRepository} from "./base-api.repository";
 import {QueryResult} from "../contracts/command-result";
-import {BASE_FRAMEWORK_URL} from '../contracts/tokens';
+import {BASE_FRAMEWORK_URL} from '../framework';
 
 @Injectable({providedIn: 'root'})
 export class FileRepository extends BaseApiRepository {

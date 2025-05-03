@@ -1,7 +1,8 @@
 import {Inject, Injectable, Injector} from '@angular/core';
 import {CommandResult, QueryResult} from "../contracts/command-result";
 import {BaseApiRepository} from './base-api.repository';
-import {BASE_FRAMEWORK_URL} from '../contracts/tokens';
+import {BASE_FRAMEWORK_URL} from '../framework';
+import {Setting} from "../contracts/setting";
 
 @Injectable({providedIn: 'root'})
 export class SettingRepository extends BaseApiRepository {
@@ -11,12 +12,12 @@ export class SettingRepository extends BaseApiRepository {
   }
 
   get(key: string) {
-    return this.http.get<QueryResult>(`${key}`);
+    return this.http.get<QueryResult<Setting>>(`${key}`);
   }
 
 
   getAll(keys: string[]) {
-    return this.http.get<QueryResult>(``, {params: {keys}});
+    return this.http.get<QueryResult<Setting[]>>(``, {params: {keys}});
   }
 
   save(key: string, value: any) {
