@@ -80,7 +80,7 @@ class CustomHttpHandler extends HttpHandler {
           baseUrl += (baseUrl.endsWith('/') ? '' : '/') + this.api.repository;
         }
         if (!baseUrl.endsWith('/')) baseUrl += '/';
-        url = baseUrl + url;
+        url = baseUrl + (url.startsWith('/') ? url.substring(1) : url);
 
         if (url.endsWith('/')) url = url.substring(0, url.length - 1);
       }
