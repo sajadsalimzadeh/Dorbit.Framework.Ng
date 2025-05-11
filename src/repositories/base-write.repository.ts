@@ -1,7 +1,7 @@
 import {Injector} from "@angular/core";
 import {BaseReadRepository} from "./base-read.repository";
 import {Observable} from "rxjs";
-import {QueryResult} from "../contracts/command-result";
+import {QueryResult} from "../contracts/results";
 
 export interface IAddRepository {
     add(request: any): Observable<QueryResult>;

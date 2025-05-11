@@ -1,4 +1,4 @@
-export * from './command-result';
+export * from './results';
 export * from './time-span';
 export * from './dispose';
 export * from './odata-query-options';
@@ -8,3 +8,4 @@ export * from './promise';
 export * from './background-worker';
 export * from '../framework';
 export * from './job';
+export * from './enums';

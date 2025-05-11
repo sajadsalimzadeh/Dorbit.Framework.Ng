@@ -2,7 +2,7 @@ import {Injector} from "@angular/core";
 import {ODataQueryOptions} from "../contracts/odata-query-options";
 import {BaseApiRepository} from "./base-api.repository";
 import {Observable} from "rxjs";
-import {PagedListResult, QueryResult} from "../contracts/command-result";
+import {PagedListResult, QueryResult} from "../contracts/results";
 
 export abstract class BaseReadRepository<T = any> extends BaseApiRepository {
 

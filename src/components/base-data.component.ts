@@ -3,7 +3,7 @@ import {BaseWriteRepository} from "../repositories/base-write.repository";
 import {ODataQueryOptions} from '../contracts/odata-query-options';
 import {BaseDataViewComponent} from "./base-data-view.component";
 import {Observable} from "rxjs";
-import {PagedListResult} from "../contracts/command-result";
+import {PagedListResult} from "../contracts/results";
 
 @Directive()
 export abstract class BaseDataComponent extends BaseDataViewComponent {
