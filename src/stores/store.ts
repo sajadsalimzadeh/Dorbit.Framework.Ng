@@ -15,7 +15,7 @@ export class Store<T extends object> {
   protected onChangeByKeys: { [key: string]: BehaviorSubject<T> } = {}
   private readonly _store: any = {};
 
-  constructor(protected name: string, private defaults?: T) {
+  constructor(protected name: string, public defaults?: T) {
     try {
       this.cacheService = new IndexedDbCacheService(new CacheStorageIndexDb({dbName: 'store'}));
       this.onChange = new BehaviorSubject<ChangeEvent<T>>({

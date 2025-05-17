@@ -4,7 +4,7 @@ import {CancellationToken} from "../contracts/cancelation-token";
 import {BaseApiRepository} from "./base-api.repository";
 import {delay} from '../utils/delay';
 import {JobDto, JobLogDto} from "../contracts/job";
-import {QueryResult} from "../contracts/command-result";
+import {QueryResult} from "../contracts/results";
 import {BASE_FRAMEWORK_URL} from '../framework';
 
 @Injectable({providedIn: 'root'})

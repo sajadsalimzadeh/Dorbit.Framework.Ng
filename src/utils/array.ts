@@ -25,6 +25,8 @@ declare global {
         sortByDescending(func: (x: T) => any): T[];
 
         clear(): void;
+
+        selectMany<TR>(func?: (x: T) => TR[]): TR[];
     }
 }
 
@@ -116,3 +118,10 @@ Array.prototype.clear = function () {
     this.splice(0, this.length);
 }
 
+Array.prototype.selectMany = function (func: (x: any) => any[]) {
+    const result: any[] = [];
+    for (const item of this) {
+        result.push(...func(item));
+    }
+    return result;
+}
