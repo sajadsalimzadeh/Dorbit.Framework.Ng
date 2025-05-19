@@ -1,5 +1,5 @@
 import {Inject, Injectable, InjectionToken, Optional} from '@angular/core';
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 export const MOCK_DATA = new InjectionToken('Mock data');
