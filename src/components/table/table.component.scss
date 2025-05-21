@@ -1,0 +1,474 @@
+@use "../../../assets/styles/mixin";
+
+@mixin selected-row {
+    @include mixin.selected-color;
+
+    td {
+        border-inline-end: 1px solid rgba(var(--color-primary-rgb), 0.15) !important;
+    }
+
+    ::ng-deep {
+        tr, & + tbody tr {
+            border-top: 1px solid rgba(var(--color-primary-rgb), 0.2) !important;
+        }
+    }
+}
+
+$border-color: rgba(var(--color-black-rgb), .08);
+
+:host {
+    display: block;
+}
+
+.table-container {
+    gap: .5rem;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    &.has-scroll .data-table ::ng-deep table > tbody:last-child {
+        td, th {
+            border-bottom: none;
+        }
+    }
+
+    &.table-striped ::ng-deep {
+        table {
+            .main-tbody:nth-child(2n+1) {
+                background-color: rgba(var(--color-black-rgb), .01);
+            }
+
+            .main-tbody:nth-child(2n) {
+                background-color: rgba(var(--color-black-rgb), .005);
+            }
+        }
+    }
+
+    &.table-bordered ::ng-deep {
+
+        table {
+            thead, tfoot {
+                th:not(:last-child) {
+                    //border-inline-end: 1px solid $border-color;
+                }
+            }
+
+            .main-tbody:nth-child(2n+1) {
+                td:not(:last-child) {
+                    //border-inline-end: 1px solid $border-color;
+                }
+            }
+
+            .main-tbody:nth-child(2n) {
+                td:not(:last-child) {
+                    //border-inline-end: 1px solid $border-color;
+                }
+            }
+        }
+    }
+
+    &.hovered ::ng-deep {
+        table {
+            .main-tbody {
+                cursor: pointer;
+
+                &:hover {
+                    @include selected-row;
+                }
+            }
+        }
+    }
+
+    .filter-box td {
+        padding: 0 !important;
+    }
+}
+
+.data {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    flex-direction: column;
+
+    &.loading {
+
+        &::before, &::after {
+            content: '';
+            z-index: 100;
+            position: absolute;
+        }
+
+        &::before {
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(var(--color-black-rgb), .03);
+        }
+
+        &::after {
+            $size: 4rem;
+            width: $size;
+            height: $size;
+            border-radius: 50%;
+            top: calc(50% - $size);
+            left: calc(50% - $size);
+            border-width: .5rem;
+            border-style: solid;
+            animation: spinner 1s linear infinite;
+            border-color: transparent var(--color-gray-7) var(--color-gray-7);
+        }
+    }
+
+    .scroll-container {
+        height: 100%;
+        overflow-y: scroll;
+        text-align: justify;
+        transition: margin-inline-end 300ms ease;
+    }
+
+    .data-header, .data-footer {
+        border: 1px solid $border-color;
+        background-color: var(--color-gray--4);
+    }
+
+    .data-header {
+    }
+
+    .data-table {
+        flex: 1;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow: auto;
+        position: absolute;
+        border-radius: 6px;
+        background-color: var(--color-white);
+        border: 1px solid rgba(var(--color-black-rgb), .08);
+
+        .gradient, .no-data {
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            position: absolute;
+        }
+
+        .gradient {
+            @include mixin.glass;
+            @include mixin.shadow-slant;
+        }
+
+        .no-data {
+            z-index: 100;
+            background-size: auto 35%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-image: url(./images/empty.png);
+        }
+    }
+
+    .footer {
+
+    }
+
+    ::ng-deep {
+
+        .data-table {
+
+            table {
+                z-index: 5;
+                width: 100%;
+                min-height: 100%;
+                position: relative;
+                border-collapse: collapse;
+                color: var(--color-gray-4);
+
+                tr {
+                    background-color: inherit;
+                }
+
+                td, th {
+                    padding: .5rem .7rem;
+                }
+
+                th {
+                    font-weight: bold;
+                    white-space: nowrap;
+                    text-align: justify;
+                    color: var(--color-gray-7);
+
+                    &.sortable {
+                        cursor: pointer;
+
+                        &:hover {
+                            background-color: var(--color-gray--4);
+
+                            .sort-icon::before {
+                                opacity: 1 !important;
+                            }
+                        }
+
+                        .sort-icon {
+                            font-size: 1em;
+                            padding: .4rem .5rem;
+                        }
+                    }
+                }
+
+                thead {
+                    top: 0;
+
+                    th {
+                        border-bottom: 1px solid $border-color;
+                    }
+                }
+
+                tfoot {
+                    bottom: -1px;
+
+                    th {
+                        border-top: 1px solid $border-color;
+                    }
+                }
+
+                thead, tfoot {
+                    z-index: 10;
+                    height: 4em;
+                    position: sticky;
+                    background-color: var(--color-gray--3);
+
+                    tr {
+                        position: relative;
+                    }
+                }
+
+                tbody {
+                    height: 3.5em;
+                    font-weight: 300;
+
+                    &.selected {
+                        @include selected-row;
+                    }
+                }
+            }
+
+            tbody tr {
+                border-top: 1px solid rgba(var(--color-black-rgb), .05);
+            }
+
+            table > tbody:first-child {
+                td, th {
+                    border-top: none;
+                }
+            }
+
+            .flexible-table-height {
+                height: auto;
+
+                td {
+                    position: relative;
+                }
+            }
+        }
+    }
+
+    ::ng-deep {
+        .sticky-column-start, .sticky-column-end {
+            position: sticky;
+            background-color: inherit !important;
+
+            &::before {
+                top: 0;
+                bottom: 0;
+                content: '';
+                position: absolute;
+                border-inline-start: 1px solid $border-color;
+            }
+        }
+    }
+
+    :host-context([dir=ltr]) {
+        ::ng-deep {
+            .sticky-column-start {
+                left: 0;
+
+                &::before {
+                    right: 0;
+                }
+            }
+
+            .sticky-column-end {
+                right: 0;
+
+                &::before {
+                    left: 0;
+                }
+            }
+        }
+    }
+
+    :host-context([dir=rtl]) {
+        ::ng-deep {
+            .sticky-column-start {
+                right: 0;
+
+                &::before {
+                    left: 0;
+                }
+            }
+
+            .sticky-column-end {
+                left: 0;
+
+                &::before {
+                    right: 0;
+                }
+            }
+        }
+    }
+}
+
+.pagination {
+    display: flex;
+
+    .summary {
+        flex: 1;
+        display: flex;
+        align-items: center;
+    }
+
+    .paginator {
+        display: flex;
+        align-items: center;
+
+        .current-page-report {
+            text-align: end;
+            white-space: nowrap;
+            color: var(--color-gray-8);
+        }
+
+        .page-numbers {
+            padding: 0 2rem;
+        }
+
+        .page-row-count {
+            width: 100px;
+        }
+    }
+}
+
+
+// Sm View
+.table-container {
+
+    &:not(.media-sm) ::ng-deep {
+
+        .data-table {
+            border: none;
+            background-color: transparent;
+
+            .gradient {
+                display: none;
+            }
+
+            .main-tbody tr {
+                width: 100%;
+            }
+
+            .flexible-table-height {
+                flex: 1;
+                display: flex;
+                align-items: stretch;
+                justify-content: center;
+                background-color: transparent;
+
+                tr, td {
+                    padding: 0;
+                    width: 100%;
+                    display: flex;
+                    align-items: stretch;
+                    justify-content: center;
+                }
+            }
+        }
+
+        .pagination {
+            flex-direction: column;
+        }
+
+        .paginator {
+            gap: .4rem;
+            flex-wrap: wrap;
+            justify-content: space-between;
+
+            .page-numbers {
+                order: 1;
+                width: 100%;
+                display: flex;
+                padding: .5rem 0;
+                border-radius: 6px;
+                justify-content: center;
+                background-color: var(--color-white);
+            }
+
+            .current-page-report, .page-row-count {
+                justify-content: space-between;
+            }
+
+            .current-page-report {
+                order: 11;
+            }
+
+            .page-row-count {
+                order: 10;
+            }
+        }
+
+        table {
+            gap: .5rem;
+            display: flex;
+            flex-direction: column;
+
+            thead, tfoot {
+                display: none;
+            }
+
+            tbody {
+                border: none;
+                display: flex;
+                padding: 0.4rem;
+                border-radius: 6px;
+                height: auto !important;
+                background-color: var(--color-white);
+
+                tr {
+                    display: flex;
+                    flex-wrap: wrap;
+                    border: none !important;
+
+                    td {
+                        flex: 50%;
+                        display: flex;
+                        text-align: justify;
+                        padding: .2rem !important;
+
+                        &:empty {
+                            display: none;
+                        }
+
+                        &[title]::before {
+                            white-space: nowrap;
+                            content: attr(title) ' : ';
+                            padding-inline-end: .4rem;
+                            color: var(--color-gray-9);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
