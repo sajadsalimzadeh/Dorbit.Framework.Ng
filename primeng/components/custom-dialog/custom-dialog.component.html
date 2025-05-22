@@ -1,0 +1,24 @@
+<p-dialog
+  [(visible)]="visible"
+  [baseZIndex]="baseZIndex"
+  [breakpoints]="breakpoints"
+  [closable]="closable"
+  [closeOnEscape]="closeOnEscape"
+  [contentStyle]="contentStyle"
+  [dismissableMask]="dismissableMask"
+  [draggable]="draggable"
+  [header]="header"
+  [maximizable]="maximizable"
+  [modal]="modal"
+  [position]="position"
+  [resizable]="resizable"
+  [styleClass]="styleClass"
+  [style]="style"
+
+  (visibleChange)="visibleChange.emit($event)"
+  (onHide)="onHide.emit()"
+>
+  <ng-container *ngIf="template && visible">
+    <ng-container *ngTemplateOutlet="template"></ng-container>
+  </ng-container>
+</p-dialog>

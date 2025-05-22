@@ -1,0 +1,12 @@
+:host {
+  display: block;
+
+  ::ng-deep {
+    .filter-row {
+      .p-inputtext {
+        min-width: 100px;
+        width: 100%;
+      }
+    }
+  }
+}

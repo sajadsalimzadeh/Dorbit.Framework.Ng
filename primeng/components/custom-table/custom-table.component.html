@@ -1,0 +1,94 @@
+<div *ngIf="breadcrumb" class="mb-2">
+    <p-breadcrumb [home]="{label: ''}" [model]="breadcrumb" class="max-w-full"/>
+</div>
+<p-card *ngIf="showInCard; else tableTpl">
+    <ng-container *ngTemplateOutlet="tableTpl"></ng-container>
+</p-card>
+<ng-template #tableTpl>
+    <div class="flex flex-row gap-2 align-items-center pb-2">
+        <p-button *ngIf="onAdd.observed" (onClick)="onAdd.emit()" icon="fa fa-plus" [label]="'custom-table.add' | translate" severity="success"/>
+        <ng-container *ngIf="captionTpl">
+            <ng-container *ngTemplateOutlet="captionTpl"></ng-container>
+        </ng-container>
+        <p-multi-select *ngIf="showColumnSelector" (ngModelChange)="processHideColumns()" [(ngModel)]="selectedColumns" [options]="columns" display="chip" optionLabel="header"></p-multi-select>
+    </div>
+    <p-table
+        showGridlines
+        [size]="'small'"
+        [value]="value"
+        [loading]="loading"
+        [paginator]="true"
+        [rows]="20"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [rowsPerPageOptions]="[5, 10, 20, 50]">
+        <ng-template pTemplate="header">
+            <ng-container *ngIf="headerTpl">
+                <ng-container *ngTemplateOutlet="headerTpl"></ng-container>
+            </ng-container>
+            <tr>
+                <th *ngIf="expandedrowTpl"></th>
+                <th class="text-center" [style.width]="'50px'">#</th>
+                <th *ngFor="let column of selectedColumns" [pSortableColumn]="column.field" [style.width]="column.width">
+                    <div class="flex flex-row align-items-center" *ngIf="column.field">
+                        <span class="flex-1">{{ column.header  }}</span>
+                        <p-sortIcon [field]="column.field" class="flex flex-row align-items-center"/>
+                        <p-columnFilter [field]="column.field" display="menu" type="date"></p-columnFilter>
+                    </div>
+                    <div *ngIf="!column.field">
+                        {{ column.header }}
+                    </div>
+                </th>
+                <th *ngIf="operationTpl" width="10"></th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-item let-rowIndex="rowIndex" let-expanded="expanded">
+            <ng-container *ngIf="bodyTpl">
+                <ng-container *ngTemplateOutlet="bodyTpl; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
+            </ng-container>
+            <tr>
+                <td *ngIf="expandedrowTpl">
+                    <p-button type="button" pRipple [pRowToggler]="item" [text]="true" [rounded]="true" [plain]="true"
+                              [icon]="expanded ? 'far fa-chevron-down' : 'far fa-chevron-left'"/>
+                </td>
+                <td class="text-center">{{ rowIndex + 1 }}</td>
+                <td *ngFor="let column of selectedColumns">
+                    <ng-container *ngIf="column.template">
+                        <ng-container
+                            *ngTemplateOutlet="column.template; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
+                    </ng-container>
+                    <div *ngIf="!column.template" [innerHTML]="(column.render ? column.render(item) : (column.field ? item[column.field] : null))">
+                    </div>
+                </td>
+                <td *ngIf="operationTpl">
+                    <div class="flex flex-row flex-nowrap gap-2">
+                        <ng-container
+                            *ngTemplateOutlet="operationTpl; context: {$implicit: item}"></ng-container>
+
+                        <p-button *ngIf="onEdit.observed" (onClick)="onEdit.emit(item)" icon="fal fa-pencil" [pTooltip]="'custom-table.edit' | translate"
+                                  severity="warn" tooltipPosition="bottom"/>
+
+                        <p-button *ngIf="onDelete.observed" (onClick)="showDeleteDialog(item)" icon="fal fa-trash-can" [pTooltip]="'custom-table.delete' | translate"
+                                  severity="danger" tooltipPosition="bottom"/>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template #expandedrow let-item>
+            <ng-container *ngIf="expandedrowTpl">
+                <ng-container *ngTemplateOutlet="expandedrowTpl; context: {$implicit: item}"></ng-container>
+            </ng-container>
+        </ng-template>
+    </p-table>
+</ng-template>
+
+<app-custom-dialog [(visible)]="isDeleteDialogVisible" [header]="'custom-table.delete' | translate" size="xs">
+    <ng-template>
+        <div class="my-3">
+            {{ 'custom-table.delete-message' | translate }}
+        </div>
+        <div class="flex flex-row gap-2">
+            <p-button (click)="deleteItemApprove()" icon="far fa-check" iconPos="right" [label]="'confirm.yes-sure' | translate" severity="danger"/>
+            <p-button (click)="isDeleteDialogVisible = false" icon="far fa-times" iconPos="left" [label]="'confirm.cancel' | translate" severity="secondary"/>
+        </div>
+    </ng-template>
+</app-custom-dialog>

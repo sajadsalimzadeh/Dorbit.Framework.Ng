@@ -1,0 +1,68 @@
+import {AfterViewInit, Component, ContentChild, ContentChildren, EventEmitter, Injector, Input, Output, QueryList, TemplateRef} from "@angular/core";
+import {MenuItem} from "primeng/api";
+import {CustomTableColumn} from "./contracts";
+import {SharedComponent} from "../shared.component";
+
+@Component({
+    standalone: false,
+    selector: 'app-custom-table',
+    templateUrl: './custom-table.component.html',
+    styleUrl: './custom-table.component.scss',
+})
+
+export class CustomTableComponent extends SharedComponent implements AfterViewInit{
+    @Input() value: any[] = [];
+    @Input() loading: boolean = false;
+    @Input() columns: CustomTableColumn[] = [];
+    @Input() breadcrumb?: MenuItem[];
+    @Input() showInCard: boolean = true;
+    @Input() showColumnSelector: boolean = true;
+
+    @Output() onAdd = new EventEmitter<any>();
+    @Output() onEdit = new EventEmitter<any>();
+    @Output() onDelete = new EventEmitter<any>();
+    @Output() isSaving = new EventEmitter<any>();
+
+
+    @ContentChild('caption') captionTpl?: TemplateRef<any>;
+    @ContentChild('header') headerTpl?: TemplateRef<any>;
+    @ContentChild('body') bodyTpl?: TemplateRef<any>;
+    @ContentChild('expandedrow') expandedrowTpl?: TemplateRef<any>;
+    @ContentChild('operation') operationTpl?: TemplateRef<any>;
+
+    @ContentChildren(TemplateRef) templates!: QueryList<TemplateRef<any>>;
+
+    isDeleteDialogVisible = false;
+    selectedColumns: CustomTableColumn[] = [];
+
+    constructor(injector: Injector) {
+        super(injector);
+
+    }
+
+    ngOnInit(): void {
+        this.processHideColumns();
+    }
+
+    ngAfterViewInit(): void {
+        this.columns.forEach(column => {
+            column.template = this.templates.find((x: any) => x._declarationTContainer.localNames[0] == column.templateName);
+            column.header = this.translateService.instant(column.header);
+
+        })
+    }
+
+    processHideColumns() {
+        this.selectedColumns = this.columns.filter(x => !x.isHide);
+    }
+
+    showDeleteDialog(item: any) {
+        this.selectedItem = item;
+        this.isDeleteDialogVisible = true;
+    }
+
+    deleteItemApprove() {
+        this.isDeleteDialogVisible = false;
+        this.onDelete.emit(this.selectedItem)
+    }
+}
