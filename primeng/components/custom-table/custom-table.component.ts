@@ -1,16 +1,16 @@
 import {AfterViewInit, Component, ContentChild, ContentChildren, EventEmitter, Injector, Input, Output, QueryList, TemplateRef} from "@angular/core";
 import {MenuItem} from "primeng/api";
 import {CustomTableColumn} from "./contracts";
-import {SharedComponent} from "../shared.component";
+import {PrimengComponent} from "../primeng.component";
 
 @Component({
     standalone: false,
-    selector: 'app-custom-table',
+    selector: 'p-custom-table',
     templateUrl: './custom-table.component.html',
     styleUrl: './custom-table.component.scss',
 })
 
-export class CustomTableComponent extends SharedComponent implements AfterViewInit{
+export class CustomTableComponent extends PrimengComponent implements AfterViewInit{
     @Input() value: any[] = [];
     @Input() loading: boolean = false;
     @Input() columns: CustomTableColumn[] = [];
@@ -40,7 +40,7 @@ export class CustomTableComponent extends SharedComponent implements AfterViewIn
 
     }
 
-    ngOnInit(): void {
+    override ngOnInit(): void {
         this.processHideColumns();
     }
 

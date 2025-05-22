@@ -14,6 +14,7 @@ export * from './list/list.component';
 export * from './stepper/stepper.component';
 export * from './progress-circle/progress-circle.component';
 export * from './position/position.component';
+export * from './svg/index.component';
 export * from './fab/fab.component';
 export * from './table/table.module';
 export * from './message/message.module';

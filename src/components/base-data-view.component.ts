@@ -7,7 +7,7 @@ import {Observable, Subscription} from "rxjs";
 import {PagedListResult} from "../contracts/results";
 
 @Directive()
-export abstract class BaseDataViewComponent<T = any> extends BasePanelComponent {
+export abstract class BaseDataViewComponent<T = any> extends PrimengComponent {
     data: TableData<T> = {items: [], totalCount: 0};
     config = new TableConfig();
 

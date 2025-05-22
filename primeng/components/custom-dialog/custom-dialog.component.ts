@@ -7,7 +7,7 @@ const styleFields = ['maximize', 'size']
 
 @Component({
   standalone: false,
-  selector: 'app-custom-dialog',
+  selector: 'p-custom-dialog',
   templateUrl: './custom-dialog.component.html',
 })
 

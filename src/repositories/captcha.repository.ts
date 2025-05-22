@@ -1,8 +1,8 @@
 import {HttpClient} from "@angular/common/http";
-import {QueryResult} from "../contracts/response";
-import {CaptchaResponse} from "../contracts/captcha";
-import {BASE_API_URL} from "../../configs";
 import {Injectable} from "@angular/core";
+import {QueryResult} from '../contracts/results';
+import {CaptchaResponse} from '../contracts/captcha';
+import {BASE_FRAMEWORK_URL} from '../framework';
 
 @Injectable({providedIn: 'root'})
 export class CaptchaRepository {
@@ -11,6 +11,6 @@ export class CaptchaRepository {
     }
 
     get(width: number, height: number) {
-        return this.http.get<QueryResult<CaptchaResponse>>(`${BASE_API_URL}/Captchas`, {params: {width, height}})
+        return this.http.get<QueryResult<CaptchaResponse>>(`${BASE_FRAMEWORK_URL}/Captchas`, {params: {width, height}})
     }
 }

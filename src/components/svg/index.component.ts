@@ -1,5 +1,4 @@
 import {Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges} from "@angular/core";
-import {SharedModule} from "@app/components/shared.module";
 import {HttpClient} from "@angular/common/http";
 
 @Component({

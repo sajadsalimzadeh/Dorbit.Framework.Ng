@@ -1,4 +1,5 @@
 export * from './results';
+export * from './captcha';
 export * from './time-span';
 export * from './dispose';
 export * from './odata-query-options';

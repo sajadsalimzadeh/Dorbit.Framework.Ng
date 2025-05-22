@@ -9,7 +9,7 @@ import {AuthRepository} from '@identity';
 import {Router} from '@angular/router';
 
 @Directive()
-export abstract class SharedComponent implements OnInit, OnDestroy {
+export abstract class PrimengComponent implements OnInit, OnDestroy {
     private _services: any = {};
 
     protected subscription = new Subscription();

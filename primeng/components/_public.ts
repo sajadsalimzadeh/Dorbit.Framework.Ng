@@ -1,1 +1,1 @@
-export * from './shared.component';
+export * from './primeng.component';
