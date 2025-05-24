@@ -1,10 +1,16 @@
 import {Injector} from "@angular/core";
-import {ODataQueryOptions} from "../contracts/odata-query-options";
-import {BaseApiRepository} from "./base-api.repository";
 import {Observable} from "rxjs";
+import {ODataQueryOptions} from "../contracts/odata-query-options";
+import {BaseApiRepository, IApiRepository} from "./base-api.repository";
 import {PagedListResult, QueryResult} from "../contracts/results";
 
-export abstract class BaseReadRepository<T = any> extends BaseApiRepository {
+export interface IViewRepository<T> extends IApiRepository  {
+    select(query?: ODataQueryOptions | any): Observable<PagedListResult<T>>;
+    getAll(): Observable<QueryResult<T[]>>;
+    getById(id: any): Observable<QueryResult<T>>;
+}
+
+export abstract class BaseReadRepository<T = any> extends BaseApiRepository implements IViewRepository<T> {
 
   constructor(injector: Injector, baseUrl: string, repository: string) {
     super(injector, baseUrl, repository);
@@ -26,7 +32,7 @@ export abstract class BaseReadRepository<T = any> extends BaseApiRepository {
     return this.select(new ODataQueryOptions().take(10000)) as Observable<QueryResult<T[]>>;
   }
 
-  getById(id: any) {
+  getById(id: any): Observable<QueryResult<T>> {
     return this.http.get<QueryResult<T>>(`${id}`);
   }
 }

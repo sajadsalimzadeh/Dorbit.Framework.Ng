@@ -1,6 +1,6 @@
-import {Directive, ElementRef, Injector, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Directive, ElementRef, Injector, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {Subscription} from "rxjs";
-import {MessageService} from "primeng/api";
+import {Confirmation, ConfirmationService, MessageService} from "primeng/api";
 import {tap} from "rxjs/operators";
 import {TranslateService} from "@ngx-translate/core";
 import {HttpErrorResponse} from "@angular/common/http";
@@ -9,7 +9,7 @@ import {AuthRepository} from '@identity';
 import {Router} from '@angular/router';
 
 @Directive()
-export abstract class PrimengComponent implements OnInit, OnDestroy {
+export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {
     private _services: any = {};
 
     protected subscription = new Subscription();
@@ -40,6 +40,14 @@ export abstract class PrimengComponent implements OnInit, OnDestroy {
         return this._services['ElementRef'] ??= this.injector.get(ElementRef);
     }
 
+    protected get changeDetectorRef(): ChangeDetectorRef {
+        return this._services['ChangeDetectorRef'] ??= this.injector.get(ChangeDetectorRef);
+    }
+
+    protected get confirmationService(): ConfirmationService {
+        return this._services['ChangeDetectorRef'] ??= this.injector.get(ChangeDetectorRef);
+    }
+
     constructor(protected injector: Injector) {
 
     }
@@ -48,8 +56,27 @@ export abstract class PrimengComponent implements OnInit, OnDestroy {
 
     }
 
+    ngOnChanges(changes: SimpleChanges) {
+    }
+
     ngOnDestroy() {
         this.subscription.unsubscribe();
+    }
+
+    success(message: string) {
+        this.messageService.add({ severity: 'success', detail: this.t(message)});
+    }
+
+    info(message: string) {
+        this.messageService.add({ severity: 'info', detail: this.t(message)});
+    }
+
+    warn(message: string) {
+        this.messageService.add({ severity: 'warn', detail: this.t(message)});
+    }
+
+    error(message: string) {
+        this.messageService.add({ severity: 'error', detail: this.t(message)});
     }
 
     showDialog(name: string, item?: any): void {
@@ -90,5 +117,37 @@ export abstract class PrimengComponent implements OnInit, OnDestroy {
 
     getFileUrl(name: string): string {
         return this.fileRepository.getUrl(name);
+    }
+
+    confirm(confirmation?: Confirmation) {
+        return new Promise<void>((resolve, reject) => {
+            this.confirmationService.confirm({
+                message: 'Are you sure that you want to proceed?',
+                header: 'Confirmation',
+                closable: true,
+                closeOnEscape: true,
+                icon: 'pi pi-exclamation-triangle',
+                rejectButtonProps: {
+                    label: 'Cancel',
+                    severity: 'secondary',
+                    outlined: true,
+                },
+                acceptButtonProps: {
+                    label: 'Save',
+                },
+                accept: () => {
+                    resolve();
+                    if(confirmation?.accept) {
+                        confirmation?.accept();
+                    }
+                },
+                reject: () => {
+                    reject();
+                    if(confirmation?.reject) {
+                        confirmation?.reject();
+                    }
+                },
+            });
+        });
     }
 }

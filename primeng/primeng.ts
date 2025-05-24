@@ -38,15 +38,17 @@ import {ChipModule} from "primeng/chip";
 import {FieldsetModule} from 'primeng/fieldset';
 import {TabsModule} from "primeng/tabs";
 import {RippleModule} from "primeng/ripple";
+import {SkeletonModule} from 'primeng/skeleton';
 
-import {CustomDialogComponent} from "../../framework/primeng/components/custom-dialog/custom-dialog.component";
-import {CustomTableComponent} from "../../framework/primeng/components/custom-table/custom-table.component";
-import {SvgComponent} from "../../framework/src/components/svg/index.component";
+
+import {CustomDialogComponent} from "./components/custom-dialog/custom-dialog.component";
+import {CustomTableComponent} from "./components/custom-table/custom-table.component";
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {PaginatorModule} from 'primeng/paginator';
 
 const COMPONENTS = [
     CustomTableComponent,
     CustomDialogComponent,
-    SvgComponent,
 ];
 
 const PRIMENG_MODULES = [
@@ -85,6 +87,9 @@ const PRIMENG_MODULES = [
     FieldsetModule,
     TabsModule,
     RippleModule,
+    SkeletonModule,
+    ConfirmDialogModule,
+    PaginatorModule,
 ];
 
 const MODULES = [

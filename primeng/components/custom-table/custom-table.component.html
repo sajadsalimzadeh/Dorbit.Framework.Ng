@@ -81,7 +81,7 @@
     </p-table>
 </ng-template>
 
-<app-custom-dialog [(visible)]="isDeleteDialogVisible" [header]="'custom-table.delete' | translate" size="xs">
+<p-custom-dialog [(visible)]="isDeleteDialogVisible" [header]="'custom-table.delete' | translate" size="xs">
     <ng-template>
         <div class="my-3">
             {{ 'custom-table.delete-message' | translate }}
@@ -91,4 +91,4 @@
             <p-button (click)="isDeleteDialogVisible = false" icon="far fa-times" iconPos="left" [label]="'confirm.cancel' | translate" severity="secondary"/>
         </div>
     </ng-template>
-</app-custom-dialog>
+</p-custom-dialog>

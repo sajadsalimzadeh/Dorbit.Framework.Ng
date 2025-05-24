@@ -1,13 +1,13 @@
 import {Directive, Injector, TemplateRef, Type} from '@angular/core';
-import {BasePanelComponent} from "./base-panel.component";
 import {ODataQueryOptions} from "../contracts/odata-query-options";
 import {TableConfig, TableData} from './table/models';
 import {DialogOptions} from './dialog/components/dialog/dialog.component';
 import {Observable, Subscription} from "rxjs";
 import {PagedListResult} from "../contracts/results";
+import {BaseComponent} from './base.component';
 
 @Directive()
-export abstract class BaseDataViewComponent<T = any> extends PrimengComponent {
+export abstract class BaseDataViewComponent<T = any> extends BaseComponent {
     data: TableData<T> = {items: [], totalCount: 0};
     config = new TableConfig();
 

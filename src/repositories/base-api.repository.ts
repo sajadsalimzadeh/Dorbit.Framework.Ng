@@ -22,6 +22,10 @@ export interface HttpOptions {
   withCredentials?: boolean;
 }
 
+export interface IApiRepository {
+    get isLoading(): boolean;
+}
+
 export abstract class BaseApiRepository {
 
   public readonly baseUrl: string;

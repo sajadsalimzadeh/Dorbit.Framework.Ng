@@ -2,19 +2,19 @@ import {Injector} from "@angular/core";
 import {BaseReadRepository} from "./base-read.repository";
 import {Observable} from "rxjs";
 import {QueryResult} from "../contracts/results";
+import {IApiRepository} from './base-api.repository';
 
-export interface IAddRepository {
+export interface IAddRepository extends IApiRepository  {
     add(request: any): Observable<QueryResult>;
 }
 
-export interface IEditRepository {
+export interface IEditRepository extends IApiRepository  {
     edit(id: any, request: any): Observable<QueryResult>;
 }
 
-export interface ISaveRepository {
+export interface ISaveRepository extends IApiRepository {
     save(id: any, request: any): Observable<QueryResult>;
 }
-
 
 export abstract class BaseWriteRepository<T = any> extends BaseReadRepository<T> implements ISaveRepository, IEditRepository, IAddRepository {
 
