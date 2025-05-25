@@ -6,34 +6,40 @@
 </p-card>
 <ng-template #tableTpl>
     <div class="flex flex-row gap-2 align-items-center pb-2">
-        <p-button *ngIf="onAdd.observed" (onClick)="onAdd.emit()" icon="fa fa-plus" [label]="'custom-table.add' | translate" severity="success"/>
+        <p-button (onClick)="onAdd.emit()" *ngIf="onAdd.observed" [label]="'custom-table.add' | translate"
+                  icon="fa fa-plus" severity="success"/>
         <ng-container *ngIf="captionTpl">
             <ng-container *ngTemplateOutlet="captionTpl"></ng-container>
         </ng-container>
-        <p-multi-select *ngIf="showColumnSelector" (ngModelChange)="processHideColumns()" [(ngModel)]="selectedColumns" [options]="columns" display="chip" optionLabel="header"></p-multi-select>
+        <p-multi-select (ngModelChange)="processHideColumns()" *ngIf="showColumnSelector" [(ngModel)]="selectedColumns"
+                        [options]="columns" display="chip" optionLabel="header"></p-multi-select>
     </div>
     <p-table
         #dt
-        showGridlines
-        [size]="'small'"
-        [value]="value"
         [loading]="loading"
         [paginator]="true"
+        [rowsPerPageOptions]="[5, 10, 20, 50]"
+        [rowsPerPageOptions]="[5, 10, 15, 20, 50]"
         [rows]="15"
+        [size]="'small'"
+        [size]="'small'"
         [tableStyle]="{ 'min-width': '50rem' }"
-        [rowsPerPageOptions]="[5, 10, 15, 20, 50]">
+        [value]="value"
+        showGridlines>
         <ng-template pTemplate="header">
             <ng-container *ngIf="headerTpl">
                 <ng-container *ngTemplateOutlet="headerTpl"></ng-container>
             </ng-container>
             <tr>
                 <th *ngIf="expandedrowTpl"></th>
-                <th class="text-center" [style.width]="'50px'">#</th>
-                <th *ngFor="let column of selectedColumns" [pSortableColumn]="column.field" [style.width]="column.width">
-                    <div class="flex flex-row align-items-center" *ngIf="column.field">
+                <th [style.width]="'50px'" class="text-center">#</th>
+                <th *ngFor="let column of selectedColumns" [pSortableColumn]="column.field"
+                    [style.width]="column.width">
+                    <div *ngIf="column.field" class="flex flex-row align-items-center">
                         <span class="flex-1">{{ column.header }}</span>
                         <p-sortIcon [field]="column.field" class="flex flex-row align-items-center"/>
-                        <p-columnFilter *ngIf="filterType == 'menu'" [field]="column.field" display="menu" type="text" matchMode="contains"></p-columnFilter>
+                        <p-columnFilter *ngIf="filterType == 'menu'" [field]="column.field" display="menu" matchMode="contains"
+                                        type="text"></p-columnFilter>
                     </div>
                     <div *ngIf="!column.field">
                         {{ column.header }}
@@ -45,19 +51,22 @@
                 <th *ngIf="expandedrowTpl"></th>
                 <th class="text-center"></th>
                 <th *ngFor="let column of selectedColumns">
-                    <p-columnFilter [field]="column.field" #cf type="text" [placeholder]="'Search by ' + column.header" matchMode="contains" (input)="cf.applyFilter()"></p-columnFilter>
+                    <p-columnFilter #cf (input)="cf.applyFilter()" [field]="column.field" [placeholder]="'Search by ' + column.header"
+                                    matchMode="contains" type="text"></p-columnFilter>
                 </th>
                 <th *ngIf="operationTpl || onEdit.observed || onDelete.observed"></th>
             </tr>
         </ng-template>
-        <ng-template #body let-item let-rowIndex="rowIndex" let-expanded="expanded">
+        <ng-template #body let-expanded="expanded" let-item let-rowIndex="rowIndex">
             <ng-container *ngIf="bodyTpl">
-                <ng-container *ngTemplateOutlet="bodyTpl; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
+                <ng-container
+                    *ngTemplateOutlet="bodyTpl; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
             </ng-container>
             <tr>
                 <td *ngIf="expandedrowTpl">
-                    <p-button type="button" pRipple [pRowToggler]="item" [text]="true" [rounded]="true" [plain]="true"
-                              [icon]="expanded ? 'far fa-chevron-down' : 'far fa-chevron-left'"/>
+                    <p-button [icon]="expanded ? 'far fa-chevron-down' : 'far fa-chevron-left'" [pRowToggler]="item"
+                              [plain]="true" [rounded]="true" [text]="true" pRipple
+                              type="button"/>
                 </td>
                 <td class="text-center">{{ rowIndex + 1 }}</td>
                 <td *ngFor="let column of selectedColumns">
@@ -65,7 +74,8 @@
                         <ng-container
                             *ngTemplateOutlet="column.template; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
                     </ng-container>
-                    <div *ngIf="!column.template" [innerHTML]="(column.render ? column.render(item) : (column.field ? item[column.field] : null))">
+                    <div *ngIf="!column.template"
+                         [innerHTML]="(column.render ? column.render(item) : (column.field ? item[column.field] : null))">
                     </div>
                 </td>
                 <td *ngIf="operationTpl || onEdit.observed || onDelete.observed">
@@ -75,10 +85,14 @@
                                 *ngTemplateOutlet="operationTpl; context: {$implicit: item}"></ng-container>
                         </ng-container>
 
-                        <p-button *ngIf="onEdit.observed" (onClick)="onEdit.emit(item)" icon="fal fa-pencil" [pTooltip]="'custom-table.edit' | translate"
+                        <p-button (onClick)="onEdit.emit(item)" *ngIf="onEdit.observed"
+                                  [pTooltip]="'custom-table.edit' | translate"
+                                  icon="fal fa-pencil"
                                   severity="warn" tooltipPosition="bottom"/>
 
-                        <p-button *ngIf="onDelete.observed" (onClick)="showDeleteDialog(item)" icon="fal fa-trash-can" [pTooltip]="'custom-table.delete' | translate"
+                        <p-button (onClick)="showDeleteDialog(item)" *ngIf="onDelete.observed"
+                                  [pTooltip]="'custom-table.delete' | translate"
+                                  icon="fal fa-trash-can"
                                   severity="danger" tooltipPosition="bottom"/>
                     </div>
                 </td>
@@ -98,8 +112,10 @@
             {{ 'custom-table.delete-message' | translate }}
         </div>
         <div class="flex flex-row gap-2">
-            <p-button (click)="deleteItemApprove()" icon="far fa-check" iconPos="right" [label]="'confirm.yes-sure' | translate" severity="danger"/>
-            <p-button (click)="isDeleteDialogVisible = false" icon="far fa-times" iconPos="left" [label]="'confirm.cancel' | translate" severity="secondary"/>
+            <p-button (click)="deleteItemApprove()" [label]="'confirm.yes-sure' | translate" icon="far fa-check"
+                      iconPos="right" severity="danger"/>
+            <p-button (click)="isDeleteDialogVisible = false" [label]="'confirm.cancel' | translate" icon="far fa-times"
+                      iconPos="left" severity="secondary"/>
         </div>
     </ng-template>
 </p-custom-dialog>

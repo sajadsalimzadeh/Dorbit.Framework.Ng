@@ -1,12 +1,13 @@
 import {PrimengComponent} from '@primeng';
 import {Directive, Injector} from '@angular/core';
-import {IViewRepository} from "@framework";
+import {QueryResult} from "@framework";
+import {Observable} from 'rxjs';
 
 @Directive()
-export class PrimengTableComponent<T = any> extends PrimengComponent {
+export abstract class PrimengTableComponent<T = any> extends PrimengComponent {
     items: T[] = [];
 
-    constructor(injector: Injector, protected repository: IViewRepository<T>) {
+    constructor(injector: Injector) {
         super(injector);
     }
 
@@ -16,8 +17,10 @@ export class PrimengTableComponent<T = any> extends PrimengComponent {
         this.load();
     }
 
+    abstract loader(): Observable<QueryResult<T[]>>;
+
     load() {
-        this.repository.getAll().subscribe((res) => this.items = res.data ?? []);
+        this.loader().subscribe((res) => this.items = res.data ?? []);
     }
 
 }

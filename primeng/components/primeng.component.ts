@@ -1,20 +1,31 @@
-import {ChangeDetectorRef, Directive, ElementRef, Injector, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {
+    ChangeDetectorRef,
+    Directive,
+    ElementRef,
+    Injector,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    SimpleChanges
+} from '@angular/core';
 import {Subscription} from "rxjs";
 import {Confirmation, ConfirmationService, MessageService} from "primeng/api";
-import {tap} from "rxjs/operators";
 import {TranslateService} from "@ngx-translate/core";
-import {HttpErrorResponse} from "@angular/common/http";
-import {FileRepository} from '@framework';
+import {FileRepository, FormUtil} from '@framework';
 import {AuthRepository} from '@identity';
 import {Router} from '@angular/router';
+import {FormGroup} from '@angular/forms';
 
 @Directive()
 export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {
-    private _services: any = {};
-
     protected subscription = new Subscription();
     protected selectedItem: any;
     protected dialogs: { [key: string]: boolean } = {};
+    private _services: any = {};
+
+    constructor(protected injector: Injector) {
+
+    }
 
     protected get messageService(): MessageService {
         return this._services['MessageService'] ??= this.injector.get(MessageService);
@@ -48,10 +59,6 @@ export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {
         return this._services['ConfirmationService'] ??= this.injector.get(ConfirmationService);
     }
 
-    constructor(protected injector: Injector) {
-
-    }
-
     ngOnInit() {
 
     }
@@ -63,22 +70,6 @@ export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {
         this.subscription.unsubscribe();
     }
 
-    success(message: string) {
-        this.messageService.add({ severity: 'success', detail: this.t(message)});
-    }
-
-    info(message: string) {
-        this.messageService.add({ severity: 'info', detail: this.t(message)});
-    }
-
-    warn(message: string) {
-        this.messageService.add({ severity: 'warn', detail: this.t(message)});
-    }
-
-    error(message: string) {
-        this.messageService.add({ severity: 'error', detail: this.t(message)});
-    }
-
     showDialog(name: string, item?: any): void {
         this.selectedItem = item;
         this.dialogs[name] = true;
@@ -88,27 +79,32 @@ export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {
         this.dialogs[name] = false;
     }
 
-    tapMessage(showSuccess: boolean = true, showError: boolean = true) {
-        return tap({
-            next: res => {
-                if (showSuccess) {
-                    this.messageService.add({
-                        severity: 'success',
-                        detail: this.t('message.operation-success')
-                    })
-                }
-            },
-            error: err => {
-                if (showError) {
-                    if (err instanceof HttpErrorResponse) {
-                        this.messageService.add({
-                            severity: 'error',
-                            detail: this.t(`message.${err.error.message}`)
-                        })
-                    }
-                }
-            }
-        })
+    info(message: string = 'message.info') {
+        this.messageService.add({
+            severity: 'info',
+            detail: this.t(message)
+        });
+    }
+
+    success(message: string = 'message.success') {
+        this.messageService.add({
+            severity: 'success',
+            detail: this.t(message)
+        });
+    }
+
+    warn(message: string = 'message.warn') {
+        this.messageService.add({
+            severity: 'warn',
+            detail: this.t(message)
+        });
+    }
+
+    error(message: string = 'message.error') {
+        this.messageService.add({
+            severity: 'error',
+            detail: this.t(message)
+        });
     }
 
     t(text: string): any {
@@ -119,6 +115,21 @@ export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {
         return this.fileRepository.getUrl(name);
     }
 
+    validateForm(form?: FormGroup) {
+        let hasCustomMessage = false;
+        for (const formKey in FormUtil.getErrors(form)) {
+            const translateKey = `message.form-invalid.${formKey}`;
+            const translate = this.t(translateKey);
+            if (translate == translateKey) continue;
+            this.warn(translate);
+            hasCustomMessage = true;
+        }
+        if (!hasCustomMessage) {
+            this.warn(this.t('message.form-invalid'));
+        }
+    }
+
+
     confirm(confirmation?: Confirmation) {
         return new Promise<void>((resolve, reject) => {
             this.confirmationService.confirm({
@@ -126,28 +137,29 @@ export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {
                 header: 'Confirmation',
                 closable: true,
                 closeOnEscape: true,
-                icon: 'pi pi-exclamation-triangle',
                 rejectButtonProps: {
                     label: 'Cancel',
                     severity: 'secondary',
                     outlined: true,
                 },
                 acceptButtonProps: {
-                    label: 'Save',
+                    label: `Yes, I'm sure`,
                 },
+                ...confirmation,
+
                 accept: () => {
                     resolve();
-                    if(confirmation?.accept) {
+                    if (confirmation?.accept) {
                         confirmation?.accept();
                     }
                 },
                 reject: () => {
                     reject();
-                    if(confirmation?.reject) {
+                    if (confirmation?.reject) {
                         confirmation?.reject();
                     }
                 },
             });
-        });
+        })
     }
 }

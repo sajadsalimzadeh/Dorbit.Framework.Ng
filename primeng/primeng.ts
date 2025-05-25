@@ -47,6 +47,7 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {PaginatorModule} from 'primeng/paginator';
 import {ProgressBarModule} from 'primeng/progressbar';
 import {ButtonGroupModule} from 'primeng/buttongroup';
+import {JalaliDatePickerComponent} from './components/jalali-date-picker/jalali-date-picker.component';
 
 const COMPONENTS = [
     CustomTableComponent,
@@ -100,7 +101,8 @@ const MODULES = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    TranslateModule
+    TranslateModule,
+    JalaliDatePickerComponent
 ]
 
 @NgModule({

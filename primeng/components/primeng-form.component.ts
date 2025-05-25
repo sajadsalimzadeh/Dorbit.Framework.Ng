@@ -18,13 +18,18 @@ export abstract class PrimengFormComponent extends PrimengComponent {
     override ngOnInit() {
         super.ngOnInit();
 
-        if(this.model) {
+        if (this.model) {
             this.form.reset({...this.model});
         }
     }
 
+    getFormValue() {
+        return this.form.getRawValue();
+    }
+
     submit() {
-        this.repository.save(this.model?.id, this.form.getRawValue()).subscribe(res => {
+        const value = this.getFormValue();
+        this.repository.save(this.model?.id, value).subscribe(res => {
             this.onComplete.emit();
         })
     }

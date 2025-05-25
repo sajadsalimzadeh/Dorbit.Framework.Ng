@@ -1,6 +1,6 @@
 import {Directive, EventEmitter, Injector, Input, Output} from '@angular/core';
 import {FormGroup} from "@angular/forms";
-import {ISaveRepository} from "../repositories/base-write.repository";
+import {ISaveRepository} from "../repositories/base-crud.repository";
 import {BaseComponent} from './base.component';
 
 @Directive()
