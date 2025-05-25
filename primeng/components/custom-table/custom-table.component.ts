@@ -2,6 +2,7 @@ import {AfterViewInit, Component, ContentChild, ContentChildren, EventEmitter, I
 import {MenuItem} from "primeng/api";
 import {CustomTableColumn} from "./contracts";
 import {PrimengComponent} from "../primeng.component";
+import {ColumnFilter, Table} from 'primeng/table';
 
 @Component({
     standalone: false,
@@ -10,13 +11,14 @@ import {PrimengComponent} from "../primeng.component";
     styleUrl: './custom-table.component.scss',
 })
 
-export class CustomTableComponent extends PrimengComponent implements AfterViewInit{
+export class CustomTableComponent extends PrimengComponent implements AfterViewInit {
     @Input() value: any[] = [];
     @Input() loading: boolean = false;
     @Input() columns: CustomTableColumn[] = [];
     @Input() breadcrumb?: MenuItem[];
     @Input() showInCard: boolean = true;
     @Input() showColumnSelector: boolean = true;
+    @Input() filterType: 'menu' | 'inline' = 'menu';
 
     @Output() onAdd = new EventEmitter<any>();
     @Output() onEdit = new EventEmitter<any>();

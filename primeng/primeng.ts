@@ -45,6 +45,8 @@ import {CustomDialogComponent} from "./components/custom-dialog/custom-dialog.co
 import {CustomTableComponent} from "./components/custom-table/custom-table.component";
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {PaginatorModule} from 'primeng/paginator';
+import {ProgressBarModule} from 'primeng/progressbar';
+import {ButtonGroupModule} from 'primeng/buttongroup';
 
 const COMPONENTS = [
     CustomTableComponent,
@@ -90,6 +92,8 @@ const PRIMENG_MODULES = [
     SkeletonModule,
     ConfirmDialogModule,
     PaginatorModule,
+    ProgressBarModule,
+    ButtonGroupModule,
 ];
 
 const MODULES = [

@@ -45,7 +45,7 @@ export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     protected get confirmationService(): ConfirmationService {
-        return this._services['ChangeDetectorRef'] ??= this.injector.get(ChangeDetectorRef);
+        return this._services['ConfirmationService'] ??= this.injector.get(ConfirmationService);
     }
 
     constructor(protected injector: Injector) {

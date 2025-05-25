@@ -13,14 +13,15 @@
         <p-multi-select *ngIf="showColumnSelector" (ngModelChange)="processHideColumns()" [(ngModel)]="selectedColumns" [options]="columns" display="chip" optionLabel="header"></p-multi-select>
     </div>
     <p-table
+        #dt
         showGridlines
         [size]="'small'"
         [value]="value"
         [loading]="loading"
         [paginator]="true"
-        [rows]="20"
+        [rows]="15"
         [tableStyle]="{ 'min-width': '50rem' }"
-        [rowsPerPageOptions]="[5, 10, 20, 50]">
+        [rowsPerPageOptions]="[5, 10, 15, 20, 50]">
         <ng-template pTemplate="header">
             <ng-container *ngIf="headerTpl">
                 <ng-container *ngTemplateOutlet="headerTpl"></ng-container>
@@ -30,15 +31,23 @@
                 <th class="text-center" [style.width]="'50px'">#</th>
                 <th *ngFor="let column of selectedColumns" [pSortableColumn]="column.field" [style.width]="column.width">
                     <div class="flex flex-row align-items-center" *ngIf="column.field">
-                        <span class="flex-1">{{ column.header  }}</span>
+                        <span class="flex-1">{{ column.header }}</span>
                         <p-sortIcon [field]="column.field" class="flex flex-row align-items-center"/>
-                        <p-columnFilter [field]="column.field" display="menu" type="date"></p-columnFilter>
+                        <p-columnFilter *ngIf="filterType == 'menu'" [field]="column.field" display="menu" type="text" matchMode="contains"></p-columnFilter>
                     </div>
                     <div *ngIf="!column.field">
                         {{ column.header }}
                     </div>
                 </th>
-                <th *ngIf="operationTpl" width="10"></th>
+                <th *ngIf="operationTpl || onEdit.observed || onDelete.observed" width="10"></th>
+            </tr>
+            <tr *ngIf="filterType == 'inline'">
+                <th *ngIf="expandedrowTpl"></th>
+                <th class="text-center"></th>
+                <th *ngFor="let column of selectedColumns">
+                    <p-columnFilter [field]="column.field" #cf type="text" [placeholder]="'Search by ' + column.header" matchMode="contains" (input)="cf.applyFilter()"></p-columnFilter>
+                </th>
+                <th *ngIf="operationTpl || onEdit.observed || onDelete.observed"></th>
             </tr>
         </ng-template>
         <ng-template #body let-item let-rowIndex="rowIndex" let-expanded="expanded">
@@ -59,10 +68,12 @@
                     <div *ngIf="!column.template" [innerHTML]="(column.render ? column.render(item) : (column.field ? item[column.field] : null))">
                     </div>
                 </td>
-                <td *ngIf="operationTpl">
+                <td *ngIf="operationTpl || onEdit.observed || onDelete.observed">
                     <div class="flex flex-row flex-nowrap gap-2">
-                        <ng-container
-                            *ngTemplateOutlet="operationTpl; context: {$implicit: item}"></ng-container>
+                        <ng-container *ngIf="operationTpl">
+                            <ng-container
+                                *ngTemplateOutlet="operationTpl; context: {$implicit: item}"></ng-container>
+                        </ng-container>
 
                         <p-button *ngIf="onEdit.observed" (onClick)="onEdit.emit(item)" icon="fal fa-pencil" [pTooltip]="'custom-table.edit' | translate"
                                   severity="warn" tooltipPosition="bottom"/>
