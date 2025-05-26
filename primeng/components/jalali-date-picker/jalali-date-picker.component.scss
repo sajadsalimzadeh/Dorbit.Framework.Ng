@@ -1,0 +1,155 @@
+:host {
+    position: relative;
+}
+
+.date-picker-container {
+    top: calc(100% + 1rem);
+    position: absolute;
+    width: 260px;
+    display: none;
+    flex-direction: column;
+    background-color: var(--surface-a);
+    animation: fade-in 300ms ease;
+
+    @keyframes fade-in {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+
+    &.open {
+        display: flex;
+    }
+
+    .year-month {
+        display: flex;
+        border-bottom: 1px solid var(--surface-c);
+
+        > div {
+            flex: 1;
+            min-height: 3rem;
+            display: flex;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+
+            &:hover {
+                background-color: var(--surface-b);
+            }
+        }
+    }
+
+    .dates {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 14.28% 14.28% 14.28% 14.28% 14.28% 14.28% 14.28%;
+
+        > div {
+            margin: .2rem;
+            min-height: 2.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .day-of-week {
+            border-bottom: 1px solid var(--surface-c);
+        }
+
+        .day {
+            cursor: pointer;
+            border-radius: 4px;
+
+            &:hover {
+                background-color: var(--surface-c);
+            }
+
+            &.today {
+                color: var(--green-500);
+                background-color: var(--green-50);
+            }
+
+            &.selected {
+                color: var(--primary-50);
+                background-color: var(--primary-500);
+            }
+
+            &:not(.current-month) {
+                opacity: .3;
+            }
+        }
+    }
+
+    .year-picker,
+    .month-picker {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        transform: scale(0);
+        position: absolute;
+        transition: transform 300ms ease;
+        background-color: var(--surface-a);
+
+        &.open {
+            transform: scale(1);
+        }
+
+        > div {
+            cursor: pointer;
+
+            &:hover {
+                background-color: var(--surface-c);
+            }
+        }
+    }
+
+    .month-picker {
+        display: grid;
+        grid-template-columns: 33.33% 33.33% 33.33%;
+
+        .month {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &.selected {
+                color: var(--primary-50);
+                background-color: var(--primary-500);
+            }
+        }
+    }
+
+    .year-picker {
+        overflow: auto;
+
+        > .year {
+            min-height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid var(--surface-c);
+
+            &.selected {
+                color: var(--primary-50);
+                background-color: var(--primary-500);
+            }
+        }
+    }
+
+    .go-today {
+        display: flex;
+        cursor: pointer;
+        min-height: 3rem;
+        align-items: center;
+        justify-content: center;
+        border-top: 1px solid var(--surface-c);
+
+        &:hover {
+            background-color: var(--surface-c);
+        }
+    }
+}

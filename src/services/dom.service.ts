@@ -1,4 +1,13 @@
-import {ApplicationRef, ComponentFactoryResolver, EmbeddedViewRef, Injectable, Injector, TemplateRef, Type, ViewContainerRef} from "@angular/core";
+import {
+    ApplicationRef,
+    ComponentFactoryResolver,
+    EmbeddedViewRef,
+    Injectable,
+    Injector,
+    TemplateRef,
+    Type,
+    ViewContainerRef
+} from "@angular/core";
 
 
 @Injectable({providedIn: 'root'})

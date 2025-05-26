@@ -135,7 +135,7 @@ export class IndexedDB implements IDatabase {
         const store = tx.objectStore(tableName);
         const promises = [] as Promise<void>[];
         for (const value of values) {
-          promises.push(this.toPromise(() => store.put(value), value));
+            promises.push(this.toPromise(() => store.put(value), value));
         }
         await Promise.all(promises);
         return true;

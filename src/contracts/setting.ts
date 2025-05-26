@@ -1,4 +1,4 @@
 export interface Setting {
-  key: string;
-  value: string;
+    key: string;
+    value: string;
 }
