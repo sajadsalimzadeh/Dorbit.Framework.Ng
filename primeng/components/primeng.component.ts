@@ -12,7 +12,6 @@ import {Subscription} from "rxjs";
 import {Confirmation, ConfirmationService, MessageService} from "primeng/api";
 import {TranslateService} from "@ngx-translate/core";
 import {FileRepository, FormUtil} from '@framework';
-import {AuthRepository} from '@identity';
 import {Router} from '@angular/router';
 import {FormGroup} from '@angular/forms';
 
@@ -39,9 +38,6 @@ export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {
         return this._services['TranslateService'] ??= this.injector.get(TranslateService);
     }
 
-    protected get authRepository(): AuthRepository {
-        return this._services['AuthRepository'] ??= this.injector.get(AuthRepository);
-    }
 
     protected get router(): Router {
         return this._services['Router'] ??= this.injector.get(Router);
@@ -115,7 +111,7 @@ export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {
         return this.fileRepository.getUrl(name);
     }
 
-    validateForm(form?: FormGroup) {
+    validateForm(form: FormGroup) {
         let hasCustomMessage = false;
         for (const formKey in FormUtil.getErrors(form)) {
             const translateKey = `message.form-invalid.${formKey}`;

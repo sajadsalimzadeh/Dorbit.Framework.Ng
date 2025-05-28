@@ -1,11 +1,4 @@
-import {
-    HttpClient,
-    HttpContext,
-    HttpErrorResponse,
-    HttpEvent,
-    HttpHandler,
-    HttpHeaders,
-    HttpParams,
+import {HttpClient, HttpErrorResponse, HttpEvent, HttpHandler,
     HttpRequest,
     HttpResponse
 } from "@angular/common/http";
@@ -17,24 +10,6 @@ import {MessageService} from "../components/message/services/message.service";
 import {Message} from "../components/message/models";
 
 const messageTimes: { [key: string]: number } = {};
-
-export interface HttpOptions {
-    headers?: HttpHeaders | {
-        [header: string]: string | string[];
-    };
-    context?: HttpContext;
-    observe?: 'body';
-    params?: HttpParams | {
-        [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean>;
-    };
-    reportProgress?: boolean;
-    responseType?: 'json';
-    withCredentials?: boolean;
-}
-
-export interface IApiRepository {
-    get isLoading(): boolean;
-}
 
 export abstract class BaseApiRepository {
 

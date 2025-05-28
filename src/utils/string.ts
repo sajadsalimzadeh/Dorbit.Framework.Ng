@@ -4,6 +4,12 @@ const upperLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const lowerLetters = 'abcdefghijklmnopqrstuvwxyz';
 
 type Includes = 'number' | 'lower' | 'upper' | 'hex' | 'special';
+const persianAlphabet = [
+    'ا', 'ب', 'پ', 'ت', 'ث', 'ج', 'چ', 'ح', 'خ',
+    'د', 'ذ', 'ر', 'ز', 'ژ', 'س', 'ش', 'ص', 'ض',
+    'ط', 'ظ', 'ع', 'غ', 'ف', 'ق', 'ک', 'گ', 'ل',
+    'م', 'ن', 'و', 'ه', 'ی'
+];
 
 export class StringUtil {
 
@@ -40,5 +46,11 @@ export class StringUtil {
             array[i] = str.charCodeAt(i);
         }
         return array;
+    }
+
+    static getLocaleDirection(str?: string) {
+        if(!str) return 'ltr';
+        if(persianAlphabet.includes(str[0])) return 'rtl';
+        return 'ltr';
     }
 }
