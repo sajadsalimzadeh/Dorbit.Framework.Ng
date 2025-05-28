@@ -39,14 +39,15 @@ import {FieldsetModule} from 'primeng/fieldset';
 import {TabsModule} from "primeng/tabs";
 import {RippleModule} from "primeng/ripple";
 import {SkeletonModule} from 'primeng/skeleton';
-
-
-import {CustomDialogComponent} from "./components/custom-dialog/custom-dialog.component";
-import {CustomTableComponent} from "./components/custom-table/custom-table.component";
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {PaginatorModule} from 'primeng/paginator';
 import {ProgressBarModule} from 'primeng/progressbar';
 import {ButtonGroupModule} from 'primeng/buttongroup';
+import {RadioButtonModule} from 'primeng/radiobutton';
+
+
+import {CustomDialogComponent} from "./components/custom-dialog/custom-dialog.component";
+import {CustomTableComponent} from "./components/custom-table/custom-table.component";
 import {JalaliDatePickerComponent} from './components/jalali-date-picker/jalali-date-picker.component';
 
 const COMPONENTS = [
@@ -95,6 +96,7 @@ const PRIMENG_MODULES = [
     PaginatorModule,
     ProgressBarModule,
     ButtonGroupModule,
+    RadioButtonModule,
 ];
 
 const MODULES = [
