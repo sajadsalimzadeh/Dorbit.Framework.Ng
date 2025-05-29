@@ -26,7 +26,12 @@ export class MockInterceptor implements HttpInterceptor {
                     const urlMatch = req.url.match(mock.url);
                     if (urlMatch && urlMatch.length > 0) {
                         return new Observable(ob => {
-                            setTimeout(() => ob.next(new HttpResponse({body: mock.data, url: req.url, status: 200, statusText: 'OK'})), 100);
+                            setTimeout(() => ob.next(new HttpResponse({
+                                body: mock.data,
+                                url: req.url,
+                                status: 200,
+                                statusText: 'OK'
+                            })), 100);
                         });
                     }
                 }

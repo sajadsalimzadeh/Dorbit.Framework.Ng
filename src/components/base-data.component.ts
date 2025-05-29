@@ -1,5 +1,5 @@
 import {Directive, Injector} from '@angular/core';
-import {BaseWriteRepository} from "../repositories/base-write.repository";
+import {BaseCrudRepository} from "../repositories/base-crud.repository";
 import {ODataQueryOptions} from '../contracts/odata-query-options';
 import {BaseDataViewComponent} from "./base-data-view.component";
 import {Observable} from "rxjs";
@@ -8,7 +8,7 @@ import {PagedListResult} from "../contracts/results";
 @Directive()
 export abstract class BaseDataComponent extends BaseDataViewComponent {
 
-    constructor(injector: Injector, protected repository: BaseWriteRepository) {
+    constructor(injector: Injector, protected repository: BaseCrudRepository) {
         super(injector);
     }
 

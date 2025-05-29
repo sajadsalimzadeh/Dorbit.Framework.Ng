@@ -1,18 +1,18 @@
 import {Message} from '../components/message/models';
-import {Colors} from '../types';
+import {MessageSeverity} from './severity';
 
 export class MessageError implements Error {
     static Name = 'MessageError';
 
     readonly options?: Message;
-    readonly color: Colors;
+    readonly severity: MessageSeverity;
     readonly message: string;
     readonly name: string;
     readonly params: any;
 
-    constructor(message: string, color: Colors = 'danger', options?: Message, params?: any) {
+    constructor(message: string, color: MessageSeverity = 'error', options?: Message, params?: any) {
         this.message = message;
-        this.color = color;
+        this.severity = color;
         this.options = options;
         this.name = MessageError.Name;
         this.params = params;

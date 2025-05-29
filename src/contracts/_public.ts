@@ -1,4 +1,5 @@
 export * from './results';
+export * from './captcha';
 export * from './time-span';
 export * from './dispose';
 export * from './odata-query-options';
@@ -9,3 +10,4 @@ export * from './background-worker';
 export * from '../framework';
 export * from './job';
 export * from './enums';
+export * from './severity';

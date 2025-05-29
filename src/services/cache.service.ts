@@ -186,11 +186,9 @@ export class CacheService {
             if (!obj) return result;
             result.data = obj.data;
             if (obj.expireTime < new Date().getTime()) {
-                // console.log('[cache] ignore for expiration,', key)
                 result.expired = true;
             }
             if (obj.version != this.version) {
-                // console.log('[cache] ignore for version,', key)
                 result.invalidVersion = true;
             }
         } catch {

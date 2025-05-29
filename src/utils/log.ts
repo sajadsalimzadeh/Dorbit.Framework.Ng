@@ -108,7 +108,7 @@ export class Logger {
 
     private log(message: string, level: LogLevel, options?: Options) {
         options ??= {};
-        if(options.scope) message = `[${options.scope.toUpperCase()}]: ${message}`;
+        if (options.scope) message = `[${options.scope.toUpperCase()}]: ${message}`;
         try {
             if (!this.enable) return;
             if (this.defaultOptions) options = {...this.defaultOptions, ...options};

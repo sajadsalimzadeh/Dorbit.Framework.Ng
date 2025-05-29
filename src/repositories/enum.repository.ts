@@ -17,7 +17,9 @@ export class EnumRepository extends BaseApiRepository {
     }
 
     getAll() {
-        return this.http.get<QueryResult<{ [key: string]: EnumDto }>>(``).pipe(tap((res: any) => this.$enums.next(res.Data ?? {})));
+        return this.http.get<QueryResult<{
+            [key: string]: EnumDto
+        }>>(``).pipe(tap((res: any) => this.$enums.next(res.Data ?? {})));
     }
 
     get(name: string) {

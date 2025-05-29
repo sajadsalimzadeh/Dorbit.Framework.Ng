@@ -1,13 +1,13 @@
-import {Directive, Injector, TemplateRef, Type} from '@angular/core';
-import {BasePanelComponent} from "./base-panel.component";
+import {Directive, Injector, TemplateRef} from '@angular/core';
 import {ODataQueryOptions} from "../contracts/odata-query-options";
 import {TableConfig, TableData} from './table/models';
 import {DialogOptions} from './dialog/components/dialog/dialog.component';
 import {Observable, Subscription} from "rxjs";
 import {PagedListResult} from "../contracts/results";
+import {BaseComponent} from './base.component';
 
 @Directive()
-export abstract class BaseDataViewComponent<T = any> extends BasePanelComponent {
+export abstract class BaseDataViewComponent<T = any> extends BaseComponent {
     data: TableData<T> = {items: [], totalCount: 0};
     config = new TableConfig();
 
@@ -29,24 +29,14 @@ export abstract class BaseDataViewComponent<T = any> extends BasePanelComponent 
         this.loadSubscription.unsubscribe();
     }
 
-    override showDialog(template: TemplateRef<any>, options?: DialogOptions) {
-        if (this.dialog) return this.dialog;
+    override showDialog(name: string, template: TemplateRef<any>, options?: DialogOptions) {
         options ??= {};
         options.title ??= (options.context ? this.t('edit') : this.t('add'));
-        this.dialog = super.showDialog(template, options);
-        this.dialog?.onClose.subscribe(() => {
-            this.dialog = undefined;
+        const dialog = super.showDialog(name, template, options);
+        dialog.onClose.subscribe(() => {
             this.load();
         });
-        return this.dialog;
-    }
-
-    showDialogByComponent(component: Type<any>, context: any, options?: DialogOptions) {
-        return this.dialogService.open({
-            ...options,
-            context: context,
-            component: component
-        })
+        return dialog;
     }
 
     protected abstract loader(query?: ODataQueryOptions): Observable<PagedListResult>;

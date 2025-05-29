@@ -1,4 +1,15 @@
-import {AfterViewInit, Directive, ElementRef, Injector, Input, OnChanges, OnDestroy, OnInit, ProviderToken, SimpleChanges} from "@angular/core";
+import {
+    AfterViewInit,
+    Directive,
+    ElementRef,
+    Injector,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    ProviderToken,
+    SimpleChanges
+} from "@angular/core";
 import {TranslateService} from "@ngx-translate/core";
 import {Subscription} from "rxjs";
 import {Colors, Direction, Sizes} from "../types";
@@ -14,7 +25,7 @@ export abstract class AbstractComponent implements OnInit, OnChanges, OnDestroy,
     @Input() dir: Direction = '';
     elementRef: ElementRef<HTMLElement>;
     protected classNames: string[] = [];
-    private _services: any = {};
+    protected _services: any = {};
 
     constructor(protected injector: Injector) {
         this.elementRef = injector.get(ElementRef);

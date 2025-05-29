@@ -1,10 +1,10 @@
 import {Directive, EventEmitter, Injector, Input, Output} from '@angular/core';
-import {BasePanelComponent} from "./base-panel.component";
 import {FormGroup} from "@angular/forms";
-import {ISaveRepository} from "../repositories/base-write.repository";
+import {ISaveRepository} from "../repositories/base-crud.repository";
+import {BaseComponent} from './base.component';
 
 @Directive()
-export abstract class BaseFormComponent extends BasePanelComponent {
+export abstract class BaseFormComponent extends BaseComponent {
     @Input({required: true}) model: any;
 
     @Output() onComplete = new EventEmitter<any>();

@@ -2,7 +2,19 @@ import {Directive, HostListener, Input} from "@angular/core";
 
 const intRegex = /^[0-9]$/;
 
-export type KeyFilters = 'p-int' | 'int' | 'n-int' | 'p-num' | 'num' | 'n-num' | 'hex' | 'email' | 'alpha' | 'alphnum' | 'persian' | string;
+export type KeyFilters =
+    'p-int'
+    | 'int'
+    | 'n-int'
+    | 'p-num'
+    | 'num'
+    | 'n-num'
+    | 'hex'
+    | 'email'
+    | 'alpha'
+    | 'alphnum'
+    | 'persian'
+    | string;
 
 @Directive({
     standalone: true,
