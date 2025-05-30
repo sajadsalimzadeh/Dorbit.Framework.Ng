@@ -38,10 +38,13 @@ export class CustomDialogComponent implements OnInit, OnChanges {
     @Input() breakpoints: any;
     @Input() maximizable: boolean = false;
     @Input() position: Position = 'top';
+    @Input() appendTo?: string;
+    @Input() contentStyleClass?: string;
 
     @Input() size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' = 'md';
     @Input() maximize: boolean = false;
     @Input() overflow: 'auto' | 'visible' = 'auto';
+
 
     @Output() visibleChange = new EventEmitter<boolean>();
     @Output() onHide = new EventEmitter();

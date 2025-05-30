@@ -12,8 +12,9 @@ import {Subscription} from "rxjs";
 import {Confirmation, ConfirmationService, MessageService} from "primeng/api";
 import {TranslateService} from "@ngx-translate/core";
 import {FileRepository, FormUtil} from '@framework';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {FormGroup} from '@angular/forms';
+import {Location} from "@angular/common";
 
 @Directive()
 export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {
@@ -24,6 +25,10 @@ export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {
 
     constructor(protected injector: Injector) {
 
+    }
+
+    protected get location(): Location {
+        return this._services['Location'] ??= this.injector.get(Location);
     }
 
     protected get messageService(): MessageService {
@@ -38,6 +43,9 @@ export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {
         return this._services['TranslateService'] ??= this.injector.get(TranslateService);
     }
 
+    protected get route(): ActivatedRoute {
+        return this._services['ActivatedRoute'] ??= this.injector.get(ActivatedRoute);
+    }
 
     protected get router(): Router {
         return this._services['Router'] ??= this.injector.get(Router);

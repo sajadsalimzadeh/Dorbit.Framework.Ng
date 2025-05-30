@@ -44,11 +44,13 @@ import {PaginatorModule} from 'primeng/paginator';
 import {ProgressBarModule} from 'primeng/progressbar';
 import {ButtonGroupModule} from 'primeng/buttongroup';
 import {RadioButtonModule} from 'primeng/radiobutton';
-
+import {TreeSelectModule} from "primeng/treeselect";
 
 import {CustomDialogComponent} from "./components/custom-dialog/custom-dialog.component";
 import {CustomTableComponent} from "./components/custom-table/custom-table.component";
 import {JalaliDatePickerComponent} from './components/jalali-date-picker/jalali-date-picker.component';
+import {ScrollPanelModule} from "primeng/scrollpanel";
+import {RatingModule} from "primeng/rating";
 
 const COMPONENTS = [
     CustomTableComponent,
@@ -97,6 +99,9 @@ const PRIMENG_MODULES = [
     ProgressBarModule,
     ButtonGroupModule,
     RadioButtonModule,
+    TreeSelectModule,
+    ScrollPanelModule,
+    RatingModule,
 ];
 
 const MODULES = [

@@ -18,8 +18,8 @@
         #dt
         [loading]="loading"
         [paginator]="true"
-        [rowsPerPageOptions]="[5, 10, 20, 50]"
-        [rows]="15"
+        [rowsPerPageOptions]="[5, 10, 12, 15, 20, 50]"
+        [rows]="12"
         [size]="size"
         [tableStyle]="{ 'min-width': '50rem' }"
         [value]="value"
@@ -36,7 +36,8 @@
                     <div *ngIf="column.field" class="flex flex-row align-items-center">
                         <span class="flex-1">{{ column.header }}</span>
                         <p-sortIcon [field]="column.field" class="flex flex-row align-items-center"/>
-                        <p-columnFilter *ngIf="filterType == 'menu'" [field]="column.field" display="menu" matchMode="contains"
+                        <p-columnFilter *ngIf="filterType == 'menu'" [field]="column.field" display="menu"
+                                        matchMode="contains"
                                         type="text"></p-columnFilter>
                     </div>
                     <div *ngIf="!column.field">
@@ -49,7 +50,8 @@
                 <th *ngIf="expandedrowTpl"></th>
                 <th class="text-center"></th>
                 <th *ngFor="let column of selectedColumns">
-                    <p-columnFilter #cf (input)="cf.applyFilter()" [field]="column.field" [placeholder]="'Search by ' + column.header"
+                    <p-columnFilter #cf (input)="cf.applyFilter()" [field]="column.field"
+                                    [placeholder]="'Search by ' + column.header"
                                     matchMode="contains" type="text"></p-columnFilter>
                 </th>
                 <th *ngIf="operationTpl || onEdit.observed || onDelete.observed"></th>
@@ -85,12 +87,12 @@
 
                         <p-button (onClick)="onEdit.emit(item)" *ngIf="onEdit.observed"
                                   [pTooltip]="'custom-table.edit' | translate"
-                                  icon="fal fa-pencil"
+                                  icon="fal fa-pencil" size="small"
                                   severity="warn" tooltipPosition="bottom"/>
 
                         <p-button (onClick)="showDeleteDialog(item)" *ngIf="onDelete.observed"
                                   [pTooltip]="'custom-table.delete' | translate"
-                                  icon="fal fa-trash-can"
+                                  icon="fal fa-trash-can" size="small"
                                   severity="danger" tooltipPosition="bottom"/>
                     </div>
                 </td>
