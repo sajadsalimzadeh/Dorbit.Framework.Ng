@@ -6,7 +6,7 @@ import {FileRepository} from '../../src/repositories/file.repository';
 import {FormUtil} from '../../src/utils/form';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormGroup} from '@angular/forms';
-import {Location} from '@angular/common';
+import {Location} from "@angular/common";
 
 @Directive()
 export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {
