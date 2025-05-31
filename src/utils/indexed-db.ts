@@ -204,7 +204,7 @@ class Table<T, TP> implements ITable<T, TP> {
             (value as any)[this.config.key] = this.config.keyGenerator();
         }
         const result = await this.database.add(this.name, value);
-        this.$change.next({value: value, action: 'add'});
+        this.$change.next({action: 'add', value: value});
         return result;
     }
 
@@ -215,19 +215,19 @@ class Table<T, TP> implements ITable<T, TP> {
             }
         }
         const result = await this.database.addAll(this.name, values);
-        this.$change.next({action: 'add-all'});
+        this.$change.next({action: 'add-all', values: values});
         return result;
     }
 
     async put(value: T) {
         const result = await this.database.put(this.name, value);
-        this.$change.next({value: value, action: 'put'});
+        this.$change.next({action: 'put', value: value});
         return result;
     }
 
     async putAll(values: T[]) {
         const result = await this.database.putAll(this.name, values);
-        this.$change.next({action: 'put-all'});
+        this.$change.next({action: 'put-all', values: values});
         return result;
     }
 
