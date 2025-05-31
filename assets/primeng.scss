@@ -16,6 +16,7 @@ $map_colors: (
         ("warning", "amber"),
         ("link", "sky"),
         ("info", "blue"),
+        ("help", "indigo"),
 );
 
 html:root {
@@ -304,4 +305,10 @@ html:root {
     --stone-800: #292524;
     --stone-900: #1c1917;
     --stone-950: #0c0a09;
+}
+
+.p-dialog-mask {
+    .p-dialog {
+        max-height: calc(100% - 1.5rem);
+    }
 }

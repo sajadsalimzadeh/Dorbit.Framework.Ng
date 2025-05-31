@@ -29,14 +29,13 @@ export class StringUtil {
         return result;
     }
 
-    static parseVersion(version: string, sectionValue = 100) {
-        let value = 1;
+    static parseVersion(version: string, sectionValue = 1000) {
         let result = 0;
-        const sections = version.split('.')
-        sections.forEach(x => {
-            result += result * value + (+x);
-            value *= sectionValue;
-        })
+        const sections = version.split('.');
+        for (let i = 0; i < sections.length; i++) {
+            const section = sections[i];
+            result += (result * sectionValue) + (+section);
+        }
         return result;
     }
 
@@ -49,8 +48,8 @@ export class StringUtil {
     }
 
     static getLocaleDirection(str?: string) {
-        if(!str) return 'ltr';
-        if(persianAlphabet.includes(str[0])) return 'rtl';
+        if (!str) return 'ltr';
+        if (persianAlphabet.includes(str[0])) return 'rtl';
         return 'ltr';
     }
 }

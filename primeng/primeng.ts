@@ -49,6 +49,11 @@ import {RadioButtonModule} from 'primeng/radiobutton';
 import {CustomDialogComponent} from "./components/custom-dialog/custom-dialog.component";
 import {CustomTableComponent} from "./components/custom-table/custom-table.component";
 import {JalaliDatePickerComponent} from './components/jalali-date-picker/jalali-date-picker.component';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import {IconFieldModule} from 'primeng/iconfield';
+import {InputIconModule} from 'primeng/inputicon';
+import {SliderModule} from 'primeng/slider';
+import {ToggleSwitchModule} from 'primeng/toggleswitch';
 
 const COMPONENTS = [
     CustomTableComponent,
@@ -97,6 +102,11 @@ const PRIMENG_MODULES = [
     ProgressBarModule,
     ButtonGroupModule,
     RadioButtonModule,
+    ProgressSpinnerModule,
+    IconFieldModule,
+    InputIconModule,
+    SliderModule,
+    ToggleSwitchModule,
 ];
 
 const MODULES = [
