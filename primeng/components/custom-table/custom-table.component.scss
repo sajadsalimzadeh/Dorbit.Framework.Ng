@@ -8,6 +8,18 @@
                 width: 100%;
             }
         }
+
+        .p-datatable-sm {
+            tr {
+                height: 3rem;
+            }
+        }
+
+        .p-datatable-lg {
+            tr {
+                height: 4rem;
+            }
+        }
     }
 }
 

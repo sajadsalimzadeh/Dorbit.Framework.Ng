@@ -16,4 +16,24 @@ export class TreeUtil {
             }
         })
     }
+
+    static getByPath<T extends { children?: T[] } = any>(items: T[], path: string, keyField: string = 'id') {
+        const keys = path.split('/').filter(x => !!x);
+        const result: T[] = [];
+        for (const key of keys) {
+            const item = items.find(item => (item as any)[keyField] === key);
+            if (!item) break;
+            result.push(item)
+            items = item.children ?? [];
+        }
+        return result;
+    }
+
+    static filterByPath<T extends { children?: T[] } = any>(items: T[], path: string, keyField: string = 'id') {
+        const keys = path.split('/').filter(x => !!x);
+        for (const key of keys) {
+            items = items.find(item => (item as any)[keyField] === key)?.children ?? [];
+        }
+        return items;
+    }
 }

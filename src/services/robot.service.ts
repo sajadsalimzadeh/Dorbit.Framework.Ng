@@ -8,6 +8,7 @@ interface Job {
     enable: boolean;
     steps: Step[];
     selector: string;
+    isRunning: boolean;
 }
 
 interface Step {
@@ -63,34 +64,40 @@ export class RobotService {
     }
 
     private async runJob(job: Job) {
+        if(job.isRunning) return;
         const el = document.querySelector(job.selector) as HTMLElement;
         if (!el) return;
-        for (let i = 0; i < job.steps.length; i++) {
-            const step = job.steps[i];
-            await delay(step.delay ?? 100);
-            let timer = step.retry ?? 3000;
+        try {
+            job.isRunning = true;
+            for (let i = 0; i < job.steps.length; i++) {
+                const step = job.steps[i];
+                await delay(step.delay ?? 100);
+                let timer = step.retry ?? 3000;
 
-            do {
-                try {
-                    if (this._handlers[step.trigger]) {
-                        await this._handlers[step.trigger](step);
-                        break;
-                    } else {
-                        const target = document.querySelector(step.selector) as HTMLElement;
-                        if (target) {
-                            (target as any)[step.trigger]();
+                do {
+                    try {
+                        if (this._handlers[step.trigger]) {
+                            await this._handlers[step.trigger](step);
                             break;
+                        } else {
+                            const target = el.querySelector(step.selector) as HTMLElement;
+                            if (target) {
+                                (target as any)[step.trigger]();
+                                break;
+                            }
                         }
+                        await delay(100);
+                        timer -= 100;
+                        if (timer < 0) {
+                            return;
+                        }
+                    } catch (ex) {
+                        console.error(ex)
                     }
-                    await delay(100);
-                    timer -= 100;
-                    if (timer < 0) {
-                        return;
-                    }
-                } catch (ex) {
-                    console.error(ex)
-                }
-            } while (true)
+                } while (true)
+            }
+        } finally {
+            job.isRunning = false;
         }
     }
 }

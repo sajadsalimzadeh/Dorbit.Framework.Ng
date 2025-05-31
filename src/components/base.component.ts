@@ -24,24 +24,6 @@ export abstract class BaseComponent extends AbstractComponent implements OnInit,
     dialog?: DialogComponent;
     dialogs: { [key: string]: DialogComponent } = {}
 
-    protected messages = {
-        formInvalid: (form?: FormGroup) => {
-            let hasCustomMessage = false;
-            for (const formKey in FormUtil.getErrors(form)) {
-                const translateKey = `message.form-invalid.${formKey}`;
-                const translate = this.t(translateKey);
-                if (translate == translateKey) continue;
-                this.messageService.warn(translate);
-                hasCustomMessage = true;
-            }
-            if (!hasCustomMessage) {
-                this.messageService.warn(this.t('message.form-invalid'));
-            }
-        },
-        success: () => this.messageService.success(this.t('message.success')),
-        error: () => this.messageService.error(this.t('message.error')),
-    }
-
     constructor(injector: Injector) {
         super(injector);
     }
@@ -93,7 +75,7 @@ export abstract class BaseComponent extends AbstractComponent implements OnInit,
         this.messageService.error(this.t(message));
     }
 
-    validateForm(form?: FormGroup) {
+    validateForm(form: FormGroup) {
         let hasCustomMessage = false;
         for (const formKey in FormUtil.getErrors(form)) {
             const translateKey = `message.form-invalid.${formKey}`;

@@ -36,4 +36,8 @@ export class FileRepository extends BaseApiRepository {
         const blob = new Blob(byteArrays, {type: ''});
         return this.upload(blob, name);
     }
+
+    download(filename: string) {
+        return this.http.get(`${filename}/Download`, {responseType: 'arraybuffer'});
+    }
 }
