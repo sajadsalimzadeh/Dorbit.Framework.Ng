@@ -39,19 +39,21 @@ import {FieldsetModule} from 'primeng/fieldset';
 import {TabsModule} from "primeng/tabs";
 import {RippleModule} from "primeng/ripple";
 import {SkeletonModule} from 'primeng/skeleton';
-
-
-import {CustomDialogComponent} from "./components/custom-dialog/custom-dialog.component";
-import {CustomTableComponent} from "./components/custom-table/custom-table.component";
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {PaginatorModule} from 'primeng/paginator';
 import {ProgressBarModule} from 'primeng/progressbar';
 import {ButtonGroupModule} from 'primeng/buttongroup';
+import { KeyFilterModule } from 'primeng/keyfilter';
+
+import {CustomDialogComponent} from "./components/custom-dialog/custom-dialog.component";
+import {CustomTableComponent} from "./components/custom-table/custom-table.component";
 import {JalaliDatePickerComponent} from './components/jalali-date-picker/jalali-date-picker.component';
+import {CustomCheckboxComponent} from './components/custom-checkbox/custom-checkbox.component';
 
 const COMPONENTS = [
     CustomTableComponent,
     CustomDialogComponent,
+    CustomCheckboxComponent,
 ];
 
 const PRIMENG_MODULES = [
@@ -95,6 +97,7 @@ const PRIMENG_MODULES = [
     PaginatorModule,
     ProgressBarModule,
     ButtonGroupModule,
+    KeyFilterModule,
 ];
 
 const MODULES = [

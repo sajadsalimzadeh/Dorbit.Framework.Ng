@@ -1,4 +1,14 @@
-import {Component, ElementRef, forwardRef, HostListener, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    forwardRef,
+    HostListener,
+    Injector,
+    Input,
+    OnDestroy,
+    OnInit,
+    ViewChild
+} from '@angular/core';
 import {ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@angular/forms';
 import moment, {Moment} from 'jalali-moment';
 import {Subscription} from 'rxjs';
@@ -6,6 +16,7 @@ import {CommonModule} from '@angular/common';
 import {InputTextModule} from 'primeng/inputtext';
 import {IconFieldModule} from 'primeng/iconfield';
 import {InputIconModule} from 'primeng/inputicon';
+import {PrimengControlComponent} from '@primeng';
 
 interface YearObject {
     value: number;
@@ -59,15 +70,13 @@ const monthNames = [
         }
     ],
 })
-export class JalaliDatePickerComponent implements OnInit, OnDestroy, ControlValueAccessor {
-    @Input({required: true}) formControl!: FormControl;
+export class JalaliDatePickerComponent extends PrimengControlComponent implements OnInit, OnDestroy, ControlValueAccessor {
     @Input() placeholder: string = '';
-    // @Input() displayFormat: string = 'jYYYY/jMM/jDD HH:mm:ss'; //Format time dar
     @Input() displayFormat: string = 'jYYYY/jMM/jDD';
     @Input() valueFormat: string = 'YYYY-MM-DD';
+    // @Input() displayFormat: string = 'jYYYY/jMM/jDD HH:mm:ss'; //Format time dar
 
     @ViewChild('inputEl') inputEl!: ElementRef<HTMLInputElement>;
-    subscription = new Subscription();
     monthNames = monthNames;
     displayFormControl = new FormControl('');
     isInside: boolean = false;
@@ -79,10 +88,9 @@ export class JalaliDatePickerComponent implements OnInit, OnDestroy, ControlValu
     months: MonthObject[] = [];
     date?: Moment;
     dates: DateObject[] = [];
-    onTouch: any;
-    onChange: any;
 
-    constructor(private elementRef: ElementRef) {
+    constructor(injector: Injector) {
+        super(injector);
     }
 
     @HostListener('mouseenter') onEnter() {
@@ -102,23 +110,9 @@ export class JalaliDatePickerComponent implements OnInit, OnDestroy, ControlValu
         this.updateDateFromFormControlValue();
     }
 
-    ngOnDestroy(): void {
-        this.subscription.unsubscribe();
-    }
 
-    writeValue(obj: any): void {
-        this.formControl.setValue(obj)
-    }
-
-    registerOnChange(fn: any): void {
-        this.onChange = fn;
-    }
-
-    registerOnTouched(fn: any): void {
-        this.onTouch = fn;
-    }
-
-    setDisabledState?(isDisabled: boolean): void {
+    override setDisabledState(isDisabled: boolean): void {
+        super.setDisabledState(isDisabled);
         if (isDisabled) this.displayFormControl.disable();
         else this.displayFormControl.enable();
     }

@@ -1,13 +1,13 @@
 import {Injectable, Injector} from "@angular/core";
 import {QueryResult} from '../contracts/results';
 import {CaptchaResponse} from '../contracts/captcha';
-import {BASE_FRAMEWORK_URL} from '../framework';
+import {BASE_URL_FRAMEWORK} from '../framework';
 import {BaseApiRepository} from './base-api.repository';
 
 @Injectable({providedIn: 'root'})
 export class CaptchaRepository extends BaseApiRepository {
     constructor(injector: Injector) {
-        super(injector, injector.get(BASE_FRAMEWORK_URL), 'Captchas');
+        super(injector, injector.get(BASE_URL_FRAMEWORK), 'Captchas');
     }
 
     get(width: number, height: number) {
