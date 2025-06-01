@@ -1,18 +1,15 @@
-interface TreeIterateOptions<T> {
-    prevAction?: (item: T, parent?: T) => void;
-    postAction?: (item: T, parent?: T) => void;
-}
+type TreeIterateAction<T>  = (item: T, parent?: T) => void;
 
 export class TreeUtil {
-    static iterate<T extends { children?: T[] } = any>(items: T[], options: TreeIterateOptions<T>, parent?: T) {
+    static iterate<T extends { children?: T[] } = any>(items: T[], beforeChildren?: TreeIterateAction<T>, afterChildren?: TreeIterateAction<T>, parent?: T) {
 
         items?.forEach(x => {
-            if (options.prevAction) {
-                options.prevAction(x, parent);
+            if (beforeChildren) {
+                beforeChildren(x, parent);
             }
-            if (x.children) this.iterate(x.children, options, x);
-            if (options.postAction) {
-                options.postAction(x, parent);
+            if (x.children) this.iterate(x.children, beforeChildren, afterChildren, x);
+            if (afterChildren) {
+                afterChildren(x, parent);
             }
         })
     }

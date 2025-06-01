@@ -23,6 +23,7 @@ html:root {
 
     --primary: var(--primary-500);
     --button-label-font-weight: 200;
+    --dialog-header-padding: 1rem 1.5rem;
     --form-field-border-color: var(--surface-200);
     --form-field-invalid-border-color: var(--red-300);
 
@@ -310,5 +311,9 @@ html:root {
 .p-dialog-mask {
     .p-dialog {
         max-height: calc(100% - 1.5rem);
+
+        .p-dialog-header {
+            border-bottom: 1px solid var(--surface-100);
+        }
     }
 }
