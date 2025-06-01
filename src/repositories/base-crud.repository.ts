@@ -6,7 +6,9 @@ import {BaseApiRepository} from './base-api.repository';
 
 export interface IViewRepository<T = any> {
     select(query?: ODataQueryOptions | any): Observable<PagedListResult<T>>;
+
     getAll(): Observable<QueryResult<T[]>>;
+
     getById(id: any): Observable<QueryResult<T>>;
 }
 
@@ -22,7 +24,7 @@ export interface ISaveRepository {
     save(id: any, request: any): Observable<QueryResult>;
 }
 
-export abstract class BaseCrudRepository<T = any> extends BaseApiRepository implements IViewRepository<T>, IAddRepository, IEditRepository, ISaveRepository {
+export abstract class BaseCrudRepository<T = any, TSave = any> extends BaseApiRepository implements IViewRepository<T>, IAddRepository, IEditRepository, ISaveRepository {
 
     constructor(injector: Injector, baseUrl: string, repository: string) {
         super(injector, baseUrl, repository);
@@ -56,11 +58,9 @@ export abstract class BaseCrudRepository<T = any> extends BaseApiRepository impl
         return this.http.patch<QueryResult<T>>(`${id}`, req);
     }
 
-    save(id: any, req: any) {
+    save(id: any, req: TSave) {
         if (!id) {
-            if (!req.id) {
-                delete req.id;
-            }
+            delete (req as any).id;
             return this.add(req);
         } else {
             return this.edit(id, {...req});

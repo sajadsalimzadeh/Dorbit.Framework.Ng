@@ -23,6 +23,7 @@ import {PrimengComponent} from "../primeng.component";
 
 export class CustomTableComponent extends PrimengComponent implements AfterViewInit {
     @Input() value: any[] = [];
+    @Input() size: 'small' | 'large' = 'small';
     @Input() loading: boolean = false;
     @Input() columns: CustomTableColumn[] = [];
     @Input() breadcrumb?: MenuItem[];

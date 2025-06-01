@@ -1,6 +1,6 @@
 import {PrimengComponent} from '@primeng';
 import {Directive, Injector} from '@angular/core';
-import {QueryResult} from "@framework";
+import {QueryResult} from "../../src/contracts/results";
 import {Observable} from 'rxjs';
 
 @Directive()

@@ -4,6 +4,12 @@ const upperLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const lowerLetters = 'abcdefghijklmnopqrstuvwxyz';
 
 type Includes = 'number' | 'lower' | 'upper' | 'hex' | 'special';
+const persianAlphabet = [
+    'ا', 'ب', 'پ', 'ت', 'ث', 'ج', 'چ', 'ح', 'خ',
+    'د', 'ذ', 'ر', 'ز', 'ژ', 'س', 'ش', 'ص', 'ض',
+    'ط', 'ظ', 'ع', 'غ', 'ف', 'ق', 'ک', 'گ', 'ل',
+    'م', 'ن', 'و', 'ه', 'ی'
+];
 
 export class StringUtil {
 
@@ -23,14 +29,13 @@ export class StringUtil {
         return result;
     }
 
-    static parseVersion(version: string, sectionValue = 100) {
-        let value = 1;
+    static parseVersion(version: string, sectionValue = 1000) {
         let result = 0;
-        const sections = version.split('.')
-        sections.forEach(x => {
-            result += result * value + (+x);
-            value *= sectionValue;
-        })
+        const sections = version.split('.');
+        for (let i = 0; i < sections.length; i++) {
+            const section = sections[i];
+            result += (result * sectionValue) + (+section);
+        }
         return result;
     }
 
@@ -40,5 +45,11 @@ export class StringUtil {
             array[i] = str.charCodeAt(i);
         }
         return array;
+    }
+
+    static getLocaleDirection(str?: string) {
+        if (!str) return 'ltr';
+        if (persianAlphabet.includes(str[0])) return 'rtl';
+        return 'ltr';
     }
 }

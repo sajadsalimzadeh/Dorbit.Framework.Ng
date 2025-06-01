@@ -1,62 +1,62 @@
-import {
-    ChangeDetectorRef,
-    Directive,
-    ElementRef,
-    Injector,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    SimpleChanges
-} from '@angular/core';
+import {ChangeDetectorRef, Directive, ElementRef, Injector, NgZone, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {Subscription} from "rxjs";
 import {Confirmation, ConfirmationService, MessageService} from "primeng/api";
 import {TranslateService} from "@ngx-translate/core";
-import {FileRepository, FormUtil} from '@framework';
-import {AuthRepository} from '@identity';
-import {Router} from '@angular/router';
+import {FileRepository} from '../../src/repositories/file.repository';
+import {FormUtil} from '../../src/utils/form';
+import {ActivatedRoute, Router} from '@angular/router';
 import {FormGroup} from '@angular/forms';
+import {Location} from "@angular/common";
 
 @Directive()
 export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {
     protected subscription = new Subscription();
     protected selectedItem: any;
     protected dialogs: { [key: string]: boolean } = {};
-    private _services: any = {};
+    protected services: any = {};
 
     constructor(protected injector: Injector) {
 
     }
 
     protected get messageService(): MessageService {
-        return this._services['MessageService'] ??= this.injector.get(MessageService);
+        return this.services['MessageService'] ??= this.injector.get(MessageService);
     }
 
     protected get fileRepository(): FileRepository {
-        return this._services['FileRepository'] ??= this.injector.get(FileRepository);
+        return this.services['FileRepository'] ??= this.injector.get(FileRepository);
     }
 
     protected get translateService(): TranslateService {
-        return this._services['TranslateService'] ??= this.injector.get(TranslateService);
-    }
-
-    protected get authRepository(): AuthRepository {
-        return this._services['AuthRepository'] ??= this.injector.get(AuthRepository);
+        return this.services['TranslateService'] ??= this.injector.get(TranslateService);
     }
 
     protected get router(): Router {
-        return this._services['Router'] ??= this.injector.get(Router);
+        return this.services['Router'] ??= this.injector.get(Router);
     }
 
     protected get elementRef(): ElementRef {
-        return this._services['ElementRef'] ??= this.injector.get(ElementRef);
+        return this.services['ElementRef'] ??= this.injector.get(ElementRef);
     }
 
     protected get changeDetectorRef(): ChangeDetectorRef {
-        return this._services['ChangeDetectorRef'] ??= this.injector.get(ChangeDetectorRef);
+        return this.services['ChangeDetectorRef'] ??= this.injector.get(ChangeDetectorRef);
     }
 
     protected get confirmationService(): ConfirmationService {
-        return this._services['ConfirmationService'] ??= this.injector.get(ConfirmationService);
+        return this.services['ConfirmationService'] ??= this.injector.get(ConfirmationService);
+    }
+
+    protected get location(): Location {
+        return this.services['Location'] ??= this.injector.get(Location);
+    }
+
+    protected get route(): ActivatedRoute {
+        return this.services['ActivatedRoute'] ??= this.injector.get(ActivatedRoute);
+    }
+
+    protected get ngZone(): NgZone {
+        return this.services['NgZone'] ??= this.injector.get(NgZone);
     }
 
     ngOnInit() {
@@ -115,7 +115,7 @@ export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {
         return this.fileRepository.getUrl(name);
     }
 
-    validateForm(form?: FormGroup) {
+    validateForm(form: FormGroup) {
         let hasCustomMessage = false;
         for (const formKey in FormUtil.getErrors(form)) {
             const translateKey = `message.form-invalid.${formKey}`;

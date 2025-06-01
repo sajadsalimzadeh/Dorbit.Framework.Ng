@@ -38,6 +38,7 @@ export interface IDatabase {
 
 export interface ITableChangeEvent<T = any> {
     value?: T,
+    values?: T[],
     action?: 'add' | 'add-all' | 'put' | 'put-all' | 'delete' | 'delete-all';
 }
 

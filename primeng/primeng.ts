@@ -44,6 +44,15 @@ import {PaginatorModule} from 'primeng/paginator';
 import {ProgressBarModule} from 'primeng/progressbar';
 import {ButtonGroupModule} from 'primeng/buttongroup';
 import { KeyFilterModule } from 'primeng/keyfilter';
+import {RadioButtonModule} from 'primeng/radiobutton';
+import {TreeSelectModule} from "primeng/treeselect";
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import {IconFieldModule} from 'primeng/iconfield';
+import {InputIconModule} from 'primeng/inputicon';
+import {SliderModule} from 'primeng/slider';
+import {ToggleSwitchModule} from 'primeng/toggleswitch';
+import {ScrollPanelModule} from "primeng/scrollpanel";
+import {RatingModule} from "primeng/rating";
 
 import {CustomDialogComponent} from "./components/custom-dialog/custom-dialog.component";
 import {CustomTableComponent} from "./components/custom-table/custom-table.component";
@@ -98,6 +107,15 @@ const PRIMENG_MODULES = [
     ProgressBarModule,
     ButtonGroupModule,
     KeyFilterModule,
+    RadioButtonModule,
+    ProgressSpinnerModule,
+    IconFieldModule,
+    InputIconModule,
+    SliderModule,
+    ToggleSwitchModule,
+    TreeSelectModule,
+    ScrollPanelModule,
+    RatingModule,
 ];
 
 const MODULES = [

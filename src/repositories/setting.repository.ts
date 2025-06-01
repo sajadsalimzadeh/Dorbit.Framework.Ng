@@ -12,7 +12,7 @@ export class SettingRepository extends BaseApiRepository {
         super(injector, baseUrl, 'Settings');
     }
 
-    get(key: string): Observable<QueryResult> {
+    get(key: string): Observable<QueryResult<any>> {
         return this.http.get<QueryResult<Setting>>(`${key}`).pipe(map(res => {
             return {
                 ...res,

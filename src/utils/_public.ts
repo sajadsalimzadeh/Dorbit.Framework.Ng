@@ -17,6 +17,7 @@ export * from './log';
 export * from './compress';
 export * from './user-agent-util';
 export * from './object';
+export * from './observable';
 export * from './delay';
 export * from './string';
 export * from './form';
