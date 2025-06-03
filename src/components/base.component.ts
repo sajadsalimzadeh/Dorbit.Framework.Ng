@@ -1,14 +1,4 @@
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Directive,
-    Injector,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    TemplateRef,
-    Type
-} from "@angular/core";
+import {AfterViewInit, ChangeDetectorRef, Directive, Injector, OnChanges, OnDestroy, OnInit, TemplateRef, Type} from "@angular/core";
 import {Location} from "@angular/common";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MessageService} from "./message/services/message.service";

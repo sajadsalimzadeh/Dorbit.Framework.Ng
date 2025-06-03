@@ -64,7 +64,7 @@ export class RobotService {
     }
 
     private async runJob(job: Job) {
-        if(job.isRunning) return;
+        if (job.isRunning) return;
         const el = document.querySelector(job.selector) as HTMLElement;
         if (!el) return;
         try {

@@ -1,15 +1,4 @@
-import {
-    Component,
-    ContentChild,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-    TemplateRef,
-    ViewChild
-} from "@angular/core";
+import {Component, ContentChild, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild} from "@angular/core";
 import {Dialog} from "primeng/dialog";
 
 type Position = "center" | "top" | "bottom" | "left" | "right" | "topleft" | "topright" | "bottomleft" | "bottomright";

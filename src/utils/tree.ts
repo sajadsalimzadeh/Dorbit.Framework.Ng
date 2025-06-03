@@ -1,4 +1,4 @@
-type TreeIterateAction<T>  = (item: T, parent?: T) => void;
+type TreeIterateAction<T> = (item: T, parent?: T) => void;
 
 export class TreeUtil {
     static iterate<T extends { children?: T[] } = any>(items: T[], beforeChildren?: TreeIterateAction<T>, afterChildren?: TreeIterateAction<T>, parent?: T) {
@@ -32,5 +32,22 @@ export class TreeUtil {
             items = items.find(item => (item as any)[keyField] === key)?.children ?? [];
         }
         return items;
+    }
+
+    static find<T extends { children?: T[] } = any>(items: T[], predict: (item: T) => boolean, parents: T[] = [], keyField: string = 'id') {
+        for (let item of items) {
+            if (predict(item)) {
+                parents.push(item);
+                return parents;
+            }
+            if (item.children) {
+                const result = this.find(item.children, predict, parents);
+                if (result) {
+                    parents.unshift(item);
+                    return parents;
+                }
+            }
+        }
+        return undefined;
     }
 }

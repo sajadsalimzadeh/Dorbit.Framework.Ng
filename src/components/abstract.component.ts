@@ -1,15 +1,4 @@
-import {
-    AfterViewInit,
-    Directive,
-    ElementRef,
-    Injector,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    ProviderToken,
-    SimpleChanges
-} from "@angular/core";
+import {AfterViewInit, Directive, ElementRef, Injector, Input, OnChanges, OnDestroy, OnInit, ProviderToken, SimpleChanges} from "@angular/core";
 import {TranslateService} from "@ngx-translate/core";
 import {Subscription} from "rxjs";
 import {Colors, Direction, Sizes} from "../types";

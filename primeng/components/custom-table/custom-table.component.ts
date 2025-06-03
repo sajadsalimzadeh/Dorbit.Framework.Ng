@@ -1,15 +1,4 @@
-import {
-    AfterViewInit,
-    Component,
-    ContentChild,
-    ContentChildren,
-    EventEmitter,
-    Injector,
-    Input,
-    Output,
-    QueryList,
-    TemplateRef
-} from "@angular/core";
+import {AfterViewInit, Component, ContentChild, ContentChildren, EventEmitter, Injector, Input, Output, QueryList, TemplateRef} from "@angular/core";
 import {MenuItem} from "primeng/api";
 import {CustomTableColumn} from "./contracts";
 import {PrimengComponent} from "../primeng.component";

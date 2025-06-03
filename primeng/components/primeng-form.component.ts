@@ -1,7 +1,7 @@
-import {PrimengComponent} from '@primeng';
+import {PrimengComponent} from './primeng.component';
 import {Directive, EventEmitter, Injector, Input, Output} from '@angular/core';
 import {FormGroup} from '@angular/forms';
-import {ISaveRepository} from '../../src/repositories/base-crud.repository';
+import {ISaveRepository} from '@framework/repositories/base-crud.repository';
 
 @Directive()
 export abstract class PrimengFormComponent extends PrimengComponent {

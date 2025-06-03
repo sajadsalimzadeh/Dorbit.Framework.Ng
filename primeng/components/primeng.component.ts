@@ -1,12 +1,12 @@
 import {ChangeDetectorRef, Directive, ElementRef, Injector, NgZone, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
-import {Subscription} from "rxjs";
-import {Confirmation, ConfirmationService, MessageService} from "primeng/api";
-import {TranslateService} from "@ngx-translate/core";
-import {FileRepository} from '../../src/repositories/file.repository';
-import {FormUtil} from '../../src/utils/form';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormGroup} from '@angular/forms';
 import {Location} from "@angular/common";
+import {Subscription} from "rxjs";
+import {Confirmation, ConfirmationService, MessageService} from "primeng/api";
+import {TranslateService} from "@ngx-translate/core";
+import {FileRepository} from '@framework/repositories/file.repository';
+import {FormUtil} from '@framework/utils/form';
 
 @Directive()
 export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {

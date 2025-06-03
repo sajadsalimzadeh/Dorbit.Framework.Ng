@@ -11,12 +11,11 @@ import {
 } from '@angular/core';
 import {ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@angular/forms';
 import moment, {Moment} from 'jalali-moment';
-import {Subscription} from 'rxjs';
 import {CommonModule} from '@angular/common';
 import {InputTextModule} from 'primeng/inputtext';
 import {IconFieldModule} from 'primeng/iconfield';
 import {InputIconModule} from 'primeng/inputicon';
-import {PrimengControlComponent} from '@primeng';
+import {PrimengControlComponent} from '../primeng-control.component';
 
 interface YearObject {
     value: number;

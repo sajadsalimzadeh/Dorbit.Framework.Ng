@@ -1,6 +1,6 @@
 import {Component, forwardRef, HostBinding, Input} from '@angular/core';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
-import {PrimengControlComponent} from '@primeng';
+import {PrimengControlComponent} from '../primeng-control.component';
 import {Severity} from '../../contracts/severity';
 
 @Component({
