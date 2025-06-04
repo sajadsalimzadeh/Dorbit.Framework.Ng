@@ -30,3 +30,16 @@ p-table :host-context([dir=rtl]) {
         }
     }
 }
+
+.no-data {
+    text-align: center;
+    color: var(--surface-400);
+
+    .icon {
+        font-size: 5rem;
+    }
+
+    .text {
+        font-size: 3rem;
+    }
+}

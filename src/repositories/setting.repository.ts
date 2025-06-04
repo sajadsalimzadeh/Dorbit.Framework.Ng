@@ -1,15 +1,15 @@
 import {Inject, Injectable, Injector} from '@angular/core';
 import {CommandResult, QueryResult} from "../contracts/results";
 import {BaseApiRepository} from './base-api.repository';
-import {BASE_FRAMEWORK_URL} from '../framework';
 import {Setting} from "../contracts/setting";
 import {map, Observable} from 'rxjs';
+import {BASE_URL_FRAMEWORK} from '@framework/configs';
 
 @Injectable({providedIn: 'root'})
 export class SettingRepository extends BaseApiRepository {
 
-    constructor(injector: Injector, @Inject(BASE_FRAMEWORK_URL) baseUrl: string) {
-        super(injector, baseUrl, 'Settings');
+    constructor(injector: Injector) {
+        super(injector, injector.get(BASE_URL_FRAMEWORK), 'Settings');
     }
 
     get(key: string): Observable<QueryResult<any>> {

@@ -1,7 +1,7 @@
 import {Inject, Injectable, Injector} from '@angular/core';
 import {BaseApiRepository} from "./base-api.repository";
 import {NotificationRecord} from "../stores/framework";
-import {BASE_FRAMEWORK_URL} from '@framework/configs';
+import {BASE_URL_FRAMEWORK} from '@framework/configs';
 import {CommandResult, QueryResult} from '@framework/contracts/results';
 
 interface NotificationDto {
@@ -17,8 +17,8 @@ interface NotificationDto {
 export class NotificationRepository extends BaseApiRepository {
 
 
-    constructor(injector: Injector, @Inject(BASE_FRAMEWORK_URL) baseUrl: string) {
-        super(injector, baseUrl, 'Notifications');
+    constructor(injector: Injector) {
+        super(injector, injector.get(BASE_URL_FRAMEWORK), 'Notifications');
     }
 
     getAll() {

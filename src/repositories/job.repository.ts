@@ -5,14 +5,14 @@ import {BaseApiRepository} from "./base-api.repository";
 import {delay} from '../utils/delay';
 import {JobDto, JobLogDto} from "../contracts/job";
 import {QueryResult} from "../contracts/results";
-import {BASE_FRAMEWORK_URL} from '../framework';
+import {BASE_URL_FRAMEWORK} from '@framework/configs';
 
 @Injectable({providedIn: 'root'})
 export class JobRepository extends BaseApiRepository {
 
 
-    constructor(injector: Injector, @Inject(BASE_FRAMEWORK_URL) baseUrl: string) {
-        super(injector, baseUrl, 'Jobs');
+    constructor(injector: Injector) {
+        super(injector, injector.get(BASE_URL_FRAMEWORK), 'Jobs');
     }
 
     getAll() {

@@ -1,13 +1,13 @@
 import {Inject, Injectable, Injector} from '@angular/core';
 import {BaseApiRepository} from "./base-api.repository";
 import {QueryResult} from "../contracts/results";
-import {BASE_FRAMEWORK_URL} from '../configs';
+import {BASE_URL_FRAMEWORK} from '../configs';
 
 @Injectable({providedIn: 'root'})
 export class FileRepository extends BaseApiRepository {
 
-    constructor(injector: Injector, @Inject(BASE_FRAMEWORK_URL) baseUrl: string) {
-        super(injector, baseUrl, 'Files');
+    constructor(injector: Injector) {
+        super(injector, injector.get(BASE_URL_FRAMEWORK), 'Files');
     }
 
     upload(data: File | Blob, name: string) {
