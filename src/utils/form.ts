@@ -3,13 +3,16 @@ import {FormGroup} from "@angular/forms";
 export class FormUtil {
     static getErrors(form: FormGroup) {
         const errors: any = {};
-        Object.keys(form.controls).forEach(key => {
-            const control = form.controls[key];
+        Object.keys(form.controls).forEach(controlKey => {
+            const control = form.controls[controlKey];
             control.markAsDirty();
             control.markAsTouched();
             if (control.errors) {
-                Object.keys(control.errors).forEach(eKey => {
-                    if (control.errors) errors[eKey] = control.errors[eKey];
+                Object.keys(control.errors).forEach(errorKey => {
+                    if (control.errors) {
+                        errors[controlKey] ??= {};
+                        errors[controlKey][errorKey] = control.errors[errorKey];
+                    }
                 });
             }
         });

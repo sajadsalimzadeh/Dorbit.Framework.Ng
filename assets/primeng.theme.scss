@@ -25,6 +25,11 @@ html:root {
     --form-field-border-color: var(--surface-200);
     --form-field-invalid-border-color: var(--red-300);
 
+    --button-outlined-success-hover-background: var(--success-50);
+    --button-outlined-success-active-background: var(--success-100);
+    --button-outlined-success-border-color: var(--success-200);
+    --button-outlined-success-color: var(--success-500);
+
     @each $map_color in $map_colors {
         $target: list.nth($map_color, 1);
         $from: list.nth($map_color, 2);
