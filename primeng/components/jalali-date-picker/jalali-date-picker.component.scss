@@ -1,14 +1,18 @@
 :host {
+    display: block;
     position: relative;
 }
 
+.input-control {
+    width: 100%;
+    padding-inline: 2rem;
+}
+
 .date-picker-container {
-    top: calc(100% + 1rem);
-    position: absolute;
-    width: 260px;
-    display: none;
+    width: 300px;
+    display: flex;
     flex-direction: column;
-    background-color: var(--surface-a);
+    background-color: var(--surface-0);
     animation: fade-in 300ms ease;
 
     @keyframes fade-in {
@@ -20,13 +24,9 @@
         }
     }
 
-    &.open {
-        display: flex;
-    }
-
     .year-month {
         display: flex;
-        border-bottom: 1px solid var(--surface-c);
+        border-bottom: 1px solid var(--surface-100);
 
         > div {
             flex: 1;
@@ -37,7 +37,7 @@
             justify-content: center;
 
             &:hover {
-                background-color: var(--surface-b);
+                background-color: var(--surface-50);
             }
         }
     }
@@ -56,7 +56,7 @@
         }
 
         .day-of-week {
-            border-bottom: 1px solid var(--surface-c);
+            border-bottom: 1px solid var(--surface-100);
         }
 
         .day {
@@ -64,7 +64,7 @@
             border-radius: 4px;
 
             &:hover {
-                background-color: var(--surface-c);
+                background-color: var(--surface-100);
             }
 
             &.today {
@@ -92,7 +92,7 @@
         transform: scale(0);
         position: absolute;
         transition: transform 300ms ease;
-        background-color: var(--surface-a);
+        background-color: var(--surface-0);
 
         &.open {
             transform: scale(1);
@@ -102,7 +102,7 @@
             cursor: pointer;
 
             &:hover {
-                background-color: var(--surface-c);
+                background-color: var(--surface-100);
             }
         }
     }
@@ -131,7 +131,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border-bottom: 1px solid var(--surface-c);
+            border-bottom: 1px solid var(--surface-100);
 
             &.selected {
                 color: var(--primary-50);
@@ -146,10 +146,10 @@
         min-height: 3rem;
         align-items: center;
         justify-content: center;
-        border-top: 1px solid var(--surface-c);
+        border-top: 1px solid var(--surface-100);
 
         &:hover {
-            background-color: var(--surface-c);
+            background-color: var(--surface-100);
         }
     }
 }

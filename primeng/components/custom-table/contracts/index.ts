@@ -3,6 +3,7 @@ import {TemplateRef} from "@angular/core";
 export interface CustomTableColumn<T = any> {
     header: string;
     field?: string;
+    class?: string;
     width?: string;
     isHide?: boolean;
     template?: TemplateRef<any>;

@@ -35,10 +35,14 @@
                     [style.width]="column.width">
                     <div *ngIf="column.field" class="flex flex-row align-items-center">
                         <span class="flex-1">{{ column.header }}</span>
-                        <p-sortIcon [field]="column.field" class="flex flex-row align-items-center"/>
-                        <p-columnFilter *ngIf="filterType == 'menu'" [field]="column.field" display="menu"
-                                        matchMode="contains"
-                                        type="text"></p-columnFilter>
+                        @if (isSortable) {
+                            <p-sortIcon [field]="column.field" class="flex flex-row align-items-center"/>
+                        }
+                        @if (isFilterable) {
+                            <p-columnFilter *ngIf="filterType == 'menu'" [field]="column.field" display="menu"
+                                            matchMode="contains"
+                                            type="text"></p-columnFilter>
+                        }
                     </div>
                     <div *ngIf="!column.field">
                         {{ column.header }}
@@ -69,14 +73,11 @@
                               type="button"/>
                 </td>
                 <td class="text-center">{{ rowIndex + 1 }}</td>
-                <td *ngFor="let column of selectedColumns">
+                <td *ngFor="let column of selectedColumns" [ngClass]="column.class"
+                    [innerHTML]="(column.render ? column.render(item) : (column.field ? item[column.field] : null))">
                     <ng-container *ngIf="column.template">
-                        <ng-container
-                            *ngTemplateOutlet="column.template; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
+                        <ng-container *ngTemplateOutlet="column.template; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
                     </ng-container>
-                    <div *ngIf="!column.template"
-                         [innerHTML]="(column.render ? column.render(item) : (column.field ? item[column.field] : null))">
-                    </div>
                 </td>
                 <td *ngIf="operationTpl || onEdit.observed || onDelete.observed">
                     <div class="flex flex-row flex-nowrap gap-2">
@@ -88,12 +89,12 @@
                         <p-button (onClick)="onEdit.emit(item)" *ngIf="onEdit.observed"
                                   [pTooltip]="'custom-table.edit' | translate"
                                   icon="fal fa-pencil" severity="warn"
-                                  size="small" tooltipPosition="bottom"/>
+                                  tooltipPosition="bottom"/>
 
                         <p-button (onClick)="showDeleteDialog(item)" *ngIf="onDelete.observed"
                                   [pTooltip]="'custom-table.delete' | translate"
                                   icon="fal fa-trash-can" severity="danger"
-                                  size="small" tooltipPosition="bottom"/>
+                                  tooltipPosition="bottom"/>
                     </div>
                 </td>
             </tr>
@@ -109,7 +110,7 @@
                     <div class="icon">
                         <i class="far fa-database"></i>
                     </div>
-                    <div class="text">{{'custom-table.no-records-found' | translate}}</div>
+                    <div class="text">{{ 'custom-table.no-records-found' | translate }}</div>
                 </td>
             </tr>
         </ng-template>

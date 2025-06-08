@@ -53,6 +53,7 @@ import {SliderModule} from 'primeng/slider';
 import {ToggleSwitchModule} from 'primeng/toggleswitch';
 import {ScrollPanelModule} from "primeng/scrollpanel";
 import {RatingModule} from "primeng/rating";
+import {PopoverModule} from "primeng/popover";
 
 import {CustomDialogComponent} from "./components/custom-dialog/custom-dialog.component";
 import {CustomTableComponent} from "./components/custom-table/custom-table.component";
@@ -116,6 +117,7 @@ const PRIMENG_MODULES = [
     TreeSelectModule,
     ScrollPanelModule,
     RatingModule,
+    PopoverModule,
 ];
 
 const MODULES = [

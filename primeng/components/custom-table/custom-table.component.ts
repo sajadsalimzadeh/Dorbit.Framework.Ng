@@ -19,6 +19,8 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Input() showInCard: boolean = true;
     @Input() showColumnSelector: boolean = true;
     @Input() filterType: 'menu' | 'inline' = 'menu';
+    @Input() isSortable: boolean = false;
+    @Input() isFilterable: boolean = false;
 
     @Output() onAdd = new EventEmitter<any>();
     @Output() onEdit = new EventEmitter<any>();

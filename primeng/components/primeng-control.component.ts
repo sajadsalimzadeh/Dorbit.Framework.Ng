@@ -33,7 +33,9 @@ export class PrimengControlComponent implements OnChanges, OnDestroy {
 
     // Write a new value to the element
     writeValue(value: string): void {
-        this.formControl.setValue(value)
+        if(this.formControl.value != value) {
+            this.formControl.setValue(value)
+        }
     }
 
     // Save the function that should be called when the value changes

@@ -1,44 +1,53 @@
-<p-iconField iconPosition="right">
-    <p-inputIcon styleClass="fal fa-calendar"/>
-    <input #inputEl (blur)="onBlur()" (focus)="open()" (keyup)="updateValueFromDisplay()" [formControl]="displayFormControl" [placeholder]="placeholder" dir="ltr" pInputText type="text"/>
-</p-iconField>
-<div [class.open]="isOpen" class="date-picker-container">
+<p-ifta-label>
+    <p-icon-field>
+        @if (showClear) {
+            <p-inputicon styleClass="fal fa-times" (click)="formControl.setValue(null)"/>
+        }
+        <input class="input-control" #inputEl (focus)="op.toggle($event, inputEl)" (keyup)="updateValueFromDisplay()"
+               [formControl]="displayFormControl" [placeholder]="placeholder" dir="ltr" pInputText type="text"/>
+        <p-inputicon styleClass="fal fa-calendar"/>
+    </p-icon-field>
+    <label>{{ label }}</label>
+</p-ifta-label>
+<p-popover #op>
+    <div class="date-picker-container">
 
-    <div class="year-month">
-        <div (click)="openYearPicker()" class="year">
-            {{ year }}
+        <div class="year-month">
+            <div (click)="openYearPicker()" class="year">
+                {{ year }}
+            </div>
+            <div (click)="openMonthPicker()" class="month">
+                {{ monthNames[month] }}
+            </div>
         </div>
-        <div (click)="openMonthPicker()" class="month">
-            {{ monthNames[month] }}
-        </div>
-    </div>
-    <div class="dates">
-        <div class="day-of-week">ش</div>
-        <div class="day-of-week">ی</div>
-        <div class="day-of-week">د</div>
-        <div class="day-of-week">س</div>
-        <div class="day-of-week">چ</div>
-        <div class="day-of-week">پ</div>
-        <div class="day-of-week">ج</div>
+        <div class="dates">
+            <div class="day-of-week">ش</div>
+            <div class="day-of-week">ی</div>
+            <div class="day-of-week">د</div>
+            <div class="day-of-week">س</div>
+            <div class="day-of-week">چ</div>
+            <div class="day-of-week">پ</div>
+            <div class="day-of-week">ج</div>
 
-        <div (click)="selectDate(date)" *ngFor="let date of dates" [class.current-month]="date.isCurrentMonth"
-             [class.selected]="date.isSelected" [class.today]="date.isToday" class="day">
-            {{ date.day }}
+            <div (click)="selectDate(date)" *ngFor="let date of dates" [class.current-month]="date.isCurrentMonth"
+                 [class.selected]="date.isSelected" [class.today]="date.isToday" class="day">
+                {{ date.day }}
+            </div>
         </div>
-    </div>
 
-    <div [class.open]="state == 'month'" class="month-picker">
-        <div (click)="selectMonth(month.value)" *ngFor="let month of months" [class.selected]="month.isSelected" class="month">
-            {{ month.name }}
+        <div [class.open]="state == 'month'" class="month-picker">
+            <div (click)="selectMonth(month.value)" *ngFor="let month of months" [class.selected]="month.isSelected" class="month">
+                {{ month.name }}
+            </div>
         </div>
-    </div>
 
-    <div [class.open]="state == 'year'" class="year-picker">
-        <div (click)="selectYear(year.value)" *ngFor="let year of years" [class.selected]="year.isSelected" class="year">
-            {{ year.value }}
+        <div [class.open]="state == 'year'" class="year-picker">
+            <div (click)="selectYear(year.value)" *ngFor="let year of years" [class.selected]="year.isSelected" class="year">
+                {{ year.value }}
+            </div>
+        </div>
+        <div (click)="goToday()" class="go-today">
+            امروز
         </div>
     </div>
-    <div (click)="goToday()" class="go-today">
-        امروز
-    </div>
-</div>
+</p-popover>

@@ -38,11 +38,13 @@ import {PositionComponent} from './components/position/position.component';
 import {BreadcrumbComponent} from './components/breadcrumb/breadcrumb.component';
 import {FabComponent} from './components/fab/fab.component';
 import {InputSplitComponent} from './components/form/input-split/input-split.component';
+
 import {TemplateDirective} from './directives/template.directive';
 import {KeyFilterDirective} from './directives/key-filter.directive';
 import {TooltipDirective} from './directives/tooltip.directive';
 import {ResponsiveDirective} from './directives/responsive.directive';
 import {HotKeyDirective} from './directives/hot-key.directive';
+
 import {DatePipe} from './pipes/date.pipe';
 import {JDatePipe} from './pipes/jdate.pipe';
 import {RDatePipe} from './pipes/rdate.pipe';

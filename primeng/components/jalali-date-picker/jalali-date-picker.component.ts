@@ -1,14 +1,4 @@
-import {
-    Component,
-    ElementRef,
-    forwardRef,
-    HostListener,
-    Injector,
-    Input,
-    OnDestroy,
-    OnInit,
-    ViewChild
-} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, forwardRef, HostListener, Injector, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@angular/forms';
 import moment, {Moment} from 'jalali-moment';
 import {CommonModule} from '@angular/common';
@@ -16,6 +6,8 @@ import {InputTextModule} from 'primeng/inputtext';
 import {IconFieldModule} from 'primeng/iconfield';
 import {InputIconModule} from 'primeng/inputicon';
 import {PrimengControlComponent} from '../primeng-control.component';
+import {Popover, PopoverModule} from "primeng/popover";
+import {IftaLabel} from "primeng/iftalabel";
 
 interface YearObject {
     value: number;
@@ -57,7 +49,7 @@ const monthNames = [
 
 @Component({
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, FormsModule, InputTextModule, IconFieldModule, InputIconModule],
+    imports: [CommonModule, ReactiveFormsModule, FormsModule, InputTextModule, InputIconModule, PopoverModule, IconFieldModule, IftaLabel],
     selector: 'p-jalali-date-picker',
     templateUrl: './jalali-date-picker.component.html',
     styleUrls: ['./jalali-date-picker.component.scss'],
@@ -69,17 +61,19 @@ const monthNames = [
         }
     ],
 })
-export class JalaliDatePickerComponent extends PrimengControlComponent implements OnInit, OnDestroy, ControlValueAccessor {
+export class JalaliDatePickerComponent extends PrimengControlComponent implements OnInit, AfterViewInit, OnDestroy, ControlValueAccessor {
     @Input() placeholder: string = '';
+    @Input() label: string = '';
+    @Input() showClear: boolean = false;
     @Input() displayFormat: string = 'jYYYY/jMM/jDD';
     @Input() valueFormat: string = 'YYYY-MM-DD';
-    // @Input() displayFormat: string = 'jYYYY/jMM/jDD HH:mm:ss'; //Format time dar
 
     @ViewChild('inputEl') inputEl!: ElementRef<HTMLInputElement>;
+    @ViewChild('op') popover!: Popover;
+
     monthNames = monthNames;
     displayFormControl = new FormControl('');
     isInside: boolean = false;
-    isOpen: boolean = false;
     state: 'date' | 'month' | 'year' = 'date';
     year: number = 0;
     years: YearObject[] = [];
@@ -103,12 +97,19 @@ export class JalaliDatePickerComponent extends PrimengControlComponent implement
     ngOnInit(): void {
 
         this.subscription.add(this.formControl.valueChanges.subscribe(e => {
-            this.updateDateFromFormControlValue();
+            this.updateDisplayFromValue();
         }));
 
-        this.updateDateFromFormControlValue();
+        this.updateDisplayFromValue();
     }
 
+    ngAfterViewInit() {
+
+        this.subscription.add(this.popover.onShow.subscribe(e => {
+            this.createDays();
+        }))
+
+    }
 
     override setDisabledState(isDisabled: boolean): void {
         super.setDisabledState(isDisabled);
@@ -116,7 +117,7 @@ export class JalaliDatePickerComponent extends PrimengControlComponent implement
         else this.displayFormControl.enable();
     }
 
-    updateDateFromFormControlValue() {
+    updateDisplayFromValue() {
         try {
             this.date = moment.from(this.formControl.getRawValue(), 'en', this.valueFormat);
             if (!(this.date as any)._isValid) {
@@ -145,28 +146,6 @@ export class JalaliDatePickerComponent extends PrimengControlComponent implement
 
     focus() {
         this.inputEl.nativeElement.focus();
-    }
-
-    open() {
-        this.createDays();
-        this.isOpen = true;
-    }
-
-    close() {
-        this.isOpen = false;
-        this.formControl.setValue(this.date?.format(this.valueFormat));
-    }
-
-    onBlur() {
-        if (!this.isInside) {
-            this.close();
-        } else {
-            setTimeout(() => {
-                if (!this.isOpen) {
-                    this.focus();
-                }
-            }, 10);
-        }
     }
 
     createDays() {
@@ -304,9 +283,6 @@ export class JalaliDatePickerComponent extends PrimengControlComponent implement
         const m = (this.date?.clone() ?? moment()).locale('en');
         this.formControl.setValue(m.format(this.valueFormat));
         this.displayFormControl.setValue(m.format(this.displayFormat));
-
-        setTimeout(() => {
-            this.isOpen = false;
-        }, 50);
+        this.popover.hide();
     }
 }
