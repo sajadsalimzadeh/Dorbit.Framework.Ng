@@ -3,7 +3,7 @@ import {OverlayOptions, OverlayRef, OverlayService} from './overlay.component'
 import {AbstractComponent} from "../abstract.component";
 
 @Directive({
-    standalone: false,
+    standalone: true,
     selector: '[dOverlay]'
 })
 export class OverlayDirective extends AbstractComponent implements OnInit {
