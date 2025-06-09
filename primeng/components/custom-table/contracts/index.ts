@@ -6,6 +6,7 @@ export interface CustomTableColumn<T = any> {
     class?: string;
     width?: string;
     isHide?: boolean;
+    headerClass?: string;
     template?: TemplateRef<any>;
     templateName?: string;
     render?: (item: T) => any;

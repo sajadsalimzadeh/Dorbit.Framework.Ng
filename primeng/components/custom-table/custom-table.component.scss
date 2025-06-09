@@ -21,6 +21,11 @@
             }
         }
     }
+
+    .columns-selection {
+        flex: 1;
+        max-width: 250px;
+    }
 }
 
 p-table :host-context([dir=rtl]) {

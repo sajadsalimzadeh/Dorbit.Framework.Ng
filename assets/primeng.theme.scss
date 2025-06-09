@@ -57,6 +57,7 @@ html:root {
     .bg-#{$color} {
         background-color: var(--#{$color});
     }
+
     .color-#{$color} {
         color: var(--#{$color});
     }

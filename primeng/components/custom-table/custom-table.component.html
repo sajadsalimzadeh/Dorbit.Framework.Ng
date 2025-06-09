@@ -7,23 +7,17 @@
 <ng-template #tableTpl>
     <div class="flex flex-row gap-2 align-items-center pb-2">
         <p-button (onClick)="onAdd.emit()" *ngIf="onAdd.observed" [label]="'custom-table.add' | translate"
-                  icon="fa fa-plus" severity="success"/>
+                  icon="fa fa-plus" iconPos="right" severity="success"/>
         <ng-container *ngIf="captionTpl">
             <ng-container *ngTemplateOutlet="captionTpl"></ng-container>
         </ng-container>
-        <p-multi-select (ngModelChange)="processHideColumns()" *ngIf="showColumnSelector" [(ngModel)]="selectedColumns"
+        <p-multi-select class="columns-selection" (ngModelChange)="processHideColumns()" *ngIf="showColumnSelector" [(ngModel)]="selectedColumns"
                         [options]="columns" display="chip" optionLabel="header"></p-multi-select>
     </div>
     <p-table
-        #dt
-        [loading]="loading"
-        [paginator]="true"
-        [rowsPerPageOptions]="[5, 10, 12, 15, 20, 50]"
-        [rows]="12"
-        [size]="size"
-        [tableStyle]="{ 'min-width': '50rem' }"
-        [value]="value"
-        showGridlines>
+        #dt showGridlines
+        [value]="value" [paginator]="true" [rowsPerPageOptions]="[5, 10, 12, 15, 20, 50]"
+        [rows]="12" [size]="size" [tableStyle]="{ 'min-width': '50rem' }" [loading]="loading">
         <ng-template pTemplate="header">
             <ng-container *ngIf="headerTpl">
                 <ng-container *ngTemplateOutlet="headerTpl"></ng-container>
@@ -31,7 +25,7 @@
             <tr>
                 <th *ngIf="expandedrowTpl"></th>
                 <th [style.width]="'50px'" class="text-center">#</th>
-                <th *ngFor="let column of selectedColumns" [pSortableColumn]="column.field"
+                <th *ngFor="let column of selectedColumns" [pSortableColumn]="column.field" [ngClass]="column.headerClass"
                     [style.width]="column.width">
                     <div *ngIf="column.field" class="flex flex-row align-items-center">
                         <span class="flex-1">{{ column.header }}</span>

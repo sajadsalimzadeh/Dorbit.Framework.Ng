@@ -288,8 +288,8 @@ export class BaseCacheStorageService implements ICacheService {
         return this.cacheService.getObservable<T>(key, this.storage, action, lifetime);
     }
 
-    set<T = any>(key: string, value: T, lifetime: TimeSpan) {
-        return this.cacheService.set<T>(key, this.storage, value, lifetime);
+    set<T = any>(key: string, value: T, ttl: TimeSpan) {
+        return this.cacheService.set<T>(key, this.storage, value, ttl);
     }
 
     remove(key: string) {

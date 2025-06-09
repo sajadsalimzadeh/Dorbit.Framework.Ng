@@ -18,3 +18,16 @@ p-button {
         width: 100%;
     }
 }
+
+.p-datatable-table-container {
+    background-color: var(--surface-50);
+
+    .p-datatable-tbody {
+        height: var(--p-custom-table-height);
+
+        &::after {
+            content: '';
+            display: table-row;
+        }
+    }
+}
