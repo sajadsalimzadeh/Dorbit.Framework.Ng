@@ -32,6 +32,9 @@ export class IndexedDB implements IDatabase {
                 this.db = e.target.result;
                 resolve(true);
             };
+            request.onblocked = (e) => {
+                reject(e);
+            }
         })
     }
 
