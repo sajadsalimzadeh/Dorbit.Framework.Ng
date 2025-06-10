@@ -3,9 +3,9 @@ import {FormControl} from '@angular/forms';
 import {Subscription} from 'rxjs';
 
 @Directive()
-export class PrimengControlComponent implements OnChanges, OnDestroy {
+export class PrimengControlComponent implements OnDestroy {
     _services: any = {};
-    _onChange?: (value: string) => void;
+    _onChange?: (value: any) => void;
     _onTouched?: () => void;
 
     @Input() formControl = new FormControl<any>(null);
@@ -17,14 +17,6 @@ export class PrimengControlComponent implements OnChanges, OnDestroy {
     }
 
     constructor(protected injector: Injector) {
-    }
-
-    ngOnChanges(changes: SimpleChanges): void {
-        if (changes['formControl']) {
-            this.subscription.add(this.formControl.valueChanges.subscribe(value => {
-                if (this._onChange) this._onChange(value)
-            }));
-        }
     }
 
     ngOnDestroy(): void {

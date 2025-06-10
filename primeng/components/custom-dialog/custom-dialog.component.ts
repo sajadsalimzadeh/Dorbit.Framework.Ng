@@ -71,10 +71,6 @@ export class CustomDialogComponent implements OnInit, OnChanges {
                 sizeStyles.height = '100%';
             }
 
-            if(!this.draggable) {
-                sizeStyles.transform = 'none';
-            }
-
             this.style = {
                 ...sizeStyles,
                 maxWidth: '100%',

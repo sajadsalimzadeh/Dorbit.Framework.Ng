@@ -21,9 +21,14 @@ $map_colors: (
 html:root {
 
     --primary: var(--primary-500);
+
+    --list-padding: .7rem;
     --button-label-font-weight: 200;
     --form-field-border-color: var(--surface-200);
     --form-field-invalid-border-color: var(--red-300);
+    --form-field-sm-padding-x: 0.425rem;
+    --form-field-sm-padding-y: 0.4rem;
+    --dialog-content-padding: var(--overlay-modal-padding);
 
     --button-outlined-success-hover-background: var(--success-50);
     --button-outlined-success-active-background: var(--success-100);

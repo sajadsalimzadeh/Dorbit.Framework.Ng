@@ -59,6 +59,8 @@ import {CustomDialogComponent} from "./components/custom-dialog/custom-dialog.co
 import {CustomTableComponent} from "./components/custom-table/custom-table.component";
 import {JalaliDatePickerComponent} from './components/jalali-date-picker/jalali-date-picker.component';
 import {CustomCheckboxComponent} from './components/custom-checkbox/custom-checkbox.component';
+import {ListboxModule} from "primeng/listbox";
+import {DividerModule} from "primeng/divider";
 
 const COMPONENTS = [
     CustomTableComponent,
@@ -118,6 +120,8 @@ const PRIMENG_MODULES = [
     ScrollPanelModule,
     RatingModule,
     PopoverModule,
+    ListboxModule,
+    DividerModule,
 ];
 
 const MODULES = [

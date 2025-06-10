@@ -19,14 +19,13 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Input() showInCard: boolean = true;
     @Input() showColumnSelector: boolean = true;
     @Input() filterType: 'menu' | 'inline' = 'menu';
-    @Input() isSortable: boolean = false;
-    @Input() isFilterable: boolean = false;
+    @Input() isSortable: boolean = true;
+    @Input() isFilterable: boolean = true;
 
     @Output() onAdd = new EventEmitter<any>();
     @Output() onEdit = new EventEmitter<any>();
     @Output() onDelete = new EventEmitter<any>();
     @Output() isSaving = new EventEmitter<any>();
-
 
     @ContentChild('caption') captionTpl?: TemplateRef<any>;
     @ContentChild('header') headerTpl?: TemplateRef<any>;
@@ -50,7 +49,7 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
 
     ngAfterViewInit(): void {
         this.columns.forEach(column => {
-            column.template = this.templates.find((x: any) => x._declarationTContainer.localNames[0] == column.templateName);
+            column.template = this.templates.find((x: any) => x._declarationTContainer.localNames && x._declarationTContainer.localNames[0] == column.templateName);
             column.header = this.translateService.instant(column.header);
 
         })

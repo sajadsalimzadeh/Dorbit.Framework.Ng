@@ -1,15 +1,16 @@
 <p-ifta-label>
-    <p-icon-field>
+    <p-icon-field >
         @if (showClear) {
             <p-inputicon styleClass="fal fa-times" (click)="formControl.setValue(null)"/>
         }
         <input class="input-control" #inputEl (focus)="op.toggle($event, inputEl)" (keyup)="updateValueFromDisplay()"
-               [formControl]="displayFormControl" [placeholder]="placeholder" dir="ltr" pInputText type="text"/>
+               [value]="displayValue" [disabled]="formControl.disabled"
+               [placeholder]="placeholder" dir="ltr" pInputText [pSize]="size!" type="text"/>
         <p-inputicon styleClass="fal fa-calendar"/>
     </p-icon-field>
     <label>{{ label }}</label>
 </p-ifta-label>
-<p-popover #op>
+<p-popover #op appendTo="body">
     <div class="date-picker-container">
 
         <div class="year-month">
@@ -30,7 +31,7 @@
             <div class="day-of-week">ج</div>
 
             <div (click)="selectDate(date)" *ngFor="let date of dates" [class.current-month]="date.isCurrentMonth"
-                 [class.selected]="date.isSelected" [class.today]="date.isToday" class="day">
+                 [class.disabled]="date.isDisabled" [class.selected]="date.isSelected" [class.today]="date.isToday" class="day">
                 {{ date.day }}
             </div>
         </div>

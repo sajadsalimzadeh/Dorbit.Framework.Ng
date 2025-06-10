@@ -20,11 +20,15 @@
                 height: 4rem;
             }
         }
+
+        p-columnfilterformelement {
+            flex: 1;
+        }
     }
 
     .columns-selection {
         flex: 1;
-        max-width: 250px;
+        max-width: 350px;
     }
 }
 
@@ -41,10 +45,10 @@ p-table :host-context([dir=rtl]) {
     color: var(--surface-400);
 
     .icon {
-        font-size: 5rem;
+        font-size: 4rem;
     }
 
     .text {
-        font-size: 3rem;
+        font-size: 2rem;
     }
 }

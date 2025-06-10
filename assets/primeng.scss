@@ -19,15 +19,12 @@ p-button {
     }
 }
 
-.p-datatable-table-container {
-    background-color: var(--surface-50);
-
-    .p-datatable-tbody {
-        height: var(--p-custom-table-height);
-
-        &::after {
-            content: '';
-            display: table-row;
+p-ifta-label {
+    label {
+        &.required::after {
+            content: '*';
+            color: var(--danger);
+            padding-inline-start: .5rem;
         }
     }
 }

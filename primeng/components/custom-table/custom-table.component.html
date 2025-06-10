@@ -17,7 +17,7 @@
     <p-table
         #dt showGridlines
         [value]="value" [paginator]="true" [rowsPerPageOptions]="[5, 10, 12, 15, 20, 50]"
-        [rows]="12" [size]="size" [tableStyle]="{ 'min-width': '50rem' }" [loading]="loading">
+        [rows]="12" [size]="size" [loading]="loading">
         <ng-template pTemplate="header">
             <ng-container *ngIf="headerTpl">
                 <ng-container *ngTemplateOutlet="headerTpl"></ng-container>
@@ -32,7 +32,7 @@
                         @if (isSortable) {
                             <p-sortIcon [field]="column.field" class="flex flex-row align-items-center"/>
                         }
-                        @if (isFilterable) {
+                        @if (isFilterable && column.field) {
                             <p-columnFilter *ngIf="filterType == 'menu'" [field]="column.field" display="menu"
                                             matchMode="contains"
                                             type="text"></p-columnFilter>
@@ -44,13 +44,15 @@
                 </th>
                 <th *ngIf="operationTpl || onEdit.observed || onDelete.observed" width="10"></th>
             </tr>
-            <tr *ngIf="filterType == 'inline'">
+            <tr *ngIf="filterType == 'inline' && isFilterable">
                 <th *ngIf="expandedrowTpl"></th>
                 <th class="text-center"></th>
                 <th *ngFor="let column of selectedColumns">
-                    <p-columnFilter #cf (input)="cf.applyFilter()" [field]="column.field"
-                                    [placeholder]="'Search by ' + column.header"
-                                    matchMode="contains" type="text"></p-columnFilter>
+                    @if (column.field) {
+                        <p-columnFilter #cf (input)="cf.applyFilter()" [field]="column.field"
+                                        [placeholder]="'Search by ' + column.header"
+                                        matchMode="contains" type="text"></p-columnFilter>
+                    }
                 </th>
                 <th *ngIf="operationTpl || onEdit.observed || onDelete.observed"></th>
             </tr>
@@ -67,12 +69,15 @@
                               type="button"/>
                 </td>
                 <td class="text-center">{{ rowIndex + 1 }}</td>
-                <td *ngFor="let column of selectedColumns" [ngClass]="column.class"
-                    [innerHTML]="(column.render ? column.render(item) : (column.field ? item[column.field] : null))">
-                    <ng-container *ngIf="column.template">
-                        <ng-container *ngTemplateOutlet="column.template; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
-                    </ng-container>
-                </td>
+                <ng-container *ngFor="let column of selectedColumns">
+                    @if (column.template) {
+                        <td [ngClass]="column.class">
+                            <ng-container *ngTemplateOutlet="column.template; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
+                        </td>
+                    } @else {
+                        <td [ngClass]="column.class" [innerHTML]="(column.render ? column.render(item) : (column.field ? item[column.field] : undefined))"></td>
+                    }
+                </ng-container>
                 <td *ngIf="operationTpl || onEdit.observed || onDelete.observed">
                     <div class="flex flex-row flex-nowrap gap-2">
                         <ng-container *ngIf="operationTpl">
@@ -99,8 +104,8 @@
             </ng-container>
         </ng-template>
         <ng-template #emptymessage let-columns>
-            <tr style="height: 40vh">
-                <td colspan="100" class="no-data">
+            <tr>
+                <td colspan="100" class="no-data" style="height: 100%; padding: 3rem 0">
                     <div class="icon">
                         <i class="far fa-database"></i>
                     </div>

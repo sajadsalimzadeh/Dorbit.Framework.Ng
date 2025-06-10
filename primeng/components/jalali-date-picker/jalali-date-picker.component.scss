@@ -63,8 +63,9 @@
             cursor: pointer;
             border-radius: 4px;
 
-            &:hover {
-                background-color: var(--surface-100);
+            &.disabled {
+                opacity: .3;
+                background-color: var(--surface-50);
             }
 
             &.today {
@@ -75,6 +76,11 @@
             &.selected {
                 color: var(--primary-50);
                 background-color: var(--primary-500);
+            }
+
+            &:not(.disabled):hover {
+                color: var(--surface-500);
+                background-color: var(--surface-100);
             }
 
             &:not(.current-month) {
