@@ -118,7 +118,7 @@ interface IndexDbCacheRecord {
 }
 
 export class CacheStorageIndexDb implements ICacheStorage {
-    caches!: ITable<IndexDbCacheRecord>;
+    items!: ITable<IndexDbCacheRecord>;
     private readonly db: IndexedDB;
     private readonly prefix: string;
 
@@ -126,19 +126,22 @@ export class CacheStorageIndexDb implements ICacheStorage {
         this.db = new IndexedDB({name: options.dbName ?? 'cache', version: options.version ?? 3});
         this.prefix = options.prefix ?? 'cache-';
         this.db.create('items', {key: 'key'});
-        this.db.open().then(() => {
-            this.caches = this.db.table('items')
-        });
+    }
+
+    private async getTable() {
+        await this.db.open();
+        return this.items ??= this.db.table('items');
     }
 
     async get<T>(key: string): Promise<T | undefined> {
-        await this.db.open();
-        const record = await this.caches.get(this.prefix + key);
+        const items = await this.getTable();
+        const record = await items.get(this.prefix + key);
         return record?.value;
     }
 
     async getAllKeys(): Promise<string[]> {
-        const keys = await this.caches.findAllKey(x => true, 10000);
+        const items = await this.getTable();
+        const keys = await items.findAllKey(x => true, 10000);
         for (let i = 0; i < keys.length; i++) {
             keys[i] = keys[i].substring(this.prefix.length);
         }
@@ -146,18 +149,18 @@ export class CacheStorageIndexDb implements ICacheStorage {
     }
 
     async remove(key: string) {
-        await this.db.open();
-        return this.caches.delete(this.prefix + key);
+        const items = await this.getTable();
+        return items.delete(this.prefix + key);
     }
 
     async removeAll() {
-        await this.db.open();
-        return this.caches.deleteAll();
+        const items = await this.getTable();
+        return items.deleteAll();
     }
 
     async set<T>(key: string, value: T | undefined) {
-        await this.db.open();
-        await this.caches.put({key: this.prefix + key, value: value});
+        const items = await this.getTable();
+        await items.put({key: this.prefix + key, value: value});
     }
 }
 
@@ -191,7 +194,8 @@ export class CacheService {
             if (obj.version != this.version) {
                 result.invalidVersion = true;
             }
-        } catch {
+        } catch(e) {
+            console.error(e)
         }
         return result;
     }
