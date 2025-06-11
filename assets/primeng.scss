@@ -19,6 +19,10 @@ p-button {
     }
 }
 
+.p-treeselect-label {
+    flex-wrap: wrap;
+}
+
 p-ifta-label {
     label {
         &.required::after {

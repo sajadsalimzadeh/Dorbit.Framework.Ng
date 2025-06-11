@@ -54,13 +54,14 @@ import {ToggleSwitchModule} from 'primeng/toggleswitch';
 import {ScrollPanelModule} from "primeng/scrollpanel";
 import {RatingModule} from "primeng/rating";
 import {PopoverModule} from "primeng/popover";
+import {ListboxModule} from "primeng/listbox";
+import {DividerModule} from "primeng/divider";
+import { FileUploadModule } from 'primeng/fileupload';
 
 import {CustomDialogComponent} from "./components/custom-dialog/custom-dialog.component";
 import {CustomTableComponent} from "./components/custom-table/custom-table.component";
 import {JalaliDatePickerComponent} from './components/jalali-date-picker/jalali-date-picker.component';
 import {CustomCheckboxComponent} from './components/custom-checkbox/custom-checkbox.component';
-import {ListboxModule} from "primeng/listbox";
-import {DividerModule} from "primeng/divider";
 
 const COMPONENTS = [
     CustomTableComponent,
@@ -122,6 +123,7 @@ const PRIMENG_MODULES = [
     PopoverModule,
     ListboxModule,
     DividerModule,
+    FileUploadModule,
 ];
 
 const MODULES = [
