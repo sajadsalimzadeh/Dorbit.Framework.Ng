@@ -1,0 +1,9 @@
+@use "../mixin";
+
+.form-control {
+    width: 100%;
+    border: none;
+    padding: 5px;
+    outline: none;
+    @include mixin.shadow;
+}

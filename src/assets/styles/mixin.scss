@@ -1,0 +1,23 @@
+@mixin selected-color {
+    color: var(--color-primary);
+    background-color: rgba(var(--color-primary-rgb), .1);
+}
+
+@mixin shadow {
+    box-shadow: 0 0 1px 0 var(--color-gray-6);
+}
+
+@mixin shadow-slant {
+    background: linear-gradient(45deg,
+        rgba(var(--color-black-rgb), .04) 0%,
+        rgba(var(--color-black-rgb), 0) 50%,
+        rgba(var(--color-black-rgb), .04) 100%
+    );
+}
+
+@mixin glass {
+    background: rgba(255, 255, 255, 0.26);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5.7px);
+    -webkit-backdrop-filter: blur(5.7px);
+}

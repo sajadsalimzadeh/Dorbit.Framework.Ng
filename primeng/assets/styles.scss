@@ -1,0 +1,53 @@
+@use "theme";
+
+
+p-button {
+
+    &.w-full {
+        display: flex;
+
+        button {
+            flex: 1;
+            display: flex;
+        }
+    }
+}
+
+p-button-group {
+    p-button {
+        flex: 1;
+
+        button {
+            width: 100%;
+            white-space: nowrap;
+        }
+    }
+}
+
+.grid {
+    br {
+        width: 100%;
+    }
+}
+
+.p-treeselect-label {
+    flex-wrap: wrap;
+}
+
+p-ifta-label {
+    label {
+        &.required::after {
+            content: '*';
+            color: var(--danger);
+            padding-inline-start: .5rem;
+        }
+    }
+
+    p-select, [pinputtext], textarea {
+        width: 100%;
+    }
+}
+
+button, input {
+    font-family: inherit;
+}

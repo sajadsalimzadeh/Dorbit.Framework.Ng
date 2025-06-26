@@ -1,0 +1,21 @@
+@use "../variables";
+
+.alert {
+    gap: 1em;
+    display: flex;
+    padding: .6em 1em;
+    border-radius: .3em;
+    text-align: justify;
+    align-items: center;
+
+    i {
+        font-size: 1.2em;
+    }
+
+    @each $color in variables.$main-colors {
+        &.alert-#{$color} {
+            color: var(--color-#{$color}-text);
+            background-color: var(--color-#{$color});
+        }
+    }
+}
