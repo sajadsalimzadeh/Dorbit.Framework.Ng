@@ -42,7 +42,14 @@ export class PrimengControlComponent implements OnDestroy {
 
     // Enable or disable the component
     setDisabledState(isDisabled: boolean): void {
-        if (isDisabled) this.formControl.disable();
-        else this.formControl.enable();
+        if (isDisabled) {
+            if (!this.formControl.disabled) {
+                this.formControl.disable();
+            }
+        } else {
+            if (!this.formControl.enabled) {
+                this.formControl.enable();
+            }
+        }
     }
 }

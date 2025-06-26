@@ -1,7 +1,6 @@
 import {Inject, Injectable, Injector} from '@angular/core';
 import {CommandResult, QueryResult} from "../contracts/results";
 import {BaseApiRepository} from './base-api.repository';
-import {Setting} from "../contracts/setting";
 import {map, Observable} from 'rxjs';
 import {BASE_URL_FRAMEWORK} from '@framework/configs';
 
@@ -13,7 +12,7 @@ export class SettingRepository extends BaseApiRepository {
     }
 
     get(key: string): Observable<QueryResult<any>> {
-        return this.http.get<QueryResult<Setting>>(`${key}`).pipe(map(res => {
+        return this.http.get<QueryResult<any>>(`${key}`).pipe(map(res => {
             return {
                 ...res,
                 data: (res.data?.value ? JSON.parse(res.data.value) : null)
@@ -21,15 +20,8 @@ export class SettingRepository extends BaseApiRepository {
         }));
     }
 
-
     getAll(keys: string[] = []) {
-        return this.http.get<QueryResult<Setting[]>>(``, {params: {keys}});
-    }
-
-    save(key: string, value: any) {
-        const obj: any = {};
-        obj[key] = value;
-        return this.http.post<CommandResult>(``, obj);
+        return this.http.get<QueryResult<{[key: string]: any}>>(``, {params: {keys}});
     }
 
     saveAll(values: any) {

@@ -1,8 +1,8 @@
-import {Injector} from "@angular/core";
-import {Observable} from "rxjs";
-import {PagedListResult, QueryResult} from "../contracts/results";
-import {ODataQueryOptions} from '../contracts/odata-query-options';
-import {BaseApiRepository} from './base-api.repository';
+import { Injector } from "@angular/core";
+import { Observable } from "rxjs";
+import { PagedListResult, QueryResult } from "../contracts/results";
+import { ODataQueryOptions } from '../contracts/odata-query-options';
+import { BaseApiRepository } from './base-api.repository';
 
 export interface IViewRepository<T = any> {
     select(query?: ODataQueryOptions | any): Observable<PagedListResult<T>>;
@@ -39,7 +39,7 @@ export abstract class BaseCrudRepository<T = any, TSave = any> extends BaseApiRe
         } else {
             params = query;
         }
-        return this.http.get<PagedListResult<T>>(url, {params: params, headers: {'Content-Type': 'application/json'}});
+        return this.http.get<PagedListResult<T>>(url, { params: params, headers: { 'Content-Type': 'application/json' } });
     }
 
     getAll(): Observable<QueryResult<T[]>> {
@@ -58,13 +58,12 @@ export abstract class BaseCrudRepository<T = any, TSave = any> extends BaseApiRe
         return this.http.patch<QueryResult<T>>(`${id}`, req);
     }
 
-    save(id: any, req: TSave) {
-        if (!id) {
-            delete (req as any).id;
-            return this.add(req);
-        } else {
-            return this.edit(id, {...req});
+    save(req: TSave) {
+        if ((req as any).id) {
+            return this.edit((req as any).id, { ...req });
         }
+        delete (req as any).id;
+        return this.add(req);
     }
 
     delete(id: any) {

@@ -1,6 +1,6 @@
 <ng-template #promptTpl>
     <textarea [(ngModel)]="value" [placeholder]="message" [rows]="4" autofocus class="w-100"></textarea>
-    <div class="flex-row flex-gap-3 mt-3">
+    <div class="flex gap-3 mt-3">
         <d-button (click)="ok()" class="flex-1" color="success">{{ 'ok' | translate }}</d-button>
         <d-button (click)="cancel()" class="flex-1" color="danger">{{ 'cancel' | translate }}</d-button>
     </div>

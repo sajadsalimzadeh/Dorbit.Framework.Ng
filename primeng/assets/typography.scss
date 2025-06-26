@@ -1,0 +1,58 @@
+@use "sass:list";
+@use "variables.scss";
+
+@each $color in variables.$colors {
+    .bg-#{$color} {
+        background-color: var(--#{$color});
+    }
+
+    .color-#{$color} {
+        color: var(--#{$color});
+    }
+}
+
+.grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+
+    &.grid {
+        display: grid;
+    }
+
+}
+
+.grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+
+    &.grid {
+        display: grid;
+    }
+}
+
+.grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+
+    &.grid {
+        display: grid;
+    }
+}
+
+@each $screen in variables.$screens {
+    $name: list.nth($screen, 1);
+    $width: list.nth($screen, 2);
+
+    .#{$name}\:grid-2 {
+        @media screen and (max-width: #{$width}) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    .#{$name}\:grid-3 {
+        @media screen and (max-width: #{$width}) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+    .#{$name}\:grid-4 {
+        @media screen and (max-width: #{$width}) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+}

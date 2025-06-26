@@ -5,7 +5,7 @@
     <ng-container *ngTemplateOutlet="tableTpl"></ng-container>
 </p-card>
 <ng-template #tableTpl>
-    <div class="flex flex-row gap-2 align-items-center pb-2">
+    <div class="flex flex gap-2 align-items-center pb-2">
         <p-button (onClick)="onAdd.emit()" *ngIf="onAdd.observed" [label]="'custom-table.add' | translate"
                   icon="fa fa-plus" iconPos="right" severity="success"/>
         <ng-container *ngIf="captionTpl">
@@ -27,10 +27,10 @@
                 <th [style.width]="'50px'" class="text-center">#</th>
                 <th *ngFor="let column of selectedColumns" [pSortableColumn]="column.field" [ngClass]="column.headerClass"
                     [style.width]="column.width">
-                    <div *ngIf="column.field" class="flex flex-row align-items-center">
+                    <div *ngIf="column.field" class="flex flex align-items-center">
                         <span class="flex-1">{{ column.header }}</span>
                         @if (isSortable) {
-                            <p-sortIcon [field]="column.field" class="flex flex-row align-items-center"/>
+                            <p-sortIcon [field]="column.field" class="flex flex align-items-center"/>
                         }
                         @if (isFilterable && column.field) {
                             <p-columnFilter *ngIf="filterType == 'menu'" [field]="column.field" display="menu"
@@ -79,7 +79,7 @@
                     }
                 </ng-container>
                 <td *ngIf="operationTpl || onEdit.observed || onDelete.observed">
-                    <div class="flex flex-row flex-nowrap gap-2">
+                    <div class="flex flex flex-nowrap gap-2">
                         <ng-container *ngIf="operationTpl">
                             <ng-container
                                 *ngTemplateOutlet="operationTpl; context: {$implicit: item}"></ng-container>
@@ -121,7 +121,7 @@
         <div class="my-3">
             {{ 'custom-table.delete-message' | translate }}
         </div>
-        <div class="flex flex-row gap-2">
+        <div class="flex flex gap-2">
             <p-button (click)="deleteItemApprove()" [label]="'confirm.yes-sure' | translate" icon="far fa-check"
                       iconPos="right" severity="danger"/>
             <p-button (click)="isDeleteDialogVisible = false" [label]="'confirm.cancel' | translate" icon="far fa-times"

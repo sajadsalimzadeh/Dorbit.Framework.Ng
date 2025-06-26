@@ -1,15 +1,28 @@
+@if(label) {
+
+
 <p-ifta-label>
-    <p-icon-field >
+    <p-icon-field>
         @if (showClear) {
-            <p-inputicon styleClass="fal fa-times" (click)="formControl.setValue(null)"/>
+        <p-inputicon styleClass="fal fa-times" (click)="formControl.setValue(null)" />
         }
-        <input class="input-control" #inputEl (focus)="op.toggle($event, inputEl)" (keyup)="updateValueFromDisplay()"
-               [value]="displayValue" [disabled]="formControl.disabled"
-               [placeholder]="placeholder" dir="ltr" pInputText [pSize]="size!" type="text"/>
-        <p-inputicon styleClass="fal fa-calendar"/>
+        <input class="input-control" #inputEl (focus)="op.toggle($event, inputEl)" (keyup)="updateValueFromDisplay()" [value]="displayValue" [disabled]="formControl.disabled"
+            [placeholder]="placeholder" dir="ltr" pInputText [pSize]="size!" type="text" />
+        <p-inputicon styleClass="fal fa-calendar" />
     </p-icon-field>
     <label>{{ label }}</label>
 </p-ifta-label>
+} @else {
+<p-icon-field>
+    @if (showClear) {
+    <p-inputicon styleClass="fal fa-times" (click)="formControl.setValue(null)" />
+    }
+    <input class="input-control" #inputEl (focus)="op.toggle($event, inputEl)" (keyup)="updateValueFromDisplay()" [value]="displayValue" [disabled]="formControl.disabled"
+        [placeholder]="placeholder" dir="ltr" pInputText [pSize]="size!" type="text" />
+    <p-inputicon styleClass="fal fa-calendar" />
+</p-icon-field>
+}
+
 <p-popover #op appendTo="body">
     <div class="date-picker-container">
 
@@ -30,8 +43,8 @@
             <div class="day-of-week">پ</div>
             <div class="day-of-week">ج</div>
 
-            <div (click)="selectDate(date)" *ngFor="let date of dates" [class.current-month]="date.isCurrentMonth"
-                 [class.disabled]="date.isDisabled" [class.selected]="date.isSelected" [class.today]="date.isToday" class="day">
+            <div (click)="selectDate(date)" *ngFor="let date of dates" [class.current-month]="date.isCurrentMonth" [class.disabled]="date.isDisabled"
+                [class.selected]="date.isSelected" [class.today]="date.isToday" class="day">
                 {{ date.day }}
             </div>
         </div>

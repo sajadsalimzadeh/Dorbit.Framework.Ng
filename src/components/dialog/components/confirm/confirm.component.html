@@ -1,6 +1,6 @@
 <ng-template #confirmTpl let-dialog>
     <div *ngIf="message" [innerHTML]="message" class="text"></div>
-    <div class="buttons flex-row flex-gap-3">
+    <div class="buttons flex gap-3">
         <d-button (click)="button.action(button, dialog)"
                   *ngFor="let button of buttons"
                   [color]="button.color ?? 'primary'"

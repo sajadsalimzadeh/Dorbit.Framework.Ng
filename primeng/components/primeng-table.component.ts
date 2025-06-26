@@ -22,7 +22,13 @@ export abstract class PrimengTableComponent<T = any> extends PrimengComponent {
     abstract loader(): Observable<QueryResult<T[]>>;
 
     load() {
-        this.loader().subscribe((res) => this.items = res.data ?? []);
+        this.loader().subscribe((res) => {
+            this.items = res.data ?? [];
+            this.onLoad();
+        });
     }
 
+    onLoad() {
+
+    }
 }

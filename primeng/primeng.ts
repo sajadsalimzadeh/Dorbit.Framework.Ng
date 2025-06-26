@@ -56,7 +56,9 @@ import {RatingModule} from "primeng/rating";
 import {PopoverModule} from "primeng/popover";
 import {ListboxModule} from "primeng/listbox";
 import {DividerModule} from "primeng/divider";
+import { DatePickerModule } from 'primeng/datepicker';
 import { FileUploadModule } from 'primeng/fileupload';
+import { SplitterModule } from 'primeng/splitter';
 
 import {CustomDialogComponent} from "./components/custom-dialog/custom-dialog.component";
 import {CustomTableComponent} from "./components/custom-table/custom-table.component";
@@ -124,6 +126,8 @@ const PRIMENG_MODULES = [
     ListboxModule,
     DividerModule,
     FileUploadModule,
+    DatePickerModule,
+    SplitterModule,
 ];
 
 const MODULES = [
