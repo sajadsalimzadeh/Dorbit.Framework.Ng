@@ -12,12 +12,7 @@ export class SettingRepository extends BaseApiRepository {
     }
 
     get(key: string): Observable<QueryResult<any>> {
-        return this.http.get<QueryResult<any>>(`${key}`).pipe(map(res => {
-            return {
-                ...res,
-                data: (res.data?.value ? JSON.parse(res.data.value) : null)
-            }
-        }));
+        return this.http.get<QueryResult<any>>(`${key}`);
     }
 
     getAll(keys: string[] = []) {
