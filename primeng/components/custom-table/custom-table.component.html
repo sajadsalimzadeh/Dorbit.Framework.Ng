@@ -88,12 +88,12 @@
                         <p-button (onClick)="onEdit.emit(item)" *ngIf="onEdit.observed"
                                   [pTooltip]="'custom-table.edit' | translate"
                                   icon="fal fa-pencil" severity="warn"
-                                  tooltipPosition="bottom" size="small"/>
+                                  tooltipPosition="bottom"/>
 
                         <p-button (onClick)="showDeleteDialog(item)" *ngIf="onDelete.observed"
                                   [pTooltip]="'custom-table.delete' | translate"
                                   icon="fal fa-trash-can" severity="danger"
-                                  tooltipPosition="bottom" size="small"/>
+                                  tooltipPosition="bottom"/>
                     </div>
                 </td>
             </tr>
