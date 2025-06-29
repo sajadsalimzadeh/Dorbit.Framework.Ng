@@ -41,9 +41,9 @@ export class TreeComponent extends AbstractComponent implements OnChanges {
         parent: 'parentId',
     };
     @Input() icons = {
-        collapse: 'icons-core-angle-right',
-        expand: 'icons-core-angle-down',
-        leaf: 'icons-core-file',
+        collapse: 'far fa-angle-right',
+        expand: 'far fa-angle-down',
+        leaf: 'far fa-file',
     }
 
     override color: Colors = 'primary';

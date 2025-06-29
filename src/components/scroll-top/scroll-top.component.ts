@@ -12,7 +12,7 @@ import {CommonModule} from "@angular/common";
 })
 export class ScrollTopComponent extends AbstractComponent {
     @Input() threshold = 50;
-    @Input() icon: string = 'icons-core-angle-up';
+    @Input() icon: string = 'far fa-angle-up';
     @Input() position: PositionsCorner = 'bottom-end';
     private _target: any = window;
     private _listener: any;

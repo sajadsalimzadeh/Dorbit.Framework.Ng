@@ -7,7 +7,7 @@ import {OverlayDirective} from "./overlay.directive";
     imports: [
         CommonModule,
     ],
-    declarations: [],
+    declarations: [OverlayComponent, OverlayDirective],
     exports: [OverlayComponent, OverlayDirective]
 })
 export class OverlayModule {

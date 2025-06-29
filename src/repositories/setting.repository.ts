@@ -2,7 +2,7 @@ import {Inject, Injectable, Injector} from '@angular/core';
 import {CommandResult, QueryResult} from "../contracts/results";
 import {BaseApiRepository} from './base-api.repository';
 import {map, Observable} from 'rxjs';
-import {BASE_URL_FRAMEWORK} from '@framework/configs';
+import {BASE_URL_FRAMEWORK} from '../configs';
 
 @Injectable({providedIn: 'root'})
 export class SettingRepository extends BaseApiRepository {

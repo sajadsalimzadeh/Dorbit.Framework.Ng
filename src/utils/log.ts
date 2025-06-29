@@ -1,4 +1,4 @@
-import {StoreDb} from "../stores/table";
+import {StoreDb} from "../stores/db";
 import {md5} from "./md5";
 
 export enum LogLevel {

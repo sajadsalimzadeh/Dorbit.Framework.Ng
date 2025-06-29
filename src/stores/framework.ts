@@ -1,7 +1,7 @@
 export * from './store';
-export * from './table';
+export * from './db';
 
-import {StoreDb} from "./table";
+import {StoreDb} from "./db";
 
 export enum NotificationType {
     Normal = 0,

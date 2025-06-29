@@ -1,18 +1,18 @@
 export class TimeSpan {
-    second: number;
-    minute: number;
-    hour: number;
-    day: number;
-    month: number;
-    year: number;
+    seconds: number;
+    minutes: number;
+    hours: number;
+    days: number;
+    months: number;
+    years: number;
 
     constructor(second?: number, minute?: number, hour?: number, day?: number, month?: number, year?: number) {
-        this.second = second || 0;
-        this.minute = minute || 0;
-        this.hour = hour || 0;
-        this.day = day || 0;
-        this.month = month || 0;
-        this.year = year || 0;
+        this.seconds = second || 0;
+        this.minutes = minute || 0;
+        this.hours = hour || 0;
+        this.days = day || 0;
+        this.months = month || 0;
+        this.years = year || 0;
     }
 
     static fromSecond(value: number): TimeSpan {
@@ -40,6 +40,6 @@ export class TimeSpan {
     }
 
     toSeconds(): number {
-        return (((((((((this.year * 12) + this.month) * 30) + this.day) * 24) + this.hour) * 60) + this.minute) * 60) + this.second;
+        return (((((((((this.years * 12) + this.months) * 30) + this.days) * 24) + this.hours) * 60) + this.minutes) * 60) + this.seconds;
     }
 }

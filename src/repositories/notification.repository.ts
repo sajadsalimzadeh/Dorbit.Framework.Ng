@@ -1,8 +1,8 @@
 import {Inject, Injectable, Injector} from '@angular/core';
 import {BaseApiRepository} from "./base-api.repository";
 import {NotificationRecord} from "../stores/framework";
-import {BASE_URL_FRAMEWORK} from '@framework/configs';
-import {CommandResult, QueryResult} from '@framework/contracts/results';
+import {BASE_URL_FRAMEWORK} from '../configs';
+import {CommandResult, QueryResult} from '../contracts/results';
 
 interface NotificationDto {
     title?: string | null;
