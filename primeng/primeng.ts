@@ -59,6 +59,7 @@ import {DividerModule} from "primeng/divider";
 import { DatePickerModule } from 'primeng/datepicker';
 import { FileUploadModule } from 'primeng/fileupload';
 import { SplitterModule } from 'primeng/splitter';
+import { TagModule } from 'primeng/tag';
 
 import {CustomDialogComponent} from "./components/custom-dialog/custom-dialog.component";
 import {CustomTableComponent} from "./components/custom-table/custom-table.component";
@@ -128,6 +129,7 @@ const PRIMENG_MODULES = [
     FileUploadModule,
     DatePickerModule,
     SplitterModule,
+    TagModule,
 ];
 
 const MODULES = [
