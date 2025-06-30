@@ -1,7 +1,7 @@
 import {BehaviorSubject, Subject} from "rxjs";
 import {HubConnection, HubConnectionBuilder, HubConnectionState} from "@microsoft/signalr";
-import {IDisposable} from '@framework/contracts/dispose';
-import {logger} from '@framework/utils/log';
+import {IDisposable} from '../contracts/dispose';
+import {logger} from '../utils/log';
 
 export class BaseHubService<TSendMethod, TReceiveMethod> implements IDisposable {
 

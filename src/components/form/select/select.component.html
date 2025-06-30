@@ -6,7 +6,7 @@
         <ng-template #elseTextTemplate>
             <span class="text">{{ getText(item) }}</span>
             <ng-container *ngIf="mode == 'multiple' && type == 'value'">
-                <i (click)="select(item, $event)" class="remove icons-core-close-circle"></i>
+                <i (click)="select(item, $event)" class="remove far fa-times-circle"></i>
             </ng-container>
         </ng-template>
     </div>
@@ -33,14 +33,14 @@
                 </ng-container>
             </div>
             <ng-container *ngIf="clearable && mode == 'single'">
-                <i (click)="clear()" class="remove icons-core-close"></i>
+                <i (click)="clear()" class="remove far fa-times"></i>
             </ng-container>
         </ng-template>
     </div>
     <div class="control-container icon-container">
         <ng-container *ngIf="loading; else arrowTpl">
             <div class="loading">
-                <i class="icons-core-loader"></i>
+                <i class="far fa-spinner"></i>
             </div>
         </ng-container>
         <ng-template #arrowTpl>

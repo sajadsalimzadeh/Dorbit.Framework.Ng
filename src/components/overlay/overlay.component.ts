@@ -34,8 +34,7 @@ export interface OverlayRef {
 }
 
 @Component({
-    standalone: true,
-    imports: [CommonModule],
+    standalone: false,
     selector: 'd-overlay',
     templateUrl: './overlay.component.html',
     styleUrls: ['./overlay.component.scss'],

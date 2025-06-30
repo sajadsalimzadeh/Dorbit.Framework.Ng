@@ -18,7 +18,7 @@ export class ButtonComponent extends AbstractComponent implements OnInit, OnChan
     @Input() disabled?: boolean = false;
     @Input() mode: 'fill' | 'outline' | 'text' = 'fill';
     @Input() loading?: boolean = false;
-    @Input() loadingIcon?: string = 'icons-core-loading';
+    @Input() loadingIcon?: string = 'far fa-spinner';
     @Input() classButton?: any;
     activeIcon?: string;
     emptyContent: boolean = false;

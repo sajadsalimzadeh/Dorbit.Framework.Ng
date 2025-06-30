@@ -38,22 +38,22 @@ export class MessageComponent extends AbstractComponent {
         if (typeof this.item.icon === 'undefined') {
             switch (this.color) {
                 case 'primary':
-                    this.item.icon = 'icons-core-info-circle';
+                    this.item.icon = 'far fa-info-circle';
                     break;
                 case 'secondary':
-                    this.item.icon = 'icons-core-exclamation-circle';
+                    this.item.icon = 'far fa-exclamation-circle';
                     break;
                 case 'warning':
-                    this.item.icon = 'icons-core-warning';
+                    this.item.icon = 'far fa-triangle-exclamation';
                     break;
                 case 'success':
-                    this.item.icon = 'icons-core-check';
+                    this.item.icon = 'far fa-check';
                     break;
                 case 'link':
-                    this.item.icon = 'icons-core-link';
+                    this.item.icon = 'far fa-link';
                     break;
                 case 'danger':
-                    this.item.icon = 'icons-core-close-circle';
+                    this.item.icon = 'far fa-times-circle';
                     break;
             }
         }

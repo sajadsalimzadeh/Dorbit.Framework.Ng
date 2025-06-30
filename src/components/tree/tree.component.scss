@@ -77,13 +77,13 @@ ul {
 }
 
 :host-context([dir=rtl]) {
-    .icons-core-angle-right {
+    .far fa-angle-right {
         transform: scaleX(-1);
     }
 }
 
 :host-context([dir=ltr]) {
-    .icons-core-angle-right {
+    .far fa-angle-right {
         transform: scaleX(1);
     }
 }
