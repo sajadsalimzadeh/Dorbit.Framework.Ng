@@ -13,15 +13,15 @@ export interface IViewRepository<T = any> {
 }
 
 export interface IAddRepository {
-    add(request: any): Observable<QueryResult>;
+    add(req: any): Observable<QueryResult>;
 }
 
 export interface IEditRepository {
-    edit(id: any, request: any): Observable<QueryResult>;
+    edit(id: any, req: any): Observable<QueryResult>;
 }
 
 export interface ISaveRepository {
-    save(id: any, request: any): Observable<QueryResult>;
+    save(req: any): Observable<QueryResult>;
 }
 
 export abstract class BaseCrudRepository<T = any, TSave = any> extends BaseApiRepository implements IViewRepository<T>, IAddRepository, IEditRepository, ISaveRepository {
@@ -50,8 +50,8 @@ export abstract class BaseCrudRepository<T = any, TSave = any> extends BaseApiRe
         return this.http.get<QueryResult<T>>(`${id}`);
     }
 
-    add(request: any) {
-        return this.http.post<QueryResult<T>>(``, request);
+    add(req: any) {
+        return this.http.post<QueryResult<T>>(``, req);
     }
 
     edit(id: any, req: any) {
