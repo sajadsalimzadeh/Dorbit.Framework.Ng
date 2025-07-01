@@ -1,13 +1,13 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, HostListener, Injector, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
-import {ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@angular/forms';
-import moment, {Moment} from 'jalali-moment';
-import {CommonModule} from '@angular/common';
-import {InputTextModule} from 'primeng/inputtext';
-import {IconFieldModule} from 'primeng/iconfield';
-import {InputIconModule} from 'primeng/inputicon';
-import {PrimengControlComponent} from '../primeng-control.component';
-import {Popover, PopoverModule} from "primeng/popover";
-import {IftaLabel} from "primeng/iftalabel";
+import { AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, HostListener, Injector, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import moment, { Moment } from 'jalali-moment';
+import { CommonModule } from '@angular/common';
+import { InputTextModule } from 'primeng/inputtext';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { PrimengControlComponent } from '../primeng-control.component';
+import { Popover, PopoverModule } from "primeng/popover";
+import { IftaLabel } from "primeng/iftalabel";
 
 interface YearObject {
     value: number;
@@ -68,10 +68,11 @@ export class JalaliDatePickerComponent extends PrimengControlComponent implement
     @Input() label: string = '';
     @Input() size?: 'small' | 'large';
     @Input() showClear: boolean = false;
-    @Input() displayFormat: string = 'jYYYY/jMM/jDD';
-    @Input() valueFormat: string = 'YYYY-MM-DD';
+    @Input() displayFormat!: string;
+    @Input() valueFormat!: string;
     @Input() min?: string | null;
     @Input() max?: string | null;
+    @Input() showTimePicker: boolean = false;
 
     @Output() onSelect = new EventEmitter();
 
@@ -103,6 +104,14 @@ export class JalaliDatePickerComponent extends PrimengControlComponent implement
     }
 
     ngOnInit(): void {
+
+        if (this.showTimePicker) {
+            this.displayFormat = 'jYYYY/jMM/jDD HH:mm:ss';
+            this.valueFormat = 'YYYY-MM-DD HH:mm:ss';
+        } else {
+            this.displayFormat = 'jYYYY/jMM/jDD';
+            this.valueFormat = 'YYYY-MM-DD';
+        }
 
         this.subscription.add(this.formControl.valueChanges.subscribe(e => {
             this.updateDisplayFromValue();
@@ -155,6 +164,7 @@ export class JalaliDatePickerComponent extends PrimengControlComponent implement
         const toDay = now.jDate();
         const toMonth = now.jMonth();
         const toYear = now.jYear();
+
 
         const date = this.date?.clone() ?? moment();
 
@@ -285,17 +295,24 @@ export class JalaliDatePickerComponent extends PrimengControlComponent implement
     }
 
     selectDate(date: DateObject) {
-        if(date.isDisabled) return;
-
+        if (date.isDisabled) return;
+        
         this.date ??= moment();
         this.date.jDate(date.day);
         this.date.jMonth(date.month);
         this.date.jYear(date.year);
+        this.select();
+    }
 
-        const m = (this.date?.clone() ?? moment()).locale('en');
-        this.displayValue = m.format(this.displayFormat);
-        if(this._onChange) this._onChange(m.format(this.valueFormat))
-        this.popover.hide();
+    select() {
+        this.date ??= moment();
+        this.displayValue = this.date.format(this.displayFormat);
+        if (this._onChange) this._onChange(this.date.format(this.valueFormat));
         this.onSelect.emit();
+        if (!this.showTimePicker) {
+            this.popover.hide();
+        } else {
+            this.createDays();
+        }
     }
 }

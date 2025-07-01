@@ -6,8 +6,9 @@
         @if (showClear) {
         <p-inputicon styleClass="fal fa-times" (click)="formControl.setValue(null)" />
         }
-        <input class="input-control" #inputEl (focus)="op.toggle($event, inputEl)" (keyup)="updateValueFromDisplay()" [value]="displayValue" [disabled]="formControl.disabled"
-            [placeholder]="placeholder" dir="ltr" pInputText [pSize]="size!" type="text" />
+        <input class="input-control" #inputEl (focus)="op.toggle($event, inputEl)" (keyup)="updateValueFromDisplay()"
+            [value]="displayValue" [disabled]="formControl.disabled" [placeholder]="placeholder" dir="ltr" pInputText
+            [pSize]="size!" type="text" />
         <p-inputicon styleClass="fal fa-calendar" />
     </p-icon-field>
     <label>{{ label }}</label>
@@ -17,8 +18,9 @@
     @if (showClear) {
     <p-inputicon styleClass="fal fa-times" (click)="formControl.setValue(null)" />
     }
-    <input class="input-control" #inputEl (focus)="op.toggle($event, inputEl)" (keyup)="updateValueFromDisplay()" [value]="displayValue" [disabled]="formControl.disabled"
-        [placeholder]="placeholder" dir="ltr" pInputText [pSize]="size!" type="text" />
+    <input class="input-control" #inputEl (focus)="op.toggle($event, inputEl)" (keyup)="updateValueFromDisplay()"
+        [value]="displayValue" [disabled]="formControl.disabled" [placeholder]="placeholder" dir="ltr" pInputText
+        [pSize]="size!" type="text" />
     <p-inputicon styleClass="fal fa-calendar" />
 </p-icon-field>
 }
@@ -43,25 +45,58 @@
             <div class="day-of-week">پ</div>
             <div class="day-of-week">ج</div>
 
-            <div (click)="selectDate(date)" *ngFor="let date of dates" [class.current-month]="date.isCurrentMonth" [class.disabled]="date.isDisabled"
-                [class.selected]="date.isSelected" [class.today]="date.isToday" class="day">
+            <div (click)="selectDate(date)" *ngFor="let date of dates" [class.current-month]="date.isCurrentMonth"
+                [class.disabled]="date.isDisabled" [class.selected]="date.isSelected" [class.today]="date.isToday"
+                class="day">
                 {{ date.day }}
             </div>
         </div>
 
         <div [class.open]="state == 'month'" class="month-picker">
-            <div (click)="selectMonth(month.value)" *ngFor="let month of months" [class.selected]="month.isSelected" class="month">
+            <div (click)="selectMonth(month.value)" *ngFor="let month of months" [class.selected]="month.isSelected"
+                class="month">
                 {{ month.name }}
             </div>
         </div>
 
         <div [class.open]="state == 'year'" class="year-picker">
-            <div (click)="selectYear(year.value)" *ngFor="let year of years" [class.selected]="year.isSelected" class="year">
+            <div (click)="selectYear(year.value)" *ngFor="let year of years" [class.selected]="year.isSelected"
+                class="year">
                 {{ year.value }}
             </div>
         </div>
         <div (click)="goToday()" class="go-today">
             امروز
+        </div>
+        <div class="time-picker" *ngIf="showTimePicker">
+            <div class="hour">
+                <a (click)="date = date?.add(1, 'hour'); select()">
+                    <i class="far fa-angle-up"></i>
+                </a>
+                <div>{{date?.hour()}}</div>
+                <a (click)="date = date?.subtract(1, 'hour'); select()">
+                    <i class="far fa-angle-down"></i>
+                </a>
+            </div>
+            <div class="minute">
+                <a (click)="date = date?.add(1, 'minute'); select()">
+                    <i class="far fa-angle-up"></i>
+                </a>
+                <div>{{date?.minute()}}</div>
+                <a (click)="date = date?.subtract(1, 'minute'); select()">
+                    <i class="far fa-angle-down"></i>
+                </a>
+            </div>
+
+            <div class="second">
+                <a (click)="date = date?.add(1, 'second'); select()">
+                    <i class="far fa-angle-up"></i>
+                </a>
+                <div>{{date?.second()}}</div>
+                <a (click)="date = date?.subtract(1, 'second'); select()">
+                    <i class="far fa-angle-down"></i>
+                </a>
+            </div>
         </div>
     </div>
 </p-popover>

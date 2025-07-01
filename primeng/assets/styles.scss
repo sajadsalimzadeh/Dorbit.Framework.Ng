@@ -53,3 +53,7 @@ p-ifta-label {
 button, input {
     font-family: inherit;
 }
+
+time {
+    unicode-bidi: plaintext;
+}
