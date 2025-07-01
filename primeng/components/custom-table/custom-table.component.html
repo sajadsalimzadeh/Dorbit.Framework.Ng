@@ -12,7 +12,7 @@
             <ng-container *ngTemplateOutlet="captionTpl"></ng-container>
         </ng-container>
         <p-multi-select class="columns-selection" (ngModelChange)="processHideColumns()" *ngIf="showColumnSelector" [(ngModel)]="selectedColumns"
-                        [options]="columns" display="chip" optionLabel="header"></p-multi-select>
+                        [options]="columns" display="chip" optionLabel="header" appendTo="body"></p-multi-select>
     </div>
     <p-table
         #dt showGridlines [showCurrentPageReport]="true"
