@@ -18,6 +18,19 @@ html:root {
     --button-outlined-success-border-color: var(--success-200);
     --button-outlined-success-color: var(--success-500);
 
+    --tag-primary-background: var(--primary);
+    --tag-primary-color: var(--primary-50);
+    --tag-secondary-background: var(--secondary);
+    --tag-secondary-color: var(--secondary-50);
+    --tag-success-background: var(--success);
+    --tag-success-color: var(--success-50);
+    --tag-info-background: var(--info);
+    --tag-info-color: var(--info-50);
+    --tag-warn-background: var(--warning);
+    --tag-warn-color: var(--warning-50);
+    --tag-danger-background: var(--danger);
+    --tag-danger-color: var(--danger-50);
+
     @each $map_color in variables.$map_colors {
         $target: list.nth($map_color, 1);
         $from: list.nth($map_color, 2);
