@@ -3,7 +3,7 @@ import {Colors} from "../../types";
 import {AbstractComponent} from "../abstract.component";
 import {Subject} from "rxjs";
 import {DomService} from "../../services/dom.service";
-import {CommonModule} from '@angular/common';
+import { CommonModule } from "@angular/common";
 
 export type OverlayAlignments =
     'top-start' | 'top-center' | 'top-end' |
@@ -34,7 +34,8 @@ export interface OverlayRef {
 }
 
 @Component({
-    standalone: false,
+    standalone: true,
+    imports: [CommonModule],
     selector: 'd-overlay',
     templateUrl: './overlay.component.html',
     styleUrls: ['./overlay.component.scss'],

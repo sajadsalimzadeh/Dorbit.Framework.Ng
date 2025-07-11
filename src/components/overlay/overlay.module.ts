@@ -6,9 +6,10 @@ import {OverlayDirective} from "./overlay.directive";
 @NgModule({
     imports: [
         CommonModule,
+        OverlayComponent
     ],
-    declarations: [OverlayComponent, OverlayDirective],
-    exports: [OverlayComponent, OverlayDirective]
+    declarations: [OverlayDirective],
+    exports: [OverlayDirective]
 })
 export class OverlayModule {
 }
