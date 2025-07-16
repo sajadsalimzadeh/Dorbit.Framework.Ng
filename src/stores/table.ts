@@ -18,7 +18,7 @@ export class StoreDb<TConfig extends StoreTableConfig> {
             }
             this.db.open().catch(console.error).finally();
         } catch (e) {
-            alert('StoreDb: ' + name + ' construct failed - ' + e)
+            console.error('StoreDb: ' + name + ' construct failed - ' + e)
         }
     }
 

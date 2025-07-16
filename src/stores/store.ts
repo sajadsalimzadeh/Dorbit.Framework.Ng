@@ -34,7 +34,7 @@ export class Store<T extends object> {
                 this.onChangeByKeys['all']?.next(e.store);
             })
         } catch (e) {
-            alert('Store: ' + name + ' construct failed - ' + e)
+            console.error('Store: ' + name + ' construct failed - ' + e)
         }
     }
 
