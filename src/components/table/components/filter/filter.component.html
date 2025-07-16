@@ -4,7 +4,7 @@
     </div>
     <div class="filter">
         <div (click)="openFilterOverlay($event)" [ngClass]="{active: (!!valueControl.value)}" class="icon-box">
-            <i #filterIconEl class="icons-core-filter"></i>
+            <i #filterIconEl class="far fa-filter"></i>
         </div>
         <div *ngIf="!overlay && template">
             <ng-container *ngTemplateOutlet="template; context: {$implicit: this, control: valueControl}">

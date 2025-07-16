@@ -74,8 +74,8 @@
             }
 
             &.selected {
-                color: var(--primary-50);
-                background-color: var(--primary-500);
+                color: var(--primary-50) !important;
+                background-color: var(--primary-500)  !important;
             }
 
             &:not(.disabled):hover {
@@ -156,6 +156,38 @@
 
         &:hover {
             background-color: var(--surface-100);
+        }
+    }
+
+    .time-picker {
+        display: flex;
+        direction: ltr;
+
+        >div {
+            flex: 1;
+            height: 100px;
+            display: flex;
+            flex-direction: column;
+
+            a {
+                height: 30px;
+                display: flex;
+                cursor: pointer;
+                align-items: center;
+                justify-content: center;
+                background-color: var(--surface-0);
+
+                &:hover {
+                    background-color: var(--surface-100);
+                }
+            }
+
+            >div {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
         }
     }
 }

@@ -32,7 +32,7 @@ export class Store<T extends object> {
                     });
                 }
                 this.onChangeByKeys['all']?.next(e.store);
-            })
+            });
         } catch (e) {
             console.error('Store: ' + name + ' construct failed - ' + e)
         }

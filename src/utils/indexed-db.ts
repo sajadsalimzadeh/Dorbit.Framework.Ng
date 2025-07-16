@@ -1,5 +1,5 @@
-import {IDatabase, ITable, ITableChangeEvent, ITableConfig} from "./database";
-import {Subject} from "rxjs";
+import { IDatabase, ITable, ITableChangeEvent, ITableConfig } from "./database";
+import { Subject } from "rxjs";
 
 export class IndexedDB implements IDatabase {
     private db!: IDBDatabase;
@@ -50,19 +50,22 @@ export class IndexedDB implements IDatabase {
         return new Table<T, TP>(name, this.tables[name], this);
     }
 
-    public get(tableName: string, id: any) {
+    public async get(tableName: string, id: any) {
+        await this.open();
         const tx = this.db.transaction(tableName, 'readonly');
         const store = tx.objectStore(tableName);
         return this.toPromise(() => store.get(id));
     }
 
-    public getAll(tableName: string, query?: IDBValidKey | IDBKeyRange | null | undefined, count?: number | undefined) {
+    public async getAll(tableName: string, query?: IDBValidKey | IDBKeyRange | null | undefined, count?: number | undefined) {
+        await this.open();
         const tx = this.db.transaction(tableName, 'readonly');
         const store = tx.objectStore(tableName);
         return this.toPromise(() => store.getAll(query, count));
     }
 
-    public findAll(tableName: string, query: (key: any, value: any) => boolean, count: number) {
+    public async findAll(tableName: string, query: (key: any, value: any) => boolean, count: number) {
+        await this.open();
         const tx = this.db.transaction(tableName, 'readonly');
         const store = tx.objectStore(tableName);
         return new Promise<any[]>((resolve, reject) => {
@@ -86,7 +89,8 @@ export class IndexedDB implements IDatabase {
         });
     }
 
-    public findAllKey(tableName: string, query: (key: any) => boolean, count: number) {
+    public async findAllKey(tableName: string, query: (key: any) => boolean, count: number) {
+        await this.open();
         const tx = this.db.transaction(tableName, 'readonly');
         const store = tx.objectStore(tableName);
         return new Promise<any[]>((resolve, reject) => {
@@ -110,7 +114,8 @@ export class IndexedDB implements IDatabase {
         });
     }
 
-    public add(tableName: string, value: any) {
+    public async add(tableName: string, value: any) {
+        await this.open();
         const tx = this.db.transaction(tableName, 'readwrite');
         const store = tx.objectStore(tableName);
         return this.toPromise(() => store.add(value), value);
@@ -119,6 +124,7 @@ export class IndexedDB implements IDatabase {
     public async addAll(tableName: string, values: any[]) {
         if (!this.db) //elham
             throw new Error("Database is not initialized. Call open() first.");
+        await this.open();
         const tx = this.db.transaction(tableName, 'readwrite');
         const store = tx.objectStore(tableName);
         for (const value of values) {
@@ -127,13 +133,15 @@ export class IndexedDB implements IDatabase {
         return await this.getAll(tableName);
     }
 
-    public put(tableName: string, value: any) {
+    public async put(tableName: string, value: any) {
+        await this.open();
         const tx = this.db.transaction(tableName, 'readwrite');
         const store = tx.objectStore(tableName);
         return this.toPromise(() => store.put(value), value);
     }
 
     public async putAll(tableName: string, values: any[]) {
+        await this.open();
         const tx = this.db.transaction(tableName, 'readwrite');
         const store = tx.objectStore(tableName);
         const promises = [] as Promise<void>[];
@@ -144,13 +152,15 @@ export class IndexedDB implements IDatabase {
         return true;
     }
 
-    public delete(tableName: string, id: any) {
+    public async delete(tableName: string, id: any) {
+        await this.open();
         const tx = this.db.transaction(tableName, 'readwrite');
         const store = tx.objectStore(tableName);
         return this.toPromise(() => store.delete(id), id);
     }
 
     public async deleteAll(tableName: string, keys?: any[]) {
+        await this.open();
         const tx = this.db.transaction(tableName, 'readwrite');
         const store = tx.objectStore(tableName);
         keys ??= await this.toPromise(() => store.getAllKeys()) ?? [];
@@ -207,7 +217,7 @@ class Table<T, TP> implements ITable<T, TP> {
             (value as any)[this.config.key] = this.config.keyGenerator();
         }
         const result = await this.database.add(this.name, value);
-        this.$change.next({action: 'add', value: value});
+        this.$change.next({ action: 'add', value: value });
         return result;
     }
 
@@ -218,19 +228,19 @@ class Table<T, TP> implements ITable<T, TP> {
             }
         }
         const result = await this.database.addAll(this.name, values);
-        this.$change.next({action: 'add-all', values: values});
+        this.$change.next({ action: 'add-all', values: values });
         return result;
     }
 
     async put(value: T) {
         const result = await this.database.put(this.name, value);
-        this.$change.next({action: 'put', value: value});
+        this.$change.next({ action: 'put', value: value });
         return result;
     }
 
     async putAll(values: T[]) {
         const result = await this.database.putAll(this.name, values);
-        this.$change.next({action: 'put-all', values: values});
+        this.$change.next({ action: 'put-all', values: values });
         return result;
     }
 
@@ -248,11 +258,11 @@ class Table<T, TP> implements ITable<T, TP> {
 
     async delete(key: TP) {
         await this.database.delete(this.name, key);
-        this.$change.next({action: 'delete'});
+        this.$change.next({ action: 'delete' });
     }
 
     async deleteAll(keys: TP[]) {
         await this.database.deleteAll(this.name, keys);
-        this.$change.next({action: 'delete-all'});
+        this.$change.next({ action: 'delete-all' });
     }
 }

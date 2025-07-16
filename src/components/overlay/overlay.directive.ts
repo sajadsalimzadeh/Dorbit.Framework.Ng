@@ -1,17 +1,15 @@
-import {Directive, HostListener, Injector, Input, OnInit} from '@angular/core';
+import {Directive, ElementRef, HostListener, Input} from '@angular/core';
 import {OverlayOptions, OverlayRef, OverlayService} from './overlay.component'
-import {AbstractComponent} from "../abstract.component";
 
 @Directive({
-    standalone: true,
+    standalone: false,
     selector: '[dOverlay]'
 })
-export class OverlayDirective extends AbstractComponent implements OnInit {
+export class OverlayDirective {
     @Input('dOverlay') options!: OverlayOptions;
     overlayRef?: OverlayRef;
 
-    constructor(injector: Injector, private overlayService: OverlayService) {
-        super(injector);
+    constructor(private overlayService: OverlayService, private elementRef: ElementRef) {
     }
 
     @HostListener('focus', ['$event']) onFocus(e: Event) {

@@ -1,9 +1,9 @@
 <ul>
     <li (click)="select(1)" *ngIf="showArrows && showFirstArrow && pageNumbers.length > 0">
-        <i class="icons-core-angle-double-left"></i>
+        <i class="far fa-angle-double-left"></i>
     </li>
     <li (click)="select(page)" *ngIf="showArrows && showPrevArrow && pageNumbers.length > 0">
-        <i class="icons-core-angle-left"></i>
+        <i class="far fa-angle-left"></i>
     </li>
     <li (click)="select(item)" *ngFor="let item of pageNumbers"
         [ngClass]="{active: (page == item - 1)}">
@@ -15,10 +15,10 @@
         </ng-template>
     </li>
     <li (click)="select(page + 2)" *ngIf="showArrows && showNextArrow && pageNumbers.length > 0">
-        <i class="icons-core-angle-right"></i>
+        <i class="far fa-angle-right"></i>
     </li>
     <li (click)="select(pageNumbers[pageNumbers.length - 1])"
         *ngIf="showArrows && showLastArrow && pageNumbers.length > 0">
-        <i class="icons-core-angle-double-right"></i>
+        <i class="far fa-angle-double-right"></i>
     </li>
 </ul>

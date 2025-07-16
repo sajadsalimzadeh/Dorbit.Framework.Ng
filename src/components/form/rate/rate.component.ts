@@ -13,8 +13,8 @@ import {CommonModule} from "@angular/common";
 export class RateComponent extends AbstractControl<number> {
 
     @Input() count: number = 5;
-    @Input() icon: string = 'icons-core-star';
-    @Input() iconActive: string = 'icons-core-star-fill';
+    @Input() icon: string = 'far fa-star';
+    @Input() iconActive: string = 'far fa-star-fill';
 
     items: boolean[] = [];
 

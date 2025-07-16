@@ -5,13 +5,13 @@
                 {{ options.title }}
             </div>
             <div (click)="minimize()" *ngIf="options.minimizable" class="button minimize">
-                <i class="icons-core-minus"></i>
+                <i class="far fa-minus"></i>
             </div>
             <div (click)="maximize()" *ngIf="!options.isMinimize && options.maximizable" class="button maximize">
-                <i [ngClass]="(options.isMaximize ? 'icons-core-minimize' : 'icons-core-maximize')"></i>
+                <i [ngClass]="(options.isMaximize ? 'far fa-minimize' : 'far fa-maximize')"></i>
             </div>
             <div (click)="close()" *ngIf="options.closable" class="button close">
-                <i class="icons-core-close"></i>
+                <i class="far fa-times"></i>
             </div>
         </div>
         <div class="body">

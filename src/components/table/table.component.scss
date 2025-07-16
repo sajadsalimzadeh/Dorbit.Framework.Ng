@@ -1,4 +1,4 @@
-@use "../../../assets/styles/mixin";
+@use "../../assets/styles/mixin";
 
 @mixin selected-row {
     @include mixin.selected-color;
@@ -41,29 +41,6 @@ $border-color: rgba(var(--color-black-rgb), .08);
 
             .main-tbody:nth-child(2n) {
                 background-color: rgba(var(--color-black-rgb), .005);
-            }
-        }
-    }
-
-    &.table-bordered ::ng-deep {
-
-        table {
-            thead, tfoot {
-                th:not(:last-child) {
-                    //border-inline-end: 1px solid $border-color;
-                }
-            }
-
-            .main-tbody:nth-child(2n+1) {
-                td:not(:last-child) {
-                    //border-inline-end: 1px solid $border-color;
-                }
-            }
-
-            .main-tbody:nth-child(2n) {
-                td:not(:last-child) {
-                    //border-inline-end: 1px solid $border-color;
-                }
             }
         }
     }
@@ -134,9 +111,6 @@ $border-color: rgba(var(--color-black-rgb), .08);
         background-color: var(--color-gray--4);
     }
 
-    .data-header {
-    }
-
     .data-table {
         flex: 1;
         top: 0;
@@ -169,10 +143,6 @@ $border-color: rgba(var(--color-black-rgb), .08);
             background-repeat: no-repeat;
             background-image: url(./images/empty.png);
         }
-    }
-
-    .footer {
-
     }
 
     ::ng-deep {

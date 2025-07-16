@@ -12,10 +12,11 @@
             <ng-container *ngTemplateOutlet="captionTpl"></ng-container>
         </ng-container>
         <p-multi-select class="columns-selection" (ngModelChange)="processHideColumns()" *ngIf="showColumnSelector" [(ngModel)]="selectedColumns"
-                        [options]="columns" display="chip" optionLabel="header"></p-multi-select>
+                        [options]="columns" display="chip" optionLabel="header" appendTo="body"></p-multi-select>
     </div>
     <p-table
-        #dt showGridlines
+        #dt showGridlines [showCurrentPageReport]="true"
+        [currentPageReportTemplate]="'custom-table.current-page-report' | translate"
         [value]="value" [paginator]="true" [rowsPerPageOptions]="[5, 10, 12, 15, 20, 50]"
         [rows]="12" [size]="size" [loading]="loading">
         <ng-template pTemplate="header">
@@ -50,7 +51,7 @@
                 <th *ngFor="let column of selectedColumns">
                     @if (column.field) {
                         <p-columnFilter #cf (input)="cf.applyFilter()" [field]="column.field"
-                                        [placeholder]="'Search by ' + column.header"
+                                        [placeholder]="column.header"
                                         matchMode="contains" type="text"></p-columnFilter>
                     }
                 </th>
@@ -88,12 +89,12 @@
                         <p-button (onClick)="onEdit.emit(item)" *ngIf="onEdit.observed"
                                   [pTooltip]="'custom-table.edit' | translate"
                                   icon="fal fa-pencil" severity="warn"
-                                  tooltipPosition="bottom" size="small"/>
+                                  tooltipPosition="bottom"/>
 
                         <p-button (onClick)="showDeleteDialog(item)" *ngIf="onDelete.observed"
                                   [pTooltip]="'custom-table.delete' | translate"
                                   icon="fal fa-trash-can" severity="danger"
-                                  tooltipPosition="bottom" size="small"/>
+                                  tooltipPosition="bottom"/>
                     </div>
                 </td>
             </tr>
@@ -122,9 +123,9 @@
             {{ 'custom-table.delete-message' | translate }}
         </div>
         <div class="flex flex gap-2">
-            <p-button (click)="deleteItemApprove()" [label]="'confirm.yes-sure' | translate" icon="far fa-check"
+            <p-button class="w-full" (click)="deleteItemApprove()" [label]="'confirm.yes-sure' | translate" icon="far fa-check"
                       iconPos="right" severity="danger"/>
-            <p-button (click)="isDeleteDialogVisible = false" [label]="'confirm.cancel' | translate" icon="far fa-times"
+            <p-button class="w-full" (click)="isDeleteDialogVisible = false" [label]="'confirm.cancel' | translate" icon="far fa-times"
                       iconPos="left" severity="secondary"/>
         </div>
     </ng-template>

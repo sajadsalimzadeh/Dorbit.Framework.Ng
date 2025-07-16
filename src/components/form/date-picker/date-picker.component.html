@@ -7,7 +7,7 @@
         <i *ngIf="icon && iconPos == 'end'" [ngClass]="icon" class="icon"></i>
     </div>
     <div *ngIf="clearable" class="control-container">
-        <i (click)="clear()" *ngIf="displayFormControl.value" class="clear icons-core-close"></i>
+        <i (click)="clear()" *ngIf="displayFormControl.value" class="clear far fa-times"></i>
     </div>
 </div>
 <ng-template #desktopTpl>

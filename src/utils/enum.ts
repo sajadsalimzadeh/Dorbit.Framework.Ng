@@ -1,14 +1,18 @@
 export class EnumUtil {
-    static getOptions(type: any) {
+    static getKeyValues(type: any) {
         const values = Object.values(type).filter(x => Number.isInteger(x)).map((x: any) => +x);
-        const result: { value: any, text: string }[] = [];
+        const result: { key: any, value: string }[] = [];
         for (let i = 0; i < values.length; i++) {
             result.push({
-                value: values[i],
-                text: type[values[i]],
+                key: values[i],
+                value: type[values[i]],
             });
         }
         return result;
+    }
+
+    static getOptions(type: any) {
+        return this.getKeyValues(type).map(x => ({value: x.key, text: x.value}));
     }
 
     static getNames(type: any) {

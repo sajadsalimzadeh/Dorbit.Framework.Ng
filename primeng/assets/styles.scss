@@ -1,5 +1,6 @@
 @use "theme";
 @use "typography";
+@use "variables";
 @use "table";
 
 
@@ -45,11 +46,26 @@ p-ifta-label {
         }
     }
 
-    p-select, [pinputtext], textarea {
+    p-select,
+    [pinputtext],
+    textarea {
         width: 100%;
     }
 }
 
-button, input {
+button,
+input {
     font-family: inherit;
+}
+
+time {
+    unicode-bidi: plaintext;
+}
+
+.p-button-outlined {
+    @each $color in variables.$colors {
+        &.p-button-#{$color} {
+            background-color: var(--#{$color}-50);
+        }
+    }
 }
