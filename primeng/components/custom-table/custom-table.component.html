@@ -17,8 +17,8 @@
     <p-table
         #dt showGridlines [showCurrentPageReport]="true"
         [currentPageReportTemplate]="'custom-table.current-page-report' | translate"
-        [value]="value" [paginator]="true" [rowsPerPageOptions]="[5, 10, 12, 15, 20, 50]"
-        [rows]="12" [size]="size" [loading]="loading">
+        [value]="value" [paginator]="true" [rowsPerPageOptions]="rowsPerPageOptions"
+        [rows]="rows" [size]="size" [loading]="loading">
         <ng-template pTemplate="header">
             <ng-container *ngIf="headerTpl">
                 <ng-container *ngTemplateOutlet="headerTpl"></ng-container>
