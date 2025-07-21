@@ -69,3 +69,9 @@ time {
         }
     }
 }
+
+.p-dialog {
+    .p-dialog-header {
+        border-bottom: 1px solid var(--surface-200);
+    }
+}
