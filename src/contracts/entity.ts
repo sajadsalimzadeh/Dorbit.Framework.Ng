@@ -17,3 +17,9 @@ export interface FullEntity extends CreateEntity {
     deleterName: string;
     isDeleted: boolean;
 }
+
+export interface CreationEntity extends Entity {
+    creationTime: string;
+    creatorId: string;
+    creatorName: string;
+}

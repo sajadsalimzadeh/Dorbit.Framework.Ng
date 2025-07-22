@@ -14,6 +14,10 @@ p-button {
             display: flex;
         }
     }
+
+    .p-button-icon+.p-button-label {
+        flex: 1;
+    }
 }
 
 p-button-group {

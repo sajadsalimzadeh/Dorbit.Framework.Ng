@@ -1,9 +1,9 @@
-import {Directive, ElementRef, Injector, Input, OnChanges, OnDestroy, SimpleChanges} from '@angular/core';
-import {FormControl} from '@angular/forms';
-import {Subscription} from 'rxjs';
+import { Directive, ElementRef, Injector, Input, OnDestroy, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Directive()
-export class PrimengControlComponent implements OnDestroy {
+export class PrimengControlComponent implements OnInit, OnDestroy {
     _services: any = {};
     _onChange?: (value: any) => void;
     _onTouched?: () => void;
@@ -19,13 +19,21 @@ export class PrimengControlComponent implements OnDestroy {
     constructor(protected injector: Injector) {
     }
 
+    ngOnInit(): void {
+        this.subscription.add(this.formControl.valueChanges.subscribe(value => {
+            if (this._onChange) {
+                this._onChange(value);
+            }
+        }));
+    }
+
     ngOnDestroy(): void {
         this.subscription.unsubscribe();
     }
 
     // Write a new value to the element
     writeValue(value: string): void {
-        if(this.formControl.value != value) {
+        if (this.formControl.value != value) {
             this.formControl.setValue(value)
         }
     }

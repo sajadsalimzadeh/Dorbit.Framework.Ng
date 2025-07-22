@@ -103,7 +103,7 @@ export class JalaliDatePickerComponent extends PrimengControlComponent implement
         this.isInside = false;
     }
 
-    ngOnInit(): void {
+    override ngOnInit(): void {
 
         if (this.showTimePicker) {
             this.displayFormat = 'jYYYY/jMM/jDD HH:mm:ss';
@@ -296,7 +296,7 @@ export class JalaliDatePickerComponent extends PrimengControlComponent implement
 
     selectDate(date: DateObject) {
         if (date.isDisabled) return;
-        
+
         this.date ??= moment();
         this.date.jDate(date.day);
         this.date.jMonth(date.month);
