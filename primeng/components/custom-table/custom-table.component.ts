@@ -21,6 +21,8 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Input() filterType: 'menu' | 'inline' = 'menu';
     @Input() isSortable: boolean = true;
     @Input() isFilterable: boolean = true;
+    @Input() rows: number = 12;
+    @Input() rowsPerPageOptions: number[] = [5, 10, 12, 15, 20, 50];
 
     @Output() onAdd = new EventEmitter<any>();
     @Output() onEdit = new EventEmitter<any>();
