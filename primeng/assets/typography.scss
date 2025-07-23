@@ -16,6 +16,7 @@
 
     &.grid {
         display: grid;
+        margin: 0 !important;
     }
 
 }
@@ -25,6 +26,7 @@
 
     &.grid {
         display: grid;
+        margin: 0 !important;
     }
 }
 
@@ -33,6 +35,16 @@
 
     &.grid {
         display: grid;
+        margin: 0 !important;
+    }
+}
+
+.grid-5 {
+    grid-template-columns: repeat(5, 1fr);
+
+    &.grid {
+        display: grid;
+        margin: 0 !important;
     }
 }
 
@@ -45,14 +57,22 @@
             grid-template-columns: repeat(2, 1fr);
         }
     }
+
     .#{$name}\:grid-3 {
         @media screen and (max-width: #{$width}) {
             grid-template-columns: repeat(3, 1fr);
         }
     }
+
     .#{$name}\:grid-4 {
         @media screen and (max-width: #{$width}) {
             grid-template-columns: repeat(4, 1fr);
+        }
+    }
+
+    .#{$name}\:grid-5 {
+        @media screen and (max-width: #{$width}) {
+            grid-template-columns: repeat(5, 1fr);
         }
     }
 }
