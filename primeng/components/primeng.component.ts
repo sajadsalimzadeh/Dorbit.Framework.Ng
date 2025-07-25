@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Directive, ElementRef, Injector, NgZone, OnChanges, O
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormGroup} from '@angular/forms';
 import {Location} from "@angular/common";
-import {Subscription} from "rxjs";
+import {Subscription, tap} from "rxjs";
 import {Confirmation, ConfirmationService, MessageService} from "primeng/api";
 import {TranslateService} from "@ngx-translate/core";
 import {FileRepository} from '@framework/repositories/file.repository';
@@ -13,6 +13,7 @@ export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {
     protected subscription = new Subscription();
     protected selectedItem: any;
     protected dialogs: { [key: string]: boolean } = {};
+    protected loadings: { [key: string]: boolean } = {};
     protected services: any = {};
 
     constructor(protected injector: Injector) {
@@ -57,6 +58,17 @@ export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {
 
     protected get ngZone(): NgZone {
         return this.services['NgZone'] ??= this.injector.get(NgZone);
+    }
+
+    protected tapLoading(key: string) {
+        return tap({
+            next: () => {
+                this.loadings[key] = true;
+            },
+            finalize: () => {
+                this.loadings[key] = false;
+            }
+        });
     }
 
     ngOnInit() {
