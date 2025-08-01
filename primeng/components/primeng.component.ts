@@ -1,12 +1,12 @@
-import {ChangeDetectorRef, Directive, ElementRef, Injector, NgZone, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {FormGroup} from '@angular/forms';
-import {Location} from "@angular/common";
-import {Subscription, tap} from "rxjs";
-import {Confirmation, ConfirmationService, MessageService} from "primeng/api";
-import {TranslateService} from "@ngx-translate/core";
-import {FileRepository} from '@framework/repositories/file.repository';
-import {FormUtil} from '@framework/utils/form';
+import { ChangeDetectorRef, Directive, ElementRef, Injector, NgZone, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup } from '@angular/forms';
+import { Location } from "@angular/common";
+import { Subscription, tap } from "rxjs";
+import { Confirmation, ConfirmationService, MessageService } from "primeng/api";
+import { TranslateService } from "@ngx-translate/core";
+import { FileRepository } from '@framework/repositories/file.repository';
+import { FormUtil } from '@framework/utils/form';
 
 @Directive()
 export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {
@@ -82,7 +82,13 @@ export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {
         this.subscription.unsubscribe();
     }
 
-    showDialog(name: string, item?: any): void {
+    showDialog(name: string, ...items: any[]): void {
+        let item = items.length > 0 ? items[0] : null;
+        if (items.length > 1) {
+            items.forEach(x => {
+                item = { ...item, ...x };
+            });
+        }
         this.selectedItem = item;
         this.dialogs[name] = true;
     }

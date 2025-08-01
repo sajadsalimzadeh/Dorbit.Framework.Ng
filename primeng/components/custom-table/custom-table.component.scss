@@ -7,6 +7,8 @@
                 min-width: 100px;
                 width: 100%;
             }
+
+
         }
 
         .p-datatable-sm {
@@ -24,6 +26,18 @@
         p-columnfilterformelement {
             flex: 1;
         }
+
+        .p-datatable-inline-filter {
+            position: relative;
+            --icon-size: 1rem;
+            justify-content: flex-end;
+            --button-icon-only-width: 2rem;
+
+            p-button {
+                position: absolute;
+                margin: 0 .5rem;
+            }
+        }
     }
 
     .columns-selection {
@@ -34,7 +48,9 @@
 
 p-table :host-context([dir=rtl]) {
     ::ng-deep {
-        .p-datatable-tbody tr td:first-child, .p-datatable-thead tr th:first-child {
+
+        .p-datatable-tbody tr td:first-child,
+        .p-datatable-thead tr th:first-child {
             border-inline-start-width: 1px !important;
         }
     }
