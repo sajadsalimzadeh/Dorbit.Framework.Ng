@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ContentChild, ContentChildren, EventEmitter, Injector, Input, Output, QueryList, TemplateRef } from "@angular/core";
+import { AfterViewInit, Component, ContentChild, ContentChildren, EventEmitter, HostBinding, Injector, Input, Output, QueryList, TemplateRef } from "@angular/core";
 import { MenuItem } from "primeng/api";
 import { CustomTableColumn } from "./contracts";
 import { PrimengComponent } from "../primeng.component";
@@ -14,19 +14,21 @@ import * as XLSX from 'xlsx';
 
 export class CustomTableComponent extends PrimengComponent implements AfterViewInit {
     @Input() value: any[] = [];
-    @Input() size: 'small' | 'large' = 'small';
     @Input() loading: boolean = false;
     @Input() columns: CustomTableColumn[] = [];
     @Input() breadcrumb?: MenuItem[];
     @Input() showInCard: boolean = true;
     @Input() showColumnSelector: boolean = false;
-    @Input() filterType: 'menu' | 'inline' = 'menu';
+    @Input() filterType: 'menu' | 'inline' = 'inline';
     @Input() isSortable: boolean = true;
     @Input() isFilterable: boolean = true;
     @Input() rows: number = 12;
     @Input() rowsPerPageOptions: number[] = [5, 10, 12, 15, 20, 50];
     @Input() headerClass?: string;
     @Input() rowClassField?: string;
+    
+    @Input() 
+    @HostBinding('class') size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' = 'md';
 
     @Output() onAdd = new EventEmitter<any>();
     @Output() onEdit = new EventEmitter<any>();

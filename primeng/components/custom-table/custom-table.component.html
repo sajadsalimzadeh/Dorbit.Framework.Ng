@@ -20,12 +20,12 @@
     </div>
     <p-table #dt showGridlines [showCurrentPageReport]="true"
         [currentPageReportTemplate]="'custom-table.current-page-report' | translate" [value]="value" [paginator]="true"
-        [rowsPerPageOptions]="rowsPerPageOptions" [rows]="rows" [size]="size" [loading]="loading">
+        [rowsPerPageOptions]="rowsPerPageOptions" [rows]="rows" [loading]="loading">
         <ng-template pTemplate="header">
             <ng-container *ngIf="headerTpl">
                 <ng-container *ngTemplateOutlet="headerTpl"></ng-container>
             </ng-container>
-            <tr [ngClass]="headerClass">
+            <tr [ngClass]="headerClass" class="header-row">
                 <th *ngIf="expandedrowTpl"></th>
                 <th [style.width]="'50px'" class="text-center">#</th>
                 <th *ngFor="let column of selectedColumns" [pSortableColumn]="column.field"
@@ -46,7 +46,7 @@
                 </th>
                 <th *ngIf="operationTpl || onEdit.observed || onDelete.observed" width="10"></th>
             </tr>
-            <tr *ngIf="filterType == 'inline' && isFilterable">
+            <tr *ngIf="filterType == 'inline' && isFilterable" class="filter-row">
                 <th *ngIf="expandedrowTpl"></th>
                 <th class="text-center"></th>
                 <th *ngFor="let column of selectedColumns">
@@ -81,7 +81,7 @@
                     </td>
                     }
                 </ng-container>
-                <td *ngIf="operationTpl || onEdit.observed || onDelete.observed">
+                <td *ngIf="operationTpl || onEdit.observed || onDelete.observed" class="operation-cell">
                     <div class="flex flex flex-nowrap gap-2">
                         <ng-container *ngIf="operationTpl">
                             <ng-container *ngTemplateOutlet="operationTpl; context: {$implicit: item}"></ng-container>

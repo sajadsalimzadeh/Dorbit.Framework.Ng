@@ -1,6 +1,49 @@
 :host {
     display: block;
 
+    --datatable-body-cell-padding: 0.8rem;
+    --datatable-header-cell-padding: 0.7rem;
+
+    .filter-row {
+        --datatable-header-cell-padding: 0.05rem;
+
+        ::ng-deep {
+            p-columnfilter {
+                --inputtext-padding-y: 0.6rem;
+                .p-inputtext {
+                    border: none;
+                    border-radius: 0;
+                    font-size: .8rem;
+                }
+            }
+        }
+    }
+
+    &.xs {
+        --datatable-body-cell-padding: 0.2rem;
+        --datatable-header-cell-padding: 0.5rem;
+    }
+
+    &.sm {
+        --datatable-body-cell-padding: 0.3rem;
+        --datatable-header-cell-padding: 0.6rem;
+    }
+
+    &.md {
+        --datatable-body-cell-padding: 0.5rem;
+        --datatable-header-cell-padding: 0.7rem;
+    }
+
+    &.lg {
+        --datatable-body-cell-padding: .7rem;
+        --datatable-header-cell-padding: 0.8rem;
+    }
+
+    &.xl {
+        --datatable-body-cell-padding: 0.9rem;
+        --datatable-header-cell-padding: 0.9rem;
+    }
+
     ::ng-deep {
         p-columnfilter {
             .p-inputtext {
@@ -43,6 +86,10 @@
     .columns-selection {
         flex: 1;
         max-width: 350px;
+    }
+
+    .operation-cell {
+        padding: .3rem !important;
     }
 }
 
