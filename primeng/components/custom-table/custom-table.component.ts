@@ -1,7 +1,9 @@
-import {AfterViewInit, Component, ContentChild, ContentChildren, EventEmitter, Injector, Input, Output, QueryList, TemplateRef} from "@angular/core";
-import {MenuItem} from "primeng/api";
-import {CustomTableColumn} from "./contracts";
-import {PrimengComponent} from "../primeng.component";
+import { AfterViewInit, Component, ContentChild, ContentChildren, EventEmitter, Injector, Input, Output, QueryList, TemplateRef } from "@angular/core";
+import { MenuItem } from "primeng/api";
+import { CustomTableColumn } from "./contracts";
+import { PrimengComponent } from "../primeng.component";
+import { saveAs } from 'file-saver';
+import * as XLSX from 'xlsx';
 
 @Component({
     standalone: false,
@@ -69,5 +71,23 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     deleteItemApprove() {
         this.isDeleteDialogVisible = false;
         this.onDelete.emit(this.selectedItem)
+    }
+
+    exportToExcel() {
+        // data آرایه آبجکت‌هاست
+        const worksheet = XLSX.utils.json_to_sheet(this.value);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+
+        // تبدیل ورک‌بوک به باینری
+        const wbout = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+
+        // ساخت Blob و دانلود فایل
+        const blob = new Blob([wbout], { type: 'application/octet-stream' });
+        saveAs(blob, this.router.url.replaceAll('/', '-') + `-${Date.now()}.xlsx`);
+    }
+
+    saveState() {
+        
     }
 }
