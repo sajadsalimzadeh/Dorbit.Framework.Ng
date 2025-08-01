@@ -23,6 +23,8 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Input() isFilterable: boolean = true;
     @Input() rows: number = 12;
     @Input() rowsPerPageOptions: number[] = [5, 10, 12, 15, 20, 50];
+    @Input() headerClass?: string;
+    @Input() rowClassField?: string;
 
     @Output() onAdd = new EventEmitter<any>();
     @Output() onEdit = new EventEmitter<any>();

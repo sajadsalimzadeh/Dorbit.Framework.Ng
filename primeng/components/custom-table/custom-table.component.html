@@ -23,7 +23,7 @@
             <ng-container *ngIf="headerTpl">
                 <ng-container *ngTemplateOutlet="headerTpl"></ng-container>
             </ng-container>
-            <tr>
+            <tr [ngClass]="headerClass">
                 <th *ngIf="expandedrowTpl"></th>
                 <th [style.width]="'50px'" class="text-center">#</th>
                 <th *ngFor="let column of selectedColumns" [pSortableColumn]="column.field" [ngClass]="column.headerClass"
@@ -63,7 +63,7 @@
                 <ng-container
                     *ngTemplateOutlet="bodyTpl; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
             </ng-container>
-            <tr>
+            <tr [ngClass]="rowClassField ? item[rowClassField] : ''">
                 <td *ngIf="expandedrowTpl">
                     <p-button [icon]="expanded ? 'far fa-chevron-down' : 'far fa-chevron-left'" [pRowToggler]="item"
                               [plain]="true" [rounded]="true" [text]="true" pRipple
