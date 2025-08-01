@@ -1,19 +1,37 @@
-import {Inject, Injectable, Injector} from '@angular/core';
-import {BaseApiRepository} from "./base-api.repository";
-import {QueryResult} from "../contracts/results";
-import {BASE_URL_FRAMEWORK} from '../configs';
+import { Injectable, Injector } from '@angular/core';
+import { BaseApiRepository } from "./base-api.repository";
+import { QueryResult } from "../contracts/results";
+import { BASE_URL_FRAMEWORK } from '../configs';
+import { HttpEventType } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class FileRepository extends BaseApiRepository {
 
     constructor(injector: Injector) {
         super(injector, injector.get(BASE_URL_FRAMEWORK), 'Files');
     }
 
-    upload(data: File | Blob, name: string) {
+    upload(data: File | Blob, name: string, progress?: (progress: number) => void) {
         const formData = new FormData();
         formData.append('file', data, name);
-        return this.http.post<QueryResult<string>>('', formData)
+        return new Observable<QueryResult<string>>(observer => {
+            this.http.post<QueryResult<string>>('', formData, { reportProgress: true, observe: 'events' }).subscribe({
+                next: (event) => {
+                    if (event.type === HttpEventType.UploadProgress) {
+                        progress?.(event.loaded / event.total!);
+                    } else if (event.type === HttpEventType.Response) {
+                        observer.next(event.body!);
+                    }
+                },
+                error: (error) => {
+                    observer.error(error);
+                },
+                complete: () => {
+                    observer.complete();
+                }
+            });
+        });
     }
 
     uploadBase64(value: string, name: string) {
@@ -33,11 +51,11 @@ export class FileRepository extends BaseApiRepository {
             byteArrays.push(byteArray);
         }
 
-        const blob = new Blob(byteArrays, {type: ''});
+        const blob = new Blob(byteArrays, { type: '' });
         return this.upload(blob, name);
     }
 
     download(filename: string) {
-        return this.http.get(`${filename}/Download`, {responseType: 'arraybuffer'});
+        return this.http.get(`${filename}/Download`, { responseType: 'arraybuffer' });
     }
 }
