@@ -11,40 +11,23 @@
     }
 }
 
-.grid-2 {
-    grid-template-columns: repeat(2, 1fr);
-
-    &.grid {
-        display: grid;
-        margin: 0 !important;
+@for $i from 1 through 12 {
+    .col-span-#{$i} {
+        grid-column: span $i;
+    }
+    
+    .row-span-#{$i} {
+        grid-row: span $i;
     }
 
-}
-
-.grid-3 {
-    grid-template-columns: repeat(3, 1fr);
-
-    &.grid {
-        display: grid;
-        margin: 0 !important;
-    }
-}
-
-.grid-4 {
-    grid-template-columns: repeat(4, 1fr);
-
-    &.grid {
-        display: grid;
-        margin: 0 !important;
-    }
-}
-
-.grid-5 {
-    grid-template-columns: repeat(5, 1fr);
-
-    &.grid {
-        display: grid;
-        margin: 0 !important;
+    .grid-#{$i} {
+        grid-template-columns: repeat($i, 1fr);
+    
+        &.grid {
+            display: grid;
+            margin: 0 !important;
+        }
+    
     }
 }
 
@@ -77,6 +60,10 @@
     }
 }
 
+.plain-text {
+    unicode-bidi: plaintext;
+}
+
 .ltr {
     direction: ltr;
 }
@@ -85,22 +72,30 @@
     direction: rtl;
 }
 
-.font-size-xs {
+.text-2xs {
+    font-size: .65rem;
+}
+
+.text-xs {
     font-size: .75rem;
 }
 
-.font-size-sm {
-    font-size: .875rem;
+.text-sm {
+    font-size: .85rem;
 }
 
-.font-size-md {
+.text-md {
     font-size: 1rem;
 }
 
-.font-size-lg {
-    font-size: 1.25rem;
+.text-lg {
+    font-size: 1.5rem;
 }
 
-.font-size-xl {
-    font-size: 1.5rem;
+.text-xl {
+    font-size: 2rem;
+}
+
+.text-2xl {
+    font-size: 2rem;
 }
