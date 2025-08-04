@@ -87,4 +87,19 @@ time {
     overflow: visible !important;
     display: flex !important;
     flex-wrap: wrap !important;
-  }
+}
+
+.p-confirmdialog {
+    min-width: 400px;
+    max-width: min(600px, 90vw);
+
+    .p-dialog-footer {
+        p-button {
+            flex: 1;
+
+            button {
+                width: 100%;
+            }
+        }
+    }
+}

@@ -153,8 +153,8 @@ export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {
         return this.translateService.instant(text);
     }
 
-    getFileUrl(name: string): string {
-        return this.fileRepository.getUrl(name);
+    getFileUrl(name: string, download: boolean = false): string {
+        return this.fileRepository.getUrl(name) + (download ? '/Download' : '');
     }
 
     validateForm(form: FormGroup) {
@@ -175,17 +175,18 @@ export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {
     confirm(confirmation?: Confirmation) {
         return new Promise<void>((resolve, reject) => {
             this.confirmationService.confirm({
-                message: 'Are you sure that you want to proceed?',
-                header: 'Confirmation',
+                header: this.t('confirmation.header'),
+                message: this.t('confirmation.message'),
                 closable: true,
                 closeOnEscape: true,
+                icon: 'far fa-exclamation-triangle',
                 rejectButtonProps: {
-                    label: 'Cancel',
+                    label: this.t('confirmation.reject'),
                     severity: 'secondary',
-                    outlined: true,
                 },
                 acceptButtonProps: {
-                    label: `Yes, I'm sure`,
+                    label: this.t('confirmation.accept'),
+                    severity: 'danger',
                 },
                 ...confirmation,
 
