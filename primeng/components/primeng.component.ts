@@ -7,6 +7,7 @@ import { Confirmation, ConfirmationService, MessageService } from "primeng/api";
 import { TranslateService } from "@ngx-translate/core";
 import { FileRepository } from '@framework/repositories/file.repository';
 import { FormUtil } from '@framework/utils/form';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Directive()
 export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {
@@ -60,8 +61,8 @@ export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {
         return this.services['NgZone'] ??= this.injector.get(NgZone);
     }
 
-    protected tapLoading(key: string) {
-        return tap({
+    protected tapLoading<T>(key: string) {
+        return tap<T>({
             next: () => {
                 this.loadings[key] = true;
             },
@@ -69,6 +70,29 @@ export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {
                 this.loadings[key] = false;
             }
         });
+    }
+
+    protected tapMessage(showSuccess: boolean = true, showError: boolean = true) {
+        return tap({
+            next: res => {
+                if(showSuccess) {
+                    this.messageService.add({
+                        severity: 'success',
+                        detail: this.t('message.operation-success')
+                    })
+                }
+            },
+            error: err => {
+                if(showError) {
+                    if (err instanceof HttpErrorResponse) {
+                        this.messageService.add({
+                            severity: 'error',
+                            detail: this.t(`message.${err.error.message}`)
+                        })
+                    }
+                }
+            }
+        })
     }
 
     ngOnInit() {

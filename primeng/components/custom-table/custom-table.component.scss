@@ -10,6 +10,7 @@
         ::ng-deep {
             p-columnfilter {
                 --inputtext-padding-y: 0.6rem;
+
                 .p-inputtext {
                     border: none;
                     border-radius: 0;
@@ -45,6 +46,14 @@
     }
 
     ::ng-deep {
+        
+        p-card p-table {
+            .p-paginator {
+                padding-top: 1rem !important;
+                padding-bottom: 0 !important;
+            }
+        }
+
         p-columnfilter {
             .p-inputtext {
                 min-width: 100px;
@@ -85,7 +94,7 @@
 
     .columns-selection {
         flex: 1;
-        max-width: 350px;
+        max-width: 200px;
     }
 
     .operation-cell {
@@ -100,18 +109,32 @@ p-table :host-context([dir=rtl]) {
         .p-datatable-thead tr th:first-child {
             border-inline-start-width: 1px !important;
         }
+
+        // .p-datatable-tbody {
+        //     tr:nth-child(even) {
+        //         background-color: var(--surface-50);
+        //     }
+        // }
     }
 }
 
 .no-data {
     text-align: center;
     color: var(--surface-400);
+    background-color: var(--surface-0);
 
-    .icon {
-        font-size: 4rem;
+    .top {
+        display: flex;
+        flex-direction: column;
+
+        i {
+            font-size: 6rem;
+            line-height: 1.3em;
+        }
+
+        span {
+            font-size: 2rem;
+        }
     }
 
-    .text {
-        font-size: 2rem;
-    }
 }

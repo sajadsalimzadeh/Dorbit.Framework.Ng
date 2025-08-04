@@ -1,7 +1,8 @@
-import { AfterViewInit, Component, ContentChild, ContentChildren, EventEmitter, HostBinding, Injector, Input, Output, QueryList, TemplateRef } from "@angular/core";
+import { AfterViewInit, Component, ContentChild, ContentChildren, EventEmitter, HostBinding, Injector, Input, Output, QueryList, TemplateRef, ViewChild } from "@angular/core";
 import { MenuItem } from "primeng/api";
 import { CustomTableColumn } from "./contracts";
 import { PrimengComponent } from "../primeng.component";
+import { Table } from "primeng/table";
 import { saveAs } from 'file-saver';
 import * as XLSX from 'xlsx';
 
@@ -13,6 +14,7 @@ import * as XLSX from 'xlsx';
 })
 
 export class CustomTableComponent extends PrimengComponent implements AfterViewInit {
+    @Input() name?: string;
     @Input() value: any[] = [];
     @Input() loading: boolean = false;
     @Input() columns: CustomTableColumn[] = [];
@@ -26,7 +28,8 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Input() rowsPerPageOptions: number[] = [5, 10, 12, 15, 20, 50];
     @Input() headerClass?: string;
     @Input() rowClassField?: string;
-    
+    @Input() stateStorage: 'session' | 'local' = 'session';
+    @Input() stateKey: string = this.router.url;
     @Input() 
     @HostBinding('class') size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' = 'md';
 
@@ -43,12 +46,17 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
 
     @ContentChildren(TemplateRef) templates!: QueryList<TemplateRef<any>>;
 
+    @ViewChild('dt') dt!: Table;
+
     isDeleteDialogVisible = false;
     selectedColumns: CustomTableColumn[] = [];
 
+    get isStateChaged() {
+        return this.dt?.filteredValue || this.dt?.sortField;
+    }
+
     constructor(injector: Injector) {
         super(injector);
-
     }
 
     override ngOnInit(): void {
@@ -91,7 +99,11 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
         saveAs(blob, this.router.url.replaceAll('/', '-') + `-${Date.now()}.xlsx`);
     }
 
-    saveState() {
+    resetState() {
+        this.dt.clearState();
+        this.dt.reset();
+        this.dt.restoreColumnOrder();
+
         
     }
 }

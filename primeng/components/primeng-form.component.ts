@@ -5,12 +5,12 @@ import { ISaveRepository } from '@framework/repositories/base-crud.repository';
 import { FormUtil } from '@framework/utils/form';
 
 @Directive()
-export abstract class PrimengFormComponent extends PrimengComponent {
-    @Input() model?: any;
+export abstract class PrimengFormComponent<T extends {id?: string} = any> extends PrimengComponent {
+    @Input() model?: T;
 
     @Output() onComplete = new EventEmitter();
 
-    abstract form: FormGroup;
+    abstract form: FormGroup<any>;
 
     constructor(injector: Injector, protected repository: ISaveRepository) {
         super(injector);
@@ -20,7 +20,7 @@ export abstract class PrimengFormComponent extends PrimengComponent {
         super.ngOnInit();
 
         if (this.model) {
-            this.form.reset({ ...this.model });
+            this.form.patchValue({ ...this.model });
         }
     }
 

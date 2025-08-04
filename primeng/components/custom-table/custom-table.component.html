@@ -6,21 +6,22 @@
 </p-card>
 <ng-template #tableTpl>
     <div class="flex flex gap-2 align-items-center pb-2">
-        <p-button (onClick)="onAdd.emit()" *ngIf="onAdd.observed" [label]="'custom-table.add' | translate"
-            icon="fa fa-plus" iconPos="right" severity="success" />
+        <p-button (onClick)="onAdd.emit()" *ngIf="onAdd.observed" icon="fa fa-plus" iconPos="right" severity="success"
+            [label]="'custom-table.add' | translate: {row: (name ?? ('custom-table.row' | translate))}" />
         <ng-container *ngIf="captionTpl">
             <ng-container *ngTemplateOutlet="captionTpl"></ng-container>
         </ng-container>
         <div class="flex-1"></div>
-        <p-multi-select class="columns-selection" display="chip" (ngModelChange)="processHideColumns()"
-            *ngIf="showColumnSelector" [(ngModel)]="selectedColumns" [options]="columns" display="chip"
-            optionLabel="header" appendTo="body"></p-multi-select>
-        <p-button (onClick)="exportToExcel()" [label]="'custom-table.export' | translate" icon="far fa-download"
-            iconPos="right" severity="secondary" />
+        <p-multi-select class="columns-selection" display="chip" (ngModelChange)="processHideColumns()" *ngIf="showColumnSelector" [(ngModel)]="selectedColumns" [options]="columns"
+            display="chip" optionLabel="header" [selectedItemsLabel]="'custom-table.selected-columns' | translate" [maxSelectedLabels]="0" appendTo="body"></p-multi-select>
+        <p-button (onClick)="exportToExcel()" [label]="'custom-table.export' | translate" icon="far fa-download" iconPos="right" severity="success" [outlined]="true" />
+        <p-button (onClick)="resetState()" [label]="'custom-table.reset-state' | translate" icon="far fa-filter-slash" iconPos="right"
+            [severity]="(isStateChaged ? 'danger' : 'secondary')" [outlined]="!isStateChaged" />
+
     </div>
-    <p-table #dt showGridlines [showCurrentPageReport]="true"
-        [currentPageReportTemplate]="'custom-table.current-page-report' | translate" [value]="value" [paginator]="true"
-        [rowsPerPageOptions]="rowsPerPageOptions" [rows]="rows" [loading]="loading">
+    <p-table #dt [showGridlines]="true" [showCurrentPageReport]="true" [stripedRows]="true" [rowHover]="true" [scrollable]="true" scrollHeight="flex" [stateStorage]="stateStorage" [stateKey]="stateKey"
+        [currentPageReportTemplate]="'custom-table.current-page-report' | translate" [value]="value" [paginator]="true" [rowsPerPageOptions]="rowsPerPageOptions" [rows]="rows"
+        [loading]="loading">
         <ng-template pTemplate="header">
             <ng-container *ngIf="headerTpl">
                 <ng-container *ngTemplateOutlet="headerTpl"></ng-container>
@@ -28,16 +29,14 @@
             <tr [ngClass]="headerClass" class="header-row">
                 <th *ngIf="expandedrowTpl"></th>
                 <th [style.width]="'50px'" class="text-center">#</th>
-                <th *ngFor="let column of selectedColumns" [pSortableColumn]="column.field"
-                    [ngClass]="column.headerClass" [style.width]="column.width">
+                <th *ngFor="let column of selectedColumns" [pSortableColumn]="column.field" [ngClass]="column.headerClass" [style.width]="column.width">
                     <div *ngIf="column.field" class="flex flex align-items-center">
                         <span class="flex-1">{{ column.header }}</span>
                         @if (isSortable) {
                         <p-sortIcon [field]="column.field" class="flex flex align-items-center" />
                         }
                         @if (isFilterable && column.field) {
-                        <p-columnFilter *ngIf="filterType == 'menu'" [field]="column.field" display="menu"
-                            matchMode="contains" type="text"></p-columnFilter>
+                        <p-columnFilter *ngIf="filterType == 'menu'" [field]="column.field" display="menu" matchMode="contains" type="text"></p-columnFilter>
                         }
                     </div>
                     <div *ngIf="!column.field">
@@ -51,33 +50,29 @@
                 <th class="text-center"></th>
                 <th *ngFor="let column of selectedColumns">
                     @if (column.field) {
-                    <p-columnFilter #cf (input)="cf.applyFilter()" [field]="column.field" [placeholder]="column.header"
-                        matchMode="contains" type="text"></p-columnFilter>
+                    <p-columnFilter #cf (input)="cf.applyFilter()" [field]="column.field" [placeholder]="column.header" matchMode="contains" type="text"></p-columnFilter>
                     }
                 </th>
                 <th *ngIf="operationTpl || onEdit.observed || onDelete.observed"></th>
             </tr>
         </ng-template>
-        <ng-template #body let-expanded="expanded" let-item let-rowIndex="rowIndex">
+        <ng-template #body let-expanded="expanded" let-item let-rowIndex="rowIndex" let-last="last">
             <ng-container *ngIf="bodyTpl">
-                <ng-container
-                    *ngTemplateOutlet="bodyTpl; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
+                <ng-container *ngTemplateOutlet="bodyTpl; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
             </ng-container>
             <tr [ngClass]="rowClassField ? item[rowClassField] : ''">
                 <td *ngIf="expandedrowTpl">
-                    <p-button [icon]="expanded ? 'far fa-chevron-down' : 'far fa-chevron-left'" [pRowToggler]="item"
-                        [plain]="true" [rounded]="true" [text]="true" pRipple type="button" />
+                    <p-button [icon]="expanded ? 'far fa-chevron-down' : 'far fa-chevron-left'" [pRowToggler]="item" [plain]="true" [rounded]="true" [text]="true" pRipple
+                        type="button" />
                 </td>
                 <td class="text-center">{{ rowIndex + 1 }}</td>
                 <ng-container *ngFor="let column of selectedColumns">
                     @if (column.template) {
                     <td [ngClass]="column.class">
-                        <ng-container
-                            *ngTemplateOutlet="column.template; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
+                        <ng-container *ngTemplateOutlet="column.template; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
                     </td>
                     } @else {
-                    <td [ngClass]="column.class"
-                        [innerHTML]="(column.render ? column.render(item) : (column.field ? item[column.field] : undefined))">
+                    <td [ngClass]="column.class" [innerHTML]="(column.render ? column.render(item) : (column.field ? item[column.field] : undefined))">
                     </td>
                     }
                 </ng-container>
@@ -87,14 +82,17 @@
                             <ng-container *ngTemplateOutlet="operationTpl; context: {$implicit: item}"></ng-container>
                         </ng-container>
 
-                        <p-button (onClick)="onEdit.emit(item)" *ngIf="onEdit.observed"
-                            [pTooltip]="'custom-table.edit' | translate" icon="fal fa-pencil" severity="warn"
+                        <p-button (onClick)="onEdit.emit(item)" *ngIf="onEdit.observed" [pTooltip]="'custom-table.edit' | translate" icon="fal fa-pencil" severity="warn"
                             tooltipPosition="bottom" />
 
-                        <p-button (onClick)="showDeleteDialog(item)" *ngIf="onDelete.observed"
-                            [pTooltip]="'custom-table.delete' | translate" icon="fal fa-trash-can" severity="danger"
-                            tooltipPosition="bottom" />
+                        <p-button (onClick)="showDeleteDialog(item)" *ngIf="onDelete.observed" [pTooltip]="'custom-table.delete' | translate" icon="fal fa-trash-can"
+                            severity="danger" tooltipPosition="bottom" />
                     </div>
+                </td>
+            </tr>
+            <tr *ngIf="last">
+                <td colspan="100" class="text-center" style="height: 100px;">
+                    
                 </td>
             </tr>
         </ng-template>
@@ -105,11 +103,17 @@
         </ng-template>
         <ng-template #emptymessage let-columns>
             <tr>
-                <td colspan="100" class="no-data" style="height: 100%; padding: 2rem 0">
-                    <div class="icon">
-                        <i class="far fa-database"></i>
+                <td colspan="100" class="no-data" style="height: 100%; padding: 4rem 0;">
+                    <div class="flex flex-column gap-4">
+                        <div class="top">
+                            <i class="fal fa-face-laugh-beam"></i>
+                            <span class="text">{{ 'custom-table.no-records-found' | translate: {row: (name ?? ('custom-table.rows' | translate))} }}</span>
+                        </div>
+                        <div *ngIf="onAdd.observed">
+                            <p-button (onClick)="onAdd.emit()" [label]="'custom-table.add-first' | translate: {row: (name ?? ('custom-table.row' | translate))}" icon="fa fa-plus"
+                                iconPos="right" severity="secondary" />
+                        </div>
                     </div>
-                    <div class="text">{{ 'custom-table.no-records-found' | translate }}</div>
                 </td>
             </tr>
         </ng-template>
@@ -122,10 +126,8 @@
             {{ 'custom-table.delete-message' | translate }}
         </div>
         <div class="flex flex gap-2">
-            <p-button class="w-full" (click)="deleteItemApprove()" [label]="'confirm.yes-sure' | translate"
-                icon="far fa-check" iconPos="right" severity="danger" />
-            <p-button class="w-full" (click)="isDeleteDialogVisible = false" [label]="'confirm.cancel' | translate"
-                icon="far fa-times" iconPos="left" severity="secondary" />
+            <p-button class="w-full" (click)="deleteItemApprove()" [label]="'confirm.yes-sure' | translate" icon="far fa-check" iconPos="right" severity="danger" />
+            <p-button class="w-full" (click)="isDeleteDialogVisible = false" [label]="'confirm.cancel' | translate" icon="far fa-times" iconPos="left" severity="secondary" />
         </div>
     </ng-template>
 </p-custom-dialog>
