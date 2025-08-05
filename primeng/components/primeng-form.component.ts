@@ -38,4 +38,8 @@ export abstract class PrimengFormComponent<T extends {id?: string} = any> extend
             this.onComplete.emit();
         })
     }
+
+    inputSelect(element: EventTarget | null) {
+        (element as HTMLInputElement)?.select?.();
+    }
 }
