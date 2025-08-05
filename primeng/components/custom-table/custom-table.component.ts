@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ContentChild, ContentChildren, EventEmitter, 
 import { MenuItem } from "primeng/api";
 import { CustomTableColumn } from "./contracts";
 import { PrimengComponent } from "../primeng.component";
-import { Table } from "primeng/table";
+import { Table, TableFilterEvent } from "primeng/table";
 import { saveAs } from 'file-saver';
 import * as XLSX from 'xlsx';
 
@@ -37,6 +37,7 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Output() onEdit = new EventEmitter<any>();
     @Output() onDelete = new EventEmitter<any>();
     @Output() isSaving = new EventEmitter<any>();
+    @Output() onFilter = new EventEmitter<TableFilterEvent>();
 
     @ContentChild('caption') captionTpl?: TemplateRef<any>;
     @ContentChild('header') headerTpl?: TemplateRef<any>;

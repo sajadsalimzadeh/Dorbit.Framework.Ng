@@ -11,8 +11,9 @@ export interface Attachment {
 }
 
 export interface AttachmentDto {
-    name: string;
     filename: string;
+    name: string;
+    description?: string;
     size: number;
 }
 
