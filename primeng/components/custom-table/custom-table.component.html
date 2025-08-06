@@ -103,8 +103,8 @@
         </ng-template>
         <ng-template #emptymessage let-columns>
             <tr>
-                <td colspan="100" class="no-data" style="height: 100%; padding: 4rem 0;">
-                    <div class="flex flex-column gap-4">
+                <td colspan="100" class="no-data" style="height: 100%; padding: 1rem 0 2rem;">
+                    <div class="flex flex-column gap-2">
                         <div class="top">
                             <i class="fal fa-face-laugh-beam"></i>
                             <span class="text">{{ 'custom-table.no-records-found' | translate: {row: (name ?? ('custom-table.rows' | translate))} }}</span>

@@ -30,9 +30,12 @@ export abstract class PrimengFormComponent<T extends {id?: string} = any> extend
 
     submit() {
         if (!FormUtil.isValid(this.form)) return;
+        const formValue = this.getFormValue();
+        console.log(formValue);
+        
         const req = {
             id: this.model?.id,
-            ...this.getFormValue(),
+            ...formValue,
         }
         this.repository.save(req).subscribe(res => {
             this.onComplete.emit();

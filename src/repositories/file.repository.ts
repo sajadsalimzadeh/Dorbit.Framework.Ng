@@ -4,6 +4,7 @@ import { QueryResult } from "../contracts/results";
 import { BASE_URL_FRAMEWORK } from '../configs';
 import { HttpEventType } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { saveAs } from 'file-saver';
 
 @Injectable({ providedIn: 'root' })
 export class FileRepository extends BaseApiRepository {
@@ -12,9 +13,10 @@ export class FileRepository extends BaseApiRepository {
         super(injector, injector.get(BASE_URL_FRAMEWORK), 'Files');
     }
 
-    upload(data: File | Blob, name: string, progress?: (progress: number) => void) : Observable<QueryResult<string>> {
+    upload(data: File | Blob, name: string, access?: string, progress?: (progress: number) => void) : Observable<QueryResult<string>> {
         const formData = new FormData();
         formData.append('file', data, name);
+        if(access) formData.append('access', access);
         return new Observable<QueryResult<string>>(observer => {
             this.http.post<QueryResult<string>>('', formData, { reportProgress: true, observe: 'events' }).subscribe({
                 next: (event) => {
@@ -55,7 +57,20 @@ export class FileRepository extends BaseApiRepository {
         return this.upload(blob, name);
     }
 
-    download(filename: string) {
-        return this.http.get(`${filename}/Download`, { responseType: 'arraybuffer' });
+    download(filename: string, downloadFilename?: string) {
+        return new Observable<boolean>(observer => {
+            this.http.get(`${filename}/Download`, { responseType: 'blob' }).subscribe({
+                next: (res) => {
+                    saveAs(res, downloadFilename ?? filename);
+                    observer.next(true);
+                },
+                error: (error) => {
+                    observer.error(error);
+                },
+                complete: () => {
+                    observer.complete();
+                }
+            });
+        });
     }
 }

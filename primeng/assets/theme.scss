@@ -12,7 +12,9 @@ html:root {
     --form-field-invalid-border-color: var(--red-300);
     --form-field-sm-padding-x: 0.425rem;
     --form-field-sm-padding-y: 0.4rem;
-    --dialog-content-padding: var(--overlay-modal-padding);
+    --dialog-content-padding: var(--overlay-modal-padding);    
+    --form-field-padding-x: 0.75em;
+    --form-field-padding-y: 0.625em;
 
     --button-outlined-success-hover-background: var(--success-50);
     --button-outlined-success-active-background: var(--success-100);

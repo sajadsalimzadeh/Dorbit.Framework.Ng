@@ -62,11 +62,12 @@ export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     protected tapLoading<T>(key: string) {
+        this.loadings[key] = true;
         return tap<T>({
-            next: () => {
-                this.loadings[key] = true;
+            error: () => {
+                this.loadings[key] = false;
             },
-            finalize: () => {
+            complete: () => {
                 this.loadings[key] = false;
             }
         });
