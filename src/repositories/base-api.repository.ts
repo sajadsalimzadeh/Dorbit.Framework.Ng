@@ -35,16 +35,12 @@ export abstract class BaseApiRepository {
 class CustomHttpHandler extends HttpHandler {
     private progressCount = 0;
     private readonly handler: HttpHandler;
-    private readonly translateService: TranslateService;
-    private readonly messageService: MessageService;
 
     constructor(
-        injector: Injector,
+        protected injector: Injector,
         private api: BaseApiRepository) {
         super();
         this.handler = injector.get(HttpHandler)
-        this.translateService = injector.get(TranslateService)
-        this.messageService = injector.get(MessageService)
     }
 
     get isLoading() {
@@ -108,7 +104,10 @@ class CustomHttpHandler extends HttpHandler {
         if (this.api.messagingEnabled) {
             const key = `${text}`;
             if (Date.now() - messageTimes[key] < 1000) return;
-            let translate = this.translateService.instant(key);
+
+            const messageService = this.injector.get(MessageService);
+            const translateService = this.injector.get(TranslateService);
+            let translate = translateService.instant(key);
             if (translate == key) {
                 console.warn(`translate '${translate}' not exists`)
                 return;
@@ -118,7 +117,7 @@ class CustomHttpHandler extends HttpHandler {
                     translate = translate.replace(`{${dataKey}}`, data[dataKey]);
                 }
             }
-            this.messageService.show({
+            messageService.show({
                 duration: 7000,
                 ...message,
                 body: translate,
