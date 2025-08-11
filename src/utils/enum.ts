@@ -19,10 +19,6 @@ export class EnumUtil {
         return result;
     }
 
-    static getOptions(type: any) {
-        return this.getKeyValues(type).map(x => ({ value: x.key, text: x.value }));
-    }
-
     static getNames(type: any) {
         const keys = Object.keys(type);
         const result: string[] = [];
@@ -33,7 +29,7 @@ export class EnumUtil {
         return result;
     }
 
-    static getName(type: any, value: any) {
-        return this.getOptions(type).find(x => x.value == value)?.text;
+    static getName(type: any, key: any) {
+        return this.getKeyValues(type).find(x => x.key == key)?.value;
     }
 }
