@@ -11,8 +11,16 @@ export class EnumUtil {
         return result;
     }
 
+    static getObject<T>(type: T) {
+        const result: any = {};
+        this.getKeyValues(type).forEach(x => {
+            result[x.key] = x.value;
+        });
+        return result;
+    }
+
     static getOptions(type: any) {
-        return this.getKeyValues(type).map(x => ({value: x.key, text: x.value}));
+        return this.getKeyValues(type).map(x => ({ value: x.key, text: x.value }));
     }
 
     static getNames(type: any) {
