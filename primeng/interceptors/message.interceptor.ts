@@ -7,23 +7,38 @@ import { Observable, tap } from "rxjs";
 @Injectable({ providedIn: 'root' })
 export class MessageInterceptor implements HttpInterceptor {
 
+    messageHistory: { [key: string]: number } = {};
+
     constructor(private injector: Injector) {
+    }
+
+    showMessage(message: string) {
+        const now = Date.now();
+        if(now - this.messageHistory[message] < 1000) return;
+        this.messageHistory[message] = now;
+        const translateService = this.injector.get(TranslateService);
+        const messageService = this.injector.get(MessageService);
+        messageService.add({
+            severity: 'error',
+            detail: translateService.instant(message),
+        })
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
         return next.handle(req).pipe(tap({
             error: (err) => {
-                if (req.method == 'POST' && err instanceof HttpErrorResponse) {
-                    if (!err.error?.message) return;
-                    const message = err.error.message;
-                    const translateService = this.injector.get(TranslateService);
-                    const messageService = this.injector.get(MessageService);
-                    const translatedMessage = translateService.instant('message.' + message);
-                    messageService.add({
-                        severity: 'error',
-                        detail: translatedMessage,
-                    })
+                if (err instanceof HttpErrorResponse) {
+
+                    if(err.status == 403) {
+                        this.showMessage('message.UnAuthorize');
+                    }
+                    else if (req.method != 'GET' && err.error?.message) {
+                        const message = err.error.message;
+                        this.showMessage('message.' + message);
+                    } else {
+                        this.showMessage('message.operation-error');
+                    }
                 }
             }
         }))

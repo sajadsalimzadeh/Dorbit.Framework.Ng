@@ -17,6 +17,7 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Input() name?: string;
     @Input() value: any[] = [];
     @Input() loading: boolean = false;
+    @Input() lazyLoading: boolean = false;
     @Input() columns: CustomTableColumn[] = [];
     @Input() breadcrumb?: MenuItem[];
     @Input() showInCard: boolean = true;
@@ -39,6 +40,7 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Output() onDelete = new EventEmitter<any>();
     @Output() isSaving = new EventEmitter<any>();
     @Output() onFilter = new EventEmitter<TableFilterEvent>();
+    @Output() onRowMouseOver = new EventEmitter<any>();
 
     @ContentChild('caption') captionTpl?: TemplateRef<any>;
     @ContentChild('header') headerTpl?: TemplateRef<any>;
@@ -105,7 +107,9 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
         this.dt.clearState();
         this.dt.reset();
         this.dt.restoreColumnOrder();
+    }
 
-        
+    filter(event: TableFilterEvent) {
+        this.onFilter.emit(event);
     }
 }

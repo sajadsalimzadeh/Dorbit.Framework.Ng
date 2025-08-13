@@ -32,7 +32,7 @@ export class CustomDialogComponent implements OnInit, OnChanges {
     @Input() fullHeight: boolean = false;
     @Input() showHeader: boolean = true;
 
-    @Input() size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' = 'md';
+    @Input() size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' = 'md';
     @Input() maximize: boolean = false;
     @Input() overflow: 'auto' | 'visible' = 'auto';
 
@@ -66,6 +66,7 @@ export class CustomDialogComponent implements OnInit, OnChanges {
             else if (this.size == 'md') sizeStyles = {width: '768px'};
             else if (this.size == 'lg') sizeStyles = {width: '992px'};
             else if (this.size == 'xl') sizeStyles = {width: '1200px'};
+            else if (this.size == 'xxl') sizeStyles = {width: '1400px'};
 
             if (this.fullHeight) {
                 sizeStyles.height = '100%';

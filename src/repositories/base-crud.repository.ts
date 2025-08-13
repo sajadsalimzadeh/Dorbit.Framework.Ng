@@ -32,7 +32,7 @@ export abstract class BaseCrudRepository<T = any, TSave = any> extends BaseApiRe
 
     select(query?: ODataQueryOptions | any): Observable<PagedListResult<T>> {
         if (!query) query = new ODataQueryOptions();
-        let url = '';
+        let url = 'odata';
         let params = {};
         if (query instanceof ODataQueryOptions) {
             url += query.toQueryString();
@@ -43,7 +43,7 @@ export abstract class BaseCrudRepository<T = any, TSave = any> extends BaseApiRe
     }
 
     getAll(): Observable<QueryResult<T[]>> {
-        return this.select(new ODataQueryOptions().take(10000)) as Observable<QueryResult<T[]>>;
+        return this.http.get<QueryResult<T[]>>('');
     }
 
     getById(id: any): Observable<QueryResult<T>> {

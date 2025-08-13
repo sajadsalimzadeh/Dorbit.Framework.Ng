@@ -21,7 +21,7 @@
     </div>
     <p-table #dt [showGridlines]="true" [showCurrentPageReport]="true" [stripedRows]="true" [rowHover]="true" [scrollable]="true" scrollHeight="flex" [stateStorage]="stateStorage" [stateKey]="stateKey"
         [currentPageReportTemplate]="'custom-table.current-page-report' | translate" [value]="value" [paginator]="true" [rowsPerPageOptions]="rowsPerPageOptions" [rows]="rows"
-        [loading]="loading" (onFilter)="onFilter.emit($event)">
+        [loading]="loading" [lazy]="lazyLoading" (onFilter)="filter($event)">
         <ng-template pTemplate="header">
             <ng-container *ngIf="headerTpl">
                 <ng-container *ngTemplateOutlet="headerTpl"></ng-container>
@@ -60,7 +60,7 @@
             <ng-container *ngIf="bodyTpl">
                 <ng-container *ngTemplateOutlet="bodyTpl; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
             </ng-container>
-            <tr [ngClass]="rowClassField ? item[rowClassField] : ''">
+            <tr [ngClass]="rowClassField ? item[rowClassField] : ''" (mouseover)="onRowMouseOver.emit(item)">
                 <td *ngIf="expandedrowTpl">
                     <p-button [icon]="expanded ? 'far fa-chevron-down' : 'far fa-chevron-left'" [pRowToggler]="item" [plain]="true" [rounded]="true" [text]="true" pRipple
                         type="button" />
