@@ -102,7 +102,7 @@
             </ng-container>
         </ng-template>
         <ng-template #emptymessage let-columns>
-            <tr>
+            <tr *ngIf="showEmptyMessage">
                 <td colspan="100" class="no-data" style="height: 100%; padding: 1rem 0 2rem;">
                     <div class="flex flex-column gap-2">
                         <div class="top">

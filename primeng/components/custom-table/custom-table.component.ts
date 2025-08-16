@@ -22,6 +22,7 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Input() breadcrumb?: MenuItem[];
     @Input() showInCard: boolean = true;
     @Input() showColumnSelector: boolean = true;
+    @Input() showEmptyMessage: boolean = true;
     @Input() filterType: 'menu' | 'inline' = 'inline';
     @Input() isSortable: boolean = true;
     @Input() isFilterable: boolean = true;
