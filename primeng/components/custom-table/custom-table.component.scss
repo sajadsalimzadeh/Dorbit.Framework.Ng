@@ -120,6 +120,8 @@ p-table :host-context([dir=rtl]) {
 }
 
 .no-data {
+    height: 100%; 
+    padding: 3rem 0;
     text-align: center;
     color: var(--surface-400);
     background-color: var(--surface-0);

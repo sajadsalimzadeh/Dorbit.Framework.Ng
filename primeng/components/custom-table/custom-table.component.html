@@ -103,10 +103,10 @@
         </ng-template>
         <ng-template #emptymessage let-columns>
             <tr *ngIf="showEmptyMessage">
-                <td colspan="100" class="no-data" style="height: 100%; padding: 1rem 0 2rem;">
+                <td colspan="100" class="no-data">
                     <div class="flex flex-column gap-2">
                         <div class="top">
-                            <i class="fal fa-face-laugh-beam"></i>
+                            <i class="fal fa-inbox"></i>
                             <span class="text">{{ 'custom-table.no-records-found' | translate: {row: (name ?? ('custom-table.rows' | translate))} }}</span>
                         </div>
                         <div *ngIf="onAdd.observed">
