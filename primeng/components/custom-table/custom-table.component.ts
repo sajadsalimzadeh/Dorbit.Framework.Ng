@@ -32,7 +32,7 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Input() rowClassField?: string;
     @Input() stateStorage: 'session' | 'local' = 'session';
     @Input() stateKey: string = this.router.url;
-    @Input() 
+    @Input()
     @HostBinding('class') size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' = 'md';
     @Input() operationSize?: 'small' | 'large';
 
@@ -56,8 +56,12 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     isDeleteDialogVisible = false;
     selectedColumns: CustomTableColumn[] = [];
 
+    get storage() {
+        return this.stateStorage == 'session' ? sessionStorage : localStorage;
+    }
+
     get isStateChaged() {
-        return this.dt?.filteredValue || this.dt?.sortField;
+        return this.dt?.filteredValue || this.dt?.sortField || this.storage.getItem(this.stateKey + '-selectedColumns');
     }
 
     constructor(injector: Injector) {
@@ -65,19 +69,35 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     }
 
     override ngOnInit(): void {
-        this.processHideColumns();
+        super.ngOnInit();
+
+        this.loadSelectedColumnState();
     }
 
     ngAfterViewInit(): void {
         this.columns.forEach(column => {
             column.template = this.templates.find((x: any) => x._declarationTContainer.localNames && x._declarationTContainer.localNames[0] == column.templateName);
             column.header = this.translateService.instant(column.header);
-
         })
     }
 
-    processHideColumns() {
-        this.selectedColumns = this.columns.filter(x => !x.isHide);
+    saveSelectedColumnState() {
+        this.storage.setItem(this.stateKey + '-selectedColumns', JSON.stringify(this.selectedColumns.map(x => x.field)));
+    }
+
+    loadSelectedColumnState() {
+        const state = this.storage.getItem(this.stateKey + '-selectedColumns');
+        if (state) {
+            const selectedColumnFields = JSON.parse(state);
+            this.selectedColumns = this.columns.filter(x => selectedColumnFields.includes(x.field));
+        } else {
+            this.selectedColumns = this.columns.filter(x => !x.isHide);
+        }
+    }
+
+    resetSelectedColumnState() {
+        const storage = this.stateStorage == 'session' ? sessionStorage : localStorage;
+        storage.removeItem(this.stateKey + '-selectedColumns');
     }
 
     showDeleteDialog(item: any) {
@@ -108,6 +128,9 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
         this.dt.clearState();
         this.dt.reset();
         this.dt.restoreColumnOrder();
+        this.resetSelectedColumnState();
+        this.selectedColumns = this.columns.filter(x => !x.isHide);
+
     }
 
     filter(event: TableFilterEvent) {
