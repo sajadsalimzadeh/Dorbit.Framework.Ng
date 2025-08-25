@@ -1,5 +1,6 @@
 :host {
-    display: block;
+    display: flex;
+    flex-direction: column;
 
     --datatable-body-cell-padding: 0.8rem;
     --datatable-header-cell-padding: 0.7rem;
@@ -119,6 +120,8 @@ p-table :host-context([dir=rtl]) {
 }
 
 .no-data {
+    height: 100%; 
+    padding: 3rem 0;
     text-align: center;
     color: var(--surface-400);
     background-color: var(--surface-0);

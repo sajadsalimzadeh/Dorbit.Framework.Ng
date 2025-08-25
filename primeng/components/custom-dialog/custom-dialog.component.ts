@@ -59,7 +59,7 @@ export class CustomDialogComponent implements OnInit, OnChanges {
     processStyles() {
         let sizeStyles: any;
         if (this.maximize) {
-            this.style = {...this.style, width: '100vw', height: '100vh', 'max-height': 'calc(100% - 1.5rem)'};
+            this.style = {...this.style, width: '100vw', height: '100vh', 'max-width': '95%', 'max-height': 'calc(100% - 1.5rem)'};
         } else {
             if (this.size == 'xs') sizeStyles = {width: '400px'};
             else if (this.size == 'sm') sizeStyles = {width: '576px'};

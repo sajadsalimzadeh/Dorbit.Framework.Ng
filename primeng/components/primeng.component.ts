@@ -206,4 +206,12 @@ export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {
             });
         })
     }
+
+    inputSelect(e: Event) {
+        let input = e.target as HTMLInputElement;
+        if (input.tagName != 'INPUT') input = input.querySelector('input') as HTMLInputElement;
+        if (input) {
+            input.select();
+        }
+    }
 }

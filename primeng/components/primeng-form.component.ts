@@ -32,7 +32,7 @@ export abstract class PrimengFormComponent<T extends {id?: string} = any> extend
         if (!FormUtil.isValid(this.form)) return;
         const formValue = this.getFormValue();
         console.log(formValue);
-        
+
         const req = {
             id: this.model?.id,
             ...formValue,
@@ -40,9 +40,5 @@ export abstract class PrimengFormComponent<T extends {id?: string} = any> extend
         this.repository.save(req).subscribe(res => {
             this.onComplete.emit();
         })
-    }
-
-    inputSelect(element: EventTarget | null) {
-        (element as HTMLInputElement)?.select?.();
     }
 }
