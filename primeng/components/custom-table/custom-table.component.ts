@@ -89,7 +89,10 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
         const state = this.storage.getItem(this.stateKey + '-selectedColumns');
         if (state) {
             const selectedColumnFields = JSON.parse(state);
-            this.selectedColumns = this.columns.filter(x => selectedColumnFields.includes(x.field));
+            this.selectedColumns = this.columns.filter(x => {
+                if (x.field) return selectedColumnFields.includes(x.field)
+                return !x.isHide;
+            });
         } else {
             this.selectedColumns = this.columns.filter(x => !x.isHide);
         }
