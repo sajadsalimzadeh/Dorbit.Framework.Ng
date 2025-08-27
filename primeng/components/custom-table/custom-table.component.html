@@ -19,7 +19,7 @@
             [severity]="(isStateChaged ? 'danger' : 'secondary')" [outlined]="!isStateChaged" />
 
     </div>
-    <p-table #dt [showGridlines]="true" [showCurrentPageReport]="true" [stripedRows]="true" [rowHover]="true" [scrollable]="true" scrollHeight="flex" [stateStorage]="stateStorage" [stateKey]="stateKey"
+    <p-table #dt [showGridlines]="true" [showCurrentPageReport]="true" [stripedRows]="true" [rowHover]="true" [scrollable]="true" scrollHeight="flex" [stateStorage]="stateStorage" [stateKey]="uniqueStateKey"
         [currentPageReportTemplate]="'custom-table.current-page-report' | translate" [value]="value" [paginator]="true" [rowsPerPageOptions]="rowsPerPageOptions" [rows]="rows"
         [loading]="loading" [lazy]="lazyLoading" (onFilter)="filter($event)">
         <ng-template pTemplate="header">

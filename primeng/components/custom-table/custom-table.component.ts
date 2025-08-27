@@ -31,8 +31,8 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Input() headerClass?: string;
     @Input() rowClassField?: string;
     @Input() stateStorage: 'session' | 'local' = 'session';
-    @Input() stateKey: string = this.router.url;
-    @Input()
+    @Input() stateKey: string = '';
+    @Input() stateKeyPrefix: string = this.router.url;
     @HostBinding('class') size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' = 'md';
     @Input() operationSize?: 'small' | 'large';
 
@@ -53,6 +53,8 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
 
     @ViewChild('dt') dt!: Table;
 
+    protected uniqueStateKey: string = '';
+
     isDeleteDialogVisible = false;
     selectedColumns: CustomTableColumn[] = [];
 
@@ -71,6 +73,8 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     override ngOnInit(): void {
         super.ngOnInit();
 
+        this.uniqueStateKey = this.stateKeyPrefix + '-' + this.stateKey;
+
         this.loadSelectedColumnState();
     }
 
@@ -82,11 +86,11 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     }
 
     saveSelectedColumnState() {
-        this.storage.setItem(this.stateKey + '-selectedColumns', JSON.stringify(this.selectedColumns.map(x => x.field)));
+        this.storage.setItem(this.uniqueStateKey + '-selectedColumns', JSON.stringify(this.selectedColumns.map(x => x.field)));
     }
 
     loadSelectedColumnState() {
-        const state = this.storage.getItem(this.stateKey + '-selectedColumns');
+        const state = this.storage.getItem(this.uniqueStateKey + '-selectedColumns');
         if (state) {
             const selectedColumnFields = JSON.parse(state);
             this.selectedColumns = this.columns.filter(x => {
@@ -100,7 +104,7 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
 
     resetSelectedColumnState() {
         const storage = this.stateStorage == 'session' ? sessionStorage : localStorage;
-        storage.removeItem(this.stateKey + '-selectedColumns');
+        storage.removeItem(this.uniqueStateKey + '-selectedColumns');
     }
 
     showDeleteDialog(item: any) {
