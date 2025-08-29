@@ -12,14 +12,14 @@
             <ng-container *ngTemplateOutlet="captionTpl"></ng-container>
         </ng-container>
         <div class="flex-1"></div>
-        <p-multi-select class="columns-selection" display="chip" (ngModelChange)="processHideColumns()" *ngIf="showColumnSelector" [(ngModel)]="selectedColumns" [options]="columns"
+        <p-multi-select class="columns-selection" display="chip" (onChange)="saveSelectedColumnState()" *ngIf="showColumnSelector" [(ngModel)]="selectedColumns" [options]="columns"
             display="chip" optionLabel="header" [selectedItemsLabel]="'custom-table.selected-columns' | translate" [maxSelectedLabels]="0" appendTo="body"></p-multi-select>
         <p-button (onClick)="exportToExcel()" [label]="'custom-table.export' | translate" icon="far fa-download" iconPos="right" severity="success" [outlined]="true" />
         <p-button (onClick)="resetState()" [label]="'custom-table.reset-state' | translate" icon="far fa-filter-slash" iconPos="right"
             [severity]="(isStateChaged ? 'danger' : 'secondary')" [outlined]="!isStateChaged" />
 
     </div>
-    <p-table #dt [showGridlines]="true" [showCurrentPageReport]="true" [stripedRows]="true" [rowHover]="true" [scrollable]="true" scrollHeight="flex" [stateStorage]="stateStorage" [stateKey]="stateKey"
+    <p-table #dt [showGridlines]="true" [showCurrentPageReport]="true" [stripedRows]="true" [rowHover]="true" [scrollable]="true" scrollHeight="flex" [stateStorage]="stateStorage" [stateKey]="uniqueStateKey"
         [currentPageReportTemplate]="'custom-table.current-page-report' | translate" [value]="value" [paginator]="true" [rowsPerPageOptions]="rowsPerPageOptions" [rows]="rows"
         [loading]="loading" [lazy]="lazyLoading" (onFilter)="filter($event)">
         <ng-template pTemplate="header">

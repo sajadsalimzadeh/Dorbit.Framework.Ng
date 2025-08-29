@@ -254,7 +254,7 @@ export class JalaliDatePickerComponent extends PrimengControlComponent implement
         this.state = 'year';
 
         setTimeout(() => {
-            const yearPickerEl = this.elementRef.nativeElement.querySelector('.year-picker') as HTMLDivElement;
+            const yearPickerEl = document.querySelector('.date-picker-container .year-picker') as HTMLDivElement;
             if (yearPickerEl) {
                 yearPickerEl.scrollTo({
                     top: yearPickerEl.scrollHeight / 2 - (yearPickerEl.clientHeight / 2),

@@ -51,11 +51,19 @@ p-ifta-label {
     }
 
     p-select,
+    p-password,
+    p-input-text,
+    p-textarea,
+    p-select,
     p-input-number,
     [pinputtext],
     textarea {
         width: 100%;
         display: flex;
+    }
+
+    .p-password {
+        flex: 1;
     }
 }
 

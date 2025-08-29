@@ -13,6 +13,18 @@ export class TreeUtil {
             }
         })
     }
+    
+    static convert<T, TR extends { children?: any[] }>(items: T[], callback: (item: T, parent?: T, parentResult?: TR) => TR, parentItem?: T, parentResult?: TR): TR[] {
+        const result: TR[] = [];
+        items?.forEach((item: any) => {
+            const resultItem = callback(item, parentItem, parentResult);
+            if (item.children) {
+                resultItem.children = this.convert(item.children, callback, item, resultItem);
+            }
+            result.push(resultItem);
+        });
+        return result;
+    }
 
     static getByPath<T extends { children?: T[] } = any>(items: T[], path: string, keyField: string = 'id') {
         const keys = path.split('/').filter(x => !!x);

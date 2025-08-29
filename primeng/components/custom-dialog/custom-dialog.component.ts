@@ -1,5 +1,5 @@
-import {Component, ContentChild, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild} from "@angular/core";
-import {Dialog} from "primeng/dialog";
+import { Component, ContentChild, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from "@angular/core";
+import { Dialog } from "primeng/dialog";
 
 type Position = "center" | "top" | "bottom" | "left" | "right" | "topleft" | "topright" | "bottomleft" | "bottomright";
 
@@ -59,14 +59,20 @@ export class CustomDialogComponent implements OnInit, OnChanges {
     processStyles() {
         let sizeStyles: any;
         if (this.maximize) {
-            this.style = {...this.style, width: '100vw', height: '100vh', 'max-width': '95%', 'max-height': 'calc(100% - 1.5rem)'};
+            this.style = {
+                ...this.style,
+                width: '100vw',
+                height: '100vh',
+                'max-width': 'calc(100% - 1.5rem)',
+                'max-height': 'calc(100% - 1.5rem)'
+            };
         } else {
-            if (this.size == 'xs') sizeStyles = {width: '400px'};
-            else if (this.size == 'sm') sizeStyles = {width: '576px'};
-            else if (this.size == 'md') sizeStyles = {width: '768px'};
-            else if (this.size == 'lg') sizeStyles = {width: '992px'};
-            else if (this.size == 'xl') sizeStyles = {width: '1200px'};
-            else if (this.size == 'xxl') sizeStyles = {width: '1400px'};
+            if (this.size == 'xs') sizeStyles = { width: '400px' };
+            else if (this.size == 'sm') sizeStyles = { width: '576px' };
+            else if (this.size == 'md') sizeStyles = { width: '768px' };
+            else if (this.size == 'lg') sizeStyles = { width: '992px' };
+            else if (this.size == 'xl') sizeStyles = { width: '1200px' };
+            else if (this.size == 'xxl') sizeStyles = { width: '1400px' };
 
             if (this.fullHeight) {
                 sizeStyles.height = '100%';
