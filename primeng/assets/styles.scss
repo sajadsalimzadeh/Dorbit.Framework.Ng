@@ -56,6 +56,7 @@ p-ifta-label {
     p-textarea,
     p-select,
     p-input-number,
+    p-autocomplete,
     [pinputtext],
     textarea {
         width: 100%;
@@ -64,6 +65,25 @@ p-ifta-label {
 
     .p-password {
         flex: 1;
+    }
+}
+
+p-select.w-full,
+p-password.w-full,
+p-input-text.w-full,
+p-textarea.w-full,
+p-select.w-full,
+p-input-number.w-full,
+p-autocomplete.w-full,
+[pinputtext].w-full,
+textarea.w-full {
+    width: 100%;
+    display: flex;
+}
+
+p-autocomplete.w-full {
+    .p-autocomplete {
+        width: 100%;
     }
 }
 
@@ -114,4 +134,3 @@ time {
 p-input-number .p-inputtext {
     width: 100%;
 }
-
