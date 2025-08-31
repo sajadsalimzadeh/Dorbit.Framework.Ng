@@ -1,19 +1,20 @@
-import {BehaviorSubject, Subject} from "rxjs";
-import {HubConnection, HubConnectionBuilder, HubConnectionState} from "@microsoft/signalr";
-import {IDisposable} from '../contracts/dispose';
-import {logger} from '../utils/log';
+import { BehaviorSubject, Subject } from "rxjs";
+import { HubConnection, HubConnectionBuilder, HubConnectionState } from "@microsoft/signalr";
+import { IDisposable } from '../contracts/dispose';
+import { logger } from '../utils/log';
 
 export class BaseHubService<TSendMethod, TReceiveMethod> implements IDisposable {
 
     $connection = new BehaviorSubject<HubConnection>(null as any);
     $state = new BehaviorSubject<HubConnectionState>(HubConnectionState.Disconnected);
+    $connected = new BehaviorSubject<boolean>(false);
 
-    private listens: { [key: string]: Subject<any> } = {};
+    private listeners: Map<TReceiveMethod, Subject<any>> = new Map();
 
     constructor(private url: string, private methodNames: TReceiveMethod[]) {
 
         this.$state.subscribe((status) => {
-            logger.debug(`Hub status change ${status}`, {scope: 'hub'});
+            logger.debug(`Hub status change ${status}`, { scope: 'hub' });
         })
     }
 
@@ -25,7 +26,7 @@ export class BaseHubService<TSendMethod, TReceiveMethod> implements IDisposable 
             return;
         }
         const connection = new HubConnectionBuilder()
-            .withUrl(`${this.url}`, {accessTokenFactory: () => token})
+            .withUrl(`${this.url}`, { accessTokenFactory: () => token })
             .withAutomaticReconnect()
             .withKeepAliveInterval(1000)
             // .withServerTimeout(5000)
@@ -35,27 +36,28 @@ export class BaseHubService<TSendMethod, TReceiveMethod> implements IDisposable 
 
         connection.start().then(() => {
             this.$state.next(connection.state);
+            this.$connected.next(true);
         });
         connection.onclose(() => {
             this.$state.next(connection.state);
+            this.$connected.next(false);
         });
         connection.onreconnecting(() => {
             this.$state.next(connection.state);
         });
         connection.onreconnected(() => {
             this.$state.next(connection.state);
+            this.$connected.next(true);
         });
 
-        for (const method of this.methodNames) {
-            const listens = this.listens as any;
-            listens[method] ??= new Subject()
-            connection.on(method as string, (data) => {
-                const obj = (typeof data === 'string' ? JSON.parse(data) : data);
-                listens[method].next(obj);
-            });
-        }
-
         this.$connection.next(connection);
+        this.init();
+    }
+
+    init() {
+        for (const key in this.listeners) {
+            this.on(key as TReceiveMethod);
+        }
     }
 
     dispose(): Promise<void> {
@@ -63,9 +65,15 @@ export class BaseHubService<TSendMethod, TReceiveMethod> implements IDisposable 
     }
 
     on<T = any>(name: TReceiveMethod): Subject<T> {
-        const listeners = this.listens as any;
-        if (!listeners[name]) listeners[name] = new Subject<any>();
-        return listeners[name];
+        if (!this.listeners.has(name)) {
+            this.listeners.set(name, new Subject<any>());
+            
+            this.$connection.value?.on(name as string, (data) => {
+                const obj = (typeof data === 'string' ? JSON.parse(data) : data);
+                this.listeners.get(name)?.next(obj);
+            });
+        }
+        return this.listeners.get(name) as Subject<T>;
     }
 
     protected async send<T>(method: TSendMethod, mode: 'send' | 'invoke', ...data: any[]) {
