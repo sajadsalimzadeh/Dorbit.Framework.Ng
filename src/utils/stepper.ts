@@ -12,7 +12,7 @@ interface Validator<T> {
 }
 
 export class Stepper<T> {
-    onChange = new Subject<ChangeEvent<T>>();
+    $change = new Subject<ChangeEvent<T>>();
     subscription = new Subscription();
     private _steps: T[];
     private _validators: Validator<T>[] = [];
@@ -41,7 +41,7 @@ export class Stepper<T> {
         Promise.all(validators).then((values) => {
             if (values.indexOf(false) < 0) {
                 this._step = step;
-                this.onChange.next(e);
+                this.$change.next(e);
             }
         });
     }
@@ -84,14 +84,14 @@ export class Stepper<T> {
     }
 
     onEnter(step: T, callback: () => void) {
-        this.subscription.add(this.onChange.subscribe(e => {
+        this.subscription.add(this.$change.subscribe(e => {
             if (e.enterStep == step) callback();
         }));
         return this;
     }
 
     onLeave(step: T, callback: () => void) {
-        this.subscription.add(this.onChange.subscribe(e => {
+        this.subscription.add(this.$change.subscribe(e => {
             if (e.enterStep == step) callback();
         }));
         return this;
