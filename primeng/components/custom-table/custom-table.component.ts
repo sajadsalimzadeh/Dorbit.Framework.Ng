@@ -30,7 +30,7 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Input() rowsPerPageOptions: number[] = [5, 10, 12, 15, 20, 50];
     @Input() headerClass?: string;
     @Input() rowClassField?: string;
-    @Input() stateStorage: 'session' | 'local' = 'session';
+    @Input() stateStorage: 'session' | 'local' = 'local';
     @Input() stateKey: string = '';
     @Input() stateKeyPrefix: string = this.router.url;
     @HostBinding('class') size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' = 'md';
