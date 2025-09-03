@@ -6,17 +6,23 @@
 </p-card>
 <ng-template #tableTpl>
     <div class="flex flex gap-2 align-items-center pb-2">
+        @if (showAddButton) {
         <p-button (onClick)="onAdd.emit()" *ngIf="onAdd.observed" icon="fa fa-plus" iconPos="right" severity="success"
             [label]="'custom-table.add' | translate: {row: (name ?? ('custom-table.row' | translate))}" />
+        }
         <ng-container *ngIf="captionTpl">
             <ng-container *ngTemplateOutlet="captionTpl"></ng-container>
         </ng-container>
         <div class="flex-1"></div>
         <p-multi-select class="columns-selection" display="chip" (onChange)="saveSelectedColumnState()" *ngIf="showColumnSelector" [(ngModel)]="selectedColumns" [options]="columns"
             display="chip" optionLabel="header" [selectedItemsLabel]="'custom-table.selected-columns' | translate" [maxSelectedLabels]="0" appendTo="body"></p-multi-select>
+        @if (showExportButton) {
         <p-button (onClick)="exportToExcel()" [label]="'custom-table.export' | translate" icon="far fa-download" iconPos="right" severity="success" [outlined]="true" />
+        }
+        @if (showResetButton) {
         <p-button (onClick)="resetState()" [label]="'custom-table.reset-state' | translate" icon="far fa-filter-slash" iconPos="right"
             [severity]="(isStateChaged ? 'danger' : 'secondary')" [outlined]="!isStateChaged" />
+        }
 
     </div>
     <p-table #dt [showGridlines]="true" [showCurrentPageReport]="true" [stripedRows]="true" [rowHover]="true" [scrollable]="true" scrollHeight="flex" [stateStorage]="stateStorage" [stateKey]="uniqueStateKey"
@@ -81,12 +87,14 @@
                         <ng-container *ngIf="operationTpl">
                             <ng-container *ngTemplateOutlet="operationTpl; context: {$implicit: item}"></ng-container>
                         </ng-container>
-
+                        @if (showEditButton) {
                         <p-button (onClick)="onEdit.emit(item)" *ngIf="onEdit.observed" [pTooltip]="'custom-table.edit' | translate" icon="fal fa-pencil" severity="warn"
                             tooltipPosition="bottom" [size]="operationSize" />
-
+                        }
+                        @if (showDeleteButton) {
                         <p-button (onClick)="showDeleteDialog(item)" *ngIf="onDelete.observed" [pTooltip]="'custom-table.delete' | translate" icon="fal fa-trash-can"
                             severity="danger" tooltipPosition="bottom" [size]="operationSize" />
+                        }
                     </div>
                 </td>
             </tr>
@@ -109,10 +117,12 @@
                             <i class="fal fa-inbox"></i>
                             <span class="text">{{ 'custom-table.no-records-found' | translate: {row: (name ?? ('custom-table.rows' | translate))} }}</span>
                         </div>
+                        @if (showAddButton) {
                         <div *ngIf="onAdd.observed">
                             <p-button (onClick)="onAdd.emit()" [label]="'custom-table.add-first' | translate: {row: (name ?? ('custom-table.row' | translate))}" icon="fa fa-plus"
                                 iconPos="right" severity="secondary" />
                         </div>
+                        }
                     </div>
                 </td>
             </tr>

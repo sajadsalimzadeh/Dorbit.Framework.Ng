@@ -21,6 +21,11 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Input() columns: CustomTableColumn[] = [];
     @Input() breadcrumb?: MenuItem[];
     @Input() showInCard: boolean = true;
+    @Input() showExportButton: boolean = true;
+    @Input() showResetButton: boolean = true;
+    @Input() showAddButton: boolean = true;
+    @Input() showEditButton: boolean = true;
+    @Input() showDeleteButton: boolean = true;
     @Input() showColumnSelector: boolean = true;
     @Input() showEmptyMessage: boolean = true;
     @Input() filterType: 'menu' | 'inline' = 'inline';
@@ -33,7 +38,7 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Input() stateStorage: 'session' | 'local' = 'local';
     @Input() stateKey: string = '';
     @Input() stateKeyPrefix: string = this.router.url;
-    @HostBinding('class') size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' = 'md';
+    @Input() @HostBinding('class') size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' = 'md';
     @Input() operationSize?: 'small' | 'large';
 
     @Output() onAdd = new EventEmitter<any>();

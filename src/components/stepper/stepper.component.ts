@@ -25,7 +25,7 @@ export class StepperComponent extends AbstractComponent implements AfterContentI
     override ngOnInit() {
         super.ngOnInit();
 
-        this.subscription.add(this.stepper.onChange.subscribe(e => {
+        this.subscription.add(this.stepper.$change.subscribe(e => {
             this.processActiveStep();
         }));
     }
