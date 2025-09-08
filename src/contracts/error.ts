@@ -10,7 +10,7 @@ export class MessageError implements Error {
     readonly name: string;
     readonly params: any;
 
-    constructor(message: string, color: Severity = 'error', options?: Message, params?: any) {
+    constructor(message: string, params?: any, color: Severity = 'error', options?: Message) {
         this.message = message;
         this.severity = color;
         this.options = options;

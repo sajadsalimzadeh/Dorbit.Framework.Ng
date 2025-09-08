@@ -54,7 +54,6 @@ p-ifta-label {
     p-password,
     p-input-text,
     p-textarea,
-    p-select,
     p-input-number,
     p-autocomplete,
     [pinputtext],
@@ -66,13 +65,16 @@ p-ifta-label {
     .p-password {
         flex: 1;
     }
+
+    .p-select .p-select-label {
+        padding-top: calc(var(--form-field-padding-y) * 2.5) !important;
+    }
 }
 
 p-select.w-full,
 p-password.w-full,
 p-input-text.w-full,
 p-textarea.w-full,
-p-select.w-full,
 p-input-number.w-full,
 p-autocomplete.w-full,
 [pinputtext].w-full,
