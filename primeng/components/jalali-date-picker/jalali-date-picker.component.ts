@@ -107,7 +107,7 @@ export class JalaliDatePickerComponent extends PrimengControlComponent implement
 
         if (this.showTimePicker) {
             this.displayFormat = 'jYYYY/jMM/jDD HH:mm:ss';
-            this.valueFormat = 'YYYY-MM-DD HH:mm:ss';
+            this.valueFormat = 'YYYY-MM-DDTHH:mm:ssZ';
         } else {
             this.displayFormat = 'jYYYY/jMM/jDD';
             this.valueFormat = 'YYYY-MM-DD';
