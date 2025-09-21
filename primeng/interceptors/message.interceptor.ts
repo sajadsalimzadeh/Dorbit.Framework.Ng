@@ -12,15 +12,16 @@ export class MessageInterceptor implements HttpInterceptor {
     constructor(private injector: Injector) {
     }
 
-    showMessage(message: string) {
+    showMessage(message: string, data?: any) {
         const now = Date.now();
         if(now - this.messageHistory[message] < 1000) return;
         this.messageHistory[message] = now;
         const translateService = this.injector.get(TranslateService);
         const messageService = this.injector.get(MessageService);
+        
         messageService.add({
             severity: 'error',
-            detail: translateService.instant(message),
+            detail: translateService.instant(message, data),
         })
     }
 
@@ -35,7 +36,7 @@ export class MessageInterceptor implements HttpInterceptor {
                     }
                     else if (req.method != 'GET' && err.error?.message) {
                         const message = err.error.message;
-                        this.showMessage('message.' + message);
+                        this.showMessage('message.' + message, err.error.data);
                     } else {
                         this.showMessage('message.operation-error');
                     }
