@@ -56,7 +56,7 @@
                 <th class="text-center"></th>
                 <th *ngFor="let column of selectedColumns">
                     @if (column.field) {
-                    <p-columnFilter #cf (input)="cf.applyFilter()" [field]="column.field" [placeholder]="column.header" matchMode="contains" type="text"></p-columnFilter>
+                    <p-columnFilter #cf (input)="cf.applyFilter()" [field]="column.field" [placeholder]="'custom-table.search' | translate" matchMode="contains" type="text"></p-columnFilter>
                     }
                 </th>
                 <th *ngIf="operationTpl || onEdit.observed || onDelete.observed"></th>
