@@ -16,7 +16,7 @@ export class StoreDb<TConfig extends StoreTableConfig> {
             for (const configsKey in this.configs) {
                 this.tables[configsKey] = this.db.table(configsKey);
             }
-            this.db.open().catch(console.error).finally();
+            // this.db.open().catch(console.error).finally();
         } catch (e) {
             console.error('StoreDb: ' + name + ' construct failed - ' + e)
         }

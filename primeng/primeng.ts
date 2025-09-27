@@ -66,11 +66,13 @@ import { CustomDialogComponent } from "./components/custom-dialog/custom-dialog.
 import { CustomTableComponent } from "./components/custom-table/custom-table.component";
 import { JalaliDatePickerComponent } from './components/jalali-date-picker/jalali-date-picker.component';
 import { CustomCheckboxComponent } from './components/custom-checkbox/custom-checkbox.component';
+import { AutoFocusDirective } from './components/auto-focus.directive';
 
 const COMPONENTS = [
     CustomTableComponent,
     CustomDialogComponent,
     CustomCheckboxComponent,
+    AutoFocusDirective
 ];
 
 const PRIMENG_MODULES = [

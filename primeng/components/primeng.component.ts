@@ -73,8 +73,8 @@ export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {
         });
     }
 
-    protected tapMessage(showSuccess: boolean = true, showError: boolean = false) {
-        return tap({
+    protected tapMessage<T>(showSuccess: boolean = true, showError: boolean = false) {
+        return tap<T>({
             next: res => {
                 if(showSuccess) {
                     this.messageService.add({

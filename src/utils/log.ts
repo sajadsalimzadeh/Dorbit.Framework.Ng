@@ -24,7 +24,7 @@ const logStore = new StoreDb('log-v1', 1, {
 });
 
 export const loggerConfigs = {
-    lifetime: 60 * 60 * 1000,
+    lifetime: 12 * 60 * 60 * 1000,
 }
 
 interface Settings {

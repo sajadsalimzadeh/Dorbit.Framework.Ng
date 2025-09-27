@@ -1,5 +1,7 @@
 import './platform.js';
 
+export type Platform = 'Windows' | 'WindowsPhone' | 'Android' | 'IOS' | 'unknown';
+
 declare const platform: {
     description: string;
     layout: string;
@@ -52,7 +54,7 @@ export class UserAgentUtil {
         return platform == 'IOS' || platform == 'Android' || platform == 'WindowsPhone' || navigator.userAgent.includes('Mobile');
     }
 
-    static getPlatform() {
+    static getPlatform(): Platform {
         const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
 
         if (/Windows/i.test(userAgent)) {

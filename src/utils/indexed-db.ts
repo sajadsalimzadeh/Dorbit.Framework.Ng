@@ -2,7 +2,7 @@ import { IDatabase, ITable, ITableChangeEvent, ITableConfig } from "./database";
 import { Subject } from "rxjs";
 
 export class IndexedDB implements IDatabase {
-    private db!: IDBDatabase;
+    private db?: IDBDatabase;
     private tables: { [name: string]: ITableConfig } = {};
 
     constructor(private options: { name: string, version: number }) {
@@ -10,8 +10,8 @@ export class IndexedDB implements IDatabase {
     }
 
     open() {
-        if (this.db) return Promise.resolve(true);
-        return new Promise<boolean>((resolve, reject) => {
+        if (this.db) return Promise.resolve(this.db);
+        return new Promise<IDBDatabase>((resolve, reject) => {
             const request = indexedDB.open(this.options.name, this.options.version);
             request.onupgradeneeded = () => {
                 this.db = request.result;
@@ -30,7 +30,19 @@ export class IndexedDB implements IDatabase {
             }
             request.onsuccess = (e: any) => {
                 this.db = e.target.result;
-                resolve(true);
+                if(!this.db) return reject('db not found');
+                this.db.addEventListener('close', () => {
+                    this.db = undefined;
+                });
+                this.db.addEventListener('error', (e) => {
+                    this.db?.close();
+                    this.db = undefined;
+                });
+                this.db.addEventListener('versionchange', (e) => {
+                    this.db?.close();
+                    this.db = undefined;
+                });
+                resolve(this.db);
             };
             request.onblocked = (e) => {
                 reject(e);
@@ -39,7 +51,7 @@ export class IndexedDB implements IDatabase {
     }
 
     async close() {
-        this.db.close();
+        this.db?.close();
     }
 
     create(name: string, config: ITableConfig) {
@@ -51,22 +63,22 @@ export class IndexedDB implements IDatabase {
     }
 
     public async get(tableName: string, id: any) {
-        await this.open();
-        const tx = this.db.transaction(tableName, 'readonly');
+        const db = await this.open();
+        const tx = db.transaction(tableName, 'readonly');
         const store = tx.objectStore(tableName);
         return this.toPromise(() => store.get(id));
     }
 
     public async getAll(tableName: string, query?: IDBValidKey | IDBKeyRange | null | undefined, count?: number | undefined) {
-        await this.open();
-        const tx = this.db.transaction(tableName, 'readonly');
+        const db = await this.open();
+        const tx = db.transaction(tableName, 'readonly');
         const store = tx.objectStore(tableName);
         return this.toPromise(() => store.getAll(query, count));
     }
 
     public async findAll(tableName: string, query: (key: any, value: any) => boolean, count: number) {
-        await this.open();
-        const tx = this.db.transaction(tableName, 'readonly');
+        const db = await this.open();
+        const tx = db.transaction(tableName, 'readonly');
         const store = tx.objectStore(tableName);
         return new Promise<any[]>((resolve, reject) => {
             const cursorRequest = store.openCursor();
@@ -90,8 +102,8 @@ export class IndexedDB implements IDatabase {
     }
 
     public async findAllKey(tableName: string, query: (key: any) => boolean, count: number) {
-        await this.open();
-        const tx = this.db.transaction(tableName, 'readonly');
+        const db = await this.open();
+        const tx = db.transaction(tableName, 'readonly');
         const store = tx.objectStore(tableName);
         return new Promise<any[]>((resolve, reject) => {
             const cursorRequest = store.openKeyCursor();
@@ -115,17 +127,15 @@ export class IndexedDB implements IDatabase {
     }
 
     public async add(tableName: string, value: any) {
-        await this.open();
-        const tx = this.db.transaction(tableName, 'readwrite');
+        const db = await this.open();
+        const tx = db.transaction(tableName, 'readwrite');
         const store = tx.objectStore(tableName);
         return this.toPromise(() => store.add(value), value);
     }
 
     public async addAll(tableName: string, values: any[]) {
-        if (!this.db) //elham
-            throw new Error("Database is not initialized. Call open() first.");
-        await this.open();
-        const tx = this.db.transaction(tableName, 'readwrite');
+        const db = await this.open();
+        const tx = db.transaction(tableName, 'readwrite');
         const store = tx.objectStore(tableName);
         for (const value of values) {
             await this.toPromise(() => store.add(value), values);
@@ -134,15 +144,15 @@ export class IndexedDB implements IDatabase {
     }
 
     public async put(tableName: string, value: any) {
-        await this.open();
-        const tx = this.db.transaction(tableName, 'readwrite');
+        const db = await this.open();
+        const tx = db.transaction(tableName, 'readwrite');
         const store = tx.objectStore(tableName);
         return this.toPromise(() => store.put(value), value);
     }
 
     public async putAll(tableName: string, values: any[]) {
-        await this.open();
-        const tx = this.db.transaction(tableName, 'readwrite');
+        const db = await this.open();
+        const tx = db.transaction(tableName, 'readwrite');
         const store = tx.objectStore(tableName);
         const promises = [] as Promise<void>[];
         for (const value of values) {
@@ -153,15 +163,15 @@ export class IndexedDB implements IDatabase {
     }
 
     public async delete(tableName: string, id: any) {
-        await this.open();
-        const tx = this.db.transaction(tableName, 'readwrite');
+        const db = await this.open();
+        const tx = db.transaction(tableName, 'readwrite');
         const store = tx.objectStore(tableName);
         return this.toPromise(() => store.delete(id), id);
     }
 
     public async deleteAll(tableName: string, keys?: any[]) {
-        await this.open();
-        const tx = this.db.transaction(tableName, 'readwrite');
+        const db = await this.open();
+        const tx = db.transaction(tableName, 'readwrite');
         const store = tx.objectStore(tableName);
         keys ??= await this.toPromise(() => store.getAllKeys()) ?? [];
 

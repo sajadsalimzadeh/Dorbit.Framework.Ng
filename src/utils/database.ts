@@ -7,7 +7,7 @@ export interface ITableConfig {
 }
 
 export interface IDatabase {
-    open(): Promise<boolean>;
+    open(): Promise<IDBDatabase>;
 
     close(): Promise<void>;
 
