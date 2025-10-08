@@ -8,7 +8,7 @@ declare global {
 
         toggle(value: any): T[];
 
-        groupBy(func: (x: T) => string): { key: string, value: T[] }[];
+        groupBy(func: (x: T) => any): { key: string, value: T[] }[];
 
         remove(x: T): boolean;
 

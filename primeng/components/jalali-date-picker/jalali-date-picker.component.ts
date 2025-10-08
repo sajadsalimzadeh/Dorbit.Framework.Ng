@@ -73,6 +73,7 @@ export class JalaliDatePickerComponent extends PrimengControlComponent implement
     @Input() min?: string | null;
     @Input() max?: string | null;
     @Input() showTimePicker: boolean = false;
+    @Input() inputStyleClass: string = '';
 
     @Output() onSelect = new EventEmitter();
 
@@ -106,11 +107,11 @@ export class JalaliDatePickerComponent extends PrimengControlComponent implement
     override ngOnInit(): void {
 
         if (this.showTimePicker) {
-            this.displayFormat = 'jYYYY/jMM/jDD HH:mm:ss';
-            this.valueFormat = 'YYYY-MM-DDTHH:mm:ssZ';
+            this.displayFormat ??= 'jYYYY/jMM/jDD HH:mm:ss';
+            this.valueFormat ??= 'YYYY-MM-DDTHH:mm:ssZ';
         } else {
-            this.displayFormat = 'jYYYY/jMM/jDD';
-            this.valueFormat = 'YYYY-MM-DD';
+            this.displayFormat ??= 'jYYYY/jMM/jDD';
+            this.valueFormat ??= 'YYYY-MM-DD';
         }
 
         this.subscription.add(this.formControl.valueChanges.subscribe(e => {

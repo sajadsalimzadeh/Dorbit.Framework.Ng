@@ -4,7 +4,7 @@
         @if (showClear) {
         <p-inputicon styleClass="fal fa-times" (click)="formControl.setValue(null)" />
         }
-        <input class="input-control" #inputEl (focus)="op.toggle($event, inputEl)" (keyup)="updateValueFromDisplay()"
+        <input class="input-control" [ngClass]="inputStyleClass" #inputEl (focus)="op.toggle($event, inputEl)" (keyup)="updateValueFromDisplay()"
             [value]="displayValue" [disabled]="formControl.disabled" [placeholder]="placeholder" dir="ltr" pInputText
             [pSize]="size!" type="text" />
         <p-inputicon styleClass="fal fa-calendar" />
@@ -16,7 +16,7 @@
     @if (showClear) {
     <p-inputicon styleClass="fal fa-times" (click)="formControl.setValue(null)" />
     }
-    <input class="input-control" #inputEl (focus)="op.toggle($event, inputEl)" (keyup)="updateValueFromDisplay()"
+    <input class="input-control" [ngClass]="inputStyleClass" #inputEl (focus)="op.toggle($event, inputEl)" (keyup)="updateValueFromDisplay()"
         [value]="displayValue" [disabled]="formControl.disabled" [placeholder]="placeholder" dir="ltr" pInputText
         [pSize]="size!" type="text" />
     <p-inputicon styleClass="fal fa-calendar" />
