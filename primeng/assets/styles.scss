@@ -109,12 +109,17 @@ p-ifta-label {
     p-password,
     p-input-text,
     p-textarea,
+    p-date-picker,
     p-input-number,
     p-autocomplete,
     [pinputtext],
     textarea {
         width: 100%;
         display: flex;
+    }
+
+    .p-datepicker {
+        flex: 1;
     }
 
     .p-password {
