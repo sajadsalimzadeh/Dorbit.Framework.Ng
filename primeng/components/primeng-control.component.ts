@@ -1,14 +1,15 @@
-import { Directive, ElementRef, Injector, Input, OnDestroy, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Directive, ElementRef, Injector, OnDestroy, OnInit } from '@angular/core';
+import { ControlValueAccessor } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 @Directive()
-export class PrimengControlComponent implements OnInit, OnDestroy {
+export class PrimengControlComponent implements OnInit, OnDestroy, ControlValueAccessor {
     _services: any = {};
-    _onChange?: (value: any) => void;
-    _onTouched?: () => void;
 
-    @Input() formControl = new FormControl<any>(null);
+    value?: any;
+    onChange = (value: any) => {};
+    onTouched = () => {};
+    isDisabled: boolean = false;
 
     subscription = new Subscription();
 
@@ -19,12 +20,7 @@ export class PrimengControlComponent implements OnInit, OnDestroy {
     constructor(protected injector: Injector) {
     }
 
-    ngOnInit(): void {
-        this.subscription.add(this.formControl.valueChanges.subscribe(value => {
-            if (this._onChange) {
-                this._onChange(value);
-            }
-        }));
+    ngOnInit() {
     }
 
     ngOnDestroy(): void {
@@ -32,32 +28,26 @@ export class PrimengControlComponent implements OnInit, OnDestroy {
     }
 
     // Write a new value to the element
-    writeValue(value: string): void {
-        if (this.formControl.value != value) {
-            this.formControl.setValue(value)
-        }
+    writeValue(value: any): void {
+        value = value ?? '';
     }
 
     // Save the function that should be called when the value changes
     registerOnChange(fn: any): void {
-        this._onChange = fn;
+        this.onChange = fn;
     }
 
     // Save the function that should be called when the control is touched
     registerOnTouched(fn: any): void {
-        this._onTouched = fn;
+        this.onTouched = fn;
     }
 
     // Enable or disable the component
     setDisabledState(isDisabled: boolean): void {
         if (isDisabled) {
-            if (!this.formControl.disabled) {
-                this.formControl.disable();
-            }
+            this.isDisabled = true;
         } else {
-            if (!this.formControl.enabled) {
-                this.formControl.enable();
-            }
+            this.isDisabled = false;
         }
     }
 }

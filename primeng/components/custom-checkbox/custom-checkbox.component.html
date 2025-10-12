@@ -1,4 +1,4 @@
-<p-check-box [inputId]="inputId" [formControl]="formControl" [binary]="binary"></p-check-box>
+<p-check-box [inputId]="inputId" [binary]="binary" [disabled]="isDisabled" [(ngModel)]="value" (ngModelChange)="onChange($event)"></p-check-box>
 <label [for]="inputId">
     <ng-content></ng-content>
 </label>

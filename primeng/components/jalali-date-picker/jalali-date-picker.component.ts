@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, HostListener, Injector, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import moment, { Moment } from 'jalali-moment';
 import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
@@ -104,7 +104,8 @@ export class JalaliDatePickerComponent extends PrimengControlComponent implement
         this.isInside = false;
     }
 
-    override ngOnInit(): void {
+    override ngOnInit() {
+        super.ngOnInit();
 
         if (this.showTimePicker) {
             this.displayFormat ??= 'jYYYY/jMM/jDD HH:mm:ss';
@@ -113,10 +114,6 @@ export class JalaliDatePickerComponent extends PrimengControlComponent implement
             this.displayFormat ??= 'jYYYY/jMM/jDD';
             this.valueFormat ??= 'YYYY-MM-DD';
         }
-
-        this.subscription.add(this.formControl.valueChanges.subscribe(e => {
-            this.updateDisplayFromValue();
-        }));
 
         this.updateDisplayFromValue();
     }
@@ -129,9 +126,14 @@ export class JalaliDatePickerComponent extends PrimengControlComponent implement
 
     }
 
+    override writeValue(value: any): void {
+        super.writeValue(value);
+        this.updateDisplayFromValue();
+    }
+
     updateDisplayFromValue() {
         try {
-            this.date = moment.from(this.formControl.getRawValue(), 'en', this.valueFormat);
+            this.date = moment.from(this.value, 'en', this.valueFormat);
             if (!(this.date as any)._isValid) {
                 this.date = undefined;
             }
@@ -308,7 +310,7 @@ export class JalaliDatePickerComponent extends PrimengControlComponent implement
     select() {
         this.date ??= moment();
         this.displayValue = this.date.format(this.displayFormat);
-        if (this._onChange) this._onChange(this.date.format(this.valueFormat));
+        if (this.onChange) this.onChange(this.date.format(this.valueFormat));
         this.onSelect.emit();
         if (!this.showTimePicker) {
             this.popover.hide();

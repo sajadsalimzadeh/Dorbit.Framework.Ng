@@ -2,10 +2,10 @@
 <p-ifta-label>
     <p-icon-field>
         @if (showClear) {
-        <p-inputicon styleClass="fal fa-times" (click)="formControl.setValue(null)" />
+        <p-inputicon styleClass="fal fa-times" (click)="onChange(null)" />
         }
         <input class="input-control" [ngClass]="inputStyleClass" #inputEl (focus)="op.toggle($event, inputEl)" (keyup)="updateValueFromDisplay()"
-            [value]="displayValue" [disabled]="formControl.disabled" [placeholder]="placeholder" dir="ltr" pInputText
+            [value]="displayValue" [disabled]="isDisabled" [placeholder]="placeholder" dir="ltr" pInputText
             [pSize]="size!" type="text" />
         <p-inputicon styleClass="fal fa-calendar" />
     </p-icon-field>
@@ -14,10 +14,10 @@
 } @else {
 <p-icon-field>
     @if (showClear) {
-    <p-inputicon styleClass="fal fa-times" (click)="formControl.setValue(null)" />
+    <p-inputicon styleClass="fal fa-times" (click)="onChange(null)" />
     }
     <input class="input-control" [ngClass]="inputStyleClass" #inputEl (focus)="op.toggle($event, inputEl)" (keyup)="updateValueFromDisplay()"
-        [value]="displayValue" [disabled]="formControl.disabled" [placeholder]="placeholder" dir="ltr" pInputText
+        [value]="displayValue" [disabled]="isDisabled" [placeholder]="placeholder" dir="ltr" pInputText
         [pSize]="size!" type="text" />
     <p-inputicon styleClass="fal fa-calendar" />
 </p-icon-field>
