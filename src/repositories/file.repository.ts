@@ -18,7 +18,7 @@ export class FileRepository extends BaseApiRepository {
         formData.append('file', data, name);
         if (access) formData.append('access', access);
         return new Observable<QueryResult<string>>(observer => {
-            this.http.post<QueryResult<string>>('', formData, { reportProgress: true, observe: 'events' }).subscribe({
+            this.http.post<QueryResult<string>>('', formData, { reportProgress: true, headers: { 'ngsw-bypass': 'true' }, observe: 'events' }).subscribe({
                 next: (event) => {
                     if (event.type === HttpEventType.UploadProgress) {
                         progress?.(event.loaded / event.total!);
@@ -58,12 +58,12 @@ export class FileRepository extends BaseApiRepository {
     }
 
     getFileContent(filename: string) {
-        return this.http.get(`${filename}/Download`, { responseType: 'blob' });
+        return this.http.get(`${filename}/Download`, { headers: { 'ngsw-bypass': 'true' }, responseType: 'blob' });
     }
 
     download(filename: string, downloadFilename?: string) {
         return new Observable<boolean>(observer => {
-            this.http.get(`${filename}/Download`, { responseType: 'blob' }).subscribe({
+            this.http.get(`${filename}/Download`, { responseType: 'blob', headers: { 'ngsw-bypass': 'true' } }).subscribe({
                 next: (res) => {
                     saveAs(res, downloadFilename ?? filename);
                     observer.next(true);
