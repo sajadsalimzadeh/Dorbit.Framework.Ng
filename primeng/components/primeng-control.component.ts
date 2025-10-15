@@ -29,7 +29,7 @@ export class PrimengControlComponent implements OnInit, OnDestroy, ControlValueA
 
     // Write a new value to the element
     writeValue(value: any): void {
-        value = value ?? '';
+        this.value = value ?? '';
     }
 
     // Save the function that should be called when the value changes
