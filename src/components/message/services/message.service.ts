@@ -19,7 +19,6 @@ export class MessageService {
 
     show(message: Message) {
         message = {...this.options?.default, ...message};
-        console.log(message.removable);
         
         message.removable ??= true;
         if (message.color?.includes('primary')) message = {...this.options?.primary, ...message};

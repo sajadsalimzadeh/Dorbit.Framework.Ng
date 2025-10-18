@@ -83,7 +83,7 @@ Array.prototype.last = function (func?: (x: any) => boolean) {
 }
 
 Array.prototype.any = function (func: (x: any) => boolean) {
-    return this.findIndex(func) > -1;
+    return this.some(func);
 }
 
 Array.prototype.sum = function (func: (x: any) => number) {
