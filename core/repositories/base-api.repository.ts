@@ -1,12 +1,14 @@
 import {HttpClient, HttpErrorResponse, HttpEvent, HttpHandler, HttpRequest, HttpResponse} from "@angular/common/http";
 import {TranslateService} from "@ngx-translate/core";
-import {Injector} from "@angular/core";
+import {InjectionToken, Injector} from "@angular/core";
 import {catchError, finalize, Observable, tap, throwError} from "rxjs";
 import {Colors} from "../types";
 import {MessageService} from "../components/message/services/message.service";
 import {Message} from "../components/message/models";
 
 const messageTimes: { [key: string]: number } = {};
+
+export const ACCESS_TOKEN = new InjectionToken<string>('ACCESS_TOKEN');
 
 export abstract class BaseApiRepository {
 
