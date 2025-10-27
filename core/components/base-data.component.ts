@@ -26,8 +26,8 @@ export abstract class BaseDataComponent extends BaseDataViewComponent {
                 }
             });
         }, undefined, {
-            title: title ?? 'حذف',
-            body: body ?? 'آیا از حذف مورد انتخاب شده اطمینان دارید؟'
+            title: title ?? this.t('delete'),
+            body: body ?? this.t('delete-confirm')
         })
     }
 

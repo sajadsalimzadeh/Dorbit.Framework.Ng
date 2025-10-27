@@ -123,15 +123,12 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     }
 
     exportToExcel() {
-        // data آرایه آبجکت‌هاست
         const worksheet = XLSX.utils.json_to_sheet(this.value);
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
 
-        // تبدیل ورک‌بوک به باینری
         const wbout = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
 
-        // ساخت Blob و دانلود فایل
         const blob = new Blob([wbout], { type: 'application/octet-stream' });
         saveAs(blob, this.router.url.replaceAll('/', '-') + `-${Date.now()}.xlsx`);
     }
