@@ -31,14 +31,36 @@ export class MessageInterceptor implements HttpInterceptor {
             error: (err) => {
                 if (err instanceof HttpErrorResponse) {
 
-                    if(err.status == 403) {
-                        this.showMessage('message.UnAuthorize');
-                    }
-                    else if (req.method != 'GET' && err.error?.message) {
+                    if (err.error?.message) {
                         const message = err.error.message;
                         this.showMessage('message.' + message, err.error.data);
-                    } else {
-                        this.showMessage('message.operation-error');
+                    }
+                    else if(err.status == 400) {
+                        this.showMessage('message.http.BadRequest');
+                    } 
+                    else if(err.status == 401) {
+                        this.showMessage('message.http.UnAuthenticated');
+                    }
+                    else if(err.status == 403) {
+                        this.showMessage('message.http.UnAuthorize');
+                    }
+                    else if(err.status == 404) {
+                        this.showMessage('message.http.NotFound');
+                    }
+                    else if(err.status == 500) {
+                        this.showMessage('message.http.InternalServerError');
+                    }
+                    else if(err.status == 502) {
+                        this.showMessage('message.http.BadGateway');
+                    }
+                    else if(err.status == 503) {
+                        this.showMessage('message.http.ServiceUnavailable');
+                    }
+                    else if(err.status == 504) {
+                        this.showMessage('message.http.GatewayTimeout');
+                    }
+                    else {
+                        this.showMessage('message.http.OperationError');
                     }
                 }
             }
