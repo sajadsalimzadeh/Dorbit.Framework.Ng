@@ -10,6 +10,8 @@ export class InputOtpDirective implements AfterViewInit {
     constructor(private el: ElementRef) {}
 
     ngAfterViewInit(): void {
-        this.el.nativeElement.querySelector('input').setAttribute("inputmode", this.inputmode);
+        this.el.nativeElement.querySelectorAll('input').forEach((input: HTMLInputElement) => {
+            input.setAttribute("inputmode", this.inputmode);
+        });
     }
 }
