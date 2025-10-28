@@ -67,6 +67,7 @@ import { CustomTableComponent } from "./components/custom-table/custom-table.com
 import { JalaliDatePickerComponent } from './components/jalali-date-picker/jalali-date-picker.component';
 import { CustomCheckboxComponent } from './components/custom-checkbox/custom-checkbox.component';
 import { AutoFocusDirective } from './components/auto-focus.directive';
+import { InputOtpDirective } from './components/input-otp.directive';
 
 const COMPONENTS = [
     CustomTableComponent,
@@ -74,6 +75,15 @@ const COMPONENTS = [
     CustomCheckboxComponent,
     AutoFocusDirective
 ];
+
+const MODULES = [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TranslateModule,
+    JalaliDatePickerComponent,
+    InputOtpDirective,
+]
 
 const PRIMENG_MODULES = [
     AutoCompleteModule,
@@ -135,14 +145,6 @@ const PRIMENG_MODULES = [
     TagModule,
     StepperModule,
 ];
-
-const MODULES = [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    TranslateModule,
-    JalaliDatePickerComponent
-]
 
 @NgModule({
     imports: [
