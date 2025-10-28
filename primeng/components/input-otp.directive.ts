@@ -10,6 +10,7 @@ export class InputOtpDirective implements AfterViewInit {
     constructor(private el: ElementRef) {}
 
     ngAfterViewInit(): void {
+        this.el.nativeElement.querySelector('input').setAttribute("autocomplete", 'one-time-code');
         this.el.nativeElement.querySelectorAll('input').forEach((input: HTMLInputElement) => {
             input.setAttribute("inputmode", this.inputmode);
         });
