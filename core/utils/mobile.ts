@@ -12,7 +12,7 @@ export class MobileUtil {
         const ua = window.navigator.userAgent.toLowerCase();
         if (ua.includes('iphone') || ua.includes('android')) {
             const ch = (ua.includes('iphone') ? '&' : '?');
-            location.href = `sms://${args.join('/')}${body ? '/' + ch + 'body=' + encodeURIComponent(body) : ''}`;
+            window.open(`sms://${args.join('/')}${body ? '/' + ch + 'body=' + encodeURIComponent(body) : ''}`, '_blank');
             return true;
         }
         return false;
