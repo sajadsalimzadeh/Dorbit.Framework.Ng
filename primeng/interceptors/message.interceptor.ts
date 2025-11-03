@@ -1,5 +1,5 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
-import { Inject, Injectable, Injector } from "@angular/core";
+import { Inject, Injectable, Injector, isDevMode } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { MessageService } from "primeng/api";
 import { Observable, tap } from "rxjs";
@@ -14,15 +14,19 @@ export class MessageInterceptor implements HttpInterceptor {
 
     showMessage(message: string, data?: any) {
         const now = Date.now();
-        if(now - this.messageHistory[message] < 1000) return;
+        if (now - this.messageHistory[message] < 1000) return;
         this.messageHistory[message] = now;
         const translateService = this.injector.get(TranslateService);
         const messageService = this.injector.get(MessageService);
-        
-        messageService.add({
-            severity: 'error',
-            detail: translateService.instant(message, data),
-        })
+        const tralatedMessage = translateService.instant(message, data);
+
+        if (tralatedMessage != message || !isDevMode()) {
+
+            messageService.add({
+                severity: 'error',
+                detail: tralatedMessage,
+            })
+        }
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -35,28 +39,28 @@ export class MessageInterceptor implements HttpInterceptor {
                         const message = err.error.message;
                         this.showMessage('message.' + message, err.error.data);
                     }
-                    else if(err.status == 400) {
+                    else if (err.status == 400) {
                         this.showMessage('message.http.BadRequest');
-                    } 
-                    else if(err.status == 401) {
+                    }
+                    else if (err.status == 401) {
                         this.showMessage('message.http.UnAuthenticated');
                     }
-                    else if(err.status == 403) {
+                    else if (err.status == 403) {
                         this.showMessage('message.http.UnAuthorize');
                     }
-                    else if(err.status == 404) {
+                    else if (err.status == 404) {
                         this.showMessage('message.http.NotFound');
                     }
-                    else if(err.status == 500) {
+                    else if (err.status == 500) {
                         this.showMessage('message.http.InternalServerError');
                     }
-                    else if(err.status == 502) {
+                    else if (err.status == 502) {
                         this.showMessage('message.http.BadGateway');
                     }
-                    else if(err.status == 503) {
+                    else if (err.status == 503) {
                         this.showMessage('message.http.ServiceUnavailable');
                     }
-                    else if(err.status == 504) {
+                    else if (err.status == 504) {
                         this.showMessage('message.http.GatewayTimeout');
                     }
                     else {
