@@ -93,6 +93,8 @@ export class ProgressCircleComponent extends AbstractComponent {
         let text = document.createElementNS("http://www.w3.org/2000/svg", "text");
         text.setAttribute("x", '50%');
         text.setAttribute("y", '50%');
+        text.setAttribute("dominant-baseline", 'middle');
+        text.setAttribute("text-anchor", 'middle');
         text.setAttribute("font-size", fontSize + '');
         text.innerHTML = NumberUtil.format(this.value, 2);
         this.svg.appendChild(text);
