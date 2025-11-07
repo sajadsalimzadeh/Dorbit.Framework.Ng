@@ -13,7 +13,7 @@ const persianAlphabet = [
 
 export class StringUtil {
 
-    static generate(len: number, options: { includes: Includes[] } = {includes: ['lower', 'upper', 'number']}) {
+    static random(len: number, options: { includes: Includes[] } = {includes: ['lower', 'upper', 'number']}) {
         let str = '';
         if (options.includes.includes('lower')) str += lowerLetters;
         if (options.includes.includes('upper')) str += upperLetters;
