@@ -13,7 +13,7 @@ export class FileRepository extends BaseApiRepository {
         super(injector, injector.get(BASE_URL_FRAMEWORK), 'Files');
     }
 
-    upload(data: File | Blob, name: string, access?: string, progress?: (progress: number) => void): Observable<QueryResult<string>> {
+    upload(data: File | Blob, name: string, access?: string | null, progress?: (progress: number) => void): Observable<QueryResult<string>> {
         const formData = new FormData();
         formData.append('file', data, name);
         if (access) formData.append('access', access);
