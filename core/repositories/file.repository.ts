@@ -58,7 +58,7 @@ export class FileRepository extends BaseApiRepository {
     }
 
     getFileContent(filename: string) {
-        return this.http.get(`${filename}/Download`, { headers: new HttpHeaders({ 'ngsw-bypass': 'true' }), responseType: 'blob' });
+        return this.http.get(`${filename}/Download`, { responseType: 'blob', headers: new HttpHeaders({ 'ngsw-bypass': 'true' }) });
     }
 
     download(filename: string, downloadFilename?: string) {
