@@ -20,7 +20,7 @@ export class MessageInterceptor implements HttpInterceptor {
         const messageService = this.injector.get(MessageService);
         const tralatedMessage = translateService.instant(message, data);
 
-        if (tralatedMessage != message || !isDevMode()) {
+        if (tralatedMessage != message || isDevMode()) {
 
             messageService.add({
                 severity: 'error',
