@@ -5,6 +5,15 @@
     --datatable-body-cell-padding: 0.8rem;
     --datatable-header-cell-padding: 0.7rem;
 
+    .card-container {
+        display: flex;
+        padding: 1.2rem 1rem .1rem;
+        flex-direction: column;
+        background: var(--surface-0);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        border-radius: 6px;
+    }
+
     .filter-row {
         --datatable-header-cell-padding: 0.05rem;
 
@@ -47,7 +56,7 @@
     }
 
     ::ng-deep {
-        
+
         p-card p-table {
             .p-paginator {
                 padding-top: 1rem !important;
@@ -120,7 +129,7 @@ p-table :host-context([dir=rtl]) {
 }
 
 .no-data {
-    height: 100%; 
+    height: 100%;
     padding: 3rem 0;
     text-align: center;
     color: var(--surface-400);

@@ -1,13 +1,13 @@
 <div *ngIf="breadcrumb" class="mb-2">
     <p-breadcrumb [home]="{label: ''}" [model]="breadcrumb" class="max-w-full" />
 </div>
-<p-card *ngIf="showInCard; else tableTpl">
-    <ng-container *ngTemplateOutlet="tableTpl"></ng-container>
-</p-card>
-<ng-template #tableTpl>
+<div [class.card-container]="showInCard">
     <div class="flex flex gap-2 align-items-center pb-2">
+        @if(onReload.observed) {
+        <p-button (onClick)="onReload.emit()" [label]="'custom-table.reload' | translate" icon="fa fa-sync" iconPos="right" severity="primary" [outlined]="true" />
+        }
         @if (showAddButton) {
-        <p-button (onClick)="onAdd.emit()" *ngIf="onAdd.observed" icon="fa fa-plus" iconPos="right" severity="success"
+        <p-button (onClick)="onAdd.emit()" *ngIf="onAdd.observed" icon="fa fa-plus" iconPos="right" severity="success" [outlined]="true"
             [label]="'custom-table.add' | translate: {row: (name ?? ('custom-table.row' | translate))}" />
         }
         <ng-container *ngIf="captionTpl">
@@ -25,9 +25,9 @@
         }
 
     </div>
-    <p-table #dt [showGridlines]="true" [showCurrentPageReport]="true" [stripedRows]="true" [rowHover]="true" [scrollable]="true" scrollHeight="flex" [stateStorage]="stateStorage" [stateKey]="uniqueStateKey"
-        [currentPageReportTemplate]="'custom-table.current-page-report' | translate" [value]="value" [paginator]="true" [rowsPerPageOptions]="rowsPerPageOptions" [rows]="rows"
-        [loading]="loading" [lazy]="lazyLoading" (onFilter)="filter($event)">
+    <p-table #dt [showGridlines]="true" [showCurrentPageReport]="true" [stripedRows]="true" [rowHover]="true" [scrollable]="true" scrollHeight="flex" [stateStorage]="stateStorage"
+        [stateKey]="uniqueStateKey" [currentPageReportTemplate]="'custom-table.current-page-report' | translate" [value]="value" [paginator]="true"
+        [rowsPerPageOptions]="rowsPerPageOptions" [rows]="rows" [loading]="loading" [lazy]="lazyLoading" (onFilter)="filter($event)">
         <ng-template pTemplate="header">
             <ng-container *ngIf="headerTpl">
                 <ng-container *ngTemplateOutlet="headerTpl"></ng-container>
@@ -56,7 +56,8 @@
                 <th class="text-center"></th>
                 <th *ngFor="let column of selectedColumns">
                     @if (column.field) {
-                    <p-columnFilter #cf (input)="cf.applyFilter()" [field]="column.field" [placeholder]="'custom-table.search' | translate" matchMode="contains" type="text"></p-columnFilter>
+                    <p-columnFilter #cf (input)="cf.applyFilter()" [field]="column.field" [placeholder]="'custom-table.search' | translate" matchMode="contains"
+                        type="text"></p-columnFilter>
                     }
                 </th>
                 <th *ngIf="operationTpl || onEdit.observed || onDelete.observed"></th>
@@ -82,7 +83,7 @@
                     </td>
                     }
                 </ng-container>
-                <td *ngIf="operationTpl || onEdit.observed || onDelete.observed" class="operation-cell">
+                <td *ngIf="operationTpl || onEdit.observed || onDelete.observed || onOperationClick.observed" class="operation-cell">
                     <div class="flex flex flex-nowrap gap-2">
                         <ng-container *ngIf="operationTpl">
                             <ng-container *ngTemplateOutlet="operationTpl; context: {$implicit: item}"></ng-container>
@@ -95,12 +96,16 @@
                         <p-button (onClick)="showDeleteDialog(item)" *ngIf="onDelete.observed" [pTooltip]="'custom-table.delete' | translate" icon="fal fa-trash-can"
                             severity="danger" tooltipPosition="bottom" [size]="operationSize" />
                         }
+                        @if (onOperationClick.observed) {
+                        <p-button (onClick)="showOperationMenu(item, menu, $event)" *ngIf="onOperationClick.observed" [pTooltip]="'custom-table.operation' | translate"
+                            icon="fal fa-ellipsis-v" severity="secondary" tooltipPosition="bottom" [size]="operationSize" />
+                        }
                     </div>
                 </td>
             </tr>
             <tr *ngIf="last">
                 <td colspan="100" class="text-center" style="height: 100px;">
-                    
+
                 </td>
             </tr>
         </ng-template>
@@ -128,7 +133,8 @@
             </tr>
         </ng-template>
     </p-table>
-</ng-template>
+    <p-menu #menu [model]="operations" [popup]="true" appendTo="body" />
+</div>
 
 <p-custom-dialog [(visible)]="isDeleteDialogVisible" [header]="'custom-table.delete' | translate" size="xs">
     <ng-template>

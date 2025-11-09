@@ -5,6 +5,7 @@ import { PrimengComponent } from "../primeng.component";
 import { Table, TableFilterEvent } from "primeng/table";
 import { saveAs } from 'file-saver';
 import * as XLSX from 'xlsx';
+import { Menu } from "primeng/menu";
 
 @Component({
     standalone: false,
@@ -40,13 +41,16 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Input() stateKeyPrefix: string = this.router.url;
     @Input() @HostBinding('class') size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' = 'md';
     @Input() operationSize?: 'small' | 'large';
-
+    @Input() operations: MenuItem[] = [];
+    
     @Output() onAdd = new EventEmitter<any>();
     @Output() onEdit = new EventEmitter<any>();
     @Output() onDelete = new EventEmitter<any>();
+    @Output() onReload = new EventEmitter<void>();
     @Output() isSaving = new EventEmitter<any>();
     @Output() onFilter = new EventEmitter<TableFilterEvent>();
     @Output() onRowMouseOver = new EventEmitter<any>();
+    @Output() onOperationClick = new EventEmitter<any>();
 
     @ContentChild('caption') captionTpl?: TemplateRef<any>;
     @ContentChild('header') headerTpl?: TemplateRef<any>;
@@ -144,5 +148,10 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
 
     filter(event: TableFilterEvent) {
         this.onFilter.emit(event);
+    }
+
+    showOperationMenu(item: any, menu: Menu, event: Event) {
+        this.onOperationClick.emit(item);
+        menu.toggle(event);
     }
 }
