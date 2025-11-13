@@ -122,36 +122,36 @@ export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {
         this.dialogs[name] = false;
     }
 
-    info(message: string = 'message.info') {
+    info(message: string = 'message.info', params: any = {}) {
         this.messageService.add({
             severity: 'info',
-            detail: this.t(message)
+            detail: this.t(message, params)
         });
     }
 
-    success(message: string = 'message.success') {
+    success(message: string = 'message.success', params: any = {}) {
         this.messageService.add({
             severity: 'success',
-            detail: this.t(message)
+            detail: this.t(message, params)
         });
     }
 
-    warn(message: string = 'message.warn') {
+    warn(message: string = 'message.warn', params: any = {}) {
         this.messageService.add({
             severity: 'warn',
-            detail: this.t(message)
+            detail: this.t(message, params)
         });
     }
 
-    error(message: string = 'message.error') {
+    error(message: string = 'message.error', params: any = {}) {
         this.messageService.add({
             severity: 'error',
-            detail: this.t(message)
+            detail: this.t(message, params)
         });
     }
 
-    t(text: string): any {
-        return this.translateService.instant(text);
+    t(text: string, params: any = {}): any {
+        return this.translateService.instant(text, params);
     }
 
     getFileUrl(name: string, download: boolean = false): string {
