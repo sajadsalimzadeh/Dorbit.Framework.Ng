@@ -13,7 +13,9 @@ export class AutoFocusDirective implements OnChanges {
         if (changes['pAutoFocusWithTimout']) {
             if (this.pAutoFocusWithTimout) {
                 setTimeout(() => {
-                    this.el.nativeElement.focus();
+                    const isInput = (this.el.nativeElement.tagName === 'INPUT' || this.el.nativeElement.tagName === 'TEXTAREA');
+                    const input = isInput ? this.el.nativeElement : this.el.nativeElement.querySelector('input, textarea');
+                    if (input) input.focus();
                 }, (typeof this.pAutoFocusWithTimout === 'number' ? this.pAutoFocusWithTimout : 500));
             }
         }
