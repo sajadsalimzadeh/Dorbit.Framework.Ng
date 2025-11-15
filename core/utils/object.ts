@@ -46,4 +46,14 @@ export class ObjectUtil {
         }
         return result;
     }
+
+    static toCammelCase(obj: any) {
+        const result: any = {};
+        for (const key in obj) {
+            const value = obj[key];
+            const cammelKey = key.charAt(0).toLowerCase() + key.slice(1);
+            result[cammelKey] = value;
+        }
+        return result;
+    }
 }
