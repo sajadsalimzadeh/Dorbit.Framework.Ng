@@ -3,27 +3,31 @@
 </div>
 <div [class.card-container]="showInCard">
     <div class="flex flex gap-2 align-items-center pb-2">
-        @if(onReload.observed) {
-        <p-button (onClick)="onReload.emit()" [label]="'custom-table.reload' | translate" icon="fa fa-sync" iconPos="right" severity="primary" [outlined]="true" />
-        }
-        @if (showAddButton) {
-        <p-button (onClick)="onAdd.emit()" *ngIf="onAdd.observed" icon="fa fa-plus" iconPos="right" severity="success" [outlined]="true"
-            [label]="'custom-table.add' | translate: {row: (name ?? ('custom-table.row' | translate))}" />
-        }
+        <ng-container *ngIf="onReload.observed">
+            <p-button (onClick)="onReload.emit()" [label]="'custom-table.reload' | translate" icon="fa fa-sync" iconPos="right" severity="primary" [outlined]="true" />
+        </ng-container>
+        <ng-container *ngIf="onAdd.observed && showAddButton">
+            <p-button (onClick)="onAdd.emit()" icon="fa fa-plus" iconPos="right" severity="success" [outlined]="true"
+                [label]="'custom-table.add' | translate: {row: (name ?? ('custom-table.row' | translate))}" />
+        </ng-container>
         <ng-container *ngIf="captionTpl">
             <ng-container *ngTemplateOutlet="captionTpl"></ng-container>
         </ng-container>
         <div class="flex-1"></div>
-        <p-multi-select class="columns-selection" display="chip" (onChange)="saveSelectedColumnState()" *ngIf="showColumnSelector" [(ngModel)]="selectedColumns" [options]="columns"
-            display="chip" optionLabel="header" [selectedItemsLabel]="'custom-table.selected-columns' | translate" [maxSelectedLabels]="0" appendTo="body"></p-multi-select>
-        @if (showExportButton) {
-        <p-button (onClick)="exportToExcel()" [label]="'custom-table.export' | translate" icon="far fa-download" iconPos="right" severity="success" [outlined]="true" />
-        }
-        @if (showResetButton) {
-        <p-button (onClick)="resetState()" [label]="'custom-table.reset-state' | translate" icon="far fa-filter-slash" iconPos="right"
-            [severity]="(isStateChaged ? 'danger' : 'secondary')" [outlined]="!isStateChaged" />
-        }
-
+        <ng-container *ngIf="showColumnSelector">
+            <p-multi-select class="columns-selection" display="chip" (onChange)="saveSelectedColumnState()" [(ngModel)]="selectedColumns" [options]="columns" display="chip"
+                optionLabel="header" [selectedItemsLabel]="'custom-table.selected-columns' | translate" [maxSelectedLabels]="0" appendTo="body"></p-multi-select>
+        </ng-container>
+        <ng-container *ngIf="onGroupOperationClick.observed">
+            <p-button severity="secondary" iconPos="right" [label]="'custom-table.group-operation' | translate" (click)="showGroupOperation(groupOperationMenu, $event)"></p-button>
+        </ng-container>
+        <ng-container *ngIf="showExportButton">
+            <p-button (onClick)="exportToExcel()" [label]="'custom-table.export' | translate" icon="far fa-download" iconPos="right" severity="success" [outlined]="true" />
+        </ng-container>
+        <ng-container *ngIf="showResetButton">
+            <p-button (onClick)="resetState()" [label]="'custom-table.reset-state' | translate" icon="far fa-filter-slash" iconPos="right"
+                [severity]="(isStateChaged ? 'danger' : 'secondary')" [outlined]="!isStateChaged" />
+        </ng-container>
     </div>
     <p-table #dt [showGridlines]="true" [showCurrentPageReport]="true" [stripedRows]="true" [rowHover]="true" [scrollable]="true" scrollHeight="flex" [stateStorage]="stateStorage"
         [stateKey]="uniqueStateKey" [currentPageReportTemplate]="'custom-table.current-page-report' | translate" [value]="value" [paginator]="true"
@@ -33,8 +37,9 @@
                 <ng-container *ngTemplateOutlet="headerTpl"></ng-container>
             </ng-container>
             <tr [ngClass]="headerClass" class="header-row">
-                <th *ngIf="expandedrowTpl"></th>
-                <th [style.width]="'50px'" class="text-center">#</th>
+                <th *ngIf="selectable" rowspan="2" [style.width]="'30px'" class="text-center"></th>
+                <th *ngIf="expandedrowTpl" rowspan="2" [style.width]="'30px'" class="text-center"></th>
+                <th *ngIf="showRowNumber" rowspan="2" [style.width]="'40px'" class="text-center">#</th>
                 <th *ngFor="let column of selectedColumns" [pSortableColumn]="column.field" [ngClass]="column.headerClass" [style.width]="column.width">
                     <div *ngIf="column.field" class="flex flex align-items-center">
                         <span class="flex-1">{{ column.header }}</span>
@@ -52,8 +57,6 @@
                 <th *ngIf="operationTpl || onEdit.observed || onDelete.observed" width="10"></th>
             </tr>
             <tr *ngIf="filterType == 'inline' && isFilterable" class="filter-row">
-                <th *ngIf="expandedrowTpl"></th>
-                <th class="text-center"></th>
                 <th *ngFor="let column of selectedColumns">
                     @if (column.field) {
                     <p-columnFilter #cf (input)="cf.applyFilter()" [field]="column.field" [placeholder]="'custom-table.search' | translate" matchMode="contains"
@@ -68,11 +71,14 @@
                 <ng-container *ngTemplateOutlet="bodyTpl; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
             </ng-container>
             <tr [ngClass]="rowClassField ? item[rowClassField] : ''" (mouseover)="onRowMouseOver.emit(item)">
+                <td *ngIf="selectable">
+                    <p-checkbox [ngModel]="selectedItems.includes(item)" [binary]="true" (ngModelChange)="onSelect(item, $event)" />
+                </td>
                 <td *ngIf="expandedrowTpl">
                     <p-button [icon]="expanded ? 'far fa-chevron-down' : 'far fa-chevron-left'" [pRowToggler]="item" [plain]="true" [rounded]="true" [text]="true" pRipple
                         type="button" />
                 </td>
-                <td class="text-center">{{ rowIndex + 1 }}</td>
+                <td *ngIf="showRowNumber" class="text-center">{{ rowIndex + 1 }}</td>
                 <ng-container *ngFor="let column of selectedColumns">
                     @if (column.template) {
                     <td [ngClass]="column.class">
@@ -97,8 +103,8 @@
                             severity="danger" tooltipPosition="bottom" [size]="operationSize" />
                         }
                         @if (onOperationClick.observed) {
-                        <p-button (onClick)="showOperationMenu(item, menu, $event)" *ngIf="onOperationClick.observed" [pTooltip]="'custom-table.operation' | translate"
-                            icon="fal fa-ellipsis-v" severity="secondary" tooltipPosition="bottom" [size]="operationSize" />
+                        <p-button (onClick)="showOperationMenu(item, operationMenu, $event)" *ngIf="onOperationClick.observed" [pTooltip]="'custom-table.operation' | translate"
+                            icon="far fa-ellipsis-v" severity="secondary" tooltipPosition="bottom" [size]="operationSize" />
                         }
                     </div>
                 </td>
@@ -133,8 +139,10 @@
             </tr>
         </ng-template>
     </p-table>
-    <p-menu #menu [model]="operations" [popup]="true" appendTo="body" />
 </div>
+
+<p-menu #operationMenu [model]="operations" [popup]="true" appendTo="body" />
+<p-menu #groupOperationMenu [model]="groupOperations" [popup]="true" appendTo="body"></p-menu>
 
 <p-custom-dialog [(visible)]="isDeleteDialogVisible" [header]="'custom-table.delete' | translate" size="xs">
     <ng-template>
