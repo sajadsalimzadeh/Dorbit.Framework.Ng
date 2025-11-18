@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ContentChild, ContentChildren, EventEmitter, HostBinding, Injector, Input, Output, QueryList, TemplateRef, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, ContentChild, ContentChildren, EventEmitter, HostBinding, Injector, Input, Output, QueryList, SimpleChanges, TemplateRef, ViewChild } from "@angular/core";
 import { MenuItem } from "primeng/api";
 import { CustomTableColumn } from "./contracts";
 import { PrimengComponent } from "../primeng.component";
@@ -21,7 +21,9 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Input() lazyLoading: boolean = false;
     @Input() columns: CustomTableColumn[] = [];
     @Input() breadcrumb?: MenuItem[];
+    @Input() selectable: boolean = false;
     @Input() showInCard: boolean = true;
+    @Input() showRowNumber: boolean = true;
     @Input() showExportButton: boolean = true;
     @Input() showResetButton: boolean = true;
     @Input() showAddButton: boolean = true;
@@ -42,7 +44,9 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Input() @HostBinding('class') size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' = 'md';
     @Input() operationSize?: 'small' | 'large';
     @Input() operations: MenuItem[] = [];
-    
+    @Input() groupOperations: MenuItem[] = [];
+    @Input() selectedItems: any[] = [];
+
     @Output() onAdd = new EventEmitter<any>();
     @Output() onEdit = new EventEmitter<any>();
     @Output() onDelete = new EventEmitter<any>();
@@ -51,6 +55,8 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Output() onFilter = new EventEmitter<TableFilterEvent>();
     @Output() onRowMouseOver = new EventEmitter<any>();
     @Output() onOperationClick = new EventEmitter<any>();
+    @Output() onGroupOperationClick = new EventEmitter<any>();
+    @Output() onSelectedItemsChange = new EventEmitter<any>();
 
     @ContentChild('caption') captionTpl?: TemplateRef<any>;
     @ContentChild('header') headerTpl?: TemplateRef<any>;
@@ -85,6 +91,13 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
         this.uniqueStateKey = this.stateKeyPrefix + '-' + this.stateKey;
 
         this.loadSelectedColumnState();
+    }
+
+    override ngOnChanges(changes: SimpleChanges): void {
+        super.ngOnChanges(changes);
+        if (changes['value']) {
+            this.selectedItems.splice(0, this.selectedItems.length);
+        }
     }
 
     ngAfterViewInit(): void {
@@ -154,5 +167,24 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     showOperationMenu(item: any, menu: Menu, event: Event) {
         this.onOperationClick.emit(item);
         menu.toggle(event);
+    }
+
+    showGroupOperation(menu: Menu, event: Event) {
+        if (this.selectable) {
+            this.onGroupOperationClick.emit(this.selectedItems);
+            menu.show(event);
+        }
+        else {
+            this.selectable = true;
+        }
+    }
+
+    onSelect(item: any, event: boolean) {
+        if (event) {
+            this.selectedItems.push(item);
+        } else {
+            this.selectedItems.splice(this.selectedItems.indexOf(item), 1);
+        }
+        this.onSelectedItemsChange.emit(this.selectedItems);
     }
 }
