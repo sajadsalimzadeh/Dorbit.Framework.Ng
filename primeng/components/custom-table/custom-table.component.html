@@ -123,7 +123,7 @@
         <ng-template #emptymessage let-columns>
             <tr *ngIf="showEmptyMessage">
                 <td colspan="100" class="no-data">
-                    <div class="flex flex-column gap-2">
+                    <div class="flex flex-column align-items-center gap-2">
                         <div class="top">
                             <i class="fal fa-inbox"></i>
                             <span class="text">{{ 'custom-table.no-records-found' | translate: {row: (name ?? ('custom-table.rows' | translate))} }}</span>
