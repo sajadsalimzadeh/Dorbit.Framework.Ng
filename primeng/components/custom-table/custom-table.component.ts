@@ -21,7 +21,6 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Input() lazyLoading: boolean = false;
     @Input() columns: CustomTableColumn[] = [];
     @Input() breadcrumb?: MenuItem[];
-    @Input() selectable: boolean = false;
     @Input() showInCard: boolean = true;
     @Input() showRowNumber: boolean = true;
     @Input() showExportButton: boolean = true;
@@ -45,8 +44,10 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Input() operationSize?: 'small' | 'large';
     @Input() operations: MenuItem[] = [];
     @Input() groupOperations: MenuItem[] = [];
-    @Input() selectedItems: any[] = [];
     @Input() dataKey: string = 'id';
+    
+    @Input() selectedItems: any[] = [];
+    @Output() selectedItemsChange = new EventEmitter<any>();
 
     @Output() onAdd = new EventEmitter<any>();
     @Output() onEdit = new EventEmitter<any>();
@@ -57,7 +58,6 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Output() onRowMouseOver = new EventEmitter<any>();
     @Output() onOperationClick = new EventEmitter<any>();
     @Output() onGroupOperationClick = new EventEmitter<any>();
-    @Output() onSelectedItemsChange = new EventEmitter<any>();
 
     @ContentChild('caption') captionTpl?: TemplateRef<any>;
     @ContentChild('header') headerTpl?: TemplateRef<any>;
@@ -171,13 +171,8 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     }
 
     showGroupOperation(menu: Menu, event: Event) {
-        if (this.selectable) {
-            this.onGroupOperationClick.emit(this.selectedItems);
-            menu.show(event);
-        }
-        else {
-            this.selectable = true;
-        }
+        this.onGroupOperationClick.emit(this.selectedItems);
+        menu.show(event);
     }
 
     onSelect(item: any, event: boolean) {
@@ -186,6 +181,6 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
         } else {
             this.selectedItems.splice(this.selectedItems.indexOf(item), 1);
         }
-        this.onSelectedItemsChange.emit(this.selectedItems);
+        this.selectedItemsChange.emit(this.selectedItems);
     }
 }

@@ -10,6 +10,9 @@
             <p-button (onClick)="onAdd.emit()" icon="fa fa-plus" iconPos="right" severity="success" [outlined]="true"
                 [label]="'custom-table.add' | translate: {row: (name ?? ('custom-table.row' | translate))}" />
         </ng-container>
+        <ng-container *ngIf="onGroupOperationClick.observed && selectedItems.length > 0">
+            <p-button severity="secondary" iconPos="right" [label]="'custom-table.group-operation' | translate" (click)="showGroupOperation(groupOperationMenu, $event)"></p-button>
+        </ng-container>
         <ng-container *ngIf="captionTpl">
             <ng-container *ngTemplateOutlet="captionTpl"></ng-container>
         </ng-container>
@@ -17,9 +20,6 @@
         <ng-container *ngIf="showColumnSelector">
             <p-multi-select class="columns-selection" display="chip" (onChange)="saveSelectedColumnState()" [(ngModel)]="selectedColumns" [options]="columns" display="chip"
                 optionLabel="header" [selectedItemsLabel]="'custom-table.selected-columns' | translate" [maxSelectedLabels]="0" appendTo="body"></p-multi-select>
-        </ng-container>
-        <ng-container *ngIf="onGroupOperationClick.observed">
-            <p-button severity="secondary" iconPos="right" [label]="'custom-table.group-operation' | translate" (click)="showGroupOperation(groupOperationMenu, $event)"></p-button>
         </ng-container>
         <ng-container *ngIf="showExportButton">
             <p-button (onClick)="exportToExcel()" [label]="'custom-table.export' | translate" icon="far fa-download" iconPos="right" severity="success" [outlined]="true" />
@@ -37,7 +37,7 @@
                 <ng-container *ngTemplateOutlet="headerTpl"></ng-container>
             </ng-container>
             <tr [ngClass]="headerClass" class="header-row">
-                <th *ngIf="selectable" rowspan="2" [style.width]="'30px'" class="text-center"></th>
+                <th *ngIf="onGroupOperationClick.observed" rowspan="2" [style.width]="'30px'" class="text-center"></th>
                 <th *ngIf="expandedrowTpl" rowspan="2" [style.width]="'30px'" class="text-center"></th>
                 <th *ngIf="showRowNumber" rowspan="2" [style.width]="'40px'" class="text-center">#</th>
                 <th *ngFor="let column of selectedColumns" [pSortableColumn]="column.field" [ngClass]="column.headerClass" [style.width]="column.width">
@@ -71,7 +71,7 @@
                 <ng-container *ngTemplateOutlet="bodyTpl; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
             </ng-container>
             <tr [ngClass]="rowClassField ? item[rowClassField] : ''" (mouseover)="onRowMouseOver.emit(item)">
-                <td *ngIf="selectable">
+                <td *ngIf="onGroupOperationClick.observed">
                     <p-checkbox [ngModel]="selectedItems.includes(item)" [binary]="true" (ngModelChange)="onSelect(item, $event)" />
                 </td>
                 <td *ngIf="expandedrowTpl">
@@ -123,7 +123,7 @@
         <ng-template #emptymessage let-columns>
             <tr *ngIf="showEmptyMessage">
                 <td colspan="100" class="no-data">
-                    <div class="flex flex-column gap-2">
+                    <div class="flex flex-column align-items-center gap-2">
                         <div class="top">
                             <i class="fal fa-inbox"></i>
                             <span class="text">{{ 'custom-table.no-records-found' | translate: {row: (name ?? ('custom-table.rows' | translate))} }}</span>

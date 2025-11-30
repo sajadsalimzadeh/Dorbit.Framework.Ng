@@ -14,7 +14,7 @@ declare global {
 
         last(func?: (x: T) => boolean): T;
 
-        any(func: (x: T) => boolean): boolean;
+        any(func: (x: T) => any): boolean;
 
         sum(func: (x: T) => number): number;
 
