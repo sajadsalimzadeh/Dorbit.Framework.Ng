@@ -12,7 +12,9 @@ declare global {
 
         remove(x: T): boolean;
 
-        last(func?: (x: T) => boolean): T;
+        first(func?: (x: T) => any): T | undefined;
+
+        last(func?: (x: T) => any): T | undefined;
 
         any(func: (x: T) => any): boolean;
 
@@ -75,6 +77,11 @@ Array.prototype.remove = function (x: any) {
     const index = this.indexOf(x);
     if (index > -1) this.splice(index, 1);
     return index > -1;
+}
+
+Array.prototype.first = function (func?: (x: any) => boolean) {
+    const items = (func ? this.filter(func) : this);
+    return items.length > 0 ? items[0] : null;
 }
 
 Array.prototype.last = function (func?: (x: any) => boolean) {

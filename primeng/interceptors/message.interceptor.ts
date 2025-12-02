@@ -31,7 +31,7 @@ export class MessageInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        if (req.headers.get('no-message') && !isDevMode()) return next.handle(req);
+        if (req.headers.get('no-message')) return next.handle(req);
 
         return next.handle(req).pipe(tap({
             error: (err) => {
