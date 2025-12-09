@@ -3,9 +3,12 @@
     display: flex;
     align-items: center;
 
-    &.primary {}
+    p-check-box {
+        display: flex;
+    }
 
     label {
+        display: flex;
         cursor: pointer;
     }
 }

@@ -50,6 +50,7 @@ import {JDatePipe} from './pipes/jdate.pipe';
 import {RDatePipe} from './pipes/rdate.pipe';
 import {TruncatePipe} from './pipes/truncate.pipe';
 import { NumberSanitizerDirective } from "./directives/number-sanitizer.directive";
+import { TimePipe } from "./pipes/time.pipe";
 
 export const ALL_MODULES = [
     TableModule,
@@ -91,6 +92,7 @@ export const ALL_COMPONENTS = [
     FabComponent,
     InputSplitComponent,
     NumberSanitizerDirective,
+    TimePipe,
 ];
 
 export const ALL_DIRECTIVES = [
