@@ -47,7 +47,7 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Input() dataKey: string = 'id';
     
     @Input() selectedItems: any[] = [];
-    @Output() selectedItemsChange = new EventEmitter<any>();
+    @Output() selectedItemsChange = new EventEmitter<any[]>();
 
     @Output() onAdd = new EventEmitter<any>();
     @Output() onEdit = new EventEmitter<any>();

@@ -37,7 +37,7 @@
                 <ng-container *ngTemplateOutlet="headerTpl"></ng-container>
             </ng-container>
             <tr [ngClass]="headerClass" class="header-row">
-                <th *ngIf="onGroupOperationClick.observed" rowspan="2" [style.width]="'30px'" class="text-center"></th>
+                <th *ngIf="selectedItemsChange.observed" rowspan="2" [style.width]="'30px'" class="text-center"></th>
                 <th *ngIf="expandedrowTpl" rowspan="2" [style.width]="'30px'" class="text-center"></th>
                 <th *ngIf="showRowNumber" rowspan="2" [style.width]="'40px'" class="text-center">#</th>
                 <th *ngFor="let column of selectedColumns" [pSortableColumn]="column.field" [ngClass]="column.headerClass" [style.width]="column.width">
@@ -71,7 +71,7 @@
                 <ng-container *ngTemplateOutlet="bodyTpl; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
             </ng-container>
             <tr [ngClass]="rowClassField ? item[rowClassField] : ''" (mouseover)="onRowMouseOver.emit(item)">
-                <td *ngIf="onGroupOperationClick.observed">
+                <td *ngIf="selectedItemsChange.observed">
                     <p-checkbox [ngModel]="selectedItems.includes(item)" [binary]="true" (ngModelChange)="onSelect(item, $event)" />
                 </td>
                 <td *ngIf="expandedrowTpl">
