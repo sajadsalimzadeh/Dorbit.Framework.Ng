@@ -1,6 +1,6 @@
 import './platform.js';
 
-export type Platform = 'Windows' | 'WindowsPhone' | 'Android' | 'IOS' | 'unknown';
+export type Platform = 'Web' | 'Windows' | 'WindowsPhone' | 'Android' | 'IOS' | 'unknown';
 
 declare const platform: {
     description: string;
