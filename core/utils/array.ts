@@ -106,7 +106,8 @@ Array.prototype.average = function (func: (x: any) => number) {
 }
 
 Array.prototype.sortBy = function (func: (x: any) => any) {
-    return this.sort((x1, x2) => {
+    const array = this.slice();
+    return array.sort((x1, x2) => {
         const v1 = func(x1);
         const v2 = func(x2);
         return v1 > v2 ? 1 : (v2 > v1 ? -1 : 0);
@@ -114,7 +115,8 @@ Array.prototype.sortBy = function (func: (x: any) => any) {
 }
 
 Array.prototype.sortByDescending = function (func: (x: any) => any) {
-    return this.sort((x1, x2) => {
+    const array = this.slice();
+    return array.sort((x1, x2) => {
         const v1 = func(x1);
         const v2 = func(x2);
         return v1 > v2 ? -1 : (v2 > v1 ? 1 : 0);
