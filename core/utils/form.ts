@@ -7,6 +7,7 @@ export class FormUtil {
             const control = form.controls[controlKey];
             control.markAsDirty();
             control.markAsTouched();
+            control.updateValueAndValidity();
             if (control.errors) {
                 Object.keys(control.errors).forEach(errorKey => {
                     if (control.errors) {
@@ -20,7 +21,10 @@ export class FormUtil {
     }
 
     static isValid(form: FormGroup) {
-        return Object.keys(this.getErrors(form)).length == 0;
+        const errors = this.getErrors(form);
+        const errorKeys = Object.keys(errors);
+        if(errorKeys.length > 0) console.log(errors);
+        return errorKeys.length == 0;
     }
 
     static markAsDirty(form: FormGroup) {
