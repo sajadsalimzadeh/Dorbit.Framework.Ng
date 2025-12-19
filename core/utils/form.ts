@@ -2,12 +2,12 @@ import {FormGroup} from "@angular/forms";
 
 export class FormUtil {
     static getErrors(form: FormGroup) {
+        
         const errors: any = {};
         Object.keys(form.controls).forEach(controlKey => {
             const control = form.controls[controlKey];
             control.markAsDirty();
             control.markAsTouched();
-            control.updateValueAndValidity();
             if (control.errors) {
                 Object.keys(control.errors).forEach(errorKey => {
                     if (control.errors) {
