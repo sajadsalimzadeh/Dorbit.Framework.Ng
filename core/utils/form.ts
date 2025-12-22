@@ -2,6 +2,7 @@ import {FormGroup} from "@angular/forms";
 
 export class FormUtil {
     static getErrors(form: FormGroup) {
+        
         const errors: any = {};
         Object.keys(form.controls).forEach(controlKey => {
             const control = form.controls[controlKey];
@@ -20,7 +21,10 @@ export class FormUtil {
     }
 
     static isValid(form: FormGroup) {
-        return Object.keys(this.getErrors(form)).length == 0;
+        const errors = this.getErrors(form);
+        const errorKeys = Object.keys(errors);
+        if(errorKeys.length > 0) console.log(errors);
+        return errorKeys.length == 0;
     }
 
     static markAsDirty(form: FormGroup) {
