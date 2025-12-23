@@ -183,4 +183,13 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
         }
         this.selectedItemsChange.emit(this.selectedItems);
     }
+
+    onSelectAll(event: boolean) {
+        if (event) {
+            this.selectedItems = this.dt?.filteredValue?.slice() ?? this.value.slice();
+        } else {
+            this.selectedItems = [];
+        }
+        this.selectedItemsChange.emit(this.selectedItems);
+    }
 }
