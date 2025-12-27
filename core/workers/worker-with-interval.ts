@@ -1,28 +1,9 @@
-import { InjectionToken, Injector } from "@angular/core";
-import { CancellationToken } from "../contracts";
-import { delay } from "../utils";
+import { CancellationToken } from "@framework/contracts";
 import { Subscription } from "rxjs";
+import { delay } from "@framework/utils";
+import { Injector, InjectionToken } from "@angular/core";
 
-export const WORKER = new InjectionToken<WorkerService>('WORKER');
 export const WORKER_WITH_INTERVAL = new InjectionToken<WorkerWithInterval>('WORKER_WITH_INTERVAL');
-
-export abstract class WorkerService {
-    subscription = new Subscription();
-
-    constructor(protected injector: Injector) {
-    }
-
-    async start() {
-        this.subscription = new Subscription();
-        await this.invoke();
-    }
-
-    async stop() {
-        this.subscription.unsubscribe();
-    }
-
-    abstract invoke(): Promise<void>;
-}
 
 export abstract class WorkerWithInterval {
     private cancellationToken = new CancellationToken();
