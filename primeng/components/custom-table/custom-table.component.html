@@ -7,7 +7,7 @@
             <p-button (onClick)="onReload.emit()" [label]="'custom-table.reload' | translate" icon="fa fa-sync" iconPos="right" severity="primary" />
         </ng-container>
         <ng-container *ngIf="onAdd.observed && showAddButton">
-            <p-button (onClick)="onAdd.emit()" icon="fa fa-plus" iconPos="right" severity="success" [outlined]="true"
+            <p-button (onClick)="onAdd.emit()" icon="fa fa-plus" iconPos="right" severity="success"
                 [label]="'custom-table.add' | translate: {row: (name ?? ('custom-table.row' | translate))}" />
         </ng-container>
         <ng-container *ngIf="onGroupOperationClick.observed && selectedItems.length > 0">
