@@ -68,6 +68,11 @@ export class Store<T extends object> {
         this.onChange.next({store: this._store, changes: []});
     }
 
+    async remove(name: keyof T & string) {
+        delete this._store[name];
+        this.onChange.next({store: this._store, changes: [name]});
+    }
+
     async delete() {
         await this.cacheService.remove(this.name);
         for (const storeKey in this._store) {
