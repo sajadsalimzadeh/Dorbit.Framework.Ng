@@ -182,11 +182,11 @@ export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {
                 closeOnEscape: true,
                 icon: 'far fa-exclamation-triangle',
                 rejectButtonProps: {
-                    label: this.t('confirmation.reject'),
+                    label: confirmation?.rejectLabel ?? this.t('confirmation.reject'),
                     severity: 'secondary',
                 },
                 acceptButtonProps: {
-                    label: this.t('confirmation.accept'),
+                    label: confirmation?.acceptLabel ?? this.t('confirmation.accept'),
                     severity: 'danger',
                 },
                 ...confirmation,
