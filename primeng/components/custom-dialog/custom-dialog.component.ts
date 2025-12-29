@@ -9,6 +9,7 @@ const styleFields = ['maximize', 'size']
     standalone: false,
     selector: 'p-custom-dialog',
     templateUrl: './custom-dialog.component.html',
+    styleUrl: './custom-dialog.component.scss'
 })
 
 export class CustomDialogComponent implements OnInit, OnChanges {

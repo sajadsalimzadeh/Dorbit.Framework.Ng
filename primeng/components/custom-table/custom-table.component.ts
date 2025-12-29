@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ContentChild, ContentChildren, EventEmitter, 
 import { MenuItem } from "primeng/api";
 import { CustomTableColumn } from "./contracts";
 import { PrimengComponent } from "../primeng.component";
-import { Table, TableFilterEvent } from "primeng/table";
+import { Table, TableFilterEvent, TableRowExpandEvent } from "primeng/table";
 import { saveAs } from 'file-saver';
 import * as XLSX from 'xlsx';
 import { Menu } from "primeng/menu";
@@ -45,7 +45,8 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Input() operations: MenuItem[] = [];
     @Input() groupOperations: MenuItem[] = [];
     @Input() dataKey: string = 'id';
-    
+    @Input() expandMode: 'single' | 'multiple' = 'single';
+
     @Input() selectedItems: any[] = [];
     @Output() selectedItemsChange = new EventEmitter<any[]>();
 
@@ -56,6 +57,7 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Output() isSaving = new EventEmitter<any>();
     @Output() onFilter = new EventEmitter<TableFilterEvent>();
     @Output() onRowMouseOver = new EventEmitter<any>();
+    @Output() onRowExpand = new EventEmitter<TableRowExpandEvent>();
     @Output() onOperationClick = new EventEmitter<any>();
     @Output() onGroupOperationClick = new EventEmitter<any>();
 
@@ -72,6 +74,7 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     protected uniqueStateKey: string = '';
 
     isDeleteDialogVisible = false;
+    expandedRowKeys: { [key: string]: boolean } = {};
     selectedColumns: CustomTableColumn[] = [];
 
     get storage() {
@@ -191,5 +194,18 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
             this.selectedItems = [];
         }
         this.selectedItemsChange.emit(this.selectedItems);
+    }
+
+    onRowExpandHandler(event: TableRowExpandEvent) {
+        if (this.expandMode === 'single') {
+            for (const key in this.expandedRowKeys) {
+                this.expandedRowKeys[key] = false;
+            }
+            this.expandedRowKeys[event.data[this.dataKey]] = true;
+        } else {
+            this.expandedRowKeys[event.data[this.dataKey]] = !this.expandedRowKeys[event.data[this.dataKey]];
+        }
+        this.expandedRowKeys = { ...this.expandedRowKeys };
+        this.onRowExpand.emit(event);
     }
 }

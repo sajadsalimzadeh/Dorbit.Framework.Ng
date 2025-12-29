@@ -31,14 +31,15 @@
     </div>
     <p-table #dt [showGridlines]="true" [showCurrentPageReport]="true" [stripedRows]="true" [rowHover]="true" [scrollable]="true" scrollHeight="flex" [stateStorage]="stateStorage"
         [stateKey]="uniqueStateKey" [currentPageReportTemplate]="'custom-table.current-page-report' | translate" [value]="value" [paginator]="true"
-        [rowsPerPageOptions]="rowsPerPageOptions" [rows]="rows" [loading]="loading" [lazy]="lazyLoading" (onFilter)="filter($event)" [dataKey]="dataKey">
+        [expandedRowKeys]="expandedRowKeys" [rowsPerPageOptions]="rowsPerPageOptions" [rows]="rows" [loading]="loading" [lazy]="lazyLoading" (onFilter)="filter($event)"
+        (onRowExpand)="onRowExpandHandler($event)" [dataKey]="dataKey">
         <ng-template pTemplate="header">
             <ng-container *ngIf="headerTpl">
                 <ng-container *ngTemplateOutlet="headerTpl"></ng-container>
             </ng-container>
             <tr [ngClass]="headerClass" class="header-row">
                 <th *ngIf="selectedItemsChange.observed" rowspan="2" [style.width]="'30px'" class="text-center">
-                    <p-checkbox [ngModel]="selectedItems.length > 0" [binary]="true" (onChange)="onSelectAll($event.checked)"/>
+                    <p-checkbox [ngModel]="selectedItems.length > 0" [binary]="true" (onChange)="onSelectAll($event.checked)" />
                 </th>
                 <th *ngIf="expandedrowTpl" rowspan="2" [style.width]="'30px'" class="text-center"></th>
                 <th *ngIf="showRowNumber" rowspan="2" [style.width]="'40px'" class="text-center">#</th>
@@ -83,11 +84,11 @@
                 <td *ngIf="showRowNumber" class="text-center">{{ rowIndex + 1 }}</td>
                 <ng-container *ngFor="let column of selectedColumns">
                     @if (column.template) {
-                    <td [ngClass]="column.class">
+                    <td [ngClass]="[column.class ?? '', (column.classFunc ? column.classFunc(item) : '')]">
                         <ng-container *ngTemplateOutlet="column.template; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
                     </td>
                     } @else {
-                    <td [ngClass]="column.class" [innerHTML]="(column.render ? column.render(item) : (column.field ? item[column.field] : undefined))">
+                    <td [ngClass]="[column.class ?? '', (column.classFunc ? column.classFunc(item) : '')]" [innerHTML]="(column.render ? column.render(item) : (column.field ? item[column.field] : undefined))">
                     </td>
                     }
                 </ng-container>
