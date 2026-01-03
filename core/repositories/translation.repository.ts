@@ -1,5 +1,5 @@
 import { Injectable, Injector } from "@angular/core";
-import { Translation } from "@app/contracts/translation";
+import { Translation } from "@framework/contracts/translation";
 import { BASE_URL_FRAMEWORK } from "@framework/configs";
 import { QueryResult } from "@framework/contracts";
 import { BaseApiRepository } from "@framework/repositories";
