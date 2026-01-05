@@ -64,8 +64,8 @@ export class CustomDialogComponent implements OnInit, OnChanges {
                 ...this.style,
                 width: '100vw',
                 height: '100vh',
-                'max-width': 'calc(100% - 1.5rem)',
-                'max-height': 'calc(100% - 1.5rem)'
+                'max-width': '100%',
+                'max-height': '100%'
             };
         } else {
             if (this.size == 'xs') sizeStyles = { width: '400px' };
@@ -82,7 +82,7 @@ export class CustomDialogComponent implements OnInit, OnChanges {
             this.style = {
                 ...sizeStyles,
                 maxWidth: '100%',
-                'max-height': 'calc(100% - 1.5rem)',
+                'max-height': '100%',
                 ...this.style
             };
         }
