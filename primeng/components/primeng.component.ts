@@ -37,7 +37,7 @@ export abstract class PrimengComponent<T = any> implements OnInit, OnChanges, On
         return this.servicesCache['Router'] ??= this.injector.get(Router);
     }
 
-    protected get elementRef(): ElementRef {
+    protected get elementRef(): ElementRef<HTMLElement> {
         return this.servicesCache['ElementRef'] ??= this.injector.get(ElementRef);
     }
 
