@@ -175,9 +175,9 @@ time {
 }
 
 .p-dialog-mask, .p-overlay-mask {
-    padding: .75rem;
-    padding-top: var(--app-inset-top, .75rem);
-    padding-bottom: var(--app-inset-bottom, .75rem);
+    padding: var(--dialog-padding, .75rem);
+    padding-top: var(--app-inset-top, var(--dialog-padding, .75rem));
+    padding-bottom: var(--app-inset-bottom, var(--dialog-padding, .75rem));
 }
 
 .p-multiselect-label {
