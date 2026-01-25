@@ -10,9 +10,9 @@ import { FormUtil } from '@framework/utils/form';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Directive()
-export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {
+export abstract class PrimengComponent<T = any> implements OnInit, OnChanges, OnDestroy {
     protected subscription = new Subscription();
-    protected selectedItem: any;
+    protected selectedItem?: T;
     protected dialogs: { [key: string]: boolean } = {};
     protected loadings: { [key: string]: boolean } = {};
     protected servicesCache: any = {};
@@ -37,7 +37,7 @@ export abstract class PrimengComponent implements OnInit, OnChanges, OnDestroy {
         return this.servicesCache['Router'] ??= this.injector.get(Router);
     }
 
-    protected get elementRef(): ElementRef {
+    protected get elementRef(): ElementRef<HTMLElement> {
         return this.servicesCache['ElementRef'] ??= this.injector.get(ElementRef);
     }
 

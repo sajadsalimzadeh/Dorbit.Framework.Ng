@@ -44,7 +44,7 @@ export class DatePickerComponent extends AbstractControl<any> {
     override dir: Direction = 'ltr';
 
     @Input() displayFormat = 'YYYY/MM/DD HH:mm:ss';
-    @Input() valueFormat = 'YYYY-MM-DDTHH:mm:ssZ';
+    @Input() valueFormat = 'YYYY-MM-DDTHH:mm:ss';
     @Input() locale: 'fa' | 'en' = 'fa';
     @Input() textAlign: '' | 'left' | 'center' | 'right' = '';
     @Input() alignment: OverlayAlignments = 'bottom-center';

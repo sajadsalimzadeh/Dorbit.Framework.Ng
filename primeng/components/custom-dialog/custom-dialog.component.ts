@@ -90,7 +90,7 @@ export class CustomDialogComponent implements OnInit, OnChanges {
             this.style = {
                 ...sizeStyles,
                 maxWidth: '100%',
-                'max-height': 'calc(100% - 1.5rem)',
+                'max-height': '100%',
                 ...this.style
             };
         }
