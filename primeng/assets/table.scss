@@ -16,23 +16,28 @@
     }
 
     &.table-striped {
-        tbody {
-            tr:nth-child(2n) {
-                background-color: var(--surface-50);
-            }
-            tr:nth-child(2n-1) {
-                background-color: var(--surface-100);
-            }
+
+        tr:nth-child(2n-1) {
+            background-color: var(--surface-0);
+        }
+
+        tr:nth-child(2n) {
+            background-color: var(--surface-100);
         }
     }
 
     &.table-bordered {
-        th, td {
+
+        th,
+        td {
             border: 1px solid var(--surface-200);
         }
     }
 
     &.table-hover {
-
+        
+        tbody tr:hover {
+            background-color: var(--warning-100) !important;
+        }
     }
 }
