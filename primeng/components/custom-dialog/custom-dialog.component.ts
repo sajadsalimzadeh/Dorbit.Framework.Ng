@@ -1,4 +1,4 @@
-import { Component, ContentChild, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from "@angular/core";
+import { Component, ContentChild, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from "@angular/core";
 import { Dialog } from "primeng/dialog";
 
 type Position = "center" | "top" | "bottom" | "left" | "right" | "topleft" | "topright" | "bottomleft" | "bottomright";
@@ -44,6 +44,9 @@ export class CustomDialogComponent implements OnInit, OnChanges {
 
     @ContentChild(TemplateRef) template?: TemplateRef<any>;
 
+    constructor(private elementRef: ElementRef) {
+    }
+
     ngOnInit(): void {
         this.processStyles();
     }
@@ -51,6 +54,10 @@ export class CustomDialogComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges): void {
         if (changes['visible'] && this.visible) {
             this.onVisible();
+        }
+        if (changes['maximize']) {
+            if(this.maximize) this.elementRef.nativeElement.style.setProperty('--dialog-padding', '0');
+            else this.elementRef.nativeElement.style.removeProperty('--dialog-padding');
         }
         if (styleFields.find(x => changes[x])) {
             this.processStyles();
@@ -64,6 +71,7 @@ export class CustomDialogComponent implements OnInit, OnChanges {
                 ...this.style,
                 width: '100vw',
                 height: '100vh',
+                '--dialog-padding': '0',
                 'max-width': '100%',
                 'max-height': '100%'
             };
