@@ -2,32 +2,36 @@
     <p-breadcrumb [home]="{label: ''}" [model]="breadcrumb" class="max-w-full" />
 </div>
 <div [class.card-container]="showInCard">
-    <div class="flex flex gap-2 align-items-center pb-2">
-        <ng-container *ngIf="onReload.observed">
-            <p-button (onClick)="onReload.emit()" [label]="'custom-table.reload' | translate" icon="fa fa-sync" iconPos="right" severity="primary" />
-        </ng-container>
-        <ng-container *ngIf="onAdd.observed && showAddButton">
-            <p-button (onClick)="onAdd.emit()" icon="fa fa-plus" iconPos="right" severity="success"
-                [label]="'custom-table.add' | translate: {row: (name ?? ('custom-table.row' | translate))}" />
-        </ng-container>
-        <ng-container *ngIf="onGroupOperationClick.observed && selectedItems.length > 0">
-            <p-button severity="secondary" iconPos="right" [label]="'custom-table.group-operation' | translate" (click)="showGroupOperation(groupOperationMenu, $event)"></p-button>
-        </ng-container>
-        <ng-container *ngIf="captionTpl">
-            <ng-container *ngTemplateOutlet="captionTpl"></ng-container>
-        </ng-container>
-        <div class="flex-1"></div>
-        <ng-container *ngIf="showColumnSelector">
-            <p-multi-select class="columns-selection" display="chip" (onChange)="saveSelectedColumnState()" [(ngModel)]="selectedColumns" [options]="columns" display="chip"
-                optionLabel="header" [selectedItemsLabel]="'custom-table.selected-columns' | translate" [maxSelectedLabels]="0" appendTo="body"></p-multi-select>
-        </ng-container>
-        <ng-container *ngIf="showExportButton">
-            <p-button (onClick)="exportToExcel()" [label]="'custom-table.export' | translate" icon="far fa-download" iconPos="right" severity="success" [outlined]="true" />
-        </ng-container>
-        <ng-container *ngIf="showResetButton">
-            <p-button (onClick)="resetState()" [label]="'custom-table.reset-state' | translate" icon="far fa-filter-slash" iconPos="right"
-                [severity]="(isStateChaged ? 'danger' : 'secondary')" [outlined]="!isStateChaged" />
-        </ng-container>
+    <div class="caption-container">
+        <div class="start">
+            <ng-container *ngIf="onReload.observed">
+                <p-button (onClick)="onReload.emit()" [label]="'custom-table.reload' | translate" icon="fa fa-sync" iconPos="right" severity="primary" />
+            </ng-container>
+            <ng-container *ngIf="onAdd.observed && showAddButton">
+                <p-button (onClick)="onAdd.emit()" icon="fa fa-plus" iconPos="right" severity="success"
+                    [label]="'custom-table.add' | translate: {row: (name ?? ('custom-table.row' | translate))}" />
+            </ng-container>
+            <ng-container *ngIf="onGroupOperationClick.observed && selectedItems.length > 0">
+                <p-button severity="secondary" iconPos="right" [label]="'custom-table.group-operation' | translate"
+                    (click)="showGroupOperation(groupOperationMenu, $event)"></p-button>
+            </ng-container>
+            <ng-container *ngIf="captionTpl">
+                <ng-container *ngTemplateOutlet="captionTpl"></ng-container>
+            </ng-container>
+        </div>
+        <div class="end">
+            <ng-container *ngIf="showColumnSelector">
+                <p-multi-select class="columns-selection" display="chip" (onChange)="saveSelectedColumnState()" [(ngModel)]="selectedColumns" [options]="columns" display="chip"
+                    optionLabel="header" [selectedItemsLabel]="'custom-table.selected-columns' | translate" [maxSelectedLabels]="0" appendTo="body"></p-multi-select>
+            </ng-container>
+            <ng-container *ngIf="showExportButton">
+                <p-button (onClick)="exportToExcel()" [label]="'custom-table.export' | translate" icon="far fa-download" iconPos="right" severity="success" [outlined]="true" />
+            </ng-container>
+            <ng-container *ngIf="showResetButton && isStateChaged">
+                <p-button (onClick)="resetState()" [label]="'custom-table.reset-state' | translate" icon="far fa-filter-slash" iconPos="right" severity="danger"
+                    [outlined]="!isStateChaged" />
+            </ng-container>
+        </div>
     </div>
     <p-table #dt [showGridlines]="true" [showCurrentPageReport]="true" [stripedRows]="true" [rowHover]="true" [scrollable]="true" scrollHeight="flex" [stateStorage]="stateStorage"
         [stateKey]="uniqueStateKey" [currentPageReportTemplate]="'custom-table.current-page-report' | translate" [value]="value" [paginator]="true"
@@ -88,7 +92,8 @@
                         <ng-container *ngTemplateOutlet="column.template; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
                     </td>
                     } @else {
-                    <td [ngClass]="[column.class ?? '', (column.classFunc ? column.classFunc(item) : '')]" [innerHTML]="(column.render ? column.render(item) : (column.field ? item[column.field] : undefined))">
+                    <td [ngClass]="[column.class ?? '', (column.classFunc ? column.classFunc(item) : '')]"
+                        [innerHTML]="(column.render ? column.render(item) : (column.field ? item[column.field] : undefined))">
                     </td>
                     }
                 </ng-container>

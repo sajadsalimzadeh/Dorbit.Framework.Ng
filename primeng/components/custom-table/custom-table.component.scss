@@ -10,8 +10,26 @@
         padding: 1.2rem 1rem .1rem;
         flex-direction: column;
         background: var(--surface-0);
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         border-radius: 6px;
+    }
+
+    .caption-container {
+        display: flex;
+        justify-content: space-between;
+
+        .start, .end {
+            gap: .5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .start,
+        .end {
+            &:not(:empty) {
+                padding-bottom: .5rem;
+            }
+        }
     }
 
     .filter-row {
