@@ -15,10 +15,20 @@
     }
 
     .caption-container {
+        gap: .5rem;
         display: flex;
         justify-content: space-between;
 
-        .start, .end {
+        ::ng-deep {
+            .p-button-label {
+                @media (max-width: 700px) {
+                    display: none;
+                }
+            }
+        }
+
+        .start,
+        .end {
             gap: .5rem;
             display: flex;
             align-items: center;
@@ -122,7 +132,7 @@
 
     .columns-selection {
         flex: 1;
-        max-width: 200px;
+        max-width: 180px;
     }
 
     .operation-cell {

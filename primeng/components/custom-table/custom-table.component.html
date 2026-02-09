@@ -5,15 +5,17 @@
     <div class="caption-container">
         <div class="start">
             <ng-container *ngIf="onReload.observed">
-                <p-button (onClick)="onReload.emit()" [label]="'custom-table.reload' | translate" icon="fa fa-sync" iconPos="right" severity="primary" />
+                <p-button (onClick)="onReload.emit()" [label]="'custom-table.reload' | translate" icon="fa fa-sync" iconPos="right" severity="primary"
+                    [pTooltip]="'custom-table.reload' | translate" />
             </ng-container>
             <ng-container *ngIf="onAdd.observed && showAddButton">
                 <p-button (onClick)="onAdd.emit()" icon="fa fa-plus" iconPos="right" severity="success"
+                    [pTooltip]="'custom-table.add' | translate: {row: (name ?? ('custom-table.row' | translate))}"
                     [label]="'custom-table.add' | translate: {row: (name ?? ('custom-table.row' | translate))}" />
             </ng-container>
             <ng-container *ngIf="onGroupOperationClick.observed && selectedItems.length > 0">
-                <p-button severity="secondary" iconPos="right" [label]="'custom-table.group-operation' | translate"
-                    (click)="showGroupOperation(groupOperationMenu, $event)"></p-button>
+                <p-button severity="secondary" icon="far fa-ellipsis-v" iconPos="right" [label]="'custom-table.group-operation' | translate"
+                    [pTooltip]="'custom-table.group-operation' | translate" (click)="showGroupOperation(groupOperationMenu, $event)"></p-button>
             </ng-container>
             <ng-container *ngIf="captionTpl">
                 <ng-container *ngTemplateOutlet="captionTpl"></ng-container>
@@ -25,7 +27,8 @@
                     optionLabel="header" [selectedItemsLabel]="'custom-table.selected-columns' | translate" [maxSelectedLabels]="0" appendTo="body"></p-multi-select>
             </ng-container>
             <ng-container *ngIf="showExportButton">
-                <p-button (onClick)="exportToExcel()" [label]="'custom-table.export' | translate" icon="far fa-download" iconPos="right" severity="success" [outlined]="true" />
+                <p-button (onClick)="exportToExcel()" [label]="'custom-table.export' | translate" icon="far fa-download" iconPos="right" severity="success" [outlined]="true"
+                    [pTooltip]="'custom-table.export' | translate" />
             </ng-container>
             <ng-container *ngIf="showResetButton && isStateChaged">
                 <p-button (onClick)="resetState()" [label]="'custom-table.reset-state' | translate" icon="far fa-filter-slash" iconPos="right" severity="danger"
