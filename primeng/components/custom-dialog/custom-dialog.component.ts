@@ -73,7 +73,8 @@ export class CustomDialogComponent implements OnInit, OnChanges {
                 height: '100vh',
                 '--dialog-padding': '0',
                 'max-width': '100%',
-                'max-height': '100%'
+                'max-height': '100%',
+                'border-radius': '0',
             };
         } else {
             if (this.size == 'xs') sizeStyles = { width: '400px' };
