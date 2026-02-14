@@ -1,6 +1,6 @@
 import {Component, Input,} from "@angular/core";
 import {AbstractControl, createControlValueAccessor} from "../abstract-control.directive";
-import {CommonModule} from "@angular/common";
+
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 export type Chips = any;
@@ -8,10 +8,9 @@ export type Chips = any;
 @Component({
     standalone: true,
     imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-    ],
+    FormsModule,
+    ReactiveFormsModule
+],
     selector: 'd-chips',
     templateUrl: './chips.component.html',
     styleUrls: ['../control.scss', './chips.component.scss'],

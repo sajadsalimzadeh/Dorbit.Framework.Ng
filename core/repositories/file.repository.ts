@@ -53,7 +53,7 @@ export class FileRepository extends BaseApiRepository {
             byteArrays.push(byteArray);
         }
 
-        const blob = new Blob(byteArrays, { type: '' });
+        const blob = new Blob(byteArrays as any, { type: '' });
         return this.upload(blob, name);
     }
 

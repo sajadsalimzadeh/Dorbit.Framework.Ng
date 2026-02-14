@@ -1,11 +1,11 @@
 import {Component, Input} from '@angular/core';
 import {AbstractComponent} from "../abstract.component";
-import {CommonModule} from "@angular/common";
+
 import {TranslateModule} from "@ngx-translate/core";
 
 @Component({
     standalone: true,
-    imports: [CommonModule, TranslateModule],
+    imports: [TranslateModule],
     selector: 'd-breadcrumb',
     templateUrl: 'breadcrumb.component.html',
     styleUrls: ['./breadcrumb.component.scss']

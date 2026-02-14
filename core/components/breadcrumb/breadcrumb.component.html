@@ -1,6 +1,8 @@
 <ul>
-    <li *ngFor="let item of items">
-        {{ item | translate }}
+  @for (item of items; track item) {
+    <li>
+      {{ item | translate }}
     </li>
+  }
 </ul>
 <ng-content></ng-content>

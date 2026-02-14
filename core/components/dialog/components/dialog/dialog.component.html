@@ -1,29 +1,37 @@
 <d-position (click)="onPositionClick($event)" [position]="options.position ?? 'middle-center'">
-    <div [ngClass]="ngClass" [style]="dialogStyles" class="dialog">
-        <div *ngIf="options.title || options.closable || options.minimizable || options.maximizable" class="header">
-            <div class="title">
-                {{ options.title }}
-            </div>
-            <div (click)="minimize()" *ngIf="options.minimizable" class="button minimize">
-                <i class="far fa-minus"></i>
-            </div>
-            <div (click)="maximize()" *ngIf="!options.isMinimize && options.maximizable" class="button maximize">
-                <i [ngClass]="(options.isMaximize ? 'far fa-minimize' : 'far fa-maximize')"></i>
-            </div>
-            <div (click)="close()" *ngIf="options.closable" class="button close">
-                <i class="far fa-times"></i>
-            </div>
+  <div [ngClass]="ngClass" [style]="dialogStyles" class="dialog">
+    @if (options.title || options.closable || options.minimizable || options.maximizable) {
+      <div class="header">
+        <div class="title">
+          {{ options.title }}
         </div>
-        <div class="body">
-            <ng-container *ngIf="options.template">
-                <ng-container *ngTemplateOutlet="options.template; context: {$implicit: this, context: options.context}"></ng-container>
-            </ng-container>
-            <ng-container *ngIf="options.component">
-                <ng-container *ngComponentOutlet="options.component; inputs: inputs"></ng-container>
-            </ng-container>
-            <ng-container *ngIf="options.html">
-                <div [innerHTML]="options.html"></div>
-            </ng-container>
-        </div>
+        @if (options.minimizable) {
+          <div (click)="minimize()" class="button minimize">
+            <i class="far fa-minus"></i>
+          </div>
+        }
+        @if (!options.isMinimize && options.maximizable) {
+          <div (click)="maximize()" class="button maximize">
+            <i [ngClass]="(options.isMaximize ? 'far fa-minimize' : 'far fa-maximize')"></i>
+          </div>
+        }
+        @if (options.closable) {
+          <div (click)="close()" class="button close">
+            <i class="far fa-times"></i>
+          </div>
+        }
+      </div>
+    }
+    <div class="body">
+      @if (options.template) {
+        <ng-container *ngTemplateOutlet="options.template; context: {$implicit: this, context: options.context}"></ng-container>
+      }
+      @if (options.component) {
+        <ng-container *ngComponentOutlet="options.component; inputs: inputs"></ng-container>
+      }
+      @if (options.html) {
+        <div [innerHTML]="options.html"></div>
+      }
     </div>
+  </div>
 </d-position>

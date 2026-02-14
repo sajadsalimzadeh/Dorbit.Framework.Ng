@@ -1,24 +1,33 @@
 <ul>
-    <li (click)="select(1)" *ngIf="showArrows && showFirstArrow && pageNumbers.length > 0">
-        <i class="far fa-angle-double-left"></i>
+  @if (showArrows && showFirstArrow && pageNumbers.length > 0) {
+    <li (click)="select(1)">
+      <i class="far fa-angle-double-left"></i>
     </li>
-    <li (click)="select(page)" *ngIf="showArrows && showPrevArrow && pageNumbers.length > 0">
-        <i class="far fa-angle-left"></i>
+  }
+  @if (showArrows && showPrevArrow && pageNumbers.length > 0) {
+    <li (click)="select(page)">
+      <i class="far fa-angle-left"></i>
     </li>
-    <li (click)="select(item)" *ngFor="let item of pageNumbers"
-        [ngClass]="{active: (page == item - 1)}">
-        <ng-container *ngIf="item; else extraPagesTpl">
-            {{ item }}
-        </ng-container>
-        <ng-template #extraPagesTpl>
-            ...
-        </ng-template>
+  }
+  @for (item of pageNumbers; track item) {
+    <li (click)="select(item)"
+      [ngClass]="{active: (page == item - 1)}">
+      @if (item) {
+        {{ item }}
+      } @else {
+        ...
+      }
     </li>
-    <li (click)="select(page + 2)" *ngIf="showArrows && showNextArrow && pageNumbers.length > 0">
-        <i class="far fa-angle-right"></i>
+  }
+  @if (showArrows && showNextArrow && pageNumbers.length > 0) {
+    <li (click)="select(page + 2)">
+      <i class="far fa-angle-right"></i>
     </li>
+  }
+  @if (showArrows && showLastArrow && pageNumbers.length > 0) {
     <li (click)="select(pageNumbers[pageNumbers.length - 1])"
-        *ngIf="showArrows && showLastArrow && pageNumbers.length > 0">
-        <i class="far fa-angle-double-right"></i>
+      >
+      <i class="far fa-angle-double-right"></i>
     </li>
+  }
 </ul>

@@ -2,5 +2,7 @@
   <span #textEl class="text">
     <ng-content></ng-content>
   </span>
-    <i *ngIf="activeIcon" [ngClass]="activeIcon" class="icon"></i>
+  @if (activeIcon) {
+    <i [ngClass]="activeIcon" class="icon"></i>
+  }
 </button>

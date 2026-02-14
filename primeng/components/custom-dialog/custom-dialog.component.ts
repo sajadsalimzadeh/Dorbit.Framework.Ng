@@ -21,17 +21,21 @@ export class CustomDialogComponent implements OnInit, OnChanges {
     @Input() draggable: boolean = false;
     @Input() resizable: boolean = false;
     @Input() closeOnEscape: boolean = true;
-    @Input() style: any;
-    @Input() contentStyle: any = {};
     @Input() baseZIndex: number = 1000;
-    @Input() styleClass: string = '';
     @Input() breakpoints: any;
     @Input() maximizable: boolean = false;
     @Input() position: Position = 'top';
-    @Input() appendTo?: string;
-    @Input() contentStyleClass?: string;
     @Input() fullHeight: boolean = false;
     @Input() showHeader: boolean = true;
+    @Input() appendTo?: string;
+    
+    @Input() dialogStyle: any = {};
+    @Input() maskStyle: any = {};
+    @Input() contentStyle: any = {};
+
+    @Input() dialogStyleClass: string = '';
+    @Input() maskStyleClass: string = '';
+    @Input() contentStyleClass: string = '';
 
     @Input() size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' = 'md';
     @Input() maximize: boolean = false;
@@ -56,7 +60,7 @@ export class CustomDialogComponent implements OnInit, OnChanges {
             this.onVisible();
         }
         if (changes['maximize']) {
-            if(this.maximize) this.elementRef.nativeElement.style.setProperty('--dialog-padding', '0');
+            if (this.maximize) this.elementRef.nativeElement.style.setProperty('--dialog-padding', '0');
             else this.elementRef.nativeElement.style.removeProperty('--dialog-padding');
         }
         if (styleFields.find(x => changes[x])) {
@@ -65,35 +69,41 @@ export class CustomDialogComponent implements OnInit, OnChanges {
     }
 
     processStyles() {
-        let sizeStyles: any;
+        let dialogStyle: any = {};
+        let maskStyles: any = {};
+
         if (this.maximize) {
-            this.style = {
-                ...this.style,
-                width: '100vw',
-                height: '100vh',
-                '--dialog-padding': '0',
-                'max-width': '100%',
-                'max-height': '100%',
-                'border-radius': '0',
-            };
+            dialogStyle['width'] = '100vw';
+            dialogStyle['height'] = '100vh';
+            dialogStyle['--dialog-padding'] = '0';
+            dialogStyle['max-width'] = '100%';
+            dialogStyle['max-height'] = '100%';
+            dialogStyle['border-radius'] = '0';
+            maskStyles['padding'] = '0';
         } else {
-            if (this.size == 'xs') sizeStyles = { width: '400px' };
-            else if (this.size == 'sm') sizeStyles = { width: '576px' };
-            else if (this.size == 'md') sizeStyles = { width: '768px' };
-            else if (this.size == 'lg') sizeStyles = { width: '992px' };
-            else if (this.size == 'xl') sizeStyles = { width: '1200px' };
-            else if (this.size == 'xxl') sizeStyles = { width: '1400px' };
+            if (this.size == 'xs') dialogStyle['width'] = '400px';
+            else if (this.size == 'sm') dialogStyle['width'] = '576px';
+            else if (this.size == 'md') dialogStyle['width'] = '768px';
+            else if (this.size == 'lg') dialogStyle['width'] = '992px';
+            else if (this.size == 'xl') dialogStyle['width'] = '1200px';
+            else if (this.size == 'xxl') dialogStyle['width'] = '1400px';
 
             if (this.fullHeight) {
-                sizeStyles.height = '100%';
+                dialogStyle.height = '100%';
             }
 
-            this.style = {
-                ...sizeStyles,
-                maxWidth: '100%',
-                'max-height': '100%',
-                ...this.style
-            };
+            dialogStyle['max-width'] = '100%';
+            dialogStyle['max-height'] = '100%';
+        }
+
+        this.dialogStyle = {
+            ...dialogStyle,
+            ...this.dialogStyle
+        };
+
+        this.maskStyle = {
+            ...maskStyles,
+            ...this.maskStyle
         }
     }
 

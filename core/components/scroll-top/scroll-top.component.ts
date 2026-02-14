@@ -1,7 +1,7 @@
-import {Component, HostBinding, HostListener, Input,} from '@angular/core';
-import {PositionsCorner} from "../../types";
-import {AbstractComponent} from "../abstract.component";
-import {CommonModule} from "@angular/common";
+import { Component, HostBinding, HostListener, Input, } from '@angular/core';
+import { PositionsCorner } from "../../types";
+import { AbstractComponent } from "../abstract.component";
+import { CommonModule } from "@angular/common";
 
 @Component({
     standalone: true,
@@ -17,11 +17,11 @@ export class ScrollTopComponent extends AbstractComponent {
     private _target: any = window;
     private _listener: any;
     @HostBinding('class.show')
-    private show: boolean = false;
+    show: boolean = false;
 
     @HostListener('click')
     gotTop() {
-        this._target.scrollTo({top: 0, behavior: 'smooth'})
+        this._target.scrollTo({ top: 0, behavior: 'smooth' })
     }
 
     override ngOnInit() {

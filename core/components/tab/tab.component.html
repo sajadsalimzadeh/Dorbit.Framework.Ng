@@ -1,13 +1,19 @@
 <ul class="tab-list">
-    <li (click)="setTab(tab)" *ngFor="let tab of tabsTemplates" [class]="(tab == activeTab ? 'active' : '')" [ngClass]="tab.classes">
-        <i *ngIf="tab.icon" [ngClass]="tab.icon"></i>
-        <span>{{ tab.header }}</span>
+  @for (tab of tabsTemplates; track tab) {
+    <li (click)="setTab(tab)" [class]="(tab == activeTab ? 'active' : '')" [ngClass]="tab.classes">
+      @if (tab.icon) {
+        <i [ngClass]="tab.icon"></i>
+      }
+      <span>{{ tab.header }}</span>
     </li>
+  }
 </ul>
 <div class="tab-container">
-    <ng-container *ngIf="activeTab">
-        <div *ngIf="!activeTab.noContent">
-            <ng-container *ngTemplateOutlet="activeTab.template; context: {$implicit: activeTab}"></ng-container>
-        </div>
-    </ng-container>
+  @if (activeTab) {
+    @if (!activeTab.noContent) {
+      <div>
+        <ng-container *ngTemplateOutlet="activeTab.template; context: {$implicit: activeTab}"></ng-container>
+      </div>
+    }
+  }
 </div>

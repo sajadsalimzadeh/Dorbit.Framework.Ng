@@ -1,99 +1,106 @@
 @if(label) {
-<p-ifta-label>
+  <p-ifta-label>
     <p-icon-field>
-        @if (showClear) {
+      @if (showClear) {
         <p-inputicon styleClass="fal fa-times" (click)="onChange(null)" />
-        }
-        <input class="input-control" [ngClass]="inputStyleClass" #inputEl (focus)="op.toggle($event, inputEl)" (keyup)="updateValueFromDisplay()"
-            [value]="displayValue" [disabled]="isDisabled" [placeholder]="placeholder" dir="ltr" pInputText
-            [pSize]="size!" type="text" />
-        <p-inputicon styleClass="fal fa-calendar" />
-    </p-icon-field>
-    <label>{{ label }}</label>
-</p-ifta-label>
-} @else {
-<p-icon-field>
-    @if (showClear) {
-    <p-inputicon styleClass="fal fa-times" (click)="onChange(null)" />
-    }
-    <input class="input-control" [ngClass]="inputStyleClass" #inputEl (focus)="op.toggle($event, inputEl)" (keyup)="updateValueFromDisplay()"
+      }
+      <input class="input-control" [ngClass]="inputStyleClass" #inputEl (focus)="op.toggle($event, inputEl)" (keyup)="updateValueFromDisplay()"
         [value]="displayValue" [disabled]="isDisabled" [placeholder]="placeholder" dir="ltr" pInputText
         [pSize]="size!" type="text" />
-    <p-inputicon styleClass="fal fa-calendar" />
-</p-icon-field>
-}
-<p-popover #op appendTo="body">
-    <div class="date-picker-container">
+        <p-inputicon styleClass="fal fa-calendar" />
+      </p-icon-field>
+      <label>{{ label }}</label>
+    </p-ifta-label>
+  } @else {
+    <p-icon-field>
+      @if (showClear) {
+        <p-inputicon styleClass="fal fa-times" (click)="onChange(null)" />
+      }
+      <input class="input-control" [ngClass]="inputStyleClass" #inputEl (focus)="op.toggle($event, inputEl)" (keyup)="updateValueFromDisplay()"
+        [value]="displayValue" [disabled]="isDisabled" [placeholder]="placeholder" dir="ltr" pInputText
+        [pSize]="size!" type="text" />
+        <p-inputicon styleClass="fal fa-calendar" />
+      </p-icon-field>
+    }
+    <p-popover #op appendTo="body">
+      <div class="date-picker-container">
 
         <div class="year-month">
-            <div (click)="openYearPicker()" class="year">
-                {{ year }}
-            </div>
-            <div (click)="openMonthPicker()" class="month">
-                {{ monthNames[month] }}
-            </div>
+          <div (click)="openYearPicker()" class="year">
+            {{ year }}
+          </div>
+          <div (click)="openMonthPicker()" class="month">
+            {{ monthNames[month] }}
+          </div>
         </div>
         <div class="dates">
-            <div class="day-of-week">ش</div>
-            <div class="day-of-week">ی</div>
-            <div class="day-of-week">د</div>
-            <div class="day-of-week">س</div>
-            <div class="day-of-week">چ</div>
-            <div class="day-of-week">پ</div>
-            <div class="day-of-week">ج</div>
+          <div class="day-of-week">ش</div>
+          <div class="day-of-week">ی</div>
+          <div class="day-of-week">د</div>
+          <div class="day-of-week">س</div>
+          <div class="day-of-week">چ</div>
+          <div class="day-of-week">پ</div>
+          <div class="day-of-week">ج</div>
 
-            <div (click)="selectDate(date)" *ngFor="let date of dates" [class.current-month]="date.isCurrentMonth"
-                [class.disabled]="date.isDisabled" [class.selected]="date.isSelected" [class.today]="date.isToday"
-                class="day">
-                {{ date.day }}
+          @for (date of dates; track date) {
+            <div (click)="selectDate(date)" [class.current-month]="date.isCurrentMonth"
+              [class.disabled]="date.isDisabled" [class.selected]="date.isSelected" [class.today]="date.isToday"
+              class="day">
+              {{ date.day }}
             </div>
+          }
         </div>
 
         <div [class.open]="state == 'month'" class="month-picker">
-            <div (click)="selectMonth(month.value)" *ngFor="let month of months" [class.selected]="month.isSelected"
-                class="month">
-                {{ month.name }}
+          @for (month of months; track month) {
+            <div (click)="selectMonth(month.value)" [class.selected]="month.isSelected"
+              class="month">
+              {{ month.name }}
             </div>
+          }
         </div>
 
         <div [class.open]="state == 'year'" class="year-picker">
-            <div (click)="selectYear(year.value)" *ngFor="let year of years" [class.selected]="year.isSelected"
-                class="year">
-                {{ year.value }}
+          @for (year of years; track year) {
+            <div (click)="selectYear(year.value)" [class.selected]="year.isSelected"
+              class="year">
+              {{ year.value }}
             </div>
+          }
         </div>
         <div (click)="goToday()" class="go-today">
-            امروز
+          امروز
         </div>
-        <div class="time-picker" *ngIf="showTimePicker">
+        @if (showTimePicker) {
+          <div class="time-picker">
             <div class="hour">
-                <a (click)="date = date?.add(1, 'hour'); select()">
-                    <i class="far fa-angle-up"></i>
-                </a>
-                <div>{{date?.hour()}}</div>
-                <a (click)="date = date?.subtract(1, 'hour'); select()">
-                    <i class="far fa-angle-down"></i>
-                </a>
+              <a (click)="date = date?.add(1, 'hour'); select()">
+                <i class="far fa-angle-up"></i>
+              </a>
+              <div>{{date?.hour()}}</div>
+              <a (click)="date = date?.subtract(1, 'hour'); select()">
+                <i class="far fa-angle-down"></i>
+              </a>
             </div>
             <div class="minute">
-                <a (click)="date = date?.add(1, 'minute'); select()">
-                    <i class="far fa-angle-up"></i>
-                </a>
-                <div>{{date?.minute()}}</div>
-                <a (click)="date = date?.subtract(1, 'minute'); select()">
-                    <i class="far fa-angle-down"></i>
-                </a>
+              <a (click)="date = date?.add(1, 'minute'); select()">
+                <i class="far fa-angle-up"></i>
+              </a>
+              <div>{{date?.minute()}}</div>
+              <a (click)="date = date?.subtract(1, 'minute'); select()">
+                <i class="far fa-angle-down"></i>
+              </a>
             </div>
-
             <div class="second">
-                <a (click)="date = date?.add(1, 'second'); select()">
-                    <i class="far fa-angle-up"></i>
-                </a>
-                <div>{{date?.second()}}</div>
-                <a (click)="date = date?.subtract(1, 'second'); select()">
-                    <i class="far fa-angle-down"></i>
-                </a>
+              <a (click)="date = date?.add(1, 'second'); select()">
+                <i class="far fa-angle-up"></i>
+              </a>
+              <div>{{date?.second()}}</div>
+              <a (click)="date = date?.subtract(1, 'second'); select()">
+                <i class="far fa-angle-down"></i>
+              </a>
             </div>
-        </div>
-    </div>
-</p-popover>
+          </div>
+        }
+      </div>
+    </p-popover>
