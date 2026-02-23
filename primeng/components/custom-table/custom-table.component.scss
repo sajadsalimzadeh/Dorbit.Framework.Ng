@@ -59,26 +59,31 @@
     }
 
     &.xs {
+        font-size: .8rem;
         --datatable-body-cell-padding: 0.2rem;
         --datatable-header-cell-padding: 0.5rem;
     }
 
     &.sm {
+        font-size: .9rem;
         --datatable-body-cell-padding: 0.3rem;
         --datatable-header-cell-padding: 0.6rem;
     }
 
     &.md {
+        font-size: 1rem;
         --datatable-body-cell-padding: 0.5rem;
         --datatable-header-cell-padding: 0.7rem;
     }
 
     &.lg {
+        font-size: 1.1rem;
         --datatable-body-cell-padding: .7rem;
         --datatable-header-cell-padding: 0.8rem;
     }
 
     &.xl {
+        font-size: 1.2rem;
         --datatable-body-cell-padding: 0.9rem;
         --datatable-header-cell-padding: 0.9rem;
     }
@@ -94,7 +99,7 @@
 
         p-columnfilter {
             .p-inputtext {
-                min-width: 100px;
+                min-width: 80px;
                 width: 100%;
             }
 
