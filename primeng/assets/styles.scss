@@ -257,3 +257,8 @@ p-tabs {
         border-bottom: 2px solid var(--primary-100);
     }
 }
+
+.p-iftalabel .p-select .p-select-label {
+    padding-block-start: var(--iftalabel-input-padding-top);
+    padding-block-end: var(--iftalabel-input-padding-bottom);
+}
