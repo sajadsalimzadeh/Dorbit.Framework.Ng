@@ -155,8 +155,7 @@ p-ifta-label {
         }
 
         &.p-multiselect-display-chip {
-            .p-multiselect-label-container {
-            }
+            .p-multiselect-label-container {}
         }
     }
 
@@ -245,4 +244,16 @@ p-input-number .p-inputtext {
     --button-padding-y: 0.4em;
     --button-sm-padding-y: 0.3em;
     --button-sm-padding-x: 0.425rem;
+}
+
+p-tabs {
+
+    .p-tab-active {
+        background-color: var(--primary-50);
+    }
+
+    .p-tablist-content {
+        margin-bottom: 1rem;
+        border-bottom: 2px solid var(--primary-100);
+    }
 }

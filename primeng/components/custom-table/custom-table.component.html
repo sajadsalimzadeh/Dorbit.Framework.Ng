@@ -29,11 +29,11 @@
             optionLabel="header" [selectedItemsLabel]="'custom-table.selected-columns' | translate" [maxSelectedLabels]="0" appendTo="body"></p-multi-select>
           }
           @if (showExportButton) {
-            <p-button (onClick)="exportToExcel()" [label]="'custom-table.export' | translate" icon="far fa-download" iconPos="right" severity="success" [outlined]="true"
+            <p-button (onClick)="exportToExcel()" [label]="'custom-table.export' | translate" icon="fal fa-download" iconPos="right" severity="success" [outlined]="true"
               [pTooltip]="'custom-table.export' | translate" />
             }
             @if (showResetButton && isStateChaged) {
-              <p-button (onClick)="resetState()" [label]="'custom-table.reset-state' | translate" icon="far fa-filter-slash" iconPos="right" severity="danger"
+              <p-button (onClick)="resetState()" [label]="'custom-table.reset-state' | translate" icon="fal fa-filter-slash" iconPos="right" severity="danger"
                 [outlined]="!isStateChaged" />
               }
             </div>
@@ -112,7 +112,7 @@
                   }
                   @if (expandedrowTpl) {
                     <td>
-                      <p-button [icon]="expanded ? 'far fa-chevron-down' : 'far fa-chevron-left'" [pRowToggler]="item" [plain]="true" [rounded]="true" [text]="true" pRipple
+                      <p-button [icon]="expanded ? 'fal fa-chevron-down' : 'fal fa-chevron-left'" [pRowToggler]="item" [plain]="true" [rounded]="true" [text]="true" pRipple
                         type="button" size="small" />
                       </td>
                     }
@@ -204,8 +204,8 @@
                     {{ 'custom-table.delete-message' | translate }}
                   </div>
                   <div class="flex flex gap-2">
-                    <p-button class="w-full" (click)="deleteItemApprove()" [label]="'confirm.yes-sure' | translate" icon="far fa-check" iconPos="right" severity="danger" />
-                    <p-button class="w-full" (click)="isDeleteDialogVisible = false" [label]="'confirm.cancel' | translate" icon="far fa-times" iconPos="left" severity="secondary" />
+                    <p-button class="w-full" (click)="deleteItemApprove()" [label]="'confirm.yes-sure' | translate" icon="fal fa-check" iconPos="right" severity="danger" />
+                    <p-button class="w-full" (click)="isDeleteDialogVisible = false" [label]="'confirm.cancel' | translate" icon="fal fa-times" iconPos="left" severity="secondary" />
                   </div>
                 </ng-template>
               </p-custom-dialog>

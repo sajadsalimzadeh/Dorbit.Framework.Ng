@@ -21,7 +21,7 @@ export class FileRepository extends BaseApiRepository {
             this.http.post<QueryResult<string>>('', formData, { reportProgress: true, headers: new HttpHeaders({ 'ngsw-bypass': 'true' }), observe: 'events' }).subscribe({
                 next: (event) => {
                     if (event.type === HttpEventType.UploadProgress) {
-                        progress?.(event.loaded / event.total!);
+                        progress?.(event.loaded / event.total! * 100);
                     } else if (event.type === HttpEventType.Response) {
                         observer.next(event.body!);
                     }
