@@ -23,7 +23,6 @@ export class FormUtil {
     static isValid(form: FormGroup) {
         const errors = this.getErrors(form);
         const errorKeys = Object.keys(errors);
-        if(errorKeys.length > 0) console.log(errors);
         return errorKeys.length == 0;
     }
 
