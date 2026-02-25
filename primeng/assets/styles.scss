@@ -240,10 +240,12 @@ p-input-number .p-inputtext {
 }
 
 .p-button-icon-only {
-    --button-padding-x: 0.5em;
-    --button-padding-y: 0.4em;
+    --button-sm-padding-x: 0.425em;
     --button-sm-padding-y: 0.3em;
-    --button-sm-padding-x: 0.425rem;
+    --button-padding-x: 0.475em;
+    --button-padding-y: 0.4em;
+    --button-lg-padding-x: 0.575em;
+    --button-lg-padding-y: 0.4em;
 }
 
 p-tabs {
