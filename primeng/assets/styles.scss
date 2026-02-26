@@ -240,12 +240,12 @@ p-input-number .p-inputtext {
 }
 
 .p-button-icon-only {
-    --button-sm-padding-x: 0.425em;
-    --button-sm-padding-y: 0.3em;
-    --button-padding-x: 0.475em;
-    --button-padding-y: 0.4em;
-    --button-lg-padding-x: 0.575em;
-    --button-lg-padding-y: 0.4em;
+    --button-sm-padding-x: 0.425rem;
+    --button-sm-padding-y: 0.3rem;
+    --button-padding-x: 0.475rem;
+    --button-padding-y: 0.6rem;
+    --button-lg-padding-x: 0.575rem;
+    --button-lg-padding-y: 0.7rem;
 }
 
 p-tabs {
@@ -255,7 +255,6 @@ p-tabs {
     }
 
     .p-tablist-content {
-        margin-bottom: 1rem;
         border-bottom: 2px solid var(--primary-100);
     }
 }

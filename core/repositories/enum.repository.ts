@@ -1,6 +1,6 @@
 import {Injectable, Injector} from "@angular/core";
 import {BaseApiRepository} from './base-api.repository';
-import {BASE_URL_FRAMEWORK} from '../configs';
+import {BASE_API_URL_FRAMEWORK} from '../configs';
 import {EnumDto} from '../contracts/enums';
 import {QueryResult} from '../contracts/results';
 import {BehaviorSubject, tap} from 'rxjs';
@@ -13,7 +13,7 @@ export class EnumRepository extends BaseApiRepository {
     $enums = new BehaviorSubject<{ [key: string]: EnumDto }>({});
 
     constructor(injector: Injector) {
-        super(injector, injector.get(BASE_URL_FRAMEWORK), 'Enums');
+        super(injector, injector.get(BASE_API_URL_FRAMEWORK), 'Enums');
     }
 
     getAll() {
