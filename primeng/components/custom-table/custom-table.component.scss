@@ -2,8 +2,14 @@
     display: flex;
     flex-direction: column;
 
+    --datatable-body-cell-sm-padding: 0.6rem;
+    --datatable-header-cell-sm-padding: 0.6rem;
+
     --datatable-body-cell-padding: 0.8rem;
     --datatable-header-cell-padding: 0.7rem;
+
+    --datatable-body-cell-lg-padding: 0.9rem;
+    --datatable-header-cell-lg-padding: 0.8rem;
 
     .card-container {
         display: flex;
@@ -46,6 +52,10 @@
         --datatable-header-cell-padding: 0.05rem;
 
         ::ng-deep {
+            th {
+                padding: 0rem !important;
+            }
+
             p-columnfilter {
                 --inputtext-padding-y: 0.6rem;
 
@@ -90,32 +100,22 @@
 
     ::ng-deep {
 
-        p-card p-table {
-            .p-paginator {
-                padding-top: 1rem !important;
-                padding-bottom: 0 !important;
-            }
+        p-card p-table .p-paginator {
+            padding-top: 1rem !important;
+            padding-bottom: 0 !important;
         }
 
-        p-columnfilter {
-            .p-inputtext {
-                min-width: 80px;
-                width: 100%;
-            }
-
-
+        p-columnfilter .p-inputtext {
+            min-width: 80px;
+            width: 100%;
         }
 
-        .p-datatable-sm {
-            tr {
-                height: 3rem;
-            }
+        .p-datatable-sm tbody tr {
+            height: 3rem;
         }
 
-        .p-datatable-lg {
-            tr {
-                height: 4rem;
-            }
+        .p-datatable-lg tbody tr {
+            height: 4rem;
         }
 
         p-columnfilterformelement {
@@ -163,9 +163,9 @@ p-table :host-context([dir=rtl]) {
 
 .no-data {
     height: 100%;
-    padding: 3rem 0;
     text-align: center;
     color: var(--surface-400);
+    padding: 3rem 0 !important;
     background-color: var(--surface-0);
 
     .top {

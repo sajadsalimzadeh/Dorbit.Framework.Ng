@@ -139,6 +139,7 @@ $i: 1;
 @each $screen in variables.$screens {
     $name: list.nth($screen, 1);
     $resolution: list.nth($screen, 2);
+    
     @media (min-width: $resolution) {
         $i: 1;
         @while $i <= 12 {

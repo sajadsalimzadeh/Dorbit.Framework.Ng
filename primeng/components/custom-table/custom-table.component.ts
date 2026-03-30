@@ -41,7 +41,8 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Input() stateKey: string = '';
     @Input() stateKeyPrefix: string = this.router.url;
     @Input() @HostBinding('class') size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' = 'md';
-    @Input() operationSize?: 'small' | 'large';
+    @Input() tableSize?: 'small' | 'large';
+    @Input() operationSize?: 'small' | 'large' = 'small';
     @Input() operations: MenuItem[] = [];
     @Input() groupOperations: MenuItem[] = [];
     @Input() dataKey: string = 'id';
@@ -101,6 +102,16 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
         super.ngOnChanges(changes);
         if (changes['value']) {
             this.selectedItems.splice(0, this.selectedItems.length);
+        }
+
+        if (!this.operationSize) {
+            if (this.size == 'sm' || this.size == 'xs') this.operationSize = 'small';
+            else if (this.size == 'lg' || this.size == 'xl') this.operationSize = 'large';
+        }
+
+        if (!this.tableSize) {
+            if (this.size == 'sm' || this.size == 'xs') this.tableSize = 'small';
+            else if (this.size == 'lg' || this.size == 'xl') this.tableSize = 'large';
         }
     }
 

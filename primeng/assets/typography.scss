@@ -15,47 +15,37 @@
     .col-span-#{$i} {
         grid-column: span $i;
     }
-    
+
     .row-span-#{$i} {
         grid-row: span $i;
     }
 
     .grid-cols-#{$i} {
         grid-template-columns: repeat($i, 1fr);
-    
+
         &.grid {
             display: grid;
             margin: 0 !important;
         }
-    
+
     }
 }
 
 @each $screen in variables.$screens {
     $name: list.nth($screen, 1);
-    $width: list.nth($screen, 2);
+    $resolution: list.nth($screen, 2);
 
-    .#{$name}\:grid-2 {
-        @media screen and (max-width: #{$width}) {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
+    @media (min-width: $resolution) {
+        @for $i from 1 through 12 {
+            .#{$name}\:grid-cols-#{$i} {
+                grid-template-columns: repeat($i, 1fr);
 
-    .#{$name}\:grid-3 {
-        @media screen and (max-width: #{$width}) {
-            grid-template-columns: repeat(3, 1fr);
-        }
-    }
+                &.grid {
+                    display: grid;
+                    margin: 0 !important;
+                }
 
-    .#{$name}\:grid-4 {
-        @media screen and (max-width: #{$width}) {
-            grid-template-columns: repeat(4, 1fr);
-        }
-    }
-
-    .#{$name}\:grid-5 {
-        @media screen and (max-width: #{$width}) {
-            grid-template-columns: repeat(5, 1fr);
+            }
         }
     }
 }
