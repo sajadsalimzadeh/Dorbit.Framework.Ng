@@ -112,10 +112,15 @@ p-ifta-label {
     p-date-picker,
     p-input-number,
     p-autocomplete,
+    p-auto-complete,
     [pinputtext],
     textarea {
         width: 100%;
         display: flex;
+    }
+
+    .p-autocomplete {
+        width: 100%;
     }
 
     .p-datepicker {
