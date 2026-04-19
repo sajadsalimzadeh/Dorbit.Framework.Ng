@@ -70,4 +70,8 @@ export class JobRepository extends BaseApiRepository {
     download(id: string) {
         return this.http.post(`${id}/Download`, {}, {responseType: 'blob'});
     }
+
+    reRun(id: string) {
+        return this.http.post(`${id}/ReRun`, {});
+    }
 }
