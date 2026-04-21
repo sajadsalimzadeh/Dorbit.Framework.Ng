@@ -1,9 +1,11 @@
-import { Directive, ElementRef, Injector, OnDestroy, OnInit } from '@angular/core';
+import { Directive, ElementRef, Injector, Input, OnDestroy, OnInit } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 @Directive()
 export class PrimengControlComponent implements OnInit, OnDestroy, ControlValueAccessor {
+    @Input() name: string = '';
+
     _services: any = {};
 
     value?: any;
