@@ -1,5 +1,9 @@
-<ul *ngIf="itemTemplate">
-    <li (click)="onItemClick.emit(item)" *ngFor="let item of items">
+@if (itemTemplate) {
+  <ul>
+    @for (item of items; track item) {
+      <li (click)="onItemClick.emit(item)">
         <ng-container *ngTemplateOutlet="itemTemplate; context: {$implicit: item}"></ng-container>
-    </li>
-</ul>
+      </li>
+    }
+  </ul>
+}

@@ -15,7 +15,6 @@ import { CheckboxModule } from "primeng/checkbox";
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 import { DialogModule } from "primeng/dialog";
-import { DropdownModule } from "primeng/dropdown";
 import { TooltipModule } from "primeng/tooltip";
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputGroupModule } from "primeng/inputgroup";
@@ -101,7 +100,6 @@ const PRIMENG_MODULES = [
     CardModule,
     TableModule,
     DialogModule,
-    DropdownModule,
     TooltipModule,
     InputNumberModule,
     ToastModule,

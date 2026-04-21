@@ -1,10 +1,10 @@
 import {Component, HostListener} from '@angular/core';
 import {AbstractControl, createControlValueAccessor} from "../abstract-control.directive";
-import {CommonModule} from "@angular/common";
+
 
 @Component({
     standalone: true,
-    imports: [CommonModule],
+    imports: [],
     selector: 'd-switch',
     templateUrl: 'switch.component.html',
     styleUrls: ['../control.scss', './switch.component.scss'],

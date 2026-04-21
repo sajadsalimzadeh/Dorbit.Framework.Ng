@@ -1,4 +1,6 @@
-<i *ngIf="icon" [ngClass]="icon"></i>
+@if (icon) {
+  <i [ngClass]="icon"></i>
+}
 <span>
   <ng-content></ng-content>
 </span>

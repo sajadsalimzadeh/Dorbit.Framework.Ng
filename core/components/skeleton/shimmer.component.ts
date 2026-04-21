@@ -1,12 +1,12 @@
 import {Component, Input} from '@angular/core';
 import {AbstractComponent} from "../abstract.component";
-import {CommonModule} from "@angular/common";
+
 
 const units = ['%', 'px', 'pt', 'rem', 'em', 'cm'];
 
 @Component({
     standalone: true,
-    imports: [CommonModule],
+    imports: [],
     selector: 'd-shimmer',
     templateUrl: 'shimmer.component.html',
     styleUrls: ['./shimmer.component.scss']

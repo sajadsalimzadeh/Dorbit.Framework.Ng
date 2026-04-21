@@ -1,9 +1,11 @@
 <ul>
-    <d-message *ngFor="let item of items" [item]="item" [items]="items" [size]="size" [timerEnable]="timerEnable">
-        <ng-container *ngIf="contentTemplate">
-            <ng-template dTemplate>
-                <ng-container *ngTemplateOutlet="contentTemplate; context: {$implicit: item}"></ng-container>
-            </ng-template>
-        </ng-container>
+  @for (item of items; track item) {
+    <d-message [item]="item" [items]="items" [size]="size" [timerEnable]="timerEnable">
+      @if (contentTemplate) {
+        <ng-template dTemplate>
+          <ng-container *ngTemplateOutlet="contentTemplate; context: {$implicit: item}"></ng-container>
+        </ng-template>
+      }
     </d-message>
+  }
 </ul>

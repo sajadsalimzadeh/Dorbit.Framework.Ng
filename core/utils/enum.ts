@@ -11,6 +11,18 @@ export class EnumUtil {
         return result;
     }
 
+    static getLabelValues(type: any) {
+        const values = Object.values(type).filter(x => Number.isInteger(x)).map((x: any) => +x);
+        const result: { value: any, label: string }[] = [];
+        for (let i = 0; i < values.length; i++) {
+            result.push({
+                value: values[i],
+                label: type[values[i]],
+            });
+        }
+        return result;
+    }
+
     static getObject<T>(type: T) {
         const result: any = {};
         this.getKeyValues(type).forEach(x => {

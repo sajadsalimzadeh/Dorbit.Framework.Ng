@@ -47,7 +47,7 @@ export abstract class BaseFormComponent extends BaseComponent {
         } else {
             if (!value.id) delete value.id;
         }
-        this.subscription.add(this.repository.save(this.model?.id, value).subscribe(res => {
+        this.subscription.add(this.repository.save(value).subscribe(res => {
             this.onComplete.emit(res.data);
             this.dialog?.close();
         }));

@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AbstractControl} from "../abstract-control.directive";
-import {CommonModule} from "@angular/common";
+
 import {ControlGroupComponent} from "../control-group/control-group.component";
 import {SelectComponent} from "../select/select.component";
 import moment from 'jalali-moment';
@@ -14,12 +14,11 @@ interface Option {
 @Component({
     standalone: true,
     imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        SelectComponent,
-        ControlGroupComponent,
-    ],
+    FormsModule,
+    ReactiveFormsModule,
+    SelectComponent,
+    ControlGroupComponent
+],
     selector: 'd-date-picker-inline',
     templateUrl: './date-picker-inline.component.html',
     styleUrls: ['./date-picker-inline.component.scss']

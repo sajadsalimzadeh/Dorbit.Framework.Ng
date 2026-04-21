@@ -1,11 +1,11 @@
 import {Component, Input, SimpleChanges} from '@angular/core';
 import {AbstractComponent} from "../abstract.component";
 import {NumberUtil} from "../../utils/number";
-import {CommonModule} from "@angular/common";
+
 
 @Component({
     standalone: true,
-    imports: [CommonModule],
+    imports: [],
     selector: 'd-progress-circle',
     templateUrl: 'progress-circle.component.html',
     styleUrls: ['./progress-circle.component.scss']

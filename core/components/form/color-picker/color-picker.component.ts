@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {AbstractControl, createControlValueAccessor} from "../abstract-control.directive";
-import {CommonModule} from "@angular/common";
+
 
 @Component({
     standalone: true,
-    imports: [CommonModule],
+    imports: [],
     selector: 'd-color-picker',
     templateUrl: 'color-picker.component.html',
     styleUrls: ['../control.scss', './color-picker.component.scss'],

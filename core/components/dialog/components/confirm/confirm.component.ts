@@ -1,5 +1,5 @@
 import {Component, EventEmitter, TemplateRef, ViewChild} from '@angular/core';
-import {CommonModule} from "@angular/common";
+
 import {DialogRef, DialogService} from "../../services/dialog.service";
 import {DialogOptions} from "../dialog/dialog.component";
 import {ConfirmButton, ConfirmOptions} from "../../models";
@@ -8,7 +8,7 @@ import {ButtonComponent} from "../../../button/button.component";
 
 @Component({
     standalone: true,
-    imports: [CommonModule, ButtonComponent],
+    imports: [ButtonComponent],
     selector: 'd-confirm',
     templateUrl: 'confirm.component.html',
     styleUrls: ['./confirm.component.scss']

@@ -1,18 +1,26 @@
-<ul *ngIf="showNavigation" class="steps">
-    <li (click)="goto(step, index)" *ngFor="let step of steps; let index = index" [ngClass]="{done: index < activeStepIndex, active: index == activeStepIndex}"
+@if (showNavigation) {
+  <ul class="steps">
+    @for (step of steps; track step; let index = $index) {
+      <li (click)="goto(step, index)" [ngClass]="{done: index < activeStepIndex, active: index == activeStepIndex}"
         class="step">
         <div class="lines"></div>
         <div class="step-content">
-            <div class="circle">
-                <i *ngIf="step.icon" [ngClass]="step.icon" class="icon"></i>
-                <img *ngIf="step.image" [alt]="step.text" [src]="step.image" class="image" fill/>
-            </div>
+          <div class="circle">
+            @if (step.icon) {
+              <i [ngClass]="step.icon" class="icon"></i>
+            }
+            @if (step.image) {
+              <img [alt]="step.text" [src]="step.image" class="image" fill/>
+            }
+          </div>
         </div>
         <div class="title">{{ step.text }}</div>
-    </li>
-</ul>
+      </li>
+    }
+  </ul>
+}
 <div class="content">
-    <ng-container *ngIf="activeStep">
-        <ng-container *ngTemplateOutlet="activeStep.template"></ng-container>
-    </ng-container>
+  @if (activeStep) {
+    <ng-container *ngTemplateOutlet="activeStep.template"></ng-container>
+  }
 </div>

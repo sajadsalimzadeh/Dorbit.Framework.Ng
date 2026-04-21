@@ -1,7 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
 import { BaseApiRepository } from "./base-api.repository";
 import { QueryResult } from "../contracts/results";
-import { BASE_URL_FRAMEWORK } from '../configs';
+import { BASE_API_URL_FRAMEWORK } from '../configs';
 import { HttpEventType, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { saveAs } from 'file-saver';
@@ -10,7 +10,7 @@ import { saveAs } from 'file-saver';
 export class FileRepository extends BaseApiRepository {
 
     constructor(injector: Injector) {
-        super(injector, injector.get(BASE_URL_FRAMEWORK), 'Files');
+        super(injector, injector.get(BASE_API_URL_FRAMEWORK), 'Files');
     }
 
     upload(data: File | Blob, name: string, access?: string | null, progress?: (progress: number) => void): Observable<QueryResult<string>> {
@@ -21,7 +21,7 @@ export class FileRepository extends BaseApiRepository {
             this.http.post<QueryResult<string>>('', formData, { reportProgress: true, headers: new HttpHeaders({ 'ngsw-bypass': 'true' }), observe: 'events' }).subscribe({
                 next: (event) => {
                     if (event.type === HttpEventType.UploadProgress) {
-                        progress?.(event.loaded / event.total!);
+                        progress?.(event.loaded / event.total! * 100);
                     } else if (event.type === HttpEventType.Response) {
                         observer.next(event.body!);
                     }
@@ -53,7 +53,7 @@ export class FileRepository extends BaseApiRepository {
             byteArrays.push(byteArray);
         }
 
-        const blob = new Blob(byteArrays, { type: '' });
+        const blob = new Blob(byteArrays as any, { type: '' });
         return this.upload(blob, name);
     }
 

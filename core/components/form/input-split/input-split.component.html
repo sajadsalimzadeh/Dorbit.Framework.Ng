@@ -1,4 +1,6 @@
-<div *ngFor="let value of values; let index = index" class="control-box">
+@for (value of values; track value; let index = $index) {
+  <div class="control-box">
     <d-input (onKeyup)="onKeyUp(index, $event)" [color]="color" [formControl]="value" [maxLength]="1" [name]="name"
-             [size]="size" [style]="styleControl" type="number"></d-input>
-</div>
+    [size]="size" [style]="styleControl" type="number"></d-input>
+  </div>
+}

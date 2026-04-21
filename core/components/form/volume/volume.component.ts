@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ElementRef, HostListener, Input, ViewChild} fr
 import {AbstractControl, createControlValueAccessor} from "../abstract-control.directive";
 import {Orientation} from "../../../types";
 import {NumberUtil} from "../../../utils/number";
-import {CommonModule} from "@angular/common";
+
 
 export interface VolumeRange {
     start: number;
@@ -11,7 +11,7 @@ export interface VolumeRange {
 
 @Component({
     standalone: true,
-    imports: [CommonModule],
+    imports: [],
     selector: 'd-volume',
     templateUrl: 'volume.component.html',
     styleUrls: ['../control.scss', './volume.component.scss'],
@@ -32,14 +32,14 @@ export class VolumeComponent extends AbstractControl<number | VolumeRange> imple
 
     @Input() formatter: (value: number) => string = (value: number) => NumberUtil.format(value);
 
-    @HostListener('window:mouseup', ['$event'])
+    @HostListener('window:mouseup', [])
     onWindowMouseUp() {
         if (this.onMouseMove) {
             window.removeEventListener('mousemove', this.onMouseMove)
         }
     }
 
-    @HostListener('window:touchend', ['$event'])
+    @HostListener('window:touchend', [])
     onWindowTouchEnd() {
         if (this.onTouchMove) {
             window.removeEventListener('touchmove', this.onTouchMove)

@@ -1,11 +1,12 @@
 <ul>
-    <li (click)="formControl.setValue(index)" (mouseenter)="onMouseEnterItem(index)" *ngFor="let item of items; let index = index"
-        [ngClass]="{active: item}">
-        <ng-container *ngIf="item; else notCheckedTpl">
-            <i [ngClass]="iconActive"></i>
-        </ng-container>
-        <ng-template #notCheckedTpl>
-            <i [ngClass]="icon"></i>
-        </ng-template>
+  @for (item of items; track item; let index = $index) {
+    <li (click)="formControl.setValue(index)" (mouseenter)="onMouseEnterItem(index)"
+      [ngClass]="{active: item}">
+      @if (item) {
+        <i [ngClass]="iconActive"></i>
+      } @else {
+        <i [ngClass]="icon"></i>
+      }
     </li>
+  }
 </ul>

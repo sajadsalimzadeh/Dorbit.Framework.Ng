@@ -1,10 +1,10 @@
 import {Component, HostListener, Input} from '@angular/core';
 import {AbstractControl, createControlValueAccessor} from "../abstract-control.directive";
-import {CommonModule} from "@angular/common";
+
 
 @Component({
     standalone: true,
-    imports: [CommonModule],
+    imports: [],
     selector: 'd-checkbox',
     templateUrl: 'checkbox.component.html',
     styleUrls: ['../control.scss', './checkbox.component.scss'],

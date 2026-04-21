@@ -59,14 +59,14 @@ export class OverlayComponent extends AbstractComponent implements OnInit, Overl
 
     overlayClasses: any = {};
 
-    @HostListener('window:click', ['$event'])
+    @HostListener('window:click', [])
     onWindowClick() {
         if (this.overlayRef) {
             this.overlayRef.destroy();
         }
     }
 
-    @HostListener('window:resize', ['$event'])
+    @HostListener('window:resize', [])
     onWindowResize() {
         this.render();
     }

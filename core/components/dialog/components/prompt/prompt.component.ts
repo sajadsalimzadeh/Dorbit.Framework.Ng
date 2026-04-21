@@ -1,5 +1,5 @@
 import {Component, ElementRef, EventEmitter, TemplateRef, ViewChild} from '@angular/core';
-import {CommonModule} from "@angular/common";
+
 import {DialogRef, DialogService} from "../../services/dialog.service";
 import {DialogOptions} from "../dialog/dialog.component";
 import {PromptOptions} from "../../models";
@@ -10,7 +10,7 @@ import {FormsModule} from "@angular/forms";
 
 @Component({
     standalone: true,
-    imports: [CommonModule, FormsModule, ButtonComponent, TranslateModule],
+    imports: [FormsModule, ButtonComponent, TranslateModule],
     selector: 'd-prompt',
     templateUrl: 'prompt.component.html',
     styleUrls: ['./prompt.component.scss']

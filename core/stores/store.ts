@@ -9,29 +9,30 @@ interface ChangeEvent<T> {
 }
 
 export class Store<T extends object> {
-    onChange!: BehaviorSubject<ChangeEvent<T>>;
+    $change!: BehaviorSubject<ChangeEvent<T>>;
+
     protected readonly cacheService!: ICacheService;
 
-    protected onChangeByKeys: { [key: string]: BehaviorSubject<T> } = {}
+    protected $changeByKeys: { [key: string]: BehaviorSubject<T> } = {}
     private readonly _store: any = {};
 
     constructor(protected name: string, public defaults?: T) {
         try {
             this.cacheService = new IndexedDbCacheService(new CacheStorageIndexDb({dbName: 'store'}));
-            this.onChange = new BehaviorSubject<ChangeEvent<T>>({
+            this.$change = new BehaviorSubject<ChangeEvent<T>>({
                 store: this._store,
                 changes: []
             });
-            this.onChange.subscribe(e => {
+            this.$change.subscribe(e => {
                 e.changes.forEach(key => {
-                    this.onChangeByKeys[key]?.next(e.store);
+                    this.$changeByKeys[key]?.next(e.store);
                 });
                 if (e.changes.length == 0) {
-                    Object.values(this.onChangeByKeys).forEach(x => {
+                    Object.values(this.$changeByKeys).forEach(x => {
                         x.next(e.store)
                     });
                 }
-                this.onChangeByKeys['all']?.next(e.store);
+                this.$changeByKeys['all']?.next(e.store);
             });
         } catch (e) {
             console.error('Store: ' + name + ' construct failed - ' + e)
@@ -48,14 +49,14 @@ export class Store<T extends object> {
     }
 
     on(key: keyof T & string | 'all') {
-        return this.onChangeByKeys[key] ??= new BehaviorSubject<any>(this._store);
+        return this.$changeByKeys[key] ??= new BehaviorSubject<any>(this._store);
     }
 
     async set(name: keyof T & string, value: any) {
         if (value === undefined || value === null) delete this._store[name]
         else this._store[name] = value;
         await this.save();
-        this.onChange.next({store: this._store, changes: [name]});
+        this.$change.next({store: this._store, changes: [name]});
     }
 
     async save() {
@@ -65,12 +66,12 @@ export class Store<T extends object> {
     async load() {
         const item = await this.cacheService.get<T>(this.name);
         Object.assign(this._store, item ?? this.defaults);
-        this.onChange.next({store: this._store, changes: []});
+        this.$change.next({store: this._store, changes: []});
     }
 
     async remove(name: keyof T & string) {
         delete this._store[name];
-        this.onChange.next({store: this._store, changes: [name]});
+        this.$change.next({store: this._store, changes: [name]});
     }
 
     async delete() {

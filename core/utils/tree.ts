@@ -1,5 +1,11 @@
 type TreeIterateAction<T> = (item: T, parent?: T) => void;
 
+export interface TreeConvertOptions<T, TR> {
+    parentItem?: T;
+    parentResult?: TR;
+    level: number;
+}
+
 export class TreeUtil {
     static iterate<T extends { children?: T[] } = any>(items: T[], beforeChildren?: TreeIterateAction<T>, afterChildren?: TreeIterateAction<T>, parent?: T) {
 
@@ -14,12 +20,14 @@ export class TreeUtil {
         })
     }
     
-    static convert<T, TR extends { children?: any[] }>(items: T[], callback: (item: T, parent?: T, parentResult?: TR) => TR, parentItem?: T, parentResult?: TR): TR[] {
+    static convert<T, TR extends { children?: any[] }>(items: T[], callback: (item: T, options: TreeConvertOptions<T, TR>) => TR | null, options?: TreeConvertOptions<T, TR>): TR[] {
+        options ??= { level: 1};
         const result: TR[] = [];
         items?.forEach((item: any) => {
-            const resultItem = callback(item, parentItem, parentResult);
+            const resultItem = callback(item, options);
+            if(!resultItem) return;
             if (item.children) {
-                resultItem.children = this.convert(item.children, callback, item, resultItem);
+                resultItem.children = this.convert(item.children, callback, { parentItem: item, parentResult: resultItem, level: options.level + 1 });
             }
             result.push(resultItem);
         });

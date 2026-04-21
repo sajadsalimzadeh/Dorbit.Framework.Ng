@@ -1,17 +1,23 @@
-<label *ngIf="showRange" class="min">{{ formatter(min) }}</label>
+@if (showRange) {
+  <label class="min">{{ formatter(min) }}</label>
+}
 <div #volumeBoxEl class="volume-box">
-    <div #valueBarEl class="value-bar">
-        <a (mousedown)="onDragStart($event, 'start')" (touchstart)="onDragStart($event, 'start')" *ngIf="mode == 'multiple'" class="bullet start">
-            <span></span>
-            <span></span>
-            <span></span>
-        </a>
-        <span class="gap"></span>
-        <a (mousedown)="onDragStart($event, 'end')" (touchstart)="onDragStart($event, 'end')" class="bullet end">
-            <span></span>
-            <span></span>
-            <span></span>
-        </a>
-    </div>
+  <div #valueBarEl class="value-bar">
+    @if (mode == 'multiple') {
+      <a (mousedown)="onDragStart($event, 'start')" (touchstart)="onDragStart($event, 'start')" class="bullet start">
+        <span></span>
+        <span></span>
+        <span></span>
+      </a>
+    }
+    <span class="gap"></span>
+    <a (mousedown)="onDragStart($event, 'end')" (touchstart)="onDragStart($event, 'end')" class="bullet end">
+      <span></span>
+      <span></span>
+      <span></span>
+    </a>
+  </div>
 </div>
-<label *ngIf="showRange" class="max">{{ formatter(max) }}</label>
+@if (showRange) {
+  <label class="max">{{ formatter(max) }}</label>
+}

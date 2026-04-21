@@ -20,25 +20,16 @@ export class ObjectUtil {
         }
     }
 
-    static getObjectWithoutUndefinedProperty(obj: any): any {
+    static cloneWithoutNullOrUndefinedProperty(obj: any): any {
         const result: any = {};
         for (const key in obj) {
             const value = obj[key];
-            if (typeof value !== 'undefined') result[key] = value;
+            if (typeof value !== 'undefined' && value !== null) result[key] = value;
         }
         return result;
     }
 
-    static getObjectWithoutNullProperty(obj: any): any {
-        const result: any = {};
-        for (const key in obj) {
-            const value = obj[key];
-            if (value !== null) result[key] = value;
-        }
-        return result;
-    }
-
-    static getObjectWithFalseResultProperty(obj: any) {
+    static cloneWithFalseResultProperty(obj: any) {
         const result: any = {};
         for (const key in obj) {
             const value = obj[key];

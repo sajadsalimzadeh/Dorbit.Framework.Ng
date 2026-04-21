@@ -1,25 +1,34 @@
 <div (touchend)="remove()" class="message">
-    <ng-container *ngIf="contentTemplate; else noTemplateTpl">
-        <ng-container *ngTemplateOutlet="contentTemplate; context: {$implicit: item}"></ng-container>
-    </ng-container>
-    <ng-template #noTemplateTpl>
-        <div *ngIf="item.icon" class="icon-box">
-            <i [ngClass]="item.icon"></i>
+  @if (contentTemplate) {
+    <ng-container *ngTemplateOutlet="contentTemplate; context: {$implicit: item}"></ng-container>
+  } @else {
+    @if (item.icon) {
+      <div class="icon-box">
+        <i [ngClass]="item.icon"></i>
+      </div>
+    }
+    <div class="content">
+      @if (item.title) {
+        <div class="title">
+          {{ item.title }}
         </div>
-        <div class="content">
-            <div *ngIf="item.title" class="title">
-                {{ item.title }}
-            </div>
-            <div *ngIf="item.body" class="body">
-                {{ item.body }}
-            </div>
+      }
+      @if (item.body) {
+        <div class="body">
+          {{ item.body }}
         </div>
-        <div *ngIf="item.showTimeString && timer" class="timer-box">
-            {{ (timer / 1000).toFixed(2) }}s
-        </div>
-        <div (click)="remove()" *ngIf="item.removable" class="remove-box">
-            <i class="far fa-times"></i>
-        </div>
-    </ng-template>
+      }
+    </div>
+    @if (item.showTimeString && timer) {
+      <div class="timer-box">
+        {{ (timer / 1000).toFixed(2) }}s
+      </div>
+    }
+    @if (item.removable) {
+      <div (click)="remove()" class="remove-box">
+        <i class="far fa-times"></i>
+      </div>
+    }
+  }
 </div>
 <div class="progress"></div>

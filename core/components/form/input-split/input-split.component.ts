@@ -2,17 +2,16 @@ import {Component, Input, SimpleChanges} from '@angular/core';
 import {AbstractControl, createControlValueAccessor} from "../abstract-control.directive";
 import {FormControl, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Subscription} from "rxjs";
-import {CommonModule} from "@angular/common";
+
 import {InputComponent} from "../input/input.component";
 
 @Component({
     standalone: true,
     imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        InputComponent,
-    ],
+    FormsModule,
+    ReactiveFormsModule,
+    InputComponent
+],
     selector: 'd-input-split',
     templateUrl: './input-split.component.html',
     styleUrls: ['./input-split.component.scss'],
