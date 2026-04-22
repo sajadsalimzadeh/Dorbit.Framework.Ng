@@ -26,7 +26,7 @@
     <div class="end">
       @if (showColumnSelector) {
       <p-multi-select class="columns-selection" display="chip" (onChange)="saveSelectedColumnState()" [(ngModel)]="selectedColumns" [options]="columns" display="chip"
-        optionLabel="header" [selectedItemsLabel]="'custom-table.selected-columns' | translate" [maxSelectedLabels]="0" appendTo="body" [size]="tableSize"></p-multi-select>
+        optionLabel="header" [selectedItemsLabel]="'custom-table.selected-columns' | translate" [maxSelectedLabels]="0" appendTo="body" [size]="tableSize!"></p-multi-select>
       }
       @if (showExportButton) {
       <p-button (onClick)="exportToExcel()" [label]="'custom-table.export' | translate" icon="fal fa-download" iconPos="right" severity="success" [outlined]="true"
