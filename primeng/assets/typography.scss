@@ -1,4 +1,5 @@
 @use "sass:list";
+@use "sass:math";
 @use "variables.scss";
 
 @each $color in variables.$colors {
@@ -19,15 +20,18 @@
     .row-span-#{$i} {
         grid-row: span $i;
     }
+    
+    .grid {
+        display: grid;
+        margin: 0 !important;
+    }
 
     .grid-cols-#{$i} {
         grid-template-columns: repeat($i, 1fr);
 
-        &.grid {
-            display: grid;
-            margin: 0 !important;
+        &.grid-autofill {
+            grid-template-columns: repeat(auto-fill, minmax(#{math.div(100, $i)}, 1fr));
         }
-
     }
 }
 

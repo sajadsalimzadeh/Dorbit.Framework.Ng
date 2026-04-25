@@ -42,7 +42,7 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Input() stateKeyPrefix: string = this.router.url;
     @Input() @HostBinding('class') size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' = 'md';
     @Input() tableSize?: 'small' | 'large';
-    @Input() operationSize?: 'small' | 'large' = 'small';
+    @Input() operationSize?: 'small' | 'large';
     @Input() operations: MenuItem[] = [];
     @Input() groupOperations: MenuItem[] = [];
     @Input() dataKey: string = 'id';
