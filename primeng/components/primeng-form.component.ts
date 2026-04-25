@@ -24,6 +24,8 @@ export abstract class PrimengFormComponent<T extends {id?: string} = any> extend
         }
     }
 
+    onSave(res: any) {}
+
     getFormValue() {
         return this.form.getRawValue();
     }
@@ -38,6 +40,7 @@ export abstract class PrimengFormComponent<T extends {id?: string} = any> extend
         }
         this.repository.save(req).subscribe(res => {
             this.onComplete.emit();
+            this.onSave(res);
         })
     }
 }

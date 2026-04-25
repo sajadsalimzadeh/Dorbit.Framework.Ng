@@ -140,6 +140,7 @@ export class JalaliDatePickerComponent extends PrimengControlComponent implement
 
             this.displayValue = this.date?.format(this.displayFormat) ?? '';
         } catch {
+            this.date = moment();
         }
     }
 
