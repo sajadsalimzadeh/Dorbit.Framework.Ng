@@ -1,211 +1,210 @@
 @if (breadcrumb) {
-  <div class="mb-2">
-    <p-breadcrumb [home]="{label: ''}" [model]="breadcrumb" class="max-w-full" />
-  </div>
+<div class="mb-2">
+  <p-breadcrumb [home]="{label: ''}" [model]="breadcrumb" class="max-w-full" />
+</div>
 }
 <div [class.card-container]="showInCard">
   <div class="caption-container">
     <div class="start">
       @if (onReload.observed) {
-        <p-button (onClick)="onReload.emit()" [label]="'custom-table.reload' | translate" icon="fa fa-sync" iconPos="right" severity="primary"
-          [pTooltip]="'custom-table.reload' | translate" />
+      <p-button (onClick)="onReload.emit()" [label]="'custom-table.reload' | translate" icon="fa fa-sync" iconPos="right" severity="primary"
+        [pTooltip]="'custom-table.reload' | translate" [size]="operationSize" />
+      }
+      @if (onAdd.observed && showAddButton) {
+      <p-button (onClick)="onAdd.emit()" icon="fa fa-plus" iconPos="right" severity="success"
+        [pTooltip]="'custom-table.add' | translate: {row: (name ?? ('custom-table.row' | translate))}"
+        [label]="'custom-table.add' | translate: {row: (name ?? ('custom-table.row' | translate))}" [size]="operationSize" />
+      }
+      @if (onGroupOperationClick.observed && selectedItems.length > 0) {
+      <p-button severity="secondary" icon="far fa-ellipsis-v" iconPos="right" [label]="'custom-table.group-operation' | translate"
+        [pTooltip]="'custom-table.group-operation' | translate" (click)="showGroupOperation(groupOperationMenu, $event)" [size]="operationSize"></p-button>
+      }
+      @if (captionTpl) {
+      <ng-container *ngTemplateOutlet="captionTpl"></ng-container>
+      }
+    </div>
+    <div class="end">
+      @if (showColumnSelector) {
+      <p-multi-select class="columns-selection" display="chip" (onChange)="saveSelectedColumnState()" [(ngModel)]="selectedColumns" [options]="columns" display="chip"
+        optionLabel="header" [selectedItemsLabel]="'custom-table.selected-columns' | translate" [maxSelectedLabels]="0" appendTo="body" [size]="operationSize"></p-multi-select>
+      }
+      @if (showExportButton) {
+      <p-button (onClick)="exportToExcel()" [label]="'custom-table.export' | translate" icon="fal fa-download" iconPos="right" severity="success" [outlined]="true"
+        [pTooltip]="'custom-table.export' | translate" [size]="operationSize" />
+      }
+      @if (showResetButton && isStateChaged) {
+      <p-button (onClick)="resetState()" [label]="'custom-table.reset-state' | translate" icon="fal fa-filter-slash" iconPos="right" severity="danger" [outlined]="!isStateChaged"
+        [size]="operationSize" />
+      }
+    </div>
+  </div>
+  <p-table #dt [showGridlines]="true" [showCurrentPageReport]="true" [stripedRows]="true" [rowHover]="true" [scrollable]="true" scrollHeight="flex" [stateStorage]="stateStorage"
+    [stateKey]="uniqueStateKey" [currentPageReportTemplate]="'custom-table.current-page-report' | translate" [value]="value" [paginator]="true" [expandedRowKeys]="expandedRowKeys"
+    [rowsPerPageOptions]="rowsPerPageOptions" [rows]="rows" [loading]="loading" [lazy]="lazyLoading" (onFilter)="filter($event)" (onRowExpand)="onRowExpandHandler($event)"
+    [dataKey]="dataKey" [size]="tableSize">
+    <ng-template pTemplate="header">
+      @if (headerTpl) {
+      <ng-container *ngTemplateOutlet="headerTpl"></ng-container>
+      }
+      <tr [ngClass]="headerClass" class="header-row">
+        @if (selectedItemsChange.observed) {
+        <th rowspan="2" [style.width]="'30px'" class="text-center">
+          <p-checkbox [ngModel]="selectedItems.length > 0" [binary]="true" (onChange)="onSelectAll($event.checked)" />
+        </th>
         }
-        @if (onAdd.observed && showAddButton) {
-          <p-button (onClick)="onAdd.emit()" icon="fa fa-plus" iconPos="right" severity="success"
-            [pTooltip]="'custom-table.add' | translate: {row: (name ?? ('custom-table.row' | translate))}"
-            [label]="'custom-table.add' | translate: {row: (name ?? ('custom-table.row' | translate))}" />
-          }
-          @if (onGroupOperationClick.observed && selectedItems.length > 0) {
-            <p-button severity="secondary" icon="far fa-ellipsis-v" iconPos="right" [label]="'custom-table.group-operation' | translate"
-            [pTooltip]="'custom-table.group-operation' | translate" (click)="showGroupOperation(groupOperationMenu, $event)"></p-button>
-          }
-          @if (captionTpl) {
-            <ng-container *ngTemplateOutlet="captionTpl"></ng-container>
-          }
-        </div>
-        <div class="end">
-          @if (showColumnSelector) {
-            <p-multi-select class="columns-selection" display="chip" (onChange)="saveSelectedColumnState()" [(ngModel)]="selectedColumns" [options]="columns" display="chip"
-            optionLabel="header" [selectedItemsLabel]="'custom-table.selected-columns' | translate" [maxSelectedLabels]="0" appendTo="body"></p-multi-select>
-          }
-          @if (showExportButton) {
-            <p-button (onClick)="exportToExcel()" [label]="'custom-table.export' | translate" icon="fal fa-download" iconPos="right" severity="success" [outlined]="true"
-              [pTooltip]="'custom-table.export' | translate" />
+        @if (expandedrowTpl) {
+        <th rowspan="2" [style.width]="'30px'" class="text-center"></th>
+        }
+        @if (showRowNumber) {
+        <th rowspan="2" [style.width]="'40px'" class="text-center">#</th>
+        }
+        @for (column of selectedColumns; track column) {
+        <th [pSortableColumn]="column.field" [ngClass]="column.headerClass" [style.width]="column.width">
+          @if (column.field) {
+          <div class="flex flex align-items-center">
+            <span class="flex-1">{{ column.header }}</span>
+            @if (isSortable) {
+            <p-sortIcon [field]="column.field" class="flex flex align-items-center" />
             }
-            @if (showResetButton && isStateChaged) {
-              <p-button (onClick)="resetState()" [label]="'custom-table.reset-state' | translate" icon="fal fa-filter-slash" iconPos="right" severity="danger"
-                [outlined]="!isStateChaged" />
-              }
-            </div>
+            @if (isFilterable && column.field) {
+            @if (filterType == 'menu') {
+            <p-columnFilter [field]="column.field" display="menu" matchMode="contains" type="text"></p-columnFilter>
+            }
+            }
           </div>
-          <p-table #dt [showGridlines]="true" [showCurrentPageReport]="true" [stripedRows]="true" [rowHover]="true" [scrollable]="true" scrollHeight="flex" [stateStorage]="stateStorage"
-            [stateKey]="uniqueStateKey" [currentPageReportTemplate]="'custom-table.current-page-report' | translate" [value]="value" [paginator]="true"
-            [expandedRowKeys]="expandedRowKeys" [rowsPerPageOptions]="rowsPerPageOptions" [rows]="rows" [loading]="loading" [lazy]="lazyLoading" (onFilter)="filter($event)"
-            (onRowExpand)="onRowExpandHandler($event)" [dataKey]="dataKey">
-            <ng-template pTemplate="header">
-              @if (headerTpl) {
-                <ng-container *ngTemplateOutlet="headerTpl"></ng-container>
-              }
-              <tr [ngClass]="headerClass" class="header-row">
-                @if (selectedItemsChange.observed) {
-                  <th rowspan="2" [style.width]="'30px'" class="text-center">
-                    <p-checkbox [ngModel]="selectedItems.length > 0" [binary]="true" (onChange)="onSelectAll($event.checked)" />
-                    </th>
-                  }
-                  @if (expandedrowTpl) {
-                    <th rowspan="2" [style.width]="'30px'" class="text-center"></th>
-                  }
-                  @if (showRowNumber) {
-                    <th rowspan="2" [style.width]="'40px'" class="text-center">#</th>
-                  }
-                  @for (column of selectedColumns; track column) {
-                    <th [pSortableColumn]="column.field" [ngClass]="column.headerClass" [style.width]="column.width">
-                      @if (column.field) {
-                        <div class="flex flex align-items-center">
-                          <span class="flex-1">{{ column.header }}</span>
-                          @if (isSortable) {
-                            <p-sortIcon [field]="column.field" class="flex flex align-items-center" />
-                          }
-                          @if (isFilterable && column.field) {
-                            @if (filterType == 'menu') {
-                              <p-columnFilter [field]="column.field" display="menu" matchMode="contains" type="text"></p-columnFilter>
-                            }
-                          }
-                        </div>
-                      }
-                      @if (!column.field) {
-                        <div>
-                          {{ column.header }}
-                        </div>
-                      }
-                    </th>
-                  }
-                  @if (operationTpl || onEdit.observed || onDelete.observed) {
-                    <th width="10"></th>
-                  }
-                </tr>
-                @if (filterType == 'inline' && isFilterable) {
-                  <tr class="filter-row">
-                    @for (column of selectedColumns; track column) {
-                      <th>
-                        @if (column.field) {
-                          <p-columnFilter #cf (input)="cf.applyFilter()" [field]="column.field" [placeholder]="'custom-table.search' | translate" matchMode="contains"
-                          type="text"></p-columnFilter>
-                        }
-                      </th>
-                    }
-                    @if (operationTpl || onEdit.observed || onDelete.observed) {
-                      <th></th>
-                    }
-                  </tr>
-                }
-              </ng-template>
-              <ng-template #body let-expanded="expanded" let-item let-rowIndex="rowIndex" let-last="last">
-                @if (bodyTpl) {
-                  <ng-container *ngTemplateOutlet="bodyTpl; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
-                }
-                <tr [ngClass]="rowClassField ? item[rowClassField] : ''" (mouseover)="onRowMouseOver.emit(item)">
-                  @if (selectedItemsChange.observed) {
-                    <td>
-                      <p-checkbox [ngModel]="selectedItems.includes(item)" [binary]="true" (ngModelChange)="onSelect(item, $event)" />
-                    </td>
-                  }
-                  @if (expandedrowTpl) {
-                    <td>
-                      <p-button [icon]="expanded ? 'fal fa-chevron-down' : 'fal fa-chevron-left'" [pRowToggler]="item" [plain]="true" [rounded]="true" [text]="true" pRipple
-                        type="button" size="small" />
-                      </td>
-                    }
-                    @if (showRowNumber) {
-                      <td class="text-center">{{ rowIndex + 1 }}</td>
-                    }
-                    @for (column of selectedColumns; track column) {
-                      @if (column.template) {
-                        <td [ngClass]="[column.class ?? '', (column.classFunc ? column.classFunc(item) : '')]">
-                          <ng-container *ngTemplateOutlet="column.template; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
-                        </td>
-                      } @else {
-                        <td [ngClass]="[column.class ?? '', (column.classFunc ? column.classFunc(item) : '')]"
-                          [innerHTML]="(column.render ? column.render(item) : (column.field ? item[column.field] : undefined))">
-                        </td>
-                      }
-                    }
-                    @if (operationTpl || onEdit.observed || onDelete.observed || onOperationClick.observed) {
-                      <td class="operation-cell">
-                        <div class="flex flex flex-nowrap gap-2">
-                          @if (operationTpl) {
-                            <ng-container *ngTemplateOutlet="operationTpl; context: {$implicit: item}"></ng-container>
-                          }
-                          @if (showEditButton) {
-                            @if (onEdit.observed) {
-                              <p-button (onClick)="onEdit.emit(item)" [pTooltip]="'custom-table.edit' | translate" icon="fal fa-pencil" severity="warn"
-                                tooltipPosition="bottom" [size]="operationSize" />
-                            }
-                          }
-                          @if (showDeleteButton) {
-                            @if (onDelete.observed) {
-                              <p-button (onClick)="showDeleteDialog(item)" [pTooltip]="'custom-table.delete' | translate" icon="fal fa-trash-can"
-                                severity="danger" tooltipPosition="bottom" [size]="operationSize" />
-                            }
-                          }
-                          @if (onOperationClick.observed) {
-                            @if (onOperationClick.observed) {
-                              <p-button (onClick)="showOperationMenu(item, operationMenu, $event)" [pTooltip]="'custom-table.operation' | translate"
-                                icon="far fa-ellipsis-v" severity="secondary" tooltipPosition="bottom" [size]="operationSize" />
-                            }
-                          }
-                        </div>
-                      </td>
-                    }
-                  </tr>
-                  @if (last) {
-                    <tr>
-                      <td colspan="100" class="text-center" style="height: 100px;">
-                      </td>
-                    </tr>
-                  }
-                </ng-template>
-                <ng-template #expandedrow let-item>
-                  @if (expandedrowTpl) {
-                    <ng-container *ngTemplateOutlet="expandedrowTpl; context: {$implicit: item}"></ng-container>
-                  }
-                </ng-template>
-                <ng-template #emptymessage let-columns>
-                  @if (showEmptyMessage) {
-                    <tr>
-                      <td colspan="100" class="no-data">
-                        <div class="flex flex-column align-items-center gap-2">
-                          <div class="top">
-                            <i class="fal fa-inbox"></i>
-                            <span class="text">{{ 'custom-table.no-records-found' | translate: {row: (name ?? ('custom-table.rows' | translate))} }}</span>
-                          </div>
-                          @if (showAddButton) {
-                            @if (onAdd.observed) {
-                              <div>
-                                <p-button (onClick)="onAdd.emit()" [label]="'custom-table.add-first' | translate: {row: (name ?? ('custom-table.row' | translate))}" icon="fa fa-plus"
-                                  iconPos="right" severity="secondary" />
-                                </div>
-                              }
-                            }
-                          </div>
-                        </td>
-                      </tr>
-                    }
-                  </ng-template>
-                </p-table>
-              </div>
+          }
+          @if (!column.field) {
+          <div>
+            {{ column.header }}
+          </div>
+          }
+        </th>
+        }
+        @if (operationTpl || onEdit.observed || onDelete.observed) {
+        <th width="10"></th>
+        }
+      </tr>
+      @if (filterType == 'inline' && isFilterable) {
+      <tr class="filter-row">
+        @for (column of selectedColumns; track column) {
+        <th>
+          @if (column.field) {
+          <p-columnFilter #cf (input)="cf.applyFilter()" [field]="column.field" [placeholder]="'custom-table.search' | translate" matchMode="contains" type="text"></p-columnFilter>
+          }
+        </th>
+        }
+        @if (operationTpl || onEdit.observed || onDelete.observed) {
+        <th></th>
+        }
+      </tr>
+      }
+    </ng-template>
+    <ng-template #body let-expanded="expanded" let-item let-rowIndex="rowIndex" let-last="last">
+      @if (bodyTpl) {
+      <ng-container *ngTemplateOutlet="bodyTpl; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
+      }
+      <tr [ngClass]="rowClassField ? item[rowClassField] : ''" (mouseover)="onRowMouseOver.emit(item)">
+        @if (selectedItemsChange.observed) {
+        <td>
+          <p-checkbox [ngModel]="selectedItems.includes(item)" [binary]="true" (ngModelChange)="onSelect(item, $event)" />
+        </td>
+        }
+        @if (expandedrowTpl) {
+        <td>
+          <p-button [icon]="expanded ? 'fal fa-chevron-down' : 'fal fa-chevron-left'" [pRowToggler]="item" [plain]="true" [rounded]="true" [text]="true" pRipple type="button"
+            size="small" />
+        </td>
+        }
+        @if (showRowNumber) {
+        <td class="text-center">{{ rowIndex + 1 }}</td>
+        }
+        @for (column of selectedColumns; track column) {
+        @if (column.template) {
+        <td [ngClass]="[column.class ?? '', (column.classFunc ? column.classFunc(item) : '')]">
+          <ng-container *ngTemplateOutlet="column.template; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
+        </td>
+        } @else {
+        <td [ngClass]="[column.class ?? '', (column.classFunc ? column.classFunc(item) : '')]"
+          [innerHTML]="(column.render ? column.render(item) : (column.field ? item[column.field] : undefined))">
+        </td>
+        }
+        }
+        @if (operationTpl || onEdit.observed || onDelete.observed || onOperationClick.observed) {
+        <td class="operation-cell">
+          <div class="flex flex flex-nowrap gap-2">
+            @if (operationTpl) {
+            <ng-container *ngTemplateOutlet="operationTpl; context: {$implicit: item, size: operationSize}"></ng-container>
+            }
+            @if (showEditButton) {
+            @if (onEdit.observed) {
+            <p-button (onClick)="onEdit.emit(item)" [pTooltip]="'custom-table.edit' | translate" icon="fal fa-pencil" severity="warn" tooltipPosition="bottom"
+              [size]="operationSize" />
+            }
+            }
+            @if (showDeleteButton) {
+            @if (onDelete.observed) {
+            <p-button (onClick)="showDeleteDialog(item)" [pTooltip]="'custom-table.delete' | translate" icon="fal fa-trash-can" severity="danger" tooltipPosition="bottom"
+              [size]="operationSize" />
+            }
+            }
+            @if (onOperationClick.observed) {
+            @if (onOperationClick.observed) {
+            <p-button (onClick)="showOperationMenu(item, operationMenu, $event)" [pTooltip]="'custom-table.operation' | translate" icon="far fa-ellipsis-v" severity="secondary"
+              tooltipPosition="bottom" [size]="operationSize" />
+            }
+            }
+          </div>
+        </td>
+        }
+      </tr>
+      @if (last) {
+      <tr>
+        <td colspan="100" class="text-center" style="height: 100px;">
+        </td>
+      </tr>
+      }
+    </ng-template>
+    <ng-template #expandedrow let-item>
+      @if (expandedrowTpl) {
+      <ng-container *ngTemplateOutlet="expandedrowTpl; context: {$implicit: item}"></ng-container>
+      }
+    </ng-template>
+    <ng-template #emptymessage let-columns>
+      @if (showEmptyMessage) {
+      <tr>
+        <td colspan="100" class="no-data">
+          <div class="flex flex-column align-items-center gap-2">
+            <div class="top">
+              <i class="fal fa-inbox"></i>
+              <span class="text">{{ 'custom-table.no-records-found' | translate: {row: (name ?? ('custom-table.rows' | translate))} }}</span>
+            </div>
+            @if (showAddButton) {
+            @if (onAdd.observed) {
+            <div>
+              <p-button (onClick)="onAdd.emit()" [label]="'custom-table.add-first' | translate: {row: (name ?? ('custom-table.row' | translate))}" icon="fa fa-plus" iconPos="right"
+                severity="secondary" [size]="operationSize" />
+            </div>
+            }
+            }
+          </div>
+        </td>
+      </tr>
+      }
+    </ng-template>
+  </p-table>
+</div>
 
-              <p-menu #operationMenu [model]="operations" [popup]="true" appendTo="body" />
-              <p-menu #groupOperationMenu [model]="groupOperations" [popup]="true" appendTo="body"></p-menu>
+<p-menu #operationMenu [model]="operations" [popup]="true" appendTo="body" />
+<p-menu #groupOperationMenu [model]="groupOperations" [popup]="true" appendTo="body"></p-menu>
 
-              <p-custom-dialog [(visible)]="isDeleteDialogVisible" [header]="'custom-table.delete' | translate" size="xs">
-                <ng-template>
-                  <div class="my-3">
-                    {{ 'custom-table.delete-message' | translate }}
-                  </div>
-                  <div class="flex flex gap-2">
-                    <p-button class="w-full" (click)="deleteItemApprove()" [label]="'confirm.yes-sure' | translate" icon="fal fa-check" iconPos="right" severity="danger" />
-                    <p-button class="w-full" (click)="isDeleteDialogVisible = false" [label]="'confirm.cancel' | translate" icon="fal fa-times" iconPos="left" severity="secondary" />
-                  </div>
-                </ng-template>
-              </p-custom-dialog>
+<p-custom-dialog [(visible)]="isDeleteDialogVisible" [header]="'custom-table.delete' | translate" size="xs">
+  <ng-template>
+    <div class="my-3">
+      {{ 'custom-table.delete-message' | translate }}
+    </div>
+    <div class="flex flex gap-2">
+      <p-button class="w-full" (click)="deleteItemApprove()" [label]="'confirm.yes-sure' | translate" icon="fal fa-check" iconPos="right" severity="danger" />
+      <p-button class="w-full" (click)="isDeleteDialogVisible = false" [label]="'confirm.cancel' | translate" icon="fal fa-times" iconPos="left" severity="secondary" />
+    </div>
+  </ng-template>
+</p-custom-dialog>

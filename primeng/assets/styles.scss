@@ -58,6 +58,7 @@ html:root {
 }
 
 p-button {
+    line-height: .9em;
 
     &.w-full {
         display: flex;
@@ -110,10 +111,15 @@ p-ifta-label {
     p-date-picker,
     p-input-number,
     p-autocomplete,
+    p-auto-complete,
     [pinputtext],
     textarea {
         width: 100%;
         display: flex;
+    }
+
+    .p-autocomplete {
+        width: 100%;
     }
 
     .p-datepicker {
@@ -240,12 +246,12 @@ p-input-number .p-inputtext {
 }
 
 .p-button-icon-only {
-    --button-sm-padding-x: 0.425rem;
-    --button-sm-padding-y: 0.3rem;
+    --button-sm-padding-x: 0.35rem;
+    --button-sm-padding-y: 0.4rem;
     --button-padding-x: 0.475rem;
-    --button-padding-y: 0.6rem;
+    --button-padding-y: 0.5rem;
     --button-lg-padding-x: 0.575rem;
-    --button-lg-padding-y: 0.7rem;
+    --button-lg-padding-y: 0.6rem;
 }
 
 p-tabs {
@@ -260,6 +266,11 @@ p-tabs {
 }
 
 .p-iftalabel .p-select .p-select-label {
-    padding-block-start: var(--iftalabel-input-padding-top);
-    padding-block-end: var(--iftalabel-input-padding-bottom);
+    // padding-block-start: var(--iftalabel-input-padding-top);
+    // padding-block-end: var(--iftalabel-input-padding-bottom);
+}
+
+.p-select .p-select-label {
+    display: flex;
+    align-items: center;
 }
