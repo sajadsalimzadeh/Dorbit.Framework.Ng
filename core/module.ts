@@ -45,12 +45,12 @@ import {TooltipDirective} from './directives/tooltip.directive';
 import {ResponsiveDirective} from './directives/responsive.directive';
 import {HotKeyDirective} from './directives/hot-key.directive';
 
-import {DatePipe} from './pipes/date.pipe';
-import {JDatePipe} from './pipes/jdate.pipe';
+import {DateJalaliPipe} from './pipes/date-jalali.pipe';
 import {RDatePipe} from './pipes/rdate.pipe';
 import {TruncatePipe} from './pipes/truncate.pipe';
 import { NumberSanitizerDirective } from "./directives/number-sanitizer.directive";
 import { TimePipe } from "./pipes/time.pipe";
+import { DateGeregorianPipe } from "./pipes";
 
 export const ALL_MODULES = [
     TableModule,
@@ -106,8 +106,8 @@ export const ALL_DIRECTIVES = [
 ];
 
 export const ALL_PIPES = [
-    DatePipe,
-    JDatePipe,
+    DateJalaliPipe,
+    DateGeregorianPipe,
     RDatePipe,
     TruncatePipe,
 ];

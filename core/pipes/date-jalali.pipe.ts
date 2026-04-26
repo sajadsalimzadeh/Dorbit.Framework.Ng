@@ -7,8 +7,8 @@ import moment from "jalali-moment";
     name: 'jdate',
     standalone: true
 })
-export class JDatePipe {
-    transform(value?: string, format: string = 'YYYY/MM/DD HH:mm:ss', utc: boolean = true): string {
+export class DateJalaliPipe {
+    transform(value?: string, format: string = 'yyyy/MM/DD HH:mm:ss', utc: boolean = true): string {
         if (!value) return '';
         try {
             return (utc ? moment.utc(value).local() : moment(value)).locale('fa').local().format(format);

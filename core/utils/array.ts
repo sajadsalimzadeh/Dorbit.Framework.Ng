@@ -29,6 +29,8 @@ declare global {
         clear(): void;
 
         selectMany<TR>(func?: (x: T) => TR[]): TR[];
+
+        includesAt(value: any, key: string): boolean;
     }
 }
 
@@ -133,4 +135,8 @@ Array.prototype.selectMany = function (func: (x: any) => any[]) {
         result.push(...func(item));
     }
     return result;
+}
+
+Array.prototype.includesAt = function (value: any, key: string) {
+    return this.some(x => x[key] == value)
 }

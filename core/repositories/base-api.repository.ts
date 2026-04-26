@@ -1,6 +1,6 @@
 import {HttpClient, HttpErrorResponse, HttpEvent, HttpHandler, HttpRequest, HttpResponse} from "@angular/common/http";
 import {TranslateService} from "@ngx-translate/core";
-import {InjectionToken, Injector} from "@angular/core";
+import {InjectionToken, Injector, signal, WritableSignal} from "@angular/core";
 import {catchError, finalize, Observable, tap, throwError} from "rxjs";
 import {Colors} from "../types";
 import {MessageService} from "../components/message/services/message.service";
@@ -25,8 +25,8 @@ export abstract class BaseApiRepository {
         this.http = new CustomHttpClient(this.handler);
     }
 
-    get isLoading() {
-        return this.handler.isLoading;
+    get loading() {
+        return this.handler.loading;
     }
 
     getUrl(url: string) {
@@ -38,15 +38,13 @@ class CustomHttpHandler extends HttpHandler {
     private progressCount = 0;
     private readonly handler: HttpHandler;
 
+    loading: WritableSignal<boolean> = signal(false);
+
     constructor(
         protected injector: Injector,
         private api: BaseApiRepository) {
         super();
         this.handler = injector.get(HttpHandler)
-    }
-
-    get isLoading() {
-        return this.progressCount > 0;
     }
 
     override handle(req: HttpRequest<any>): Observable<HttpEvent<any>> {
@@ -75,8 +73,10 @@ class CustomHttpHandler extends HttpHandler {
         }
 
         this.progressCount++;
+        this.loading.set(true);
         return this.handler.handle(req).pipe(finalize(() => {
             this.progressCount--;
+            if(this.progressCount <= 0) this.loading.set(false);
         })).pipe(tap(e => {
             if (e instanceof HttpResponse) {
                 if (e.ok) {

@@ -8,16 +8,16 @@
     <div class="start">
       @if (onReload.observed) {
       <p-button (onClick)="onReload.emit()" [label]="'custom-table.reload' | translate" icon="fa fa-sync" iconPos="right" severity="primary"
-        [pTooltip]="'custom-table.reload' | translate" [size]="tableSize" />
+        [pTooltip]="'custom-table.reload' | translate" [size]="operationSize" />
       }
       @if (onAdd.observed && showAddButton) {
       <p-button (onClick)="onAdd.emit()" icon="fa fa-plus" iconPos="right" severity="success"
         [pTooltip]="'custom-table.add' | translate: {row: (name ?? ('custom-table.row' | translate))}"
-        [label]="'custom-table.add' | translate: {row: (name ?? ('custom-table.row' | translate))}" [size]="tableSize" />
+        [label]="'custom-table.add' | translate: {row: (name ?? ('custom-table.row' | translate))}" [size]="operationSize" />
       }
       @if (onGroupOperationClick.observed && selectedItems.length > 0) {
       <p-button severity="secondary" icon="far fa-ellipsis-v" iconPos="right" [label]="'custom-table.group-operation' | translate"
-        [pTooltip]="'custom-table.group-operation' | translate" (click)="showGroupOperation(groupOperationMenu, $event)" [size]="tableSize"></p-button>
+        [pTooltip]="'custom-table.group-operation' | translate" (click)="showGroupOperation(groupOperationMenu, $event)" [size]="operationSize"></p-button>
       }
       @if (captionTpl) {
       <ng-container *ngTemplateOutlet="captionTpl"></ng-container>
@@ -26,15 +26,15 @@
     <div class="end">
       @if (showColumnSelector) {
       <p-multi-select class="columns-selection" display="chip" (onChange)="saveSelectedColumnState()" [(ngModel)]="selectedColumns" [options]="columns" display="chip"
-        optionLabel="header" [selectedItemsLabel]="'custom-table.selected-columns' | translate" [maxSelectedLabels]="0" appendTo="body" [size]="tableSize!"></p-multi-select>
+        optionLabel="header" [selectedItemsLabel]="'custom-table.selected-columns' | translate" [maxSelectedLabels]="0" appendTo="body" [size]="operationSize"></p-multi-select>
       }
       @if (showExportButton) {
       <p-button (onClick)="exportToExcel()" [label]="'custom-table.export' | translate" icon="fal fa-download" iconPos="right" severity="success" [outlined]="true"
-        [pTooltip]="'custom-table.export' | translate" [size]="tableSize" />
+        [pTooltip]="'custom-table.export' | translate" [size]="operationSize" />
       }
       @if (showResetButton && isStateChaged) {
       <p-button (onClick)="resetState()" [label]="'custom-table.reset-state' | translate" icon="fal fa-filter-slash" iconPos="right" severity="danger" [outlined]="!isStateChaged"
-        [size]="tableSize" />
+        [size]="operationSize" />
       }
     </div>
   </div>
