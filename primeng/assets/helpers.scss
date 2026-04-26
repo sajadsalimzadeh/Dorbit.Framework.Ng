@@ -1,0 +1,149 @@
+@use "sass:list";
+@use "sass:math";
+@use "variables";
+
+.ltr {
+    direction: ltr;
+}
+
+.rtl {
+    direction: rtl;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-justify {
+    text-align: justify;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-start {
+    text-align: start;
+}
+
+.text-end {
+    text-align: end;
+}
+
+@for $i from 0 through 12 {
+    .gap-#{$i} {
+        gap: var(--size-#{$i});
+    }
+}
+
+@for $i from 0 through 12 {
+    .flex-#{$i} {
+        flex: $i;
+    }
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-row {
+    flex-direction: row;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.align-items-end {
+    align-items: end;
+}
+
+.align-items-start {
+    align-items: start;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+.justify-content-end {
+    justify-content: end;
+}
+
+.justify-content-start {
+    justify-content: start;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+}
+
+.justify-content-around {
+    justify-content: space-around;
+}
+
+.grid {
+    display: grid;
+    margin: 0 !important;
+}
+
+@for $i from 1 through 12 {
+    .col-span-#{$i} {
+        grid-column: span $i;
+    }
+
+    .row-span-#{$i} {
+        grid-row: span $i;
+    }
+
+    .grid-cols-#{$i} {
+        grid-template-columns: repeat($i, 1fr);
+
+        &.grid-autofill {
+            grid-template-columns: repeat(auto-fill, minmax(#{math.div(100, $i)}, 1fr));
+        }
+    }
+}
+
+@each $screen in variables.$screens {
+    $name: list.nth($screen, 1);
+    $resolution: list.nth($screen, 2);
+
+    @media (min-width: $resolution) {
+        @for $i from 1 through 12 {
+            .#{$name}\:grid-cols-#{$i} {
+                grid-template-columns: repeat($i, 1fr);
+
+                &.grid {
+                    display: grid;
+                    margin: 0 !important;
+                }
+
+            }
+        }
+    }
+}
+
+.plain-text {
+    unicode-bidi: plaintext;
+}
+
+.white-space-nowrap {
+    white-space: nowrap;
+}
+
+.white-space-pre {
+    white-space: pre;
+}
+
+.white-space-pre-wrap {
+    white-space: pre-wrap;
+}
