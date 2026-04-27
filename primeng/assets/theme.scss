@@ -4,27 +4,25 @@
 @use "sass:color";
 @use "variables";
 
-@function create-color-variants($custom-colors) {
+@function create-color-variants($custom-colors, $color-offset: 3%) {
     $base-colors: map.merge(variables.$base-colors, $custom-colors);
 
     $colors: (
     );
 
+    @each $name, $color in $base-colors {
+        $colors: map.set($colors, $name, $color);
+        
+        $color-step: 4.6%;
+        @for $i from 0 through 10 {
+            $colors: map.set($colors, '#{$name}-#{500 - ($i * 50)}', color.adjust($color, $lightness: ($color-offset + $i * $color-step)));
+            $colors: map.set($colors, '#{$name}-#{500 + ($i * 50)}', color.adjust($color, $lightness: ($color-offset + $i * $color-step * 1.5) * -1));
 
-@each $name, $color in $base-colors {
-    $colors: map.set($colors, $name, $color);
-    
-    $color-step: 6.1%;
-    $color-offset: 2%;
-    @for $i from 0 through 10 {
-        $colors: map.set($colors, '#{$name}-#{500 - ($i * 50)}', color.adjust($color, $lightness: ($color-offset + $i * $color-step)));
-        $colors: map.set($colors, '#{$name}-#{500 + ($i * 50)}', color.adjust($color, $lightness: ($color-offset + $i * $color-step) * -1));
-
-        $color-step: $color-step - 0.1%;
+            $color-step: $color-step - 0.1%;
+        }
     }
-}
 
-@return $colors;
+    @return $colors;
 }
 
 @mixin init($colors) {
@@ -37,7 +35,16 @@
     }
 
     html:root {
-        $overwrite-primeng-colors: ("primary", "secondary", "green");
+        $overwrite-primeng-colors: (
+            "primary",
+            "secondary",
+            "danger",
+            "warning",
+            "info",
+            "link",
+            "success",
+        );
+    
         @each $name, $color in $colors {
             @each $overwrite-primeng-color in $overwrite-primeng-colors {
                 @if string.index($name, $overwrite-primeng-color) != null  {
