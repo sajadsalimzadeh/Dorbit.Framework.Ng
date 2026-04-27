@@ -115,10 +115,6 @@ p-ifta-label {
             .p-multiselect-label-container {}
         }
     }
-
-    .p-select .p-select-label {
-        // padding-top: calc(var(--form-field-padding-y) * 2.5) !important;
-    }
 }
 
 p-select.w-full,
@@ -201,14 +197,4 @@ p-tabs {
     .p-tablist-content {
         border-bottom: 2px solid var(--primary-100);
     }
-}
-
-.p-iftalabel .p-select .p-select-label {
-    // padding-block-start: var(--iftalabel-input-padding-top);
-    // padding-block-end: var(--iftalabel-input-padding-bottom);
-}
-
-.p-select .p-select-label {
-    display: flex;
-    align-items: center;
 }

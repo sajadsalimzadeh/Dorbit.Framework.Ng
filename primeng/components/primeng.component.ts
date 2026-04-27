@@ -159,17 +159,21 @@ export abstract class PrimengComponent<T = any> implements OnInit, OnChanges, On
     }
 
     validateForm(form: FormGroup) {
+        let hasError = false;
         let hasCustomMessage = false;
-        for (const formKey in FormUtil.getErrors(form)) {
-            const translateKey = `message.form-invalid.${formKey}`;
+        const errors = FormUtil.getErrors(form);
+        for (const errorKey in errors) {
+            hasError = true;
+            const translateKey = `message.form-invalid.${errorKey}`;
             const translate = this.t(translateKey);
             if (translate == translateKey) continue;
             this.warn(translate);
             hasCustomMessage = true;
         }
-        if (!hasCustomMessage) {
+        if (hasError && !hasCustomMessage) {
             this.warn(this.t('message.form-invalid'));
         }
+        return !hasError;
     }
 
 
