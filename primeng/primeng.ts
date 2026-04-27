@@ -67,6 +67,7 @@ import { JalaliDatePickerComponent } from './components/jalali-date-picker/jalal
 import { CustomCheckboxComponent } from './components/custom-checkbox/custom-checkbox.component';
 import { AutoFocusDirective } from './components/auto-focus.directive';
 import { InputOtpDirective } from './components/input-otp.directive';
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 const COMPONENTS = [
     CustomTableComponent,
@@ -142,6 +143,7 @@ const PRIMENG_MODULES = [
     SplitterModule,
     TagModule,
     StepperModule,
+    SelectButtonModule
 ];
 
 @NgModule({

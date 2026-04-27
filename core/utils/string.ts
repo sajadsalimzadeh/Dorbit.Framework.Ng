@@ -52,4 +52,8 @@ export class StringUtil {
         if (persianAlphabet.includes(str[0])) return 'rtl';
         return 'ltr';
     }
+
+    static nameToChar(str: string, defaultValue: string = 'x') {
+        return (str ? str.split(' ').map(x => x[0]).join('') : defaultValue).toUpperCase();
+    }
 }
