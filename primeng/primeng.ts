@@ -77,12 +77,13 @@ const COMPONENTS = [
 ];
 
 const MODULES = [
+    JalaliDatePickerComponent,
+    InputOtpDirective,
+    
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     TranslateModule,
-    JalaliDatePickerComponent,
-    InputOtpDirective,
 ]
 
 const PRIMENG_MODULES = [
@@ -148,16 +149,16 @@ const PRIMENG_MODULES = [
 
 @NgModule({
     imports: [
-        ...MODULES,
-        ...PRIMENG_MODULES,
+        PRIMENG_MODULES,
+        MODULES,
     ],
     exports: [
-        ...MODULES,
-        ...PRIMENG_MODULES,
-        ...COMPONENTS
+        PRIMENG_MODULES,
+        MODULES,
+        COMPONENTS
     ],
     declarations: [
-        ...COMPONENTS
+        COMPONENTS
     ],
     providers: [],
 })

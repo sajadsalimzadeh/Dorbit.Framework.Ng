@@ -189,12 +189,7 @@ p-input-number .p-inputtext {
 }
 
 .p-button-icon-only {
-    --button-sm-padding-x: 0.35rem;
-    --button-sm-padding-y: 0.4rem;
-    --button-padding-x: 0.475rem;
-    --button-padding-y: 0.5rem;
-    --button-lg-padding-x: 0.575rem;
-    --button-lg-padding-y: 0.6rem;
+    aspect-ratio: 1/1;
 }
 
 p-tabs {

@@ -41,6 +41,124 @@
 }
 
 @for $i from 0 through 12 {
+    .p-#{$i} {
+        padding-top: var(--size-#{$i});
+        padding-bottom: var(--size-#{$i});
+        padding-left: var(--size-#{$i});
+        padding-right: var(--size-#{$i});
+    }
+
+    .py-#{$i} {
+        padding-top: var(--size-#{$i});
+        padding-bottom: var(--size-#{$i});
+    }
+
+    .px-#{$i} {
+        padding-left: var(--size-#{$i});
+        padding-right: var(--size-#{$i});
+    }
+
+    .pt-#{$i} {
+        padding-top: var(--size-#{$i});
+    }
+
+    .pb-#{$i} {
+        padding-bottom: var(--size-#{$i});
+    }
+
+    .pr-#{$i} {
+        padding-right: var(--size-#{$i});
+    }
+
+    .pl-#{$i} {
+        padding-left: var(--size-#{$i});
+    }
+
+    .pi-#{$i} {
+        padding-inline: var(--size-#{$i});
+    }
+
+    .pis-#{$i} {
+        padding-inline-start: var(--size-#{$i});
+    }
+
+    .pie-#{$i} {
+        padding-inline-end: var(--size-#{$i});
+    }
+
+    .pb-#{$i} {
+        padding-block: var(--size-#{$i});
+    }
+
+    .pbs-#{$i} {
+        padding-block-start: var(--size-#{$i});
+    }
+
+    .pbe-#{$i} {
+        padding-block-end: var(--size-#{$i});
+    }
+}
+
+@for $i from 0 through 12 {
+    .m-#{$i} {
+        margin-top: var(--size-#{$i});
+        margin-bottom: var(--size-#{$i});
+        margin-left: var(--size-#{$i});
+        margin-right: var(--size-#{$i});
+    }
+
+    .my-#{$i} {
+        margin-top: var(--size-#{$i});
+        margin-bottom: var(--size-#{$i});
+    }
+
+    .mx-#{$i} {
+        margin-left: var(--size-#{$i});
+        margin-right: var(--size-#{$i});
+    }
+
+    .mt-#{$i} {
+        margin-top: var(--size-#{$i});
+    }
+
+    .mb-#{$i} {
+        margin-bottom: var(--size-#{$i});
+    }
+
+    .mr-#{$i} {
+        margin-right: var(--size-#{$i});
+    }
+
+    .ml-#{$i} {
+        margin-left: var(--size-#{$i});
+    }
+
+    .mi-#{$i} {
+        margin-inline: var(--size-#{$i});
+    }
+
+    .mis-#{$i} {
+        margin-inline-start: var(--size-#{$i});
+    }
+
+    .mie-#{$i} {
+        margin-inline-end: var(--size-#{$i});
+    }
+
+    .mb-#{$i} {
+        margin-block: var(--size-#{$i});
+    }
+
+    .mbs-#{$i} {
+        margin-block-start: var(--size-#{$i});
+    }
+
+    .mbe-#{$i} {
+        margin-block-end: var(--size-#{$i});
+    }
+}
+
+@for $i from 0 through 12 {
     .flex-#{$i} {
         flex: $i;
     }
