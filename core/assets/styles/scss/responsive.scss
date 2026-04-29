@@ -136,7 +136,7 @@ $i: 1;
     $i: $i + 1;
 }
 
-@each $screen in variables.$screens {
+@each $name, $resolution in variables.$screens {
     $name: list.nth($screen, 1);
     $resolution: list.nth($screen, 2);
     

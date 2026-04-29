@@ -75,6 +75,8 @@
                 }
             }
         }
+
+        --p-dialog-content-padding: var(--p-overlay-modal-padding);
     }
 
     @each $name, $color in $colors {
@@ -119,10 +121,6 @@
             background-color: var(--secondary-50);
         }
     }
-}
-
-html:root {
-
 }
 
 p-button {
