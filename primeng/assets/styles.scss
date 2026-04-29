@@ -1,8 +1,125 @@
 @use "sass:list";
+@use "sass:map";
+@use "sass:string";
+@use "sass:color";
 @use "typography";
 @use "variables";
 @use "table";
 @use "helpers";
+
+
+@function create-color-variants($custom-colors, $color-offset: 3%) {
+    $base-colors: map.merge(variables.$base-colors, $custom-colors);
+
+    $colors: (
+    );
+
+    @each $name, $color in $base-colors {
+        $colors: map.set($colors, $name, $color);
+        
+        $color-step: 4.6%;
+        @for $i from 0 through 10 {
+            $colors: map.set($colors, '#{$name}-#{500 - ($i * 50)}', color.adjust($color, $lightness: ($color-offset + $i * $color-step)));
+            $colors: map.set($colors, '#{$name}-#{500 + ($i * 50)}', color.adjust($color, $lightness: ($color-offset + $i * $color-step * 1.5) * -1));
+
+            $color-step: $color-step - 0.1%;
+        }
+    }
+
+    @return $colors;
+}
+
+@function unique-list-join($list1, $list2) {
+    $result: ();
+  
+    // merge first
+    $combined: list.join($list1, $list2);
+  
+    @each $item in $combined {
+      @if list.index($result, $item) == null {
+        $result: list.append($result, $item);
+      }
+    }
+  
+    @return $result;
+  }
+
+@mixin init($custom-colors) {
+
+    $colors: create-color-variants($custom-colors);
+
+    :root {
+
+        @each $name, $color in $colors {
+            --#{$name}: #{$color};
+        }
+    }
+
+    html:root {
+        $overwrite-primeng-colors: (
+            "primary",
+            "secondary",
+            "danger",
+            "warning",
+            "info",
+            "link",
+            "success",
+        );
+    
+        $overwrite-primeng-colors: unique-list-join($overwrite-primeng-colors, map.keys($custom-colors));
+
+        @each $name, $color in $colors {
+            @each $overwrite-primeng-color in $overwrite-primeng-colors {
+                @if string.index($name, $overwrite-primeng-color) != null  {
+                    --p-#{$name}: var(--#{$name});
+                }
+            }
+        }
+    }
+
+    @each $name, $color in $colors {
+
+        .bg-#{$name} {
+            background-color: var(--#{$name});
+        }
+    }
+
+    @each $name, $color in $colors {
+        .color-#{$name} {
+            color: var(--#{$name});
+        }
+    }
+
+    .p-button-outlined {
+        &.p-button-success {
+            background-color: var(--success-50);
+        }
+
+        &.p-button-danger {
+            background-color: var(--danger-50);
+        }
+
+        &.p-button-warning {
+            background-color: var(--warning-50);
+        }
+
+        &.p-button-info {
+            background-color: var(--info-50);
+        }
+
+        &.p-button-link {
+            background-color: var(--link-50);
+        }
+
+        &.p-button-primary {
+            background-color: var(--primary-50);
+        }
+
+        &.p-button-secondary {
+            background-color: var(--secondary-50);
+        }
+    }
+}
 
 html:root {
 
