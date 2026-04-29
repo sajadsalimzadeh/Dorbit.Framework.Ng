@@ -133,7 +133,7 @@
         margin-left: var(--size-#{$i});
     }
 
-    .mi-#{$i} {
+    .mil-#{$i} {
         margin-inline: var(--size-#{$i});
     }
 
@@ -145,7 +145,7 @@
         margin-inline-end: var(--size-#{$i});
     }
 
-    .mb-#{$i} {
+    .mbl-#{$i} {
         margin-block: var(--size-#{$i});
     }
 
@@ -264,4 +264,12 @@
 
 .white-space-pre-wrap {
     white-space: pre-wrap;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.h-full {
+    height: 100%;
 }

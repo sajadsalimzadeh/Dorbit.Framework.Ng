@@ -12,6 +12,8 @@ import {NumberUtil} from "../../utils/number";
 })
 
 export class ProgressCircleComponent extends AbstractComponent {
+    NumberUtil = NumberUtil;
+
     @Input({required: true}) diameter!: number;
     @Input() startDegree: number = 90;
     @Input() max: number = 100;
@@ -23,10 +25,7 @@ export class ProgressCircleComponent extends AbstractComponent {
 
     private svg: any;
     private slice: any;
-    private overlay: any;
-    private text: any;
     private strokeWidth: any;
-    private radius: any;
     private preValue?: number;
     private interval: any;
 
@@ -48,23 +47,18 @@ export class ProgressCircleComponent extends AbstractComponent {
     }
 
     private create() {
-        const container = this.elementRef.nativeElement;
         this.strokeWidth = this.diameter / 8;
-        this.radius = this.diameter / 2 - this.strokeWidth / 2;
-        container.childNodes.forEach(x => x.remove());
-        this.createSvg();
-        this.createOverlay();
-        this.createSlice();
-        this.createText();
-        container.appendChild(this.svg);
-        this.update();
-    }
-
-    private createSvg() {
-        let svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        
+        const svg = this.elementRef.nativeElement.querySelector('svg');
+        if (!svg) return;
         svg.setAttribute("width", `${this.diameter}px`);
         svg.setAttribute("height", `${this.diameter}px`);
+        svg.childNodes.forEach(x => x.remove());
         this.svg = svg;
+
+        this.createOverlay();
+        this.createSlice();
+        this.update();
     }
 
     private createSlice() {
@@ -85,20 +79,6 @@ export class ProgressCircleComponent extends AbstractComponent {
         circle.setAttribute("stroke-width", this.strokeWidth);
         circle.setAttribute("class", "overlay");
         this.svg.appendChild(circle);
-        this.overlay = circle;
-    }
-
-    private createText() {
-        const fontSize = this.diameter / 3.5;
-        let text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        text.setAttribute("x", '50%');
-        text.setAttribute("y", '50%');
-        text.setAttribute("dominant-baseline", 'middle');
-        text.setAttribute("text-anchor", 'middle');
-        text.setAttribute("font-size", fontSize + '');
-        text.innerHTML = NumberUtil.format(this.value, 2);
-        this.svg.appendChild(text);
-        this.text = text;
     }
 
     private polarToCartesian(centerX: number, centerY: number, radius: number, angleInDegrees: number) {
@@ -147,7 +127,6 @@ export class ProgressCircleComponent extends AbstractComponent {
             const xy = this.diameter / 2 - this.strokeWidth / 2;
             const d = this.describeArc(xy, xy, xy, 180, 180 + c);
             this.slice.setAttribute("d", d);
-            this.text.innerHTML = `${value.toFixed(this.valueFractionDigits)}`;
             if (targetValue > value) value += step;
             else value -= step;
         };

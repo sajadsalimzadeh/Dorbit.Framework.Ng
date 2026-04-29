@@ -1,4 +1,5 @@
 @use "sass:map";
+@use "sass:list";
 @use "sass:string";
 @use "sass:math";
 @use "sass:color";
@@ -25,7 +26,24 @@
     @return $colors;
 }
 
-@mixin init($colors) {
+@function unique-list-join($list1, $list2) {
+    $result: ();
+  
+    // merge first
+    $combined: list.join($list1, $list2);
+  
+    @each $item in $combined {
+      @if list.index($result, $item) == null {
+        $result: list.append($result, $item);
+      }
+    }
+  
+    @return $result;
+  }
+
+@mixin init($custom-colors) {
+
+    $colors: create-color-variants($custom-colors);
 
     :root {
 
@@ -45,6 +63,8 @@
             "success",
         );
     
+        $overwrite-primeng-colors: unique-list-join($overwrite-primeng-colors, map.keys($custom-colors));
+
         @each $name, $color in $colors {
             @each $overwrite-primeng-color in $overwrite-primeng-colors {
                 @if string.index($name, $overwrite-primeng-color) != null  {
