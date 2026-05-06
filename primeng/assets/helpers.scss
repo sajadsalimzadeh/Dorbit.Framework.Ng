@@ -2,301 +2,323 @@
 @use "sass:math";
 @use "variables";
 
-@for $i from 0 through 12 {
-    .gap-#{$i} {
-        gap: var(--size-#{$i});
+@mixin init($colors) {
+  @each $name, $color in $colors {
+    .bg-#{$name} {
+      background-color: var(--#{$name});
     }
-}
+  }
 
-@for $i from 0 through 12 {
+  @each $name, $color in $colors {
+    .color-#{$name} {
+      color: var(--#{$name});
+    }
+  }
+
+  @for $i from 0 through 12 {
+    .gap-#{$i} {
+      gap: var(--size-#{$i});
+    }
+  }
+
+  @for $i from 0 through 12 {
     .p-#{$i} {
-        padding-top: var(--size-#{$i});
-        padding-bottom: var(--size-#{$i});
-        padding-left: var(--size-#{$i});
-        padding-right: var(--size-#{$i});
+      padding-top: var(--size-#{$i});
+      padding-bottom: var(--size-#{$i});
+      padding-left: var(--size-#{$i});
+      padding-right: var(--size-#{$i});
     }
 
     .py-#{$i} {
-        padding-top: var(--size-#{$i});
-        padding-bottom: var(--size-#{$i});
+      padding-top: var(--size-#{$i});
+      padding-bottom: var(--size-#{$i});
     }
 
     .px-#{$i} {
-        padding-left: var(--size-#{$i});
-        padding-right: var(--size-#{$i});
+      padding-left: var(--size-#{$i});
+      padding-right: var(--size-#{$i});
     }
 
     .pt-#{$i} {
-        padding-top: var(--size-#{$i});
+      padding-top: var(--size-#{$i});
     }
 
     .pb-#{$i} {
-        padding-bottom: var(--size-#{$i});
+      padding-bottom: var(--size-#{$i});
     }
 
     .pr-#{$i} {
-        padding-right: var(--size-#{$i});
+      padding-right: var(--size-#{$i});
     }
 
     .pl-#{$i} {
-        padding-left: var(--size-#{$i});
+      padding-left: var(--size-#{$i});
     }
 
     .pi-#{$i} {
-        padding-inline: var(--size-#{$i});
+      padding-inline: var(--size-#{$i});
     }
 
     .pis-#{$i} {
-        padding-inline-start: var(--size-#{$i});
+      padding-inline-start: var(--size-#{$i});
     }
 
     .pie-#{$i} {
-        padding-inline-end: var(--size-#{$i});
+      padding-inline-end: var(--size-#{$i});
     }
 
     .pb-#{$i} {
-        padding-block: var(--size-#{$i});
+      padding-block: var(--size-#{$i});
     }
 
     .pbs-#{$i} {
-        padding-block-start: var(--size-#{$i});
+      padding-block-start: var(--size-#{$i});
     }
 
     .pbe-#{$i} {
-        padding-block-end: var(--size-#{$i});
+      padding-block-end: var(--size-#{$i});
     }
-}
+  }
 
-@for $i from 0 through 12 {
+  @for $i from 0 through 12 {
     .m-#{$i} {
-        margin-top: var(--size-#{$i});
-        margin-bottom: var(--size-#{$i});
-        margin-left: var(--size-#{$i});
-        margin-right: var(--size-#{$i});
+      margin-top: var(--size-#{$i});
+      margin-bottom: var(--size-#{$i});
+      margin-left: var(--size-#{$i});
+      margin-right: var(--size-#{$i});
     }
 
     .my-#{$i} {
-        margin-top: var(--size-#{$i});
-        margin-bottom: var(--size-#{$i});
+      margin-top: var(--size-#{$i});
+      margin-bottom: var(--size-#{$i});
     }
 
     .mx-#{$i} {
-        margin-left: var(--size-#{$i});
-        margin-right: var(--size-#{$i});
+      margin-left: var(--size-#{$i});
+      margin-right: var(--size-#{$i});
     }
 
     .mt-#{$i} {
-        margin-top: var(--size-#{$i});
+      margin-top: var(--size-#{$i});
     }
 
     .mb-#{$i} {
-        margin-bottom: var(--size-#{$i});
+      margin-bottom: var(--size-#{$i});
     }
 
     .mr-#{$i} {
-        margin-right: var(--size-#{$i});
+      margin-right: var(--size-#{$i});
     }
 
     .ml-#{$i} {
-        margin-left: var(--size-#{$i});
+      margin-left: var(--size-#{$i});
     }
 
     .mil-#{$i} {
-        margin-inline: var(--size-#{$i});
+      margin-inline: var(--size-#{$i});
     }
 
     .mis-#{$i} {
-        margin-inline-start: var(--size-#{$i});
+      margin-inline-start: var(--size-#{$i});
     }
 
     .mie-#{$i} {
-        margin-inline-end: var(--size-#{$i});
+      margin-inline-end: var(--size-#{$i});
     }
 
     .mbl-#{$i} {
-        margin-block: var(--size-#{$i});
+      margin-block: var(--size-#{$i});
     }
 
     .mbs-#{$i} {
-        margin-block-start: var(--size-#{$i});
+      margin-block-start: var(--size-#{$i});
     }
 
     .mbe-#{$i} {
-        margin-block-end: var(--size-#{$i});
+      margin-block-end: var(--size-#{$i});
     }
-}
+  }
 
-.ltr {
+  .ltr {
     direction: ltr;
-}
+  }
 
-.rtl {
+  .rtl {
     direction: rtl;
-}
+  }
 
-.text-center {
+  .text-center {
     text-align: center !important;
-}
+  }
 
-.text-justify {
+  .text-justify {
     text-align: justify !important;
-}
+  }
 
-.text-left {
+  .text-left {
     text-align: left !important;
-}
+  }
 
-.text-right {
+  .text-right {
     text-align: right !important;
-}
+  }
 
-.text-start {
+  .text-start {
     text-align: start !important;
-}
+  }
 
-.text-end {
+  .text-end {
     text-align: end !important;
-}
+  }
 
-.plain-text {
+  .plain-text {
     unicode-bidi: plaintext;
-}
+  }
 
-.white-space-nowrap {
+  .white-space-nowrap {
     white-space: nowrap;
-}
+  }
 
-.white-space-pre {
+  .white-space-pre {
     white-space: pre;
-}
+  }
 
-.white-space-pre-wrap {
+  .white-space-pre-wrap {
     white-space: pre-wrap;
-}
+  }
 
-.w-full {
+  .w-full {
     width: 100%;
-}
+  }
 
-.h-full {
+  .h-full {
     height: 100%;
-}
+  }
 
-.hidden {
+  .hidden {
     display: none;
-}
+  }
 
-@each $screen in variables.$screens {
+  @each $screen in variables.$screens {
     $name: list.nth($screen, 1);
     $resolution: list.nth($screen, 2);
 
     @media (min-width: $resolution) {
-        .#{$name}\:hidden {
-            display: none;
-        }
+      .#{$name}\:hidden {
+        display: none;
+      }
 
-        .#{$name}\:block {
-            display: block;
-        }
+      .#{$name}\:block {
+        display: block;
+      }
 
-        .#{$name}\:flex {
-            display: flex;
-        }
+      .#{$name}\:flex {
+        display: flex;
+      }
 
-        .#{$name}\:grid {
-            display: grid;
-        }
+      .#{$name}\:grid {
+        display: grid;
+      }
     }
-}
+  }
 
-@for $i from 0 through 12 {
+  @for $i from 0 through 12 {
     .flex-#{$i} {
-        flex: $i;
+      flex: $i;
     }
-}
+  }
 
-.flex {
+  .flex {
     display: flex;
-}
+  }
 
-.flex-row {
+  .flex-row {
     flex-direction: row;
-}
+  }
 
-.flex-column {
+  .flex-column {
     flex-direction: column;
-}
+  }
 
-.align-items-center {
+  .align-items-center {
     align-items: center;
-}
+  }
 
-.align-items-end {
+  .align-items-end {
     align-items: end;
-}
+  }
 
-.align-items-start {
+  .align-items-start {
     align-items: start;
-}
+  }
 
-.justify-content-center {
+  .justify-content-center {
     justify-content: center;
-}
+  }
 
-.justify-content-end {
+  .justify-content-end {
     justify-content: end;
-}
+  }
 
-.justify-content-start {
+  .justify-content-start {
     justify-content: start;
-}
+  }
 
-.justify-content-between {
+  .justify-content-between {
     justify-content: space-between;
-}
+  }
 
-.justify-content-around {
+  .justify-content-around {
     justify-content: space-around;
-}
+  }
 
-.grid {
+  .grid {
     display: grid;
     margin: 0 !important;
-}
+  }
 
-@for $i from 1 through 12 {
+  @for $i from 1 through 12 {
     .col-span-#{$i} {
-        grid-column: span $i;
+      grid-column: span $i;
     }
 
     .row-span-#{$i} {
-        grid-row: span $i;
+      grid-row: span $i;
     }
 
     .grid-cols-#{$i} {
-        grid-template-columns: repeat($i, 1fr);
+      grid-template-columns: repeat($i, 1fr);
 
-        &.grid-autofill {
-            grid-template-columns: repeat(auto-fill, minmax(#{math.div(100, $i)}, 1fr));
-        }
+      &.grid-autofill {
+        grid-template-columns: repeat(
+          auto-fill,
+          minmax(#{math.div(100, $i)}, 1fr)
+        );
+      }
     }
-}
 
-@each $screen in variables.$screens {
+    @for $i from 1 through 12 {
+      .w-#{$i} {
+        width: #{math.div(100%, 12) * $i};
+      }
+    }
+  }
+
+  @each $screen in variables.$screens {
     $name: list.nth($screen, 1);
     $resolution: list.nth($screen, 2);
 
     @media (min-width: $resolution) {
-        @for $i from 1 through 12 {
-            .#{$name}\:grid-cols-#{$i} {
-                grid-template-columns: repeat($i, 1fr);
+      @for $i from 1 through 12 {
+        .#{$name}\:grid-cols-#{$i} {
+          grid-template-columns: repeat($i, 1fr);
 
-                &.grid {
-                    display: grid;
-                    margin: 0 !important;
-                }
-
-            }
+          &.grid {
+            display: grid;
+            margin: 0 !important;
+          }
         }
+      }
     }
+  }
 }

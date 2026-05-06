@@ -1,0 +1,194 @@
+@mixin init($colors) {
+  .p-button-outlined {
+    &.p-button-success {
+      background-color: var(--success-50);
+    }
+
+    &.p-button-danger {
+      background-color: var(--danger-50);
+    }
+
+    &.p-button-warning {
+      background-color: var(--warning-50);
+    }
+
+    &.p-button-info {
+      background-color: var(--info-50);
+    }
+
+    &.p-button-link {
+      background-color: var(--link-50);
+    }
+
+    &.p-button-primary {
+      background-color: var(--primary-50);
+    }
+
+    &.p-button-secondary {
+      background-color: var(--secondary-50);
+    }
+  }
+
+  p-button {
+    line-height: 0.9em;
+
+    &.w-full {
+      display: flex;
+
+      button {
+        flex: 1;
+        display: flex;
+      }
+    }
+
+    .p-button-icon + .p-button-label {
+      flex: 1;
+    }
+  }
+
+  p-button-group {
+    p-button {
+      flex: 1;
+
+      button {
+        width: 100%;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  .grid {
+    br {
+      width: 100%;
+    }
+  }
+
+  .p-treeselect-label {
+    flex-wrap: wrap;
+  }
+
+  p-ifta-label {
+    label {
+      &.required::after {
+        content: "*";
+        color: var(--danger);
+        padding-inline-start: 0.5rem;
+      }
+    }
+
+    p-select,
+    p-password,
+    p-input-text,
+    p-textarea,
+    p-date-picker,
+    p-input-number,
+    p-autocomplete,
+    p-auto-complete,
+    [pinputtext],
+    textarea {
+      width: 100%;
+      display: flex;
+    }
+
+    .p-autocomplete {
+      width: 100%;
+    }
+
+    .p-datepicker {
+      flex: 1;
+    }
+
+    .p-password {
+      flex: 1;
+    }
+
+    p-multi-select {
+
+      .p-multiselect-label:has(.p-chip) {
+        padding-block-start: calc(var(--p-iftalabel-input-padding-top) - .3em);
+        padding-block-end: calc(var(--p-iftalabel-input-padding-bottom) - .3em);
+      }
+    }
+  }
+
+  p-select.w-full,
+  p-password.w-full,
+  p-input-text.w-full,
+  p-textarea.w-full,
+  p-input-number.w-full,
+  p-autocomplete.w-full,
+  [pinputtext].w-full,
+  textarea.w-full {
+    width: 100%;
+    display: flex;
+  }
+
+  p-autocomplete.w-full {
+    .p-autocomplete {
+      width: 100%;
+    }
+  }
+
+  button,
+  input {
+    font-family: inherit;
+  }
+
+  time {
+    unicode-bidi: plaintext;
+  }
+
+  .p-dialog {
+    margin: 0 !important;
+
+    .p-dialog-header {
+      border-bottom: 1px solid var(--surface-200);
+    }
+  }
+
+  .p-dialog-mask,
+  .p-overlay-mask {
+    padding: var(--dialog-padding, 0.75rem);
+    padding-top: var(--app-inset-top, var(--dialog-padding, 0.75rem));
+    padding-bottom: var(--app-inset-bottom, var(--dialog-padding, 0.75rem));
+  }
+
+  .p-multiselect-label {
+    overflow: visible !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+  }
+
+  .p-confirmdialog {
+    width: 400px;
+    max-width: min(600px, 90vw);
+
+    .p-dialog-footer {
+      p-button {
+        flex: 1;
+
+        button {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  p-input-number .p-inputtext {
+    width: 100%;
+  }
+
+  .p-button-icon-only {
+    aspect-ratio: 1/1;
+  }
+
+  p-tabs {
+    .p-tab-active {
+      background-color: var(--primary-50);
+    }
+
+    .p-tablist-content {
+      border-bottom: 2px solid var(--primary-100);
+    }
+  }
+}
