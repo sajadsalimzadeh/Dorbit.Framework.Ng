@@ -1,66 +1,39 @@
 @use "sass:list";
 @use "sass:map";
 @use "sass:color";
-@use "sass:string";
-@use "typography";
 @use "variables";
 @use "table";
 @use "helpers";
+@use "customize";
 
-@function create-color-variants(
-    $base-colors,
-    $dark-mode: false,
-    $color-offset: 3%
-) {
+@function create-theme($custom-colors, $color-offset: 3%) {
+    $base-colors: map.merge(variables.$base-colors, $custom-colors);
+
     $colors: ();
 
     @each $name, $color in $base-colors {
         $colors: map.set($colors, $name, $color);
 
-        @if $dark-mode {
-            $color-step: 4.0%;
-            @for $i from 0 through 10 {
-                $colors: map.set(
-                    $colors,
-                    "#{$name}-#{500 - ($i * 50)}",
-                    color.adjust(
-                        $color,
-                        $lightness: ($color-offset + $i * $color-step * 1.3) *
-                            -1
-                    )
-                );
-                $colors: map.set(
-                    $colors,
-                    "#{$name}-#{500 + ($i * 50)}",
-                    color.adjust(
-                        $color,
-                        $lightness: ($color-offset + $i * $color-step)
-                    )
-                );
-                $color-step: $color-step - 0.1%;
-            }
-        } @else {
-            $color-step: 4.6%;
-            @for $i from 0 through 10 {
-                $colors: map.set(
-                    $colors,
-                    "#{$name}-#{500 - ($i * 50)}",
-                    color.adjust(
-                        $color,
-                        $lightness: ($color-offset + $i * $color-step)
-                    )
-                );
-                $colors: map.set(
-                    $colors,
-                    "#{$name}-#{500 + ($i * 50)}",
-                    color.adjust(
-                        $color,
-                        $lightness: ($color-offset + $i * $color-step * 1.2) *
-                            -1
-                    )
-                );
-                $color-step: $color-step - 0.1%;
-            }
+        $color-step: 4.6%;
+        @for $i from 0 through 10 {
+            $colors: map.set(
+                $colors,
+                "#{$name}-#{500 - ($i * 50)}",
+                color.adjust(
+                    $color,
+                    $lightness: ($color-offset + $i * $color-step)
+                )
+            );
+            $colors: map.set(
+                $colors,
+                "#{$name}-#{500 + ($i * 50)}",
+                color.adjust(
+                    $color,
+                    $lightness: ($color-offset + $i * $color-step * 1.5) * -1
+                )
+            );
+
+            $color-step: $color-step - 0.1%;
         }
     }
 
@@ -74,7 +47,7 @@
     $combined: list.join($list1, $list2);
 
     @each $item in $combined {
-        @if list.index($result, $item) ==null {
+        @if list.index($result, $item) == null {
             $result: list.append($result, $item);
         }
     }
@@ -85,12 +58,28 @@
 @mixin init($custom-colors) {
     $base-colors: map.merge(variables.$base-colors, $custom-colors);
 
-    $base-colors: map.set($base-colors, "surface", map.get($base-colors, "stone"));
-    $base-colors: map.set($base-colors, "success", map.get($base-colors, "green"));
+    $base-colors: map.set(
+        $base-colors,
+        "surface",
+        map.get($base-colors, "stone")
+    );
+    $base-colors: map.set(
+        $base-colors,
+        "success",
+        map.get($base-colors, "green")
+    );
     $base-colors: map.set($base-colors, "danger", map.get($base-colors, "red"));
-    $base-colors: map.set($base-colors, "warning", map.get($base-colors, "yellow"));
+    $base-colors: map.set(
+        $base-colors,
+        "warning",
+        map.get($base-colors, "yellow")
+    );
     $base-colors: map.set($base-colors, "info", map.get($base-colors, "cyan"));
-    $base-colors: map.set($base-colors, "link", map.get($base-colors, "indigo"));
+    $base-colors: map.set(
+        $base-colors,
+        "link",
+        map.get($base-colors, "indigo")
+    );
 
     $colors: create-color-variants($base-colors);
     $colors-dark: create-color-variants($base-colors, true);
@@ -156,238 +145,9 @@
         color: var(--surface-900);
     }
 
-    @each $name, $color in $colors {
-        .bg-#{$name} {
-            background-color: var(--#{$name});
-        }
-    }
-
-    @each $name, $color in $colors {
-        .color-#{$name} {
-            color: var(--#{$name});
-        }
-    }
-
-    .p-button-outlined {
-        &.p-button-success {
-            background-color: var(--success-50);
-        }
-
-        &.p-button-danger {
-            background-color: var(--danger-50);
-        }
-
-        &.p-button-warning {
-            background-color: var(--warning-50);
-        }
-
-        &.p-button-info {
-            background-color: var(--info-50);
-        }
-
-        &.p-button-link {
-            background-color: var(--link-50);
-        }
-
-        &.p-button-primary {
-            background-color: var(--primary-50);
-        }
-
-        &.p-button-secondary {
-            background-color: var(--secondary-50);
-        }
-    }
-}
-
-p-button {
-    line-height: 0.9em;
-
-    &.w-full {
-        display: flex;
-
-        button {
-            flex: 1;
-            display: flex;
-        }
-    }
-
-    .p-button-icon + .p-button-label {
-        flex: 1;
-    }
-}
-
-p-button-group {
-    p-button {
-        flex: 1;
-
-        button {
-            width: 100%;
-            white-space: nowrap;
-        }
-    }
-}
-
-.grid {
-    br {
-        width: 100%;
-    }
-}
-
-.p-treeselect-label {
-    flex-wrap: wrap;
-}
-
-p-ifta-label {
-    label {
-        &.required::after {
-            content: "*";
-            color: var(--danger);
-            padding-inline-start: 0.5rem;
-        }
-    }
-
-    p-select,
-    p-password,
-    p-input-text,
-    p-textarea,
-    p-date-picker,
-    p-input-number,
-    p-autocomplete,
-    p-auto-complete,
-    [pinputtext],
-    textarea {
-        width: 100%;
-        display: flex;
-    }
-
-    .p-autocomplete {
-        width: 100%;
-    }
-
-    .p-datepicker {
-        flex: 1;
-    }
-
-    .p-password {
-        flex: 1;
-    }
-
-    p-tree-select {
-        .p-treeselect-label-container {
-            padding-top: calc(var(--iftalabel-input-padding-top) - 0.5em);
-
-            .p-treeselect-label {
-                min-height: 3em;
-                padding-block-start: var(--iftalabel-input-padding-bottom);
-            }
-        }
-
-        &.p-treeselect-display-chip {
-            .p-treeselect-label-container {
-                .p-treeselect-label {
-                    padding: 0 calc(var(--iftalabel-input-padding-bottom) / 2)
-                        calc(var(--iftalabel-input-padding-bottom) / 2) !important;
-                }
-            }
-        }
-    }
-
-    p-multi-select {
-        .p-multiselect-label-container {
-            padding-top: calc(var(--iftalabel-input-padding-top) - 0.5em);
-
-            .p-multiselect-label {
-                min-height: 3em;
-                padding: calc(
-                    var(--iftalabel-input-padding-bottom) / 2
-                ) !important;
-            }
-        }
-
-        &.p-multiselect-display-chip {
-            .p-multiselect-label-container {
-            }
-        }
-    }
-}
-
-p-select.w-full,
-p-password.w-full,
-p-input-text.w-full,
-p-textarea.w-full,
-p-input-number.w-full,
-p-autocomplete.w-full,
-[pinputtext].w-full,
-textarea.w-full {
-    width: 100%;
-    display: flex;
-}
-
-p-autocomplete.w-full {
-    .p-autocomplete {
-        width: 100%;
-    }
-}
-
-button,
-input {
-    font-family: inherit;
-}
-
-time {
-    unicode-bidi: plaintext;
-}
-
-.p-dialog {
-    margin: 0 !important;
-
-    .p-dialog-header {
-        border-bottom: 1px solid var(--surface-200);
-    }
-}
-
-.p-dialog-mask,
-.p-overlay-mask {
-    padding: var(--dialog-padding, 0.75rem);
-    padding-top: var(--app-inset-top, var(--dialog-padding, 0.75rem));
-    padding-bottom: var(--app-inset-bottom, var(--dialog-padding, 0.75rem));
-}
-
-.p-multiselect-label {
-    overflow: visible !important;
-    display: flex !important;
-    flex-wrap: wrap !important;
-}
-
-.p-confirmdialog {
-    width: 400px;
-    max-width: min(600px, 90vw);
-
-    .p-dialog-footer {
-        p-button {
-            flex: 1;
-
-            button {
-                width: 100%;
-            }
-        }
-    }
-}
-
-p-input-number .p-inputtext {
-    width: 100%;
-}
-
-.p-button-icon-only {
-    aspect-ratio: 1/1;
-}
-
-p-tabs {
-    .p-tab-active {
-        background-color: var(--primary-50);
-    }
-
-    .p-tablist-content {
-        border-bottom: 2px solid var(--primary-100);
+    html.dorbit {
+        @include helpers.init($colors);
+        @include customize.init($colors);
+        @include table.init($colors);
     }
 }
