@@ -1,7 +1,7 @@
 .table {
     width: 100%;
     border-collapse: collapse;
-    background-color: var(--color-gray--0);
+    background-color: var(--surface-0);
 
     thead {
         th {
@@ -36,8 +36,8 @@
 
     &.table-hover {
         
-        tbody tr:hover {
-            background-color: var(--warning-100) !important;
+        tbody>tr:hover {
+            background-color: var(--surface-50) !important;
         }
     }
 }

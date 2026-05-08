@@ -1,28 +1,66 @@
 @use "sass:list";
 @use "sass:map";
-@use "sass:string";
 @use "sass:color";
+@use "sass:string";
 @use "typography";
 @use "variables";
 @use "table";
 @use "helpers";
 
-
-@function create-color-variants($custom-colors, $color-offset: 3%) {
-    $base-colors: map.merge(variables.$base-colors, $custom-colors);
-
-    $colors: (
-    );
+@function create-color-variants(
+    $base-colors,
+    $dark-mode: false,
+    $color-offset: 3%
+) {
+    $colors: ();
 
     @each $name, $color in $base-colors {
         $colors: map.set($colors, $name, $color);
-        
-        $color-step: 4.6%;
-        @for $i from 0 through 10 {
-            $colors: map.set($colors, '#{$name}-#{500 - ($i * 50)}', color.adjust($color, $lightness: ($color-offset + $i * $color-step)));
-            $colors: map.set($colors, '#{$name}-#{500 + ($i * 50)}', color.adjust($color, $lightness: ($color-offset + $i * $color-step * 1.5) * -1));
 
-            $color-step: $color-step - 0.1%;
+        @if $dark-mode {
+            $color-step: 4.0%;
+            @for $i from 0 through 10 {
+                $colors: map.set(
+                    $colors,
+                    "#{$name}-#{500 - ($i * 50)}",
+                    color.adjust(
+                        $color,
+                        $lightness: ($color-offset + $i * $color-step * 1.3) *
+                            -1
+                    )
+                );
+                $colors: map.set(
+                    $colors,
+                    "#{$name}-#{500 + ($i * 50)}",
+                    color.adjust(
+                        $color,
+                        $lightness: ($color-offset + $i * $color-step)
+                    )
+                );
+                $color-step: $color-step - 0.1%;
+            }
+        } @else {
+            $color-step: 4.6%;
+            @for $i from 0 through 10 {
+                $colors: map.set(
+                    $colors,
+                    "#{$name}-#{500 - ($i * 50)}",
+                    color.adjust(
+                        $color,
+                        $lightness: ($color-offset + $i * $color-step)
+                    )
+                );
+                $colors: map.set(
+                    $colors,
+                    "#{$name}-#{500 + ($i * 50)}",
+                    color.adjust(
+                        $color,
+                        $lightness: ($color-offset + $i * $color-step * 1.2) *
+                            -1
+                    )
+                );
+                $color-step: $color-step - 0.1%;
+            }
         }
     }
 
@@ -31,46 +69,62 @@
 
 @function unique-list-join($list1, $list2) {
     $result: ();
-  
+
     // merge first
     $combined: list.join($list1, $list2);
-  
+
     @each $item in $combined {
-      @if list.index($result, $item) == null {
-        $result: list.append($result, $item);
-      }
+        @if list.index($result, $item) ==null {
+            $result: list.append($result, $item);
+        }
     }
-  
+
     @return $result;
-  }
+}
 
 @mixin init($custom-colors) {
+    $base-colors: map.merge(variables.$base-colors, $custom-colors);
 
-    $colors: create-color-variants($custom-colors);
+    $base-colors: map.set($base-colors, "surface", map.get($base-colors, "stone"));
+    $base-colors: map.set($base-colors, "success", map.get($base-colors, "green"));
+    $base-colors: map.set($base-colors, "danger", map.get($base-colors, "red"));
+    $base-colors: map.set($base-colors, "warning", map.get($base-colors, "yellow"));
+    $base-colors: map.set($base-colors, "info", map.get($base-colors, "cyan"));
+    $base-colors: map.set($base-colors, "link", map.get($base-colors, "indigo"));
 
-    :root {
+    $colors: create-color-variants($base-colors);
+    $colors-dark: create-color-variants($base-colors, true);
+
+    $overwrite-primeng-colors: (
+        "primary",
+        "secondary",
+        "danger",
+        "warning",
+        "info",
+        "link",
+        "success"
+    );
+
+    $overwrite-primeng-colors: unique-list-join(
+        $overwrite-primeng-colors,
+        map.keys($custom-colors)
+    );
+
+    html:root {
+        @each $name, $color in $base-colors {
+            --#{$name}-rgb:
+                #{color.channel($color, "red", $space: rgb)},
+                #{color.channel($color, "green", $space: rgb)},
+                #{color.channel($color, "blue", $space: rgb)};
+        }
 
         @each $name, $color in $colors {
             --#{$name}: #{$color};
         }
-    }
-
-    html:root {
-        $overwrite-primeng-colors: (
-            "primary",
-            "secondary",
-            "danger",
-            "warning",
-            "info",
-            "link",
-            "success",
-        );
-    
-        $overwrite-primeng-colors: unique-list-join($overwrite-primeng-colors, map.keys($custom-colors));
 
         @each $name, $color in $colors {
             @each $overwrite-primeng-color in $overwrite-primeng-colors {
-                @if string.index($name, $overwrite-primeng-color) != null  {
+                @if string.index($name, $overwrite-primeng-color) !=null {
                     --p-#{$name}: var(--#{$name});
                 }
             }
@@ -79,8 +133,30 @@
         --p-dialog-content-padding: var(--p-overlay-modal-padding);
     }
 
-    @each $name, $color in $colors {
+    html[theme="dark"]:root {
+        @each $name, $color in $colors-dark {
+            --#{$name}: #{$color};
+        }
 
+        --p-surface-0: var(--surface-0);
+        --p-surface-50: var(--surface-50);
+        --p-surface-100: var(--surface-100);
+        --p-surface-200: var(--surface-200);
+        --p-surface-300: var(--surface-300);
+        --p-surface-400: var(--surface-400);
+        --p-surface-500: var(--surface-500);
+        --p-surface-600: var(--surface-600);
+        --p-surface-700: var(--surface-700);
+        --p-surface-800: var(--surface-800);
+        --p-surface-900: var(--surface-900);
+        --p-surface-950: var(--surface-950);
+    }
+
+    html {
+        color: var(--surface-900);
+    }
+
+    @each $name, $color in $colors {
         .bg-#{$name} {
             background-color: var(--#{$name});
         }
@@ -124,7 +200,7 @@
 }
 
 p-button {
-    line-height: .9em;
+    line-height: 0.9em;
 
     &.w-full {
         display: flex;
@@ -135,7 +211,7 @@ p-button {
         }
     }
 
-    .p-button-icon+.p-button-label {
+    .p-button-icon + .p-button-label {
         flex: 1;
     }
 }
@@ -164,9 +240,9 @@ p-button-group {
 p-ifta-label {
     label {
         &.required::after {
-            content: '*';
+            content: "*";
             color: var(--danger);
-            padding-inline-start: .5rem;
+            padding-inline-start: 0.5rem;
         }
     }
 
@@ -197,9 +273,8 @@ p-ifta-label {
     }
 
     p-tree-select {
-
         .p-treeselect-label-container {
-            padding-top: calc(var(--iftalabel-input-padding-top) - .5em);
+            padding-top: calc(var(--iftalabel-input-padding-top) - 0.5em);
 
             .p-treeselect-label {
                 min-height: 3em;
@@ -210,7 +285,8 @@ p-ifta-label {
         &.p-treeselect-display-chip {
             .p-treeselect-label-container {
                 .p-treeselect-label {
-                    padding: 0 calc(var(--iftalabel-input-padding-bottom) / 2) calc(var(--iftalabel-input-padding-bottom) / 2) !important;
+                    padding: 0 calc(var(--iftalabel-input-padding-bottom) / 2)
+                        calc(var(--iftalabel-input-padding-bottom) / 2) !important;
                 }
             }
         }
@@ -218,16 +294,19 @@ p-ifta-label {
 
     p-multi-select {
         .p-multiselect-label-container {
-            padding-top: calc(var(--iftalabel-input-padding-top) - .5em);
+            padding-top: calc(var(--iftalabel-input-padding-top) - 0.5em);
 
             .p-multiselect-label {
                 min-height: 3em;
-                padding: calc(var(--iftalabel-input-padding-bottom) / 2) !important;
+                padding: calc(
+                    var(--iftalabel-input-padding-bottom) / 2
+                ) !important;
             }
         }
 
         &.p-multiselect-display-chip {
-            .p-multiselect-label-container {}
+            .p-multiselect-label-container {
+            }
         }
     }
 }
@@ -269,9 +348,9 @@ time {
 
 .p-dialog-mask,
 .p-overlay-mask {
-    padding: var(--dialog-padding, .75rem);
-    padding-top: var(--app-inset-top, var(--dialog-padding, .75rem));
-    padding-bottom: var(--app-inset-bottom, var(--dialog-padding, .75rem));
+    padding: var(--dialog-padding, 0.75rem);
+    padding-top: var(--app-inset-top, var(--dialog-padding, 0.75rem));
+    padding-bottom: var(--app-inset-bottom, var(--dialog-padding, 0.75rem));
 }
 
 .p-multiselect-label {
@@ -304,7 +383,6 @@ p-input-number .p-inputtext {
 }
 
 p-tabs {
-
     .p-tab-active {
         background-color: var(--primary-50);
     }
