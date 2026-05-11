@@ -1,200 +1,153 @@
 @use "sass:list";
-@use "typography";
+@use "sass:map";
+@use "sass:color";
 @use "variables";
 @use "table";
 @use "helpers";
+@use "customize";
 
-html:root {
+@function create-theme($custom-colors, $color-offset: 3%) {
+    $base-colors: map.merge(variables.$base-colors, $custom-colors);
 
-}
+    $colors: ();
 
-p-button {
-    line-height: .9em;
+    @each $name, $color in $base-colors {
+        $colors: map.set($colors, $name, $color);
 
-    &.w-full {
-        display: flex;
+        $color-step: 4.6%;
+        @for $i from 0 through 10 {
+            $colors: map.set(
+                $colors,
+                "#{$name}-#{500 - ($i * 50)}",
+                color.adjust(
+                    $color,
+                    $lightness: ($color-offset + $i * $color-step)
+                )
+            );
+            $colors: map.set(
+                $colors,
+                "#{$name}-#{500 + ($i * 50)}",
+                color.adjust(
+                    $color,
+                    $lightness: ($color-offset + $i * $color-step * 1.5) * -1
+                )
+            );
 
-        button {
-            flex: 1;
-            display: flex;
+            $color-step: $color-step - 0.1%;
         }
     }
 
-    .p-button-icon+.p-button-label {
-        flex: 1;
-    }
+    @return $colors;
 }
 
-p-button-group {
-    p-button {
-        flex: 1;
+@function unique-list-join($list1, $list2) {
+    $result: ();
 
-        button {
-            width: 100%;
-            white-space: nowrap;
-        }
-    }
-}
+    // merge first
+    $combined: list.join($list1, $list2);
 
-.grid {
-    br {
-        width: 100%;
-    }
-}
-
-.p-treeselect-label {
-    flex-wrap: wrap;
-}
-
-p-ifta-label {
-    label {
-        &.required::after {
-            content: '*';
-            color: var(--danger);
-            padding-inline-start: .5rem;
+    @each $item in $combined {
+        @if list.index($result, $item) == null {
+            $result: list.append($result, $item);
         }
     }
 
-    p-select,
-    p-password,
-    p-input-text,
-    p-textarea,
-    p-date-picker,
-    p-input-number,
-    p-autocomplete,
-    p-auto-complete,
-    [pinputtext],
-    textarea {
-        width: 100%;
-        display: flex;
-    }
+    @return $result;
+}
 
-    .p-autocomplete {
-        width: 100%;
-    }
+@mixin init($custom-colors) {
+    $base-colors: map.merge(variables.$base-colors, $custom-colors);
 
-    .p-datepicker {
-        flex: 1;
-    }
+    $base-colors: map.set(
+        $base-colors,
+        "surface",
+        map.get($base-colors, "stone")
+    );
+    $base-colors: map.set(
+        $base-colors,
+        "success",
+        map.get($base-colors, "green")
+    );
+    $base-colors: map.set($base-colors, "danger", map.get($base-colors, "red"));
+    $base-colors: map.set(
+        $base-colors,
+        "warning",
+        map.get($base-colors, "yellow")
+    );
+    $base-colors: map.set($base-colors, "info", map.get($base-colors, "cyan"));
+    $base-colors: map.set(
+        $base-colors,
+        "link",
+        map.get($base-colors, "indigo")
+    );
 
-    .p-password {
-        flex: 1;
-    }
+    $colors: create-color-variants($base-colors);
+    $colors-dark: create-color-variants($base-colors, true);
 
-    p-tree-select {
+    $overwrite-primeng-colors: (
+        "primary",
+        "secondary",
+        "danger",
+        "warning",
+        "info",
+        "link",
+        "success"
+    );
 
-        .p-treeselect-label-container {
-            padding-top: calc(var(--iftalabel-input-padding-top) - .5em);
+    $overwrite-primeng-colors: unique-list-join(
+        $overwrite-primeng-colors,
+        map.keys($custom-colors)
+    );
 
-            .p-treeselect-label {
-                min-height: 3em;
-                padding-block-start: var(--iftalabel-input-padding-bottom);
-            }
+    html:root {
+        @each $name, $color in $base-colors {
+            --#{$name}-rgb:
+                #{color.channel($color, "red", $space: rgb)},
+                #{color.channel($color, "green", $space: rgb)},
+                #{color.channel($color, "blue", $space: rgb)};
         }
 
-        &.p-treeselect-display-chip {
-            .p-treeselect-label-container {
-                .p-treeselect-label {
-                    padding: 0 calc(var(--iftalabel-input-padding-bottom) / 2) calc(var(--iftalabel-input-padding-bottom) / 2) !important;
+        @each $name, $color in $colors {
+            --#{$name}: #{$color};
+        }
+
+        @each $name, $color in $colors {
+            @each $overwrite-primeng-color in $overwrite-primeng-colors {
+                @if string.index($name, $overwrite-primeng-color) !=null {
+                    --p-#{$name}: var(--#{$name});
                 }
             }
         }
+
+        --p-dialog-content-padding: var(--p-overlay-modal-padding);
     }
 
-    p-multi-select {
-        .p-multiselect-label-container {
-            padding-top: calc(var(--iftalabel-input-padding-top) - .5em);
-
-            .p-multiselect-label {
-                min-height: 3em;
-                padding: calc(var(--iftalabel-input-padding-bottom) / 2) !important;
-            }
+    html[theme="dark"]:root {
+        @each $name, $color in $colors-dark {
+            --#{$name}: #{$color};
         }
 
-        &.p-multiselect-display-chip {
-            .p-multiselect-label-container {}
-        }
-    }
-}
-
-p-select.w-full,
-p-password.w-full,
-p-input-text.w-full,
-p-textarea.w-full,
-p-input-number.w-full,
-p-autocomplete.w-full,
-[pinputtext].w-full,
-textarea.w-full {
-    width: 100%;
-    display: flex;
-}
-
-p-autocomplete.w-full {
-    .p-autocomplete {
-        width: 100%;
-    }
-}
-
-button,
-input {
-    font-family: inherit;
-}
-
-time {
-    unicode-bidi: plaintext;
-}
-
-.p-dialog {
-    margin: 0 !important;
-
-    .p-dialog-header {
-        border-bottom: 1px solid var(--surface-200);
-    }
-}
-
-.p-dialog-mask,
-.p-overlay-mask {
-    padding: var(--dialog-padding, .75rem);
-    padding-top: var(--app-inset-top, var(--dialog-padding, .75rem));
-    padding-bottom: var(--app-inset-bottom, var(--dialog-padding, .75rem));
-}
-
-.p-multiselect-label {
-    overflow: visible !important;
-    display: flex !important;
-    flex-wrap: wrap !important;
-}
-
-.p-confirmdialog {
-    width: 400px;
-    max-width: min(600px, 90vw);
-
-    .p-dialog-footer {
-        p-button {
-            flex: 1;
-
-            button {
-                width: 100%;
-            }
-        }
-    }
-}
-
-p-input-number .p-inputtext {
-    width: 100%;
-}
-
-.p-button-icon-only {
-    aspect-ratio: 1/1;
-}
-
-p-tabs {
-
-    .p-tab-active {
-        background-color: var(--primary-50);
+        --p-surface-0: var(--surface-0);
+        --p-surface-50: var(--surface-50);
+        --p-surface-100: var(--surface-100);
+        --p-surface-200: var(--surface-200);
+        --p-surface-300: var(--surface-300);
+        --p-surface-400: var(--surface-400);
+        --p-surface-500: var(--surface-500);
+        --p-surface-600: var(--surface-600);
+        --p-surface-700: var(--surface-700);
+        --p-surface-800: var(--surface-800);
+        --p-surface-900: var(--surface-900);
+        --p-surface-950: var(--surface-950);
     }
 
-    .p-tablist-content {
-        border-bottom: 2px solid var(--primary-100);
+    html {
+        color: var(--surface-900);
+    }
+
+    html.dorbit {
+        @include helpers.init($colors);
+        @include customize.init($colors);
+        @include table.init($colors);
     }
 }

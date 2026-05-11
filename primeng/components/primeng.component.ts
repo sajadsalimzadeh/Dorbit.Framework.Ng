@@ -63,12 +63,15 @@ export abstract class PrimengComponent<T = any> implements OnInit, OnChanges, On
 
     protected tapLoading<T>(key: string) {
         this.loadings[key] = true;
+        this.changeDetectorRef.detectChanges();
         return tap<T>({
             error: () => {
                 this.loadings[key] = false;
+                this.changeDetectorRef.detectChanges();
             },
             complete: () => {
                 this.loadings[key] = false;
+                this.changeDetectorRef.detectChanges();
             }
         });
     }

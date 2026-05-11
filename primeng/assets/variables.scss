@@ -3,17 +3,17 @@
 @use "sass:color";
 
 $base-colors: (
-    "surface": #8794a8,
+    "surface": #8f9caf,
     "primary": #f97316,
     "secondary": #8b5cf6,
     "danger": #ef4444,
     "warning": #f5aa29,
     "info": #27c3df,
     "link": #3b82f6,
-    "success": #66cf9e,
+    "success": #5bc292,
 
     "emerald": #10b981,
-    "green": #37bf7c,
+    "green": #5fc491,
     "lime": #84cc16,
     "red": #ef4444,
     "orange": #fa8734,
@@ -33,7 +33,7 @@ $base-colors: (
     "gray": #6b7280,
     "zinc": #71717a,
     "neutral": #737373,
-    "stone": #78716c
+    "stone": #8f9caf
 );
 
 $color-step: 6.75%;
