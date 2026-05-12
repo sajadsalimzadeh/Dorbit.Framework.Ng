@@ -7,9 +7,11 @@ import {CacheService, CacheStorageIndexDb, ICacheStorage} from "../services/cach
 import {delay} from "../utils/delay";
 import {APP_VERSION} from "../types";
 
+export type Methods = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
+
 export interface HttpCacheBase {
     url: RegExp | string;
-    methods: string[],
+    methods: Methods[],
     lazy?: boolean;
     constraints?: {
         offline?: boolean;
@@ -46,7 +48,7 @@ export class CacheInterceptor implements HttpInterceptor {
         this.httpCaches.forEach(x => x.storage ??= storage)
         this.httpCaches.forEach(x => {
             for (let i = 0; i < x.methods.length; i++) {
-                x.methods[i] = x.methods[i].toLowerCase();
+                x.methods[i] = x.methods[i].toUpperCase() as Methods;
             }
             this.matchItems.push({
                 ...x,
@@ -76,15 +78,17 @@ export class CacheInterceptor implements HttpInterceptor {
 
         return new Observable<HttpEvent<any>>(ob => {
                 setTimeout(async () => {
-                    const method = req.method.toLowerCase();
-                    const matchCaches = this.matchItems.filter(x => {
+                    const method = req.method.toUpperCase();
+                    const matchCache = this.matchItems.find(x => {
                         x.constraints ??= {};
-                        if (!x.methods.includes(method)) return false;
+                        if (!x.methods.includes(method as Methods)) return false;
                         if (typeof x.url === 'string') return req.url.includes(x.url);
                         if (x.constraints.production && isDevMode()) return false;
                         return x.url.test(req.url);
                     });
-                    for (const matchCache of matchCaches) {
+                    if (matchCache) {
+                        console.log('[CACHE]: ', matchCache);
+                        
                         const httpCache = matchCache.httpCache;
                         const key = req.url;
 

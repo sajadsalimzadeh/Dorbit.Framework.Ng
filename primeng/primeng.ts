@@ -68,12 +68,14 @@ import { CustomCheckboxComponent } from './components/custom-checkbox/custom-che
 import { AutoFocusDirective } from './components/auto-focus.directive';
 import { InputOtpDirective } from './components/input-otp.directive';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { CustomAlertComponent } from './components/custom-alert/custom-alert.component';
 
 const COMPONENTS = [
     CustomTableComponent,
     CustomDialogComponent,
     CustomCheckboxComponent,
-    AutoFocusDirective
+    CustomAlertComponent,
+    AutoFocusDirective,
 ];
 
 const MODULES = [

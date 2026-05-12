@@ -30,13 +30,11 @@
     }
 
     .py-#{$i} {
-      padding-top: var(--size-#{$i});
-      padding-bottom: var(--size-#{$i});
+      padding-block: var(--size-#{$i});
     }
 
     .px-#{$i} {
-      padding-left: var(--size-#{$i});
-      padding-right: var(--size-#{$i});
+      padding-inline: var(--size-#{$i});
     }
 
     .pt-#{$i} {
@@ -55,27 +53,19 @@
       padding-left: var(--size-#{$i});
     }
 
-    .pi-#{$i} {
-      padding-inline: var(--size-#{$i});
-    }
-
-    .pis-#{$i} {
+    .pxs-#{$i} {
       padding-inline-start: var(--size-#{$i});
     }
 
-    .pie-#{$i} {
+    .pxe-#{$i} {
       padding-inline-end: var(--size-#{$i});
     }
 
-    .pb-#{$i} {
-      padding-block: var(--size-#{$i});
-    }
-
-    .pbs-#{$i} {
+    .pys-#{$i} {
       padding-block-start: var(--size-#{$i});
     }
 
-    .pbe-#{$i} {
+    .pye-#{$i} {
       padding-block-end: var(--size-#{$i});
     }
   }
@@ -136,6 +126,12 @@
 
     .mbe-#{$i} {
       margin-block-end: var(--size-#{$i});
+    }
+  }
+
+  @for $i from 0 through 12 {
+    .font-size-#{$i} {
+      font-size: var(--size-#{$i});
     }
   }
 
