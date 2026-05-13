@@ -3,13 +3,13 @@ import { ControlValueAccessor } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 @Directive()
-export class PrimengControlComponent implements OnInit, OnDestroy, ControlValueAccessor {
+export class PrimengControlComponent<T = any> implements OnInit, OnDestroy, ControlValueAccessor {
     @Input() name: string = '';
 
     _services: any = {};
 
-    value?: any;
-    onChange = (value: any) => {};
+    value?: T;
+    onChange = (value: T) => {};
     onTouched = () => {};
     isDisabled: boolean = false;
 
@@ -30,17 +30,17 @@ export class PrimengControlComponent implements OnInit, OnDestroy, ControlValueA
     }
 
     // Write a new value to the element
-    writeValue(value: any): void {
-        this.value = value ?? '';
+    writeValue(value: T): void {
+        this.value = value;
     }
 
     // Save the function that should be called when the value changes
-    registerOnChange(fn: any): void {
+    registerOnChange(fn: (value: T) => void): void {
         this.onChange = fn;
     }
 
     // Save the function that should be called when the control is touched
-    registerOnTouched(fn: any): void {
+    registerOnTouched(fn: () => void): void {
         this.onTouched = fn;
     }
 
