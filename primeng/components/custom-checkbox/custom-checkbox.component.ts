@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 @Component({
     standalone: false,
     selector: 'p-custom-checkbox',
-    styleUrl: 'custom-control.component.scss',
+    styleUrl: 'custom-checkbox.component.scss',
     templateUrl: 'custom-checkbox.component.html',
     providers: [{
         provide: NG_VALUE_ACCESSOR,

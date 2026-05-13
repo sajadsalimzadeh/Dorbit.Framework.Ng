@@ -30,13 +30,11 @@
     }
 
     .py-#{$i} {
-      padding-top: var(--size-#{$i});
-      padding-bottom: var(--size-#{$i});
+      padding-block: var(--size-#{$i});
     }
 
     .px-#{$i} {
-      padding-left: var(--size-#{$i});
-      padding-right: var(--size-#{$i});
+      padding-inline: var(--size-#{$i});
     }
 
     .pt-#{$i} {
@@ -55,27 +53,19 @@
       padding-left: var(--size-#{$i});
     }
 
-    .pi-#{$i} {
-      padding-inline: var(--size-#{$i});
-    }
-
-    .pis-#{$i} {
+    .pxs-#{$i} {
       padding-inline-start: var(--size-#{$i});
     }
 
-    .pie-#{$i} {
+    .pxe-#{$i} {
       padding-inline-end: var(--size-#{$i});
     }
 
-    .pb-#{$i} {
-      padding-block: var(--size-#{$i});
-    }
-
-    .pbs-#{$i} {
+    .pys-#{$i} {
       padding-block-start: var(--size-#{$i});
     }
 
-    .pbe-#{$i} {
+    .pye-#{$i} {
       padding-block-end: var(--size-#{$i});
     }
   }
@@ -136,6 +126,12 @@
 
     .mbe-#{$i} {
       margin-block-end: var(--size-#{$i});
+    }
+  }
+
+  @for $i from 0 through 12 {
+    .font-size-#{$i} {
+      font-size: var(--size-#{$i});
     }
   }
 
@@ -230,6 +226,21 @@
 
   .flex {
     display: flex;
+
+    @for $i from 1 through 12 {
+      .col-#{$i} {
+        flex: 0 0 #{math.div(100%, 12) * $i};
+      }
+
+      &.gap-#{$i} .col-#{$i} {
+        flex: 0 0 calc(#{math.div(100%, 12) * $i} - var(--size-#{$i}));
+      }
+
+    }
+  }
+
+  .flex-wrap {
+    flex-wrap: wrap;
   }
 
   .flex-row {
@@ -278,6 +289,7 @@
   }
 
   @for $i from 1 through 12 {
+
     .col-span-#{$i} {
       grid-column: span $i;
     }
@@ -290,10 +302,8 @@
       grid-template-columns: repeat($i, 1fr);
 
       &.grid-autofill {
-        grid-template-columns: repeat(
-          auto-fill,
-          minmax(#{math.div(100, $i)}, 1fr)
-        );
+        grid-template-columns: repeat(auto-fill,
+          minmax(#{math.div(100, $i)}, 1fr));
       }
     }
 

@@ -174,3 +174,10 @@ export class ODataQueryOptions {
         return result;
     }
 }
+
+export interface QueryOptions {
+    top?: number;
+    skip?: number;
+    orderby?: string;
+    filter?: string;
+}

@@ -1,0 +1,14 @@
+:host {
+
+    ::ng-deep .p-card {
+        border-inline-start: 6px solid;
+    }
+    
+    &.danger {
+        .p-card {
+            color: var(--danger);
+            border-color: var(--danger);
+        }
+        
+    }
+}
