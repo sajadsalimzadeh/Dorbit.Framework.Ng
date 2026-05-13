@@ -23,124 +23,108 @@
 
   @for $i from 0 through 12 {
     .p-#{$i} {
-      padding-top: var(--size-#{$i});
-      padding-bottom: var(--size-#{$i});
-      padding-left: var(--size-#{$i});
-      padding-right: var(--size-#{$i});
+      padding-top: var(--size-#{$i}) !important;
     }
 
     .py-#{$i} {
-      padding-block: var(--size-#{$i});
+      padding-block: var(--size-#{$i}) !important;
     }
 
     .px-#{$i} {
-      padding-inline: var(--size-#{$i});
+      padding-inline: var(--size-#{$i}) !important;
     }
 
     .pt-#{$i} {
-      padding-top: var(--size-#{$i});
+      padding-top: var(--size-#{$i}) !important;
     }
 
     .pb-#{$i} {
-      padding-bottom: var(--size-#{$i});
+      padding-bottom: var(--size-#{$i}) !important;
     }
 
     .pr-#{$i} {
-      padding-right: var(--size-#{$i});
+      padding-right: var(--size-#{$i}) !important;
     }
 
     .pl-#{$i} {
-      padding-left: var(--size-#{$i});
+      padding-left: var(--size-#{$i}) !important;
     }
 
     .pxs-#{$i} {
-      padding-inline-start: var(--size-#{$i});
+      padding-inline-start: var(--size-#{$i}) !important;
     }
 
     .pxe-#{$i} {
-      padding-inline-end: var(--size-#{$i});
+      padding-inline-end: var(--size-#{$i}) !important;
     }
 
     .pys-#{$i} {
-      padding-block-start: var(--size-#{$i});
+      padding-block-start: var(--size-#{$i}) !important;
     }
 
     .pye-#{$i} {
-      padding-block-end: var(--size-#{$i});
+      padding-block-end: var(--size-#{$i}) !important;
     }
   }
 
   @for $i from 0 through 12 {
     .m-#{$i} {
-      margin-top: var(--size-#{$i});
-      margin-bottom: var(--size-#{$i});
-      margin-left: var(--size-#{$i});
-      margin-right: var(--size-#{$i});
+      margin: var(--size-#{$i}) !important;
     }
 
     .my-#{$i} {
-      margin-top: var(--size-#{$i});
-      margin-bottom: var(--size-#{$i});
+      margin-block: var(--size-#{$i}) !important;
     }
 
     .mx-#{$i} {
-      margin-left: var(--size-#{$i});
-      margin-right: var(--size-#{$i});
+      margin-inline: var(--size-#{$i}) !important;
     }
 
     .mt-#{$i} {
-      margin-top: var(--size-#{$i});
+      margin-top: var(--size-#{$i}) !important;
     }
 
     .mb-#{$i} {
-      margin-bottom: var(--size-#{$i});
+      margin-bottom: var(--size-#{$i}) !important;
     }
 
     .mr-#{$i} {
-      margin-right: var(--size-#{$i});
+      margin-right: var(--size-#{$i}) !important;
     }
 
     .ml-#{$i} {
-      margin-left: var(--size-#{$i});
+      margin-left: var(--size-#{$i}) !important;
     }
 
-    .mil-#{$i} {
-      margin-inline: var(--size-#{$i});
+    .mxs-#{$i} {
+      margin-inline-start: var(--size-#{$i}) !important;
     }
 
-    .mis-#{$i} {
-      margin-inline-start: var(--size-#{$i});
+    .mxe-#{$i} {
+      margin-inline-end: var(--size-#{$i}) !important;
     }
 
-    .mie-#{$i} {
-      margin-inline-end: var(--size-#{$i});
+    .mys-#{$i} {
+      margin-block-start: var(--size-#{$i}) !important;
     }
 
-    .mbl-#{$i} {
-      margin-block: var(--size-#{$i});
-    }
-
-    .mbs-#{$i} {
-      margin-block-start: var(--size-#{$i});
-    }
-
-    .mbe-#{$i} {
-      margin-block-end: var(--size-#{$i});
+    .mye-#{$i} {
+      margin-block-end: var(--size-#{$i}) !important;
     }
   }
 
   @for $i from 0 through 12 {
     .font-size-#{$i} {
-      font-size: var(--size-#{$i});
+      font-size: var(--size-#{$i}) !important;
     }
   }
 
   .ltr {
-    direction: ltr;
+    direction: ltr !important;
   }
 
   .rtl {
-    direction: rtl;
+    direction: rtl !important;
   }
 
   .text-center {
