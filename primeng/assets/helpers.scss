@@ -229,13 +229,14 @@
 
     @for $i from 1 through 12 {
       .col-#{$i} {
-        flex: 0 0 #{math.div(100%, 12) * $i};
+        flex: #{math.div(100%, 12) * $i};
       }
 
-      &.gap-#{$i} .col-#{$i} {
-        flex: 0 0 calc(#{math.div(100%, 12) * $i} - var(--size-#{$i}));
+      @for $j from 1 through 12 {
+        &.gap-#{$j} > .col-#{$i} {
+          flex: calc(#{math.div(100%, 12) * $i} - var(--size-#{$j}));
+        }
       }
-
     }
   }
 
@@ -289,7 +290,6 @@
   }
 
   @for $i from 1 through 12 {
-
     .col-span-#{$i} {
       grid-column: span $i;
     }
@@ -302,8 +302,10 @@
       grid-template-columns: repeat($i, 1fr);
 
       &.grid-autofill {
-        grid-template-columns: repeat(auto-fill,
-          minmax(#{math.div(100, $i)}, 1fr));
+        grid-template-columns: repeat(
+          auto-fill,
+          minmax(#{math.div(100, $i)}, 1fr)
+        );
       }
     }
 
