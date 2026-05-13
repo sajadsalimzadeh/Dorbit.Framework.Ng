@@ -4,8 +4,9 @@ import { CustomTableColumn } from "./contracts";
 import { PrimengComponent } from "../primeng.component";
 import { Table, TableFilterEvent, TableRowExpandEvent } from "primeng/table";
 import { saveAs } from 'file-saver';
-import * as XLSX from 'xlsx';
 import { Menu } from "primeng/menu";
+import moment from "jalali-moment";
+import * as XLSX from 'xlsx';
 
 @Component({
     standalone: false,
@@ -36,6 +37,7 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Input() rows: number = 12;
     @Input() rowsPerPageOptions: number[] = [5, 10, 12, 15, 20, 50, 100, 200];
     @Input() headerClass?: string;
+    @Input() footerClass?: string;
     @Input() rowClassField?: string;
     @Input() stateStorage: 'session' | 'local' = 'local';
     @Input() stateKey: string = '';
@@ -67,13 +69,15 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @ContentChild('body') bodyTpl?: TemplateRef<any>;
     @ContentChild('expandedrow') expandedrowTpl?: TemplateRef<any>;
     @ContentChild('operation') operationTpl?: TemplateRef<any>;
-
+    @ContentChild('footer') footerTpl?: TemplateRef<any>;
+    
     @ContentChildren(TemplateRef) templates!: QueryList<TemplateRef<any>>;
 
     @ViewChild('dt') dt!: Table;
 
     protected uniqueStateKey: string = '';
 
+    hasFooter: boolean = false;
     isDeleteDialogVisible = false;
     expandedRowKeys: { [key: string]: boolean } = {};
     selectedColumns: CustomTableColumn[] = [];
@@ -118,7 +122,15 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     ngAfterViewInit(): void {
         this.columns.forEach(column => {
             column.template = this.templates.find((x: any) => x._declarationTContainer.localNames && x._declarationTContainer.localNames[0] == column.templateName);
+            column.headerTemplate = this.templates.find((x: any) => x._declarationTContainer.localNames && x._declarationTContainer.localNames[0] == column.headerTemplateName);
+            column.footerTemplate = this.templates.find((x: any) => x._declarationTContainer.localNames && x._declarationTContainer.localNames[0] == column.footerTemplateName);
+
             column.header = this.translateService.instant(column.header);
+
+            if (column.footer || column.footerRender) {
+                if(column.footer) column.footer = this.translateService.instant(column.footer);
+                this.hasFooter = true;
+            }
         })
     }
 
@@ -163,7 +175,7 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
         const wbout = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
 
         const blob = new Blob([wbout], { type: 'application/octet-stream' });
-        saveAs(blob, this.router.url.replaceAll('/', '-') + `-${Date.now()}.xlsx`);
+        saveAs(blob, location.hostname + this.router.url.replaceAll('/', '-') + `-${moment().format('YYYY-MM-DD-HH-mm-ss')}.xlsx`);
     }
 
     resetState() {

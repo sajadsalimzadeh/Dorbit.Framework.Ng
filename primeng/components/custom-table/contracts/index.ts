@@ -1,14 +1,25 @@
 import {TemplateRef} from "@angular/core";
 
 export interface CustomTableColumn<T = any> {
-    header: string;
     field?: string;
-    class?: string;
     width?: string;
     isHide?: boolean;
+    
+    header: string;
     headerClass?: string;
+    headerTemplate?: TemplateRef<any>;
+    headerTemplateName?: string;
+    headerRender?: () => any;
+    
     template?: TemplateRef<any>;
     templateName?: string;
-    render?: (item: T) => any;
+    class?: string;
     classFunc?: (item: T) => string;
+    render?: (item: T) => any;
+
+    footer?: string;
+    footerClass?: string;
+    footerTemplate?: TemplateRef<any>;
+    footerTemplateName?: string;
+    footerRender?: () => any;
 }
