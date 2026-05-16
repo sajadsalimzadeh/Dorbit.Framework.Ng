@@ -1,4 +1,4 @@
-import { Component, ContentChild, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from "@angular/core";
+import { ChangeDetectorRef, Component, ContentChild, ElementRef, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from "@angular/core";
 import { Dialog } from "primeng/dialog";
 
 type Position = "center" | "top" | "bottom" | "left" | "right" | "topleft" | "topright" | "bottomleft" | "bottomright";
@@ -48,7 +48,12 @@ export class CustomDialogComponent implements OnInit, OnChanges {
 
     @ContentChild(TemplateRef) template?: TemplateRef<any>;
 
-    constructor(private elementRef: ElementRef) {
+    @HostListener('window:click', [])
+    onDocumentClick() {
+        this.changeDetectorRef.detectChanges();
+    }
+
+    constructor(private elementRef: ElementRef, private changeDetectorRef: ChangeDetectorRef) {
     }
 
     ngOnInit(): void {
