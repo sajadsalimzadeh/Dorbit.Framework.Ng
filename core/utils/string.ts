@@ -56,4 +56,8 @@ export class StringUtil {
     static nameToChar(str: string, defaultValue: string = 'x') {
         return (str ? str.split(' ').map(x => x[0]).join('') : defaultValue).toUpperCase();
     }
+
+    static toNumber(str: string) {
+        return Array.from(str).reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    }
 }
