@@ -9,7 +9,7 @@ export interface CustomTableColumn<T = any> {
     headerClass?: string;
     headerTemplate?: TemplateRef<any>;
     headerTemplateName?: string;
-    headerRender?: () => any;
+    headerRender?: (items: T[]) => any;
     
     template?: TemplateRef<any>;
     templateName?: string;
@@ -21,5 +21,5 @@ export interface CustomTableColumn<T = any> {
     footerClass?: string;
     footerTemplate?: TemplateRef<any>;
     footerTemplateName?: string;
-    footerRender?: () => any;
+    footerRender?: (items: T[]) => any;
 }

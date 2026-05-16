@@ -67,7 +67,7 @@
             <ng-container *ngTemplateOutlet="column.headerTemplate"></ng-container>
             }
             @else if(column.headerRender) {
-            <div [innerHTML]="column.headerRender()"></div>
+            <div [innerHTML]="column.headerRender(dt.filteredValue ?? dt.value)"></div>
             }
             @else {
             <div class="flex-1">{{ column.header }}</div>
@@ -87,7 +87,7 @@
           <ng-container *ngTemplateOutlet="column.headerTemplate"></ng-container>
           }
           @else if(column.headerRender) {
-          <div [innerHTML]="column.headerRender()"></div>
+          <div [innerHTML]="column.headerRender(dt.filteredValue ?? dt.value)"></div>
           }
           @else {
           <div class="flex-1">
@@ -233,7 +233,7 @@
           <ng-container *ngTemplateOutlet="column.footerTemplate"></ng-container>
           }
           @else if(column.footerRender) {
-          <div [innerHTML]="column.footerRender()"></div>
+          <div [innerHTML]="column.footerRender(dt.filteredValue ?? dt.value)"></div>
           }
           @else {
           <div>
