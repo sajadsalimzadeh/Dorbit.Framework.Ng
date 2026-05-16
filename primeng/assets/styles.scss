@@ -116,7 +116,16 @@
         "warning",
         "info",
         "link",
-        "success"
+        "success",
+        "green",
+        "lime",
+        "amber",
+        "yellow",
+        "teal",
+        "cyan",
+        "sky",
+        "blue",
+        "indigo",
     );
 
     $overwrite-primeng-colors: unique-list-join(

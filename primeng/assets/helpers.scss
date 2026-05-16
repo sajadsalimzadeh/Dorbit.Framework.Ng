@@ -23,7 +23,7 @@
 
   @for $i from 0 through 12 {
     .p-#{$i} {
-      padding-top: var(--size-#{$i}) !important;
+      padding: var(--size-#{$i}) !important;
     }
 
     .py-#{$i} {
@@ -213,12 +213,12 @@
 
     @for $i from 1 through 12 {
       .col-#{$i} {
-        flex: #{math.div(100%, 12) * $i};
+        flex: 0 0 #{math.div(100%, 12) * $i};
       }
 
       @for $j from 1 through 12 {
         &.gap-#{$j} > .col-#{$i} {
-          flex: calc(#{math.div(100%, 12) * $i} - var(--size-#{$j}));
+          flex: 0  0 calc(#{math.div(100%, 12) * $i} - var(--size-#{$j}));
         }
       }
     }

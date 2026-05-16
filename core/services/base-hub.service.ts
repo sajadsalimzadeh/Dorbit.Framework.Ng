@@ -27,7 +27,7 @@ export class BaseHubService<TSendMethod, TReceiveMethod> implements IDisposable 
         }
         const connection = new HubConnectionBuilder()
             .withUrl(`${this.url}`, { accessTokenFactory: () => token })
-            .withAutomaticReconnect()
+            .withAutomaticReconnect({ nextRetryDelayInMilliseconds: () => 1000 })
             .withKeepAliveInterval(1000)
             // .withServerTimeout(5000)
             .build();
@@ -35,19 +35,20 @@ export class BaseHubService<TSendMethod, TReceiveMethod> implements IDisposable 
         this.$state.next(connection.state);
 
         connection.start().then(() => {
-            this.$state.next(connection.state);
             this.$connected.next(true);
+            this.$state.next(connection.state);
         });
         connection.onclose(() => {
-            this.$state.next(connection.state);
             this.$connected.next(false);
+            this.$state.next(connection.state);
         });
         connection.onreconnecting(() => {
+            this.$connected.next(false);
             this.$state.next(connection.state);
         });
         connection.onreconnected(() => {
-            this.$state.next(connection.state);
             this.$connected.next(true);
+            this.$state.next(connection.state);
         });
 
         this.$connection.next(connection);
@@ -67,7 +68,7 @@ export class BaseHubService<TSendMethod, TReceiveMethod> implements IDisposable 
     on<T = any>(name: TReceiveMethod): Subject<T> {
         if (!this.listeners.has(name)) {
             this.listeners.set(name, new Subject<any>());
-            
+
             this.$connection.value?.on(name as string, (data) => {
                 const obj = (typeof data === 'string' ? JSON.parse(data) : data);
                 this.listeners.get(name)?.next(obj);
