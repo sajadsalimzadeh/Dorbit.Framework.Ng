@@ -119,10 +119,12 @@ export abstract class PrimengComponent<T = any> implements OnInit, OnChanges, On
         }
         this.selectedItem = item;
         this.dialogs[name] = true;
+        this.changeDetectorRef.detectChanges();
     }
 
     hideDialog(name: string): void {
         this.dialogs[name] = false;
+        this.changeDetectorRef.detectChanges();
     }
 
     info(message: string = 'message.info', params: any = {}) {

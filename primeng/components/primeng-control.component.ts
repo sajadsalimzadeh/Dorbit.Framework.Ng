@@ -9,7 +9,7 @@ export class PrimengControlComponent<T = any> implements OnInit, OnDestroy, Cont
     _services: any = {};
 
     value?: T;
-    onChange = (value: T) => {};
+    onChange!: (value: T) => void;
     onTouched = () => {};
     isDisabled: boolean = false;
 

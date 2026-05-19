@@ -49,7 +49,11 @@ export class CustomDialogComponent implements OnInit, OnChanges {
     @ContentChild(TemplateRef) template?: TemplateRef<any>;
 
     @HostListener('window:click', [])
-    onDocumentClick() {
+    onWindowClick() {
+        this.changeDetectorRef.detectChanges();
+    }
+    @HostListener('window:keydown.escape', [])
+    onWindowEscape() {
         this.changeDetectorRef.detectChanges();
     }
 
