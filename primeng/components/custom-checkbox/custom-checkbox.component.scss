@@ -11,4 +11,33 @@
         display: flex;
         cursor: pointer;
     }
+
+    &.success {
+        --p-checkbox-checked-background: var(--success-500);
+        --p-checkbox-checked-hover-background: var(--success-600);
+        --p-checkbox-checked-border-color: var(--success-500);
+        --p-checkbox-checked-hover-border-color: var(--success-600);
+    }
+
+    &.warn {
+        --p-checkbox-checked-background: var(--warning-500);
+        --p-checkbox-checked-hover-background: var(--warning-600);
+        --p-checkbox-checked-border-color: var(--warning-500);
+        --p-checkbox-checked-hover-border-color: var(--warning-600);
+    }
+
+    &.info {
+        --p-checkbox-checked-background: var(--info-500);
+        --p-checkbox-checked-hover-background: var(--info-600);
+        --p-checkbox-checked-border-color: var(--info-500);
+        --p-checkbox-checked-hover-border-color: var(--info-600);
+    }
+
+    &.danger {
+        --p-checkbox-checked-background: var(--danger-500);
+        --p-checkbox-checked-hover-background: var(--danger-600);
+        --p-checkbox-checked-border-color: var(--danger-500);
+        --p-checkbox-checked-hover-border-color: var(--danger-600);
+    }
+    
 }
