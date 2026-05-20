@@ -8,7 +8,7 @@ import { FormUtil } from '@framework/utils/form';
 export abstract class PrimengFormComponent<T extends {id?: string} = any> extends PrimengComponent {
     @Input() model?: T;
 
-    @Output() onComplete = new EventEmitter();
+    @Output() onComplete = new EventEmitter<boolean>();
 
     abstract form: FormGroup<any>;
 

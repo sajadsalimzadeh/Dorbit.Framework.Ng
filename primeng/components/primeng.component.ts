@@ -110,7 +110,7 @@ export abstract class PrimengComponent<T = any> implements OnInit, OnChanges, On
         this.subscription.unsubscribe();
     }
 
-    showDialog(name: string, ...items: any[]): void {
+    showDialog(name: string, ...items: any[]) {
         let item = items.length > 0 ? items[0] : null;
         if (items.length > 1) {
             items.forEach(x => {

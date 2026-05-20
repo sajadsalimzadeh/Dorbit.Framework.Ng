@@ -3,17 +3,16 @@ import { ControlValueAccessor } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 @Directive()
-export class PrimengControlComponent<T = any> implements OnInit, OnDestroy, ControlValueAccessor {
+export abstract class PrimengControlComponent<T = any> implements OnInit, OnDestroy, ControlValueAccessor {
     @Input() name: string = '';
 
-    _services: any = {};
+    private _services: any = {};
 
-    value?: T;
-    onChange!: (value: T) => void;
-    onTouched = () => {};
-    isDisabled: boolean = false;
-
-    subscription = new Subscription();
+    protected value?: T;
+    protected onChange!: (value: T | undefined) => void;
+    protected onTouched!: () => void;
+    protected isDisabled: boolean = false;
+    protected subscription = new Subscription();
 
     get elementRef(): ElementRef {
         return this._services['ElementRef'] ??= this.injector.get(ElementRef);
@@ -22,20 +21,19 @@ export class PrimengControlComponent<T = any> implements OnInit, OnDestroy, Cont
     constructor(protected injector: Injector) {
     }
 
-    ngOnInit() {
-    }
+    ngOnInit() { }
 
     ngOnDestroy(): void {
         this.subscription.unsubscribe();
     }
 
     // Write a new value to the element
-    writeValue(value: T): void {
+    writeValue(value: T | undefined): void {
         this.value = value;
     }
 
     // Save the function that should be called when the value changes
-    registerOnChange(fn: (value: T) => void): void {
+    registerOnChange(fn: (value: T | undefined) => void): void {
         this.onChange = fn;
     }
 

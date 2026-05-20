@@ -60,6 +60,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { SplitterModule } from 'primeng/splitter';
 import { TagModule } from 'primeng/tag';
 import { StepperModule } from 'primeng/stepper';
+import { MessageModule } from 'primeng/message';
 
 import { CustomDialogComponent } from "./components/custom-dialog/custom-dialog.component";
 import { CustomTableComponent } from "./components/custom-table/custom-table.component";
@@ -146,7 +147,8 @@ const PRIMENG_MODULES = [
     SplitterModule,
     TagModule,
     StepperModule,
-    SelectButtonModule
+    SelectButtonModule,
+    MessageModule
 ];
 
 @NgModule({

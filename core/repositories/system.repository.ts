@@ -9,15 +9,15 @@ export class SystemRepository extends BaseApiRepository {
         super(injector, injector.get(BASE_API_URL_FRAMEWORK), 'System');
     }
 
-    getAllKey() {
-        return this.http.get<QueryResult<string[]>>(`MemoryCache`);
+    memoryCacheGetAllKey() {
+        return this.http.get<QueryResult<string[]>>(`MemoryCache/Keys`);
     }
 
-    delete(key: string) {
-        return this.http.delete<CommandResult>(`MemoryCache/${key}`);
+    memoryCacheDeleteByKey(key: string) {
+        return this.http.post<CommandResult>(`MemoryCache/Delete/${key}`, {});
     }
 
-    clear() {
-        return this.http.delete<CommandResult>(`MemoryCache`);
+    memoryCacheClear() {
+        return this.http.post<CommandResult>(`MemoryCache/Clear`, {});
     }   
 }

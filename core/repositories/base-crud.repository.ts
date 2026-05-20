@@ -30,7 +30,7 @@ export abstract class BaseCrudRepository<T = any, TSave = any> extends BaseApiRe
         super(injector, baseUrl, repository);
     }
 
-    select(query?: ODataQueryOptions | any): Observable<PagedListResult<T>> {
+    select<TReturn = T>(query?: ODataQueryOptions | any): Observable<PagedListResult<TReturn>> {
         if (!query) query = new ODataQueryOptions();
         let url = 'odata';
         let params = {};
@@ -39,34 +39,34 @@ export abstract class BaseCrudRepository<T = any, TSave = any> extends BaseApiRe
         } else {
             params = query;
         }
-        return this.http.get<PagedListResult<T>>(url, { params: params, headers: { 'Content-Type': 'application/json' } });
+        return this.http.get<PagedListResult<TReturn>>(url, { params: params, headers: { 'Content-Type': 'application/json' } });
     }
 
-    getAll(): Observable<QueryResult<T[]>> {
-        return this.http.get<QueryResult<T[]>>('');
+    getAll<TReturn = T>(): Observable<QueryResult<TReturn[]>> {
+        return this.http.get<QueryResult<TReturn[]>>('');
     }
 
-    getById(id: any): Observable<QueryResult<T>> {
-        return this.http.get<QueryResult<T>>(`${id}`);
+    getById<TReturn = T>(id: any): Observable<QueryResult<TReturn>> {
+        return this.http.get<QueryResult<TReturn>>(`${id}`);
     }
 
-    add(req: any) {
-        return this.http.post<QueryResult<T>>(``, req);
+    add<TReturn = T>(req: any) {
+        return this.http.post<QueryResult<TReturn>>(``, req);
     }
 
-    edit(id: any, req: any) {
-        return this.http.patch<QueryResult<T>>(`${id}`, req);
+    edit<TReturn = T>(id: any, req: any) {
+        return this.http.patch<QueryResult<TReturn>>(`${id}`, req);
     }
 
-    save(req: TSave) {
+    save<TReturn = T>(req: TSave) {
         if ((req as any).id) {
-            return this.edit((req as any).id, { ...req });
+            return this.edit<TReturn>((req as any).id, { ...req });
         }
         delete (req as any).id;
-        return this.add(req);
+        return this.add<TReturn>(req);
     }
 
-    delete(id: any) {
-        return this.http.delete<QueryResult<T>>(`${id}`);
+    delete<TReturn = T>(id: any) {
+        return this.http.delete<QueryResult<TReturn>>(`${id}`);
     }
 }
