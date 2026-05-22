@@ -70,6 +70,7 @@ import { AutoFocusDirective } from './components/auto-focus.directive';
 import { InputOtpDirective } from './components/input-otp.directive';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { CustomAlertComponent } from './components/custom-alert/custom-alert.component';
+import { ErrorMessageComponent } from './components/error-message/error-message.component';
 
 const COMPONENTS = [
     CustomTableComponent,
@@ -77,6 +78,7 @@ const COMPONENTS = [
     CustomCheckboxComponent,
     CustomAlertComponent,
     AutoFocusDirective,
+    ErrorMessageComponent,
 ];
 
 const MODULES = [
