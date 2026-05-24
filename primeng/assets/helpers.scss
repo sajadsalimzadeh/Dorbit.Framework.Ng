@@ -212,13 +212,32 @@
     display: flex;
 
     @for $i from 1 through 12 {
-      .col-#{$i} {
+      >.col-#{$i} {
         flex: 0 0 #{math.div(100%, 12) * $i};
       }
 
       @for $j from 1 through 12 {
         &.gap-#{$j} > .col-#{$i} {
-          flex: 0  0 calc(#{math.div(100%, 12) * $i} - var(--size-#{$j}));
+          flex: 0 0 calc(#{math.div(100%, 12) * $i} - var(--size-#{$j}));
+        }
+      }
+    }
+
+    @each $screen in variables.$screens {
+      $name: list.nth($screen, 1);
+      $resolution: list.nth($screen, 2);
+
+      @media (min-width: $resolution) {
+        @for $i from 1 through 12 {
+          >.#{$name}\:col-#{$i} {
+            flex: 0 0 #{math.div(100%, 12) * $i} !important;
+          }
+
+          @for $j from 1 through 12 {
+            &.gap-#{$j} > .#{$name}\:col-#{$i} {
+              flex: 0 0 calc(#{math.div(100%, 12) * $i} - var(--size-#{$j})) !important;
+            }
+          }
         }
       }
     }
@@ -253,11 +272,11 @@
   }
 
   .justify-content-end {
-    justify-content: end;
+    justify-content: flex-end;
   }
 
   .justify-content-start {
-    justify-content: start;
+    justify-content: flex-start;
   }
 
   .justify-content-between {

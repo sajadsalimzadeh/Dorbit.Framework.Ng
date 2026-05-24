@@ -70,6 +70,8 @@ import { AutoFocusDirective } from './components/auto-focus.directive';
 import { InputOtpDirective } from './components/input-otp.directive';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { CustomAlertComponent } from './components/custom-alert/custom-alert.component';
+import { ImagePickerComponent } from './components/image-picker/index.component';
+import { ImageCropperComponent } from 'ngx-image-cropper';
 
 const COMPONENTS = [
     CustomTableComponent,
@@ -77,11 +79,13 @@ const COMPONENTS = [
     CustomCheckboxComponent,
     CustomAlertComponent,
     AutoFocusDirective,
+    ImagePickerComponent,
 ];
 
 const MODULES = [
     JalaliDatePickerComponent,
     InputOtpDirective,
+    ImageCropperComponent,
     
     CommonModule,
     FormsModule,
