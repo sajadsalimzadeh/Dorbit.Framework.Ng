@@ -1,12 +1,12 @@
 :host {
 
     ::ng-deep .p-card {
-        border-inline-start: 6px solid;
+        border-top: 5px solid;
     }
     
     &.danger {
         .p-card {
-            color: var(--danger);
+            color: var(--danger-600);
             border-color: var(--danger);
         }
         

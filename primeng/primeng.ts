@@ -72,6 +72,7 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { CustomAlertComponent } from './components/custom-alert/custom-alert.component';
 import { ImagePickerComponent } from './components/image-picker/index.component';
 import { ImageCropperComponent } from 'ngx-image-cropper';
+import { ErrorMessageComponent } from './components/error-message/error-message.component';
 
 const COMPONENTS = [
     CustomTableComponent,
@@ -80,6 +81,7 @@ const COMPONENTS = [
     CustomAlertComponent,
     AutoFocusDirective,
     ImagePickerComponent,
+    ErrorMessageComponent,
 ];
 
 const MODULES = [

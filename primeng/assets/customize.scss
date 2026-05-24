@@ -151,7 +151,7 @@
   .p-overlay-mask {
     padding: var(--dialog-padding, 0.75rem);
     padding-top: var(--app-inset-top, var(--dialog-padding, 0.75rem));
-    padding-bottom: var(--app-inset-bottom, var(--dialog-padding, 0.75rem));
+    padding-bottom: calc(var(--dialog-padding, 0.75rem) + var(--app-inset-bottom, 0rem));
   }
 
   .p-multiselect-label {
