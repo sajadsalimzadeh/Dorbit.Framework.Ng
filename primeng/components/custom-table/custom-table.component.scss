@@ -17,8 +17,12 @@
     justify-content: space-between;
 
     ::ng-deep {
-      .p-button-label {
-        @media (max-width: 700px) {
+      @media (max-width: 700px) {
+        .p-button {
+          aspect-ratio: 1/1;
+        }
+
+        .p-button-label {
           display: none;
         }
       }
@@ -153,6 +157,7 @@
 
 p-table :host-context([dir="rtl"]) {
   ::ng-deep {
+
     .p-datatable-tbody tr td:first-child,
     .p-datatable-thead tr th:first-child {
       border-inline-start-width: 1px !important;

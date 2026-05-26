@@ -1,0 +1,13 @@
+<input type="file" accept=".jpg, .jpeg, .png" (change)="onFileSelected($event)" hidden />
+
+<p-custom-dialog [(visible)]="dialogs['cropper']">
+    <ng-template>
+        <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1 / 1" output="base64" [format]="format"
+            (imageCropped)="imageCropped($event)"></image-cropper>
+        <div class="flex gap-2">
+            <p-button class="w-full" [label]="'confirm' | translate" severity="success" (onClick)="confirmCroppedImage()" icon="fal fa-check" iconPos="right"
+                [loading]="fileRepository.loading()" />
+            <p-button class="w-full" [label]="'cancel' | translate" severity="secondary" (onClick)="hideDialog('cropper')" icon="fal fa-times" iconPos="left" />
+        </div>
+    </ng-template>
+</p-custom-dialog>

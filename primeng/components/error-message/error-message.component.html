@@ -1,0 +1,5 @@
+@if(control?.touched) {
+@for (error of errors; track error) {
+<span *ngIf="control?.errors?.[error]">{{t('error-message.' + error, control?.errors?.[error])}}</span>
+}
+}
