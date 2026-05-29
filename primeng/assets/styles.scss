@@ -103,7 +103,7 @@
     $base-colors: map.set(
         $base-colors,
         "link",
-        map.get($base-colors, "indigo")
+        map.get($base-colors, "blue")
     );
 
     $colors: create-theme($base-colors);

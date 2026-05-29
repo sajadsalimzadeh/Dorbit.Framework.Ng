@@ -180,6 +180,7 @@ p-table :host-context([dir="rtl"]) {
 
   .top {
     display: flex;
+    align-items: center;
     flex-direction: column;
 
     i {

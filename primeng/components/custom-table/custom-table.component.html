@@ -70,7 +70,7 @@
             <div [innerHTML]="column.headerRender(dt.filteredValue ?? dt.value)"></div>
             }
             @else {
-            <div class="flex-1">{{ column.header }}</div>
+            <div class="flex-1">{{ column.header | translate }}</div>
             }
             @if (isSortable) {
             <p-sortIcon [field]="column.field" class="flex flex align-items-center" />

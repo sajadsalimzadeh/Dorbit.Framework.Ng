@@ -1,10 +1,11 @@
 import { Directive, ElementRef, Injector, Input, OnDestroy, OnInit } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { v4 as uuidv4 } from 'uuid';
 
 @Directive()
 export abstract class PrimengControlComponent<T = any> implements OnInit, OnDestroy, ControlValueAccessor {
-    @Input() name: string = '';
+    @Input() name: string = uuidv4();
 
     private _services: any = {};
 
