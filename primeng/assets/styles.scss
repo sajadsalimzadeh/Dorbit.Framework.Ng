@@ -97,7 +97,7 @@
     $base-colors: map.set(
         $base-colors,
         "warning",
-        map.get($base-colors, "yellow")
+        map.get($base-colors, "amber")
     );
     $base-colors: map.set($base-colors, "info", map.get($base-colors, "cyan"));
     $base-colors: map.set(

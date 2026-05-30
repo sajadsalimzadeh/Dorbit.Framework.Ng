@@ -1,17 +1,44 @@
-<p-select [ngModel]="value" [optionLabel]="optionLabel" [optionValue]="optionValue" (onChange)="onChange($event)" (onShow)="isShowDialog = true"></p-select>
+<p-select class="w-full" [ngModel]="value" [name]="name" [options]="options" [optionLabel]="optionLabel" [optionValue]="optionValue" [filter]="true" [virtualScroll]="true"
+    (onShow)="isShowDialog.set(true)">
+    <ng-template #selectedItem let-item>
+        @if(selectedItemTpl) {
+        <ng-container *ngTemplateOutlet="selectedItemTpl; context: { $implicit: item }"></ng-container>
+        } @else {
+        <span>{{optionLabel ? item[optionLabel] : item}}</span>
+        }
+    </ng-template>
+</p-select>
 
-<p-custom-dialog [(visible)]="isShowDialog" appendTo="body">
+<p-custom-dialog [(visible)]="isShowDialog" appendTo="body" size="xs" [showHeader]="false" [fullHeight]="true">
     <ng-template>
-        <div class="items">
-            @for (item of items; track $index) {
-            <div class="item" (click)="onChange(optionValue ? item[optionValue] : item)">
-                @if(itemTpl) {
-                <ng-container *ngTemplateOutlet="itemTpl"></ng-container>
-                } @else {
-                <span>{{optionLabel ? item[optionLabel] : item}}</span>
-                }
+        <div class="items-container" [ngClass]="['display-' + display, size]">
+            @if(filter) {
+            <div class="filter">
+                <p-icon-field>
+                    <p-inputIcon class="far fa-search"></p-inputIcon>
+                    <input class="w-full" [(ngModel)]="filterValue" name="search-select-dialog" type="text" pInputText />
+                </p-icon-field>
             </div>
             }
+            <div class="scroll-container">
+                <div class="items" [style.grid-template-columns]="'repeat(' + gridColumns + ', 1fr)'">
+                    @for (item of optionsFiltered(); track $index) {
+                    <a class="item" (click)="select(item)" [ngClass]="{'selected': value == (optionValue ? item[optionValue] : item)}">
+                        @if(itemTpl) {
+                        <ng-container *ngTemplateOutlet="itemTpl; context: { $implicit: item }"></ng-container>
+                        } @else {
+                        <span>{{optionLabel ? item[optionLabel] : item}}</span>
+                        }
+                    </a>
+                    }
+                </div>
+            </div>
+            <div class="footer">
+                <p-button class="w-full" (click)="isShowDialog.set(false)" [label]="'cancel' | translate" severity="secondary"></p-button>
+                @if(showClear) {
+                <p-button class="w-full" (click)="select(null)" [label]="'clear' | translate" severity="danger"></p-button>
+                }
+            </div>
         </div>
     </ng-template>
 </p-custom-dialog>

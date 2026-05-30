@@ -1,7 +1,7 @@
 :host {
 
     ::ng-deep .p-card {
-        border-top: 5px solid;
+        border-inline-start: 5px solid;
     }
     
     &.danger {
@@ -9,6 +9,26 @@
             color: var(--danger-600);
             border-color: var(--danger);
         }
-        
+    }
+
+    &.success {
+        .p-card {
+            color: var(--success-600);
+            border-color: var(--success);
+        }
+    }
+
+    &.info {
+        .p-card {
+            color: var(--info-600);
+            border-color: var(--info);
+        }
+    }
+
+    &.warning {
+        .p-card {
+            color: var(--warning-600);
+            border-color: var(--warning);
+        }
     }
 }
