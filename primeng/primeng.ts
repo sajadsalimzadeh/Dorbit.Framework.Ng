@@ -74,6 +74,7 @@ import { SelectDialogComponent } from './components/select-dialog/select-dialog.
 import { ImagePickerComponent } from './components/image-picker/index.component';
 import { ImageCropperComponent } from 'ngx-image-cropper';
 import { ErrorMessageComponent } from './components/error-message/error-message.component';
+import { CustomDatePickerComponent } from './components/custom-date-picker/custom-date-picker.component';
 
 const COMPONENTS = [
     CustomTableComponent,
@@ -84,6 +85,7 @@ const COMPONENTS = [
     SelectDialogComponent,
     ImagePickerComponent,
     ErrorMessageComponent,
+    CustomDatePickerComponent
 ];
 
 const MODULES = [

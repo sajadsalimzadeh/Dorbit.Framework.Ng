@@ -125,8 +125,6 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
             column.headerTemplate = this.templates.find((x: any) => x._declarationTContainer.localNames && x._declarationTContainer.localNames[0] == column.headerTemplateName);
             column.footerTemplate = this.templates.find((x: any) => x._declarationTContainer.localNames && x._declarationTContainer.localNames[0] == column.footerTemplateName);
 
-            column.header = this.translateService.instant(column.header);
-
             if (column.footer || column.footerRender) {
                 if(column.footer) column.footer = this.translateService.instant(column.footer);
                 this.hasFooter = true;
