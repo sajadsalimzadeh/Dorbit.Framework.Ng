@@ -87,8 +87,6 @@ export class CacheInterceptor implements HttpInterceptor {
                         return x.url.test(req.url);
                     });
                     if (matchCache) {
-                        console.log('[CACHE]: ', matchCache);
-                        
                         const httpCache = matchCache.httpCache;
                         const key = req.url;
 
