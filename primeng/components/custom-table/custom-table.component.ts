@@ -122,8 +122,13 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     ngAfterViewInit(): void {
         this.columns.forEach(column => {
             column.template = this.templates.find((x: any) => x._declarationTContainer.localNames && x._declarationTContainer.localNames[0] == column.templateName);
-            column.headerTemplate = this.templates.find((x: any) => x._declarationTContainer.localNames && x._declarationTContainer.localNames[0] == column.headerTemplateName);
-            column.footerTemplate = this.templates.find((x: any) => x._declarationTContainer.localNames && x._declarationTContainer.localNames[0] == column.footerTemplateName);
+            if(column.headerTemplateName) {
+                column.headerTemplate = this.templates.find((x: any) => x._declarationTContainer.localNames && x._declarationTContainer.localNames[0] == column.headerTemplateName);
+            }
+
+            if(column.footerTemplateName) {
+                column.footerTemplate = this.templates.find((x: any) => x._declarationTContainer.localNames && x._declarationTContainer.localNames[0] == column.footerTemplateName);
+            }
 
             if (column.footer || column.footerRender) {
                 if(column.footer) column.footer = this.translateService.instant(column.footer);
