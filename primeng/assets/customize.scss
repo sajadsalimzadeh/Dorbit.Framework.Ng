@@ -207,4 +207,10 @@
       --p-progressbar-value-background: var(--info-500);
     }
   }
+
+  p-input-otp {
+    input {
+      min-height: 50px;
+    }
+  }
 }
