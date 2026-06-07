@@ -1,4 +1,9 @@
 @mixin init($colors) {
+  
+  --p-message-warn-color: var(--warning-650);
+  --p-message-warn-background: var(--warning-50);
+  --p-message-warn-border-color: var(--warning-200);
+  
   .p-button-outlined {
     &.p-button-success {
       background-color: var(--success-50);

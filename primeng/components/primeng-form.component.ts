@@ -38,7 +38,7 @@ export abstract class PrimengFormComponent<T extends {id?: string} = any> extend
             id: this.model?.id,
             ...formValue,
         }
-        this.repository.save(req).subscribe(res => {
+        this.repository.save(req).pipe(this.tapLoading('saving')).subscribe(res => {
             this.onComplete.emit();
             this.onSave(res);
         })
