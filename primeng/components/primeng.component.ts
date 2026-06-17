@@ -156,6 +156,7 @@ export abstract class PrimengComponent<T = any> implements OnInit, OnChanges, On
     }
 
     t(text: string, params: any = {}): any {
+        if(!text) return '';
         return this.translateService.instant(text, params);
     }
 
