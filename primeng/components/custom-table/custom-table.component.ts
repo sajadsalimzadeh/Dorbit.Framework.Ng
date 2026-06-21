@@ -192,7 +192,16 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
 
     exportToExcel() {
         const filteredValue = this.dt.filteredValue || this.value;
-        const worksheet = XLSX.utils.json_to_sheet(filteredValue);
+        const items = filteredValue.map(x => {
+            const item: any = {};
+            this.columns.forEach(col => {
+                if(col.field) {
+                    item[col.field] = x[col.field];
+                }
+            })
+            return item;
+        })
+        const worksheet = XLSX.utils.json_to_sheet(items);
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
 

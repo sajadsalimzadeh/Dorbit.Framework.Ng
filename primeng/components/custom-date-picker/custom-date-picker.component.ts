@@ -15,28 +15,34 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
     }]
 })
 export class CustomDatePickerComponent extends PrimengControlComponent implements OnChanges {
-    @Input() displayFormat: string = 'YYYY/MM/DD';
+    @Input() dateFormat: string = 'YYYY/MM/DD';
     @Input() valueFormat: string = 'YYYY-MM-DD';
+    @Input() showTime: boolean = false;
+    @Input() hideOnDateTimeSelect: boolean = true;
+    @Input() stepMinute: number = 1;
 
-    protected innerValue: string = '';
+    protected innerValue: Date = new Date();
     protected innerDisplayFormat: string = '';
 
+    override ngOnInit(): void {
+        this.innerDisplayFormat = this.dateFormat.replace('YYYY', 'yy').replace('MM', 'mm').replace('DD', 'dd');
+    }
+
     ngOnChanges(changes: SimpleChanges): void {
-        if(changes['displayFormat']) {
-            this.innerDisplayFormat = this.displayFormat.replace('YYYY', 'yy').replace('MM', 'mm').replace('DD', 'dd');
+        if (changes['displayFormat']) {
+            this.innerDisplayFormat = this.dateFormat.replace('YYYY', 'yy').replace('MM', 'mm').replace('DD', 'dd');
         }
     }
 
     override writeValue(value: any): void {
-        console.log(value);
-        if(value) {
-            this.innerValue = moment.from(value, this.valueFormat).format(this.displayFormat);
+        if (value) {
+            this.innerValue = moment.from(value, this.valueFormat).toDate();
         } else {
-        this.innerValue = '';
+            this.innerValue = new Date();
         }
     }
 
-    setValue(value: Date) { 
+    setValue(value: Date) {
         console.log(value);
         
         this.value = value;

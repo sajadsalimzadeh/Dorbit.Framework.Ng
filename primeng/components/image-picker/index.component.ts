@@ -1,7 +1,6 @@
-import { Component, EventEmitter, forwardRef, Injector, Input, Output, ViewChild } from "@angular/core";
+import { Component, EventEmitter, Injector, Input, Output, ViewChild } from "@angular/core";
 import { ImageCroppedEvent, ImageCropperComponent, OutputFormat } from "ngx-image-cropper";
 import { NgxImageCompressService } from "ngx-image-compress";
-import { NG_VALUE_ACCESSOR } from "@angular/forms";
 import { PrimengComponent } from "../primeng.component";
 
 export interface ImagePickerEvent {
@@ -13,12 +12,7 @@ export interface ImagePickerEvent {
     standalone: false,
     selector: 'p-image-picker',
     templateUrl: './index.component.html',
-    styleUrls: ['./index.component.scss'],
-    providers: [{
-        provide: NG_VALUE_ACCESSOR,
-        useExisting: forwardRef(() => ImagePickerComponent),
-        multi: true
-    }]
+    styleUrls: ['./index.component.scss']
 })
 export class ImagePickerComponent extends PrimengComponent {
     @Input() ratio: number = 100;

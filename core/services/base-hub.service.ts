@@ -4,10 +4,10 @@ import { IDisposable } from '../contracts/dispose';
 import { logger } from '../utils/log';
 
 export class BaseHubService<TSendMethod, TReceiveMethod> implements IDisposable {
-
-    $connection = new BehaviorSubject<HubConnection>(null as any);
     $state = new BehaviorSubject<HubConnectionState>(HubConnectionState.Disconnected);
     $connected = new BehaviorSubject<boolean>(false);
+
+    private connection?: HubConnection;
 
     private listeners: Map<TReceiveMethod, Subject<any>> = new Map();
 
@@ -19,12 +19,8 @@ export class BaseHubService<TSendMethod, TReceiveMethod> implements IDisposable 
     }
 
     connect(token: string) {
-        if (!token) {
-            return;
-        }
-        if (this.$connection.value && this.$connection.value.state !== HubConnectionState.Disconnected) {
-            return;
-        }
+        if (!token) return;
+        if (this.connection) return;
         const connection = new HubConnectionBuilder()
             .withUrl(`${this.url}`, { accessTokenFactory: () => token })
             .withAutomaticReconnect({ nextRetryDelayInMilliseconds: () => 1000 })
@@ -32,12 +28,8 @@ export class BaseHubService<TSendMethod, TReceiveMethod> implements IDisposable 
             // .withServerTimeout(5000)
             .build();
 
-        this.$state.next(connection.state);
+        this.connection = connection;
 
-        connection.start().then(() => {
-            this.$connected.next(true);
-            this.$state.next(connection.state);
-        });
         connection.onclose(() => {
             this.$connected.next(false);
             this.$state.next(connection.state);
@@ -51,7 +43,11 @@ export class BaseHubService<TSendMethod, TReceiveMethod> implements IDisposable 
             this.$state.next(connection.state);
         });
 
-        this.$connection.next(connection);
+        connection.start().then(() => {
+            this.$connected.next(true);
+            this.$state.next(connection.state);
+        });
+
         this.init();
     }
 
@@ -62,14 +58,14 @@ export class BaseHubService<TSendMethod, TReceiveMethod> implements IDisposable 
     }
 
     dispose(): Promise<void> {
-        return Promise.resolve(this.$connection.value?.stop());
+        return Promise.resolve(this.connection?.stop());
     }
 
     on<T = any>(name: TReceiveMethod): Subject<T> {
         if (!this.listeners.has(name)) {
             this.listeners.set(name, new Subject<any>());
 
-            this.$connection.value?.on(name as string, (data) => {
+            this.connection?.on(name as string, (data) => {
                 const obj = (typeof data === 'string' ? JSON.parse(data) : data);
                 this.listeners.get(name)?.next(obj);
             });
@@ -78,12 +74,12 @@ export class BaseHubService<TSendMethod, TReceiveMethod> implements IDisposable 
     }
 
     protected async send<T>(method: TSendMethod, mode: 'send' | 'invoke', ...data: any[]) {
-        if (this.$connection.value) {
+        if (this.connection) {
             if (mode == 'send') {
-                await this.$connection.value.send(method as string, ...data);
+                await this.connection.send(method as string, ...data);
                 return null;
             }
-            return await this.$connection.value.invoke<T>(method as string, ...data)
+            return await this.connection.invoke<T>(method as string, ...data)
         } else {
             throw new Error('connection not made')
         }
