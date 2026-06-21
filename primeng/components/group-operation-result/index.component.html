@@ -1,0 +1,67 @@
+<div class="flex flex-column gap-3">
+  <div>
+    <p-custom-checkbox [(ngModel)]="isStopOnError">
+      {{ 'group-operation-result.stop-on-error' | translate }}
+    </p-custom-checkbox>
+  </div>
+  <table class="table table-bordered table-striped table-hover">
+    <thead>
+      <tr>
+        <th width="40px" class="text-center">#</th>
+        <th>{{'group-operation-result.name' | translate}}</th>
+        <th>{{'group-operation-result.message' | translate}}</th>
+        <th width="100px">{{'group-operation-result.status' | translate}}</th>
+        <th width="10px"></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of items; track item; let i = $index) {
+        <tr>
+          <td class="text-center">{{ i + 1 }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.message }}</td>
+          <td class="text-center">
+            <div>
+              @switch (item.status) {
+                @case ('inprogress') {
+                  <i class="far fa-spinner fa-spin"></i>
+                }
+                @case ('success') {
+                  <i class="far fa-check-circle color-success"></i>
+                }
+                @case ('error') {
+                  <i class="far fa-times-circle color-danger"></i>
+                }
+                @default {
+                  <i class="far fa-minus"></i>
+                }
+              }
+            </div>
+          </td>
+          <td>
+            <div class="flex gap-2">
+              <p-button icon="far fa-play" severity="success" (onClick)="start([item])" [pTooltip]="'group-operation-result.start' | translate" size="small" [loading]="isLoading"></p-button>
+              <p-button icon="far fa-times" severity="danger" (onClick)="remove(item)" [pTooltip]="'group-operation-result.remove' | translate" size="small" [loading]="isLoading"></p-button>
+            </div>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+  <div class="flex gap-2 white-space-nowrap">
+    <p-button [label]="'group-operation-result.start' | translate" icon="far fa-play" iconPos="right" (onClick)="startAll()" severity="success"
+    [disabled]="cancelationToken.isRequested" [loading]="isLoading"></p-button>
+    <p-button [label]="'group-operation-result.start-failed' | translate" icon="far fa-play" iconPos="right" (onClick)="startFailed()" severity="warn"
+    [disabled]="!cancelationToken.isRequested" [loading]="isLoading"></p-button>
+    <p-button [label]="'group-operation-result.stop' | translate" icon="far fa-stop" iconPos="left" (onClick)="stop()" severity="danger"
+    [disabled]="!cancelationToken.isRequested" [loading]="isLoading"></p-button>
+    <div class="flex-1 flex align-items-center justify-content-center gap-2">
+      @if (counts) {
+        <span>{{ 'group-operation-result.success' | translate }} : <b class="color-success">{{ counts.success }}</b> </span>
+        <span>{{ 'group-operation-result.error' | translate }} : <b class="color-danger">{{ counts.error }}</b> </span>
+      }
+    </div>
+    <p-button [label]="'group-operation-result.download' | translate" icon="far fa-download" iconPos="right" (onClick)="download()" severity="primary"></p-button>
+    <p-button [label]="'group-operation-result.close' | translate" icon="far fa-times" iconPos="left" (onClick)="close()" severity="secondary"></p-button>
+  </div>
+</div>

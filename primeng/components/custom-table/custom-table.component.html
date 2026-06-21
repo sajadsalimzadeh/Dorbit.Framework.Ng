@@ -48,7 +48,7 @@
       }
       @else {
       <tr [ngClass]="headerClass" class="header-row">
-        @if (selectedItemsChange.observed) {
+        @if (selectedItemsChange.observed || onGroupOperationClick.observed) {
         <th rowspan="2" [style.width]="'30px'" class="text-center">
           <p-checkbox [ngModel]="selectedItems.length > 0" [binary]="true" (onChange)="onSelectAll($event.checked)" />
         </th>
@@ -122,7 +122,7 @@
       <ng-container *ngTemplateOutlet="bodyTpl; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
       }
       <tr [ngClass]="rowClassField ? item[rowClassField] : ''" (mouseover)="onRowMouseOver.emit(item)">
-        @if (selectedItemsChange.observed) {
+        @if (selectedItemsChange.observed || onGroupOperationClick.observed) {
         <td>
           <p-checkbox [ngModel]="selectedItems.includes(item)" [binary]="true" (ngModelChange)="onSelect(item, $event)" />
         </td>
@@ -216,7 +216,7 @@
       }
       @else {
       <tr [ngClass]="footerClass" class="footer-row">
-        @if (selectedItemsChange.observed) {
+        @if (selectedItemsChange.observed || onGroupOperationClick.observed) {
         <th rowspan="2" [style.width]="'30px'" class="text-center">
           <p-checkbox [ngModel]="selectedItems.length > 0" [binary]="true" (onChange)="onSelectAll($event.checked)" />
         </th>
@@ -253,7 +253,7 @@
 </div>
 
 <p-menu #operationMenu [model]="operations" [popup]="true" appendTo="body" />
-<p-menu #groupOperationMenu [model]="groupOperations" [popup]="true" appendTo="body"></p-menu>
+<p-menu #groupOperationMenu [model]="innerGroupOperations" [popup]="true" appendTo="body"></p-menu>
 
 <p-custom-dialog [(visible)]="isDeleteDialogVisible" [header]="'custom-table.delete' | translate" size="xs">
   <ng-template>
@@ -264,5 +264,11 @@
       <p-button class="w-full" (click)="deleteItemApprove()" [label]="'confirm.yes-sure' | translate" icon="fal fa-check" iconPos="right" severity="danger" />
       <p-button class="w-full" (click)="isDeleteDialogVisible = false" [label]="'confirm.cancel' | translate" icon="fal fa-times" iconPos="left" severity="secondary" />
     </div>
+  </ng-template>
+</p-custom-dialog>
+
+<p-custom-dialog [(visible)]="dialogs['group-operation']" [header]="'custom-table.group-operation' | translate" size="md" appendTo="body">
+  <ng-template>
+    <p-group-operation-result [value]="selectedItems" [action]="groupInvoker!" [nameField]="groupOperationNameField" (onComplete)="hideDialog('group-operation');"></p-group-operation-result>
   </ng-template>
 </p-custom-dialog>
