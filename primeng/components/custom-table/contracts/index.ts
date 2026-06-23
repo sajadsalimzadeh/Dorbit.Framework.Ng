@@ -1,4 +1,6 @@
 import {TemplateRef} from "@angular/core";
+import { QueryResult } from "@framework/contracts";
+import { GroupOperationItem } from "@primeng/components/group-operation-result/index.component";
 
 export interface CustomTableColumn<T = any> {
     field?: string;
@@ -22,4 +24,12 @@ export interface CustomTableColumn<T = any> {
     footerTemplate?: TemplateRef<any>;
     footerTemplateName?: string;
     footerRender?: (items: T[]) => any;
+}
+
+
+export interface CustomTableGroupOperation<T = any> {
+    label: string;
+    icon: string;
+    action?: () => void;
+    command?: (item: GroupOperationItem) => Promise<QueryResult>;
 }
