@@ -16,6 +16,7 @@ export abstract class PrimengComponent<T = any> implements OnInit, OnChanges, On
     protected dialogs: { [key: string]: boolean } = {};
     protected loadings: { [key: string]: boolean } = {};
     protected servicesCache: any = {};
+    protected randomIds: { [key: string]: string } = {};
 
     constructor(protected injector: Injector) {
 
@@ -158,6 +159,10 @@ export abstract class PrimengComponent<T = any> implements OnInit, OnChanges, On
     t(text: string, params: any = {}): any {
         if(!text) return '';
         return this.translateService.instant(text, params);
+    }
+
+    getRandomId(name: string): string {
+        return this.randomIds[name] ??= `${name}-${Math.random().toString(36).substring(2, 15)}`;
     }
 
     getFileUrl(name: string, download: boolean = false): string {

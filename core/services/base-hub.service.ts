@@ -1,5 +1,5 @@
 import { BehaviorSubject, Subject } from "rxjs";
-import { HubConnection, HubConnectionBuilder, HubConnectionState } from "@microsoft/signalr";
+import { HttpTransportType, HubConnection, HubConnectionBuilder, HubConnectionState } from "@microsoft/signalr";
 import { IDisposable } from '../contracts/dispose';
 import { logger } from '../utils/log';
 
@@ -11,8 +11,7 @@ export class BaseHubService<TSendMethod, TReceiveMethod> implements IDisposable 
 
     private listeners: Map<TReceiveMethod, Subject<any>> = new Map();
 
-    constructor(private url: string, private methodNames: TReceiveMethod[]) {
-
+    constructor(private url: string) {
         this.$state.subscribe((status) => {
             logger.debug(`Hub status change ${status}`, { scope: 'hub' });
         })
@@ -22,7 +21,7 @@ export class BaseHubService<TSendMethod, TReceiveMethod> implements IDisposable 
         if (!token) return;
         if (this.connection) return;
         const connection = new HubConnectionBuilder()
-            .withUrl(`${this.url}`, { accessTokenFactory: () => token })
+            .withUrl(`${this.url}`, { accessTokenFactory: () => token, transport: HttpTransportType.WebSockets, skipNegotiation: true })
             .withAutomaticReconnect({ nextRetryDelayInMilliseconds: () => 1000 })
             .withKeepAliveInterval(1000)
             // .withServerTimeout(5000)
@@ -57,8 +56,12 @@ export class BaseHubService<TSendMethod, TReceiveMethod> implements IDisposable 
         }
     }
 
-    dispose(): Promise<void> {
-        return Promise.resolve(this.connection?.stop());
+    async dispose(): Promise<void> {
+        this.connection?.stop();
+        this.connection = undefined;
+        this.listeners.clear();
+        this.$state.next(HubConnectionState.Disconnected);
+        this.$connected.next(false);
     }
 
     on<T = any>(name: TReceiveMethod): Subject<T> {
