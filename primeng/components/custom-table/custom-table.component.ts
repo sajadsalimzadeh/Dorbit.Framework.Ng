@@ -1,10 +1,12 @@
 import { AfterViewInit, Component, ContentChild, ContentChildren, EventEmitter, HostBinding, Injector, Input, Output, QueryList, SimpleChanges, TemplateRef, ViewChild } from "@angular/core";
 import { MenuItem } from "primeng/api";
-import { CustomTableColumn } from "./contracts";
+import { CustomTableColumn, CustomTableGroupOperation } from "./contracts";
 import { PrimengComponent } from "../primeng.component";
 import { Table, TableFilterEvent, TableRowExpandEvent } from "primeng/table";
 import { saveAs } from 'file-saver';
 import { Menu } from "primeng/menu";
+import { QueryResult } from "@framework/contracts";
+import { GroupOperationItem } from "../group-operation-result/index.component";
 import moment from "jalali-moment";
 import * as XLSX from 'xlsx';
 
@@ -46,7 +48,8 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Input() tableSize?: 'small' | 'large';
     @Input() operationSize?: 'small' | 'large';
     @Input() operations: MenuItem[] = [];
-    @Input() groupOperations: MenuItem[] = [];
+    @Input() groupOperations: CustomTableGroupOperation[] = [];
+    @Input() groupOperationNameField: string = 'name';
     @Input() dataKey: string = 'id';
     @Input() expandMode: 'single' | 'multiple' = 'single';
 
@@ -70,7 +73,7 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @ContentChild('expandedrow') expandedrowTpl?: TemplateRef<any>;
     @ContentChild('operation') operationTpl?: TemplateRef<any>;
     @ContentChild('footer') footerTpl?: TemplateRef<any>;
-    
+
     @ContentChildren(TemplateRef) templates!: QueryList<TemplateRef<any>>;
 
     @ViewChild('dt') dt!: Table;
@@ -79,6 +82,8 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
 
     hasFooter: boolean = false;
     isDeleteDialogVisible = false;
+    groupInvoker?: (item: GroupOperationItem) => Promise<QueryResult>;
+    innerGroupOperations: MenuItem[] = [];
     expandedRowKeys: { [key: string]: boolean } = {};
     selectedColumns: CustomTableColumn[] = [];
 
@@ -108,6 +113,22 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
             this.selectedItems.splice(0, this.selectedItems.length);
         }
 
+        if (changes['groupOperations']) {
+            this.innerGroupOperations = this.groupOperations.map(x => ({
+                ...x,
+                command: () => {
+                    if (x.action) {
+                        x.action();
+                    }
+                    if(x.command) {
+                        const command = x.command;
+                        this.showDialog('group-operation');
+                        this.groupInvoker = (item: GroupOperationItem) => command(item);
+                    }
+                }
+            }));
+        }
+
         if (!this.operationSize) {
             if (this.size == 'sm' || this.size == 'xs') this.operationSize = 'small';
             else if (this.size == 'lg' || this.size == 'xl') this.operationSize = 'large';
@@ -122,16 +143,16 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     ngAfterViewInit(): void {
         this.columns.forEach(column => {
             column.template = this.templates.find((x: any) => x._declarationTContainer.localNames && x._declarationTContainer.localNames[0] == column.templateName);
-            if(column.headerTemplateName) {
+            if (column.headerTemplateName) {
                 column.headerTemplate = this.templates.find((x: any) => x._declarationTContainer.localNames && x._declarationTContainer.localNames[0] == column.headerTemplateName);
             }
 
-            if(column.footerTemplateName) {
+            if (column.footerTemplateName) {
                 column.footerTemplate = this.templates.find((x: any) => x._declarationTContainer.localNames && x._declarationTContainer.localNames[0] == column.footerTemplateName);
             }
 
             if (column.footer || column.footerRender) {
-                if(column.footer) column.footer = this.translateService.instant(column.footer);
+                if (column.footer) column.footer = this.translateService.instant(column.footer);
                 this.hasFooter = true;
             }
         })

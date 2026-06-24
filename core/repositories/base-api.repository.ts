@@ -74,11 +74,11 @@ class CustomHttpHandler extends HttpHandler {
 
         this.progressCount++;
         this.loading.set(true);
-        return this.handler.handle(req).pipe(finalize(() => {
-            this.progressCount--;
-            if(this.progressCount <= 0) this.loading.set(false);
-        })).pipe(tap(e => {
+        return this.handler.handle(req).pipe(tap(e => {
             if (e instanceof HttpResponse) {
+                this.progressCount--;
+                if(this.progressCount <= 0) this.loading.set(false);
+                
                 if (e.ok) {
                     if (e.body.message) {
                         this.send(`message.${e.body.message}`, 'success');
