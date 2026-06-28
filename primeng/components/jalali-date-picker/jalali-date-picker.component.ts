@@ -51,7 +51,7 @@ const monthNames = [
 
 @Component({
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, FormsModule, InputTextModule, InputIconModule, PopoverModule, IconFieldModule, IftaLabel],
+    imports: [CommonModule, ReactiveFormsModule, FormsModule, InputTextModule, InputIconModule, PopoverModule, IconFieldModule],
     selector: 'p-jalali-date-picker',
     templateUrl: './jalali-date-picker.component.html',
     styleUrls: ['./jalali-date-picker.component.scss'],

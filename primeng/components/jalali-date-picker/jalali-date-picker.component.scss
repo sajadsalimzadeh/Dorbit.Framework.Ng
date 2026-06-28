@@ -26,7 +26,7 @@
 
     .year-month {
         display: flex;
-        border-bottom: 1px solid var(--surface-100);
+        border-bottom: 1px solid var(--surface-200);
 
         > div {
             flex: 1;
@@ -56,7 +56,7 @@
         }
 
         .day-of-week {
-            border-bottom: 1px solid var(--surface-100);
+            color: var(--surface-400);
         }
 
         .day {
@@ -79,7 +79,7 @@
             }
 
             &:not(.disabled):hover {
-                color: var(--surface-500);
+                color: var(--surface-700);
                 background-color: var(--surface-100);
             }
 
@@ -108,7 +108,7 @@
             cursor: pointer;
 
             &:hover {
-                background-color: var(--surface-100);
+                background-color: var(--surface-50);
             }
         }
     }
@@ -137,7 +137,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border-bottom: 1px solid var(--surface-100);
+            border-bottom: 1px solid var(--surface-200);
 
             &.selected {
                 color: var(--primary-50);
@@ -152,7 +152,7 @@
         min-height: 3rem;
         align-items: center;
         justify-content: center;
-        border-top: 1px solid var(--surface-100);
+        border-top: 1px solid var(--surface-200);
 
         &:hover {
             background-color: var(--surface-100);

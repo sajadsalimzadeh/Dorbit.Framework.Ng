@@ -108,6 +108,8 @@
     }
 
     p-multi-select {
+      width: 100%;
+      
       .p-multiselect-label:has(.p-chip) {
         padding-block-start: calc(var(--p-iftalabel-input-padding-top) - 0.3em);
         padding-block-end: calc(
@@ -217,5 +219,9 @@
     input {
       min-height: 50px;
     }
+  }
+
+  .p-buttongroup {
+    width: 100%;
   }
 }
