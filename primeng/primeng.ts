@@ -61,6 +61,7 @@ import { SplitterModule } from 'primeng/splitter';
 import { TagModule } from 'primeng/tag';
 import { StepperModule } from 'primeng/stepper';
 import { MessageModule } from 'primeng/message';
+import { CascadeSelectModule } from 'primeng/cascadeselect';
 
 import { CustomDialogComponent } from "./components/custom-dialog/custom-dialog.component";
 import { CustomTableComponent } from "./components/custom-table/custom-table.component";
@@ -160,7 +161,8 @@ const PRIMENG_MODULES = [
     TagModule,
     StepperModule,
     SelectButtonModule,
-    MessageModule
+    MessageModule,
+    CascadeSelectModule
 ];
 
 @NgModule({

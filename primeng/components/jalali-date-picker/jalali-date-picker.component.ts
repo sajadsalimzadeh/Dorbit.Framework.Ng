@@ -77,8 +77,8 @@ export class JalaliDatePickerComponent extends PrimengControlComponent implement
 
     @Output() onSelect = new EventEmitter();
 
-    @ViewChild('inputEl') inputEl!: ElementRef<HTMLInputElement>;
-    @ViewChild('op') popover!: Popover;
+    @ViewChild('inputEl', {static: true}) inputEl!: ElementRef<HTMLInputElement>;
+    @ViewChild('op', {static: true}) popover!: Popover;
 
     displayValue: string = '';
 
