@@ -52,6 +52,7 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Input() groupOperationNameField: string = 'name';
     @Input() dataKey: string = 'id';
     @Input() expandMode: 'single' | 'multiple' = 'single';
+    @Input() expandedRowKeys: { [key: string]: boolean } = {};
 
     @Input() selectedItems: any[] = [];
     @Output() selectedItemsChange = new EventEmitter<any[]>();
@@ -84,7 +85,6 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     isDeleteDialogVisible = false;
     groupInvoker?: (item: GroupOperationItem) => Promise<QueryResult>;
     innerGroupOperations: MenuItem[] = [];
-    expandedRowKeys: { [key: string]: boolean } = {};
     selectedColumns: CustomTableColumn[] = [];
 
     get storage() {
