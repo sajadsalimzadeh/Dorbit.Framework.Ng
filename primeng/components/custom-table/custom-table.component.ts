@@ -66,13 +66,14 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Output() onRowExpand = new EventEmitter<TableRowExpandEvent>();
     @Output() onOperationClick = new EventEmitter<any>();
     @Output() onGroupOperationClick = new EventEmitter<any>();
+    @Output() onRowDoubleClick = new EventEmitter<any>();
 
-    @ContentChild('caption') captionTpl?: TemplateRef<any>;
-    @ContentChild('header') headerTpl?: TemplateRef<any>;
-    @ContentChild('body') bodyTpl?: TemplateRef<any>;
-    @ContentChild('expandedrow') expandedrowTpl?: TemplateRef<any>;
-    @ContentChild('operation') operationTpl?: TemplateRef<any>;
-    @ContentChild('footer') footerTpl?: TemplateRef<any>;
+    @ContentChild('caption', { static: true }) captionTpl?: TemplateRef<any>;
+    @ContentChild('header', { static: true }) headerTpl?: TemplateRef<any>;
+    @ContentChild('body', { static: true }) bodyTpl?: TemplateRef<any>;
+    @ContentChild('expandedrow', { static: true }) expandedrowTpl?: TemplateRef<any>;
+    @ContentChild('operation', { static: true }) operationTpl?: TemplateRef<any>;
+    @ContentChild('footer', { static: true }) footerTpl?: TemplateRef<any>;
 
     @ContentChildren(TemplateRef) templates!: QueryList<TemplateRef<any>>;
 
@@ -263,5 +264,9 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
         }
         this.expandedRowKeys = { ...this.expandedRowKeys };
         this.onRowExpand.emit(event);
+    }
+
+    onRowDoubleClickHandler(event: Event, item: any) {
+        this.onRowDoubleClick.emit(item);
     }
 }

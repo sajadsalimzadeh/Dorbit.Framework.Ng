@@ -121,7 +121,7 @@
       @if (bodyTpl) {
       <ng-container *ngTemplateOutlet="bodyTpl; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
       }
-      <tr [ngClass]="rowClassField ? item[rowClassField] : ''" (mouseover)="onRowMouseOver.emit(item)">
+      <tr [ngClass]="rowClassField ? item[rowClassField] : ''" (mouseover)="onRowMouseOver.emit(item)" [class.dblclick]="onRowDoubleClick.observed" (dblclick)="onRowDoubleClickHandler($event, item)">
         @if (selectedItemsChange.observed || onGroupOperationClick.observed) {
         <td>
           <p-checkbox [ngModel]="selectedItems.includes(item)" [binary]="true" (ngModelChange)="onSelect(item, $event)" />
