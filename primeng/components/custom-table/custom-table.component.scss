@@ -109,6 +109,13 @@
       }
     }
 
+    tbody tr {
+      &.dblclick {
+        cursor: pointer;
+        user-select: none;
+      }
+    }
+
     .p-datatable-sm tbody tr {
       height: 3rem;
     }

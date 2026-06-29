@@ -46,7 +46,7 @@ export class CustomDialogComponent implements OnInit, OnChanges {
 
     @ViewChild(Dialog) dialog?: Dialog;
 
-    @ContentChild(TemplateRef) template?: TemplateRef<any>;
+    @ContentChild(TemplateRef, {static: true}) template?: TemplateRef<any>;
 
     @HostListener('window:click', [])
     onWindowClick() {

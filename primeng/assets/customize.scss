@@ -224,4 +224,14 @@
   .p-buttongroup {
     width: 100%;
   }
+
+  &[dir="ltr"] .p-virtualscroller-content, &[dir="ltr"] .p-virtualscroller-list {
+    left: 0;
+    right: initial;
+  }
+
+  &[dir="rtl"] .p-virtualscroller-content, [dir="rtl"] .p-virtualscroller-content {
+    left: initial;
+    right: 0;
+  }
 }
