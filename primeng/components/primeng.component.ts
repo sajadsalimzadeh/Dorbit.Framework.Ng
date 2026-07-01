@@ -8,6 +8,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { FileRepository } from '@framework/repositories/file.repository';
 import { FormUtil } from '@framework/utils/form';
 import { HttpErrorResponse } from '@angular/common/http';
+import moment from 'jalali-moment';
 
 @Directive()
 export abstract class PrimengComponent<T = any> implements OnInit, OnChanges, OnDestroy {
@@ -17,9 +18,16 @@ export abstract class PrimengComponent<T = any> implements OnInit, OnChanges, On
     protected loadings: { [key: string]: boolean } = {};
     protected servicesCache: any = {};
     protected randomIds: { [key: string]: string } = {};
+    protected dateLocale: string;
+    protected translateService: TranslateService;
 
     constructor(protected injector: Injector) {
 
+        this.translateService = this.injector.get(TranslateService);
+
+        const dateLocale = this.translateService.instant('date.locale');
+        if (dateLocale != 'date.locale') this.dateLocale = dateLocale;
+        else this.dateLocale = 'fa';
     }
 
     protected get messageService(): MessageService {
@@ -28,10 +36,6 @@ export abstract class PrimengComponent<T = any> implements OnInit, OnChanges, On
 
     protected get fileRepository(): FileRepository {
         return this.servicesCache['FileRepository'] ??= this.injector.get(FileRepository);
-    }
-
-    protected get translateService(): TranslateService {
-        return this.servicesCache['TranslateService'] ??= this.injector.get(TranslateService);
     }
 
     protected get router(): Router {
@@ -159,6 +163,10 @@ export abstract class PrimengComponent<T = any> implements OnInit, OnChanges, On
     t(text: string, params: any = {}): any {
         if(!text) return '';
         return this.translateService.instant(text, params);
+    }
+
+    dateFormat(date: string, format: string = 'YYYY/MM/DD HH:mm:ss'): string {
+        return moment.utc(date).local().locale(this.dateLocale).format(format);
     }
 
     getRandomId(name: string): string {

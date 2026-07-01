@@ -50,7 +50,7 @@ import {RDatePipe} from './pipes/rdate.pipe';
 import {TruncatePipe} from './pipes/truncate.pipe';
 import { NumberSanitizerDirective } from "./directives/number-sanitizer.directive";
 import { TimePipe } from "./pipes/time.pipe";
-import { DateGeregorianPipe } from "./pipes";
+import { DatePipe } from "./pipes";
 
 export const ALL_MODULES = [
     TableModule,
@@ -107,7 +107,7 @@ export const ALL_DIRECTIVES = [
 
 export const ALL_PIPES = [
     DateJalaliPipe,
-    DateGeregorianPipe,
+    DatePipe,
     RDatePipe,
     TruncatePipe,
 ];
