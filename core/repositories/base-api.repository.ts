@@ -1,10 +1,10 @@
-import {HttpClient, HttpErrorResponse, HttpEvent, HttpHandler, HttpRequest, HttpResponse} from "@angular/common/http";
-import {TranslateService} from "@ngx-translate/core";
-import {InjectionToken, Injector, signal, WritableSignal} from "@angular/core";
-import {catchError, finalize, Observable, tap, throwError} from "rxjs";
-import {Colors} from "../types";
-import {MessageService} from "../components/message/services/message.service";
-import {Message} from "../components/message/models";
+import { HttpClient, HttpErrorResponse, HttpEvent, HttpHandler, HttpRequest, HttpResponse } from "@angular/common/http";
+import { TranslateService } from "@ngx-translate/core";
+import { InjectionToken, Injector, signal, WritableSignal } from "@angular/core";
+import { catchError, finalize, Observable, tap, throwError } from "rxjs";
+import { Colors } from "../types";
+import { MessageService } from "../components/message/services/message.service";
+import { Message } from "../components/message/models";
 
 const messageTimes: { [key: string]: number } = {};
 
@@ -74,17 +74,22 @@ class CustomHttpHandler extends HttpHandler {
 
         this.progressCount++;
         this.loading.set(true);
-        return this.handler.handle(req).pipe(tap(e => {
-            if (e instanceof HttpResponse) {
-                this.progressCount--;
-                if(this.progressCount <= 0) this.loading.set(false);
-                
-                if (e.ok) {
-                    if (e.body.message) {
-                        this.send(`message.${e.body.message}`, 'success');
+        return this.handler.handle(req).pipe(tap({
+            next: res => {
+                if (res instanceof HttpResponse && res.ok) {
+                    this.progressCount--;
+                    if (this.progressCount <= 0) this.loading.set(false);
+                    if (res.body.message) {
+                        this.send(`message.${res.body.message}`, 'success');
                     } else if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(req.method.toUpperCase())) {
                         // this.send(`message.success`, 'success');
                     }
+                }
+            },
+            error: err => {
+                if (err instanceof HttpErrorResponse) {
+                    this.progressCount--;
+                    if (this.progressCount <= 0) this.loading.set(false);
                 }
             }
         })).pipe(catchError(e => {
@@ -92,7 +97,7 @@ class CustomHttpHandler extends HttpHandler {
                 if (e.error?.message) {
                     this.send(`message.${e.error.message}`, 'danger', undefined, e.error.data);
                 } else if (e.status == 504 || e.status == 0) {
-                    this.send(`message.http.504`, 'danger', {duration: 10000});
+                    this.send(`message.http.504`, 'danger', { duration: 10000 });
                 } else {
                     this.send(`message.error`, 'danger');
                 }

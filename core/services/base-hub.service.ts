@@ -10,6 +10,7 @@ export class BaseHubService<TSendMethod, TReceiveMethod> implements IDisposable 
     private connection?: HubConnection;
 
     private listeners: Map<TReceiveMethod, Subject<any>> = new Map();
+    private listenerNames: TReceiveMethod[] = [];
 
     constructor(private url: string) {
         this.$state.subscribe((status) => {
@@ -47,6 +48,13 @@ export class BaseHubService<TSendMethod, TReceiveMethod> implements IDisposable 
             this.$state.next(connection.state);
         });
 
+        for (const key of this.listenerNames) {
+            connection.on(key as string, (data) => {
+                const obj = (typeof data === 'string' ? JSON.parse(data) : data);
+                this.listeners.get(key as TReceiveMethod)?.next(obj);
+            });
+        }
+
         this.init();
     }
 
@@ -65,13 +73,18 @@ export class BaseHubService<TSendMethod, TReceiveMethod> implements IDisposable 
     }
 
     on<T = any>(name: TReceiveMethod): Subject<T> {
+
         if (!this.listeners.has(name)) {
             this.listeners.set(name, new Subject<any>());
 
-            this.connection?.on(name as string, (data) => {
-                const obj = (typeof data === 'string' ? JSON.parse(data) : data);
-                this.listeners.get(name)?.next(obj);
-            });
+            if (this.connection) {
+                this.connection.on(name as string, (data) => {
+                    const obj = (typeof data === 'string' ? JSON.parse(data) : data);
+                    this.listeners.get(name)?.next(obj);
+                });
+            } else {
+                this.listenerNames.push(name);
+            }
         }
         return this.listeners.get(name) as Subject<T>;
     }

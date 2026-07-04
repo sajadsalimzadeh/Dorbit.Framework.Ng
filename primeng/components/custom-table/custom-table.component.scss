@@ -65,32 +65,32 @@
 
   &.xs {
     font-size: 0.8rem;
-    --p-datatable-body-cell-padding: 0.2rem;
-    --p-datatable-header-cell-padding: 0.2rem;
+    --p-datatable-body-cell-padding: 0.2rem .3rem;
+    --p-datatable-header-cell-padding: 0.2rem .4rem;
   }
 
   &.sm {
     font-size: 0.9rem;
-    --p-datatable-body-cell-padding: 0.25rem;
-    --p-datatable-header-cell-padding: 0.25rem;
+    --p-datatable-body-cell-padding: 0.25rem .35rem;
+    --p-datatable-header-cell-padding: 0.25rem .45rem;
   }
 
   &.md {
     font-size: 1rem;
-    --p-datatable-body-cell-padding: 0.5rem;
-    --p-datatable-header-cell-padding: 0.5rem;
+    --p-datatable-body-cell-padding: 0.5rem .6rem;
+    --p-datatable-header-cell-padding: 0.5rem .7rem;
   }
 
   &.lg {
     font-size: 1.1rem;
-    --p-datatable-body-cell-padding: 0.75rem;
-    --p-datatable-header-cell-padding: 0.75rem;
+    --p-datatable-body-cell-padding: 0.75rem .85rem;
+    --p-datatable-header-cell-padding: 0.75rem .95rem;
   }
 
   &.xl {
     font-size: 1.2rem;
-    --p-datatable-body-cell-padding: 1rem;
-    --p-datatable-header-cell-padding: 1rem;
+    --p-datatable-body-cell-padding: 1rem 1.2rem;
+    --p-datatable-header-cell-padding: 1rem 1.3rem;
   }
 
   ::ng-deep {
@@ -106,6 +106,13 @@
 
       &:focus {
         z-index: 1;
+      }
+    }
+
+    tbody tr {
+      &.dblclick {
+        cursor: pointer;
+        user-select: none;
       }
     }
 

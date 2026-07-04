@@ -20,6 +20,10 @@ export class ObjectUtil {
         }
     }
 
+    static clone(obj: any): any {
+        return JSON.parse(JSON.stringify(obj));
+    }
+
     static cloneWithoutNullOrUndefinedProperty(obj: any): any {
         const result: any = {};
         for (const key in obj) {

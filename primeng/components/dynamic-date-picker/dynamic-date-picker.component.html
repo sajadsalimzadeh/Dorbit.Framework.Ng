@@ -1,25 +1,13 @@
-@if(label) {
-<p-ifta-label>
-  <p-icon-field>
-    @if (showClear) {
-    <p-inputicon styleClass="fal fa-times" (click)="onChange(null)" />
-    }
-    <input class="input-control" [ngClass]="inputStyleClass" #inputEl (focus)="op.toggle($event, inputEl)" (keyup)="updateValueFromDisplay()" [value]="displayValue"
-      [disabled]="isDisabled" [placeholder]="placeholder" dir="ltr" pInputText [pSize]="size!" type="text" />
-    <p-inputicon styleClass="fal fa-calendar" />
-  </p-icon-field>
-  <label>{{ label }}</label>
-</p-ifta-label>
-} @else {
 <p-icon-field>
   @if (showClear) {
-  <p-inputicon styleClass="fal fa-times" (click)="onChange(null)" />
+  <p-inputicon styleClass="fal fa-times" (click)="onChange(null); displayValue = ''" />
   }
-  <input class="input-control" [ngClass]="inputStyleClass" #inputEl (focus)="op.toggle($event, inputEl)" (keyup)="updateValueFromDisplay()" [value]="displayValue"
-    [disabled]="isDisabled" [placeholder]="placeholder" dir="ltr" pInputText [pSize]="size!" type="text" />
+  <input class="input-control" [ngClass]="inputStyleClass" #inputEl (focus)="op.toggle($event, inputEl)"
+    (keyup)="updateValueFromDisplay()" [value]="displayValue" [disabled]="isDisabled" [placeholder]="placeholder"
+    dir="ltr" pInputText [pSize]="size!" type="text" />
   <p-inputicon styleClass="fal fa-calendar" />
 </p-icon-field>
-}
+
 <p-popover #op appendTo="body">
   <div class="date-picker-container">
 
@@ -28,7 +16,7 @@
         {{ year }}
       </div>
       <div (click)="openMonthPicker()" class="month">
-        {{ monthNames[month] }}
+        {{ month?.name }}
       </div>
     </div>
     <div class="dates">
@@ -41,8 +29,8 @@
       <div class="day-of-week">ج</div>
 
       @for (date of dates; track date) {
-      <div (click)="selectDate(date)" [class.current-month]="date.isCurrentMonth" [class.disabled]="date.isDisabled" [class.selected]="date.isSelected" [class.today]="date.isToday"
-        class="day">
+      <div (click)="selectDate(date)" [class.current-month]="date.isCurrentMonth" [class.disabled]="date.isDisabled"
+        [class.selected]="date.isSelected" [class.today]="date.isToday" class="day">
         {{ date.day }}
       </div>
       }
@@ -64,7 +52,7 @@
       }
     </div>
     <div (click)="goToday()" class="go-today">
-      امروز
+      {{'today' | translate}}
     </div>
     @if (showTimePicker) {
     <div class="time-picker">
