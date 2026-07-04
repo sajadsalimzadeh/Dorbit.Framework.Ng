@@ -88,6 +88,7 @@ export class CustomDialogComponent implements OnInit, OnChanges {
             dialogStyle['max-width'] = '100%';
             dialogStyle['max-height'] = '100%';
             dialogStyle['border-radius'] = '0';
+            dialogStyle['padding'] = 'var(--app-inset-top, 0) var(--app-inset-right, 0) var(--app-inset-bottom, 0) var(--app-inset-left, 0)';
             maskStyles['padding'] = '0';
         } else {
             if (this.size == 'xs') dialogStyle['width'] = '400px';
