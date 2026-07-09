@@ -234,6 +234,7 @@ export class DynamicDatePickerComponent extends PrimengControlComponent implemen
         const month = (this.date ?? moment()).locale(this.locale).month();
         let m = moment().locale(this.locale);
         m = m.subtract(m.month(), 'month');
+        this.months = [];
         for (let i = 0; i < 12; i++) {
             this.months.push({
                 value: m.month(),
@@ -298,7 +299,7 @@ export class DynamicDatePickerComponent extends PrimengControlComponent implemen
 
     select() {
         this.date ??= moment();
-        this.displayValue = this.date.locale(this.locale).format(this.displayFormat);
+        this.displayValue = this.date.clone().locale(this.locale).format(this.displayFormat);
         if (this.onChange) this.onChange(this.date.format(this.valueFormat));
         this.onSelect.emit();
         if (!this.showTimePicker) {

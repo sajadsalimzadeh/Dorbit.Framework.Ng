@@ -217,7 +217,7 @@
       }
 
       @for $j from 1 through 12 {
-        &.gap-#{$j} > .col-#{$i} {
+        &.gap-#{$j}>.col-#{$i} {
           flex: 0 0 calc(#{math.div(100%, 12) * $i} - var(--size-#{$j}));
         }
       }
@@ -234,7 +234,7 @@
           }
 
           @for $j from 1 through 12 {
-            &.gap-#{$j} > .#{$name}\:col-#{$i} {
+            &.gap-#{$j}>.#{$name}\:col-#{$i} {
               flex: 0 0 calc(#{math.div(100%, 12) * $i} - var(--size-#{$j})) !important;
             }
           }
@@ -254,6 +254,7 @@
   .flex-column {
     flex-direction: column;
   }
+
 
   .align-items-center {
     align-items: center;
@@ -305,10 +306,8 @@
       grid-template-columns: repeat($i, 1fr);
 
       &.grid-autofill {
-        grid-template-columns: repeat(
-          auto-fill,
-          minmax(#{math.div(100, $i)}, 1fr)
-        );
+        grid-template-columns: repeat(auto-fill,
+          minmax(#{math.div(100, $i)}, 1fr));
       }
     }
 
@@ -332,6 +331,34 @@
             display: grid;
             margin: 0 !important;
           }
+        }
+
+        .#{$name}\:col-span-#{$i} {
+          grid-column: span $i;
+        }
+
+        .#{$name}\:flex-column {
+          flex-direction: column;
+        }
+
+        .#{$name}\:flex-row {
+          flex-direction: row;
+        }
+
+        .#{$name}\:hidden {
+          display: none;
+        }
+
+        .#{$name}\:block {
+          display: block;
+        }
+
+        .#{$name}\:flex {
+          display: flex;
+        }
+
+        .#{$name}\:grid {
+          display: grid;
         }
       }
     }
