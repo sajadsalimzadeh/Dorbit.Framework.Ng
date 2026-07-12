@@ -26,7 +26,11 @@
     <div class="end">
       @if (showColumnSelector) {
       <p-multi-select class="columns-selection" display="chip" (onChange)="saveSelectedColumnState()" [(ngModel)]="selectedColumns" [options]="columns" display="chip"
-        optionLabel="header" [selectedItemsLabel]="'custom-table.selected-columns' | translate" [maxSelectedLabels]="0" appendTo="body" [size]="operationSize"></p-multi-select>
+        [selectedItemsLabel]="'custom-table.selected-columns' | translate" [maxSelectedLabels]="0" appendTo="body" [size]="operationSize">
+        <ng-template #item #selectedItem let-item>
+          {{ item.header | translate }}
+        </ng-template>
+      </p-multi-select>
       }
       @if (showExportButton) {
       <p-button (onClick)="exportToExcel()" [label]="'custom-table.export' | translate" icon="fal fa-download" iconPos="right" severity="success" [outlined]="true"
@@ -121,7 +125,8 @@
       @if (bodyTpl) {
       <ng-container *ngTemplateOutlet="bodyTpl; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
       }
-      <tr [ngClass]="rowClassField ? item[rowClassField] : ''" (mouseover)="onRowMouseOver.emit(item)" [class.dblclick]="onRowDoubleClick.observed" (dblclick)="onRowDoubleClickHandler($event, item)">
+      <tr [ngClass]="rowClassField ? item[rowClassField] : ''" (mouseover)="onRowMouseOver.emit(item)" [class.dblclick]="onRowDoubleClick.observed"
+        (dblclick)="onRowDoubleClickHandler($event, item)">
         @if (selectedItemsChange.observed || onGroupOperationClick.observed) {
         <td>
           <p-checkbox [ngModel]="selectedItems.includes(item)" [binary]="true" (ngModelChange)="onSelect(item, $event)" />
@@ -255,13 +260,14 @@
 <p-menu #operationMenu [model]="operations" [popup]="true" appendTo="body" />
 <p-menu #groupOperationMenu [model]="innerGroupOperations" [popup]="true" appendTo="body"></p-menu>
 
-<p-custom-dialog [(visible)]="isDeleteDialogVisible" [header]="'custom-table.delete' | translate" size="xs">
+<p-custom-dialog [(visible)]="isDeleteDialogVisible" [header]="'custom-table.delete' | translate" size="xs" appendTo="body">
   <ng-template>
     <div class="my-3">
       {{ 'custom-table.delete-message' | translate }}
     </div>
     <div class="flex flex gap-2">
-      <p-button class="w-full" (click)="deleteItemApprove()" [label]="'confirm.yes-sure' | translate" icon="fal fa-check" iconPos="right" severity="danger" />
+      <p-button class="w-full" (click)="deleteItemApprove()" [label]="'confirm.yes-sure' | translate" icon="fal fa-check" iconPos="right" severity="danger"
+        [pAutoFocusWithTimout]="100" />
       <p-button class="w-full" (click)="isDeleteDialogVisible = false" [label]="'confirm.cancel' | translate" icon="fal fa-times" iconPos="left" severity="secondary" />
     </div>
   </ng-template>
@@ -269,6 +275,7 @@
 
 <p-custom-dialog [(visible)]="dialogs['group-operation']" [header]="'custom-table.group-operation' | translate" size="md" appendTo="body">
   <ng-template>
-    <p-group-operation-result [value]="selectedItems" [action]="groupInvoker!" [nameField]="groupOperationNameField" (onComplete)="hideDialog('group-operation');"></p-group-operation-result>
+    <p-group-operation-result [value]="selectedItems" [action]="groupInvoker!" [nameField]="groupOperationNameField"
+      (onComplete)="hideDialog('group-operation');"></p-group-operation-result>
   </ng-template>
 </p-custom-dialog>
