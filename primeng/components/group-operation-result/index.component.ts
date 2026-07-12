@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { SharedComponent } from '../../../../../app/components/shared.component';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { CancellationToken, QueryResult } from '@framework/contracts';
+import { PrimengComponent } from '../primeng.component';
 
 export interface GroupOperationItem {
     data: any;
@@ -25,7 +25,7 @@ interface Counts {
     templateUrl: './index.component.html',
     styleUrls: ['./index.component.scss'],
 })
-export class GroupOperationResultComponent extends SharedComponent {
+export class GroupOperationResultComponent extends PrimengComponent {
     @Input({ required: true }) value!: any[];
     @Input() nameField: string = 'name';
     @Input({ required: true }) action!: (item: any, cancelationToken: CancellationToken) => Promise<QueryResult>;
