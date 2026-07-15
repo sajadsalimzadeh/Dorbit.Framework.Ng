@@ -127,12 +127,6 @@
       width: 100%;
 
     }
-
-    .p-multiselect-label,
-    .p-treeselect-label {
-      padding-block-start: calc(var(--p-iftalabel-input-padding-top) - 0.3em);
-      padding-block-end: calc(var(--p-iftalabel-input-padding-bottom) - 0.3em);
-    }
   }
 
   p-select.w-full,
