@@ -42,11 +42,11 @@
       }
     </div>
   </div>
-  <p-table #dt [showGridlines]="true" [showCurrentPageReport]="true" [stripedRows]="true" [rowHover]="true" [scrollable]="true" scrollHeight="flex" [stateStorage]="stateStorage"
-    [stateKey]="uniqueStateKey" [currentPageReportTemplate]="'custom-table.current-page-report' | translate" [value]="value" [paginator]="true" [expandedRowKeys]="expandedRowKeys"
+  <p-table #dt [value]="value" [columns]="selectedColumns" [showGridlines]="true" [showCurrentPageReport]="true" [stripedRows]="true" [rowHover]="true" [scrollable]="true" scrollHeight="flex" [stateStorage]="stateStorage"
+    [stateKey]="uniqueStateKey" [currentPageReportTemplate]="'custom-table.current-page-report' | translate" [paginator]="true" [expandedRowKeys]="expandedRowKeys"
     [rowsPerPageOptions]="rowsPerPageOptions" [rows]="rows" [loading]="loading" [lazy]="lazyLoading" (onFilter)="filter($event)" (onRowExpand)="onRowExpandHandler($event)"
-    [dataKey]="dataKey" [rowExpandMode]="expandMode">
-    <ng-template #header>
+    [dataKey]="dataKey" [rowExpandMode]="expandMode" [resizableColumns]="true" [reorderableColumns]="true">
+    <ng-template #header let-columns>
       @if (headerTpl) {
       <ng-container *ngTemplateOutlet="headerTpl"></ng-container>
       }
@@ -63,8 +63,8 @@
         @if (showRowNumber) {
         <th rowspan="2" [style.width]="'40px'" class="text-center">#</th>
         }
-        @for (column of selectedColumns; track column) {
-        <th [pSortableColumn]="column.field" [ngClass]="column.headerClass" [style.width]="column.width">
+        @for (column of columns; track column) {
+        <th [pSortableColumn]="column.field" [ngClass]="column.headerClass" [style.width]="column.width" pResizableColumn pReorderableColumn>
           @if (column.field) {
           <div class="flex flex align-items-center">
             @if (column.headerTemplate) {
@@ -121,7 +121,7 @@
       </tr>
       }
     </ng-template>
-    <ng-template #body let-expanded="expanded" let-item let-rowIndex="rowIndex" let-last="last">
+    <ng-template #body let-columns="columns" let-expanded="expanded" let-item let-rowIndex="rowIndex" let-last="last">
       @if (bodyTpl) {
       <ng-container *ngTemplateOutlet="bodyTpl; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
       }
@@ -141,7 +141,7 @@
         @if (showRowNumber) {
         <td class="text-center">{{ rowIndex + 1 }}</td>
         }
-        @for (column of selectedColumns; track column) {
+        @for (column of columns; track column) {
         @if (column.template) {
         <td [ngClass]="[column.class ?? '', (column.classFunc ? column.classFunc(item) : '')]">
           <ng-container *ngTemplateOutlet="column.template; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
@@ -215,7 +215,7 @@
       }
     </ng-template>
     @if(hasFooter) {
-    <ng-template #footer>
+    <ng-template #footer let-columns="columns">
       @if (footerTpl) {
       <ng-container *ngTemplateOutlet="footerTpl"></ng-container>
       }
@@ -232,7 +232,7 @@
         @if (showRowNumber) {
         <th rowspan="2" [style.width]="'40px'" class="text-center">#</th>
         }
-        @for (column of selectedColumns; track column) {
+        @for (column of columns; track column) {
         <th [ngClass]="column.footerClass" class="text-center">
           @if (column.footerTemplate) {
           <ng-container *ngTemplateOutlet="column.footerTemplate"></ng-container>
