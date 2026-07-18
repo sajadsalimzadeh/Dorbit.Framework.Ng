@@ -1,0 +1,13 @@
+{
+    "peerDependencies": {
+        "ngx-image-cropper": "^9.1.6",
+        "@ngx-translate/core": "^17.0.0",
+        "@microsoft/signalr": "^10.0.0",
+        "uuid": "^14.0.1",
+        "file-saver": "^2.0.5",
+        "xlsx": "^0.18.5"
+    },
+    "peerDevDependencies": {
+        "@types/file-saver": "^2.0.7"
+    }
+}

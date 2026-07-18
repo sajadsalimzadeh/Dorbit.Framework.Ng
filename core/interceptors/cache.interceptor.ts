@@ -1,11 +1,11 @@
-import {Inject, Injectable, InjectionToken, Injector, isDevMode, Optional} from '@angular/core';
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {TimeSpan} from "../contracts/time-span";
-import {internetStateService} from "../services/internet-state.service";
-import {CacheService, CacheStorageIndexDb, ICacheStorage} from "../services/cache.service";
-import {delay} from "../utils/delay";
-import {APP_VERSION} from "../types";
+import { Inject, Injectable, InjectionToken, Injector, isDevMode, Optional } from '@angular/core';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { TimeSpan } from "../contracts/time-span";
+import { internetStateService } from "../services/internet-state.service";
+import { CacheService, CacheStorageIndexDb, ICacheStorage } from "../services/cache.service";
+import { delay } from "../utils/delay";
+import { APP_VERSION } from "../types";
 
 export type Methods = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
 
@@ -34,7 +34,7 @@ interface HttpCacheExtended extends HttpCache {
 export const HTTP_CACHE = new InjectionToken<HttpCache[]>('Http Cache');
 
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class CacheInterceptor implements HttpInterceptor {
     subscriberGroups: { [key: string]: boolean } = {};
     private cacheService: CacheService = new CacheService();
@@ -43,7 +43,7 @@ export class CacheInterceptor implements HttpInterceptor {
     constructor(
         private injector: Injector,
         @Inject(HTTP_CACHE) @Optional() private readonly httpCaches: HttpCacheExtended[],) {
-        const storage = new CacheStorageIndexDb({prefix: 'cache-http-'});
+        const storage = new CacheStorageIndexDb({ prefix: 'cache-http-' });
         this.httpCaches ??= [];
         this.httpCaches.forEach(x => x.storage ??= storage)
         this.httpCaches.forEach(x => {
@@ -72,12 +72,13 @@ export class CacheInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if (!this.cacheService.version) {
-            const version = this.injector.get(APP_VERSION, undefined, {optional: true});
+            const version = this.injector.get(APP_VERSION, undefined, { optional: true });
             if (version) this.cacheService.version = version();
         }
 
         return new Observable<HttpEvent<any>>(ob => {
-                setTimeout(async () => {
+            new Promise(async (resolve) => {
+                try {
                     const method = req.method.toUpperCase();
                     const matchCache = this.matchItems.find(x => {
                         x.constraints ??= {};
@@ -106,17 +107,15 @@ export class CacheInterceptor implements HttpInterceptor {
 
                         } else {
 
-                            while (this.subscriberGroups[key]) {
-                                await delay(50);
-                            }
+                            while (this.subscriberGroups[key]) await delay(100);
                             this.subscriberGroups[key] = true;
 
                             const cache = await this.cacheService.getItem(key, httpCache.storage);
                             const isOffline = !internetStateService.$status.value;
                             if (isOffline) {
                                 if (cache.data) {
-                                    this.subscriberGroups[req.url] = false;
-                                    ob.next(new HttpResponse({body: cache.data, status: 200}));
+                                    this.subscriberGroups[key] = false;
+                                    ob.next(new HttpResponse({ body: cache.data, status: 200 }));
                                     ob.complete();
                                     return;
                                 }
@@ -124,16 +123,16 @@ export class CacheInterceptor implements HttpInterceptor {
                                 if (cache.data && !matchCache.constraints?.offline) {
 
                                     if (matchCache.lazy) {
-                                        this.subscriberGroups[req.url] = false;
-                                        ob.next(new HttpResponse({body: cache.data, status: 200}));
+                                        this.subscriberGroups[key] = false;
+                                        ob.next(new HttpResponse({ body: cache.data, status: 200 }));
                                         if (matchCache.httpCache.timeout && !cache.expired && !cache.invalidVersion) {
                                             ob.complete();
                                             return;
                                         }
                                     } else {
                                         if (!cache.expired && !cache.invalidVersion) {
-                                            this.subscriberGroups[req.url] = false;
-                                            ob.next(new HttpResponse({body: cache.data, status: 200}));
+                                            this.subscriberGroups[key] = false;
+                                            ob.next(new HttpResponse({ body: cache.data, status: 200 }));
                                             ob.complete();
                                             return;
                                         }
@@ -176,8 +175,11 @@ export class CacheInterceptor implements HttpInterceptor {
                         error: e => ob.error(e),
                         complete: () => ob.complete(),
                     });
-                });
-            }
+                } finally {
+                    resolve(true);
+                }
+            });
+        }
         )
     }
 

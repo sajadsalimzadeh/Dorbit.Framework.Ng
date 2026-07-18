@@ -26,7 +26,11 @@
     <div class="end">
       @if (showColumnSelector) {
       <p-multi-select class="columns-selection" display="chip" (onChange)="saveSelectedColumnState()" [(ngModel)]="selectedColumns" [options]="columns" display="chip"
-        optionLabel="header" [selectedItemsLabel]="'custom-table.selected-columns' | translate" [maxSelectedLabels]="0" appendTo="body" [size]="operationSize"></p-multi-select>
+        [selectedItemsLabel]="'custom-table.selected-columns' | translate" [maxSelectedLabels]="0" appendTo="body" [size]="operationSize">
+        <ng-template #item #selectedItem let-item>
+          {{ item.header | translate }}
+        </ng-template>
+      </p-multi-select>
       }
       @if (showExportButton) {
       <p-button (onClick)="exportToExcel()" [label]="'custom-table.export' | translate" icon="fal fa-download" iconPos="right" severity="success" [outlined]="true"
@@ -38,11 +42,11 @@
       }
     </div>
   </div>
-  <p-table #dt [showGridlines]="true" [showCurrentPageReport]="true" [stripedRows]="true" [rowHover]="true" [scrollable]="true" scrollHeight="flex" [stateStorage]="stateStorage"
-    [stateKey]="uniqueStateKey" [currentPageReportTemplate]="'custom-table.current-page-report' | translate" [value]="value" [paginator]="true" [expandedRowKeys]="expandedRowKeys"
+  <p-table #dt [value]="value" [columns]="selectedColumns" [showGridlines]="true" [showCurrentPageReport]="true" [stripedRows]="true" [rowHover]="true" [scrollable]="true" scrollHeight="flex" [stateStorage]="stateStorage"
+    [stateKey]="uniqueStateKey" [currentPageReportTemplate]="'custom-table.current-page-report' | translate" [paginator]="true" [expandedRowKeys]="expandedRowKeys"
     [rowsPerPageOptions]="rowsPerPageOptions" [rows]="rows" [loading]="loading" [lazy]="lazyLoading" (onFilter)="filter($event)" (onRowExpand)="onRowExpandHandler($event)"
-    [dataKey]="dataKey">
-    <ng-template #header>
+    [dataKey]="dataKey" [resizableColumns]="true" [reorderableColumns]="true">
+    <ng-template #header let-columns>
       @if (headerTpl) {
       <ng-container *ngTemplateOutlet="headerTpl"></ng-container>
       }
@@ -59,8 +63,8 @@
         @if (showRowNumber) {
         <th rowspan="2" [style.width]="'40px'" class="text-center">#</th>
         }
-        @for (column of selectedColumns; track column) {
-        <th [pSortableColumn]="column.field" [ngClass]="column.headerClass" [style.width]="column.width">
+        @for (column of columns; track column) {
+        <th [pSortableColumn]="column.field" [ngClass]="column.headerClass" [style.width]="column.width" pResizableColumn pReorderableColumn>
           @if (column.field) {
           <div class="flex flex align-items-center">
             @if (column.headerTemplate) {
@@ -117,11 +121,12 @@
       </tr>
       }
     </ng-template>
-    <ng-template #body let-expanded="expanded" let-item let-rowIndex="rowIndex" let-last="last">
+    <ng-template #body let-columns="columns" let-expanded="expanded" let-item let-rowIndex="rowIndex" let-last="last">
       @if (bodyTpl) {
       <ng-container *ngTemplateOutlet="bodyTpl; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
       }
-      <tr [ngClass]="rowClassField ? item[rowClassField] : ''" (mouseover)="onRowMouseOver.emit(item)" [class.dblclick]="onRowDoubleClick.observed" (dblclick)="onRowDoubleClickHandler($event, item)">
+      <tr [ngClass]="rowClassField ? item[rowClassField] : ''" (mouseover)="onRowMouseOver.emit(item)" [class.dblclick]="onRowDoubleClick.observed"
+        (dblclick)="onRowDoubleClickHandler($event, item)">
         @if (selectedItemsChange.observed || onGroupOperationClick.observed) {
         <td>
           <p-checkbox [ngModel]="selectedItems.includes(item)" [binary]="true" (ngModelChange)="onSelect(item, $event)" />
@@ -136,7 +141,7 @@
         @if (showRowNumber) {
         <td class="text-center">{{ rowIndex + 1 }}</td>
         }
-        @for (column of selectedColumns; track column) {
+        @for (column of columns; track column) {
         @if (column.template) {
         <td [ngClass]="[column.class ?? '', (column.classFunc ? column.classFunc(item) : '')]">
           <ng-container *ngTemplateOutlet="column.template; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
@@ -210,7 +215,7 @@
       }
     </ng-template>
     @if(hasFooter) {
-    <ng-template #footer>
+    <ng-template #footer let-columns="columns">
       @if (footerTpl) {
       <ng-container *ngTemplateOutlet="footerTpl"></ng-container>
       }
@@ -227,7 +232,7 @@
         @if (showRowNumber) {
         <th rowspan="2" [style.width]="'40px'" class="text-center">#</th>
         }
-        @for (column of selectedColumns; track column) {
+        @for (column of columns; track column) {
         <th [ngClass]="column.footerClass" class="text-center">
           @if (column.footerTemplate) {
           <ng-container *ngTemplateOutlet="column.footerTemplate"></ng-container>
@@ -255,13 +260,14 @@
 <p-menu #operationMenu [model]="operations" [popup]="true" appendTo="body" />
 <p-menu #groupOperationMenu [model]="innerGroupOperations" [popup]="true" appendTo="body"></p-menu>
 
-<p-custom-dialog [(visible)]="isDeleteDialogVisible" [header]="'custom-table.delete' | translate" size="xs">
+<p-custom-dialog [(visible)]="isDeleteDialogVisible" [header]="'custom-table.delete' | translate" size="xs" appendTo="body">
   <ng-template>
     <div class="my-3">
       {{ 'custom-table.delete-message' | translate }}
     </div>
     <div class="flex flex gap-2">
-      <p-button class="w-full" (click)="deleteItemApprove()" [label]="'confirm.yes-sure' | translate" icon="fal fa-check" iconPos="right" severity="danger" />
+      <p-button class="w-full" (click)="deleteItemApprove()" [label]="'confirm.yes-sure' | translate" icon="fal fa-check" iconPos="right" severity="danger"
+        [pAutoFocusWithTimout]="100" />
       <p-button class="w-full" (click)="isDeleteDialogVisible = false" [label]="'confirm.cancel' | translate" icon="fal fa-times" iconPos="left" severity="secondary" />
     </div>
   </ng-template>
@@ -269,6 +275,7 @@
 
 <p-custom-dialog [(visible)]="dialogs['group-operation']" [header]="'custom-table.group-operation' | translate" size="md" appendTo="body">
   <ng-template>
-    <p-group-operation-result [value]="selectedItems" [action]="groupInvoker!" [nameField]="groupOperationNameField" (onComplete)="hideDialog('group-operation');"></p-group-operation-result>
+    <p-group-operation-result [value]="selectedItems" [action]="groupInvoker!" [nameField]="groupOperationNameField"
+      (onComplete)="hideDialog('group-operation');"></p-group-operation-result>
   </ng-template>
 </p-custom-dialog>
