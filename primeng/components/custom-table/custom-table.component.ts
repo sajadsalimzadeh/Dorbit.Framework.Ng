@@ -93,7 +93,7 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     }
 
     get isStateChaged() {
-        return this.dt?.filteredValue || this.dt?.sortField || this.storage.getItem(this.stateKey + '-selectedColumns');
+        return this.dt?.filteredValue || this.dt?.sortField || this.storage.getItem(this.stateKey + '-selectedColumns') || this.storage.getItem(this.uniqueStateKey);
     }
 
     constructor(injector: Injector) {
@@ -112,6 +112,13 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
         super.ngOnChanges(changes);
         if (changes['value']) {
             this.selectedItems.splice(0, this.selectedItems.length);
+
+            if (this.value) {
+                this.value.forEach((x, i) => {
+                    if (typeof x._defaultOrder == 'undefined') x._defaultOrder = i
+                });
+            }
+
         }
 
         if (changes['groupOperations']) {
@@ -121,7 +128,7 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
                     if (x.action) {
                         x.action();
                     }
-                    if(x.command) {
+                    if (x.command) {
                         const command = x.command;
                         this.showDialog('group-operation');
                         this.groupInvoker = (item: GroupOperationItem) => command(item);
@@ -196,7 +203,7 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
         const items = filteredValue.map(x => {
             const item: any = {};
             this.columns.forEach(col => {
-                if(col.field) {
+                if (col.field) {
                     item[col.field] = x[col.field];
                 }
             })
@@ -213,6 +220,16 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     }
 
     resetState() {
+        const tableId = this.elementRef.nativeElement.querySelector('table.p-datatable-table')?.id;
+        if (tableId) {
+            const style = Array.from(document.head.querySelectorAll(`style`)).reverse().find(x => x.textContent.includes('#' + tableId) && x.textContent?.includes('th:nth-child'));
+            if (style) {
+                style.remove();
+            }
+        }
+
+        this.dt.value.splice(0, this.dt.value.length, ...this.dt.value.sortBy(x => x._defaultOrder));
+
         this.dt.clearState();
         this.dt.reset();
         this.dt.restoreColumnOrder();
