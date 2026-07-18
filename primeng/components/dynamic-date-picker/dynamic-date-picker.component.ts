@@ -1,13 +1,13 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, HostListener, Injector, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
-import moment, { Moment } from 'jalali-moment';
 import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { PrimengControlComponent } from '../primeng-control.component';
 import { Popover, PopoverModule } from "primeng/popover";
-import { IftaLabel } from "primeng/iftalabel";
+import moment, { Moment } from 'jalali-moment';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 interface YearObject {
     value: number;
@@ -33,39 +33,24 @@ interface DateObject {
     isCurrentMonth?: boolean;
 }
 
-
-const monthNames = [
-    'فروردین',
-    'اردیبهشت',
-    'خرداد',
-    'تیر',
-    'مرداد',
-    'شهریور',
-    'مهر',
-    'آبان',
-    'آذر',
-    'دی',
-    'بهمن',
-    'اسفند',
-]
-
 @Component({
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, FormsModule, InputTextModule, InputIconModule, PopoverModule, IconFieldModule],
-    selector: 'p-jalali-date-picker',
-    templateUrl: './jalali-date-picker.component.html',
-    styleUrls: ['./jalali-date-picker.component.scss'],
+    imports: [CommonModule, ReactiveFormsModule, FormsModule, InputTextModule, InputIconModule, PopoverModule, IconFieldModule, TranslateModule],
+    selector: 'p-dynamic-date-picker',
+    templateUrl: './dynamic-date-picker.component.html',
+    styleUrls: ['./dynamic-date-picker.component.scss'],
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => JalaliDatePickerComponent),
+            useExisting: forwardRef(() => DynamicDatePickerComponent),
             multi: true,
         }
     ],
 })
-export class JalaliDatePickerComponent extends PrimengControlComponent implements OnInit, AfterViewInit, OnDestroy, ControlValueAccessor {
+export class DynamicDatePickerComponent extends PrimengControlComponent implements OnInit, AfterViewInit, OnDestroy, ControlValueAccessor {
     @Input() placeholder: string = '';
     @Input() label: string = '';
+    @Input() locale!: string;
     @Input() size?: 'small' | 'large';
     @Input() showClear: boolean = false;
     @Input() displayFormat!: string;
@@ -77,22 +62,21 @@ export class JalaliDatePickerComponent extends PrimengControlComponent implement
 
     @Output() onSelect = new EventEmitter();
 
-    @ViewChild('inputEl', {static: true}) inputEl!: ElementRef<HTMLInputElement>;
-    @ViewChild('op', {static: true}) popover!: Popover;
+    @ViewChild('inputEl', { static: true }) inputEl!: ElementRef<HTMLInputElement>;
+    @ViewChild('op', { static: true }) popover!: Popover;
 
     displayValue: string = '';
 
-    monthNames = monthNames;
     isInside: boolean = false;
     state: 'date' | 'month' | 'year' = 'date';
     year: number = 0;
     years: YearObject[] = [];
-    month: number = 0;
+    month?: MonthObject;
     months: MonthObject[] = [];
     date?: Moment;
     dates: DateObject[] = [];
 
-    constructor(injector: Injector) {
+    constructor(injector: Injector, private translateService: TranslateService) {
         super(injector);
     }
 
@@ -107,11 +91,15 @@ export class JalaliDatePickerComponent extends PrimengControlComponent implement
     override ngOnInit() {
         super.ngOnInit();
 
+        const dateLocale = this.translateService.instant('date.locale');
+        if (dateLocale != 'date.locale') this.locale = dateLocale;
+        if (!this.locale) this.locale = 'fa';
+
         if (this.showTimePicker) {
-            this.displayFormat ??= 'jYYYY/jMM/jDD HH:mm:ss';
+            this.displayFormat ??= 'YYYY/MM/DD HH:mm:ss';
             this.valueFormat ??= 'YYYY-MM-DDTHH:mm:ss';
         } else {
-            this.displayFormat ??= 'jYYYY/jMM/jDD';
+            this.displayFormat ??= 'YYYY/MM/DD';
             this.valueFormat ??= 'YYYY-MM-DD';
         }
 
@@ -138,18 +126,17 @@ export class JalaliDatePickerComponent extends PrimengControlComponent implement
                 this.date = undefined;
             }
 
-            this.displayValue = this.date?.format(this.displayFormat) ?? '';
+            this.displayValue = this.date?.clone().locale(this.locale).format(this.displayFormat) ?? '';
         } catch {
             this.date = moment();
         }
     }
 
     updateValueFromDisplay() {
-
         try {
             const value = this.displayValue;
             if (value) {
-                const m = moment.from(value, 'en', this.displayFormat);
+                const m = moment.from(value, this.locale, this.displayFormat);
                 if ((m as any)._isValid) {
                     this.date = m;
                     this.createDays();
@@ -164,29 +151,27 @@ export class JalaliDatePickerComponent extends PrimengControlComponent implement
     }
 
     createDays() {
-        const now = moment();
-        const toDay = now.jDate();
-        const toMonth = now.jMonth();
-        const toYear = now.jYear();
+        const date = (this.date?.clone() ?? moment()).locale(this.locale);
 
+        this.year = date.year();
+        this.month = {
+            value: date.month(),
+            name: date.format('MMMM'),
+            isSelected: false,
+        };
+        const day = date.date();
+        const daysInMonth = date.daysInMonth();
 
-        const date = this.date?.clone() ?? moment();
-
-        this.year = date.jYear();
-        this.month = date.jMonth();
-        const day = date.jDate();
-        const daysInMonth = date.jDaysInMonth();
-
-        const m = moment.from(`${this.year}-${this.month + 1}-1`, 'fa');
-        const previousDays = m.jDay()
+        const m = moment().locale(this.locale).set({ year: this.year, month: this.month.value, date: 1 });
+        const previousDays = m.day();
         m.add(-previousDays, 'day')
 
         const dates: DateObject[] = [];
         for (let i = 0; i < previousDays; i++) {
             dates.push({
-                year: m.jYear(),
-                month: m.jMonth(),
-                day: m.jDate(),
+                year: m.year(),
+                month: m.month(),
+                day: m.date(),
                 value: m.valueOf(),
 
                 isCurrentMonth: false,
@@ -196,9 +181,9 @@ export class JalaliDatePickerComponent extends PrimengControlComponent implement
 
         for (let i = 0; i < daysInMonth; i++) {
             dates.push({
-                year: m.jYear(),
-                month: m.jMonth(),
-                day: m.jDate(),
+                year: m.year(),
+                month: m.month(),
+                day: m.date(),
                 value: m.valueOf(),
                 isCurrentMonth: true,
             })
@@ -207,9 +192,9 @@ export class JalaliDatePickerComponent extends PrimengControlComponent implement
 
         while (dates.length % 7 != 0) {
             dates.push({
-                year: m.jYear(),
-                month: m.jMonth(),
-                day: m.jDate(),
+                year: m.year(),
+                month: m.month(),
+                day: m.date(),
                 value: m.valueOf(),
 
                 isCurrentMonth: false,
@@ -220,12 +205,17 @@ export class JalaliDatePickerComponent extends PrimengControlComponent implement
         const minValue = this.min ? moment(this.min, this.valueFormat).valueOf() : 0;
         const maxValue = this.max ? moment(this.max, this.valueFormat).valueOf() : 100000000000000;
 
+        const now = moment().locale(this.locale);
+        const toDay = now.date();
+        const toMonth = now.month();
+        const toYear = now.year();
+
         dates.forEach(date => {
             if (date.day == toDay && date.month == toMonth && date.year == toYear) {
                 date.isToday = true;
             }
 
-            if (date.day == day && date.month == this.month && date.year == this.year) {
+            if (date.day == day && date.month == this.month?.value && date.year == this.year) {
                 date.isSelected = true;
             }
 
@@ -241,15 +231,17 @@ export class JalaliDatePickerComponent extends PrimengControlComponent implement
     }
 
     createMonths() {
-        this.month = (this.date ?? moment()).jMonth();
+        const month = (this.date ?? moment()).locale(this.locale).month();
+        let m = moment().locale(this.locale);
+        m = m.subtract(m.month(), 'month');
         this.months = [];
         for (let i = 0; i < 12; i++) {
             this.months.push({
-                value: i,
-                name: monthNames[i],
-
-                isSelected: this.month == i
-            })
+                value: m.month(),
+                name: m.format('MMMM'),
+                isSelected: month == m.month()
+            });
+            m = m.add(1, 'month');
         }
     }
 
@@ -269,7 +261,7 @@ export class JalaliDatePickerComponent extends PrimengControlComponent implement
     }
 
     createYears() {
-        this.year = (this.date ?? moment()).jYear();
+        this.year = (this.date ?? moment()).locale(this.locale).year();
         this.years = [];
         for (let i = this.year - 100; i < this.year + 100; i++) {
             this.years.push({
@@ -280,20 +272,20 @@ export class JalaliDatePickerComponent extends PrimengControlComponent implement
     }
 
     goToday() {
-        this.date = moment();
+        this.date = moment().locale(this.locale);
         this.createDays();
     }
 
     selectYear(value: number) {
-        this.date ??= moment();
-        this.date.jYear(value);
+        this.date ??= moment().locale(this.locale);
+        this.date.set({ year: value });
         this.openMonthPicker();
         this.createDays();
     }
 
     selectMonth(value: number) {
-        this.date ??= moment();
-        this.date.jMonth(value);
+        this.date ??= moment().locale(this.locale);
+        this.date.set({ month: value });
         this.state = 'date';
         this.createDays();
     }
@@ -301,16 +293,13 @@ export class JalaliDatePickerComponent extends PrimengControlComponent implement
     selectDate(date: DateObject) {
         if (date.isDisabled) return;
 
-        this.date ??= moment();
-        this.date.jDate(date.day);
-        this.date.jMonth(date.month);
-        this.date.jYear(date.year);
+        this.date = moment.unix(date.value / 1000);
         this.select();
     }
 
     select() {
         this.date ??= moment();
-        this.displayValue = this.date.format(this.displayFormat);
+        this.displayValue = this.date.clone().locale(this.locale).format(this.displayFormat);
         if (this.onChange) this.onChange(this.date.format(this.valueFormat));
         this.onSelect.emit();
         if (!this.showTimePicker) {

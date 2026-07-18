@@ -1,4 +1,4 @@
-import { Component, computed, ContentChild, ContentChildren, ElementRef, forwardRef, HostBinding, HostListener, Input, Output, QueryList, signal, TemplateRef } from '@angular/core';
+import { Component, computed, ContentChildren, forwardRef, HostListener, Input, QueryList, signal, TemplateRef } from '@angular/core';
 import { PrimengControlComponent } from '../primeng-control.component';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 

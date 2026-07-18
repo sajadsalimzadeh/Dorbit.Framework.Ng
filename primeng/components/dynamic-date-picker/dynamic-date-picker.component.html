@@ -1,5 +1,5 @@
 <p-icon-field>
-  @if (showClear) {
+  @if (showClear && displayValue) {
   <p-inputicon styleClass="fal fa-times" (click)="onChange(null); displayValue = ''" />
   }
   <input class="input-control" [ngClass]="inputStyleClass" #inputEl (focus)="op.toggle($event, inputEl)"
@@ -16,7 +16,7 @@
         {{ year }}
       </div>
       <div (click)="openMonthPicker()" class="month">
-        {{ monthNames[month] }}
+        {{ month?.name }}
       </div>
     </div>
     <div class="dates">
@@ -52,7 +52,7 @@
       }
     </div>
     <div (click)="goToday()" class="go-today">
-      امروز
+      {{'today' | translate}}
     </div>
     @if (showTimePicker) {
     <div class="time-picker">

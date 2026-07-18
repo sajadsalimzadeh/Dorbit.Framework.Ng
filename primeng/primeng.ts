@@ -65,7 +65,7 @@ import { CascadeSelectModule } from 'primeng/cascadeselect';
 
 import { CustomDialogComponent } from "./components/custom-dialog/custom-dialog.component";
 import { CustomTableComponent } from "./components/custom-table/custom-table.component";
-import { JalaliDatePickerComponent } from './components/jalali-date-picker/jalali-date-picker.component';
+import { DynamicDatePickerComponent } from './components/dynamic-date-picker/dynamic-date-picker.component';
 import { CustomCheckboxComponent } from './components/custom-checkbox/custom-checkbox.component';
 import { AutoFocusDirective } from './components/auto-focus.directive';
 import { InputOtpDirective } from './components/input-otp.directive';
@@ -94,7 +94,7 @@ const COMPONENTS = [
 ];
 
 const MODULES = [
-    JalaliDatePickerComponent,
+    DynamicDatePickerComponent,
     InputOtpDirective,
     ImageCropperComponent,
     FilterPipe,
