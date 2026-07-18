@@ -77,6 +77,8 @@ import { ImageCropperComponent } from 'ngx-image-cropper';
 import { ErrorMessageComponent } from './components/error-message/error-message.component';
 import { CustomDatePickerComponent } from './components/custom-date-picker/custom-date-picker.component';
 import { GroupOperationResultComponent } from './components/group-operation-result/index.component';
+import { FilterPipe } from './components/filter.pipe';
+import { PaggingPipe } from './components/pagging.pipe';
 
 const COMPONENTS = [
     CustomTableComponent,
@@ -95,7 +97,9 @@ const MODULES = [
     JalaliDatePickerComponent,
     InputOtpDirective,
     ImageCropperComponent,
-    
+    FilterPipe,
+    PaggingPipe,
+
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
