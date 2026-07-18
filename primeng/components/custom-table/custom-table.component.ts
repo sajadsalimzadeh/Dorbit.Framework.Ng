@@ -254,15 +254,16 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     }
 
     onRowExpandHandler(event: TableRowExpandEvent) {
+        const dataKey = event.data[this.dataKey];
         if (this.expandMode === 'single') {
             for (const key in this.expandedRowKeys) {
                 this.expandedRowKeys[key] = false;
             }
-            this.expandedRowKeys[event.data[this.dataKey]] = true;
+            this.expandedRowKeys[dataKey] = true;
         } else {
-            this.expandedRowKeys[event.data[this.dataKey]] = !this.expandedRowKeys[event.data[this.dataKey]];
+            if(this.expandedRowKeys[dataKey]) this.expandedRowKeys[dataKey] = false;
+            else this.expandedRowKeys[dataKey] = true;
         }
-        this.expandedRowKeys = { ...this.expandedRowKeys };
         this.onRowExpand.emit(event);
     }
 
