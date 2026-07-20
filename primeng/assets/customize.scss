@@ -81,6 +81,9 @@
   }
 
   p-ifta-label {
+    --p-multiselect-sm-padding-y: calc(var(--p-form-field-sm-padding-y) * 3.4) var(--p-form-field-sm-padding-y);
+    --p-treeselect-sm-padding-y: calc(var(--p-form-field-sm-padding-y) * 3.4) var(--p-form-field-sm-padding-y);
+
     label {
       &.required::after {
         content: "*";
