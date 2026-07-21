@@ -45,7 +45,7 @@
   <p-table #dt [value]="value" [columns]="selectedColumns" [showGridlines]="true" [showCurrentPageReport]="true" [stripedRows]="true" [rowHover]="true" [scrollable]="true" scrollHeight="flex" [stateStorage]="stateStorage"
     [stateKey]="uniqueStateKey" [currentPageReportTemplate]="'custom-table.current-page-report' | translate" [paginator]="true" [expandedRowKeys]="expandedRowKeys"
     [rowsPerPageOptions]="rowsPerPageOptions" [rows]="rows" [loading]="loading" [lazy]="lazyLoading" (onFilter)="filter($event)" (onRowExpand)="onRowExpandHandler($event)"
-    [dataKey]="dataKey" [resizableColumns]="true" [reorderableColumns]="true">
+    [dataKey]="dataKey" [reorderableColumns]="true">
     <ng-template #header let-columns>
       @if (headerTpl) {
       <ng-container *ngTemplateOutlet="headerTpl"></ng-container>
@@ -215,7 +215,7 @@
       }
     </ng-template>
     @if(hasFooter) {
-    <ng-template #footer let-columns="columns">
+    <ng-template #footer let-columns>
       @if (footerTpl) {
       <ng-container *ngTemplateOutlet="footerTpl"></ng-container>
       }
