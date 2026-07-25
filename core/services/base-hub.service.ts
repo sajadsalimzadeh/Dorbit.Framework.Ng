@@ -54,14 +54,6 @@ export class BaseHubService<TSendMethod, TReceiveMethod> implements IDisposable 
                 this.listeners.get(key as TReceiveMethod)?.next(obj);
             });
         }
-
-        this.init();
-    }
-
-    init() {
-        for (const key in this.listeners) {
-            this.on(key as TReceiveMethod);
-        }
     }
 
     async dispose(): Promise<void> {
