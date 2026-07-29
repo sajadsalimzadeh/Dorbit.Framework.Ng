@@ -24,6 +24,8 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Input() lazyLoading: boolean = false;
     @Input() columns: CustomTableColumn[] = [];
     @Input() breadcrumb?: MenuItem[];
+    @Input() resizableColumns: boolean = false;
+    @Input() reorderableColumns: boolean = false;
     @Input() showInCard: boolean = true;
     @Input() showRowNumber: boolean = true;
     @Input() showExportButton: boolean = true;
@@ -93,7 +95,10 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     }
 
     get isStateChaged() {
-        return this.dt?.filteredValue || this.dt?.sortField || this.storage.getItem(this.stateKey + '-selectedColumns') || this.storage.getItem(this.uniqueStateKey);
+        return this.dt?.filteredValue || 
+        this.dt?.sortField || 
+        this.storage.getItem(this.stateKey + '-selectedColumns') ||
+        this.dt?.columns?.some((x,i) => i != this.columns.filter(y => !y.isHide).findIndex(y => y.header == x.header));
     }
 
     constructor(injector: Injector) {

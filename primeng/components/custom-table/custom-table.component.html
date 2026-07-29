@@ -42,10 +42,10 @@
       }
     </div>
   </div>
-  <p-table #dt [value]="value" [columns]="selectedColumns" [showGridlines]="true" [showCurrentPageReport]="true" [stripedRows]="true" [rowHover]="true" [scrollable]="true" scrollHeight="flex" [stateStorage]="stateStorage"
-    [stateKey]="uniqueStateKey" [currentPageReportTemplate]="'custom-table.current-page-report' | translate" [paginator]="true" [expandedRowKeys]="expandedRowKeys"
-    [rowsPerPageOptions]="rowsPerPageOptions" [rows]="rows" [loading]="loading" [lazy]="lazyLoading" (onFilter)="filter($event)" (onRowExpand)="onRowExpandHandler($event)"
-    [dataKey]="dataKey" [rowExpandMode]="expandMode" [resizableColumns]="true" [reorderableColumns]="true">
+  <p-table #dt [value]="value" [columns]="selectedColumns" [showGridlines]="true" [showCurrentPageReport]="true" [stripedRows]="true" [rowHover]="true" [scrollable]="true"
+    scrollHeight="flex" [stateStorage]="stateStorage" [stateKey]="uniqueStateKey" [currentPageReportTemplate]="'custom-table.current-page-report' | translate" [paginator]="true"
+    [expandedRowKeys]="expandedRowKeys" [rowsPerPageOptions]="rowsPerPageOptions" [rows]="rows" [loading]="loading" [lazy]="lazyLoading" (onFilter)="filter($event)"
+    (onRowExpand)="onRowExpandHandler($event)" [dataKey]="dataKey" [rowExpandMode]="expandMode" [resizableColumns]="resizableColumns" [reorderableColumns]="reorderableColumns">
     <ng-template #header let-columns>
       @if (headerTpl) {
       <ng-container *ngTemplateOutlet="headerTpl"></ng-container>
@@ -142,15 +142,13 @@
         <td class="text-center">{{ rowIndex + 1 }}</td>
         }
         @for (column of columns; track column) {
-        @if (column.template) {
-        <td [ngClass]="[column.class ?? '', (column.classFunc ? column.classFunc(item) : '')]">
+        <td [ngClass]="[column.class ?? '', (column.classFunc ? column.classFunc(item) : '')]" [ngStyle]="(column.styleFunc ? column.styleFunc(item) : null)">
+          @if (column.template) {
           <ng-container *ngTemplateOutlet="column.template; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
+          } @else {
+          <div [innerHTML]="(column.render ? column.render(item) : (column.field ? item[column.field] : undefined))"></div>
+          }
         </td>
-        } @else {
-        <td [ngClass]="[column.class ?? '', (column.classFunc ? column.classFunc(item) : '')]"
-          [innerHTML]="(column.render ? column.render(item) : (column.field ? item[column.field] : undefined))">
-        </td>
-        }
         }
         @if (operationTpl || onEdit.observed || onDelete.observed || onOperationClick.observed) {
         <td class="operation-cell">
