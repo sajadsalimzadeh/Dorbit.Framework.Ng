@@ -6,6 +6,7 @@ import { PrimengComponent } from "../primeng.component";
 export interface ImagePickerEvent {
     filename: string;
     output: string;
+    data?: any;
 }
 
 @Component({
@@ -29,6 +30,7 @@ export class ImagePickerComponent extends PrimengComponent {
 
     croppedImage: ImageCroppedEvent | null = null;
 
+    data?: any;
     imageFilename: string | null = null;
     imageChangedEvent: Event | null = null;
 
@@ -64,12 +66,12 @@ export class ImagePickerComponent extends PrimengComponent {
         if (this.imageFilename) {
             const filename = this.imageFilename;
             if (this.output === 'base64') {
-                this.onSelected.emit({ filename, output: compressedImage });
+                this.onSelected.emit({ filename, output: compressedImage, data: this.data });
                 this.hideDialog('cropper');
             } else {
                 this.fileRepository.uploadBase64(compressedImage, this.imageFilename).subscribe(res => {
                     if (res.data) {
-                        this.onSelected.emit({ filename, output: res.data });
+                        this.onSelected.emit({ filename, output: res.data, data: this.data });
                         this.hideDialog('cropper');
                     }
                 });
@@ -77,7 +79,8 @@ export class ImagePickerComponent extends PrimengComponent {
         }
     }
 
-    click() {
+    open(data?: any) {
+        this.data = data;
         this.elementRef.nativeElement.querySelector('input')?.click();
     }
 }

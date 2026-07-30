@@ -174,6 +174,7 @@ export abstract class PrimengComponent<T = any> implements OnInit, OnChanges, On
     }
 
     getFileUrl(name: string, download: boolean = false): string {
+        if(name?.includes('/')) return name;
         return this.fileRepository.getUrl(name) + (download ? '/Download' : '');
     }
 
