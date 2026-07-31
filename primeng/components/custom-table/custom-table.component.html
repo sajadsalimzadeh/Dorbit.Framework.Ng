@@ -7,7 +7,7 @@
   <div class="caption-container">
     <div class="start">
       @if (onReload.observed) {
-      <p-button (onClick)="onReload.emit()" [label]="'custom-table.reload' | translate" icon="fa fa-sync" iconPos="right" severity="primary"
+      <p-button (onClick)="onReload.emit()" [label]="reloadLabel | translate" icon="fa fa-sync" iconPos="right" severity="primary"
         [pTooltip]="'custom-table.reload' | translate" [size]="operationSize" />
       }
       @if (onAdd.observed && showAddButton) {
