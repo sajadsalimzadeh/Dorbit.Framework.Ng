@@ -10,6 +10,35 @@ import { GroupOperationItem } from "../group-operation-result/index.component";
 import moment from "jalali-moment";
 import * as XLSX from 'xlsx';
 
+type CustomTableSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+type CustomTableTableSize = 'small' | 'large';
+type CustomTableOperationSize = 'small' | 'large';
+
+export const CustomTableComponentDefaults = {
+    resizableColumns: false,
+    reorderableColumns: false,
+    showInCard: true,
+    showRowNumber: true,
+    showExportButton: true,
+    showResetButton: true,
+    showAddButton: true,
+    showEditButton: true,
+    showDeleteButton: true,
+    showColumnSelector: true,
+    showEmptyMessage: true,
+    filterType: 'inline' as 'inline' | 'menu',
+    isSortable: true,
+    isFilterable: true,
+    rows: 12,
+    rowsPerPageOptions: [5, 10, 12, 15, 20, 50, 100, 200],
+    headerClass: '',
+    footerClass: '',
+    stateStorage: 'local' as 'session' | 'local',
+    size: 'md' as CustomTableSize,
+    tableSize: 'small' as CustomTableTableSize,
+    operationSize: 'small' as CustomTableOperationSize,
+}
+
 @Component({
     standalone: false,
     selector: 'p-custom-table',
@@ -24,37 +53,38 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Input() lazyLoading: boolean = false;
     @Input() columns: CustomTableColumn[] = [];
     @Input() breadcrumb?: MenuItem[];
-    @Input() resizableColumns: boolean = false;
-    @Input() reorderableColumns: boolean = false;
-    @Input() showInCard: boolean = true;
+    @Input() resizableColumns: boolean = CustomTableComponentDefaults.resizableColumns;
+    @Input() reorderableColumns: boolean = CustomTableComponentDefaults.reorderableColumns;
+    @Input() showInCard: boolean = CustomTableComponentDefaults.showInCard;
     @Input() showRowNumber: boolean = true;
     @Input() showExportButton: boolean = true;
-    @Input() showResetButton: boolean = true;
-    @Input() showAddButton: boolean = true;
-    @Input() showEditButton: boolean = true;
-    @Input() showDeleteButton: boolean = true;
+    @Input() showResetButton: boolean = CustomTableComponentDefaults.showResetButton;
+    @Input() showAddButton: boolean = CustomTableComponentDefaults.showAddButton;
+    @Input() showEditButton: boolean = CustomTableComponentDefaults.showEditButton;
+    @Input() showDeleteButton: boolean = CustomTableComponentDefaults.showDeleteButton;
     @Input() showColumnSelector: boolean = true;
-    @Input() showEmptyMessage: boolean = true;
-    @Input() filterType: 'menu' | 'inline' = 'inline';
-    @Input() isSortable: boolean = true;
-    @Input() isFilterable: boolean = true;
-    @Input() rows: number = 12;
-    @Input() rowsPerPageOptions: number[] = [5, 10, 12, 15, 20, 50, 100, 200];
+    @Input() showEmptyMessage: boolean = CustomTableComponentDefaults.showEmptyMessage;
+    @Input() filterType: 'menu' | 'inline' = CustomTableComponentDefaults.filterType;
+    @Input() isSortable: boolean = CustomTableComponentDefaults.isSortable;
+    @Input() isFilterable: boolean = CustomTableComponentDefaults.isFilterable;
+    @Input() rows: number = CustomTableComponentDefaults.rows;
+    @Input() rowsPerPageOptions: number[] = CustomTableComponentDefaults.rowsPerPageOptions;
     @Input() headerClass?: string;
     @Input() footerClass?: string;
     @Input() rowClassField?: string;
-    @Input() stateStorage: 'session' | 'local' = 'local';
+    @Input() stateStorage: 'session' | 'local' = CustomTableComponentDefaults.stateStorage;
     @Input() stateKey: string = '';
     @Input() stateKeyPrefix: string = this.router.url;
-    @Input() @HostBinding('class') size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' = 'md';
-    @Input() tableSize?: 'small' | 'large';
-    @Input() operationSize?: 'small' | 'large';
+    @Input() @HostBinding('class') size: CustomTableSize = CustomTableComponentDefaults.size;
+    @Input() tableSize?: CustomTableTableSize = CustomTableComponentDefaults.tableSize;
+    @Input() operationSize?: CustomTableOperationSize = CustomTableComponentDefaults.operationSize;
     @Input() operations: MenuItem[] = [];
     @Input() groupOperations: CustomTableGroupOperation[] = [];
     @Input() groupOperationNameField: string = 'name';
     @Input() dataKey: string = 'id';
     @Input() expandMode: 'single' | 'multiple' = 'single';
     @Input() expandedRowKeys: { [key: string]: boolean } = {};
+    @Input() reloadLabel: string = 'custom-table.reload';
 
     @Input() selectedItems: any[] = [];
     @Output() selectedItemsChange = new EventEmitter<any[]>();
