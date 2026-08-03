@@ -13,6 +13,7 @@ export interface HttpCacheBase {
     url: RegExp | string;
     methods: Methods[],
     lazy?: boolean;
+    lazyNextOnFinish?: boolean;
     constraints?: {
         offline?: boolean;
         version?: boolean;
@@ -142,7 +143,9 @@ export class CacheInterceptor implements HttpInterceptor {
 
                             next.handle(req).subscribe({
                                 next: async res => {
-                                    ob.next(res);
+                                    if (!matchCache.lazy || matchCache.lazyNextOnFinish) {
+                                        ob.next(res);
+                                    }
                                     if (res instanceof HttpResponse) {
                                         try {
                                             const bodyConstraint = (matchCache.constraints?.body ? matchCache.constraints?.body(res.body) : true);

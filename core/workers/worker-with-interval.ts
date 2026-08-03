@@ -19,8 +19,8 @@ export abstract class WorkerWithInterval {
         const cancellationToken = this.cancellationToken = new CancellationToken();
         while (!cancellationToken.isRequested) {
             try {
-                await this.invoke();
                 await delay(this.interval);
+                await this.invoke();
             }
             catch (e) {
                 console.error(e)
