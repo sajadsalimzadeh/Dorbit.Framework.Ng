@@ -16,6 +16,7 @@ export interface CustomTableColumn<T = any> {
     template?: TemplateRef<any>;
     templateName?: string;
     class?: string;
+    styleFunc?: (item: T) => any;
     classFunc?: (item: T) => string;
     render?: (item: T) => any;
 

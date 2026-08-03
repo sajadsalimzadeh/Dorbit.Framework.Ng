@@ -7,16 +7,16 @@
   <div class="caption-container">
     <div class="start">
       @if (onReload.observed) {
-      <p-button (onClick)="onReload.emit()" [label]="'custom-table.reload' | translate" icon="fa fa-sync" iconPos="right" severity="primary"
+      <p-button (onClick)="onReload.emit()" [label]="reloadLabel | translate" icon="fa fa-sync" severity="primary"
         [pTooltip]="'custom-table.reload' | translate" [size]="operationSize" />
       }
       @if (onAdd.observed && showAddButton) {
-      <p-button (onClick)="onAdd.emit()" icon="fa fa-plus" iconPos="right" severity="success"
+      <p-button (onClick)="onAdd.emit()" icon="fa fa-plus" severity="success"
         [pTooltip]="'custom-table.add' | translate: {row: (name ?? ('custom-table.row' | translate))}"
         [label]="'custom-table.add' | translate: {row: (name ?? ('custom-table.row' | translate))}" [size]="operationSize" />
       }
       @if (onGroupOperationClick.observed && selectedItems.length > 0) {
-      <p-button severity="secondary" icon="far fa-ellipsis-v" iconPos="right" [label]="'custom-table.group-operation' | translate"
+      <p-button severity="secondary" icon="far fa-ellipsis-v" [label]="'custom-table.group-operation' | translate"
         [pTooltip]="'custom-table.group-operation' | translate" (click)="showGroupOperation(groupOperationMenu, $event)" [size]="operationSize"></p-button>
       }
       @if (captionTpl) {
@@ -33,19 +33,19 @@
       </p-multi-select>
       }
       @if (showExportButton) {
-      <p-button (onClick)="exportToExcel()" [label]="'custom-table.export' | translate" icon="fal fa-download" iconPos="right" severity="success" [outlined]="true"
+      <p-button (onClick)="exportToExcel()" [label]="'custom-table.export' | translate" icon="fal fa-download" severity="success" [outlined]="true"
         [pTooltip]="'custom-table.export' | translate" [size]="operationSize" />
       }
       @if (showResetButton && isStateChaged) {
-      <p-button (onClick)="resetState()" [label]="'custom-table.reset-state' | translate" icon="fal fa-filter-slash" iconPos="right" severity="danger" [outlined]="!isStateChaged"
+      <p-button (onClick)="resetState()" [label]="'custom-table.reset-state' | translate" icon="fal fa-filter-slash" severity="danger" [outlined]="!isStateChaged"
         [size]="operationSize" />
       }
     </div>
   </div>
-  <p-table #dt [value]="value" [columns]="selectedColumns" [showGridlines]="true" [showCurrentPageReport]="true" [stripedRows]="true" [rowHover]="true" [scrollable]="true" scrollHeight="flex" [stateStorage]="stateStorage"
-    [stateKey]="uniqueStateKey" [currentPageReportTemplate]="'custom-table.current-page-report' | translate" [paginator]="true" [expandedRowKeys]="expandedRowKeys"
-    [rowsPerPageOptions]="rowsPerPageOptions" [rows]="rows" [loading]="loading" [lazy]="lazyLoading" (onFilter)="filter($event)" (onRowExpand)="onRowExpandHandler($event)"
-    [dataKey]="dataKey" [resizableColumns]="true" [reorderableColumns]="true">
+  <p-table #dt [value]="value" [columns]="selectedColumns" [showGridlines]="true" [showCurrentPageReport]="true" [stripedRows]="true" [rowHover]="true" [scrollable]="true"
+    scrollHeight="flex" [stateStorage]="stateStorage" [stateKey]="uniqueStateKey" [currentPageReportTemplate]="'custom-table.current-page-report' | translate" [paginator]="true"
+    [expandedRowKeys]="expandedRowKeys" [rowsPerPageOptions]="rowsPerPageOptions" [rows]="rows" [loading]="loading" [lazy]="lazyLoading" (onFilter)="filter($event)"
+    (onRowExpand)="onRowExpandHandler($event)" [dataKey]="dataKey" [rowExpandMode]="expandMode" [resizableColumns]="resizableColumns" [reorderableColumns]="reorderableColumns">
     <ng-template #header let-columns>
       @if (headerTpl) {
       <ng-container *ngTemplateOutlet="headerTpl"></ng-container>
@@ -142,15 +142,13 @@
         <td class="text-center">{{ rowIndex + 1 }}</td>
         }
         @for (column of columns; track column) {
-        @if (column.template) {
-        <td [ngClass]="[column.class ?? '', (column.classFunc ? column.classFunc(item) : '')]">
+        <td [ngClass]="[column.class ?? '', (column.classFunc ? column.classFunc(item) : '')]" [ngStyle]="(column.styleFunc ? column.styleFunc(item) : null)">
+          @if (column.template) {
           <ng-container *ngTemplateOutlet="column.template; context: {$implicit: item, rowIndex: rowIndex}"></ng-container>
+          } @else {
+          <div [innerHTML]="(column.render ? column.render(item) : (column.field ? item[column.field] : undefined))"></div>
+          }
         </td>
-        } @else {
-        <td [ngClass]="[column.class ?? '', (column.classFunc ? column.classFunc(item) : '')]"
-          [innerHTML]="(column.render ? column.render(item) : (column.field ? item[column.field] : undefined))">
-        </td>
-        }
         }
         @if (operationTpl || onEdit.observed || onDelete.observed || onOperationClick.observed) {
         <td class="operation-cell">
@@ -204,7 +202,7 @@
             @if (showAddButton) {
             @if (onAdd.observed) {
             <div>
-              <p-button (onClick)="onAdd.emit()" [label]="'custom-table.add-first' | translate: {row: (name ?? ('custom-table.row' | translate))}" icon="fa fa-plus" iconPos="right"
+              <p-button (onClick)="onAdd.emit()" [label]="'custom-table.add-first' | translate: {row: (name ?? ('custom-table.row' | translate))}" icon="fa fa-plus"
                 severity="secondary" [size]="operationSize" />
             </div>
             }
@@ -215,7 +213,7 @@
       }
     </ng-template>
     @if(hasFooter) {
-    <ng-template #footer let-columns="columns">
+    <ng-template #footer let-columns>
       @if (footerTpl) {
       <ng-container *ngTemplateOutlet="footerTpl"></ng-container>
       }
@@ -266,9 +264,9 @@
       {{ 'custom-table.delete-message' | translate }}
     </div>
     <div class="flex flex gap-2">
-      <p-button class="w-full" (click)="deleteItemApprove()" [label]="'confirm.yes-sure' | translate" icon="fal fa-check" iconPos="right" severity="danger"
+      <p-button class="w-full" (click)="deleteItemApprove()" [label]="'confirm.yes-sure' | translate" icon="fal fa-check" severity="danger"
         [pAutoFocusWithTimout]="100" />
-      <p-button class="w-full" (click)="isDeleteDialogVisible = false" [label]="'confirm.cancel' | translate" icon="fal fa-times" iconPos="left" severity="secondary" />
+      <p-button class="w-full" (click)="isDeleteDialogVisible = false" [label]="'confirm.cancel' | translate" icon="fal fa-times" iconPos="right" severity="secondary" />
     </div>
   </ng-template>
 </p-custom-dialog>

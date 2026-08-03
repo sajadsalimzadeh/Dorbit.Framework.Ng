@@ -49,11 +49,11 @@
     </tbody>
   </table>
   <div class="flex gap-2 white-space-nowrap">
-    <p-button [label]="'group-operation-result.start' | translate" icon="far fa-play" iconPos="right" (onClick)="startAll()" severity="success"
+    <p-button [label]="'group-operation-result.start' | translate" icon="far fa-play" (onClick)="startAll()" severity="success"
     [disabled]="cancelationToken.isRequested" [loading]="isLoading"></p-button>
-    <p-button [label]="'group-operation-result.start-failed' | translate" icon="far fa-play" iconPos="right" (onClick)="startFailed()" severity="warn"
+    <p-button [label]="'group-operation-result.start-failed' | translate" icon="far fa-play" (onClick)="startFailed()" severity="warn"
     [disabled]="!cancelationToken.isRequested" [loading]="isLoading"></p-button>
-    <p-button [label]="'group-operation-result.stop' | translate" icon="far fa-stop" iconPos="left" (onClick)="stop()" severity="danger"
+    <p-button [label]="'group-operation-result.stop' | translate" icon="far fa-stop" iconPos="right" (onClick)="stop()" severity="danger"
     [disabled]="!cancelationToken.isRequested" [loading]="isLoading"></p-button>
     <div class="flex-1 flex align-items-center justify-content-center gap-2">
       @if (counts) {
@@ -61,7 +61,7 @@
         <span>{{ 'group-operation-result.error' | translate }} : <b class="color-danger">{{ counts.error }}</b> </span>
       }
     </div>
-    <p-button [label]="'group-operation-result.download' | translate" icon="far fa-download" iconPos="right" (onClick)="download()" severity="primary"></p-button>
-    <p-button [label]="'group-operation-result.close' | translate" icon="far fa-times" iconPos="left" (onClick)="close()" severity="secondary"></p-button>
+    <p-button [label]="'group-operation-result.download' | translate" icon="far fa-download" (onClick)="download()" severity="primary"></p-button>
+    <p-button [label]="'group-operation-result.close' | translate" icon="far fa-times" iconPos="right" (onClick)="close()" severity="secondary"></p-button>
   </div>
 </div>

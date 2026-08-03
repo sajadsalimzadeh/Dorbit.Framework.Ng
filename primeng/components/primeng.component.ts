@@ -165,8 +165,8 @@ export abstract class PrimengComponent<T = any> implements OnInit, OnChanges, On
         return this.translateService.instant(text, params);
     }
 
-    dateFormat(date: string, format: string = 'YYYY/MM/DD HH:mm:ss'): string {
-        return moment.utc(date).local().locale(this.dateLocale).format(format);
+    dateFormat(date?: string, format: string = 'YYYY/MM/DD HH:mm:ss'): string {
+        return date ? moment.utc(date).local().locale(this.dateLocale).format(format) : '';
     }
 
     getRandomId(name: string): string {
@@ -174,6 +174,7 @@ export abstract class PrimengComponent<T = any> implements OnInit, OnChanges, On
     }
 
     getFileUrl(name: string, download: boolean = false): string {
+        if(name?.includes('/')) return name;
         return this.fileRepository.getUrl(name) + (download ? '/Download' : '');
     }
 

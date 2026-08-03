@@ -5,9 +5,9 @@
         <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1 / 1" output="base64" [format]="format"
             (imageCropped)="imageCropped($event)"></image-cropper>
         <div class="flex gap-2">
-            <p-button class="w-full" [label]="'confirm' | translate" severity="success" (onClick)="confirmCroppedImage()" icon="fal fa-check" iconPos="right"
+            <p-button class="w-full" [label]="'confirm' | translate" severity="success" (onClick)="confirmCroppedImage()" icon="fal fa-check"
                 [loading]="fileRepository.loading()" />
-            <p-button class="w-full" [label]="'cancel' | translate" severity="secondary" (onClick)="hideDialog('cropper')" icon="fal fa-times" iconPos="left" />
+            <p-button class="w-full" [label]="'cancel' | translate" severity="secondary" (onClick)="hideDialog('cropper')" icon="fal fa-times" iconPos="right" />
         </div>
     </ng-template>
 </p-custom-dialog>
