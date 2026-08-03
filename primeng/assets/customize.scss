@@ -272,11 +272,11 @@
     }
 
     .p-button-icon-right {
-      order: -1;
+      order: 1 !important;
     }
 
     .p-button-icon-left {
-      order: 1;
+      order: -1 !important;
     }
   }
 }
