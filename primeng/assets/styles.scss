@@ -86,7 +86,7 @@
     $base-colors: map.set(
         $base-colors,
         "surface",
-        map.get($base-colors, "stone")
+        map.get($base-colors, "gray")
     );
     $base-colors: map.set(
         $base-colors,
@@ -118,6 +118,27 @@
         "link",
         "success",
         "green",
+        "red",
+        "lime",
+        "amber",
+        "yellow",
+        "teal",
+        "cyan",
+        "sky",
+        "blue",
+        "indigo",
+    );
+
+    $dark-colors: (
+        "primary",
+        "secondary",
+        "danger",
+        "warning",
+        "info",
+        "link",
+        "success",
+        "green",
+        "red",
         "lime",
         "amber",
         "yellow",
@@ -159,6 +180,30 @@
     html[theme="dark"]:root {
         @each $name, $color in $colors-dark {
             --#{$name}: #{$color};
+        }
+
+        @each $name, $color in $dark-colors {
+            --#{$color}-0: var(--#{$color}-1000);
+            --#{$color}-50: var(--#{$color}-950);
+            --#{$color}-100: var(--#{$color}-900);
+            --#{$color}-150: var(--#{$color}-850);
+            --#{$color}-200: var(--#{$color}-800);
+            --#{$color}-250: var(--#{$color}-750);
+            --#{$color}-300: var(--#{$color}-700);
+            --#{$color}-350: var(--#{$color}-650);
+            --#{$color}-400: var(--#{$color}-600);
+            --#{$color}-450: var(--#{$color}-550);
+            --#{$color}-500: var(--#{$color}-500);
+            --#{$color}-550: var(--#{$color}-450);
+            --#{$color}-600: var(--#{$color}-400);
+            --#{$color}-650: var(--#{$color}-350);
+            --#{$color}-700: var(--#{$color}-300);
+            --#{$color}-750: var(--#{$color}-250);
+            --#{$color}-800: var(--#{$color}-200);
+            --#{$color}-850: var(--#{$color}-150);
+            --#{$color}-900: var(--#{$color}-100);
+            --#{$color}-950: var(--#{$color}-50);
+            --#{$color}-1000: var(--#{$color}-0);
         }
 
         --p-surface-0: var(--surface-0);
