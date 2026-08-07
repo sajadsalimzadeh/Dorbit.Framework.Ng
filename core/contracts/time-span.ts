@@ -16,23 +16,23 @@ export class TimeSpan {
     }
 
     static fromSecond(value: number): TimeSpan {
-        return new TimeSpan(value);
+        return new TimeSpan(value % 60, Math.floor(value / 60) % 60, Math.floor(value / 3600) % 24, Math.floor(value / 86400) % 30);
     }
 
     static fromMinute(value: number): TimeSpan {
-        return new TimeSpan(0, value);
+        return new TimeSpan(0, value % 60, Math.floor(value / 60) % 24, Math.floor(value / 1440) % 30);
     }
 
     static fromHour(value: number): TimeSpan {
-        return new TimeSpan(0, 0, value);
+        return new TimeSpan(0, 0, value % 24, Math.floor(value / 24));
     }
 
     static fromDay(value: number): TimeSpan {
-        return new TimeSpan(0, 0, 0, value);
+        return new TimeSpan(0, 0, 0, value % 30, Math.floor(value / 30.5) % 12, Math.floor(value / 365));
     }
 
     static fromMonth(value: number): TimeSpan {
-        return new TimeSpan(0, 0, 0, 0, value);
+        return new TimeSpan(0, 0, 0, 0, value % 12, Math.floor(value / 12));
     }
 
     static fromYear(value: number): TimeSpan {
@@ -49,8 +49,12 @@ export class TimeSpan {
         return new TimeSpan(now.getSeconds(), now.getMinutes(), now.getHours(), now.getDate(), now.getMonth(), now.getFullYear());
     }
 
-    toString(): string {
-        return `${this.hours.toString().padStart(2, '0')}:${this.minutes.toString().padStart(2, '0')}:${this.seconds.toString().padStart(2, '0')}`;
+    toString(format: string = 'HH:mm:ss'): string {
+        format = format.toLowerCase();
+        format = format.replace('hh', this.hours.toString().padStart(2, '0'));
+        format = format.replace('mm', this.minutes.toString().padStart(2, '0'));
+        format = format.replace('ss', this.seconds.toString().padStart(2, '0'));
+        return format;
     }
 
     timeOfDay(): TimeSpan {
