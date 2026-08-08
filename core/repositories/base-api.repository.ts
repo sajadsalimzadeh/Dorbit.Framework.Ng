@@ -74,25 +74,19 @@ class CustomHttpHandler extends HttpHandler {
 
         this.progressCount++;
         this.loading.set(true);
-        return this.handler.handle(req).pipe(tap({
-            next: res => {
-                if (res instanceof HttpResponse && res.ok) {
-                    this.progressCount--;
-                    if (this.progressCount <= 0) this.loading.set(false);
-                    if (res.body.message) {
-                        this.send(`message.${res.body.message}`, 'success');
-                    } else if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(req.method.toUpperCase())) {
-                        // this.send(`message.success`, 'success');
-                    }
-                }
-            },
-            error: err => {
-                if (err instanceof HttpErrorResponse) {
-                    this.progressCount--;
-                    if (this.progressCount <= 0) this.loading.set(false);
+        return this.handler.handle(req).pipe(tap(res => {
+            if (res instanceof HttpResponse && res.ok) {
+                this.progressCount--;
+                if (this.progressCount <= 0) this.loading.set(false);
+                if (res.body.message) {
+                    this.send(`message.${res.body.message}`, 'success');
+                } else if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(req.method.toUpperCase())) {
+                    // this.send(`message.success`, 'success');
                 }
             }
         })).pipe(catchError(e => {
+            this.progressCount--;
+            if (this.progressCount <= 0) this.loading.set(false);
             if (e instanceof HttpErrorResponse) {
                 if (e.error?.message) {
                     this.send(`message.${e.error.message}`, 'danger', undefined, e.error.data);

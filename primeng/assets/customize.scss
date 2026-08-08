@@ -1,5 +1,6 @@
 @mixin init($colors) {
 
+  --p-button-lg-padding-y: .85rem;
   --p-message-warn-color: var(--warning-650);
   --p-message-warn-background: var(--warning-50);
   --p-message-warn-border-color: var(--warning-200);

@@ -10,101 +10,85 @@
 @function create-theme($custom-colors, $dark-mode: false, $color-offset: 3%) {
     $base-colors: map.merge(variables.$base-colors, $custom-colors);
 
-    $colors: ();
+    $colors: (
+    );
 
-    @each $name, $color in $base-colors {
-        $colors: map.set($colors, $name, $color);
+@each $name, $color in $base-colors {
+    $colors: map.set($colors, $name, $color);
 
-        @if $dark-mode {
-            $color-step: 4%;
-            @for $i from 0 through 10 {
-                $colors: map.set(
-                    $colors,
+    @if $dark-mode {
+        $color-step: 4%;
+
+        @for $i from 0 through 10 {
+            $colors: map.set($colors,
                     "#{$name}-#{500 - ($i * 50)}",
-                    color.adjust(
-                        $color,
-                        $lightness: ($color-offset + $i * $color-step * 1.3) *
-                            -1
-                    )
-                );
-                $colors: map.set(
-                    $colors,
-                    "#{$name}-#{500 + ($i * 50)}",
-                    color.adjust(
-                        $color,
-                        $lightness: ($color-offset + $i * $color-step)
-                    )
-                );
-                $color-step: $color-step - 0.1%;
-            }
-        } @else {
-            $color-step: 4.6%;
-            @for $i from 0 through 10 {
-                $colors: map.set(
-                    $colors,
-                    "#{$name}-#{500 - ($i * 50)}",
-                    color.adjust(
-                        $color,
-                        $lightness: ($color-offset + $i * $color-step)
-                    )
-                );
-                $colors: map.set(
-                    $colors,
-                    "#{$name}-#{500 + ($i * 50)}",
-                    color.adjust(
-                        $color,
-                        $lightness: ($color-offset + $i * $color-step * 1.2) *
-                            -1
-                    )
-                );
-                $color-step: $color-step - 0.1%;
-            }
-        }
-    }
+                    color.adjust($color,
+                        $lightness: (
+                        $color-offset + $i * $color-step * 1.3) * -1)
+            );
+        $colors: map.set($colors,
+                "#{$name}-#{500 + ($i * 50)}",
+                color.adjust($color,
+                    $lightness: (
+                    $color-offset + $i * $color-step))
+        );
+    $color-step: $color-step - 0.1%;
+}
+}
 
-    @return $colors;
+@else {
+    $color-step: 4.6%;
+
+    @for $i from 0 through 10 {
+        $colors: map.set($colors,
+                "#{$name}-#{500 - ($i * 50)}",
+                color.adjust($color,
+                    $lightness: (
+                    $color-offset + $i * $color-step))
+        );
+    $colors: map.set($colors,
+            "#{$name}-#{500 + ($i * 50)}",
+            color.adjust($color,
+                $lightness: (
+                $color-offset + $i * $color-step * 1.2) * -1)
+    );
+$color-step: $color-step - 0.1%;
+}
+}
+}
+
+@return $colors;
 }
 
 @function unique-list-join($list1, $list2) {
-    $result: ();
+    $result: (
+    );
 
-    // merge first
-    $combined: list.join($list1, $list2);
+// merge first
+$combined: list.join($list1, $list2);
 
-    @each $item in $combined {
-        @if list.index($result, $item) == null {
-            $result: list.append($result, $item);
-        }
+@each $item in $combined {
+    @if list.index($result, $item)==null {
+        $result: list.append($result, $item);
     }
+}
 
-    @return $result;
+@return $result;
 }
 
 @mixin init($custom-colors) {
     $base-colors: map.merge(variables.$base-colors, $custom-colors);
 
-    $base-colors: map.set(
-        $base-colors,
-        "surface",
-        map.get($base-colors, "stone")
-    );
-    $base-colors: map.set(
-        $base-colors,
-        "success",
-        map.get($base-colors, "green")
-    );
+    $base-colors: map.set($base-colors, "surface", map.get($base-colors, "gray"));
+    $base-colors: map.set($base-colors, "success", map.get($base-colors, "green"));
     $base-colors: map.set($base-colors, "danger", map.get($base-colors, "red"));
-    $base-colors: map.set(
-        $base-colors,
-        "warning",
-        map.get($base-colors, "amber")
-    );
+    $base-colors: map.set($base-colors, "warning", map.get($base-colors, "amber"));
     $base-colors: map.set($base-colors, "info", map.get($base-colors, "cyan"));
-    $base-colors: map.set(
-        $base-colors,
-        "link",
-        map.get($base-colors, "blue")
-    );
+    $base-colors: map.set($base-colors, "link", map.get($base-colors, "blue"));
+    $base-colors: map.set($base-colors, "help", map.get($base-colors, "purple"));
+    $base-colors: map.set($base-colors, "link", map.get($base-colors, "blue"));
+
+
 
     $colors: create-theme($base-colors);
     $colors-dark: create-theme($base-colors, true);
@@ -118,6 +102,7 @@
         "link",
         "success",
         "green",
+        "red",
         "lime",
         "amber",
         "yellow",
@@ -128,60 +113,101 @@
         "indigo",
     );
 
-    $overwrite-primeng-colors: unique-list-join(
-        $overwrite-primeng-colors,
-        map.keys($custom-colors)
-    );
+$dark-colors: (
+    "primary",
+    "secondary",
+    "danger",
+    "warning",
+    "info",
+    "link",
+    "success",
+    "green",
+    "red",
+    "lime",
+    "amber",
+    "yellow",
+    "teal",
+    "cyan",
+    "sky",
+    "blue",
+    "indigo",
+);
 
-    html:root {
-        @each $name, $color in $base-colors {
-            --#{$name}-rgb:
-                #{color.channel($color, "red", $space: rgb)},
-                #{color.channel($color, "green", $space: rgb)},
-                #{color.channel($color, "blue", $space: rgb)};
-        }
+$overwrite-primeng-colors: unique-list-join($overwrite-primeng-colors,
+        map.keys($custom-colors));
 
-        @each $name, $color in $colors {
-            --#{$name}: #{$color};
-        }
+html:root {
+    @each $name, $color in $base-colors {
+        --#{$name}-rgb: #{color.channel($color, "red", $space: rgb)},
+        #{color.channel($color, "green", $space: rgb)},
+        #{color.channel($color, "blue", $space: rgb)};
+    }
 
-        @each $name, $color in $colors {
-            @each $overwrite-primeng-color in $overwrite-primeng-colors {
-                @if string.index($name, $overwrite-primeng-color) != null {
-                    --p-#{$name}: var(--#{$name});
-                }
+    @each $name, $color in $colors {
+        --#{$name}: #{$color};
+    }
+
+    @each $name, $color in $colors {
+        @each $overwrite-primeng-color in $overwrite-primeng-colors {
+            @if string.index($name, $overwrite-primeng-color) !=null {
+                --p-#{$name}: var(--#{$name});
             }
         }
-
-        --p-dialog-content-padding: var(--p-overlay-modal-padding);
     }
 
-    html[theme="dark"]:root {
-        @each $name, $color in $colors-dark {
-            --#{$name}: #{$color};
-        }
+    --p-dialog-content-padding: var(--p-overlay-modal-padding);
+}
 
-        --p-surface-0: var(--surface-0);
-        --p-surface-50: var(--surface-50);
-        --p-surface-100: var(--surface-100);
-        --p-surface-200: var(--surface-200);
-        --p-surface-300: var(--surface-300);
-        --p-surface-400: var(--surface-400);
-        --p-surface-500: var(--surface-500);
-        --p-surface-600: var(--surface-600);
-        --p-surface-700: var(--surface-700);
-        --p-surface-800: var(--surface-800);
-        --p-surface-900: var(--surface-900);
-        --p-surface-950: var(--surface-950);
+html[theme="dark"]:root {
+    @each $name, $color in $colors-dark {
+        --#{$name}: #{$color};
     }
 
-    html {
-        color: var(--surface-900);
+    @each $name, $color in $dark-colors {
+        --#{$color}-0: var(--#{$color}-1000);
+        --#{$color}-50: var(--#{$color}-950);
+        --#{$color}-100: var(--#{$color}-900);
+        --#{$color}-150: var(--#{$color}-850);
+        --#{$color}-200: var(--#{$color}-800);
+        --#{$color}-250: var(--#{$color}-750);
+        --#{$color}-300: var(--#{$color}-700);
+        --#{$color}-350: var(--#{$color}-650);
+        --#{$color}-400: var(--#{$color}-600);
+        --#{$color}-450: var(--#{$color}-550);
+        --#{$color}-500: var(--#{$color}-500);
+        --#{$color}-550: var(--#{$color}-450);
+        --#{$color}-600: var(--#{$color}-400);
+        --#{$color}-650: var(--#{$color}-350);
+        --#{$color}-700: var(--#{$color}-300);
+        --#{$color}-750: var(--#{$color}-250);
+        --#{$color}-800: var(--#{$color}-200);
+        --#{$color}-850: var(--#{$color}-150);
+        --#{$color}-900: var(--#{$color}-100);
+        --#{$color}-950: var(--#{$color}-50);
+        --#{$color}-1000: var(--#{$color}-0);
     }
 
-    html.dorbit {
-        @include helpers.init($colors);
-        @include customize.init($colors);
-        @include table.init($colors);
-    }
+    --p-surface-0: var(--surface-0);
+    --p-surface-50: var(--surface-50);
+    --p-surface-100: var(--surface-100);
+    --p-surface-200: var(--surface-200);
+    --p-surface-300: var(--surface-300);
+    --p-surface-400: var(--surface-400);
+    --p-surface-500: var(--surface-500);
+    --p-surface-600: var(--surface-600);
+    --p-surface-700: var(--surface-700);
+    --p-surface-800: var(--surface-800);
+    --p-surface-900: var(--surface-900);
+    --p-surface-950: var(--surface-950);
+}
+
+html {
+    color: var(--surface-900);
+}
+
+html.dorbit {
+    @include helpers.init($colors);
+    @include customize.init($colors);
+    @include table.init($colors);
+}
 }
