@@ -111,6 +111,7 @@ export class CacheInterceptor implements HttpInterceptor {
                             while (this.subscriberGroups[key]) await delay(100);
                             this.subscriberGroups[key] = true;
 
+                            let isLazyNext = false;
                             const cache = await this.cacheService.getItem(key, httpCache.storage);
                             const isOffline = !internetStateService.$status.value;
                             if (isOffline) {
@@ -122,8 +123,10 @@ export class CacheInterceptor implements HttpInterceptor {
                                 }
                             } else {
                                 if (cache.data && !matchCache.constraints?.offline) {
-
+                                    console.log(cache);
+                                    
                                     if (matchCache.lazy) {
+                                        isLazyNext = true;
                                         this.subscriberGroups[key] = false;
                                         ob.next(new HttpResponse({ body: cache.data, status: 200 }));
                                         if (matchCache.httpCache.timeout && !cache.expired && !cache.invalidVersion) {
@@ -143,11 +146,11 @@ export class CacheInterceptor implements HttpInterceptor {
 
                             next.handle(req).subscribe({
                                 next: async res => {
-                                    if (!matchCache.lazy || matchCache.lazyNextOnFinish) {
-                                        ob.next(res);
-                                    }
                                     if (res instanceof HttpResponse) {
                                         try {
+                                            if (!matchCache.lazy || matchCache.lazyNextOnFinish || !isLazyNext) {
+                                                ob.next(res);
+                                            }
                                             const bodyConstraint = (matchCache.constraints?.body ? matchCache.constraints?.body(res.body) : true);
                                             if (bodyConstraint) {
                                                 await this.cacheService.set(key, httpCache.storage, res.body, httpCache.timeout ?? TimeSpan.fromMinute(10));
