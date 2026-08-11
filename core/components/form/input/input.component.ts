@@ -44,7 +44,7 @@ export class InputComponent extends AbstractControl<string> {
     @Input() keyFilter?: KeyFilters;
     @Input() icon?: string;
     @Input() iconPos: 'start' | 'end' = 'start';
-    maskValue: string = '';
+    maskingValue: string = '';
     override focusable = false;
 
     constructor(injector: Injector) {
@@ -121,10 +121,10 @@ export class InputComponent extends AbstractControl<string> {
 
     maskOnKeyDown(e: KeyboardEvent) {
         if (e.key?.length == 1) {
-            this.maskValue += e.key;
+            this.maskingValue += e.key;
         } else {
             if (e.key == 'Backspace') {
-                this.maskValue = this.maskValue.substring(0, this.maskValue.length - 1);
+                this.maskingValue = this.maskingValue.substring(0, this.maskingValue.length - 1);
             }
         }
     }
@@ -191,16 +191,16 @@ export class InputComponent extends AbstractControl<string> {
 
     private loadMaskedValue() {
         if (!this.formControl) return;
-        this.maskValue ??= this.formControl.value ?? '';
+        this.maskingValue ??= this.formControl.value ?? '';
         const masks = this.getMaskItems();
         let newValue = '';
         let tempMaskedValue = '';
-        if (!this.maskValue && !this.focused) return;
+        if (!this.maskingValue && !this.focused) return;
         for (let i = 0, j = 0; i < masks.length; i++) {
             const mask = masks[i];
             let tempChar = mask.placeholder;
             if (mask.pattern) {
-                const ch = (this.maskValue.length > j ? this.maskValue[j] : '');
+                const ch = (this.maskingValue.length > j ? this.maskingValue[j] : '');
                 if (ch && mask.pattern.test(ch)) {
                     tempChar = ch;
                     tempMaskedValue += ch;
@@ -209,7 +209,7 @@ export class InputComponent extends AbstractControl<string> {
             }
             newValue += tempChar;
         }
-        this.maskValue = tempMaskedValue;
+        this.maskingValue = tempMaskedValue;
         this.formControl?.setValue(newValue);
         const element = this.inputEl?.nativeElement;
         if (element) element.value = newValue;
