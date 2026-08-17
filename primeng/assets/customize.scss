@@ -69,14 +69,26 @@
     }
   }
 
+  .p-treeselect-sm .p-treeselect-label  {
+    min-height: calc(var(--p-form-field-sm-padding-y) * 5.5);
+  }
+
   .p-treeselect-label {
     flex-wrap: wrap;
-    min-height: 50px;
+    min-height: calc(var(--p-form-field-padding-y) * 5.5);
+  }
+
+  .p-treeselect-lg .p-treeselect-label  {
+    min-height: calc(var(--p-form-field-lg-padding-y) * 5.5);
   }
 
   p-ifta-label {
     --p-multiselect-sm-padding-y: calc(var(--p-form-field-sm-padding-y) * 3.4) var(--p-form-field-sm-padding-y);
     --p-treeselect-sm-padding-y: calc(var(--p-form-field-sm-padding-y) * 3.4) var(--p-form-field-sm-padding-y);
+
+    .p-treeselect-label {
+      min-height: 50px;
+    }
 
     label {
       &.required::after {
@@ -253,6 +265,7 @@
 
   &[dir="rtl"],
   [dir="rtl"] {
+
     .fa-arrow-right,
     .fa-arrow-left,
     .fa-chevron-right,
