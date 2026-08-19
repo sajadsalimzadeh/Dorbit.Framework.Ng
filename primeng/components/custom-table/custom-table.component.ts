@@ -76,7 +76,6 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Input() stateKey: string = '';
     @Input() stateKeyPrefix: string = this.router.url;
     @Input() @HostBinding('class') size: CustomTableSize = CustomTableComponentDefaults.size;
-    @Input() tableSize?: CustomTableTableSize = CustomTableComponentDefaults.tableSize;
     @Input() operationSize?: CustomTableOperationSize = CustomTableComponentDefaults.operationSize;
     @Input() operations: MenuItem[] = [];
     @Input() groupOperations: CustomTableGroupOperation[] = [];
@@ -175,11 +174,6 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
         if (!this.operationSize) {
             if (this.size == 'sm' || this.size == 'xs') this.operationSize = 'small';
             else if (this.size == 'lg' || this.size == 'xl') this.operationSize = 'large';
-        }
-
-        if (!this.tableSize) {
-            if (this.size == 'sm' || this.size == 'xs') this.tableSize = 'small';
-            else if (this.size == 'lg' || this.size == 'xl') this.tableSize = 'large';
         }
     }
 
