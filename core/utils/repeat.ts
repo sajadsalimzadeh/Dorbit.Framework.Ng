@@ -1,5 +1,7 @@
-export function repeat(times: number, callback: () => void) {
+export function repeat<T = void>(times: number, callback: (index: number) => T) {
+    const result: T[] = [];
     for (let i = 0; i < times; i++) {
-        callback();
+        result.push(callback(i));
     }
+    return result;
 }

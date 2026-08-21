@@ -50,7 +50,8 @@ import { RDatePipe } from './pipes/rdate.pipe';
 import { TruncatePipe } from './pipes/truncate.pipe';
 import { NumberSanitizerDirective } from "./directives/number-sanitizer.directive";
 import { TimePipe } from "./pipes/time.pipe";
-import { DatePipe } from "./pipes";
+import { DatePipe } from "./pipes/date.pipe";
+import { MomentPipe } from "./pipes/moment.pipe";
 import { ElementHTMLDirective } from "./components/element-html.directive";
 
 export const ALL_MODULES = [
@@ -112,6 +113,7 @@ export const ALL_PIPES = [
     DatePipe,
     RDatePipe,
     TruncatePipe,
+    MomentPipe,
 ];
 
 @NgModule({
