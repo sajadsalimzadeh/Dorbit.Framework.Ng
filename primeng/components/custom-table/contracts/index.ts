@@ -31,6 +31,6 @@ export interface CustomTableColumn<T = any> {
 export interface CustomTableGroupOperation<T = any> {
     label: string;
     icon: string;
-    action?: () => void;
     command?: (item: GroupOperationItem) => Promise<QueryResult>;
+    action?: (next: () => void) => void;
 }

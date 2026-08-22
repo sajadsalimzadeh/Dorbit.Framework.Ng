@@ -79,7 +79,7 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @Input() operationSize?: CustomTableOperationSize = CustomTableComponentDefaults.operationSize;
     @Input() operations: MenuItem[] = [];
     @Input() groupOperations: CustomTableGroupOperation[] = [];
-    @Input() groupOperationNameField: string = 'name';
+    @Input() groupOperationNameField: string = 'text';
     @Input() dataKey: string = 'id';
     @Input() expandMode: 'single' | 'multiple' = 'single';
     @Input() expandedRowKeys: { [key: string]: boolean } = {};
@@ -124,10 +124,10 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     }
 
     get isStateChaged() {
-        return this.dt?.filteredValue || 
-        this.dt?.sortField || 
-        this.storage.getItem(this.stateKey + '-selectedColumns') ||
-        this.dt?.columns?.some((x,i) => i != this.columns.filter(y => !y.isHide).findIndex(y => y.header == x.header));
+        return this.dt?.filteredValue ||
+            this.dt?.sortField ||
+            this.storage.getItem(this.stateKey + '-selectedColumns') ||
+            this.dt?.columns?.some((x, i) => i != this.columns.filter(y => !y.isHide).findIndex(y => y.header == x.header));
     }
 
     constructor(injector: Injector) {
@@ -159,13 +159,19 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
             this.innerGroupOperations = this.groupOperations.map(x => ({
                 ...x,
                 command: () => {
-                    if (x.action) {
-                        x.action();
+
+                    const next = () => {
+                        if (x.command) {
+                            const command = x.command;
+                            this.showDialog('group-operation');
+                            this.groupInvoker = (item: GroupOperationItem) => command(item);
+                        }
                     }
-                    if (x.command) {
-                        const command = x.command;
-                        this.showDialog('group-operation');
-                        this.groupInvoker = (item: GroupOperationItem) => command(item);
+
+                    if (x.action) {
+                        x.action(next);
+                    } else {
+                        next();
                     }
                 }
             }));
@@ -307,7 +313,7 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
             }
             this.expandedRowKeys[dataKey] = true;
         } else {
-            if(this.expandedRowKeys[dataKey]) this.expandedRowKeys[dataKey] = false;
+            if (this.expandedRowKeys[dataKey]) this.expandedRowKeys[dataKey] = false;
             else this.expandedRowKeys[dataKey] = true;
         }
         this.onRowExpand.emit(event);
