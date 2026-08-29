@@ -27,24 +27,24 @@ export class NumberSanitizerDirective implements AfterViewInit {
     const input = el.tagName === 'INPUT' ? el : el.querySelector('input') as HTMLInputElement;
     if (!input || input.tagName !== 'INPUT') return;
 
-    setInterval(() => {
-      input.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, key: '۲' }));
-    }, 1000);
 
     input.addEventListener('keydown', (e: KeyboardEvent) => {
-      const input = e.target as HTMLInputElement;
       const replaced = toEnglishDigits(input.value);
       if (input.value !== replaced) {
         input.value = replaced;
         input.dispatchEvent(new Event('input', { bubbles: true }));
       }
 
-      const englishNumber = e.key.replace(/[۰-۹]/g, d => String("۰۱۲۳۴۵۶۷۸۹".indexOf(d)))
-        .replace(/[٠-٩]/g, d => String("٠١٢٣٤٥٦٧٨٩".indexOf(d)));
+      const persianIndex = "۰۱۲۳۴۵۶۷۸۹".indexOf(e.key);
+      const arabicIndex = "٠١٢٣٤٥٦٧٨٩".indexOf(e.key);
+
+      let englishNumber = e.key;
+      if (persianIndex > -1) englishNumber = String(persianIndex);
+      else if (arabicIndex > -1) englishNumber = String(arabicIndex);
 
       if (e.key != englishNumber) {
         e.preventDefault();
-        input.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, key: englishNumber }));
+        typeText(input, englishNumber);
       }
     });
   }
@@ -66,4 +66,40 @@ export class NumberSanitizerDirective implements AfterViewInit {
 
     input.focus();
   }
+}
+
+function typeText(element: HTMLInputElement, char: string, delay: number = 50) {
+  element.focus();
+
+  element.dispatchEvent(new KeyboardEvent("keydown", {
+    key: char,
+    code: `Key${char.toUpperCase()}`,
+    bubbles: true,
+    cancelable: true
+  }));
+
+  element.dispatchEvent(new InputEvent("beforeinput", {
+    inputType: "insertText",
+    data: char,
+    bubbles: true,
+    cancelable: true
+  }));
+
+  // تغییر مقدار واقعی
+  const start = element.selectionStart ?? element.value.length;
+  const end = element.selectionEnd ?? element.value.length;
+
+  element.setRangeText(char, start, end, "end");
+
+  element.dispatchEvent(new InputEvent("input", {
+    inputType: "insertText",
+    data: char,
+    bubbles: true
+  }));
+
+  element.dispatchEvent(new KeyboardEvent("keyup", {
+    key: char,
+    code: `Key${char.toUpperCase()}`,
+    bubbles: true
+  }));
 }
