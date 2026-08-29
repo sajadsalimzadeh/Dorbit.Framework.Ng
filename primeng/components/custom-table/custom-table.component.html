@@ -274,6 +274,6 @@
 <p-custom-dialog [(visible)]="dialogs['group-operation']" [header]="'custom-table.group-operation' | translate" size="md" appendTo="body">
   <ng-template>
     <p-group-operation-result [value]="selectedItems" [action]="groupInvoker!" [nameField]="groupOperationNameField"
-      (onComplete)="hideDialog('group-operation');"></p-group-operation-result>
+      (onClose)="hideDialog('group-operation')" (onCompleteSuccessfully)="onReload.emit()"></p-group-operation-result>
   </ng-template>
 </p-custom-dialog>

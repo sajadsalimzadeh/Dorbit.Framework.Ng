@@ -123,8 +123,6 @@ export class CacheInterceptor implements HttpInterceptor {
                                 }
                             } else {
                                 if (cache.data && !matchCache.constraints?.offline) {
-                                    console.log(cache);
-                                    
                                     if (matchCache.lazy) {
                                         isLazyNext = true;
                                         this.subscriberGroups[key] = false;
