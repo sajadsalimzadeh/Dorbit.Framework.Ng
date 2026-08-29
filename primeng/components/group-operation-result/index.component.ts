@@ -30,7 +30,8 @@ export class GroupOperationResultComponent extends PrimengComponent {
     @Input() nameField: string = 'name';
     @Input({ required: true }) action!: (item: any, cancelationToken: CancellationToken) => Promise<QueryResult>;
 
-    @Output() onComplete = new EventEmitter<void>();
+    @Output() onClose = new EventEmitter<void>();
+    @Output() onCompleteSuccessfully = new EventEmitter<void>();
 
     items: GroupOperationItem[] = [];
 
@@ -84,6 +85,9 @@ export class GroupOperationResultComponent extends PrimengComponent {
             }
         } finally {
             this.isLoading = false;
+            if (this.items.every(item => item.status === 'success')) {
+                this.onCompleteSuccessfully.emit();
+            }
         }
     }
 
@@ -116,6 +120,6 @@ export class GroupOperationResultComponent extends PrimengComponent {
     }
 
     close() {
-        this.onComplete.emit();
+        this.onClose.emit();
     }
 }
