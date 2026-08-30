@@ -25,7 +25,7 @@ export abstract class PrimengTableComponent<T = any> extends PrimengComponent {
     load() {
         const query = new ODataQueryOptions();
 
-        this.loader(query).subscribe((res) => {
+        this.loader(query).pipe(this.tapLoading('loading')).subscribe((res) => {
             this.items = res.data ?? [];
             this.onLoad();
         });
