@@ -69,27 +69,26 @@
     }
   }
 
-  .p-treeselect-sm .p-treeselect-label  {
-    min-height: calc(var(--p-form-field-sm-padding-y) * 5.5);
+  .p-treeselect {
+    min-height: calc(var(--p-form-field-padding-y) * 8.2);
+
+    &.p-treeselect-sm {
+      --p-form-field-padding-y: var(--p-form-field-sm-padding-y);
+    }
+
+    &.p-treeselect-lg {
+      --p-form-field-padding-y: var(--p-form-field-lg-padding-y);
+    }
   }
 
   .p-treeselect-label {
     flex-wrap: wrap;
-    min-height: calc(var(--p-form-field-padding-y) * 5.5);
-  }
-
-  .p-treeselect-lg .p-treeselect-label  {
-    min-height: calc(var(--p-form-field-lg-padding-y) * 5.5);
   }
 
   p-ifta-label {
     --p-multiselect-sm-padding-y: calc(var(--p-form-field-sm-padding-y) * 3.2) var(--p-form-field-sm-padding-y);
     --p-treeselect-sm-padding-y: calc(var(--p-form-field-sm-padding-y) * 3.2) var(--p-form-field-sm-padding-y);
     --p-select-sm-padding-y: calc(var(--p-form-field-sm-padding-y) * 3.2) var(--p-form-field-sm-padding-y);
-
-    .p-treeselect-label {
-      min-height: 50px;
-    }
 
     label {
       &.required::after {

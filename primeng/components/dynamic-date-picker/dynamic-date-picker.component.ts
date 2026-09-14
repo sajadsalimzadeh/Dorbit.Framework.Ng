@@ -163,7 +163,9 @@ export class DynamicDatePickerComponent extends PrimengControlComponent implemen
         const daysInMonth = date.daysInMonth();
 
         const m = moment().locale(this.locale).set({ year: this.year, month: this.month.value, date: 1 });
-        const previousDays = m.day();
+        const previousDays = m.date();
+        console.log('previousDays', previousDays);
+        
         m.add(-previousDays, 'day')
 
         const dates: DateObject[] = [];
