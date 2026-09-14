@@ -57,6 +57,9 @@ export class CustomDialogComponent implements OnInit, OnChanges {
         this.changeDetectorRef.detectChanges();
     }
 
+    maskStyleInner: any = {};
+    dialogStyleInner: any = {};
+
     constructor(private elementRef: ElementRef, private changeDetectorRef: ChangeDetectorRef) {
     }
 
@@ -106,12 +109,12 @@ export class CustomDialogComponent implements OnInit, OnChanges {
             dialogStyle['max-height'] = '100%';
         }
 
-        this.dialogStyle = {
+        this.dialogStyleInner = {
             ...dialogStyle,
             ...this.dialogStyle
         };
 
-        this.maskStyle = {
+        this.maskStyleInner = {
             ...maskStyles,
             ...this.maskStyle
         }
