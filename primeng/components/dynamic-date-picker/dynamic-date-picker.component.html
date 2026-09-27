@@ -2,8 +2,8 @@
   @if (showClear && displayValue) {
   <p-inputicon styleClass="fal fa-times" (click)="onChange(null); displayValue = ''" />
   }
-  <input class="input-control" [ngClass]="inputStyleClass" #inputEl (focus)="op.toggle($event, inputEl)"
-    (keyup)="updateValueFromDisplay()" [value]="displayValue" [disabled]="isDisabled" [placeholder]="placeholder"
+  <input class="input-control" [ngClass]="inputStyleClass" #inputEl (focus)="op.show($event, inputEl)"
+    (keyup)="updateValueFromDisplay()" [(ngModel)]="displayValue" [disabled]="isDisabled" [placeholder]="placeholder"
     dir="ltr" pInputText [pSize]="size!" type="text" />
   <p-inputicon styleClass="fal fa-calendar" />
 </p-icon-field>
@@ -28,7 +28,7 @@
       <div class="day-of-week">پ</div>
       <div class="day-of-week">ج</div>
 
-      @for (date of dates; track date) {
+      @for (date of dates; track $index) {
       <div (click)="selectDate(date)" [class.current-month]="date.isCurrentMonth" [class.disabled]="date.isDisabled"
         [class.selected]="date.isSelected" [class.today]="date.isToday" class="day">
         {{ date.day }}
@@ -37,7 +37,7 @@
     </div>
 
     <div [class.open]="state == 'month'" class="month-picker">
-      @for (month of months; track month) {
+      @for (month of months; track $index) {
       <div (click)="selectMonth(month.value)" [class.selected]="month.isSelected" class="month">
         {{ month.name }}
       </div>
@@ -45,7 +45,7 @@
     </div>
 
     <div [class.open]="state == 'year'" class="year-picker">
-      @for (year of years; track year) {
+      @for (year of years; track $index) {
       <div (click)="selectYear(year.value)" [class.selected]="year.isSelected" class="year">
         {{ year.value }}
       </div>
