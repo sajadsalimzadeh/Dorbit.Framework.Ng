@@ -22,6 +22,7 @@ export class ImagePickerComponent extends PrimengComponent {
     @Input() maxHeight?: number = undefined;
     @Input() format: OutputFormat = 'png';
     @Input() output: 'base64' | 'upload' = 'upload';
+    @Input() appendTo: string = 'body';
 
     @Output() onCropped = new EventEmitter<ImageCroppedEvent>();
     @Output() onSelected = new EventEmitter<ImagePickerEvent>();

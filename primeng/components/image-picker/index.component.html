@@ -1,6 +1,6 @@
 <input type="file" accept=".jpg, .jpeg, .png" (change)="onFileSelected($event)" hidden />
 
-<p-custom-dialog [(visible)]="dialogs['cropper']">
+<p-custom-dialog [(visible)]="dialogs['cropper']" [appendTo]="appendTo">
     <ng-template>
         <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1 / 1" output="base64" [format]="format"
             (imageCropped)="imageCropped($event)"></image-cropper>
