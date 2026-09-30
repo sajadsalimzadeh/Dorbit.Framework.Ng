@@ -134,15 +134,17 @@ export class DynamicDatePickerComponent extends PrimengControlComponent implemen
 
     updateValueFromDisplay() {
         try {
-            const value = this.displayValue;
-            if (value) {
-                const m = moment.from(value, this.locale, this.displayFormat);
+
+            if (this.displayValue) {
+                const m = moment.from(this.displayValue, this.locale, this.displayFormat);
                 if ((m as any)._isValid) {
                     this.date = m;
                     this.createDays();
+                    if (this.onChange) this.onChange(this.date.format(this.valueFormat));
                 }
             }
-        } catch {
+        } catch (e) {
+            console.log('error', this.displayValue, e);
         }
     }
 
@@ -152,6 +154,8 @@ export class DynamicDatePickerComponent extends PrimengControlComponent implemen
 
     createDays() {
         const date = (this.date?.clone() ?? moment()).locale(this.locale);
+        console.log(date.format(this.displayFormat));
+
 
         this.year = date.year();
         this.month = {
@@ -163,9 +167,7 @@ export class DynamicDatePickerComponent extends PrimengControlComponent implemen
         const daysInMonth = date.daysInMonth();
 
         const m = moment().locale(this.locale).set({ year: this.year, month: this.month.value, date: 1 });
-        const previousDays = m.date();
-        console.log('previousDays', previousDays);
-        
+        const previousDays = m.day() + 1;
         m.add(-previousDays, 'day')
 
         const dates: DateObject[] = [];
