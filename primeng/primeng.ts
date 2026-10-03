@@ -79,6 +79,7 @@ import { CustomDatePickerComponent } from './components/custom-date-picker/custo
 import { GroupOperationResultComponent } from './components/group-operation-result/index.component';
 import { FilterPipe } from './components/filter.pipe';
 import { PaggingPipe } from './components/pagging.pipe';
+import { NumberSanitizerDirective } from '../core/directives/number-sanitizer.directive';
 
 const COMPONENTS = [
     CustomTableComponent,
@@ -94,6 +95,7 @@ const COMPONENTS = [
 ];
 
 const MODULES = [
+    NumberSanitizerDirective,
     DynamicDatePickerComponent,
     InputOtpDirective,
     ImageCropperComponent,
