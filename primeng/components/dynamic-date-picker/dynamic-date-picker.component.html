@@ -2,10 +2,10 @@
   @if (showClear && displayValue) {
   <p-inputicon styleClass="fal fa-times" (click)="onChange(null); displayValue = ''" />
   }
-  <input class="input-control" [ngClass]="inputStyleClass" #inputEl (focus)="op.show($event, inputEl)"
-    (keyup)="updateValueFromDisplay()" [(ngModel)]="displayValue" [disabled]="isDisabled" [placeholder]="placeholder"
+  <input class="input-control" [ngClass]="inputStyleClass" #inputEl
+    (ngModelChange)="displayValue = $event; updateValueFromDisplay()" [ngModel]="displayValue" (blur)="onTouched()" [disabled]="isDisabled" [placeholder]="placeholder"
     dir="ltr" pInputText [pSize]="size!" type="text" />
-  <p-inputicon styleClass="fal fa-calendar" />
+  <p-inputicon styleClass="fal fa-calendar" (click)="op.toggle($event, inputEl)" />
 </p-icon-field>
 
 <p-popover #op appendTo="body">

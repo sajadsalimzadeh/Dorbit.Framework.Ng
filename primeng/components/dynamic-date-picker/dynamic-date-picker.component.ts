@@ -134,14 +134,23 @@ export class DynamicDatePickerComponent extends PrimengControlComponent implemen
 
     updateValueFromDisplay() {
         try {
-
-            if (this.displayValue) {
-                const m = moment.from(this.displayValue, this.locale, this.displayFormat);
-                if ((m as any)._isValid) {
+            const normalized = this.displayValue.replace(/[۰-۹]/g, digit => String('۰۱۲۳۴۵۶۷۸۹'.indexOf(digit)))
+                .replace(/[٠-٩]/g, digit => String('٠١٢٣٤٥٦٧٨٩'.indexOf(digit)));
+            if (normalized) {
+                const m = moment.from(normalized, this.locale, this.displayFormat);
+                if (m.isValid() && m.clone().locale(this.locale).format(this.displayFormat) === normalized) {
                     this.date = m;
                     this.createDays();
-                    if (this.onChange) this.onChange(this.date.format(this.valueFormat));
+                    this.value = this.date.clone().locale('en').format(this.valueFormat);
+                    if (this.onChange) this.onChange(this.value);
+                } else {
+                    this.value = null;
+                    if (this.onChange) this.onChange(null);
                 }
+            } else {
+                this.date = undefined;
+                this.value = null;
+                if (this.onChange) this.onChange(null);
             }
         } catch (e) {
             console.log('error', this.displayValue, e);
@@ -154,7 +163,6 @@ export class DynamicDatePickerComponent extends PrimengControlComponent implemen
 
     createDays() {
         const date = (this.date?.clone() ?? moment()).locale(this.locale);
-        console.log(date.format(this.displayFormat));
 
 
         this.year = date.year();
@@ -296,15 +304,17 @@ export class DynamicDatePickerComponent extends PrimengControlComponent implemen
 
     selectDate(date: DateObject) {
         if (date.isDisabled) return;
-
+        const time = this.date ? { hour: this.date.hour(), minute: this.date.minute(), second: this.date.second() } : { hour: 0, minute: 0, second: 0 };
         this.date = moment.unix(date.value / 1000);
+        this.date.set(time);
         this.select();
     }
 
     select() {
         this.date ??= moment();
         this.displayValue = this.date.clone().locale(this.locale).format(this.displayFormat);
-        if (this.onChange) this.onChange(this.date.format(this.valueFormat));
+        this.value = this.date.clone().locale('en').format(this.valueFormat);
+        if (this.onChange) this.onChange(this.value);
         this.onSelect.emit();
         if (!this.showTimePicker) {
             this.popover.hide();
