@@ -1,10 +1,11 @@
 import { Injectable, Injector } from '@angular/core';
 import { BaseApiRepository } from "./base-api.repository";
-import { QueryResult } from "../contracts/results";
+import { CommandResult, QueryResult } from "../contracts/results";
 import { BASE_API_URL_FRAMEWORK } from '../configs';
 import { HttpEventType, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { saveAs } from 'file-saver';
+import { Attachment } from '@framework/contracts/attachment';
 
 @Injectable({ providedIn: 'root' })
 export class FileRepository extends BaseApiRepository {
@@ -76,5 +77,17 @@ export class FileRepository extends BaseApiRepository {
                 }
             });
         });
+    }
+
+    getAll() {
+        return this.http.get<QueryResult<Attachment[]>>('');
+    }
+
+    getById(filename: string) {
+        return this.http.get<QueryResult<Attachment>>(`${filename}/Info`);
+    }
+
+    remove(filename: string) {
+        return this.http.delete<CommandResult>(`${filename}`);
     }
 }
