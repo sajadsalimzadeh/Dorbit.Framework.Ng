@@ -95,7 +95,7 @@ describe('NumberSanitizerDirective with PrimeNG', () => {
       key: '۱', keyCode: 0x06F1, which: 0x06F1, bubbles: true, cancelable: true,
     });
     input.dispatchEvent(event);
-    expect(event.defaultPrevented).toBeTrue();
+    expect(event.defaultPrevented).toBe(true);
     expect(fixture.componentInstance.amount.value).toBe(1);
     expect(input.value).toBe('1');
   });
@@ -147,6 +147,6 @@ describe('NumberSanitizerDirective with PrimeNG', () => {
       data: '۱', inputType: 'insertText', bubbles: true, cancelable: true,
     });
     input.dispatchEvent(event);
-    expect(event.defaultPrevented).toBeFalse();
+    expect(event.defaultPrevented).toBe(false);
   });
 });
