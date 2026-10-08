@@ -53,6 +53,7 @@ import { TimePipe } from "./pipes/time.pipe";
 import { DatePipe } from "./pipes/date.pipe";
 import { MomentPipe } from "./pipes/moment.pipe";
 import { ElementHTMLDirective } from "./components/element-html.directive";
+import { DynamicTranslationPipe } from "./pipes/dynamic-translation.pipe";
 
 export const ALL_MODULES = [
     TableModule,
@@ -96,6 +97,7 @@ export const ALL_COMPONENTS = [
     NumberSanitizerDirective,
     TimePipe,
     ElementHTMLDirective,
+    DynamicTranslationPipe,
 ];
 
 export const ALL_DIRECTIVES = [
