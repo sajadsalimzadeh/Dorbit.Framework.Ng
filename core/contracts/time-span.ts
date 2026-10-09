@@ -49,6 +49,19 @@ export class TimeSpan {
         return new TimeSpan(now.getSeconds(), now.getMinutes(), now.getHours(), now.getDate(), now.getMonth(), now.getFullYear());
     }
 
+    static fromUtcNow(): TimeSpan {
+        const now = new Date();
+        return new TimeSpan(now.getUTCSeconds(), now.getUTCMinutes(), now.getUTCHours(), now.getUTCDate(), now.getUTCMonth(), now.getUTCFullYear());
+    }
+
+    add(timeSpan: TimeSpan): TimeSpan {
+        return new TimeSpan(this.seconds + timeSpan.seconds, this.minutes + timeSpan.minutes, this.hours + timeSpan.hours, this.days + timeSpan.days, this.months + timeSpan.months, this.years + timeSpan.years);
+    }
+
+    addFromString(value: string): TimeSpan {
+        return this.add(TimeSpan.fromString(value));
+    }
+
     toString(format: string = 'HH:mm:ss'): string {
         format = format.toLowerCase();
         format = format.replace('hh', this.hours.toString().padStart(2, '0'));
