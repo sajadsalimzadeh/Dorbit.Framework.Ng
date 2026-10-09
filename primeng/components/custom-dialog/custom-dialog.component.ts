@@ -59,6 +59,7 @@ export class CustomDialogComponent implements OnInit, OnChanges {
 
     maskStyleInner: any = {};
     dialogStyleInner: any = {};
+    dialogStyleClassInner: string = '';
 
     constructor(private elementRef: ElementRef, private changeDetectorRef: ChangeDetectorRef) {
     }
@@ -83,6 +84,7 @@ export class CustomDialogComponent implements OnInit, OnChanges {
     processStyles() {
         let dialogStyle: any = {};
         let maskStyles: any = {};
+        let dialogStyleClass: string = '';
 
         if (this.maximize) {
             dialogStyle['width'] = '100vw';
@@ -93,6 +95,8 @@ export class CustomDialogComponent implements OnInit, OnChanges {
             dialogStyle['border-radius'] = '0';
             dialogStyle['padding'] = 'var(--app-inset-top, 0) var(--app-inset-right, 0) var(--app-inset-bottom, 0) var(--app-inset-left, 0)';
             maskStyles['padding'] = '0';
+
+            dialogStyleClass = 'p-dialog-maximize';
         } else {
             if (this.size == 'xs') dialogStyle['width'] = '400px';
             else if (this.size == 'sm') dialogStyle['width'] = '576px';
@@ -118,6 +122,8 @@ export class CustomDialogComponent implements OnInit, OnChanges {
             ...maskStyles,
             ...this.maskStyle
         }
+
+        this.dialogStyleClassInner = dialogStyleClass + ' ' + this.dialogStyleClass;
     }
 
     private onVisible() {
