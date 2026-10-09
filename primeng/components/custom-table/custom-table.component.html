@@ -13,7 +13,7 @@
       @if (onAdd.observed && showAddButton) {
       <p-button (onClick)="onAdd.emit()" icon="fa fa-plus" severity="success"
         [pTooltip]="'custom-table.add' | translate: {row: (name ?? ('custom-table.row' | translate))}"
-        [label]="'custom-table.add' | translate: {row: (name ?? ('custom-table.row' | translate))}" [size]="operationSize" />
+        [label]="addButtonLabel ?? ('custom-table.add' | translate: {row: (name ?? ('custom-table.row' | translate))})" [size]="operationSize" />
       }
       @if (onGroupOperationClick.observed && selectedItems.length > 0) {
       <p-button severity="secondary" icon="far fa-ellipsis-v" [label]="'custom-table.group-operation' | translate"

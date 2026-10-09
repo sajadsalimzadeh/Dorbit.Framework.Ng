@@ -48,6 +48,7 @@ export const CustomTableComponentDefaults = {
 
 export class CustomTableComponent extends PrimengComponent implements AfterViewInit {
     @Input() name?: string;
+    @Input() addButtonLabel?: string;
     @Input() value: any[] = [];
     @Input() loading: boolean = false;
     @Input() lazyLoading: boolean = false;
