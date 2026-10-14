@@ -48,7 +48,7 @@ export class StringUtil {
     }
 
     static getLocaleDirection(str?: string) {
-        if (!str) return 'ltr';
+        if (!str) return '';
         if (persianAlphabet.includes(str[0])) return 'rtl';
         return 'ltr';
     }

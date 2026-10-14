@@ -3,7 +3,7 @@ import {indexedDbCacheService} from "./cache.service";
 
 class InternetStateService {
 
-    $status = new BehaviorSubject(window.navigator.onLine);
+    $status = new BehaviorSubject<boolean>(window.navigator.onLine);
 
     constructor() {
         window.addEventListener('online', () => this.$status.next(true));

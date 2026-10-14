@@ -43,8 +43,6 @@ export class CustomDatePickerComponent extends PrimengControlComponent implement
     }
 
     setValue(value: Date) {
-        console.log(value);
-        
         this.value = value;
         this.onChange(moment(value).format(this.valueFormat));
     }
