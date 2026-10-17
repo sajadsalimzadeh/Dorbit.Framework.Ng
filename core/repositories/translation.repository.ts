@@ -25,7 +25,8 @@ export class TranslationRepository extends BaseApiRepository {
         }));
     }
 
-    translate(value: string) {
+    translate(value?: string) {
+        if (!value) return '';
         const key = TranslateUtil.getKey(value)
         return this.translations[key] ?? value;
     }
