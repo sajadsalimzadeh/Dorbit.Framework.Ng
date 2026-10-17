@@ -80,6 +80,7 @@ import { GroupOperationResultComponent } from './components/group-operation-resu
 import { FilterPipe } from './components/filter.pipe';
 import { PaggingPipe } from './components/pagging.pipe';
 import { NumberSanitizerDirective } from '../core/directives/number-sanitizer.directive';
+import { CdkDrag, CdkDropList, CdkDragHandle } from '@angular/cdk/drag-drop';
 
 const COMPONENTS = [
     CustomTableComponent,
@@ -101,6 +102,8 @@ const MODULES = [
     ImageCropperComponent,
     FilterPipe,
     PaggingPipe,
+    CdkDrag,
+    CdkDropList,
 
     CommonModule,
     FormsModule,
@@ -173,9 +176,10 @@ const PRIMENG_MODULES = [
 
 @NgModule({
     imports: [
-        PRIMENG_MODULES,
-        MODULES,
-    ],
+    PRIMENG_MODULES,
+    MODULES,
+    CdkDragHandle
+],
     exports: [
         PRIMENG_MODULES,
         MODULES,

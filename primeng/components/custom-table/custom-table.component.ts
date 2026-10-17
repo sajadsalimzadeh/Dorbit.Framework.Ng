@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ContentChild, ContentChildren, EventEmitter, HostBinding, Injector, Input, Output, QueryList, SimpleChanges, TemplateRef, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, ContentChild, ContentChildren, EventEmitter, HostBinding, HostListener, Injector, Input, Output, QueryList, SimpleChanges, TemplateRef, ViewChild } from "@angular/core";
 import { MenuItem } from "primeng/api";
 import { CustomTableColumn, CustomTableGroupOperation } from "./contracts";
 import { PrimengComponent } from "../primeng.component";
@@ -7,12 +7,21 @@ import { saveAs } from 'file-saver';
 import { Menu } from "primeng/menu";
 import { QueryResult } from "@framework/contracts";
 import { GroupOperationItem } from "../group-operation-result/index.component";
+import { CdkDragDrop } from "@angular/cdk/drag-drop";
+import { v4 as uuidv4 } from 'uuid';
 import moment from "jalali-moment";
 import * as XLSX from 'xlsx';
 
 type CustomTableSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 type CustomTableTableSize = 'small' | 'large';
 type CustomTableOperationSize = 'small' | 'large';
+
+interface ColumnState {
+    field: string;
+    order?: number;
+    width?: string;
+    isHide?: boolean;
+}
 
 export const CustomTableComponentDefaults = {
     resizableColumns: false,
@@ -112,6 +121,23 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
 
     @ViewChild('dt') dt!: Table;
 
+    @HostListener('window:mouseup', ['$event'])
+    onMouseUp(event: MouseEvent) {
+        this.changingWidthColumn = null;
+    }
+
+    @HostListener('window:mousemove', ['$event'])
+    onMouseMove(event: MouseEvent) {
+        if (this.changingWidthColumn) {
+            const width = this.changeWidthStartWidth + (event.pageX - this.changeWidthStartX);
+            this.changingWidthColumn.width = width + 'px';
+        }
+    }
+
+    changeWidthStartX: number = 0;
+    changeWidthStartWidth: number = 0;
+    changingWidthColumn: CustomTableColumn | null = null;
+
     protected uniqueStateKey: string = '';
 
     hasFooter: boolean = false;
@@ -119,17 +145,9 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     groupInvoker?: (item: GroupOperationItem) => Promise<QueryResult>;
     innerGroupOperations: MenuItem[] = [];
     selectedColumns: CustomTableColumn[] = [];
-
-    get storage() {
-        return this.stateStorage == 'session' ? sessionStorage : localStorage;
-    }
-
-    get isStateChaged() {
-        return this.dt?.filteredValue ||
-            this.dt?.sortField ||
-            this.storage.getItem(this.stateKey + '-selectedColumns') ||
-            this.dt?.columns?.some((x, i) => i != this.columns.filter(y => !y.isHide).findIndex(y => y.header == x.header));
-    }
+    initialColumns: CustomTableColumn[] = [];
+    isStateChaged: boolean = false;
+    storage: Storage = localStorage;
 
     constructor(injector: Injector) {
         super(injector);
@@ -156,6 +174,10 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
 
         }
 
+        if (changes['stateStorage']) {
+            this.storage = this.stateStorage == 'session' ? sessionStorage : localStorage;
+        }
+
         if (changes['groupOperations']) {
             this.innerGroupOperations = this.groupOperations.map(x => ({
                 ...x,
@@ -176,6 +198,15 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
                     }
                 }
             }));
+        }
+
+        if (changes['columns']) {
+            this.initialColumns = this.columns.map(x => {
+                x.id = uuidv4();
+                return {
+                    ...x,
+                }
+            });
         }
 
         if (!this.operationSize) {
@@ -202,26 +233,51 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
         })
     }
 
+    processSelectedColumns() {
+        this.selectedColumns = this.columns.filter(x => !x.isHide);
+        this.selectedColumns = this.selectedColumns.sortBy(x => x.order);
+        this.changeDetectorRef.detectChanges();
+
+        this.updateStateChaged();
+    }
+
+    updateStateChaged() {
+        this.isStateChaged = !!(this.dt?.filteredValue || this.dt?.sortField || this.storage.getItem(this.uniqueStateKey + '-column-state'));
+    }
+
     saveSelectedColumnState() {
-        this.storage.setItem(this.uniqueStateKey + '-selectedColumns', JSON.stringify(this.selectedColumns.map(x => x.field)));
+        this.storage.setItem(this.uniqueStateKey + '-column-state', JSON.stringify(this.columns.map(x => {
+            return {
+                field: x.field,
+                isHide: x.isHide,
+                order: x.order,
+                width: x.width,
+            }
+        })));
+
+        this.processSelectedColumns();
     }
 
     loadSelectedColumnState() {
-        const state = this.storage.getItem(this.uniqueStateKey + '-selectedColumns');
+        const state = this.storage.getItem(this.uniqueStateKey + '-column-state');
         if (state) {
-            const selectedColumnFields = JSON.parse(state);
-            this.selectedColumns = this.columns.filter(x => {
-                if (x.field) return selectedColumnFields.includes(x.field)
-                return !x.isHide;
+            const columnState = JSON.parse(state);
+            columnState.forEach((x: ColumnState) => {
+                const column = this.columns.find(y => y.field == x.field);
+                if (column) {
+                    column.isHide = x.isHide;
+                    column.order = x.order;
+                    column.width = x.width;
+                }
             });
-        } else {
-            this.selectedColumns = this.columns.filter(x => !x.isHide);
         }
+
+        this.processSelectedColumns();
     }
 
     resetSelectedColumnState() {
-        const storage = this.stateStorage == 'session' ? sessionStorage : localStorage;
-        storage.removeItem(this.uniqueStateKey + '-selectedColumns');
+        this.storage.removeItem(this.uniqueStateKey + '-column-state');
+
     }
 
     showDeleteDialog(item: any) {
@@ -269,13 +325,23 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
         this.dt.clearState();
         this.dt.reset();
         this.dt.restoreColumnOrder();
-        this.resetSelectedColumnState();
-        this.selectedColumns = this.columns.filter(x => !x.isHide);
 
+        this.initialColumns.forEach((x, index) => {
+            const column = this.columns.find(y => y.id == x.id);
+            if (column) {
+                column.isHide = x.isHide;
+                column.order = x.order;
+                column.width = x.width;
+            }
+        });
+
+        this.resetSelectedColumnState();
+        this.processSelectedColumns();
     }
 
     filter(event: TableFilterEvent) {
         this.onFilter.emit(event);
+        this.updateStateChaged();
     }
 
     showOperationMenu(item: any, menu: Menu, event: Event) {
@@ -318,9 +384,41 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
             else this.expandedRowKeys[dataKey] = true;
         }
         this.onRowExpand.emit(event);
+        this.updateStateChaged();
     }
 
     onRowDoubleClickHandler(event: Event, item: any) {
         this.onRowDoubleClick.emit(item);
+    }
+
+    onColumnDrop(event: CdkDragDrop<CustomTableColumn[]>, items: CustomTableColumn[]) {
+        if (event.currentIndex == event.previousIndex) return;
+
+        const item = items[event.previousIndex];
+        if (event.currentIndex > event.previousIndex) {
+            items.splice(event.currentIndex + 1, 0, item);
+            items.splice(event.previousIndex, 1);
+        } else {
+            items.splice(event.previousIndex, 1);
+            items.splice(event.currentIndex, 0, item);
+        }
+
+        items.forEach((x, index) => {
+            x.order = index;
+        });
+
+        this.saveSelectedColumnState();
+        this.loadSelectedColumnState();
+    }
+
+    startChangeWidth(event: MouseEvent, column: CustomTableColumn) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (column.width) {
+            this.changeWidthStartX = event.pageX;
+            this.changeWidthStartWidth = +(column.width?.replace('px', '') ?? 0);
+            this.changingWidthColumn = column;
+        }
     }
 }

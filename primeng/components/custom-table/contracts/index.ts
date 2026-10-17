@@ -3,8 +3,10 @@ import { QueryResult } from "@framework/contracts";
 import { GroupOperationItem } from "@primeng/components/group-operation-result/index.component";
 
 export interface CustomTableColumn<T = any> {
+    id?: string;
     field?: string;
     width?: string;
+    order?: number;
     isHide?: boolean;
     
     header: string;

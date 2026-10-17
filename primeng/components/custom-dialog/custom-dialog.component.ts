@@ -37,7 +37,7 @@ export class CustomDialogComponent implements OnInit, OnChanges {
     @Input() maskStyleClass: string = '';
     @Input() contentStyleClass: string = '';
 
-    @Input() size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' = 'md';
+    @Input() size: 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' = 'md';
     @Input() maximize: boolean = false;
     @Input() overflow: 'auto' | 'visible' = 'auto';
 
@@ -98,7 +98,8 @@ export class CustomDialogComponent implements OnInit, OnChanges {
 
             dialogStyleClass = 'p-dialog-maximize';
         } else {
-            if (this.size == 'xs') dialogStyle['width'] = '400px';
+            if (this.size == 'xxs') dialogStyle['width'] = '350px';
+            else if (this.size == 'xs') dialogStyle['width'] = '400px';
             else if (this.size == 'sm') dialogStyle['width'] = '576px';
             else if (this.size == 'md') dialogStyle['width'] = '768px';
             else if (this.size == 'lg') dialogStyle['width'] = '992px';
