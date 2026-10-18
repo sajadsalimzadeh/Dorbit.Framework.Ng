@@ -418,10 +418,8 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
         event.preventDefault();
         event.stopPropagation();
 
-        if (column.width) {
-            this.changeWidthStartX = event.pageX;
-            this.changeWidthStartWidth = +(column.width?.replace('px', '') ?? 0);
-            this.changingWidthColumn = column;
-        }
+        this.changeWidthStartX = event.pageX;
+        this.changeWidthStartWidth = +(column.width?.replace('px', '') ?? 100);
+        this.changingWidthColumn = column;
     }
 }
