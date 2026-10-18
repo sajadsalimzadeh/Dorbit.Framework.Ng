@@ -123,7 +123,10 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
 
     @HostListener('window:mouseup', ['$event'])
     onMouseUp(event: MouseEvent) {
-        this.changingWidthColumn = null;
+        if (this.changingWidthColumn) {
+            this.changingWidthColumn = null;
+            this.saveSelectedColumnState();
+        }
     }
 
     @HostListener('window:mousemove', ['$event'])

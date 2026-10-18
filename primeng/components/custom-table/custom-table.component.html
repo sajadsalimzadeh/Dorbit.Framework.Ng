@@ -294,7 +294,7 @@
 </p-custom-dialog>
 
 <p-custom-dialog [(visible)]="dialogs['column-settings']" [header]="'custom-table.column-settings' | translate"
-  size="xxs" appendTo="body" [draggable]="true" [dismissableMask]="true" [modal]="false" position="left">
+  size="xxs" appendTo="body" [draggable]="true" [dismissableMask]="true" [modal]="false">
   <ng-template>
     <ul class="custom-table-columns-list" cdkDropList (cdkDropListDropped)="onColumnDrop($event, columns)">
       @for (column of columns; track $index) {
