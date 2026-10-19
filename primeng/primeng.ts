@@ -81,6 +81,7 @@ import { FilterPipe } from './components/filter.pipe';
 import { PaggingPipe } from './components/pagging.pipe';
 import { NumberSanitizerDirective } from '../core/directives/number-sanitizer.directive';
 import { CdkDrag, CdkDropList, CdkDragHandle } from '@angular/cdk/drag-drop';
+import { InputHexComponent } from './components/input-hex/input-hex.component';
 
 const COMPONENTS = [
     CustomTableComponent,
@@ -93,6 +94,7 @@ const COMPONENTS = [
     ErrorMessageComponent,
     CustomDatePickerComponent,
     GroupOperationResultComponent,
+    InputHexComponent,
 ];
 
 const MODULES = [
