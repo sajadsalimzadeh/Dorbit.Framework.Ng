@@ -301,9 +301,7 @@
       <li class="custom-table-columns-list-item" cdkDrag>
         <i cdkDragHandle class="drag-handle fal fa-grip-dots-vertical"></i>
         <span>{{ column.header | translate }}</span>
-        @if(column.width != undefined) {
-          <i class="width-handle fal fa-arrows-left-right" (mousedown)="startChangeWidth($event, column)"></i>
-        }
+        <i class="width-handle fal fa-arrows-left-right" (mousedown)="startChangeWidth($event, column)"></i>
         <p-checkbox [ngModel]="!column.isHide" [binary]="true"
           (ngModelChange)="column.isHide = !$event; saveSelectedColumnState()" />
       </li>
