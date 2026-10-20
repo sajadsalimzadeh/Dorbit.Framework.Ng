@@ -4,7 +4,7 @@ import { BASE_API_URL_FRAMEWORK } from "@framework/configs";
 import { QueryResult } from "@framework/contracts";
 import { BaseApiRepository } from "@framework/repositories";
 import { tap } from "rxjs";
-import { TranslateUtil } from "@app/utils/translate";
+import { TranslateUtil } from "../utils/translate";
 
 @Injectable({
     providedIn: 'root'
