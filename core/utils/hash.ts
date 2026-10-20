@@ -1,5 +1,8 @@
-export function md5(d: string) {
-    return M(V(Y(X(d), 8 * d.length))).toLowerCase();
+export class HashUtil {
+
+    static md5(d: string) {
+        return M(V(Y(X(d), 8 * d.length))).toLowerCase();
+    }
 }
 
 function M(d: any) {

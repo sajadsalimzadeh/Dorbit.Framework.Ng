@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { TranslateUtil } from "@app/utils/translate";
 import { TranslationRepository } from "@framework/repositories/translation.repository";
 
 @Pipe({

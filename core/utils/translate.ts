@@ -1,11 +1,11 @@
 
 import { Translation } from "@framework/contracts/translation";
-import CryptoJS from "crypto-js";
+import { HashUtil } from "./hash";
 
 export class TranslateUtil {
 
     static getKey(payload: string) {
-        return CryptoJS.MD5(payload).toString();
+        return HashUtil.md5(payload);
     }
 
     static translate(translations: Translation[], payload: string, locale: string) {

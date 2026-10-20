@@ -1,5 +1,5 @@
 import {StoreDb} from "../stores/db";
-import {md5} from "./md5";
+import {HashUtil} from "./hash";
 
 export enum LogLevel {
     TRACE = 1,
@@ -168,7 +168,7 @@ export class Logger {
 
             //prevent multiple same log insert
             if (log.message) {
-                const logKey = md5(log.message);
+                const logKey = HashUtil.md5(log.message);
                 if (this.logTimeMessages[logKey] > new Date().getTime() - 200) return;
                 this.logTimeMessages[logKey] = new Date().getTime();
             }

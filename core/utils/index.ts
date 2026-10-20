@@ -18,7 +18,7 @@ export * from './indexed-db';
 export * from './locale';
 export * from './location';
 export * from './log';
-export * from './md5';
+export * from './hash';
 export * from './mobile';
 export * from './number';
 export * from './object';
