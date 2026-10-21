@@ -124,16 +124,9 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
     @HostListener('window:mouseup', ['$event'])
     onMouseUp(event: MouseEvent) {
         if (this.changingWidthColumn) {
+            window.removeEventListener('mousemove', this.onMouseMove);
             this.changingWidthColumn = null;
             this.saveSelectedColumnState();
-        }
-    }
-
-    @HostListener('window:mousemove', ['$event'])
-    onMouseMove(event: MouseEvent) {
-        if (this.changingWidthColumn) {
-            const width = this.changeWidthStartWidth + (event.pageX - this.changeWidthStartX);
-            this.changingWidthColumn.width = width + 'px';
         }
     }
 
@@ -234,6 +227,13 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
                 this.hasFooter = true;
             }
         })
+    }
+
+    onMouseMove(event: MouseEvent) {
+        if (this.changingWidthColumn) {
+            const width = this.changeWidthStartWidth + (event.pageX - this.changeWidthStartX);
+            this.changingWidthColumn.width = width + 'px';
+        }
     }
 
     processSelectedColumns() {
@@ -421,5 +421,7 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
         this.changeWidthStartX = event.pageX;
         this.changeWidthStartWidth = +(column.width?.replace('px', '') ?? 100);
         this.changingWidthColumn = column;
+
+        window.addEventListener('mousemove', this.onMouseMove);
     }
 }
