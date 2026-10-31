@@ -47,11 +47,12 @@ export class ImageUtil {
 
     static resize(sourceCanvas: HTMLCanvasElement, width: number, height: number) {
 
+        const dataURL = sourceCanvas.toDataURL("image/png");
         return new Promise<HTMLCanvasElement>(resolve => {
             const img = new Image();
             img.width = sourceCanvas.width;
             img.height = sourceCanvas.height;
-            img.src = sourceCanvas.toDataURL('2d');
+            img.src = dataURL;
             img.onload = () => {
                 const canvas = document.createElement("canvas");
                 const context = canvas.getContext("2d");
