@@ -78,7 +78,7 @@ class CustomHttpHandler extends HttpHandler {
             if (res instanceof HttpResponse && res.ok) {
                 this.progressCount--;
                 if (this.progressCount <= 0) this.loading.set(false);
-                if (res.body.message) {
+                if (res.body?.message) {
                     this.send(`message.${res.body.message}`, 'success');
                 } else if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(req.method.toUpperCase())) {
                     // this.send(`message.success`, 'success');
