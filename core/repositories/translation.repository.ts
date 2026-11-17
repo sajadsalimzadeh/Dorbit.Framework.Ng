@@ -14,7 +14,7 @@ export class TranslationRepository extends BaseApiRepository {
     translations: Record<string, string> = {};
 
     constructor(injector: Injector) {
-        super(injector, injector.get(BASE_API_URL_FRAMEWORK) , 'Translations');
+        super(injector, injector.get(BASE_API_URL_FRAMEWORK), 'Translations');
     }
 
     getAll(locale: string, keys: string[] = []) {
@@ -27,7 +27,9 @@ export class TranslationRepository extends BaseApiRepository {
 
     translate(value?: string) {
         if (!value) return '';
-        const key = TranslateUtil.getKey(value)
+        const key = TranslateUtil.getKey(value);
+        console.log(this.translations, key, this.translations[key]);
+
         return this.translations[key] ?? value;
     }
 }
