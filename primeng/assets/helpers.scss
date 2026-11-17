@@ -167,6 +167,14 @@
     white-space: pre-wrap;
   }
 
+  .white-space-normal {
+    white-space: normal;
+  }
+
+  .word-break-all {
+    word-break: break-all;
+  }
+
   .w-full {
     width: 100%;
   }
@@ -254,7 +262,6 @@
   .flex-column {
     flex-direction: column;
   }
-
 
   .align-items-center {
     align-items: center;

@@ -4,7 +4,8 @@
 
     ::ng-deep {
         .p-iconfield .p-inputtext {
-            padding-inline: calc((var(--p-form-field-padding-x) * 1.5) + var(--p-icon-size));
+            padding-inline-start: calc((var(--p-form-field-padding-x) * 1.5) + var(--p-icon-size));
+            padding-inline-end: var(--p-form-field-padding-x);
         }
     }
 }

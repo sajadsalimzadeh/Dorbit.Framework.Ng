@@ -15,7 +15,7 @@ export class SettingRepository extends BaseApiRepository {
         return this.http.get<QueryResult<any>>(`${key}`);
     }
 
-    getAll(keys: string[] = []) {
+    getAll(keys: string[]) {
         return this.http.get<QueryResult<{[key: string]: any}>>(``, {params: {keys}});
     }
 
