@@ -1,0 +1,102 @@
+:host {
+    display: block;
+    min-width: 0;
+}
+
+.input-control {
+    width: 100%;
+    min-width: 0;
+}
+
+.date-picker-range-container {
+    width: min(300px, calc(100vw - 64px));
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    color: var(--p-text-color);
+}
+
+.range-summary {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .5rem;
+
+    .range-endpoint {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: .75rem;
+        min-width: 0;
+        padding: .75rem;
+        border: 1px solid var(--p-content-border-color);
+        border-radius: var(--p-border-radius-md);
+        background: var(--p-content-background);
+    }
+
+    time {
+        overflow-wrap: anywhere;
+        font-size: .9rem;
+        font-weight: 600;
+    }
+}
+
+.year-month,
+.time-endpoints {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .25rem;
+}
+
+.dates {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: .2rem;
+
+    .day-of-week {
+        text-align: center;
+        color: var(--p-text-muted-color);
+        padding-block: .5rem;
+    }
+
+    .calendar-day {
+        display: block;
+        min-width: 0;
+        border-radius: var(--p-button-border-radius);
+    }
+
+    .outside-month:not(.endpoint) {
+        opacity: .5;
+    }
+
+    // Jalali range highlighting belongs to this calendar's own cells, not PrimeNG internals.
+    .in-range {
+        background: var(--p-highlight-background);
+        color: var(--p-highlight-color);
+    }
+}
+
+.month-picker {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .25rem;
+}
+
+.year-picker {
+    display: flex;
+    flex-direction: column;
+    max-height: 280px;
+    overflow: auto;
+    gap: .25rem;
+}
+
+.time-picker {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    .time-unit {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: .25rem;
+    }
+}
