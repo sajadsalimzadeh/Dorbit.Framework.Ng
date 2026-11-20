@@ -2,8 +2,37 @@ import { ChangeDetectorRef, Component, ContentChild, ElementRef, EventEmitter, H
 import { Dialog } from "primeng/dialog";
 
 type Position = "center" | "top" | "bottom" | "left" | "right" | "topleft" | "topright" | "bottomleft" | "bottomright";
+type Size = 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+type Overflow = 'auto' | 'visible';
 
-const styleFields = ['maximize', 'size']
+const styleFields = ['maximize', 'size'];
+
+export const CustomDialogComponentDefaults = {
+    visible: false,
+    header: '',
+    modal: true,
+    dismissableMask: false,
+    closable: true,
+    draggable: false,
+    resizable: false,
+    closeOnEscape: true,
+    baseZIndex: 1000,
+    breakpoints: undefined,
+    maximizable: false,
+    position: 'top' as Position,
+    fullHeight: false,
+    showHeader: true,
+    appendTo: undefined,
+    dialogStyle: {},
+    maskStyle: {},
+    contentStyle: {},
+    dialogStyleClass: '',
+    maskStyleClass: '',
+    contentStyleClass: '',
+    size: 'md' as Size,
+    maximize: false,
+    overflow: 'auto' as Overflow,
+}
 
 @Component({
     standalone: false,
@@ -13,33 +42,33 @@ const styleFields = ['maximize', 'size']
 })
 
 export class CustomDialogComponent implements OnInit, OnChanges {
-    @Input() visible: boolean = false;
-    @Input() header: string = '';
-    @Input() modal: boolean = true;
-    @Input() dismissableMask: boolean = false;
+    @Input() visible: boolean = CustomDialogComponentDefaults.visible;
+    @Input() header: string = CustomDialogComponentDefaults.header;
+    @Input() modal: boolean = CustomDialogComponentDefaults.modal;
+    @Input() dismissableMask: boolean = CustomDialogComponentDefaults.dismissableMask;
     @Input() closable: boolean = true;
-    @Input() draggable: boolean = false;
-    @Input() resizable: boolean = false;
+    @Input() draggable: boolean = CustomDialogComponentDefaults.draggable;
+    @Input() resizable: boolean = CustomDialogComponentDefaults.resizable;
     @Input() closeOnEscape: boolean = true;
-    @Input() baseZIndex: number = 1000;
-    @Input() breakpoints: any;
-    @Input() maximizable: boolean = false;
-    @Input() position: Position = 'top';
-    @Input() fullHeight: boolean = false;
-    @Input() showHeader: boolean = true;
-    @Input() appendTo?: string;
+    @Input() baseZIndex: number = CustomDialogComponentDefaults.baseZIndex;
+    @Input() breakpoints: any = CustomDialogComponentDefaults.breakpoints;
+    @Input() maximizable: boolean = CustomDialogComponentDefaults.maximizable;
+    @Input() position: Position = CustomDialogComponentDefaults.position;
+    @Input() fullHeight: boolean = CustomDialogComponentDefaults.fullHeight;
+    @Input() showHeader: boolean = CustomDialogComponentDefaults.showHeader;
+    @Input() appendTo?: string = CustomDialogComponentDefaults.appendTo;
     
-    @Input() dialogStyle: any = {};
-    @Input() maskStyle: any = {};
-    @Input() contentStyle: any = {};
+    @Input() dialogStyle: any = CustomDialogComponentDefaults.dialogStyle;
+    @Input() maskStyle: any = CustomDialogComponentDefaults.maskStyle;
+    @Input() contentStyle: any = CustomDialogComponentDefaults.contentStyle;
 
-    @Input() dialogStyleClass: string = '';
-    @Input() maskStyleClass: string = '';
-    @Input() contentStyleClass: string = '';
+    @Input() dialogStyleClass: string = CustomDialogComponentDefaults.dialogStyleClass;
+    @Input() maskStyleClass: string = CustomDialogComponentDefaults.maskStyleClass;
+    @Input() contentStyleClass: string = CustomDialogComponentDefaults.contentStyleClass;
 
-    @Input() size: 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' = 'md';
-    @Input() maximize: boolean = false;
-    @Input() overflow: 'auto' | 'visible' = 'auto';
+    @Input() size: Size = CustomDialogComponentDefaults.size;
+    @Input() maximize: boolean = CustomDialogComponentDefaults.maximize;
+    @Input() overflow: Overflow = CustomDialogComponentDefaults.overflow;
 
     @Output() visibleChange = new EventEmitter<boolean>();
     @Output() onHide = new EventEmitter();

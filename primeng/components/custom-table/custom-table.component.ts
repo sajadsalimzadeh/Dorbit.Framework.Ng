@@ -48,6 +48,8 @@ export const CustomTableComponentDefaults = {
     operationSize: 'small' as CustomTableOperationSize,
 }
 
+let onMouseMoveGlobal: (event: MouseEvent) => void;
+
 @Component({
     standalone: false,
     selector: 'p-custom-table',
@@ -123,8 +125,8 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
 
     @HostListener('window:mouseup', ['$event'])
     onMouseUp(event: MouseEvent) {
+        window.removeEventListener('mousemove', onMouseMoveGlobal);
         if (this.changingWidthColumn) {
-            window.removeEventListener('mousemove', this.onMouseMove);
             this.changingWidthColumn = null;
             this.saveSelectedColumnState();
         }
@@ -422,6 +424,6 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
         this.changeWidthStartWidth = +(column.width?.replace('px', '') ?? 100);
         this.changingWidthColumn = column;
 
-        window.addEventListener('mousemove', this.onMouseMove);
+        window.addEventListener('mousemove', onMouseMoveGlobal = (e) => this.onMouseMove(e));
     }
 }
