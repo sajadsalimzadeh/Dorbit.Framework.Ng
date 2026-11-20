@@ -1,0 +1,99 @@
+<p-icon-field>
+    @if (showClear && displayValue) {
+    <p-inputicon styleClass="fal fa-times" (click)="clear(); displayValue = ''" />
+    }
+    <input #inputEl pInputText class="input-control" [ngClass]="inputStyleClass" [pSize]="size!" [id]="name"
+        [name]="name" [ngModel]="displayValue" [ngModelOptions]="{standalone: true}"
+        (ngModelChange)="displayValue = $event; updateValueFromDisplay()" (blur)="onBlur()" (focus)="open($event)"
+        (keydown.escape)="op.hide()" [disabled]="isDisabled" [placeholder]="placeholder" dir="ltr" type="text"
+        autocomplete="off" [attr.aria-label]="label || placeholder || (isPersian ? 'بازه تاریخی' : 'Date range')" />
+    <p-inputicon styleClass="fal fa-calendar" (click)="op.toggle($event, inputEl)" />
+</p-icon-field>
+
+<p-popover #op appendTo="body" [focusOnShow]="false" [ariaLabel]="label || (isPersian ? 'بازه تاریخی' : 'Date range')">
+    <div class="date-picker-range-container" [dir]="isPersian ? 'rtl' : 'ltr'">
+        <div class="range-summary" aria-live="polite">
+            <div class="range-endpoint">
+                <p-tag severity="info" [value]="isPersian ? 'از تاریخ' : 'From'" />
+                <time dir="ltr">{{ fromText || '—' }}</time>
+            </div>
+            <div class="range-endpoint">
+                <p-tag severity="success" [value]="isPersian ? 'تا تاریخ' : 'To'" />
+                <time dir="ltr">{{ toText || '—' }}</time>
+            </div>
+        </div>
+        <div class="year-month">
+            <button pButton type="button" [text]="true" severity="secondary" (click)="openYearPicker()"
+                [disabled]="isDisabled" [attr.aria-label]="isPersian ? 'انتخاب سال' : 'Choose year'">{{ year }}</button>
+            <button pButton type="button" [text]="true" severity="secondary" (click)="openMonthPicker()"
+                [disabled]="isDisabled" [attr.aria-label]="isPersian ? 'انتخاب ماه' : 'Choose month'">{{ month?.name
+                }}</button>
+        </div>
+
+        @if (state === 'date') {
+        <div class="dates" [attr.aria-label]="isPersian ? 'تقویم' : 'Calendar'">
+            @for (weekday of weekdays; track $index) {
+            <span class="day-of-week">{{ weekday }}</span>
+            }
+            @for (day of dates; track day.value) {
+            <p-button type="button" class="calendar-day" styleClass="day" [class.outside-month]="!day.isCurrentMonth"
+                [class.endpoint]="day.isSelected" [class.in-range]="day.isInRange" [label]="'' + day.day"
+                [style]="{width: '100%', minHeight: '2.7rem', padding: '0'}" [text]="!day.isSelected"
+                [outlined]="day.isToday && !day.isSelected"
+                [severity]="day.isRangeStart && day.isRangeEnd ? 'primary' : day.isRangeStart ? 'info' : day.isRangeEnd ? 'success' : 'secondary'"
+                [disabled]="isDisabled || day.isDisabled" [ariaLabel]="day.label"
+                [pt]="{root: {'aria-pressed': day.isSelected, 'aria-current': day.isToday ? 'date' : undefined}}"
+                (onClick)="selectDate(day)" />
+            }
+        </div>
+        }
+        @if (state === 'month') {
+        <div class="month-picker">
+            @for (month of months; track month.value) {
+            <button pButton type="button" [text]="!month.isSelected"
+                [severity]="month.isSelected ? 'primary' : 'secondary'" [disabled]="isDisabled"
+                [attr.aria-pressed]="month.isSelected" (click)="selectMonth(month.value)">{{ month.name }}</button>
+            }
+        </div>
+        }
+        @if (state === 'year') {
+        <div #yearPicker class="year-picker">
+            @for (year of years; track year.value) {
+            <button pButton type="button" [text]="!year.isSelected"
+                [severity]="year.isSelected ? 'primary' : 'secondary'" [disabled]="isDisabled"
+                [attr.aria-pressed]="year.isSelected" (click)="selectYear(year.value)">{{ year.value }}</button>
+            }
+        </div>
+        }
+        <button pButton type="button" [text]="true" severity="secondary" [disabled]="isDisabled" (click)="goToday()">
+            {{ isPersian ? 'امروز' : 'Today' }}
+        </button>
+
+        @if (showTimePicker) {
+        <div class="time-endpoints">
+            <button pButton type="button" [text]="activeEndpoint !== 'from'" [disabled]="isDisabled"
+                [severity]="activeEndpoint === 'from' ? 'primary' : 'secondary'"
+                [attr.aria-pressed]="activeEndpoint === 'from'" (click)="editEndpoint('from')">{{ isPersian ? 'زمان
+                شروع' : 'Start time' }}</button>
+            <button pButton type="button" [text]="activeEndpoint !== 'to'" [disabled]="isDisabled"
+                [severity]="activeEndpoint === 'to' ? 'primary' : 'secondary'"
+                [attr.aria-pressed]="activeEndpoint === 'to'" (click)="editEndpoint('to')">{{ isPersian ? 'زمان پایان' :
+                'End time' }}</button>
+        </div>
+        <div class="time-picker" dir="ltr">
+            @for (unit of timeUnits; track unit) {
+            <div class="time-unit">
+                <button pButton type="button" [text]="true" severity="secondary" icon="far fa-angle-up"
+                    [disabled]="isDisabled || !activeDate" (click)="adjustTime(unit, 1)"
+                    [attr.aria-label]="(isPersian ? 'افزایش ' : 'Increase ') + unit"></button>
+                <span>{{ activeDate ? (unit === 'hour' ? activeDate.hour() : unit === 'minute' ? activeDate.minute() :
+                    activeDate.second()) : '—' }}</span>
+                <button pButton type="button" [text]="true" severity="secondary" icon="far fa-angle-down"
+                    [disabled]="isDisabled || !activeDate" (click)="adjustTime(unit, -1)"
+                    [attr.aria-label]="(isPersian ? 'کاهش ' : 'Decrease ') + unit"></button>
+            </div>
+            }
+        </div>
+        }
+    </div>
+</p-popover>
