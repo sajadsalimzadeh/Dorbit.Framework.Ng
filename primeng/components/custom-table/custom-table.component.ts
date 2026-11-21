@@ -46,6 +46,7 @@ export const CustomTableComponentDefaults = {
     size: 'md' as CustomTableSize,
     tableSize: 'small' as CustomTableTableSize,
     operationSize: 'small' as CustomTableOperationSize,
+    saveStateOnChange: true,
 }
 
 let onMouseMoveGlobal: (event: MouseEvent) => void;
@@ -228,7 +229,12 @@ export class CustomTableComponent extends PrimengComponent implements AfterViewI
                 if (column.footer) column.footer = this.translateService.instant(column.footer);
                 this.hasFooter = true;
             }
-        })
+        });
+        
+
+        if(!CustomTableComponentDefaults.saveStateOnChange) {
+            this.resetState();
+        }
     }
 
     onMouseMove(event: MouseEvent) {
